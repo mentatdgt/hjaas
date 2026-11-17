@@ -49,6 +49,21 @@
   color: var(--hj-ink);
 }
 
+/* Before the intro: laid out, sized and decoded, but not yet shown. */
+.hj-scene.is-pre .hj-room,
+.hj-scene.is-pre .hj-ambient,
+.hj-scene.is-pre .hj-shadow,
+.hj-scene.is-pre .hj-rachel,
+.hj-scene.is-pre .hj-mushrooms,
+.hj-scene.is-pre .hj-logo,
+.hj-scene.is-pre .hj-counter {
+  opacity: 0;
+}
+
+.hj-scene.is-pre .hj-mushrooms {
+  visibility: hidden;
+}
+
 /* The room's own light, blurred and dimmed, behind the letterbox bars. */
 .hj-ambient {
   position: absolute;
@@ -98,6 +113,15 @@
   width: 100%;
   height: 100%;
   display: block;
+  pointer-events: none;
+}
+
+/* The intro paints the room onto this canvas, stroke by stroke. It is removed when the room is complete. */
+.hj-paint {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
 }
 
@@ -216,6 +240,46 @@
 .hj-flyer {
   position: absolute;
   will-change: transform, opacity;
+}
+
+/* ---------- Logo ---------- */
+
+.hj-logo {
+  position: absolute;
+  top: calc(var(--hj-pad) - 4px);
+  left: var(--hj-pad);
+  display: block;
+  width: clamp(120px, 14cqw, 210px);
+  pointer-events: auto;
+  border-radius: 10px;
+}
+
+/* Lifts the chrome off the wall behind it. On the image only, so the glint canvas above never re-filters it. */
+.hj-logo img {
+  filter: drop-shadow(0 3px 5px rgba(43, 26, 16, 0.38));
+}
+
+.hj-logo img,
+.hj-logo canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hj-logo canvas {
+  pointer-events: none;
+}
+
+.hj-logo:focus {
+  outline: none;
+}
+
+.hj-logo:focus-visible {
+  outline: 2px solid var(--hj-cream);
+  outline-offset: 4px;
+  box-shadow: 0 0 0 8px rgba(43, 26, 16, 0.72);
 }
 
 /* ---------- Counter: a small enamel pin ---------- */

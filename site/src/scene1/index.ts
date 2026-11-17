@@ -3,6 +3,8 @@ import './scene.css';
 import { PLATE, asset, loadImage, loadLoopFrames, setAssetBase } from './assets';
 import { Counter } from './counter';
 import { flags } from './flags';
+import { playIntro, type IntroMode } from './intro';
+import { Logo } from './logo';
 import { onReducedMotionChange, reducedMotion } from './motion';
 import { Hunt, SPOTS } from './mushrooms';
 import { RachelPlayer } from './player';
@@ -14,6 +16,8 @@ import { loadProgress, saveProgress } from './state';
 export interface Scene1Options {
   /** Folder holding the scene's assets. Defaults to `<site base>/assets/scene1/`. */
   assetBase?: string;
+  /** Where the logo links to. Without it the logo is not a link. */
+  homeHref?: string;
 }
 
 export interface Scene1 {
@@ -37,7 +41,7 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
   if (options.assetBase) setAssetBase(options.assetBase);
 
   const root = document.createElement('section');
-  root.className = 'hj-scene';
+  root.className = 'hj-scene is-pre';
   root.setAttribute('aria-label', 'Hui Jie at work. Ten mushrooms are hidden in the room.');
   root.innerHTML = `
     <div class="hj-ambient" aria-hidden="true"></div>
@@ -58,7 +62,8 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
   const room = q<HTMLImageElement>('.hj-room');
   const hud = q<HTMLDivElement>('.hj-hud');
   const flyLayer = q<HTMLDivElement>('.hj-fly');
-  q<HTMLDivElement>('.hj-ambient').style.backgroundImage = `url("${asset('room-ambient.webp')}")`;
+  const ambient = q<HTMLDivElement>('.hj-ambient');
+  ambient.style.backgroundImage = `url("${asset('room-ambient.webp')}")`;
 
   let destroyed = false;
   let rachel: Rachel | undefined;
@@ -77,6 +82,18 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
     if (flags.found !== undefined) return; // a QA preset is never written back
     saveProgress({ ...progress, found: [...found] });
   };
+
+  // QA: with ?debug, every frame that arrives late is logged (start time and length, in ms).
+  const jank: Array<[number, number]> = [];
+  if (flags.debug) {
+    let last = performance.now();
+    const watch = (now: number): void => {
+      if (now - last > 25) jank.push([Math.round(last), Math.round(now - last)]);
+      last = now;
+      if (!destroyed) requestAnimationFrame(watch);
+    };
+    requestAnimationFrame(watch);
+  }
 
   const rnd = flags.seed === undefined ? Math.random : seeded(flags.seed);
   const rhythm = (): Iterator<Step> => (reducedMotion() ? gentleSchedule(rnd) : hammerSchedule(rnd));
@@ -97,8 +114,9 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
   let quietSeconds = 0;
   let hunt: Hunt | undefined;
   const hintAfter = flags.hintSeconds ?? HINT_AFTER_S;
+  let settled = false; // the intro has finished
   const hintClock = window.setInterval(() => {
-    if (document.hidden || !hunt || hunt.remaining === 0) return;
+    if (document.hidden || !settled || !hunt || hunt.remaining === 0) return;
     quietSeconds++;
     if (quietSeconds >= hintAfter) {
       quietSeconds = 0;
@@ -113,10 +131,16 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
   };
 
   void (async () => {
-    const [roomImage, frames] = await Promise.all([loadImage(asset('room.webp')), loadLoopFrames()]);
+    const [roomImage, frames, logo] = await Promise.all([
+      loadImage(asset('room.webp')),
+      loadLoopFrames(),
+      Logo.create(options.homeHref),
+    ]);
     if (destroyed) return;
     room.src = roomImage.src;
+    await room.decode().catch(() => {});
     rachel = new Rachel(frames);
+    const theRachel = rachel;
 
     hunt = await Hunt.create({
       plate,
@@ -142,18 +166,20 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
     if (destroyed) return;
 
     plate.append(rachel.shadow, hunt.el, rachel.el);
+    hud.prepend(logo.el);
     rachel.resize();
-    root.classList.add('is-ready');
-
-    if (found.size < TOTAL) counter.say(COPY.prompt, found.size === 0 ? undefined : 6000);
+    cleanup.push(() => logo.stop());
 
     player = new RachelPlayer(rachel, rhythm());
-    cleanup.push(onReducedMotionChange(() => player?.setLoop(rhythm())));
+    const thePlayer = player;
+    cleanup.push(onReducedMotionChange(() => thePlayer.setLoop(rhythm())));
 
     // Nothing runs while the tab is hidden; she picks up on the same pose when it comes back.
+    let working = false;
     const onVisibility = (): void => {
-      if (document.hidden) player?.stop();
-      else player?.start();
+      if (!working) return;
+      if (document.hidden) thePlayer.stop();
+      else thePlayer.start();
     };
     document.addEventListener('visibilitychange', onVisibility);
     cleanup.push(() => document.removeEventListener('visibilitychange', onVisibility));
@@ -161,14 +187,53 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
     if (flags.debug) {
       const poses: Array<[string, number]> = [];
       player.onPose = (pose, at) => poses.push([pose, Math.round(at)]);
-      debug = { player, rachel, poses, hunt, counter, ready: false };
+      debug = { player, rachel, poses, hunt, counter, logo, jank, marks: { introStart: 0, introEnd: 0 }, ready: false };
       (window as unknown as { __hj: unknown }).__hj = debug;
     }
-    if (!document.hidden) player.start();
 
-    // The reaction frames are not needed for the first seconds, so they load after the loop is running.
+    const introMode: IntroMode =
+      flags.intro === 'off'
+        ? 'off'
+        : reducedMotion()
+          ? 'reduced'
+          : (flags.intro ?? (progress.seenIntro ? 'quick' : 'full'));
+
+    if (debug) (debug.marks as Record<string, number>).introStart = Math.round(performance.now());
+    await playIntro(introMode, {
+      root,
+      plate,
+      room,
+      ambient,
+      rachel: theRachel.el,
+      shadow: theRachel.shadow,
+      mushrooms: hunt.el,
+      logo: logo.el,
+      counter: counter.el,
+      seed: flags.seed,
+      onRachel: () => {
+        working = true;
+        if (!document.hidden) thePlayer.start();
+      },
+      onLogo: () => {
+        logo.glint();
+        logo.startIdle();
+      },
+      onCounter: () => {
+        if (found.size < TOTAL) counter.say(COPY.prompt, found.size === 0 ? undefined : 6000);
+      },
+    });
+    if (destroyed) return;
+    if (debug) (debug.marks as Record<string, number>).introEnd = Math.round(performance.now());
+    settled = true;
+    if (!progress.seenIntro) {
+      progress.seenIntro = true;
+      save();
+    }
+
+    // The reaction frames are not needed for the first seconds, so they load once the intro is over
+    // and nothing else is competing for the frame.
     try {
-      reaction = await loadReaction(rachel);
+      reaction = await loadReaction(theRachel);
     } catch (error) {
       console.warn('[hjaas] reaction frames unavailable; finds still count', error);
     }
