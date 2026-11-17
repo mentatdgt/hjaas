@@ -1,0 +1,91 @@
+/* Scene 1. Every rule is scoped under .hj-scene so the scene can move to another route untouched. */
+
+.hj-scene {
+  --plate-w: 1672;
+  --plate-h: 941;
+  --ink: #2b1a10;
+  --shade: #1d120b;
+
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--shade);
+  /* The scene sizes itself from its host, not from the browser window. */
+  container-type: size;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hj-scene *,
+.hj-scene *::before,
+.hj-scene *::after {
+  box-sizing: border-box;
+}
+
+/* The room's own light, blurred and dimmed, behind the letterbox bars. */
+.hj-ambient {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.hj-stage {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+/* The window onto the room. Wide screens show the whole plate. */
+.hj-viewport {
+  position: relative;
+  width: min(100cqw, calc(100cqh * var(--plate-w) / var(--plate-h)));
+  aspect-ratio: 1672 / 941;
+  overflow: hidden;
+}
+
+/* The plate is the scene's coordinate system: children are placed in percentages of 1672 × 941. */
+.hj-plate {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  aspect-ratio: 1672 / 941;
+}
+
+.hj-room {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+.hj-shadow {
+  position: absolute;
+  pointer-events: none;
+  /* A blurred ellipse drawn as a gradient: no filter, nothing to repaint. */
+  background: radial-gradient(
+    ellipse closest-side,
+    rgba(60, 30, 10, 0.43) 0%,
+    rgba(60, 30, 10, 0.4) 52%,
+    rgba(60, 30, 10, 0.24) 74%,
+    rgba(60, 30, 10, 0.08) 90%,
+    rgba(60, 30, 10, 0) 100%
+  );
+}
+
+.hj-rachel {
+  position: absolute;
+  pointer-events: none;
+}
+
+.hj-rachel canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

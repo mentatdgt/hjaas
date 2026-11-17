@@ -1,0 +1,114 @@
+{
+ "canvas": [
+  1146,
+  916
+ ],
+ "note": "All frames share the 2x canvas and registration of frames/016-upscale/approved/frame_01.png. Play in order; ms is the hold time.",
+ "frames": [
+  {
+   "file": "rx_frame_01.png",
+   "ms": 0,
+   "beat": "start: loop is on its contact frame"
+  },
+  {
+   "file": "rx_A24.png",
+   "ms": 50,
+   "beat": "notice"
+  },
+  {
+   "file": "rx_A25.png",
+   "ms": 150,
+   "beat": "notice: eyes up at the viewer"
+  },
+  {
+   "file": "rx_A49.png",
+   "ms": 70,
+   "beat": "look up"
+  },
+  {
+   "file": "rx_A52.png",
+   "ms": 40,
+   "beat": "look up (squint as the smile pops)"
+  },
+  {
+   "file": "rx_A53.png",
+   "ms": 60,
+   "beat": "look up"
+  },
+  {
+   "file": "rx_A55.png",
+   "ms": 60,
+   "beat": "look up"
+  },
+  {
+   "file": "rx_A58.png",
+   "ms": 80,
+   "beat": "look up"
+  },
+  {
+   "file": "rx_K1.png",
+   "ms": 150,
+   "beat": "beam"
+  },
+  {
+   "file": "rx_B36.png",
+   "ms": 60,
+   "beat": "thumbs-up swing"
+  },
+  {
+   "file": "rx_B39.png",
+   "ms": 60,
+   "beat": "thumbs-up"
+  },
+  {
+   "file": "rx_B41.png",
+   "ms": 70,
+   "beat": "thumbs-up settle"
+  },
+  {
+   "file": "rx_K2.png",
+   "ms": 900,
+   "beat": "hold (wink frames from task 015 go here)"
+  },
+  {
+   "file": "rx_B39.png",
+   "ms": 50,
+   "beat": "back"
+  },
+  {
+   "file": "rx_B36.png",
+   "ms": 50,
+   "beat": "back"
+  },
+  {
+   "file": "rx_K1.png",
+   "ms": 80,
+   "beat": "back"
+  },
+  {
+   "file": "rx_A55.png",
+   "ms": 50,
+   "beat": "back"
+  },
+  {
+   "file": "rx_A49.png",
+   "ms": 60,
+   "beat": "back"
+  },
+  {
+   "file": "rx_A25.png",
+   "ms": 80,
+   "beat": "back"
+  },
+  {
+   "file": "rx_A24.png",
+   "ms": 50,
+   "beat": "back"
+  },
+  {
+   "file": "rx_frame_01.png",
+   "ms": 0,
+   "beat": "end: loop resumes on contact"
+  }
+ ]
+}
