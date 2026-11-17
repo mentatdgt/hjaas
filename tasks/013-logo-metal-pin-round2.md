@@ -1,6 +1,6 @@
 ---
 id: 013-logo-metal-pin-round2
-status: open             # draft | open | delivered | changes-requested | approved
+status: superseded       # user picked option 6; continued in 014-logo-tape-measure. draft | open | delivered | changes-requested | approved
 type: logo-options
 frames: 6
 grid: 3x2                # six options on one sheet, for review
