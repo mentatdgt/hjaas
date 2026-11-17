@@ -1,6 +1,6 @@
 ---
 id: 010-logo
-status: open             # draft | open | delivered | changes-requested | approved
+status: superseded          # replaced by 011-logo-enamel-pin
 type: logo-options
 frames: 6
 grid: 3x2                # six options on one sheet, for review
@@ -42,4 +42,5 @@ Checklist: six distinct directions in the right order · spelling exact in every
 A follow-up task will ask for the chosen logo cleaned up on transparent background, plus an SVG version if you can export one.
 
 ## Revision notes
-_(Wren writes here after each QC round)_
+### Round 1 (2026-11-17): SUPERSEDED
+- The six options were well executed but read as too childish for the brand. The direction moved to a retro, glossy soft-enamel pin: see `tasks/011-logo-enamel-pin.md`.
