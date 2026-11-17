@@ -9,8 +9,9 @@ Each file here is one animation. Read the whole task file **and** every referenc
 3. **Background.** Transparent PNG. If transparency isn't possible, use a flat pure green `#00FF00` background with no gradient, texture, floor or shadow.
 4. **Same size, same spot.** The character is the same height in every cell and stands on the same invisible floor line. Keep at least 8% empty margin on every side of every cell. Nothing may cross into a neighbouring cell.
 5. **Only the described motion changes.** Outfit, colours, proportions, line weight, hairstyle and accessories stay exactly the same as the reference sheet in every frame.
-6. **Match the reference style**: same line style, colouring and level of detail as the reference sheet. Don't add rendering, lighting or texture the reference doesn't have.
-7. If something in the task is impossible or unclear, say so in your reply instead of guessing.
+6. **Match the reference style**: same line style, colouring and level of detail as the reference sheet. Don't add rendering, lighting or texture the reference doesn't have, **unless the task gives a Lighting section**: then follow that section (scene tasks light Rachel to match the room).
+7. **Size.** Make the sheet as large as you can. Phones show Rachel cropped and enlarged, so more pixels per frame means crisper art.
+8. If something in the task is impossible or unclear, say so in your reply instead of guessing.
 
 ## Revisions
 

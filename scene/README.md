@@ -13,5 +13,14 @@ The open tiled floor, centre to centre-right (roughly the middle 40-80% of the i
 3. Rachel's animation frames
 4. optional foreground props that she must go behind or inside (only if a task calls for one)
 
+## Props she touches travel with her
+If Rachel's hands touch a prop (the wooden box she hammers), the prop is drawn inside her frames, not as a separate layer, so hands and prop always line up. Wren keeps the prop pixel-steady across frames during QC.
+
+## Mobile (decided 2026-11-17)
+- Desktop, tablet and landscape phones show the whole room.
+- Portrait phones show a crop of about 4:5 centred on Rachel (roughly x 514–1267 of the 1672-wide plate for the hammering spot), and visitors swipe sideways to explore the rest of the room.
+- Consequence: on phones Rachel is shown about 1.5× larger than her keyframe size, so her frames should be drawn larger than the keyframe (target ~900 px tall when kneeling). The room plate stays as is; upscale later only if it looks soft.
+- Mushroom tap areas are at least 44 px even when the mushroom itself is tiny.
+
 ## Lighting rule for character tasks
 Warm golden light from the window on the LEFT. Rachel's frames must be lit to match: warm highlights on her left side, slightly deeper warm shadow on her right, same overall colour warmth as the room. Her outline style stays as on the model sheets.
