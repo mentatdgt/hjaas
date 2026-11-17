@@ -1,6 +1,6 @@
 ---
 id: 011-logo-enamel-pin
-status: open             # draft | open | delivered | changes-requested | approved
+status: superseded       # by 012-logo-metal-pin. draft | open | delivered | changes-requested | approved
 type: logo-options
 frames: 6
 grid: 3x2                # six options on one sheet, for review

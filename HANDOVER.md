@@ -95,7 +95,7 @@ On first load the room should appear as if painted in by brush strokes, in chunk
 - No horizontal page scroll and no layout shift. Test at 390×844 (iPhone) and 412×915 (Android).
 
 ### 3.6 Logo, with the enamel-pin glint
-- The final logo is a retro soft-enamel pin and isn't approved yet (`tasks/011-logo-enamel-pin.md`).
+- The final logo is a photographed metal pin and is not approved yet (`tasks/012-logo-metal-pin.md`).
 - Build a logo slot with a placeholder: "HJaaS" set in a tasteful retro display face (self-host an open-licence font), on a simple pin-shaped badge.
 - Implement the **glint** in code now:
   - A diagonal highlight sweeps across, clipped to the logo's shape via mask, every ~9 s and on hover/focus.
