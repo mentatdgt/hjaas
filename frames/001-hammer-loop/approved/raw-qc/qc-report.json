@@ -1,0 +1,130 @@
+{
+  "source": "frames/001-hammer-loop/incoming/001-hammer-loop-batch01.png",
+  "passed": false,
+  "notes": [
+    "Sheet 1536x1024, grid 2x2, cell 768x512."
+  ],
+  "checks": [
+    {
+      "check": "frames same size",
+      "result": "PASS",
+      "detail": "sizes: [(768, 512)]"
+    },
+    {
+      "check": "no empty frames",
+      "result": "PASS",
+      "detail": "all frames have content"
+    },
+    {
+      "check": "character height consistent",
+      "result": "PASS",
+      "detail": "variation 3.3% (limit 4%); heights [429, 429, 442, 428]"
+    },
+    {
+      "check": "baseline steady",
+      "result": "PASS",
+      "detail": "drift 0.0% of cell (limit 2%); baselines [462, 462, 462, 462]"
+    },
+    {
+      "check": "horizontal centre",
+      "result": "PASS",
+      "detail": "centre x per frame [357, 334, 358, 335] (info: intentional motion is fine)"
+    },
+    {
+      "check": "nothing touches cell edge",
+      "result": "PASS",
+      "detail": "clear"
+    },
+    {
+      "check": "margin \u2265 spec",
+      "result": "WARN",
+      "detail": "frames under 8% margin: [1, 2, 3, 4]"
+    },
+    {
+      "check": "palette matches frame 1",
+      "result": "PASS",
+      "detail": "similarity [1.0, 0.98, 0.96, 0.96] (limit 0.8); low: []"
+    },
+    {
+      "check": "palette vs reference",
+      "result": "PASS",
+      "detail": "similarity [0.64, 0.64, 0.63, 0.64] (info: reference has other poses/text)"
+    },
+    {
+      "check": "no green fringe",
+      "result": "FAIL",
+      "detail": "fringe [0.02004, 0.021, 0.02066, 0.02086]; bad: [1, 2, 3, 4]"
+    },
+    {
+      "check": "background",
+      "result": "PASS",
+      "detail": "modes per frame: ['keyed']"
+    }
+  ],
+  "frames": [
+    {
+      "bbox": [
+        127,
+        34,
+        683,
+        462
+      ],
+      "height": 429,
+      "width": 557,
+      "baseline": 462,
+      "cx": 356.6008272273656,
+      "area": 98401,
+      "margin_frac": 0.0664,
+      "touches_edge": false,
+      "green_fringe_frac": 0.02004
+    },
+    {
+      "bbox": [
+        105,
+        34,
+        658,
+        462
+      ],
+      "height": 429,
+      "width": 554,
+      "baseline": 462,
+      "cx": 334.3286576215124,
+      "area": 97953,
+      "margin_frac": 0.0664,
+      "touches_edge": false,
+      "green_fringe_frac": 0.021
+    },
+    {
+      "bbox": [
+        127,
+        21,
+        683,
+        462
+      ],
+      "height": 442,
+      "width": 557,
+      "baseline": 462,
+      "cx": 357.51742345323447,
+      "area": 97914,
+      "margin_frac": 0.041,
+      "touches_edge": false,
+      "green_fringe_frac": 0.02066
+    },
+    {
+      "bbox": [
+        105,
+        35,
+        658,
+        462
+      ],
+      "height": 428,
+      "width": 554,
+      "baseline": 462,
+      "cx": 335.33586598128164,
+      "area": 97658,
+      "margin_frac": 0.0684,
+      "touches_edge": false,
+      "green_fringe_frac": 0.02086
+    }
+  ]
+}

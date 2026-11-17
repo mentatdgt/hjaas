@@ -1,6 +1,6 @@
 ---
 id: 006-backdrop-merlion
-status: open             # draft | open | delivered | changes-requested | approved
+status: approved             # draft | open | delivered | changes-requested | approved
 type: backdrop
 frames: 1
 references:
@@ -45,4 +45,6 @@ The Merlion, a clear view of Marina Bay Sands, and both spots should fall inside
 - No people, no readable text
 
 ## Revision notes
-_(Wren writes here after each QC round)_
+### Round 1 — Batch 01 (2026-11-17): APPROVED
+- Instantly reads as Merlion Park with Marina Bay Sands (correct three towers + SkyPark) and the ArtScience Museum. Golden hour, light from the left, no people, no text, wide clear promenade, good hiding nooks (bench, planters, railing posts).
+- The Merlion sits left of the 30–75% phone band. Resolution: this scene's phone crop window is shifted left (about x 380–1133 of 1672) and the two figures are placed inside it. Copied to `scene/merlion.png`.

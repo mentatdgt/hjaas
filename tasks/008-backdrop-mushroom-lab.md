@@ -1,6 +1,6 @@
 ---
 id: 008-backdrop-mushroom-lab
-status: open             # draft | open | delivered | changes-requested | approved
+status: approved             # draft | open | delivered | changes-requested | approved
 type: backdrop
 frames: 1
 references:
@@ -41,4 +41,5 @@ Rachel's spot and at least one rack of fruiting mushrooms should fall inside the
 - No people, no readable text, no spotted toadstools
 
 ## Revision notes
-_(Wren writes here after each QC round)_
+### Round 1 — Batch 01 (2026-11-17): APPROVED
+- Clean white lab: laminar flow hood, steel racks of grow bags and jars with oyster, pink oyster and lion's mane, humidifier mist, floor drain, glass door + window on the left. Cool light with the key from the left. No people, no text, no spotted toadstools. Copied to `scene/mushroom-lab.png`.

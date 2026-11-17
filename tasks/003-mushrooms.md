@@ -1,6 +1,6 @@
 ---
 id: 003-mushrooms
-status: open             # draft | open | delivered | changes-requested | approved
+status: approved             # draft | open | delivered | changes-requested | approved
 frames: 9
 grid: 3x3                # columns x rows
 fps: 1                   # not an animation: a set of props
@@ -51,4 +51,6 @@ Transparent, or flat pure green `#00FF00`. No ground, grass, soil or cast shadow
 - Baseline and size consistent enough to place them by their stem bottom
 
 ## Revision notes
-_(Wren writes here after each QC round)_
+### Round 1 — Batch 01 (2026-11-17): APPROVED
+- Transparent 1254×1254 sheet. Heights/baselines vary between cells (Quinn flagged), which doesn't matter: Wren cut each mushroom out by its outline (`approved/mushroom_01..09.png`) and the site places each by its stem bottom.
+- Style and left-side lighting match the reno room (see `approved/preview-in-room.png`). The white mushrooms read slightly cool; the site can warm-tint per scene.

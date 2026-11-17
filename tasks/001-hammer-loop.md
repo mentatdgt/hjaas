@@ -1,6 +1,6 @@
 ---
 id: 001-hammer-loop
-status: open             # draft | open | delivered | changes-requested | approved
+status: approved             # draft | open | delivered | changes-requested | approved
 frames: 4
 grid: 2x2                # columns x rows
 fps: 12
@@ -61,4 +61,8 @@ Match the keyframe's lighting: warm golden light from the window on the LEFT. Wa
 - Recorded, not a fail: the pixel height of Rachel in each cell (target for crisp phones is ~900px; Wren reports what we got)
 
 ## Revision notes
-_(Wren writes here after each QC round)_
+### Round 1 — Batch 01 (2026-11-17): APPROVED after Wren stabilisation
+- Raw sheet: 1536×1024, cells 768×512, Rachel ~430 px tall. Automated QC flagged green fringe on all frames and a ~24 px horizontal jump between columns; Quinn also noted changing nail height.
+- Fixed in post with `tools/stabilise_frames.py` (anchor = the box; diff 20, grow 14): green keyed and despilled, every frame registered to frame 1, frame 1's body/box kept and only changed areas (hammer arm, steadying hand + nail, slight head bob) swapped in. Result: box, legs and boots pixel-steady; single clean nail; clean hammer arc 1→2→3→4.
+- `approved/frame_01..04.png` (573×458) are the stabilised frames to use; `raw-qc/` keeps the automated report on the raw sheet.
+- Open issue, not a fail: resolution. Rachel is ~430 px tall vs the ~900 px target for crisp phones. Decide later between an upscaler pass or regenerating frames larger.

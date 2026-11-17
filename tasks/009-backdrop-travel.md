@@ -1,6 +1,6 @@
 ---
 id: 009-backdrop-travel
-status: open             # draft | open | delivered | changes-requested | approved
+status: approved             # draft | open | delivered | changes-requested | approved
 type: backdrop
 frames: 1
 references:
@@ -41,4 +41,5 @@ Rachel's spot and the best part of the valley view should fall inside the 30–7
 - No people, no readable text
 
 ## Revision notes
-_(Wren writes here after each QC round)_
+### Round 1 — Batch 01 (2026-11-17): APPROVED
+- Rock lookout with blank trail post, winding river valley, layered ridges and snowy peaks; golden light from the upper left; open ledge for Rachel; plenty of nooks. Slightly richer painting than the reno room but clearly the same world. Location is still the placeholder assumption. Copied to `scene/travel-lookout.png`.

@@ -1,6 +1,6 @@
 ---
 id: 007-backdrop-cafe
-status: open             # draft | open | delivered | changes-requested | approved
+status: approved             # draft | open | delivered | changes-requested | approved
 type: backdrop
 frames: 1
 references:
@@ -41,4 +41,6 @@ Rachel's spot, a window, and the counter should fall inside the 30–75% width b
 - No people, no readable text
 
 ## Revision notes
-_(Wren writes here after each QC round)_
+### Round 1 — Batch 01 (2026-11-17): APPROVED
+- Designed shophouse-style cafe: curved timber counter, coffee machine, cup shelves, terrazzo with tile border, rattan chairs, marble tables, arched niche, pendants, fan, plants. Light from the left, no people, no readable text, open floor for Rachel.
+- Note: the window wall and doorway reuse the reno room's layout (same HDB windows and view), so it reads like the same flat turned into a cafe. Kept as a deliberate link between scenes unless the user wants a different view. Copied to `scene/cafe.png`.
