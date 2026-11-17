@@ -66,6 +66,16 @@
   visibility: hidden;
 }
 
+/* The rehearsal copy of the pin (counter.ts, warm()): drawn, so the GPU does the work, but not seen. */
+.hj-scene .hj-counter.hj-ghost {
+  opacity: 0.02;
+  pointer-events: none;
+}
+
+.hj-ghost .hj-pin {
+  --morph: 160ms;
+}
+
 /* The room's own light, blurred and dimmed, behind the letterbox bars. */
 .hj-ambient {
   position: absolute;
@@ -680,6 +690,13 @@ a.hj-logo:active {
   transition:
     opacity 220ms var(--hj-ease-out),
     transform 300ms var(--hj-ease-out);
+}
+
+/* Laid out once ahead of time, unseen (form.ts, prepare()). */
+.hj-dialog.is-preparing {
+  display: block;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 /* Opened or closed from the keyboard: no entrance or exit, it is simply there or gone. */

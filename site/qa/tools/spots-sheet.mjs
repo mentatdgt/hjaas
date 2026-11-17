@@ -2,7 +2,7 @@
 import { chromium } from 'playwright';
 import sharp from 'sharp';
 
-const out = process.argv[2] ?? 'qa/m3/spots.png';
+const out = process.argv[2] ?? 'qa/m3/spots.jpg';
 const browser = await chromium.launch({ channel: 'chrome' });
 const page = await browser.newPage({ viewport: { width: 1672, height: 941 }, deviceScaleFactor: 2 });
 await page.goto('http://localhost:5173/?debug&reset&intro=off');
@@ -21,5 +21,5 @@ const cols = 4, rows = Math.ceil(tiles.length / cols);
 await sharp({ create: { width: cols * W * 2, height: rows * H * 2, channels: 3, background: '#000' } })
   .composite(tiles.map((input, i) => ({ input, left: (i % cols) * W * 2, top: Math.floor(i / cols) * H * 2 })))
   .resize({ width: 1900 })
-  .png().toFile(out);
+  .jpeg({ quality: 88 }).toFile(out);
 console.log(out, spots.length);

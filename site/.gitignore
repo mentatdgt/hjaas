@@ -12,5 +12,4 @@ qa/traces/*.json.gz
 
 # The review agents' own screenshots (about 220 MB, taken before the fixes). Their findings are in
 # qa/impeccable/CRITIQUE.md and the measurement JSON files beside it.
-qa/impeccable/**/shots/
-qa/impeccable/**/screenshots/
+qa/impeccable/**/*.png

@@ -116,6 +116,8 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
   counter.measure();
   // A returning visitor who already found them all goes straight to the button.
   if (found.size === TOTAL) counter.unlock(false);
+  // Everyone else gets the unlock rehearsed out of sight while the art is still loading.
+  const rehearsed = counter.warm();
   void document.fonts?.ready.then(() => counter.measure());
 
   const pan = new Pan(viewport, plate, progress.panned, () => {
@@ -248,6 +250,11 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
           ? 'reduced'
           : (flags.intro ?? (progress.seenIntro ? 'quick' : 'full'));
 
+    // While nothing is on screen yet: lay the contact sheet out once (with its real font), so that
+    // opening it later never costs a frame of Rachel's hammering.
+    await document.fonts?.ready;
+    form.prepare();
+    await rehearsed;
     // Let the setup above reach the screen before any motion starts.
     await new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
     if (destroyed) return;
@@ -289,10 +296,13 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
 
     // The reaction frames are not needed for the first seconds, so they load once the intro is over
     // and nothing else is competing for the frame.
-    try {
-      reaction = await loadReaction(theRachel);
-    } catch (error) {
-      console.warn('[hjaas] reaction frames unavailable; finds still count', error);
+    // (A visitor who has already found everything never sees a reaction, so nothing is fetched for them.)
+    if (hunt.remaining > 0) {
+      try {
+        reaction = await loadReaction(theRachel);
+      } catch (error) {
+        console.warn('[hjaas] reaction frames unavailable; finds still count', error);
+      }
     }
     if (debug) debug.ready = true;
   })();

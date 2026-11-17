@@ -26,7 +26,8 @@ const ms = (ts) => (ts - t0) / 1000;
 let from = fromArg !== undefined && !fromArg.startsWith('--') ? Number(fromArg) : -Infinity;
 let to = toArg !== undefined && !toArg.startsWith('--') ? Number(toArg) : Infinity;
 if (flag('--mark')) {
-  const mark = events.find((e) => e.name === flag('--mark') && String(e.cat).includes('blink.user_timing'));
+  // The last one, in case the page was reloaded while the trace was running.
+  const mark = events.findLast((e) => e.name === flag('--mark') && String(e.cat).includes('blink.user_timing'));
   if (!mark) throw new Error(`mark "${flag('--mark')}" not found in trace`);
   from = ms(mark.ts);
   to = from + Number(flag('--span') ?? 1000);

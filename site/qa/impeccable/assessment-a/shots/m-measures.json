@@ -1,0 +1,145 @@
+{
+  "spots": [
+    "sill",
+    "drape",
+    "skirting",
+    "screed",
+    "tiles",
+    "conduit",
+    "socket",
+    "ladder-foot",
+    "ladder-step",
+    "toolbox"
+  ],
+  "prizeNote": {
+    "text": "Find all 10 to reach Hui Jie",
+    "box": {
+      "x": 1226.734375,
+      "y": 124.78125,
+      "width": 185.265625,
+      "height": 26,
+      "top": 124.78125,
+      "right": 1412,
+      "bottom": 150.78125,
+      "left": 1226.734375
+    },
+    "pin": {
+      "x": 1227,
+      "y": 72.78125,
+      "width": 185,
+      "height": 44,
+      "top": 72.78125,
+      "right": 1412,
+      "bottom": 116.78125,
+      "left": 1227
+    }
+  },
+  "afterPrize": false,
+  "unlockEnd": {
+    "active": "hj-pin-action",
+    "focusVisible": false,
+    "status": "All 10 mushrooms found. You can now contact Hui Jie.",
+    "note": false
+  },
+  "cursors": {
+    "chip": "pointer",
+    "send": "pointer",
+    "pin": "pointer"
+  },
+  "phoneToolbox": {
+    "x": 453.859375,
+    "y": 660.796875,
+    "w": 44,
+    "h": 44
+  },
+  "w360": {
+    "fresh": {
+      "logo": {
+        "l": 14,
+        "r": 134,
+        "t": 140.2,
+        "b": 211
+      },
+      "pin": {
+        "l": 168,
+        "r": 346,
+        "t": 132.5,
+        "b": 176.5
+      },
+      "note": {
+        "l": 135.3,
+        "r": 346,
+        "t": 183.5,
+        "b": 209
+      },
+      "viewport": {
+        "l": 0,
+        "r": 360,
+        "t": 219,
+        "b": 669
+      }
+    },
+    "noteToLogoGap": 1.3,
+    "buttonToLogoGap": 34
+  },
+  "w375": {
+    "fresh": {
+      "logo": {
+        "l": 14,
+        "r": 137.8,
+        "t": 62.1,
+        "b": 135.1
+      },
+      "pin": {
+        "l": 183,
+        "r": 361,
+        "t": 56.6,
+        "b": 100.6
+      },
+      "note": {
+        "l": 150.3,
+        "r": 361,
+        "t": 107.6,
+        "b": 133.1
+      },
+      "viewport": {
+        "l": 0,
+        "r": 375,
+        "t": 143.1,
+        "b": 611.9
+      }
+    },
+    "noteToLogoGap": 12.5,
+    "buttonToLogoGap": 45.2
+  },
+  "w412": {
+    "fresh": {
+      "logo": {
+        "l": 14,
+        "r": 150,
+        "t": 155.7,
+        "b": 236
+      },
+      "pin": {
+        "l": 220,
+        "r": 398,
+        "t": 157.5,
+        "b": 201.5
+      },
+      "note": {
+        "l": 187.3,
+        "r": 398,
+        "t": 208.5,
+        "b": 234
+      },
+      "viewport": {
+        "l": 0,
+        "r": 412,
+        "t": 244,
+        "b": 759
+      }
+    },
+    "noteToLogoGap": 37.3,
+    "buttonToLogoGap": 70
+  }
+}

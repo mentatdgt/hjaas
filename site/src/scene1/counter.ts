@@ -170,6 +170,36 @@ export class Counter {
     sweepGlint(this.glintBar, -GLINT_BAR_W * 1.2, width + GLINT_BAR_W * 0.4);
   }
 
+  /**
+   * Rehearse the unlock once, unseen, while the page is still loading.
+   *
+   * Measured: the first time a browser draws the morph's effects (the moving clip, the blur, the fading
+   * enamel) it can stall for about 400 ms while the GPU prepares them, which froze the real unlock in the
+   * middle. A copy of the pin at 2% opacity runs the same motion here, so that cost is paid before
+   * anything is on screen.
+   */
+  warm(): Promise<void> {
+    if (this.unlocked || reducedMotion() || !this.el.parentElement) return Promise.resolve();
+    const ghost = this.el.cloneNode(true) as HTMLElement;
+    ghost.classList.add('hj-ghost');
+    ghost.setAttribute('aria-hidden', 'true');
+    ghost.querySelector('.hj-sr')?.remove();
+    ghost.querySelector('.hj-pin-action')?.remove();
+    this.el.parentElement.append(ghost);
+    return new Promise((resolve) => {
+      // Two frames so the copy is drawn in its counting state first, then the morph, then away with it.
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => {
+          ghost.dataset.state = 'unlocked';
+          window.setTimeout(() => {
+            ghost.remove();
+            resolve();
+          }, 420);
+        }),
+      );
+    });
+  }
+
   /** Lay a line of text out ahead of time (invisible), so showing it later costs nothing mid-animation. */
   prime(text: string): void {
     if (!this.note.classList.contains('is-on')) this.note.textContent = text;

@@ -39,6 +39,7 @@ export class ContactForm {
   private readonly shown = new Set<FieldName>();
   private closing = 0;
   private sending = false;
+  private prepared = false;
 
   constructor(host: HTMLElement, trigger: HTMLElement) {
     this.trigger = trigger;
@@ -137,6 +138,18 @@ export class ContactForm {
     window.addEventListener('resize', () => {
       if (this.dialog.open) this.anchor();
     });
+  }
+
+  /**
+   * Lay the sheet out once, unseen, before the scene appears. The first layout of the form (its fonts,
+   * fields and chips) is the one slow step of opening it; done ahead of time, the tap is answered at once.
+   */
+  prepare(): void {
+    if (this.dialog.open || this.prepared) return;
+    this.prepared = true;
+    this.dialog.classList.add('is-preparing');
+    void this.dialog.offsetHeight;
+    this.dialog.classList.remove('is-preparing');
   }
 
   /** Opens the sheet from the button. `instant` skips the entrance (keyboard-initiated opens). */

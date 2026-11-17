@@ -1,0 +1,296 @@
+{
+  "beforeEnter": "button.hj-pin-action",
+  "afterEnter": {
+    "active": "input#hj-name[name]",
+    "open": true
+  },
+  "boxes": {
+    ".hj-dialog": {
+      "x": 1008,
+      "y": 127,
+      "w": 404,
+      "h": 578.8
+    },
+    ".hj-sheet": {
+      "x": 1008,
+      "y": 127,
+      "w": 404,
+      "h": 578.8
+    },
+    ".hj-sheet h2": {
+      "x": 1032,
+      "y": 149.2,
+      "w": 167.6,
+      "h": 27.6
+    },
+    ".hj-close": {
+      "x": 1354,
+      "y": 141,
+      "w": 44,
+      "h": 44
+    },
+    "#hj-name": {
+      "x": 1032,
+      "y": 215.8,
+      "w": 356,
+      "h": 45.6
+    },
+    "#hj-email": {
+      "x": 1032,
+      "y": 298.2,
+      "w": 356,
+      "h": 45.6
+    },
+    "#hj-message": {
+      "x": 1032,
+      "y": 507.4,
+      "w": 356,
+      "h": 110.4
+    },
+    ".hj-form .hj-send": {
+      "x": 1032,
+      "y": 633.8,
+      "w": 356,
+      "h": 48
+    },
+    ".hj-pin": {
+      "x": 1227,
+      "y": 72.8,
+      "w": 185,
+      "h": 44
+    },
+    ".hj-needs legend": {
+      "x": 1032,
+      "y": 357.8,
+      "w": 128,
+      "h": 16.8
+    },
+    ".hj-chips": {
+      "x": 1032,
+      "y": 382.6,
+      "w": 356,
+      "h": 88
+    }
+  },
+  "chips": [
+    {
+      "t": "Build",
+      "w": 68.7,
+      "h": 40,
+      "x": 1032,
+      "y": 382.6
+    },
+    {
+      "t": "Design",
+      "w": 81.5,
+      "h": 40,
+      "x": 1108.7,
+      "y": 382.6
+    },
+    {
+      "t": "Film",
+      "w": 62.8,
+      "h": 40,
+      "x": 1198.2,
+      "y": 382.6
+    },
+    {
+      "t": "Grow",
+      "w": 70.7,
+      "h": 40,
+      "x": 1269,
+      "y": 382.6
+    },
+    {
+      "t": "Travel",
+      "w": 75.5,
+      "h": 40,
+      "x": 1032,
+      "y": 430.6
+    },
+    {
+      "t": "Something else",
+      "w": 143.7,
+      "h": 40,
+      "x": 1115.5,
+      "y": 430.6
+    }
+  ],
+  "placeholder": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "typography": {
+    "h2": {
+      "size": "24px",
+      "weight": "680",
+      "color": "rgb(43, 26, 16)",
+      "lh": "27.6px"
+    },
+    "label": {
+      "size": "14px",
+      "weight": "600",
+      "color": "rgb(106, 74, 44)",
+      "lh": "16.8px"
+    },
+    "legend": {
+      "size": "14px",
+      "weight": "600",
+      "color": "rgb(106, 74, 44)",
+      "lh": "16.8px"
+    },
+    "input": {
+      "size": "16px",
+      "weight": "400",
+      "color": "rgb(43, 26, 16)",
+      "lh": "21.6px"
+    },
+    "chip": {
+      "size": "15px",
+      "weight": "600",
+      "color": "rgb(43, 26, 16)",
+      "lh": "18px"
+    },
+    "send": {
+      "size": "17px",
+      "weight": "600",
+      "color": "rgb(43, 26, 16)",
+      "lh": "normal"
+    }
+  },
+  "tabOrder": [
+    "input#hj-name[name]",
+    "input#hj-email[email]",
+    "input[need=Build]",
+    "input[need=Design]",
+    "input[need=Film]",
+    "input[need=Grow]",
+    "input[need=Travel]",
+    "input[need=Something else]",
+    "textarea#hj-message[message]",
+    "button.hj-send",
+    "body",
+    "button.hj-close",
+    "input#hj-name[name]"
+  ],
+  "sendShot": true,
+  "closeShot": true,
+  "chipSpace": true,
+  "errors": {
+    "active": "input#hj-name[name]",
+    "texts": [
+      "Add your name.",
+      "Add your email so Hui Jie can reply.",
+      "Write a few words about what you need."
+    ],
+    "sheet": {
+      "x": 1008,
+      "y": 127,
+      "w": 404,
+      "h": 649.4
+    },
+    "err": {
+      "size": "13.5px",
+      "color": "rgb(157, 48, 24)"
+    },
+    "invalidBorder": "rgb(178, 58, 30)",
+    "focusedInvalidBorder": "rgb(178, 58, 30)",
+    "scroll": {
+      "scrollH": 645,
+      "clientH": 645
+    }
+  },
+  "badEmail": [
+    null,
+    "That email looks incomplete. Check it for typos.",
+    "Write a few words about what you need."
+  ],
+  "sending": {
+    "disabled": true,
+    "text": "Sending",
+    "active": "",
+    "fieldsDisabled": false
+  },
+  "sent": {
+    "active": "div.hj-sent",
+    "sheet": {
+      "x": 1008,
+      "y": 127,
+      "w": 404,
+      "h": 579
+    },
+    "done": {
+      "x": 1032,
+      "y": 530.6,
+      "w": 356,
+      "h": 48
+    }
+  },
+  "sentTab": [
+    "button.hj-send.hj-done",
+    "button.hj-close",
+    "button.hj-send.hj-done"
+  ],
+  "afterEscape": {
+    "active": "button.hj-pin-action",
+    "open": false
+  },
+  "alert": {
+    "box": {
+      "x": 1032,
+      "y": 631.8,
+      "w": 356,
+      "h": 59.1
+    },
+    "sheet": {
+      "x": 1008,
+      "y": 127,
+      "w": 404,
+      "h": 651.9
+    },
+    "viewportH": 900
+  },
+  "tallest": {
+    "sheet": {
+      "x": 1008,
+      "y": 127,
+      "w": 404,
+      "h": 722.5
+    },
+    "scroll": {
+      "scrollH": 719,
+      "clientH": 719
+    }
+  },
+  "short": {
+    "dialog": {
+      "x": 848,
+      "y": 127,
+      "w": 404,
+      "h": 497
+    },
+    "sheet": {
+      "x": 848,
+      "y": 127,
+      "w": 404,
+      "h": 497
+    },
+    "pin": {
+      "x": 995.6,
+      "y": 28,
+      "w": 185,
+      "h": 44
+    },
+    "scroll": {
+      "scrollH": 719,
+      "clientH": 493
+    }
+  }
+}
