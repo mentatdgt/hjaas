@@ -49,6 +49,18 @@ export class Logo {
     return new Logo(await loadImage(asset('logo/logo.webp')), homeHref);
   }
 
+  /** Size the glint canvas and run the logo through it once, so the first real glint has nothing to set up. */
+  prepare(): void {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const w = Math.round(this.el.clientWidth * dpr);
+    const h = Math.round(this.el.clientHeight * dpr);
+    if (!w || !h) return;
+    this.canvas.width = w;
+    this.canvas.height = h;
+    this.ctx.drawImage(this.image, 0, 0, w, h);
+    this.ctx.clearRect(0, 0, w, h);
+  }
+
   /** Start the idle glint, every nine seconds or so while the tab is visible. */
   startIdle(): void {
     window.clearInterval(this.timer);

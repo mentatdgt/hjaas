@@ -1,6 +1,6 @@
 import '@fontsource-variable/bricolage-grotesque';
 import './scene.css';
-import { PLATE, asset, loadImage, loadLoopFrames, setAssetBase } from './assets';
+import { PLATE, asset, loadLoopFrames, loadRoom, setAssetBase } from './assets';
 import { Counter } from './counter';
 import { shower } from './finale';
 import { flags } from './flags';
@@ -34,6 +34,7 @@ const HINT_AFTER_S = 60;
 const COPY = {
   prompt: `Find the ${TOTAL} hidden mushrooms`,
   prize: `Find all ${TOTAL} to reach Hui Jie`,
+  done: `You found all ${TOTAL}`,
 };
 
 /**
@@ -89,7 +90,15 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
 
   // QA: with ?debug, every frame that arrives late is logged (start time and length, in ms).
   const jank: Array<[number, number]> = [];
+  const longTasks: Array<[number, number]> = [];
   if (flags.debug) {
+    try {
+      new PerformanceObserver((list) => {
+        for (const entry of list.getEntries()) longTasks.push([Math.round(entry.startTime), Math.round(entry.duration)]);
+      }).observe({ type: 'longtask', buffered: true });
+    } catch {
+      // Long-task timing is Chromium-only; the frame log below still works everywhere.
+    }
     let last = performance.now();
     const watch = (now: number): void => {
       if (now - last > 25) jank.push([Math.round(last), Math.round(now - last)]);
@@ -148,7 +157,8 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
   };
 
   const form = new ContactForm(root, counter.action);
-  counter.action.addEventListener('click', () => form.open());
+  // A click with detail 0 came from the keyboard: keyboard actions open at once, with no entrance.
+  counter.action.addEventListener('click', (event) => form.open(event.detail === 0));
 
   // 10/10: one last reaction, a short shower of mushrooms, and the counter becomes the way to reach Hui Jie.
   const celebrate = (): void => {
@@ -159,6 +169,7 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
     window.setTimeout(
       () => {
         counter.unlock(true);
+        counter.say(COPY.done, 4200);
         // Keyboard and screen-reader users land on the prize.
         window.setTimeout(() => counter.action.focus({ preventScroll: true }), calm ? 0 : 600);
       },
@@ -167,11 +178,7 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
   };
 
   void (async () => {
-    const [roomImage, frames, logo] = await Promise.all([
-      loadImage(asset('room.webp')),
-      loadLoopFrames(),
-      Logo.create(options.homeHref),
-    ]);
+    const [roomImage, frames, logo] = await Promise.all([loadRoom(), loadLoopFrames(), Logo.create(options.homeHref)]);
     if (destroyed) return;
     room.src = roomImage.src;
     await room.decode().catch(() => {});
@@ -194,10 +201,11 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
       },
       onLand: () => {
         const first = counter.current === 0;
-        counter.land(Math.min(TOTAL, counter.current + 1));
+        const next = Math.min(TOTAL, counter.current + 1);
+        counter.land(next, first && next < TOTAL ? COPY.prize : '');
         if (counter.noteText === COPY.prompt) {
           // The prompt has done its job. Once, briefly, say what the hunt is for.
-          if (first && counter.current < TOTAL) counter.say(COPY.prize, 5200);
+          if (first && next < TOTAL) counter.say(COPY.prize, 5200);
           else counter.hush();
         }
         if (counter.current === TOTAL) celebrate();
@@ -208,6 +216,8 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
     plate.append(rachel.shadow, hunt.el, rachel.el);
     hud.prepend(logo.el);
     rachel.resize();
+    logo.prepare();
+    counter.prime(found.size === 0 ? COPY.prompt : COPY.prize);
     cleanup.push(() => logo.stop());
 
     player = new RachelPlayer(rachel, rhythm());
@@ -227,7 +237,7 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
     if (flags.debug) {
       const poses: Array<[string, number]> = [];
       player.onPose = (pose, at) => poses.push([pose, Math.round(at)]);
-      debug = { player, rachel, poses, hunt, counter, logo, jank, marks: { introStart: 0, introEnd: 0 }, ready: false };
+      debug = { player, rachel, poses, hunt, counter, logo, jank, longTasks, marks: { introStart: 0, introEnd: 0 }, ready: false };
       (window as unknown as { __hj: unknown }).__hj = debug;
     }
 
@@ -238,11 +248,15 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
           ? 'reduced'
           : (flags.intro ?? (progress.seenIntro ? 'quick' : 'full'));
 
+    // Let the setup above reach the screen before any motion starts.
+    await new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
+    if (destroyed) return;
     if (debug) (debug.marks as Record<string, number>).introStart = Math.round(performance.now());
     await playIntro(introMode, {
       root,
       plate,
       room,
+      roomPixels: roomImage.pixels,
       ambient,
       rachel: theRachel.el,
       shadow: theRachel.shadow,
@@ -259,7 +273,9 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
         logo.startIdle();
       },
       onCounter: () => {
-        if (found.size < TOTAL) counter.say(COPY.prompt, found.size === 0 ? undefined : 6000);
+        // A new visitor keeps the prompt until the first find; a returning one is reminded what the hunt is for.
+        if (found.size === 0) counter.say(COPY.prompt);
+        else if (found.size < TOTAL) counter.say(COPY.prize, 6000);
       },
     });
     if (destroyed) return;

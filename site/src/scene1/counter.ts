@@ -3,7 +3,7 @@
 import { sweepGlint } from './glint';
 import { EASE_OUT, gsap, reducedMotion, settle } from './motion';
 
-const ICON = `
+export const MUSHROOM_ICON = `
 <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
   <path class="hj-ico-stem" d="M9.3 13.6h5.4l.95 5.3c.17.95-.5 1.7-1.45 1.7H9.8c-.95 0-1.62-.75-1.45-1.7z"/>
   <path class="hj-ico-cap" d="M2.9 12.3c0-5 4-8.9 9.1-8.9s9.1 3.9 9.1 8.9c0 1.05-.8 1.7-1.85 1.7H4.75c-1.05 0-1.85-.65-1.85-1.7z"/>
@@ -18,6 +18,7 @@ const ICON_W = 22;
 const GAP = 8;
 const PAD_RIGHT_COUNT = 16;
 const PAD_RIGHT_LABEL = 20;
+const GLINT_BAR_W = 46; // .hj-glint-bar width
 
 export class Counter {
   readonly el: HTMLDivElement;
@@ -51,13 +52,15 @@ export class Counter {
         <span class="hj-pin-glint"><span class="hj-glint-bar"></span></span>
         <span class="hj-pin-face"></span>
         <span class="hj-pin-face hj-pin-face--go"></span>
-        <span class="hj-pin-icon">${ICON}</span>
-        <span class="hj-pin-count" aria-hidden="true">
-          <span class="hj-odo"><span class="hj-odo-strip"><span>${value}</span></span></span>
-          <span class="hj-pin-of">/ ${total}</span>
+        <span class="hj-pin-content">
+          <span class="hj-pin-icon">${MUSHROOM_ICON}</span>
+          <span class="hj-pin-count" aria-hidden="true">
+            <span class="hj-odo"><span class="hj-odo-strip"><span>${value}</span></span></span>
+            <span class="hj-pin-of">/ ${total}</span>
+          </span>
+          <span class="hj-pin-label" aria-hidden="true">Contact Hui Jie</span>
         </span>
-        <span class="hj-pin-label" aria-hidden="true">Contact Hui Jie</span>
-        <button class="hj-pin-action" type="button" hidden aria-haspopup="dialog">Contact Hui Jie</button>
+        <button class="hj-pin-action" type="button" hidden aria-haspopup="dialog" aria-label="Contact Hui Jie"></button>
       </div>
       <p class="hj-note" aria-hidden="true"></p>
       <p class="hj-sr" role="status" aria-live="polite"></p>
@@ -72,6 +75,8 @@ export class Counter {
     this.note = q('.hj-note');
     this.status = q('.hj-sr');
     this.action = q('.hj-pin-action');
+    // Let GSAP take its first look at these now, not in the middle of the first landing.
+    gsap.set([this.pin, this.strip], { x: 0 });
 
     // The same glint as the logo, on hover and on keyboard focus.
     this.action.addEventListener('pointerenter', (event) => {
@@ -104,23 +109,25 @@ export class Counter {
     return this.value;
   }
 
-  /** A mushroom has landed: roll the number, give the pin a tiny squash and a glint on the rim. */
-  land(value: number): void {
+  /**
+   * A mushroom has landed: roll the number, give the pin a tiny squash and a glint on the rim.
+   * `also` is added to the screen-reader announcement (the visible note is not read out).
+   */
+  land(value: number, also = ''): void {
     const previous = this.value;
     this.value = value;
-    this.status.textContent = `${value} of ${this.total} mushrooms found`;
+    this.status.textContent = `${value} of ${this.total} mushrooms found.${also ? ` ${also}.` : ''}`;
     if (reducedMotion()) {
       this.crossfade(value);
       return;
     }
-    this.rollTo(previous, value);
     this.squash?.kill();
     this.squash = gsap
       .timeline()
       .to(this.pin, { scaleX: 1.055, scaleY: 0.955, duration: 0.075, ease: 'power2.out' })
-      // Hand the transform back to CSS afterwards, so the button's press state can use it.
-      .to(this.pin, { scaleX: 1, scaleY: 1, duration: 0.52, ease: settle, clearProps: 'transform' });
+      .to(this.pin, { scaleX: 1, scaleY: 1, duration: 0.52, ease: settle });
     this.glint();
+    this.rollTo(previous, value);
   }
 
   /** Set the number with no ceremony (restoring saved progress). */
@@ -143,10 +150,13 @@ export class Counter {
     if (this.unlocked) return;
     this.hush();
     if (!animate) this.el.classList.add('is-instant');
+    // From here the pin's transform belongs to CSS (the button's press state), not to the landing squash.
+    this.squash?.kill();
+    gsap.set(this.pin, { clearProps: 'transform' });
     this.el.dataset.state = 'unlocked';
     this.action.hidden = false;
     if (animate) {
-      this.status.textContent = `All ${this.total} mushrooms found. You can now contact Hui Jie.`;
+      this.status.textContent = `All ${this.total} mushrooms found. The Contact Hui Jie button is now available.`;
       // The rim catches the light once the button has finished widening.
       window.setTimeout(() => this.glint(), 620);
     } else {
@@ -156,8 +166,13 @@ export class Counter {
 
   glint(): void {
     const width = this.el.dataset.state === 'unlocked' ? this.widths.button : this.widths.count;
-    const bar = this.glintBar.offsetWidth;
-    sweepGlint(this.glintBar, -bar * 1.2, width + bar * 0.4);
+    // Known sizes only: reading layout here would force a reflow in the middle of the landing.
+    sweepGlint(this.glintBar, -GLINT_BAR_W * 1.2, width + GLINT_BAR_W * 0.4);
+  }
+
+  /** Lay a line of text out ahead of time (invisible), so showing it later costs nothing mid-animation. */
+  prime(text: string): void {
+    if (!this.note.classList.contains('is-on')) this.note.textContent = text;
   }
 
   /** A short line under the pin. Passing a duration makes it leave by itself. */

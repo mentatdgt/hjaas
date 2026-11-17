@@ -9,8 +9,8 @@
 //   Hammer loop         -           2.60 s    -        first swing                 once she has settled
 //   Logo                Support     2.66 s    0.52 s   fade + 10 px settle         after Rachel
 //   Logo glint          Decoration  3.10 s    0.65 s   first sweep                 lands as the logo settles
-//   Counter             Support     2.84 s    0.44 s   fade + 8 px settle          overlaps the logo
-//   Hunt prompt         Decoration  3.20 s    0.32 s   fade                        after the counter
+//   Counter             Support     2.80 s    0.44 s   fade + 8 px settle          overlaps the logo
+//   Hunt prompt         Decoration  3.16 s    0.20 s   fade                        after the counter
 //
 // What stays still, and why: the letterbox light fades with the wash rather than moving; the mushrooms
 // only fade (they belong to the room, and movement would give them away); the counter's parts arrive as
@@ -24,6 +24,8 @@ export interface IntroParts {
   root: HTMLElement;
   plate: HTMLElement;
   room: HTMLImageElement;
+  /** The plate as decoded pixels: the paint the brush uses. */
+  roomPixels: CanvasImageSource;
   ambient: HTMLElement;
   rachel: HTMLElement;
   shadow: HTMLElement;
@@ -84,7 +86,7 @@ export function playIntro(mode: IntroMode, parts: IntroParts): Promise<void> {
   const pace = mode === 'quick' ? 0.36 : 1;
   // Unpainted mushrooms can't be found yet.
   gsap.set(mushrooms, { visibility: 'hidden' });
-  const painter = new Painter(room, plate.clientWidth, parts.seed);
+  const painter = new Painter(parts.roomPixels, plate.clientWidth, parts.seed);
   plate.insertBefore(painter.canvas, room.nextSibling);
 
   return new Promise((resolve) => {
@@ -145,8 +147,8 @@ export function playIntro(mode: IntroMode, parts: IntroParts): Promise<void> {
       counter,
       { opacity: 0, y: -8 },
       { opacity: 1, y: 0, duration: 0.44, ease: EASE_OUT },
-      logoAt + 0.18,
+      logoAt + 0.14,
     );
-    timeline.call(parts.onCounter, undefined, logoAt + 0.54);
+    timeline.call(parts.onCounter, undefined, logoAt + 0.5);
   });
 }

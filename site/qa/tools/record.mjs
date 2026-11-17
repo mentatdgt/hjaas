@@ -4,6 +4,7 @@
 import { chromium, webkit, devices } from 'playwright';
 import { mkdir, rename, readdir, rm } from 'node:fs/promises';
 import { join } from 'node:path';
+import { execFileSync } from 'node:child_process';
 
 const [scenario = 'find', device = 'desktop', outDir = 'qa/video'] = process.argv.slice(2);
 const base = process.env.HJ_URL ?? 'http://localhost:5173/';
@@ -26,7 +27,7 @@ const errors = [];
 page.on('pageerror', (e) => errors.push(String(e)));
 page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
 
-const shot = (name) => page.screenshot({ path: join(outDir, `${scenario}-${device}-${name}.png`) });
+const shot = (name) => page.screenshot({ path: join(outDir, `${scenario}-${device}-${name}.jpg`), type: 'jpeg', quality: 86 });
 const ready = () => page.waitForFunction(() => window.__hj?.ready === true, null, { timeout: 30000 });
 const tap = async (id) => {
   const el = page.locator(`.hj-shroom[data-spot="${id}"]`);
@@ -67,10 +68,11 @@ const run = {
     await page.waitForTimeout(4500); await shot('f-second-find');
   },
   async wiggle() {
-    await page.goto(`${base}?debug&reset&intro=off&hint=4`);
+    // The real thing: nothing is found for a minute, then one mushroom wiggles once (at about 60 s).
+    await page.goto(`${base}?debug&reset&intro=off`);
     await ready();
-    await page.waitForTimeout(13000);
-    await shot('after-hints');
+    await page.waitForTimeout(66000);
+    await shot('after-60s');
   },
   async finale() {
     await page.goto(`${base}?debug&reset&intro=off&found=9&seed=5`);
@@ -108,7 +110,12 @@ await run[scenario]();
 await context.close();
 await browser.close();
 const [video] = (await readdir(tmp)).filter((f) => f.endsWith('.webm'));
-const final = join(outDir, `${scenario}-${device}.webm`);
-await rename(join(tmp, video), final);
+// MP4 (H.264): plays in QuickTime and in the browser, and is a fraction of the size of the raw capture.
+const final = join(outDir, `${scenario}-${device}.mp4`);
+try {
+  execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', join(tmp, video), '-vf', 'pad=ceil(iw/2)*2:ceil(ih/2)*2', '-c:v', 'libx264', '-preset', 'medium', '-crf', '24', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', final]);
+} catch {
+  await rename(join(tmp, video), final.replace('.mp4', '.webm'));
+}
 await rm(tmp, { recursive: true, force: true });
 console.log(final, errors.length ? `\nERRORS:\n${errors.join('\n')}` : '(no page errors)');

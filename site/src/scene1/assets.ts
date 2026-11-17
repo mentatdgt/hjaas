@@ -23,17 +23,46 @@ export async function loadImage(url: string): Promise<HTMLImageElement> {
   return img;
 }
 
-/** A decoded frame. ImageBitmap keeps its pixels in memory, so the browser can't evict them mid-loop. */
+/**
+ * A decoded frame. An ImageBitmap made from the file's bytes is decoded off the main thread and keeps its
+ * pixels in memory, so loading never stalls an animation and the browser can't evict a pose mid-loop.
+ */
 export async function loadFrame(url: string): Promise<Frame> {
-  const img = await loadImage(url);
   if (typeof createImageBitmap === 'function') {
     try {
-      return await createImageBitmap(img);
+      const response = await fetch(url);
+      if (response.ok) return await createImageBitmap(await response.blob());
     } catch {
-      // Fall through to the decoded <img>.
+      // Fall through to a decoded <img>.
     }
   }
-  return img;
+  return loadImage(url);
+}
+
+/** The room plate, once as an <img> source and once as decoded pixels for the intro's brush. One download. */
+export async function loadRoom(): Promise<{ src: string; pixels: CanvasImageSource }> {
+  const url = asset('room.webp');
+  if (typeof createImageBitmap === 'function') {
+    try {
+      const response = await fetch(url);
+      if (response.ok) {
+        const blob = await response.blob();
+        return { src: URL.createObjectURL(blob), pixels: await createImageBitmap(blob) };
+      }
+    } catch {
+      // Fall through.
+    }
+  }
+  const img = await loadImage(url);
+  return { src: img.src, pixels: img };
+}
+
+/** Resolves when the browser has a quiet moment (or soon enough anyway). */
+export function idle(): Promise<void> {
+  return new Promise((resolve) => {
+    if (typeof requestIdleCallback === 'function') requestIdleCallback(() => resolve(), { timeout: 400 });
+    else setTimeout(resolve, 60);
+  });
 }
 
 export function frameSize(frame: Frame): { w: number; h: number } {

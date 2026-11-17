@@ -16,6 +16,8 @@
   --hj-mustard: #edb525;
   --hj-mustard-deep: #d89a12;
   --hj-red: #c9472c;
+  /* Edges of fields and chips: 3.9:1 on the field, 3.6:1 on the sheet. */
+  --hj-edge: #9c7a3a;
 
   /* One family of curves for all UI motion. */
   --hj-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
@@ -249,7 +251,7 @@
   top: calc(var(--hj-pad) - 4px);
   left: var(--hj-pad);
   display: block;
-  width: clamp(120px, 14cqw, 210px);
+  width: clamp(160px, 14cqw, 210px);
   pointer-events: auto;
   border-radius: 10px;
 }
@@ -270,6 +272,15 @@
 
 .hj-logo canvas {
   pointer-events: none;
+}
+
+/* Press feedback on its own property, so it never competes with the intro's transform. */
+.hj-logo {
+  transition: scale 160ms var(--hj-ease-out);
+}
+
+a.hj-logo:active {
+  scale: 0.98;
 }
 
 .hj-logo:focus {
@@ -293,7 +304,7 @@
   align-items: flex-end;
   gap: 8px;
   font-size: 17px;
-  font-weight: 620;
+  font-weight: 600;
   line-height: 1;
   font-variant-numeric: tabular-nums lining-nums;
 }
@@ -306,10 +317,15 @@
   --d0: 72px;
   --d: var(--d0);
   --k: 0.62;
+  /* How long the counter takes to become the button. Every part of the morph shares it. */
+  --morph: 500ms;
   position: relative;
   width: var(--wb);
   height: var(--pin-h);
   transform-origin: calc(100% - var(--wc) / 2) 50%;
+  /* Keeps the pin on its own layer at a fixed raster scale, so the landing squash is only composited
+     (measured: without it the pin was re-rasterised on every frame of the squash). */
+  will-change: transform;
 }
 
 .hj-counter[data-state='unlocked'] .hj-pin {
@@ -328,7 +344,7 @@
     0 5px 12px rgba(43, 26, 16, 0.3);
   transform-origin: 100% 50%;
   transform: scaleX(var(--k));
-  transition: transform 560ms var(--hj-ease-in-out);
+  transition: transform var(--morph) var(--hj-ease-in-out);
 }
 
 .hj-counter[data-state='unlocked'] .hj-pin-shadow {
@@ -341,7 +357,7 @@
   inset: 0;
   border-radius: 999px;
   clip-path: inset(0 0 0 var(--d) round 999px);
-  transition: clip-path 560ms var(--hj-ease-in-out);
+  transition: clip-path var(--morph) var(--hj-ease-in-out);
 }
 
 /* Thin gold rim, lit from above like polished metal. */
@@ -368,7 +384,7 @@
   background: radial-gradient(130% 150% at 28% -10%, #fbd565 0%, var(--hj-mustard) 48%, var(--hj-mustard-deep) 100%);
   opacity: 0;
   transition:
-    clip-path 560ms var(--hj-ease-in-out),
+    clip-path var(--morph) var(--hj-ease-in-out),
     opacity 420ms var(--hj-ease-in-out) 80ms;
 }
 
@@ -410,6 +426,14 @@
   );
 }
 
+/* Icon, number and label live inside the same clip as the enamel, so nothing shows outside the pin. */
+.hj-pin-content {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 0 0 var(--d) round 999px);
+  transition: clip-path var(--morph) var(--hj-ease-in-out);
+}
+
 .hj-pin-icon {
   position: absolute;
   top: 50%;
@@ -417,7 +441,7 @@
   width: 22px;
   height: 22px;
   margin-top: -11.5px;
-  transition: transform 560ms var(--hj-ease-in-out);
+  transition: transform var(--morph) var(--hj-ease-in-out);
 }
 
 .hj-counter[data-state='unlocked'] .hj-pin-icon {
@@ -461,14 +485,13 @@
   gap: 0.24em;
   white-space: nowrap;
   transition:
-    opacity 200ms var(--hj-ease-out),
-    transform 320ms var(--hj-ease-out),
-    filter 200ms var(--hj-ease-out);
+    opacity 220ms ease,
+    filter 220ms ease;
 }
 
+/* The number dissolves where it stands while the label takes its place: a soft blur joins the two. */
 .hj-counter[data-state='unlocked'] .hj-pin-count {
   opacity: 0;
-  transform: translateX(8px);
   filter: blur(2px);
 }
 
@@ -479,6 +502,8 @@
   height: 1.3em;
   overflow: hidden;
   text-align: center;
+  /* A new number re-lays-out only this little window, not the scene around it. */
+  contain: strict;
 }
 
 .hj-odo-strip {
@@ -494,31 +519,31 @@
 
 .hj-pin-of {
   color: var(--hj-ink-soft);
-  font-weight: 520;
+  font-weight: 500;
 }
 
 .hj-pin-label {
   position: absolute;
   top: 0;
-  left: calc(13px + 22px + 8px);
+  /* Always the same small gap after the icon. The two travel together, so they can never collide. */
+  left: calc(100% - var(--wc) + 13px + 22px + 8px);
   height: var(--pin-h);
   display: flex;
   align-items: center;
   white-space: nowrap;
   letter-spacing: 0.005em;
   opacity: 0;
-  transform: translateX(12px);
   transition:
-    opacity 300ms var(--hj-ease-out) 0ms,
-    transform 300ms var(--hj-ease-out) 0ms;
+    transform var(--morph) var(--hj-ease-in-out),
+    opacity 160ms var(--hj-ease-out);
 }
 
 .hj-counter[data-state='unlocked'] .hj-pin-label {
   opacity: 1;
-  transform: none;
+  transform: translateX(calc(var(--d0) * -1));
   transition:
-    opacity 320ms var(--hj-ease-out) 240ms,
-    transform 460ms var(--hj-ease-out) 200ms;
+    transform var(--morph) var(--hj-ease-in-out),
+    opacity 240ms ease 50ms;
 }
 
 /* The real button. It only exists once the hunt is complete. */
@@ -530,8 +555,6 @@
   border: 0;
   border-radius: 999px;
   background: none;
-  color: transparent;
-  font: inherit;
   cursor: pointer;
   pointer-events: auto;
   touch-action: manipulation;
@@ -564,28 +587,42 @@
   transform: scale(0.97);
 }
 
-/* A short line under the pin: the hunt prompt, and once, what the hunt is for. */
+.hj-pin-face--go {
+  filter: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hj-pin:has(.hj-pin-action:hover) .hj-pin-face--go {
+    filter: brightness(1.06);
+  }
+}
+
+/* A short line under the pin: the hunt prompt, and once, what the hunt is for.
+   Made of the pin's own material (cream enamel, a hair of gold), just smaller and flatter. */
 .hj-note {
   margin: 0;
-  padding: 6px 11px 7px;
+  padding: 5px 11px 6px;
+  border: 1px solid #c2913a;
   border-radius: 999px;
-  background: rgba(34, 20, 11, 0.8);
-  color: var(--hj-cream);
+  background: linear-gradient(180deg, #fffaf0, var(--hj-cream) 60%, var(--hj-cream-deep));
+  box-shadow: 0 1px 2px rgba(43, 26, 16, 0.35), 0 3px 8px rgba(43, 26, 16, 0.18);
+  color: var(--hj-ink);
   font-size: 13px;
   font-weight: 500;
+  line-height: 1.25;
   letter-spacing: 0.01em;
   white-space: nowrap;
   opacity: 0;
   transform: translateY(-4px);
   transition:
-    opacity 220ms var(--hj-ease-out),
-    transform 220ms var(--hj-ease-out);
+    opacity 160ms var(--hj-ease-out),
+    transform 160ms var(--hj-ease-out);
 }
 
 .hj-note.is-on {
   opacity: 1;
   transform: none;
-  transition-duration: 320ms;
+  transition-duration: 200ms;
 }
 
 .hj-sr {
@@ -598,6 +635,7 @@
   clip-path: inset(50%);
   white-space: nowrap;
   border: 0;
+  contain: strict;
 }
 
 /* ---------- Finale ---------- */
@@ -644,6 +682,12 @@
     transform 300ms var(--hj-ease-out);
 }
 
+/* Opened or closed from the keyboard: no entrance or exit, it is simply there or gone. */
+.hj-dialog.is-instant,
+.hj-dialog.is-instant::backdrop {
+  transition: none;
+}
+
 .hj-dialog::backdrop {
   background: rgba(29, 18, 11, 0);
   transition: background-color 220ms ease;
@@ -658,9 +702,7 @@
   display: flex;
   flex-direction: column;
   max-height: inherit;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  padding: 20px 22px 22px;
+  padding: 20px 0 0;
   border: 2px solid transparent;
   border-radius: 24px;
   background:
@@ -669,16 +711,30 @@
   box-shadow:
     0 2px 3px rgba(43, 26, 16, 0.4),
     0 22px 48px rgba(29, 18, 11, 0.42);
-  scrollbar-width: thin;
-  scrollbar-color: var(--hj-gold) transparent;
 }
 
+/* The title and the close button stay put; only the form beneath them scrolls on short screens. */
 .hj-sheet-head {
+  flex: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 16px;
+  padding: 0 22px 14px;
+}
+
+.hj-sheet-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 2px 22px 22px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--hj-gold) transparent;
+}
+
+.hj-sheet h2:focus {
+  outline: none;
 }
 
 .hj-sheet h2 {
@@ -761,7 +817,7 @@
   width: 100%;
   margin: 0;
   padding: 11px 13px;
-  border: 1.5px solid #d6c08d;
+  border: 1.5px solid var(--hj-edge);
   border-radius: 12px;
   background: #fffdf6;
   box-shadow: inset 0 1px 2px rgba(110, 70, 20, 0.12);
@@ -780,16 +836,18 @@
 
 .hj-field textarea {
   min-height: 104px;
-  resize: vertical;
+  max-height: 240px;
+  /* Grows with the message where the browser can; no grab handle to style. */
+  field-sizing: content;
+  resize: none;
 }
 
+/* One focus ring for everything in the sheet: ink, two pixels, clear of the edge. */
 .hj-field input:focus-visible,
 .hj-field textarea:focus-visible {
-  outline: none;
-  border-color: var(--hj-gold-deep);
-  box-shadow:
-    inset 0 1px 2px rgba(110, 70, 20, 0.12),
-    0 0 0 3px rgba(237, 181, 37, 0.45);
+  outline: 2px solid var(--hj-ink);
+  outline-offset: 2px;
+  border-color: var(--hj-ink-soft);
 }
 
 .hj-field input[aria-invalid='true'],
@@ -829,13 +887,17 @@
 
 .hj-chip span {
   display: block;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  min-height: 44px;
   padding: 10px 15px;
-  border: 1.5px solid #d6c08d;
+  border: 1.5px solid var(--hj-edge);
   border-radius: 999px;
   background: #fffdf6;
   color: var(--hj-ink);
   font-size: 15px;
-  font-weight: 560;
+  font-weight: 600;
   line-height: 1.2;
   transition:
     background-color 160ms ease,
@@ -843,9 +905,29 @@
     transform 160ms var(--hj-ease-out);
 }
 
+/* A picked chip fills with mustard and gains a tick, so its state never rests on colour alone. */
+.hj-chip svg {
+  flex: none;
+  width: 0;
+  height: 14px;
+  margin-right: 0;
+  fill: none;
+  stroke: var(--hj-ink);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+}
+
 .hj-chip input:checked + span {
-  border-color: var(--hj-gold-deep);
+  border-color: var(--hj-ink-soft);
   background: var(--hj-mustard);
+}
+
+.hj-chip input:checked + span svg {
+  width: 14px;
+  margin-right: 6px;
+  opacity: 1;
 }
 
 .hj-chip input:active + span {
@@ -853,8 +935,14 @@
 }
 
 .hj-chip input:focus-visible + span {
-  box-shadow: 0 0 0 3px rgba(237, 181, 37, 0.45);
-  border-color: var(--hj-gold-deep);
+  outline: 2px solid var(--hj-ink);
+  outline-offset: 2px;
+}
+
+.hj-hint {
+  margin-left: 4px;
+  font-weight: 500;
+  opacity: 0.85;
 }
 
 .hj-alert {
@@ -864,7 +952,7 @@
   background: #f6dccf;
   color: #7c2410;
   font-size: 14.5px;
-  font-weight: 520;
+  font-weight: 500;
   line-height: 1.35;
 }
 
@@ -887,7 +975,7 @@
   color: var(--hj-ink);
   font: inherit;
   font-size: 17px;
-  font-weight: 640;
+  font-weight: 600;
   cursor: pointer;
   touch-action: manipulation;
   -webkit-appearance: none;
@@ -901,9 +989,23 @@
   transform: scale(0.97);
 }
 
-.hj-send:disabled {
+.hj-send[aria-disabled='true'] {
+  cursor: default;
+  filter: saturate(0.55) brightness(1.04);
+}
+
+.hj-send[aria-disabled='true']:active {
+  transform: none;
+}
+
+.hj-send.is-sending {
   cursor: progress;
-  filter: saturate(0.7);
+}
+
+/* Shown at the top of the form when it cannot send at all, before anyone starts writing. */
+.hj-notice {
+  background: rgba(43, 26, 16, 0.08);
+  color: var(--hj-ink);
 }
 
 /* Three dots after "Sending": the only sign of waiting the button needs. */
@@ -929,19 +1031,13 @@
 }
 
 .hj-sent {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   gap: 8px;
-  padding: 18px 0 2px;
+  padding: 10px 0 0;
   text-align: center;
   animation: hj-sent-in 260ms var(--hj-ease-out) both;
-}
-
-.hj-sent:focus {
-  outline: none;
 }
 
 @keyframes hj-sent-in {
@@ -951,22 +1047,49 @@
   }
 }
 
-.hj-sent svg {
-  width: 56px;
-  height: 56px;
-  margin-bottom: 6px;
+/* The hunt's own mushroom, enamel and gold like the pin, with a small tick: found, and sent. */
+.hj-sent-mark {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 76px;
+  margin-bottom: 8px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  background:
+    radial-gradient(120% 120% at 30% 0%, #fffaf0 0%, var(--hj-cream) 55%, var(--hj-cream-deep) 100%) padding-box,
+    linear-gradient(176deg, var(--hj-gold-light) 0%, var(--hj-gold) 34%, var(--hj-gold-deep) 62%, #e6bd5e 100%) border-box;
+  box-shadow:
+    0 1px 1.5px rgba(43, 26, 16, 0.45),
+    0 5px 12px rgba(43, 26, 16, 0.22);
 }
 
-.hj-sent-ring {
-  fill: var(--hj-mustard);
-  stroke: var(--hj-gold-deep);
-  stroke-width: 2;
+.hj-sent-mark > svg {
+  width: 44px;
+  height: 44px;
+  overflow: visible;
 }
 
 .hj-sent-tick {
+  position: absolute;
+  right: -5px;
+  bottom: -3px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--hj-cream);
+  border-radius: 50%;
+  background: var(--hj-mustard);
+}
+
+.hj-sent-tick svg {
+  width: 14px;
+  height: 14px;
   fill: none;
   stroke: var(--hj-ink);
-  stroke-width: 3.4;
+  stroke-width: 2.4;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
@@ -978,11 +1101,16 @@
   letter-spacing: -0.01em;
 }
 
+.hj-sent h3:focus {
+  outline: none;
+}
+
 .hj-sent p {
   margin: 0;
   color: var(--hj-ink-soft);
   font-size: 16px;
   line-height: 1.4;
+  overflow-wrap: anywhere;
 }
 
 .hj-sent .hj-dev-note {
@@ -1007,7 +1135,7 @@
     border-color: var(--hj-gold-deep);
   }
 
-  .hj-send:not(:disabled):hover {
+  .hj-send:not([aria-disabled='true']):hover {
     filter: brightness(1.04);
   }
 }
@@ -1030,13 +1158,16 @@
   }
 
   .hj-sheet {
-    padding: 20px 18px calc(20px + env(safe-area-inset-bottom));
     border-bottom: 0;
     border-radius: 24px 24px 0 0;
   }
 
-  .hj-chip span {
-    padding: 12px 16px;
+  .hj-sheet-head {
+    padding: 0 18px 14px;
+  }
+
+  .hj-sheet-body {
+    padding: 2px 18px calc(20px + env(safe-area-inset-bottom));
   }
 }
 
@@ -1105,19 +1236,22 @@
     align-items: center;
     gap: 9px;
     transform: translateX(-50%);
-    padding: 7px 12px;
+    padding: 6px 12px;
+    border: 1px solid #c2913a;
     border-radius: 999px;
-    background: rgba(34, 20, 11, 0.8);
-    color: var(--hj-cream);
+    /* The same cream tag as the prompt line. */
+    background: linear-gradient(180deg, #fffaf0, var(--hj-cream) 60%, var(--hj-cream-deep));
+    box-shadow: 0 1px 2px rgba(43, 26, 16, 0.35), 0 3px 8px rgba(43, 26, 16, 0.18);
+    color: var(--hj-ink-soft);
   }
 
   .hj-swipe-hand svg {
     display: block;
     width: 26px;
     height: 26px;
-    fill: var(--hj-cream);
+    fill: #fffdf6;
     stroke: var(--hj-ink);
-    stroke-width: 1.2;
+    stroke-width: 1.5;
     stroke-linejoin: round;
   }
 
@@ -1138,6 +1272,53 @@
   }
 }
 
+/* Narrow phones: the prompt wraps instead of running into the logo. */
+@container (orientation: portrait) and (max-width: 379px) {
+  .hj-note {
+    max-width: 164px;
+    border-radius: 14px;
+    text-align: right;
+    white-space: normal;
+  }
+}
+
+@container (orientation: portrait) and (max-width: 339px) {
+  .hj-logo {
+    left: 10px;
+    width: 112px;
+  }
+
+  .hj-counter {
+    right: 10px;
+    font-size: 15px;
+  }
+}
+
+/* Short landscape screens (phones on their side): a smaller logo, so it does not crowd the room. */
+@container (orientation: landscape) and (max-height: 520px) {
+  .hj-logo {
+    width: 120px;
+  }
+}
+
+/* Large monitors: the room fills the screen, so the logo and the pin grow with it. */
+@container (min-width: 1800px) {
+  .hj-logo {
+    width: 12cqw;
+  }
+
+  .hj-counter {
+    scale: 1.2;
+    transform-origin: 100% 0;
+  }
+}
+
+@container (min-width: 2400px) {
+  .hj-counter {
+    scale: 1.45;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hj-note,
   .hj-note.is-on {
@@ -1148,17 +1329,21 @@
   .hj-pin-rim,
   .hj-pin-face,
   .hj-pin-shadow,
+  .hj-pin-content,
   .hj-pin-icon,
-  .hj-pin-count,
   .hj-pin-label,
   .hj-pin {
     transition-property: opacity !important;
   }
 
-  .hj-counter[data-state='unlocked'] .hj-pin-count,
-  .hj-pin-label {
-    transform: none;
-    filter: none;
+  /* The number goes at once, so the wider pin is never seen holding a fading "10 / 10". */
+  .hj-pin-count {
+    transition: none;
+    filter: none !important;
+  }
+
+  .hj-logo {
+    transition: none;
   }
 
   /* The sheet fades; it does not slide or scale. */

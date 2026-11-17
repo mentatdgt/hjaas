@@ -20,6 +20,9 @@ export class SendError extends Error {
 // below to the shape that service expects. Until then nothing is ever sent.
 export const CONTACT_ENDPOINT: string | undefined = import.meta.env.VITE_FORM_ENDPOINT || undefined;
 
+/** False in a production build with no endpoint: the form then says so up front and Send is off. */
+export const canSend: boolean = Boolean(CONTACT_ENDPOINT) || import.meta.env.DEV;
+
 /**
  * Sends a message to Hui Jie.
  * - With an endpoint configured: posts it, and resolves 'sent' only if the service accepted it.

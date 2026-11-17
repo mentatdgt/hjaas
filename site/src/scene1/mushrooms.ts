@@ -139,8 +139,10 @@ export class Hunt {
 
     const { flyLayer, target, onFind, onLand } = this.options;
     const art = button.querySelector<HTMLElement>('.hj-shroom-art')!;
+    // Measure everything first, then change the page: no layout is forced mid-change.
     const from = art.getBoundingClientRect();
     const layer = flyLayer.getBoundingClientRect();
+    const to = target();
 
     // Keyboard users carry on from the next mushroom.
     if (document.activeElement === button) this.focusNext(button);
@@ -170,7 +172,6 @@ export class Hunt {
       return;
     }
 
-    const to = target();
     const dx = to.left + to.width / 2 - (from.left + from.width / 2);
     const dy = to.top + to.height / 2 - (from.top + from.height / 2);
     const lift = Math.max(8, from.height * 0.4);
