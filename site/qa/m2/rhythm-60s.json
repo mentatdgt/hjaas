@@ -1,0 +1,15 @@
+{
+  "note": "Pose changes logged for 62 s on the live page (?debug, Math.random). Durations are quantised to 60 Hz display frames.",
+  "spanMs": 61805,
+  "swingsPerMin": 47.6,
+  "poseHoldMs": {
+    "frame_01 contact": { "n": 90, "min": 32, "median": 300, "max": 1083 },
+    "frame_02 lift": { "n": 59, "min": 83, "median": 133, "max": 168 },
+    "frame_03 wind-up": { "n": 49, "min": 232, "median": 349, "max": 435 },
+    "frame_04 down-swing": { "n": 49, "min": 49, "median": 67, "max": 84 },
+    "blink_half": { "n": 44, "min": 32, "median": 34, "max": 51 },
+    "blink_closed": { "n": 22, "min": 65, "median": 67, "max": 84 }
+  },
+  "blinks": 21,
+  "blinksNotHalfClosedHalfOnContact": 0
+}
