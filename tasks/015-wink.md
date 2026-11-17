@@ -1,6 +1,6 @@
 ---
 id: 015-wink
-status: open             # draft | open | delivered | changes-requested | approved
+status: approved             # draft | open | delivered | changes-requested | approved
 frames: 2
 grid: separate images     # one image per pose, each an edit of the base frame
 fps: 24
@@ -53,4 +53,7 @@ If anything is ❌ and attempts remain, redo it. Deliver the best attempt with a
 - Played open → half → wink → half → open, it reads as one confident, charming wink.
 
 ## Revision notes
-_(Wren writes here after each QC round)_
+### Round 1 (2026-11-17): APPROVED after Wren compositing
+- Quinn chose half-wink attempt 3 and full wink attempt 2 (1403×1121, ≈2.45×). The face was redrawn slightly, so only the eye, lid and eyebrow area of the viewer's-right eye was used, registered onto the 2× K2.
+- While doing this, Wren found a lumpy outline on the 2× K2 thumb, carried over from the old K2. It was replaced with Quinn's clean thumb from the same delivery. `frames/016-upscale/approved/K2.png` and `005/approved/rx_K2.png` are updated.
+- Output: `frames/005-reaction-motion/approved/rx_wink_half.png` and `rx_wink.png`. In `reaction.json` the thumbs-up hold is now K2 300 ms → half-wink 50 → wink 260 → half-wink 50 → K2 240.
