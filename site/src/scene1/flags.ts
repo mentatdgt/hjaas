@@ -6,7 +6,6 @@
 //   ?hint=5        seconds before the hint wiggle (default 60)
 //   ?slow=5        play the UI motion (GSAP) this many times slower, for frame-by-frame review
 //   ?debug         outline mushroom hit areas and expose window.__hj
-//   ?fakesend      pretend the contact form sends (dev builds do this by default)
 
 const params = new URLSearchParams(typeof location === 'undefined' ? '' : location.search);
 
@@ -25,5 +24,4 @@ export const flags = {
   hintSeconds: num('hint'),
   slow: num('slow'),
   debug: params.has('debug'),
-  fakeSend: params.has('fakesend'),
 };

@@ -2,7 +2,9 @@ import '@fontsource-variable/bricolage-grotesque';
 import './scene.css';
 import { PLATE, asset, loadImage, loadLoopFrames, setAssetBase } from './assets';
 import { Counter } from './counter';
+import { shower } from './finale';
 import { flags } from './flags';
+import { ContactForm } from './form';
 import { playIntro, type IntroMode } from './intro';
 import { Logo } from './logo';
 import { onReducedMotionChange, reducedMotion } from './motion';
@@ -47,12 +49,12 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
   root.innerHTML = `
     <div class="hj-ambient" aria-hidden="true"></div>
     <div class="hj-stage">
+      <div class="hj-hud"></div>
       <div class="hj-viewport">
         <div class="hj-plate">
           <img class="hj-room" alt="" draggable="false" width="${PLATE.w}" height="${PLATE.h}" />
         </div>
       </div>
-      <div class="hj-hud"></div>
     </div>
     <div class="hj-fly" aria-hidden="true"></div>
   `;
@@ -103,6 +105,8 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
   const counter = new Counter(TOTAL, found.size);
   hud.append(counter.el);
   counter.measure();
+  // A returning visitor who already found them all goes straight to the button.
+  if (found.size === TOTAL) counter.unlock(false);
   void document.fonts?.ready.then(() => counter.measure());
 
   const pan = new Pan(viewport, plate, progress.panned, () => {
@@ -135,9 +139,31 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
   }, 1000);
   cleanup.push(() => window.clearInterval(hintClock));
 
-  const react = (): void => {
-    if (!player || !reaction) return;
-    void player.react(reducedMotion() ? reaction.still : reaction.steps);
+  let reacting: Promise<void> = Promise.resolve();
+  const react = (): Promise<void> => {
+    if (!player || !reaction) return Promise.resolve();
+    if (player.reacting) return reacting; // already reacting: the find counts, the reaction carries on
+    reacting = player.react(reducedMotion() ? reaction.still : reaction.steps);
+    return reacting;
+  };
+
+  const form = new ContactForm(root, counter.action);
+  counter.action.addEventListener('click', () => form.open());
+
+  // 10/10: one last reaction, a short shower of mushrooms, and the counter becomes the way to reach Hui Jie.
+  const celebrate = (): void => {
+    progress.unlocked = true;
+    save();
+    const calm = reducedMotion();
+    if (!calm) window.setTimeout(() => shower(flyLayer, viewport.getBoundingClientRect()), 160);
+    window.setTimeout(
+      () => {
+        counter.unlock(true);
+        // Keyboard and screen-reader users land on the prize.
+        window.setTimeout(() => counter.action.focus({ preventScroll: true }), calm ? 0 : 600);
+      },
+      calm ? 400 : 1250,
+    );
   };
 
   void (async () => {
@@ -161,7 +187,10 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
         quietSeconds = 0;
         found.add(spot.id);
         save();
-        react(); // if she is already reacting, the find still counts and her reaction carries on
+        const busy = player?.reacting ?? false;
+        const done = react();
+        // The last find always gets its own reaction, even if she was still busy with the one before.
+        if (found.size === TOTAL && busy) void done.then(() => react());
       },
       onLand: () => {
         const first = counter.current === 0;
@@ -171,6 +200,7 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
           if (first && counter.current < TOTAL) counter.say(COPY.prize, 5200);
           else counter.hush();
         }
+        if (counter.current === TOTAL) celebrate();
       },
     });
     if (destroyed) return;

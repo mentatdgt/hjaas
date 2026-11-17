@@ -34,6 +34,7 @@ export class Counter {
   private value: number;
   private widths = { count: 118, button: 190 };
   private roll: gsap.core.Tween | null = null;
+  private squash: gsap.core.Timeline | null = null;
   private noteTimer = 0;
 
   constructor(total: number, value: number) {
@@ -71,6 +72,14 @@ export class Counter {
     this.note = q('.hj-note');
     this.status = q('.hj-sr');
     this.action = q('.hj-pin-action');
+
+    // The same glint as the logo, on hover and on keyboard focus.
+    this.action.addEventListener('pointerenter', (event) => {
+      if (event.pointerType === 'mouse') this.glint();
+    });
+    this.action.addEventListener('focus', () => {
+      if (this.action.matches(':focus-visible')) this.glint();
+    });
   }
 
   /** Size the pin from its real text. Call once it is in the document, and again when the font arrives. */
@@ -105,10 +114,12 @@ export class Counter {
       return;
     }
     this.rollTo(previous, value);
-    gsap
-      .timeline({ overwrite: true })
+    this.squash?.kill();
+    this.squash = gsap
+      .timeline()
       .to(this.pin, { scaleX: 1.055, scaleY: 0.955, duration: 0.075, ease: 'power2.out' })
-      .to(this.pin, { scaleX: 1, scaleY: 1, duration: 0.52, ease: settle });
+      // Hand the transform back to CSS afterwards, so the button's press state can use it.
+      .to(this.pin, { scaleX: 1, scaleY: 1, duration: 0.52, ease: settle, clearProps: 'transform' });
     this.glint();
   }
 
@@ -118,6 +129,29 @@ export class Counter {
     this.roll?.kill();
     this.strip.replaceChildren(digit(value));
     gsap.set(this.strip, { yPercent: 0 });
+  }
+
+  get unlocked(): boolean {
+    return this.el.dataset.state === 'unlocked';
+  }
+
+  /**
+   * The hunt is complete: the pin widens into the "Contact Hui Jie" button, in one continuous motion
+   * (the transitions are in scene.css). `animate: false` restores the button for a returning visitor.
+   */
+  unlock(animate: boolean): void {
+    if (this.unlocked) return;
+    this.hush();
+    if (!animate) this.el.classList.add('is-instant');
+    this.el.dataset.state = 'unlocked';
+    this.action.hidden = false;
+    if (animate) {
+      this.status.textContent = `All ${this.total} mushrooms found. You can now contact Hui Jie.`;
+      // The rim catches the light once the button has finished widening.
+      window.setTimeout(() => this.glint(), 620);
+    } else {
+      requestAnimationFrame(() => requestAnimationFrame(() => this.el.classList.remove('is-instant')));
+    }
   }
 
   glint(): void {
