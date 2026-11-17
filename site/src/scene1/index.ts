@@ -7,6 +7,7 @@ import { playIntro, type IntroMode } from './intro';
 import { Logo } from './logo';
 import { onReducedMotionChange, reducedMotion } from './motion';
 import { Hunt, SPOTS } from './mushrooms';
+import { Pan } from './pan';
 import { RachelPlayer } from './player';
 import { Rachel } from './rachel';
 import { loadReaction, type Reaction } from './reaction';
@@ -58,6 +59,7 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
   host.append(root);
 
   const q = <T extends HTMLElement>(selector: string): T => root.querySelector<T>(selector)!;
+  const viewport = q<HTMLDivElement>('.hj-viewport');
   const plate = q<HTMLDivElement>('.hj-plate');
   const room = q<HTMLImageElement>('.hj-room');
   const hud = q<HTMLDivElement>('.hj-hud');
@@ -103,12 +105,20 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
   counter.measure();
   void document.fonts?.ready.then(() => counter.measure());
 
+  const pan = new Pan(viewport, plate, progress.panned, () => {
+    progress.panned = true;
+    save();
+  });
+  cleanup.push(() => pan.destroy());
+
   const layout = new ResizeObserver(() => {
     // One plate pixel in CSS pixels. Only changes on resize, never during animation.
     plate.style.setProperty('--u', `${plate.clientWidth / PLATE.w}px`);
     rachel?.resize();
+    pan.layout();
   });
   layout.observe(plate);
+  layout.observe(viewport);
 
   // The hint: after a minute with no find, one unfound mushroom wiggles once. Time only counts while the tab is visible.
   let quietSeconds = 0;
@@ -225,6 +235,7 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
     if (destroyed) return;
     if (debug) (debug.marks as Record<string, number>).introEnd = Math.round(performance.now());
     settled = true;
+    pan.showHint(hud);
     if (!progress.seenIntro) {
       progress.seenIntro = true;
       save();

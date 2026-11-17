@@ -56,7 +56,7 @@ await copyFile(join(repo, reaction, 'reaction.json'), join(out, 'rachel/reaction
 await sharp(join(repo, 'scene/room-empty.png'))
   .resize(96)
   .blur(6)
-  .modulate({ brightness: 0.55, saturation: 0.9 })
+  .modulate({ brightness: 0.4, saturation: 0.85 })
   .webp({ quality: 70 })
   .toFile(join(out, 'room-ambient.webp'));
 

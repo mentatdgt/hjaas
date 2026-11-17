@@ -8,9 +8,11 @@ export interface Progress {
   found: string[];
   unlocked: boolean;
   seenIntro: boolean;
+  /** The visitor has panned the room on a phone, so the swipe hint is not shown again. */
+  panned: boolean;
 }
 
-const empty = (): Progress => ({ found: [], unlocked: false, seenIntro: false });
+const empty = (): Progress => ({ found: [], unlocked: false, seenIntro: false, panned: false });
 
 export function loadProgress(): Progress {
   try {
@@ -22,6 +24,7 @@ export function loadProgress(): Progress {
       found: Array.isArray(data.found) ? data.found.filter((id): id is string => typeof id === 'string') : [],
       unlocked: data.unlocked === true,
       seenIntro: data.seenIntro === true,
+      panned: data.panned === true,
     };
   } catch {
     return empty();

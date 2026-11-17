@@ -585,6 +585,104 @@
   border: 0;
 }
 
+/* ---------- Portrait phones: a 4:5 crop of the room, panned sideways ---------- */
+
+.hj-swipe {
+  display: none;
+}
+
+@container (orientation: portrait) and (max-width: 600px) {
+  /* Logo and counter sit in a row above the room; the row and the room are centred together. */
+  .hj-stage {
+    --hud-row: 88px;
+    padding-top: var(--hud-row);
+  }
+
+  .hj-viewport,
+  .hj-hud {
+    width: 100cqw;
+    height: min(125cqw, calc(100cqh - var(--hud-row) - 8px));
+    aspect-ratio: auto;
+  }
+
+  /* A native scroller: the browser follows the finger, adds momentum and eases into the edges. */
+  .hj-viewport {
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    touch-action: pan-x;
+    scrollbar-width: none;
+  }
+
+  .hj-viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hj-viewport.is-dragging {
+    cursor: grabbing;
+  }
+
+  .hj-logo {
+    top: auto;
+    bottom: calc(100% + 8px);
+    left: 14px;
+    width: clamp(120px, 33cqw, 140px);
+  }
+
+  .hj-counter {
+    top: auto;
+    bottom: calc(100% + 10px);
+    right: 14px;
+    gap: 7px;
+    font-size: 16px;
+  }
+
+  .hj-note {
+    font-size: 12.5px;
+  }
+
+  /* The one-time swipe hint: a small hand between two chevrons, at the foot of the room. */
+  .hj-swipe {
+    position: absolute;
+    left: 50%;
+    bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    transform: translateX(-50%);
+    padding: 7px 12px;
+    border-radius: 999px;
+    background: rgba(34, 20, 11, 0.8);
+    color: var(--hj-cream);
+  }
+
+  .hj-swipe-hand svg {
+    display: block;
+    width: 26px;
+    height: 26px;
+    fill: var(--hj-cream);
+    stroke: var(--hj-ink);
+    stroke-width: 1.2;
+    stroke-linejoin: round;
+  }
+
+  .hj-swipe-chev svg {
+    display: block;
+    width: 8px;
+    height: 13px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.8;
+  }
+
+  .hj-swipe-chev.is-right svg {
+    transform: scaleX(-1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hj-note,
   .hj-note.is-on {
