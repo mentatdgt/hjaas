@@ -1,6 +1,6 @@
 ---
 id: 005-reaction-motion
-status: open             # draft | open | delivered | changes-requested | approved
+status: approved             # draft | open | delivered | changes-requested | approved
 frames: 0                # comes from video; Wren extracts and decides
 grid: n/a
 fps: 12
@@ -67,4 +67,15 @@ Negative prompt (if the tool has one): camera movement, zoom, background change,
 - Joins to the loop seamlessly both ways
 
 ## Revision notes
-_(Wren writes here after each QC round)_
+### Round 1 (2026-11-17): APPROVED (v1), built by Wren from Higgsfield Kling 3.0 std clips
+- **Clip A, attempt 1:** FAIL. Her glasses vanished for 5 frames and the face morphed instead of the head lifting.
+- **Clip A, attempt 2** (tighter prompt): usable. The eyes flick up first (a natural "notice"), then the head lifts.
+  - Frames 50–51 dropped (glasses smear). Frame 52 kept as a 40 ms squint as the smile pops.
+- **Clip B:** usable, with a connected arm swing.
+  - Smeared frames 34–35 and 37–38 dropped. Frame 36 (arm out, hand slightly soft) kept at 60 ms as a motion frame.
+- **Processing:** green keyed, each frame registered to the 2× contact frame on the box. Only the head (clip A) or the arm (clip B) is taken from the video; the body, box and hammer come from the steady 2× stills. Colours are matched to K1 and K2.
+- **Output:**
+  - `approved/rx_*.png` on the 2× canvas (1146×916, the same registration as `frames/016-upscale/approved/frame_01.png`).
+  - `approved/reaction.json`: frame order and hold times, 2.17 s in total.
+  - Previews: `approved/reaction-in-scene.mp4` and `approved/reaction-closeup.mp4`.
+- **Later polish (optional):** one Quinn in-between between rx_A49 and rx_A53 (head half-lifted, glasses on, smile starting) and a cleaner hand for rx_B36. The wink frames (task 015) slot into the K2 hold.

@@ -20,6 +20,12 @@ Kling 3.0, std 720p, 3 s, 4.5 credits each.
 |---|---|---|
 | A, attempt 1 | 5128b269-f6f7-4ed5-a380-6ec18be3e4c0 | FAIL: her glasses vanish for 5 frames and the face morphs instead of the head lifting. |
 | B, attempt 1 | ccfb4093-2169-4a01-9634-7592a5227659 | Usable: a connected arm swing. Drop 2–3 smeared hand frames (~34–37). |
-| A, attempt 2 | acec5436-d5d1-4b71-8b20-0c2cc3c9fc21 | Tighter prompt: glasses always on, no blink, continuous head lift. Pending QC. |
+| A, attempt 2 | acec5436-d5d1-4b71-8b20-0c2cc3c9fc21 | Usable: eyes up first, then the head lifts. Frames 50–51 dropped. |
 
 Spent so far: 29.5 credits (balance 210 → 180.5).
+
+## Output (2026-11-17)
+`approved/` contains the 2× set (1146×916, transparent): frame_01–04, blink_half, blink_closed, K1, K2.
+- Each upscale was downsized to exactly 2×, keyed, and then steadied: frame_01's pixels are kept everywhere except the areas that differ in the approved 1× originals. That way the independent upscales can't shimmer between frames.
+- Built with `tools/build_2x_frames.py`. QC: crisp lines, same style, clean edges on dark backgrounds.
+- **For the site:** drop-in replacements for `frames/001`, `002` and `004` at double resolution. The placement transform is computed from the image size, so nothing else changes.

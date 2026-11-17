@@ -188,6 +188,7 @@ The user is asleep while you build. **Do not stop to ask questions.**
 - **Commit after every milestone,** so a partial night still leaves a working, viewable site on the branch.
 - Leave `wren-inbox/` alone. It's Wren's download folder and is ignored by git.
 - Wren is still preparing the real reaction frames, the sharper 2× Rachel frames and the wink. Keep the placeholder reaction and the current frames; they will drop in as file swaps.
+- *Added later the same night:* the 2× frames are now in `frames/016-upscale/approved/`, and the real reaction is in `frames/005-reaction-motion/approved/` (with `reaction.json`, on the same 2× canvas). If you see these after a `git pull`, you may use them. The reaction player should read `reaction.json` directly.
 - The user is non-technical. Tell them how to view the site: the exact command (`cd site && npm install && npm run dev`) and the local URL.
 
 ## 7. Final report (paste in chat, also save as `site/qa/REPORT.md`)
