@@ -60,6 +60,9 @@ Match the keyframe's lighting: warm golden light from the window on the LEFT. Wa
 - Swing reads smoothly at the timing above; no jump from frame 4 back to 1
 - Recorded, not a fail: the pixel height of Rachel in each cell (target for crisp phones is ~900px; Wren reports what we got)
 
+## Site playback timing (decided 2026-11-17, replaces the fixed holds above)
+The site does not play the four frames at a fixed rate. Per swing: contact 260–460 ms, lift 110–150 ms, wind-up 240–420 ms, down-swing 60–80 ms (kept snappy for impact), with each swing ×0.9–1.15 overall. About 1 in 5 swings is preceded by 1–2 small taps (contact → lift → contact). Every 3–6 swings she pauses on the contact frame for 1.1–2.0 s (blinks happen here). Average ≈ 55 swings/min. Reference implementation: `tools/preview_timing.py`; preview: `approved/in-scene-timing.mp4`.
+
 ## Revision notes
 ### Round 1 — Batch 01 (2026-11-17): APPROVED after Wren stabilisation
 - Raw sheet: 1536×1024, cells 768×512, Rachel ~430 px tall. Automated QC flagged green fringe on all frames and a ~24 px horizontal jump between columns; Quinn also noted changing nail height.
