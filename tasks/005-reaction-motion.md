@@ -34,7 +34,7 @@ Run each clip twice to start (4 generations), keep all results; Wren picks the b
 | Notice | ~0.15 s | Hammer loop stops on its contact frame; her eyes flick up first |
 | Look up | ~0.35 s | Head lifts to the camera, easing out; smile grows into a beam (clip A) |
 | Thumbs up | ~0.30 s | Steadying hand leaves the box, thumb up, tiny overshoot and settle (clip B) |
-| Hold | ~0.9 s | Holds the thumbs up; one blink |
+| Hold | ~0.9 s | Holds the thumbs up and gives one playful wink (task 015 frames) |
 | Back to work | ~0.5 s | Clip B then clip A played in reverse, eased; loop resumes on its contact frame |
 
 ## Clips to generate

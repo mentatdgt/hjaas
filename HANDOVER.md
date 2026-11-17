@@ -90,7 +90,7 @@ Coordinates below are in **plate pixels**. The room plate is 1672×941 and is th
 ### 3.3 Reaction (look up → beam → thumbs-up → back to work)
 The real in-between frames are still being made (`tasks/005-reaction-motion.md`, via video in-betweening). **Build the reaction as a data-driven player now, so the real frames drop in later with no code changes:**
 - Store the reaction in a manifest, e.g. `reaction.json`: an ordered list of `{frame, ms}` plus the beat markers from task 005.
-- The beats are: notice 0.15 s → look up 0.35 s → thumbs-up 0.30 s → hold 0.9 s → back to work 0.5 s (look-up and thumbs-up reversed, eased).
+- The beats are: notice 0.15 s → look up 0.35 s → thumbs-up 0.30 s → hold 0.9 s with one wink (`tasks/015-wink.md`; the wink frames drop in like the reaction frames) → back to work 0.5 s (look-up and thumbs-up reversed, eased).
 - The loop always enters the reaction from, and returns to, the contact frame (frame_01). Wait for the current swing to reach contact before starting, so the hammer never teleports.
 - **Interim content (placeholder until 005 lands):** contact → K1 → K2 and back, using very short dissolves of 120–180 ms between poses.
   - Long crossfades between different poses look ghostly (a double arm), so keep them short.
