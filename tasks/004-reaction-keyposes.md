@@ -1,6 +1,6 @@
 ---
 id: 004-reaction-keyposes
-status: open             # draft | open | delivered | changes-requested | approved
+status: approved             # draft | open | delivered | changes-requested | approved
 frames: 2
 grid: separate images     # one image per pose, each an edit of the base frame
 fps: 1                   # key poses for 005, not played directly
@@ -41,4 +41,8 @@ Make each pose as an **edit of `frames/001-hammer-loop/approved/frame_01.png`**:
 - Thumbs-up hand has correct anatomy (four fingers curled, thumb up) and connects naturally to the arm
 
 ## Revision notes
-_(Wren writes here after each QC round)_
+### Round 1 — Batch 02 (2026-11-17): APPROVED after Wren compositing
+- Quinn's poses are excellent (eye contact, beaming smile, connected thumbs-up arm with five digits) but redrawn at ≈2.45× with small drift. Wren registered them to hammer frame 1 and kept frame 1's box, legs, boots, gripping hand and hammer exactly.
+- K1 (`approved/frame_01.png`): head, neck and upper torso from Quinn's beaming image.
+- K2 (`approved/frame_02.png`): K1 plus the raised thumbs-up arm; the steadying hand and forearm removed from the box (lower area aligned on the box to avoid seams), the approved hammer restored on top, Quinn's transparent-edge halo darkened to the outline colour.
+- Both match the hammer loop pixel-for-pixel outside the head/arm, so the reaction joins the loop with no jump.

@@ -1,6 +1,6 @@
 ---
 id: 005-reaction-motion
-status: draft            # opens once 004 is approved
+status: open             # draft | open | delivered | changes-requested | approved
 frames: 0                # comes from video; Wren extracts and decides
 grid: n/a
 fps: 12
@@ -15,6 +15,18 @@ used_on: contracting scene; plays when a visitor collects a mushroom
 # 005 — Reaction motion (video in-betweens)
 
 **Not a Quinn task.** This one uses a video model with **start and end frame** control (Kling start/end frames, e.g. on Higgsfield, or Seedance 2.0 first/last frame). The person running it uploads two approved images per clip and pastes the prompt below. Wren then turns the videos into frames.
+
+## Recipe on higgsfield.ai (verified against Higgsfield's model catalogue, 2026-11-17)
+The Claude connector is read-only, so the user runs these on the website; Wren checks results via the connector's generation history.
+
+**Model:** Kling v3.0 (start image + end image). **Settings:** duration 3 s (the minimum; Wren re-times), mode `std`, sound **off**, aspect ratio **16:9**.
+**Inputs** (already prepared, 1632×918, flat green, character centred at 2×): `frames/005-reaction-motion/inputs/`
+| Clip | Start image | End image | Prompt |
+|---|---|---|---|
+| A | `A_start_hammer-contact.png` | `A_end_B_start_beaming.png` | prompt A below |
+| B | `A_end_B_start_beaming.png` | `B_end_thumbs-up.png` | prompt B below |
+
+Run each clip twice to start (4 generations), keep all results; Wren picks the best of each. Fallback if Kling 3.0 drifts: Kling 4.0 (image-to-video, start + end, 720p) or Seedance 2.0 `fast` mode (start + end frame, available on Starter).
 
 ## The reaction, beat by beat (what the site plays)
 | Beat | Time | What happens |

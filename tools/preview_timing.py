@@ -21,14 +21,29 @@ TAP = [(1, (160, 220)), (2, (80, 100))]          # small tap: contact -> lift ->
 PAUSE = (1100, 2000)                              # stop and look at the work
 
 
-def schedule(seconds, seed=7):
+BLINK = [(5, 40), (6, 70), (5, 40)]               # half, closed, half (ids 5/6 = blink frames)
+
+
+def with_blink(ms, rnd, seq):
+    """Hold the contact frame for ms, slipping a blink in the middle."""
+    pre = rnd.randint(int(ms * 0.25), int(ms * 0.55))
+    seq.append((1, pre))
+    seq.extend(BLINK)
+    seq.append((1, max(ms - pre - 150, 40)))
+
+
+def schedule(seconds, seed=7, blink=False):
     rnd = random.Random(seed)
     seq, t = [], 0
     swings_until_pause = rnd.randint(3, 6)
     while t < seconds * 1000:
         if swings_until_pause == 0:
             ms = rnd.randint(*PAUSE)
-            seq.append((1, ms)); t += ms
+            if blink:
+                with_blink(ms, rnd, seq)
+            else:
+                seq.append((1, ms))
+            t += ms
             swings_until_pause = rnd.randint(3, 6)
             continue
         if rnd.random() < 0.2:                    # occasionally a couple of quick taps
@@ -37,15 +52,22 @@ def schedule(seconds, seed=7):
                     ms = rnd.randint(lo, hi); seq.append((f, ms)); t += ms
         tempo = rnd.uniform(0.9, 1.15)            # each swing a little faster or slower
         for f, (lo, hi) in SWING:
-            ms = int(rnd.randint(lo, hi) * tempo); seq.append((f, ms)); t += ms
+            ms = int(rnd.randint(lo, hi) * tempo)
+            if blink and f == 1 and ms > 330 and rnd.random() < 0.3:
+                with_blink(ms, rnd, seq)
+            else:
+                seq.append((f, ms))
+            t += ms
         swings_until_pause -= 1
     return seq
 
 
-def composite(frames_dir, scene, place):
+def composite(frames_dir, scene, place, blink_dir=None):
     px, py, ph = (float(v) for v in place.split(","))
     room = Image.open(scene).convert("RGBA")
     frames = [Image.open(p) for p in sorted(Path(frames_dir).glob("frame_*.png"))]
+    if blink_dir:
+        frames += [Image.open(Path(blink_dir) / "blink_half.png"), Image.open(Path(blink_dir) / "blink_closed.png")]
     a1 = np.asarray(frames[0])[..., 3] > 10
     rows = np.where(a1.any(1))[0]
     top, bot = rows.min(), rows.max()
@@ -72,10 +94,11 @@ def main():
     ap.add_argument("--seconds", type=float, default=14)
     ap.add_argument("--fps", type=int, default=30)
     ap.add_argument("--seed", type=int, default=7)
+    ap.add_argument("--blink", help="folder with blink_half.png and blink_closed.png (same size as frame_01)")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
-    imgs = composite(args.frames, args.scene, args.place)
-    seq = schedule(args.seconds, args.seed)
+    imgs = composite(args.frames, args.scene, args.place, args.blink)
+    seq = schedule(args.seconds, args.seed, blink=bool(args.blink))
     with tempfile.TemporaryDirectory() as td:
         for i, im in enumerate(imgs, start=1):
             im.save(f"{td}/f{i}.png")

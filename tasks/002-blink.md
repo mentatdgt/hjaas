@@ -1,6 +1,6 @@
 ---
 id: 002-blink
-status: open             # draft | open | delivered | changes-requested | approved
+status: approved             # draft | open | delivered | changes-requested | approved
 frames: 2
 grid: separate images     # one image per pose, each an edit of the base frame
 fps: 24
@@ -38,4 +38,7 @@ Make each pose as an **edit of `frames/001-hammer-loop/approved/frame_01.png`**:
 - Lid shapes read as a soft, natural blink when played open → half → closed → half → open
 
 ## Revision notes
-_(Wren writes here after each QC round)_
+### Round 1 — Batch 02 (2026-11-17): APPROVED after Wren compositing
+- Quinn delivered 1403×1121 edits (≈2.45× the base, same framing). Registered to `001/approved/frame_01.png` (local face alignment 0–1 px) and only the eye/lid area was swapped in, so nothing else moves.
+- The closed frame had white lenses while the half-blink has skin lids; Wren filled the closed lids with the half-blink's lid skin and kept Quinn's lid lines, so open → half → closed reads as one continuous lid.
+- `approved/blink_half.png`, `approved/blink_closed.png` are full frames (573×458) matching hammer frame 1. The site blinks only on the contact frame (pauses and some longer contact holds): half 40 ms, closed 70 ms, half 40 ms. Preview: `approved/in-scene-with-blinks.mp4`.
