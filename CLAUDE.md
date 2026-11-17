@@ -2,6 +2,9 @@
 
 Pipeline and roles: see README.md. Quinn = ChatGPT (read-only GitHub access; the user uploads its images).
 
+## Building the website
+Start with `HANDOVER.md`: scope, assets, placement, timing, QA and how to report.
+
 ## Site build tooling (for whoever builds the website)
 Installed in this repo (2026-11-17):
 - **Skills** in `.claude/skills/` (Emil Kowalski, MIT): `emil-design-eng` (easing, duration, whether to animate), `choreograph` (sequencing several moving parts, e.g. the paint-in reveal), `animation-performance` (keeping motion inside the frame budget), `review-animations` (strict motion review; it is set to manual invocation, so read `.claude/skills/review-animations/STANDARDS.md` directly as the sign-off checklist).
