@@ -167,7 +167,7 @@ Use the tools installed in this repo (see `CLAUDE.md`). Save all evidence under 
 - **Milestones** (finish and verify each before the next):
   1. Scaffold and asset pipeline, with the static room and Rachel placed correctly.
   2. Hammer loop and blinks.
-  3. Mushroom hunt (10), animated counter, hints and placeholder reaction.
+  3. Mushroom hunt (10), animated counter, the 60 s wiggle and placeholder reaction.
   4. Intro reveal, including the logo's entrance.
   5. Mobile crop and pan.
   6. Logo glint, 10/10 unlock and contact form.
