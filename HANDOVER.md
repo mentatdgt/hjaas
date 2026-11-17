@@ -80,11 +80,10 @@ Coordinates below are in **plate pixels**. The room plate is 1672×941 and is th
   - The rim gets a quick glint, the same glint as the logo.
 - Each find feels rewarding but never noisy. Reduced motion: the number simply cross-fades.
 
-**Hints, so nobody gets stuck**
-- The contact form sits behind all 10, so a stuck visitor can never reach her. Hints are required, not optional.
-- After about 25 s without a find, one unfound mushroom gives a single tiny wiggle.
-- After about 60 s, the counter offers a quiet "Need a hint?". Tapping it pans to, and briefly highlights, the area of one unfound mushroom (the area, not the exact spot).
-- Keyboard users can Tab through the mushrooms. That's the accessible route and is acceptable.
+**One hint, small and discreet**
+- After 60 s without a find, one unfound mushroom gives a single tiny wiggle: a few degrees of rotation, under 400 ms, once.
+- There is nothing else: no hint button, no messages, no highlights, no panning.
+- Keyboard users can Tab through the mushrooms; that's the accessible route.
 
 **Remember progress** per visitor with `localStorage`, wrapped in try/catch: found mushrooms and whether the form is unlocked.
 
@@ -153,7 +152,7 @@ On first load the room should appear as if painted in by brush strokes, in chunk
 Use the tools installed in this repo (see `CLAUDE.md`). Save all evidence under `site/qa/`.
 
 1. **Playwright:**
-   - Record a video of the intro, a full minute of the hammer loop, one find (mushroom flight, counter animation, reaction), a hint, and the 10/10 finale with the counter turning into the button and the form opening. Do this on desktop (1440×900) and iPhone portrait (390×844, WebKit).
+   - Record a video of the intro, a full minute of the hammer loop, one find (mushroom flight, counter animation, reaction), the 60 s wiggle, and the 10/10 finale with the counter turning into the button and the form opening. Do this on desktop (1440×900) and iPhone portrait (390×844, WebKit).
    - Take screenshots of every state.
 2. **Chrome DevTools performance traces:**
    - Trace the intro reveal, a find with the counter animation, the 10/10 unlock and a phone pan with 4× CPU throttling and mobile emulation.
