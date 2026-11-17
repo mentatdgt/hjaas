@@ -1,6 +1,6 @@
 ---
 id: 012-logo-metal-pin
-status: open             # draft | open | delivered | changes-requested | approved
+status: superseded       # by 013-logo-metal-pin-round2. draft | open | delivered | changes-requested | approved
 type: logo-options
 frames: 6
 grid: 3x2                # six options on one sheet, for review
