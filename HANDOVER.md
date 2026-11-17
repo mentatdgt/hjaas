@@ -115,12 +115,14 @@ On first load the room should appear as if painted in by brush strokes, in chunk
 - No horizontal page scroll and no layout shift. Test at 390×844 (iPhone) and 412×915 (Android).
 
 ### 3.6 Logo, with the glint
-- The final logo is a photographed metal pin and is not approved yet (`tasks/014-logo-tape-measure.md`).
-- Build a logo slot with a placeholder: "HJaaS" set in a tasteful retro display face (self-host an open-licence font), on a simple pin-shaped badge.
+- **Use `assets/logo/tape-measure-temp.png` now.** It's a 564×333 transparent PNG: a chrome tape-measure reel with a mustard tape reading "HJaaS". It's the user's chosen design, cut out by Wren. A sharper final version (`tasks/014-logo-tape-measure.md`) will replace it later.
+- Show it at about 160–220 CSS px wide on desktop and about 120–140 px on phones. Don't recolour or redraw it.
+- **Favicon (temporary):** crop the reel from that same image to a square and export it at 32 and 180 px.
 - Implement the **glint** in code now:
   - A diagonal highlight sweeps across, clipped to the logo's shape via mask, every ~9 s and on hover/focus.
   - Each sweep takes about 600–700 ms, with an ease-in-out that is fast in the middle.
-  - Swapping in the final PNG (a die-cut pin with transparency) later must need only a file swap.
+  - It suits this logo: let the glint travel across the chrome reel and along the tape.
+  - Swapping in the final PNG later must need only a file swap, with the mask taken from the image's alpha.
 - The logo enters as part of the intro (3.4), after Rachel.
 
 ### 3.7 Unlock: the contact form (the prize for 10/10)
@@ -163,7 +165,8 @@ Use the tools installed in this repo (see `CLAUDE.md`). Save all evidence under 
 5. **Watch your own recordings** for the user's past complaints: jerky rhythm, unnatural blinks, pose pops, disconnected hands, framing that's too tight, flicker on pose switch, and any edge fringe around Rachel.
 
 ## 6. How to work
-- Create the branch `site/scene-1`. Commit at each milestone with clear messages, and push. **Don't merge to `main`**; Wren reviews first. If a push fails on authentication, stop and tell the user.
+- Create the branch `site/scene-1`. Commit at each milestone with clear messages, and push. **Don't merge to `main`**; Wren reviews first.
+- If a push fails, keep committing locally, carry on, and say so in the report.
 - **Milestones** (finish and verify each before the next):
   1. Scaffold and asset pipeline, with the static room and Rachel placed correctly.
   2. Hammer loop and blinks.
@@ -172,11 +175,24 @@ Use the tools installed in this repo (see `CLAUDE.md`). Save all evidence under 
   5. Mobile crop and pan.
   6. Logo glint, 10/10 unlock and contact form.
   7. Full QA pass.
-- Start by posting a short plan, then proceed without waiting for approval. Ask the user only when genuinely blocked.
+- Start by posting a short plan, then proceed without waiting for approval.
+
+### Working unattended (overnight run)
+The user is asleep while you build. **Do not stop to ask questions.**
+- **When something is unclear,** take the most reasonable reading of this brief, note the decision under "Decisions I made" in the report, and keep going.
+- **If a tool fails** (an MCP server won't connect, a trace errors), retry once, then use a fallback and note it. For example, write a small Playwright script and run it with `npx playwright`, or take screenshots instead of video.
+- **Order of priority if time runs short:**
+  1. Milestones 1–3 must be solid. They're the heart of it: Rachel hammering beautifully, and the hunt with its counter.
+  2. Then the intro, mobile, then the logo glint and the unlock.
+  3. A smaller set of features with superb motion beats everything half-finished.
+- **Commit after every milestone,** so a partial night still leaves a working, viewable site on the branch.
+- Leave `wren-inbox/` alone. It's Wren's download folder and is ignored by git.
+- Wren is still preparing the real reaction frames, the sharper 2× Rachel frames and the wink. Keep the placeholder reaction and the current frames; they will drop in as file swaps.
 - The user is non-technical. Tell them how to view the site: the exact command (`cd site && npm install && npm run dev`) and the local URL.
 
 ## 7. Final report (paste in chat, also save as `site/qa/REPORT.md`)
 - ✅ / ❌ / ⚠️ for every requirement in sections 3 and 5, each with an evidence path.
 - The performance numbers from the traces.
-- **What is placeholder:** the reaction frames, the logo, the form endpoint and all copy.
+- **What is placeholder:** the reaction frames, the logo (temp cut-out), the form endpoint and all copy.
+- **Decisions I made:** every judgement call you made without the user, with one line on why.
 - Anything you'd change in the art pipeline to make the site better. Address that to Wren.
