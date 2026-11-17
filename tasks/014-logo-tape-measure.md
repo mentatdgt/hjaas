@@ -1,6 +1,6 @@
 ---
 id: 014-logo-tape-measure
-status: changes-requested   # draft | open | delivered | changes-requested | approved
+status: delivered           # draft | open | delivered | changes-requested | approved
 type: logo-options
 frames: 6
 grid: separate images       # six images, each an EDIT of the anchor image (not a sheet)
@@ -72,3 +72,12 @@ The delivery (`reference/logo/014-round1-drifted.png`) re-imagined the design in
 - Option 6 put the letters on top of the case instead of engraving them.
 
 **Fix:** make every image an edit of `reference/logo/anchor-tape-measure.png` (rules above), one image per variation, no sheet.
+
+### Round 2 (2026-11-17): DELIVERED, waiting for the user's pick
+Contact sheet: `reference/logo/014-round2-contact.png`. All six now stay faithful to the anchor (silver reel face, chrome dome, mustard wavy tape, same letter style). The remaining drift is minor: brighter mustard and slightly different engraving.
+- **Wren's read:**
+  - #3 (toadstool hook) best ties the logo to the site's mushroom hunt.
+  - #2 (longer tape) has the most legible wordmark for a header.
+  - #4 (five services) gets cluttered at header size.
+  - #5 (orbit) is distinctive, but its letters are small.
+  - #6 compact: the word won't read at 32 px in any version, so the favicon should be the reel alone (no text). Attempt 2 has the largest letters, for 64 px and up (e.g. a social avatar).
