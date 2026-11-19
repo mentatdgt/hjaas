@@ -445,27 +445,34 @@ const run = {
       const seams = await page.evaluate(async () => {
         const h = window.__hj;
         h.player.stop();
-        const frames = await (await fetch('./assets/scene2/rachel/frames.json')).json();
+        // Narrow screens are given the lighter set of her frames (review 04): compare within the set in use.
+        const dir = h.scene.memory.canvasWidth === 980 ? 'rachel' : 'rachel-1.5x';
+        const frames = await (await fetch(`./assets/scene2/${dir}/frames.json`)).json();
         const canvas = document.querySelector('.hj-rachel canvas');
         const ctx = canvas.getContext('2d');
-        const grab = (pose) => { h.rachel.show(pose); return ctx.getImageData(0, 0, canvas.width, canvas.height).data; };
+        // A clip frame is decoded only when asked for: ask, as a step of her routine would, and wait for it.
+        const grab = async (pose) => {
+          if (!h.rachel.has(pose)) { h.scene.ahead([pose]); while (!h.rachel.has(pose)) await new Promise((r) => setTimeout(r, 4)); }
+          h.rachel.show(pose);
+          return ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+        };
         // Chrome moves a canvas from the graphics card to main memory the first time its pixels are read, and
         // draws slightly differently there. One throwaway read first, so everything compared was drawn the same way.
-        for (let n = 0; n < 6; n++) grab(Object.keys(frames.stills)[n % 2]);
+        for (let n = 0; n < 6; n++) await grab(Object.keys(frames.stills)[n % 2]);
         const s = canvas.width / frames.canvas.w;
         const rows = [];
         for (const [name, clip] of Object.entries(frames.clips)) {
-          const still = grab(clip.base).slice();
+          const still = (await grab(clip.base)).slice();
           h.rachel.show(Object.keys(frames.stills).find((n) => n !== clip.base));
-          const stillAgain = grab(clip.base);
+          const stillAgain = await grab(clip.base);
           let redraw = 0;
           for (let k = 0; k < still.length; k++) if (still[k] !== stillAgain[k]) redraw++;
           let outside = 0; let ring = 0; let ringCount = 0; let ringSum = 0; let ringOver = 0; let firstCut = 0; let figure = 0;
           // Every frame of the clip, against its still.
           for (let i = 0; i < clip.frames.length; i++) {
-            const img = new Image(); img.src = `./assets/scene2/rachel/${clip.frames[i].replace('.png', '.webp')}`; await img.decode();
+            const img = new Image(); img.src = `./assets/scene2/${dir}/${clip.frames[i].replace('.png', '.webp')}`; await img.decode();
             const x0 = clip.x * s; const y0 = clip.y * s; const x1 = (clip.x + img.naturalWidth) * s; const y1 = (clip.y + img.naturalHeight) * s;
-            const data = grab(`${name}#${i}`);
+            const data = await grab(`${name}#${i}`);
             for (let y = 0; y < canvas.height; y++) for (let x = 0; x < canvas.width; x++) {
               const k = (y * canvas.width + x) * 4;
               const d = Math.max(Math.abs(data[k] - still[k]), Math.abs(data[k + 1] - still[k + 1]), Math.abs(data[k + 2] - still[k + 2]), Math.abs(data[k + 3] - still[k + 3]));
@@ -482,7 +489,7 @@ const run = {
           rows.push({ clip: name, frames: clip.frames.length, stillRedrawnDiffers: redraw, largestDifferenceOutsidePatch: outside, meanDifferenceAtPatchEdge: Math.round((ringSum / ringCount) * 100) / 100, shareOfEdgePixelsOver24: `${Math.round((ringOver / ringCount) * 10000) / 100}%`, shareOfFigureChangingAtFirstFrame: `${Math.round((firstCut / figure) * 1000) / 10}%` });
         }
         h.player.start();
-        return { canvas: [canvas.width, canvas.height], scale: Math.round(s * 1000) / 1000, rows };
+        return { set: dir, canvas: [canvas.width, canvas.height], scale: Math.round(s * 1000) / 1000, rows };
       });
       report[`seams-${tag}`] = seams;
       say(`seams ${tag}`, seams);

@@ -1,0 +1,24 @@
+{
+ "cpu-4x": {
+  "set": "1.5x",
+  "posesShown": 400,
+  "framesSheHadToSkip": 0,
+  "fullReaction": true,
+  "frames": 3289,
+  "medianFrameMs": 17,
+  "longestFrameMs": 83,
+  "over50": 2,
+  "peakMB": 66.9
+ },
+ "cpu-6x": {
+  "set": "1.5x",
+  "posesShown": 401,
+  "framesSheHadToSkip": 0,
+  "fullReaction": true,
+  "frames": 3281,
+  "medianFrameMs": 17,
+  "longestFrameMs": 167,
+  "over50": 4,
+  "peakMB": 66.9
+ }
+}

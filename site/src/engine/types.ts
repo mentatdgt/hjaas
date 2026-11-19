@@ -79,6 +79,11 @@ export interface ClipCast {
   frames: string;
   /** The routine manifest, in that folder. */
   routine: string;
+  /**
+   * A lighter copy of the same frames (made by `npm run assets`, with its own frame manifest), used when
+   * the picture is shown less than `below` CSS px wide: phones, where memory is short.
+   */
+  small?: { dir: string; below: number };
 }
 
 export type CharacterConfig = FrameCast | ClipCast;

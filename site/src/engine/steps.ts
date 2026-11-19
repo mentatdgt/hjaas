@@ -3,6 +3,12 @@
 export interface Step {
   pose: string;
   ms: number;
+  /**
+   * Poses that may be shown shortly after this one and are not kept in memory all the time (clip frames:
+   * see reel.ts). The player passes the list on as each step begins, so they are decoded by the time they
+   * are needed. Left out by routines whose every pose is always ready.
+   */
+  soon?: readonly string[];
 }
 
 export type Rng = () => number;

@@ -49,6 +49,7 @@ Inside `src/engine/`:
 | `edge.ts` | The painting's watercolour edge: it fades into the paper along a wandering line, with rounded corners. Also places each mushroom's tap box clear of the fade. |
 | `character.ts`, `player.ts`, `steps.ts` | A character's canvas (whole frames, or a patch over a still), her placement on the plate, and the player that shows her poses. |
 | `clips.ts` | Reads Wren's delivered format (`frames.json` + `routine.json`): stills, clips of patches, the routine, blinks, the reaction and its entry rule. |
+| `reel.ts` | Keeps a clip character's memory down: her patches stay as downloaded and are decoded only a few frames ahead of being shown, then given back. |
 | `routine.ts` | A simpler loop manifest for whole-frame characters: loops, cycles, transitions, blinks. |
 | `reaction.ts` | Loads and plays `reaction.json` exactly as delivered. |
 | `mushrooms.ts` | Tap boxes, the short trip to the caption, the hint wiggle. |
@@ -85,6 +86,12 @@ when someone opens its address directly.
   copied as delivered by `npm run assets`; the config only names them.
 
 A scene's character is fetched when the scene is first opened: her stills first, then her clips.
+
+**Memory.** A clip character's stills stay decoded; her clip frames do not (all of the lab's, decoded, would
+be over 200 MB). Each step of the routine names the frames that may follow it, `reel.ts` decodes those and
+gives the others back, and the reaction's frames stay decoded while the scene is on show. `npm run assets`
+also makes a lighter set of the lab frames, `scene2/rachel-1.5x/` (three quarters of the size, with its own
+`frames.json`), which the scene's config (`small`) uses when the picture is shown under 900 px wide.
 
 ## Swapping art
 

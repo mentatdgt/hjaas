@@ -30,6 +30,8 @@ export class Player {
 
   /** Called on every pose change. Used by QA to log the rhythm. */
   onPose: ((pose: string, at: number) => void) | null = null;
+  /** Called as each step begins: a step may say which poses to have ready next (steps.ts, `soon`). */
+  onStep: ((step: Step) => void) | null = null;
 
   constructor(character: Character, loop: Schedule) {
     this.rachel = character;
@@ -69,6 +71,7 @@ export class Player {
     this.elapsed = 0;
     this.step = { pose: this.rest, ms: 0 };
     this.rachel.show(this.rest);
+    this.onStep?.(this.step);
   }
 
   /** Swap the rhythm (reduced motion on or off). Takes effect at the next step. */
@@ -145,6 +148,7 @@ export class Player {
   private enter(step: Step): void {
     this.step = step;
     this.rachel.show(step.pose);
+    this.onStep?.(step);
     this.onPose?.(step.pose, performance.now());
   }
 }

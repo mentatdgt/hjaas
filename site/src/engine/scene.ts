@@ -1,11 +1,12 @@
 // One scene, built from its config: the plate, the character on it, and the ten hidden mushrooms.
 // A scene knows nothing about the page around it; site.ts puts it in the window and takes it out again.
-import { PLATE, asset, idle, loadFrame, loadFrames, loadPlate } from './assets';
+import { PLATE, asset, decodeBlob, fetchBlob, idle, loadFrames, loadPlate } from './assets';
 import { Character } from './character';
 import { edgeAlpha, edgeCanvas, type EdgeStyle } from './edge';
 import { checkClips, clipPose, clipReaction, clipSchedule, clipsInUse, type ClipFrames, type ClipRoutine } from './clips';
 import { Hunt } from './mushrooms';
 import { Player, type Schedule } from './player';
+import { Reel } from './reel';
 import { loadReaction, type Reaction } from './reaction';
 import { checkRoutine, routineFrames, routineSchedule, type RoutineManifest } from './routine';
 import { holdSchedule, type Rng } from './steps';
@@ -28,6 +29,8 @@ export interface SceneHost {
   onLayout: () => void;
   /** QA: called on every pose change. */
   onPose?: (pose: string, at: number) => void;
+  /** How wide the picture is shown, in CSS px (the window onto the room, not the room itself). */
+  shownWidth: () => number;
   /** The painting's edge: which style, and the paper it fades into, as red, green, blue. */
   edge: { style: EdgeStyle; seed: (scene: string) => number; paper: [number, number, number] };
 }
@@ -44,6 +47,13 @@ interface Cast {
    * moments. `reactions: false` leaves out what only a reaction uses.
    */
   more: (reactions: boolean) => Promise<void>;
+  /** The poses that may be shown soon (see steps.ts). Only a character with a reel listens. */
+  ahead?: (poses: readonly string[]) => void;
+  /** The scene is on show, or out of sight: a reel decodes its frames, or gives them back. */
+  wake?: () => void;
+  sleep?: () => void;
+  /** QA: decoded image memory, in bytes. */
+  memory?: () => Record<string, number>;
 }
 
 const json = async <T>(path: string): Promise<T> => {
@@ -88,23 +98,36 @@ async function frameCast(config: SceneConfig, cast: FrameCast, host: SceneHost):
   };
 }
 
-/** A character delivered as stills and clips of patches (scene 2; see clips.ts). */
+/** A character delivered as stills and clips of patches (scene 2; see clips.ts and reel.ts). */
 async function clipCast(config: SceneConfig, cast: ClipCast, host: SceneHost): Promise<Cast> {
   const dir = config.assets + cast.dir;
-  const [frames, routine] = await Promise.all([json<ClipFrames>(dir + cast.frames), json<ClipRoutine>(dir + cast.routine)]);
+  // A narrow screen gets the lighter set of the same frames, if the scene has one.
+  const light = cast.small && host.shownWidth() < cast.small.below ? config.assets + cast.small.dir : null;
+  let art = light ?? dir;
+  const [frames, routine] = await Promise.all([
+    json<ClipFrames>(art + cast.frames).catch((error) => {
+      if (!light) throw error;
+      art = dir;
+      return json<ClipFrames>(dir + cast.frames);
+    }),
+    json<ClipRoutine>(dir + cast.routine),
+  ]);
   const problems = checkClips(frames, routine);
   if (problems.length) throw new Error(`${config.id}: ${problems.join(' ')}`);
+  const load = (file: string): Promise<Blob> => fetchBlob(asset(art + webp(file)));
 
-  // The stills first: they are all she needs to start her routine.
+  // The stills first: they are all she needs to start her routine, and they stay decoded.
   const names = Object.keys(frames.stills);
-  const stills = await Promise.all(names.map((name) => loadFrame(asset(dir + webp(frames.stills[name])))));
+  const stills = await Promise.all(names.map((name) => load(frames.stills[name]).then(decodeBlob)));
   const c = frames.canvas;
   const character = new Character(new Map(names.map((name, i) => [name, stills[i]])), {
     rest: routine.reaction?.enter_from ?? names[0],
     placement: { kind: 'box', x: c.plate_x, y: c.plate_y, width: c.plate_w, height: c.plate_h },
   });
 
-  // Then the clips, when asked: the routine's own, then the reaction's.
+  // Then the clips, when asked: the routine's own, then the reaction's. They are only downloaded here;
+  // the reel decodes each frame shortly before it is shown.
+  const reel = new Reel(character);
   const loaded = new Set<string>();
   const inUse = clipsInUse(routine);
   const fetching = new Map<string, Promise<void>>();
@@ -115,7 +138,7 @@ async function clipCast(config: SceneConfig, cast: ClipCast, host: SceneHost): P
         const clip = frames.clips[name];
         for (let i = 0; i < clip.frames.length; i++) {
           await idle();
-          character.addPatch(clipPose(name, i), { base: clip.base, x: clip.x, y: clip.y, frame: await loadFrame(asset(dir + webp(clip.frames[i]))) });
+          reel.add(clipPose(name, i), { blob: await load(clip.frames[i]), base: clip.base, x: clip.x, y: clip.y });
         }
         loaded.add(name);
       })();
@@ -128,16 +151,24 @@ async function clipCast(config: SceneConfig, cast: ClipCast, host: SceneHost): P
     return pending;
   };
   const full = clipReaction(frames, routine);
+  // A reaction can start at any moment, so its clip frames stay decoded while the scene is on show.
+  const reactionFrames = [...new Set((full?.steps ?? []).map((step) => step.pose).filter((pose) => !(pose in frames.stills)))];
   return {
     character,
     routine: () => clipSchedule(frames, routine, host.rnd, (name) => loaded.has(name)),
-    // The full reaction needs every clip: its own, and the routine's for the way back from writing.
-    reaction: () => (full && [...inUse.routine, ...inUse.reaction].every((name) => loaded.has(name)) ? full : null),
+    // The full reaction needs every clip: its own, decoded, and the routine's for the way back from writing.
+    reaction: () => (full && [...inUse.routine, ...inUse.reaction].every((name) => loaded.has(name)) && reel.ready(reactionFrames) ? full : null),
     still: full?.still ?? [],
     more: async (reactions) => {
       for (const name of inUse.routine) await fetchClip(name).catch(() => {});
-      if (reactions) for (const name of inUse.reaction) await fetchClip(name).catch(() => {});
+      if (!reactions) return;
+      reel.pin(reactionFrames);
+      for (const name of inUse.reaction) await fetchClip(name).catch(() => {});
     },
+    ahead: (poses) => reel.want(poses),
+    wake: () => reel.wake(),
+    sleep: () => reel.sleep(),
+    memory: () => ({ ...character.bytes, clipFrames: reel.bytes, clipFramesPeak: reel.peak, canvasWidth: c.w }),
   };
 }
 
@@ -229,6 +260,8 @@ export class Scene {
    * time this fetches them; after that it resolves at once.
    */
   enter(): Promise<void> {
+    // A scene come back to: its clip frames are decoded again while the brush is still at work.
+    this.cast?.wake?.();
     if (this.character || !this.config.character) return Promise.resolve();
     this.casting ??= Scene.castFor(this.config, this.host).then((cast) => {
       if (cast) this.attach(cast);
@@ -243,6 +276,7 @@ export class Scene {
     if (character.shadow) this.plate.insertBefore(character.shadow, this.hunt.el);
     this.plate.insertBefore(character.el, this.edge);
     this.player = new Player(character, this.rhythm());
+    this.player.onStep = (step) => cast.ahead?.(step.soon ?? []);
     if (this.host.onPose) this.player.onPose = this.host.onPose;
     character.resize();
   }
@@ -254,19 +288,38 @@ export class Scene {
   /** Start, or carry on with, the idle routine. Nothing runs while the tab is hidden. */
   work(): void {
     this.working = true;
+    this.cast?.wake?.();
     if (!document.hidden) this.player?.start();
   }
 
-  /** Stop on the current pose (the visitor has left for another scene). work() carries on from it. */
+  /**
+   * Stop on the current pose (the visitor has left for another scene). work() carries on from it. Clip
+   * frames held in memory are given back until then.
+   */
   hold(): void {
     this.working = false;
     this.player?.stop();
+    this.cast?.sleep?.();
   }
 
-  /** Stop and go back to the rest pose, dropping any reaction (the room is about to be painted again). */
+  /**
+   * Stop and go back to the rest pose, dropping any reaction (the room is about to be painted again). Her
+   * routine then starts from the top: carried on from the middle of a clip, it would jump.
+   */
   settle(): void {
     this.working = false;
     this.player?.settle();
+    this.player?.setLoop(this.rhythm());
+  }
+
+  /** QA: ask for clip frames by name, as a step of her routine would (she must be stopped, or she asks again). */
+  ahead(poses: readonly string[]): void {
+    this.cast?.ahead?.(poses);
+  }
+
+  /** QA: what her decoded images take, in bytes. */
+  get memory(): Record<string, number> | null {
+    return this.cast?.memory?.() ?? null;
   }
 
   /** The tab was hidden or shown: she picks up on the same pose when it comes back. */

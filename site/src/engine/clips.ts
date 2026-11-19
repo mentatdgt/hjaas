@@ -15,6 +15,10 @@
 // routine when a reaction is waiting; the routine then finishes the frame it is on and takes the shortest
 // way back to that still: a clip being played is run back to its start, and from the writing loop the
 // transition is played in reverse, as routine.json's note asks.
+//
+// Clip frames are large, so they are not all kept decoded (reel.ts). Each step of the routine therefore says
+// which clip frames may be shown soon after it (`soon`): the next few if nothing interrupts, and the first
+// few of the way home, in case a reaction is asked for.
 import type { Rng, Step } from './steps';
 
 /** A time in ms: fixed, or rolled between two values each time. */
@@ -54,6 +58,14 @@ export const clipPose = (clip: string, index: number): string => `${clip}#${inde
 
 /** A hold must leave at least this long before and after a blink. */
 const BLINK_MARGIN_MS = 80;
+
+/**
+ * How many steps ahead clip frames are asked for. A clip always follows a hold or another clip, so the first
+ * frames have at least a hold's length to be decoded in, and the rest at least AHEAD frame times each.
+ */
+export const AHEAD = 5;
+/** How many frames of the way home are kept ready, in case a reaction is asked for at the next step. */
+export const HOME_READY = 3;
 
 /** Everything wrong with the two manifests, in plain words. An empty list means they can be played. */
 export function checkClips(frames: ClipFrames, routine: ClipRoutine): string[] {
@@ -202,13 +214,25 @@ export function* clipSchedule(
     }
   }
 
+  /** The clip frames among these steps. */
+  const clipFrames = (steps: readonly Step[]): string[] => [...new Set(steps.map((step) => step.pose).filter((pose) => !(pose in frames.stills)))];
+
   for (;;) {
-    for (const moment of pass()) {
-      const signal = yield moment.step;
-      if (signal !== 'react' || !rest || moment.step.pose === rest) continue;
+    // A whole pass is rolled at once, so that every step can say what follows it.
+    const moments = [...pass()];
+    for (let i = 0; i < moments.length; i++) {
+      const { step, home } = moments[i];
+      const soon = clipFrames([
+        ...moments.slice(i + 1, i + 1 + AHEAD).map((moment) => moment.step),
+        // Should a reaction be asked for during this step or the next: the start of the way home from each.
+        ...home.slice(0, HOME_READY),
+        ...(moments[i + 1]?.home.slice(0, HOME_READY) ?? []),
+      ]);
+      const signal = yield { ...step, soon };
+      if (signal !== 'react' || !rest || step.pose === rest) continue;
       // A reaction is waiting: go home, then offer the rest still. The player starts the reaction on it,
       // and afterwards the routine begins again from the top.
-      for (const step of moment.home) yield step;
+      for (let j = 0; j < home.length; j++) yield { ...home[j], soon: clipFrames(home.slice(j + 1, j + 1 + AHEAD)) };
       yield { pose: rest, ms: 300 };
       break;
     }

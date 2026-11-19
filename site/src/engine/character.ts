@@ -1,5 +1,5 @@
 // A scene's character: one canvas that shows one pose at a time, placed on the plate as her scene says.
-import { PLATE, type Frame, frameSize, idle } from './assets';
+import { PLATE, type Frame, frameSize, idle, releaseFrame } from './assets';
 import type { Placement } from './types';
 
 /** What a character needs to know about herself to be drawn. */
@@ -90,6 +90,8 @@ export class Character {
   private readonly source: { w: number; h: number };
   private readonly patches = new Map<string, Patch>();
   private pose: string;
+  /** QA: how many times she was asked for a pose that was not in memory (she stays on the one before). */
+  missed = 0;
   /** The whole-canvas frame now on the canvas (under any patch). */
   private drawn = '';
   /** The rectangle of that frame now covered by a patch ('' when it is clean). */
@@ -144,8 +146,31 @@ export class Character {
 
   /** Add a clip frame: a patch over one of her stills. */
   addPatch(name: string, patch: Patch): void {
+    const old = this.patches.get(name);
     this.patches.set(name, patch);
-    this.warm(patch.frame);
+    if (old && old.frame !== patch.frame) releaseFrame(old.frame);
+  }
+
+  /**
+   * Take a clip frame away again and give its pixels back (reel.ts decides when). The frame she is showing
+   * is never taken: her canvas may have to be drawn again, after a resize.
+   */
+  dropPatch(name: string): void {
+    const patch = this.patches.get(name);
+    if (!patch || name === this.pose) return;
+    this.patches.delete(name);
+    releaseFrame(patch.frame);
+  }
+
+  /** What her decoded stills and her canvases take, in bytes (clip frames are counted by the reel). */
+  get bytes(): { stills: number; canvases: number } {
+    let stills = 0;
+    for (const frame of this.frames.values()) {
+      const { w, h } = frameSize(frame);
+      stills += w * h * 4;
+    }
+    const scratch = this.scratch?.canvas;
+    return { stills, canvases: this.canvas.width * this.canvas.height * 4 + (scratch ? scratch.width * scratch.height * 4 : 0) };
   }
 
   has(name: string): boolean {
@@ -190,7 +215,10 @@ export class Character {
   /** Switch pose. One draw call on one canvas: there is never a frame with two poses or none. */
   show(name: string): void {
     if (name === this.pose) return;
-    if (!this.has(name)) return;
+    if (!this.has(name)) {
+      this.missed++;
+      return;
+    }
     this.pose = name;
     this.draw();
   }

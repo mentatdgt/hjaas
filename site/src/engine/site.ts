@@ -353,6 +353,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       target: () => caption.targetRect(),
       rnd,
       still,
+      shownWidth: () => frame.clientWidth,
       onFind: (spot: Spot) => {
         quietSeconds = 0;
         found.add(spot.id);

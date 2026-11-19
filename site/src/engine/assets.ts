@@ -52,6 +52,35 @@ async function decodeFrame(url: string): Promise<Frame> {
   return loadImage(url);
 }
 
+/** A file's bytes, as downloaded: an image kept this way takes a fraction of its decoded size. */
+export async function fetchBlob(url: string): Promise<Blob> {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`${url}: ${response.status}`);
+  return response.blob();
+}
+
+/** Decode an image from its downloaded bytes. Give the pixels back with releaseFrame() when done with it. */
+export async function decodeBlob(blob: Blob): Promise<Frame> {
+  if (typeof createImageBitmap === 'function') {
+    try {
+      return await createImageBitmap(blob);
+    } catch {
+      // Fall through to a decoded <img>.
+    }
+  }
+  const url = URL.createObjectURL(blob);
+  try {
+    return await loadImage(url);
+  } finally {
+    URL.revokeObjectURL(url);
+  }
+}
+
+/** Give a frame's pixels back to the browser. The frame must not be drawn again. */
+export function releaseFrame(frame: Frame): void {
+  if (!(frame instanceof HTMLImageElement)) frame.close();
+}
+
 /** A scene's plate, downloaded and decoded. Resolves with the address to give the scene's <img>. */
 export async function loadPlate(path: string): Promise<string> {
   // An <img> request, not fetch(): it is the only kind WebKit matches to the image preload in index.html

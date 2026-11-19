@@ -3,7 +3,7 @@
 import { describe, expect, it } from 'vitest';
 import framesJson from '../../public/assets/scene2/rachel/frames.json';
 import routineJson from '../../public/assets/scene2/rachel/routine.json';
-import { checkClips, clipPose, clipReaction, clipSchedule, clipsInUse, type ClipFrames, type ClipRoutine, type Signal } from './clips';
+import { AHEAD, HOME_READY, checkClips, clipPose, clipReaction, clipSchedule, clipsInUse, type ClipFrames, type ClipRoutine, type Signal } from './clips';
 import { seeded, type Step } from './steps';
 
 const frames = framesJson as unknown as ClipFrames;
@@ -185,6 +185,91 @@ describe('the reaction entry rule', () => {
     // The player plays the reaction here. Then:
     const after = Array.from({ length: 4 }, () => schedule.next().value.pose);
     expect(after.slice(0, 3)).toEqual([REST, 'A2_mist_squeeze', 'A3_mist_lift']);
+  });
+});
+
+// Clip frames are decoded only shortly before they are shown (reel.ts), so each step has to name the ones
+// that may follow it. If a frame were shown that no earlier step had asked for, she would skip it.
+describe('what each step asks to have ready', () => {
+  const isClipFrame = (pose: string): boolean => !(pose in frames.stills);
+
+  /** Play `n` steps, telling the routine a reaction is waiting at the steps `reactAt` picks, as the player does. */
+  const play = (n: number, seed: number, reactAt: (step: Step, i: number) => boolean = () => false): Step[] => {
+    const schedule = clipSchedule(frames, routine, seeded(seed));
+    const steps: Step[] = [];
+    let waiting = false;
+    for (let i = 0; i < n; i++) {
+      const step = schedule.next(waiting ? 'react' : undefined).value;
+      steps.push(step);
+      // The player starts the reaction on the rest still; the routine then begins again.
+      if (waiting && step.pose === REST) waiting = false;
+      else if (!waiting && reactAt(step, i)) waiting = true;
+    }
+    return steps;
+  };
+
+  /** Every clip frame shown must have been in the list of the step before it, or be the frame already up. */
+  const unasked = (steps: Step[]): string[] => {
+    const missed: string[] = [];
+    for (let i = 1; i < steps.length; i++) {
+      const { pose } = steps[i];
+      if (isClipFrame(pose) && pose !== steps[i - 1].pose && !steps[i - 1].soon?.includes(pose)) missed.push(`${steps[i - 1].pose} -> ${pose}`);
+    }
+    return missed;
+  };
+
+  it('names every clip frame at least one step before it is shown', () => {
+    for (const seed of [1, 2, 3, 4, 5]) expect(unasked(play(4000, seed))).toEqual([]);
+  });
+
+  it('does so on the way home too, whenever a reaction is asked for', () => {
+    for (const seed of [1, 2, 3]) {
+      // A reaction at every 37th step, then every 61st: from sprays, holds, both clips and both directions.
+      for (const every of [37, 61, 113]) expect(unasked(play(6000, seed, (_, i) => i % every === every - 1))).toEqual([]);
+    }
+    // And at every single frame of the way in, the loop and the way out.
+    for (const clip of ['mist_to_write', 'write_loop']) {
+      for (let frame = 0; frame < lengths[clip]; frame++) {
+        for (const nth of [1, 2]) {
+          let seen = 0;
+          expect(unasked(play(1500, 7, (step) => step.pose === clipPose(clip, frame) && ++seen === nth))).toEqual([]);
+        }
+      }
+    }
+  });
+
+  it('gives the first frame of a clip at least 600 ms to be decoded in', () => {
+    const steps = play(3000, 9);
+    const first = clipPose('mist_to_write', 0);
+    let checked = 0;
+    for (let i = 1; i < steps.length; i++) {
+      if (steps[i].pose !== first || steps[i - 1].pose !== REST) continue;
+      // The time from the first step that names it to the moment it is shown (a blink may split the hold).
+      let notice = 0;
+      for (let j = i - 1; j >= 0 && steps[j].soon?.includes(first); j--) notice += steps[j].ms;
+      expect(notice).toBeGreaterThanOrEqual(600);
+      checked++;
+    }
+    expect(checked).toBeGreaterThan(5);
+  });
+
+  it('keeps the way back ready all through the writing loop', () => {
+    const last = lengths.mist_to_write - 1;
+    for (const step of play(3000, 9)) {
+      if (clipOf(step.pose) !== 'write_loop') continue;
+      for (let k = 0; k < HOME_READY; k++) expect(step.soon).toContain(clipPose('mist_to_write', last - k));
+    }
+  });
+
+  it('never asks for more than a handful at once: that is what keeps the memory down', () => {
+    const most = (steps: Step[]): number => Math.max(...steps.map((step) => new Set([...(step.soon ?? []), ...(isClipFrame(step.pose) ? [step.pose] : [])]).size));
+    expect(most(play(6000, 3))).toBeLessThanOrEqual(1 + AHEAD + HOME_READY + 1);
+    expect(most(play(6000, 3, (_, i) => i % 41 === 40))).toBeLessThanOrEqual(1 + AHEAD + HOME_READY + 1);
+  });
+
+  it('asks for nothing while she only mists', () => {
+    const none = take(200, 3, () => false);
+    expect(none.every((step) => (step.soon ?? []).length === 0)).toBe(true);
   });
 });
 

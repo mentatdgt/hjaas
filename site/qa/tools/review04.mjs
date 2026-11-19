@@ -3,6 +3,9 @@
 //
 //   node qa/tools/review04.mjs handoff   item 1: the cut from the aim still into mist_to_write and back, frame by frame
 //   node qa/tools/review04.mjs corners   item 2: the mock-up beside the build at 1440×900
+//   node qa/tools/review04.mjs memory    item 3: decoded image memory through two cycles and a reaction, phone and desktop
+//   node qa/tools/review04.mjs sharp     item 3: the 1.5× set beside the 2× set on a 390×844 @3× screen
+//   node qa/tools/review04.mjs slow      item 3: does decoding keep ahead of her on a slow phone? (Chrome, CPU slowed 4× and 6×)
 import { chromium, webkit, devices } from 'playwright';
 import { execFileSync } from 'node:child_process';
 import { mkdir, rm, writeFile } from 'node:fs/promises';
@@ -173,6 +176,165 @@ const run = {
     const file = new URL('../edge/corners.jpg', import.meta.url).pathname;
     await sharp({ create: { width: 2 * W + 3 * gap, height: y, channels: 3, background: '#d9d6cf' } }).composite(tiles).jpeg({ quality: 90 }).toFile(file);
     say('corners', file);
+  },
+
+  // Decoded image memory with Grow open, from the bitmap sizes: sampled every frame through two full cycles
+  // of the routine, a reaction from misting and one from writing; then after leaving for Build.
+  async memory() {
+    const report = {};
+    const MB = (bytes) => Math.round(bytes / 1e5) / 10;
+    for (const [tag, launch, options] of [
+      ['iphone-webkit', () => webkit.launch(), { ...devices['iPhone 14'], viewport: { width: 390, height: 844 } }],
+      ['desktop-chrome', () => chrome(), { viewport: { width: 1440, height: 900 }, deviceScaleFactor: 2 }],
+    ]) {
+      const browser = await launch();
+      const page = await (await browser.newContext(options)).newPage();
+      const errors = [];
+      page.on('pageerror', (e) => errors.push(String(e)));
+      page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
+      await page.goto(`${base}?debug&reset&intro=off&seed=4#grow`);
+      await ready(page);
+      await page.waitForFunction(() => window.__hj.rachel.has('thumbs_up#9'), null, { timeout: 60000 });
+      // "Before": everything of hers decoded at once, at the delivered size, as the site did until now.
+      const before = await page.evaluate(async () => {
+        const frames = await (await fetch('./assets/scene2/rachel/frames.json')).json();
+        const size = async (file) => { const img = new Image(); img.src = `./assets/scene2/rachel/${file.replace('.png', '.webp')}`; await img.decode(); return img.naturalWidth * img.naturalHeight * 4; };
+        const stills = Object.keys(frames.stills).length * frames.canvas.w * frames.canvas.h * 4;
+        const clips = {};
+        for (const [name, clip] of Object.entries(frames.clips)) clips[name] = (await size(clip.frames[0])) * clip.frames.length;
+        return { stills, clips };
+      });
+      await page.evaluate(() => {
+        const log = { peak: 0, peakClips: 0, at: '', samples: 0 };
+        window.__mem = log;
+        const tick = () => {
+          const m = window.__hj.scene.memory;
+          if (!m) return;
+          const total = m.stills + m.canvases + m.clipFrames;
+          log.samples++;
+          if (total > log.peak) { log.peak = total; log.at = window.__hj.rachel.current; log.parts = { ...m }; }
+          log.peakClips = Math.max(log.peakClips, m.clipFrames);
+          requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+        window.__hj.poses.length = 0;
+      });
+      await page.waitForFunction(() => window.__hj.poses.filter(([p], i, a) => p === 'mist_to_write#0' && a[i - 1]?.[0] === 'mist_to_write#1').length >= 2, null, { timeout: 120000 });
+      const find = async (spot, when) => {
+        await page.waitForFunction(when, null, { timeout: 60000 });
+        await page.evaluate(() => { window.__mark = window.__hj.poses.length; });
+        await page.locator(`[data-spot="${spot}"]`).click({ force: true });
+        await page.waitForFunction(() => window.__hj.poses.slice(window.__mark).some(([p]) => p === 'K2_thumbs'), null, { timeout: 20000 });
+        await page.waitForFunction(() => !window.__hj.player.reacting, null, { timeout: 20000 });
+        return page.evaluate(() => window.__hj.poses.slice(window.__mark).some(([p]) => p === 'look_up#3'));
+      };
+      const fullFromMisting = await find('pipe', () => window.__hj.rachel.current === 'A3_mist_lift');
+      const fullFromWriting = await find('door', () => window.__hj.rachel.current === 'write_loop#6');
+      const open = await page.evaluate(() => ({ ...window.__mem, missed: window.__hj.rachel.missed, set: window.__hj.scene.memory.canvasWidth, shownPoses: window.__hj.poses.length }));
+      // Leave for Build: what stays decoded of the lab.
+      await page.evaluate(() => { window.__lab = window.__hj.scene; });
+      await page.locator('.hj-tab[data-scene="build"]').click();
+      await page.waitForFunction(() => window.__hj.scene?.config.id === 'build' && window.__hj.busy === false, null, { timeout: 30000 });
+      await page.waitForTimeout(500);
+      const away = await page.evaluate(() => window.__lab.memory);
+      // And back again: her frames are decoded afresh while the brush is at work.
+      await page.locator('.hj-tab[data-scene="grow"]').click();
+      await page.waitForFunction(() => window.__hj.scene?.config.id === 'grow' && window.__hj.busy === false, null, { timeout: 30000 });
+      await page.evaluate(() => { window.__hj.poses.length = 0; });
+      await page.waitForFunction(() => window.__hj.poses.some(([p]) => p === 'write_loop#5'), null, { timeout: 60000 });
+      const back = await page.evaluate(() => ({ missed: window.__hj.rachel.missed, reactionReady: window.__hj.rachel.has('thumbs_up#9') && window.__hj.rachel.has('look_up#0') }));
+      const allAtOnce = before.stills + Object.values(before.clips).reduce((a, b) => a + b, 0);
+      report[tag] = {
+        set: open.set === 980 ? '2x (as delivered)' : `1.5x (canvas ${open.set} px wide)`,
+        beforeMB: { everythingDecodedAtOnce: MB(allAtOnce), stills: MB(before.stills), ...Object.fromEntries(Object.entries(before.clips).map(([k, v]) => [k, MB(v)])) },
+        afterMB: { peakWithGrowOpen: MB(open.peak), atPose: open.at, stills: MB(open.parts.stills), canvases: MB(open.parts.canvases), clipFramesAtThatMoment: MB(open.parts.clipFrames), clipFramesPeak: MB(open.peakClips), afterLeavingForBuild: MB(away.stills + away.clipFrames) },
+        samples: open.samples, posesShown: open.shownPoses, framesSheHadToSkip: open.missed, afterComingBackFromBuild: { framesSheHadToSkip: back.missed - open.missed, reactionFramesDecodedAgain: back.reactionReady }, fullReactionFromMisting: fullFromMisting, fullReactionFromWriting: fullFromWriting, errors,
+      };
+      say(tag, report[tag]);
+      await browser.close();
+    }
+    await save('memory', report);
+  },
+
+  // The lighter set beside the delivered one, on the phone that needs the most of it: 390 × 844 at 3×.
+  async sharp() {
+    const browser = await webkit.launch();
+    const shots = {};
+    for (const set of ['1.5x', '2x']) {
+      const context = await browser.newContext({ ...devices['iPhone 14'], viewport: { width: 390, height: 844 }, deviceScaleFactor: 3 });
+      const page = await context.newPage();
+      // Without its manifest the lighter set is not used, and the site falls back to the delivered frames.
+      if (set === '2x') await page.route('**/rachel-1.5x/frames.json', (route) => route.fulfill({ status: 404, body: '' }));
+      await page.goto(`${base}?debug&reset&intro=off&seed=4#grow`);
+      await ready(page);
+      await clean(page);
+      await page.getByRole('button', { name: 'Pause animation' }).click();
+      await page.waitForTimeout(600);
+      const info = await page.evaluate(() => { const c = document.querySelector('.hj-rachel canvas'); return { canvas: [c.width, c.height], css: Math.round(c.getBoundingClientRect().width * 10) / 10, source: window.__hj.scene.memory.canvasWidth }; });
+      const box = await page.locator('.hj-rachel').boundingBox();
+      shots[set] = { whole: await page.screenshot({ clip: box }), full: await page.screenshot(), info, box };
+      say(set, info);
+      await context.close();
+    }
+    await browser.close();
+    // Whole figure, then her face and her hand with the bottle, at the screen's own pixels.
+    const meta = await sharp(shots['1.5x'].whole).metadata();
+    const crop = (image, fx, fy, size) => sharp(image).extract({ left: Math.round(meta.width * fx), top: Math.round(meta.height * fy), width: size, height: size }).toBuffer();
+    const size = 420;
+    const gap = 14;
+    const head = 30;
+    const tiles = [];
+    let x = gap;
+    for (const set of ['1.5x', '2x']) {
+      const figureH = 2 * size + gap;
+      const figureW = Math.round((figureH * meta.width) / meta.height);
+      tiles.push({ input: label(set === '1.5x' ? `1.5× set (her canvas ${shots[set].info.canvas[0]} px), as phones now get` : `2× set (her canvas ${shots[set].info.canvas[0]} px), as before`, figureW + size + gap, 16), left: x, top: gap });
+      tiles.push({ input: await sharp(shots[set].whole).resize(figureW, figureH).toBuffer(), left: x, top: gap + head });
+      tiles.push({ input: await crop(shots[set].whole, 0.3, 0.02, size), left: x + figureW + gap, top: gap + head });
+      tiles.push({ input: await crop(shots[set].whole, 0.02, 0.24, size), left: x + figureW + gap, top: gap + head + size + gap });
+      x += figureW + size + 3 * gap;
+    }
+    await sharp({ create: { width: x, height: 2 * gap + head + 2 * size + gap, channels: 3, background: '#d9d6cf' } }).composite(tiles).jpeg({ quality: 92 }).toFile(`${out}sharpness-390x844@3x.jpg`);
+    await sharp(shots['1.5x'].full).jpeg({ quality: 90 }).toFile(`${out}grow-390x844@3x-1.5x-set.jpg`);
+    await save('sharpness', { '1.5x': shots['1.5x'].info, '2x': shots['2x'].info });
+  },
+
+  // A slow phone: the processor held to a quarter and a sixth of its speed. Does every clip frame arrive
+  // in time to be shown, and how long are the frames?
+  async slow() {
+    const report = {};
+    for (const rate of [4, 6]) {
+      const browser = await chrome();
+      const context = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true });
+      await context.addInitScript(() => {
+        const log = [];
+        window.__gaps = log;
+        let last = performance.now();
+        const tick = (now) => { log.push([Math.round(last), Math.round(now - last)]); last = now; requestAnimationFrame(tick); };
+        requestAnimationFrame(tick);
+      });
+      const page = await context.newPage();
+      await page.goto(`${base}?debug&reset&intro=off&seed=4#grow`);
+      await ready(page);
+      await page.waitForFunction(() => window.__hj.rachel.has('thumbs_up#9'), null, { timeout: 60000 });
+      const cdp = await context.newCDPSession(page);
+      await cdp.send('Emulation.setCPUThrottlingRate', { rate });
+      await page.waitForTimeout(1000);
+      const t0 = await page.evaluate(() => { window.__hj.poses.length = 0; window.__missed0 = window.__hj.rachel.missed; return performance.now(); });
+      await page.waitForFunction(() => window.__hj.poses.filter(([p], i, a) => p === 'mist_to_write#0' && a[i - 1]?.[0] === 'mist_to_write#1').length >= 2, null, { timeout: 180000 });
+      await page.waitForFunction(() => window.__hj.rachel.current === 'write_loop#6', null, { timeout: 60000 });
+      await page.locator('[data-spot="door"]').tap({ force: true });
+      await page.waitForFunction(() => window.__hj.poses.some(([p]) => p === 'K2_thumbs'), null, { timeout: 30000 });
+      await page.waitForFunction(() => !window.__hj.player.reacting, null, { timeout: 30000 });
+      report[`cpu-${rate}x`] = await page.evaluate((start) => {
+        const gaps = window.__gaps.filter(([at]) => at >= start);
+        const sorted = gaps.map(([, len]) => len).sort((a, b) => a - b);
+        return { set: window.__hj.scene.memory.canvasWidth === 980 ? '2x' : '1.5x', posesShown: window.__hj.poses.length, framesSheHadToSkip: window.__hj.rachel.missed - window.__missed0, fullReaction: window.__hj.poses.some(([p]) => p === 'look_up#3'), frames: gaps.length, medianFrameMs: sorted[sorted.length >> 1], longestFrameMs: sorted.at(-1), over50: gaps.filter(([, len]) => len > 50).length, peakMB: Math.round((window.__hj.scene.memory.stills + window.__hj.scene.memory.canvases + window.__hj.scene.memory.clipFramesPeak) / 1e5) / 10 };
+      }, t0);
+      say(`cpu ${rate}x`, report[`cpu-${rate}x`]);
+      await browser.close();
+    }
+    await save('slow-phone', report);
   },
 };
 

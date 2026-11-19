@@ -57,7 +57,9 @@ export const grow: SceneConfig = {
   plate: 'room.webp',
   // Rachel as delivered by task 017 (frames/017-lab-keyposes/site/): frames.json has her stills, her clips
   // and where her canvas sits on the plate; routine.json has her routine, her blinks and her reaction.
-  character: { kind: 'clips', dir: 'rachel/', frames: 'frames.json', routine: 'routine.json' },
+  // Under 900 px she is drawn from the 1.5x set: a little over half the memory, and still as sharp as a
+  // phone shows her.
+  character: { kind: 'clips', dir: 'rachel/', frames: 'frames.json', routine: 'routine.json', small: { dir: 'rachel-1.5x/', below: 900 } },
   spots: SPOTS,
   strokes: STROKES,
   // A phone starts on Rachel and the trolley (about plate x 680-1180): centred on x 930 at either shape.
