@@ -181,4 +181,47 @@ if (item === 'ladder') {
     .toFile('qa/review-01/06-ladder-foot.jpg');
 }
 
+if (item === 'dedupe') {
+  const page = await browser.newPage({ viewport: { width: 1280, height: 760 } });
+  const requests = [];
+  page.on('request', (r) => { const u = new URL(r.url()).pathname; if (u.includes('/rachel/')) requests.push(u.replace('/assets/scene1/', '')); });
+  await page.goto('http://localhost:5173/?reset&intro=off&debug&seed=3');
+  await page.waitForFunction(() => window.__hj?.ready === true, null, { timeout: 30000 });
+  const onLoad = [...requests];
+  const checks = await page.evaluate(async () => {
+    // The very module instance the scene uses, so its frame cache is the one under test.
+    const url = performance.getEntriesByType('resource').map((e) => e.name).find((n) => new URL(n).pathname === '/src/scene1/assets.ts');
+    const { loadFrame, asset } = await import(url);
+    const frames = window.__hj.rachel.frames;
+    const k1 = frames.get('reaction/rx_K1.png');
+    const k2 = frames.get('reaction/rx_K2.png');
+    return {
+      rx_K1_is_rachel_K1: k1 === (await loadFrame(asset('rachel/K1.webp'))),
+      rx_K2_is_rachel_K2: k2 === (await loadFrame(asset('rachel/K2.webp'))),
+      rx_frame_01_would_be_loop_frame_01: (await loadFrame(asset('rachel/frame_01.webp'))) === frames.get('frame_01'),
+    };
+  });
+  const before = requests.length;
+  requests.length = 0;
+  requests.push(...onLoad);
+  await page.evaluate(() => { window.__hj.poses.length = 0; document.querySelector('.hj-shroom').click(); });
+  await page.waitForTimeout(3500);
+  const played = await page.evaluate(() => window.__hj.poses.filter(([p]) => p.startsWith('reaction/')).map(([p]) => p.replace('reaction/', '')));
+  const counts = requests.reduce((m, u) => ((m[u] = (m[u] || 0) + 1), m), {});
+  const result = { requests: requests.length, fetchedTwice: Object.keys(counts).filter((u) => counts[u] > 1), requestsByCheck: before - onLoad.length, checks, reactionPoses: played.length, includesK1K2: played.includes('rx_K1.png') && played.includes('rx_K2.png') };
+  const lines = [
+    'Review 01 item 2: duplicate frames load once',
+    '',
+    ...Object.entries(counts).map(([u, n]) => `${n}x  ${u}`),
+    '',
+    ...Object.entries(checks).map(([k, v]) => `${v ? 'PASS' : 'FAIL'}  ${k}`),
+    `${result.fetchedTwice.length === 0 ? 'PASS' : 'FAIL'}  no file fetched twice`,
+    `${result.includesK1K2 ? 'PASS' : 'FAIL'}  one find played ${played.length} reaction poses, K1 and K2 included`,
+  ];
+  await page.setContent(`<pre style="font:15px/1.45 monospace;margin:20px">${lines.join('\n')}</pre>`);
+  await page.screenshot({ path: 'qa/review-01/02-dedupe.png', fullPage: true });
+  await page.close();
+  console.log(JSON.stringify(result, null, 1));
+}
+
 await browser.close();

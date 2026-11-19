@@ -21,9 +21,11 @@ const DIR = 'rachel/reaction/';
 
 /** Loads the manifest and decodes every frame it names. Resolves once the reaction is ready to play. */
 export async function loadReaction(rachel: Rachel): Promise<Reaction> {
+  const sharing = loadShared();
   const response = await fetch(asset(`${DIR}reaction.json`));
   if (!response.ok) throw new Error(`reaction.json: ${response.status}`);
   const manifest = (await response.json()) as ReactionManifest;
+  const shared = await sharing;
 
   // Frames with ms 0 only mark where the loop hands over and takes back (the contact frame).
   const held = manifest.frames.filter((frame) => frame.ms > 0);
@@ -31,13 +33,24 @@ export async function loadReaction(rachel: Rachel): Promise<Reaction> {
   // One at a time, in quiet moments: Rachel is already hammering while these arrive.
   for (const file of files) {
     await idle();
-    // The site serves WebP copies of the delivered PNGs.
-    rachel.add(poseName(file), await loadFrame(asset(DIR + file.replace(/\.png$/i, '.webp'))));
+    // The site serves WebP copies of the delivered PNGs. A copy shared with the loop is the loop's own decoded frame.
+    const url = asset(shared[file] ?? DIR + file.replace(/\.png$/i, '.webp'));
+    rachel.add(poseName(file), await loadFrame(url));
   }
 
   const steps = held.map((frame) => ({ pose: poseName(frame.file), ms: frame.ms }));
   const longest = steps.reduce((a, b) => (b.ms > a.ms ? b : a), steps[0]);
   return { steps, still: longest ? [longest] : [] };
+}
+
+/** Reaction files that are byte-identical to an upscaled frame, mapped to that one copy (made by `npm run assets`). */
+async function loadShared(): Promise<Record<string, string>> {
+  try {
+    const response = await fetch(asset(`${DIR}shared.json`));
+    return response.ok ? ((await response.json()) as Record<string, string>) : {};
+  } catch {
+    return {};
+  }
 }
 
 function poseName(file: string): string {
