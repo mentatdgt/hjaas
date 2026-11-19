@@ -15,10 +15,10 @@ const out = join(site, 'public/assets/scene1');
 // Small sprites (mushrooms, logo): lossy at quality 95 with exact alpha. At 3× zoom, on the floor and on the
 // phone's dark band, they show no edges or banding next to lossless; go back to lossless if a new drawing does.
 const sprite = { quality: 95, alphaQuality: 100, smartSubsample: true, effort: 6 };
-// Sprites are sized for 2× the largest the layout shows them, on the 2560 px screens it is tuned for.
-// Mushrooms: the tallest spot (mushrooms.ts SPOTS) is 42 plate px; at 2560 px a plate px is 1.53 CSS px and a
-// find pops the mushroom to 1.2×, so 77 CSS px at most. Logo: 12cqw there, 307 CSS px. Never enlarged.
-const MUSHROOM_H = 160;
+// Sprites are at most 2× the largest the layout shows them, on the 2560 px screens it is tuned for.
+// Mushrooms: the tallest spot (mushrooms.ts SPOTS) is 42 plate px; at 2560 × 1440 a find pops it to 77.1 CSS px,
+// so 154 px (2 × 77.1, rounded down). Logo: 12cqw there, 307 CSS px. Never enlarged.
+const MUSHROOM_H = 154;
 const LOGO_W = 614;
 // Rachel's 2x frames: lossy at quality 95, the bulk of the page weight. Alpha stays exact and smart chroma
 // subsampling keeps colour from bleeding across the dark outlines. Check the outlines at 3x after raising
