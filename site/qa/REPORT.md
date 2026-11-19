@@ -397,3 +397,97 @@ One thing to look at: **the new logo is wider and flatter** (2.6:1; the temporar
 width it is 202 × 77 px on a 1440 px window, where the old one was 202 × 119 px, so it looks smaller and the
 "HJaaS" lettering is about 10 px tall. I kept the width rule as it was. If you want it larger, it is one line:
 `--logo-w` in `scene.css`.
+
+## Scene 2 (structure)
+
+Built from `reviews/scene-2-build.md` on the new branch **`site/scene-2`**, made from `site/scene-1-elegant`
+after the logo swap. Nothing was merged into any other branch. One commit per item, done in the order
+4, 1, 2, 3, 5 (the routine engine first, because the scene engine uses it). Evidence is in `qa/scene-2/`;
+`qa/tools/scene2.mjs` and `qa/tools/same-as-before.mjs` remake it.
+
+**To see it:** `cd ~/hjaas && git checkout site/scene-2 && cd site && npm install && npm run dev`, then open
+http://localhost:5173/. The lab is at http://localhost:5173/#grow. Add `?reset` before the `#` to start as a
+new visitor.
+
+Three things to know first:
+
+- **Scene 2 is a still picture for now.** Its plate is the chosen mock-up, with Rachel and the trolley drawn
+  in. She does not move or react until `tasks/017` delivers her frames. Everything around her works.
+- **Nothing here has been on a real phone.** Safari was tested as Playwright's WebKit on this Mac.
+- **On a slow phone the first switch to a scene starts late.** On Chrome's slow-phone profile about one
+  second passes between the tap and the brush starting, while the new picture is drawn for the first time
+  out of sight. The tab changes at once and the old picture stays up, so it reads as a pause, not a freeze.
+  Later switches start within a tenth of a second.
+
+| | Item | What was done, and what was measured | Evidence |
+|---|---|---|---|
+| ✅ | **1. A reusable scene engine** | `src/scene1/` is now `src/engine/` plus one file per scene in `src/scenes/`. A scene's file only describes it: plate, character frames and placement, idle routine, reaction folder, the ten hiding spots, the paint-in strokes, the phone framing. Mushrooms and the logo moved to `assets/shared/`. | `src/engine/types.ts`, `src/scenes/build.ts` |
+| ✅ | 1, scene 1 behaves exactly as before | Compared with the commit before the refactor, at 1440 × 900, 390 × 844 and 360 × 740, in five states each (first screen, one found, nine found, ten found with the button, form open): **11 of 15 screenshots are identical to the pixel; in the other four the largest difference is 4 levels out of 255**, which is rendering noise. The first-visit painting measures the same: 312 frames in 5.2 s, longest 17 ms, first swing at 4.98 s in Chrome; 310 frames, longest 44 ms in WebKit. Review 03's behaviour checks (skip, replay, return visit, pause, reduced motion, cursor, keyboard, ten mushrooms at three phone sizes, scroll and pan) all pass again. | `scene-2/same-as-before.json`, `scene-2/scene-1-after-refactor/` (recordings, `timeline.json`, check results) |
+| ✅ | **2. Scene menu** | Two plain text tabs, Build and Grow, at the end of the masthead just above the picture; on phones on their own row under the name. One row at every size tested, each tab 44 px tall, the current one in darker text with a fine underline and `aria-current`. They are links inside a `nav`, so they are in the Tab order (logo, Build, Grow, then the mushrooms) and Enter follows them. With one scene there is no menu. | `scene-2/screen-build-1440x900.jpg`, `screen-grow-390x844.jpg`, `nav-checks.json` (`keyboard`) |
+| ✅ | 2, switching | The new picture is brushed in over the old one with the new scene's own strokes, played quickly, then a short wash: **1.43 to 1.56 s measured** (asked for: 1.2 to 1.6 s). Clicking a tab again finishes the picture in about 50 ms, as does Skip. Clicking the other tab mid-brush finishes this picture and goes on to that one. | `scene-2/switch-build-grow-build-desktop.mp4`, `switch-build-grow-build-iphone.mp4` (WebKit), their `-stills.jpg`, `nav-checks.json` (`switch`) |
+| ✅ | 2, first visit and revisits | The first visit to a scene is its full painting from a blank sheet (5.2 s measured for the lab); a revisit is the short brush (1.48 s). Reduced motion: the old picture fades off the new one in 200 ms (199 and 204 ms measured), with no strokes. | `scene-2/first-visit-to-grow-painting.jpg`, `nav-checks.json` (`firstVisit`, `reducedMotion`) |
+| ✅ | 2, the address | `#grow` is the lab; a plain address or `#build` is scene 1; an unknown name is scene 1. A click changes the address, and back and forward move the picture. Opening `#grow` directly shows the lab. | `nav-checks.json` (`address`) |
+| ✅ | 2, state per scene | Each scene keeps its own found mushrooms and, on a phone, its own pan position, across switches and across a reload (scene 1 left at 60 px and the lab at 400 px came back at 60 and 400). Progress saved by the one-scene version is carried over to scene 1. | `hunt-checks.json` (`pan per scene`) |
+| ⚠️ | **3. The lab** | The plate is the chosen mock-up (`reference/mockups/mockup-lab-1-trolley-CHOSEN.png`), framed like scene 1, marked `PLACEHOLDER until tasks/017` in `grow.ts` and `build-assets.mjs`. Rachel is in the picture but still, and there is no reaction; a find still travels to the caption and counts. `LAB_CAST` is written for her frames as full-plate images drawn at the plate's corner, with no placement maths. | `scene-2/screen-grow-1440x900.jpg`, `src/scenes/grow.ts` |
+| ✅ | 3, ten mushrooms | Left to right: by the door, under the bench, on the floor in the sun, on the bench corner, under the middle shelf, on the pipe, on the switch box, beside the humidifier, by the drain, under the rack on the right. Sizes follow depth, 18 to 40 plate px. None is on the trolley or behind Rachel, where her frames will go. Two of the ten are pale drawings; the rest are red or golden. A cooler tint than scene 1's. Tap boxes are 44 px, none overlap, all sit inside the picture, at 390 × 844 and 360 × 740. | `scene-2/tapboxes-grow-390x844-left.jpg`, `tapboxes-grow-390x844-right.jpg`, `hunt-checks.json` |
+| ✅ | 3, phones | The same pannable window, 2:3 at the sizes tested, opening on plate x 616 to 1243, centred on Rachel and the trolley. | `scene-2/screen-grow-390x844.jpg`, `screen-grow-360x740.jpg` |
+| ✅ | **4. Data-driven routine** | `routine.ts` plays a manifest: named loops with a hold range per frame, how many cycles each loop runs, the frames between loops, blinks only in the middle of a long enough hold on a named frame, and the frame a reaction starts from. It also says in words what is wrong with a manifest. Tested with a made-up manifest of scene 1's frame names. | `src/engine/routine.ts`, `src/engine/routine.test.ts` |
+| ⚠️ | 4, scene 2's manifest | A stub, `public/assets/scene2/rachel/routine.json`, with the target timings: 2 to 4 sprays of 0.9 to 1.3 s, a 1 to 2 s pause, 4 to 7 s of writing with one glance, blinks on A1 every 3 to 6 s. Tests hold it to those numbers. It is not played yet, and its two transitions are empty until the in-between frames exist. **`npm test`: 18 tests, all pass.** | `src/scenes/grow.test.ts` |
+| ✅ | **5. QA** | Screenshots of both scenes at 1440 × 900, 390 × 844 and 360 × 740. A recording of Build → Grow → Build → Grow on desktop and on an iPhone profile in WebKit. | `scene-2/screen-*.jpg`, `switch-build-grow-build-*.mp4` |
+| ✅ | 5, all 20 mushrooms | Found by tapping in WebKit at 390 × 844 and 360 × 740, and by clicking in Chrome at 1440 × 900: ten in each scene, each scene with its own count. | `hunt-checks.json`, `hunt-webkit-390-2-grow-done.jpg` |
+| ✅ | 5, Contact unlocks after the first 10/10 | Finishing scene 1 first: the button appears there, and is already there on arriving in the lab at "0 of 10 found". Finishing the lab first, with scene 1 untouched: the same the other way round. | `hunt-checks.json` (`lab first`) |
+| ✅ | 5, state survives a reload | After a reload the address still names the lab, both scenes show "You found all 10", and the button is there. | `hunt-checks.json` (`afterReload`) |
+| ⚠️ | 5, WebKit cold load, the switch | Production build, a new browser for every run, six runs per profile, two switches per run. **iPhone profile: longest frame 20 to 35 ms in 12 of 12 switches.** Desktop: 28 to 40 ms in 10 of 12; one switch had a 57 ms frame at the click, and one had a single 305 ms frame 0.3 s after the brush had finished, which I could not reproduce or explain. | `scene-2/switch-frames-webkit-cold.json` |
+
+### On a slow phone profile
+
+Chrome DevTools, phone-sized window at pixel ratio 3, CPU slowed 4×, tracer off, the scene's own frame log.
+
+| Scenario | Late frames | Tasks over 50 ms |
+|---|---|---|
+| First switch to the lab | 383 ms and 601 ms, both before the brush starts | 205 ms and 162 ms, at the tap |
+| Switch back to scene 1 | One of 100 ms, at the tap | 0 |
+| Switch to the lab again | 0 | 0 |
+| A find in the lab | 0 | 0 |
+
+The brush itself ran clean each time. The cost is at the tap: copying the old picture onto the sheet, and the
+browser drawing the new picture for the first time.
+
+### What is placeholder
+
+- **Scene 2's picture and Rachel.** The mock-up stands in for the empty lab plus her frames. No routine, no
+  blink, no reaction in scene 2 yet.
+- **Scene 2's `routine.json`.** Target timings only; the transitions are empty.
+- **Words.** The scene names (Build, Grow) are from the review. The menu's screen-reader label ("Scenes"),
+  the two picture descriptions, and everything listed under review 03 are still `TODO(copy)`.
+- From before: the form endpoint.
+
+### Decisions I made
+
+1. **The unlock is shared, as Wren assumed.** The first scene to reach 10 of 10 earns the Contact button; it then shows in every scene, beside that scene's own count.
+2. **A first visit to a scene through the menu** clears the old picture to a blank sheet (160 ms) and plays the full painting. A revisit gets the short brush.
+3. **How the switch is drawn.** A copy of the picture being left is laid over the window and the brush rubs it away, the same method as the first-visit painting. Safari's canvas cannot tint, so in Safari the copy's mushrooms are untinted for the second and a half it is on screen.
+4. **The menu is on the same line as the name on desktop,** so the picture keeps its size. On phones it has its own row.
+5. **Scene 1's hammer rhythm stays as code,** not a manifest, so it keeps matching the script it was ported from. Both kinds feed the same player.
+6. **The hint wiggle is still once per visit,** in whichever scene the visitor is in at the time.
+7. **Pause applies to every scene.** In the lab it only stops the logo's glint for now, so the control looks idle there.
+8. **Other scenes load in the background** once the opening scene has settled (1.2 MB for the lab), so a switch does not wait for a download.
+9. **Saved progress has a new format** (per scene). The old one is read once and carried over.
+10. **The lab's smallest mushrooms are 18 plate px,** like scene 1's, not smaller: at 16 they were under 9 px on a phone.
+11. **Full-plate character frames are drawn on a canvas capped at 2.6 megapixels,** so a pose change stays cheap on phones. Scene 1's cut-out frames are far below the cap and unaffected.
+12. **`vitest` is a new dev dependency,** for `npm test`.
+13. **Before the logo swap I ran `git pull origin main`** as a merge of `main` into `site/scene-1-elegant`, which brought in the two briefs and task 017. Nothing went the other way.
+
+### For Wren, about task 017
+
+1. **A blink needs a closed-eyes frame.** The task lists only `A1_blink_half`. The stub blinks with that one frame for 110 ms. Scene 1 uses half, closed, half.
+2. **A find during the writing loop.** The reaction starts from A1, and writing keeps her off A1 for 4 to 7 s. She needs either the write-to-mist transition frames, so the engine can take her back first, or a second reaction that starts from B1. Until then a find while she writes would wait.
+3. **Frames could be cropped to Rachel and the trolley** with an offset, instead of full 1672 × 941 images. They would be smaller files and cheaper to draw on phones. The engine draws full-plate frames today; a crop needs a small addition.
+4. **Nothing may be hidden on the trolley or behind her.** The ten spots avoid that area, so they are valid for the mock-up and for the real frames.
+
+### Not done, or not verified
+
+- **A real phone,** and Safari itself.
+- **The routine engine has not played real frames.** It is unit-tested, and the same player runs scene 1.
+- **The one-second pause before the first switch on a slow phone** (above). It could be shortened by drawing the next scene ahead of time, at the cost of memory; I left it.
+- **The unexplained 305 ms frame** in one of 12 desktop WebKit switches.

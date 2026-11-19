@@ -1,0 +1,215 @@
+{
+ "summary": {
+  "url": "http://localhost:4173/",
+  "iphone": {
+   "toGrow": [
+    33,
+    34,
+    27,
+    32,
+    33,
+    35
+   ],
+   "toBuild": [
+    26,
+    24,
+    20,
+    20,
+    21,
+    24
+   ]
+  },
+  "desktop": {
+   "toGrow": [
+    40,
+    32,
+    31,
+    30,
+    33,
+    57
+   ],
+   "toBuild": [
+    305,
+    30,
+    29,
+    28,
+    33,
+    28
+   ]
+  }
+ },
+ "results": [
+  {
+   "profile": "iphone",
+   "run": 1,
+   "toGrow": {
+    "frames": 122,
+    "longest": 33,
+    "over50": []
+   },
+   "toBuild": {
+    "frames": 122,
+    "longest": 26,
+    "over50": []
+   }
+  },
+  {
+   "profile": "iphone",
+   "run": 2,
+   "toGrow": {
+    "frames": 121,
+    "longest": 34,
+    "over50": []
+   },
+   "toBuild": {
+    "frames": 122,
+    "longest": 24,
+    "over50": []
+   }
+  },
+  {
+   "profile": "iphone",
+   "run": 3,
+   "toGrow": {
+    "frames": 124,
+    "longest": 27,
+    "over50": []
+   },
+   "toBuild": {
+    "frames": 122,
+    "longest": 20,
+    "over50": []
+   }
+  },
+  {
+   "profile": "iphone",
+   "run": 4,
+   "toGrow": {
+    "frames": 122,
+    "longest": 32,
+    "over50": []
+   },
+   "toBuild": {
+    "frames": 123,
+    "longest": 20,
+    "over50": []
+   }
+  },
+  {
+   "profile": "iphone",
+   "run": 5,
+   "toGrow": {
+    "frames": 122,
+    "longest": 33,
+    "over50": []
+   },
+   "toBuild": {
+    "frames": 123,
+    "longest": 21,
+    "over50": []
+   }
+  },
+  {
+   "profile": "iphone",
+   "run": 6,
+   "toGrow": {
+    "frames": 123,
+    "longest": 35,
+    "over50": []
+   },
+   "toBuild": {
+    "frames": 123,
+    "longest": 24,
+    "over50": []
+   }
+  },
+  {
+   "profile": "desktop",
+   "run": 1,
+   "toGrow": {
+    "frames": 120,
+    "longest": 40,
+    "over50": []
+   },
+   "toBuild": {
+    "frames": 110,
+    "longest": 305,
+    "over50": [
+     "305ms@1789"
+    ]
+   }
+  },
+  {
+   "profile": "desktop",
+   "run": 2,
+   "toGrow": {
+    "frames": 122,
+    "longest": 32,
+    "over50": []
+   },
+   "toBuild": {
+    "frames": 123,
+    "longest": 30,
+    "over50": []
+   }
+  },
+  {
+   "profile": "desktop",
+   "run": 3,
+   "toGrow": {
+    "frames": 122,
+    "longest": 31,
+    "over50": []
+   },
+   "toBuild": {
+    "frames": 123,
+    "longest": 29,
+    "over50": []
+   }
+  },
+  {
+   "profile": "desktop",
+   "run": 4,
+   "toGrow": {
+    "frames": 122,
+    "longest": 30,
+    "over50": []
+   },
+   "toBuild": {
+    "frames": 122,
+    "longest": 28,
+    "over50": []
+   }
+  },
+  {
+   "profile": "desktop",
+   "run": 5,
+   "toGrow": {
+    "frames": 122,
+    "longest": 33,
+    "over50": []
+   },
+   "toBuild": {
+    "frames": 123,
+    "longest": 33,
+    "over50": []
+   }
+  },
+  {
+   "profile": "desktop",
+   "run": 6,
+   "toGrow": {
+    "frames": 118,
+    "longest": 57,
+    "over50": [
+     "57ms@63"
+    ]
+   },
+   "toBuild": {
+    "frames": 122,
+    "longest": 28,
+    "over50": []
+   }
+  }
+ ]
+}

@@ -1,0 +1,128 @@
+{
+ "address": {
+  "plain": {
+   "address": "",
+   "scene": "build",
+   "current": "Build",
+   "caption": "0 of 10 found Find the 10 hidden mushrooms",
+   "button": false,
+   "pan": 0
+  },
+  "afterClick": {
+   "address": "#grow",
+   "scene": "grow",
+   "current": "Grow",
+   "caption": "0 of 10 found Find the 10 hidden mushrooms",
+   "button": false,
+   "pan": 0
+  },
+  "afterBack": {
+   "address": "",
+   "scene": "build",
+   "current": "Build",
+   "caption": "0 of 10 found Find the 10 hidden mushrooms",
+   "button": false,
+   "pan": 0
+  },
+  "afterForward": {
+   "address": "#grow",
+   "scene": "grow",
+   "current": "Grow",
+   "caption": "0 of 10 found Find the 10 hidden mushrooms",
+   "button": false,
+   "pan": 0
+  },
+  "directToGrow": {
+   "address": "#grow",
+   "scene": "grow",
+   "current": "Grow",
+   "caption": "0 of 10 found Find the 10 hidden mushrooms",
+   "button": false,
+   "pan": 0
+  },
+  "unknownName": {
+   "address": "#nowhere",
+   "scene": "build",
+   "current": "Build",
+   "caption": "0 of 10 found Find the 10 hidden mushrooms",
+   "button": false,
+   "pan": 0
+  },
+  "errors": []
+ },
+ "switch": {
+  "toGrow": {
+   "fromClickMs": 1572,
+   "brushMs": 1500
+  },
+  "toBuild": {
+   "fromClickMs": 1516,
+   "brushMs": 1450
+  },
+  "midway": {
+   "busy": true,
+   "sheets": 1,
+   "skip": "visible"
+  },
+  "clickAgainFinishesInMs": 46,
+  "skipControlFinishesInMs": 63,
+  "changedMindEndsOn": "build",
+  "errors": []
+ },
+ "firstVisit": {
+  "firstVisitMs": 5208,
+  "during": {
+   "sheetInsidePlate": true,
+   "mushroomsFindable": false
+  },
+  "revisitMs": 1484,
+  "errors": []
+ },
+ "reducedMotion": {
+  "fadeMs": 204,
+  "opacities": 15,
+  "startedAt": 1,
+  "strokes": "none (the sheet only fades)",
+  "after": {
+   "address": "#grow",
+   "scene": "grow",
+   "current": "Grow",
+   "caption": "0 of 10 found Find the 10 hidden mushrooms",
+   "button": false,
+   "pan": 0
+  },
+  "controls": [],
+  "errors": []
+ },
+ "keyboard": {
+  "tabOrder": [
+   "logo",
+   "tab:Build",
+   "tab:Grow",
+   "mushroom:sill"
+  ],
+  "focusedBeforeEnter": "Grow",
+  "afterEnter": {
+   "address": "#grow",
+   "scene": "grow",
+   "current": "Grow",
+   "caption": "0 of 10 found Find the 10 hidden mushrooms",
+   "button": false,
+   "pan": 0
+  },
+  "focusRing": {
+   "outline": "solid",
+   "width": "2px"
+  },
+  "semantics": {
+   "nav": "NAV",
+   "label": "Scenes",
+   "current": [
+    "Build:-",
+    "Grow:page"
+   ],
+   "picture": "Hui Jie in her mushroom lab. Ten mushrooms are hidden in the room."
+  },
+  "errors": []
+ }
+}
