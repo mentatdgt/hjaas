@@ -157,6 +157,33 @@ if (item === 'sprites') {
   await browser.close();
 }
 
+if (item === 'meta') {
+  // Item 4: what the served page tells crawlers and link previews, read back from the production build.
+  //   node qa/tools/review02.mjs meta <url>
+  const url = process.argv[3];
+  const browser = await webkit.launch();
+  const page = await browser.newPage({ viewport: { width: 1200, height: 900 } });
+  await page.goto(url);
+  const head = await page.evaluate(() =>
+    [...document.head.querySelectorAll('title, meta[name], meta[property]')].map((el) =>
+      el.tagName === 'TITLE' ? ['title', el.textContent] : [el.getAttribute('name') ?? el.getAttribute('property'), el.getAttribute('content')],
+    ),
+  );
+  const robots = await (await page.request.get(new URL('robots.txt', url).href)).text();
+  const image = new URL(head.find(([k]) => k === 'og:image')[1], url).href;
+  const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  await page.setContent(`<body style="margin:0;padding:28px;background:#1d120b;color:#f3e6cf;font:16px/1.45 sans-serif">
+    <h2 style="margin:0 0 12px">${esc(url)}: page head</h2>
+    <table style="border-collapse:collapse">${head.map(([k, v]) => `<tr><td style="padding:3px 18px 3px 0;color:#d9a441">${esc(k)}</td><td>${esc(v)}</td></tr>`).join('')}</table>
+    <h2 style="margin:22px 0 8px">robots.txt</h2><pre style="margin:0;padding:12px;background:#000;color:#9f9">${esc(robots)}</pre>
+    <h2 style="margin:22px 0 8px">og:image</h2><img src="${image}" style="width:480px;border:1px solid #555">
+  </body>`);
+  await page.waitForLoadState('networkidle');
+  await page.screenshot({ path: 'qa/review-02/04-metadata.png', fullPage: true });
+  console.log(JSON.stringify({ head, robots }, null, 1));
+  await browser.close();
+}
+
 if (item === 'intro') {
   const [before, after] = process.argv.slice(3);
   const browser = await webkit.launch();

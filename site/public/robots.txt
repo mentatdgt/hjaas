@@ -1,0 +1,3 @@
+# Not launched yet: no crawling. At launch, replace with rules that allow it.
+User-agent: *
+Disallow: /

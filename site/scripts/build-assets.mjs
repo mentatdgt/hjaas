@@ -97,4 +97,11 @@ for (const [size, name] of [[32, 'favicon-32.png'], [180, 'apple-touch-icon.png'
   await sharp(logo).extract(reel).resize(size, size, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } }).png().toFile(join(site, 'public', name));
 }
 
+// Temporary link-preview image (og:image): the logo centred on the page colour, at the 1200 × 630 size
+// link previews expect. PNG, because not every preview scraper reads WebP.
+await sharp({ create: { width: 1200, height: 630, channels: 3, background: '#1d120b' } })
+  .composite([{ input: await sharp(logo).resize({ width: 760, withoutEnlargement: true }).toBuffer(), gravity: 'center' }])
+  .png({ palette: true, quality: 90, effort: 10 })
+  .toFile(join(site, 'public', 'og-image.png'));
+
 console.log(`\n${jobs.length} images, ${(total / 1024 / 1024).toFixed(2)} MB`);
