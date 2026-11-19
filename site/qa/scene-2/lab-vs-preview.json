@@ -1,0 +1,20 @@
+{
+ "previewShowsPlate": {
+  "x": [
+   560,
+   1300
+  ],
+  "y": [
+   180,
+   920
+  ],
+  "roomDifference": 10.83
+ },
+ "herBestShiftPlatePx": [
+  -1,
+  0
+ ],
+ "herDifferenceAtBestShift": 12.45,
+ "herDifferenceWithNoShift": 14.07,
+ "herDifferenceShifted4Px": 28.9
+}

@@ -1,33 +1,28 @@
 {
-  "note": "STUB until tasks/017 delivers Rachel's lab frames. The timings are the targets from reviews/scene-2-build.md; tune them on a recording once the frames exist. Frame names are the task's pose names (017_A1_mist_aim.png is A1, and so on). The two transitions are empty until the in-between frames are made: add them as lists of { frame, ms }.",
-  "rest": "A1",
-  "order": ["mist", "write"],
-  "loops": {
-    "mist": {
-      "frames": [
-        { "frame": "A1", "ms": [300, 450] },
-        { "frame": "A2", "ms": [250, 350] },
-        { "frame": "A3", "ms": [350, 500] }
-      ],
-      "cycles": [2, 4],
-      "pause": { "frame": "A1", "ms": [1000, 2000] }
-    },
-    "write": {
-      "frames": [
-        { "frame": "B1", "ms": [1800, 3200] },
-        { "frame": "B2", "ms": [500, 800] },
-        { "frame": "B1", "ms": [1700, 3000] }
-      ],
-      "cycles": 1
-    }
-  },
-  "transitions": {
-    "mist>write": [],
-    "write>mist": []
-  },
-  "blink": {
-    "on": ["A1"],
-    "every": [3000, 6000],
-    "frames": [{ "frame": "A1_blink_half", "ms": 110 }]
-  }
+ "note": "Scene 2 (lab) idle routine and reaction. Frames are listed in frames.json; holds are in ms; [a,b] = random in range. Calm and unhurried. Draw Rachel's 980x1380 canvas at plate (680,210), 490x690 plate px. Use scene/mushroom-lab.png as the plate (no longer the mock-up).",
+ "routine": [
+  {"loop": "mist", "repeat": [2, 4], "steps": [
+    {"still": "A1_mist_aim", "ms": [400, 650]},
+    {"still": "A2_mist_squeeze", "ms": [280, 360]},
+    {"still": "A3_mist_lift", "ms": [380, 480]}]},
+  {"still": "A1_mist_aim", "ms": [900, 1800], "blink_ok": true},
+  {"clip": "mist_to_write", "ms": 83},
+  {"loop": "write", "repeat": [1, 2], "clip": "write_loop", "ms": 125},
+  {"clip": "mist_to_write", "ms": 83, "reverse": true},
+  {"still": "A1_mist_aim", "ms": [600, 1200], "blink_ok": true}
+ ],
+ "blink": {"on": "A1_mist_aim", "frames": [{"still": "A1_blink_half", "ms": 50}], "every_ms": [3000, 6000], "note": "write_loop has its own blinks built in"},
+ "reaction": {
+  "enter_from": "A1_mist_aim",
+  "note": "If a find happens during writing, finish the current write_loop frame, play mist_to_write in reverse, then react.",
+  "steps": [
+   {"clip": "look_up", "ms": 70, "first_ms": 90, "first_n": 7},
+   {"hold_last": 250},
+   {"clip": "thumbs_up", "ms": 75},
+   {"still": "K2_thumbs", "ms": 1100},
+   {"clip": "thumbs_up", "ms": 55, "reverse": true},
+   {"clip": "look_up", "ms": 55, "reverse": true},
+   {"still": "A1_mist_aim", "ms": 300}
+  ]
+ }
 }

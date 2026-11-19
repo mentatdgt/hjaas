@@ -36,22 +36,24 @@ export interface Spot {
 
 /** How a character's frames sit on the plate. */
 export type Placement =
-  /** Frames are the size of the plate and drawn at its corner: no placement maths (scene 2). */
-  | { kind: 'registered' }
+  /** Frames fill a fixed rectangle of the plate, given in plate px (scene 2, from its frames.json). */
+  | { kind: 'box'; x: number; y: number; width: number; height: number }
   /**
    * Frames are cut-outs of the figure. She is `height` plate px tall, her frame's left edge is at `left`
    * and her feet are on `baseline`; the scale comes from the rest frame's own pixels (scene 1).
    */
   | { kind: 'standing'; left: number; baseline: number; height: number; shadow: boolean };
 
-/** The idle routine: what the character does when nobody is finding mushrooms. */
+/** An idle routine written as data: what the character does when nobody is finding mushrooms. */
 export type Routine =
   /** A generator written in code (scene 1's hammer rhythm, ported from Wren's timing script). */
   | { kind: 'code'; schedule: (rnd: Rng) => Iterator<Step> }
-  /** A routine manifest (routine.json) in the character's folder, played by routine.ts. */
+  /** A loop manifest in the character's folder, played by routine.ts. */
   | { kind: 'manifest'; file: string };
 
-export interface CharacterConfig {
+/** A character whose every pose is one whole image (scene 1). */
+export interface FrameCast {
+  kind: 'frames';
   /** Folder under the scene's assets that holds the frames, with a trailing slash. */
   dir: string;
   /** The frames the idle routine uses. They are decoded before the scene is shown. */
@@ -63,6 +65,23 @@ export interface CharacterConfig {
   /** Folder (under `dir`) holding reaction.json and its frames. Leave out for no reaction. */
   reaction?: string;
 }
+
+/**
+ * A character delivered as stills and clips of patches, with her routine and reaction in a manifest
+ * (scene 2; the format is described in clips.ts). Her placement, rest pose and reaction all come from the
+ * two files, so the config only says where they are.
+ */
+export interface ClipCast {
+  kind: 'clips';
+  /** Folder under the scene's assets that holds everything, with a trailing slash. */
+  dir: string;
+  /** The frame manifest, in that folder. */
+  frames: string;
+  /** The routine manifest, in that folder. */
+  routine: string;
+}
+
+export type CharacterConfig = FrameCast | ClipCast;
 
 export interface SceneConfig {
   /** Short name used in the address (`#grow`) and in saved progress. Never change it once live. */

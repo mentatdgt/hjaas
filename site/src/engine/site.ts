@@ -339,7 +339,10 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     const found = foundIn.get(config.id)!;
     const of = config.spots.length;
     let self: Scene | undefined;
-    scene = Scene.load(config, {
+    // The opening scene comes with its character; any other scene fetches hers when it is first opened.
+    scene = Scene.load(
+      config,
+      {
       flyLayer,
       found,
       target: () => caption.targetRect(),
@@ -369,9 +372,11 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       onLayout: () => {
         if (self === current) pan.layout();
       },
-    }).then((loaded) => {
+      onPose: flags.debug ? (pose, at) => poses.push([pose, Math.round(at)]) : undefined,
+      },
+      config.id === first.id,
+    ).then((loaded) => {
       self = loaded;
-      if (flags.debug && loaded.player) loaded.player.onPose = (pose, at) => poses.push([pose, Math.round(at)]);
       return loaded;
     });
     loading.set(config.id, scene);
@@ -406,6 +411,8 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   const switchTo = async (config: SceneConfig): Promise<void> => {
     const old = current!;
     const next = await sceneFor(config);
+    // Her first frames, the first time the scene is opened.
+    await next.enter();
     if (destroyed) return;
     marks.switchStart = Math.round(performance.now());
     old.hold();
@@ -445,7 +452,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     seen(next);
     showControls(false);
     quietSeconds = 0;
-    void next.loadReaction();
+    void next.loadMore();
   };
 
   /** Go to a scene. Asked again while a brush is at work, it finishes that picture at once and carries on. */
@@ -541,9 +548,10 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     // A scene asked for while the opening was being painted.
     if (wanted.id !== scene.config.id) void go(wanted);
 
-    // The reaction frames are not needed for the first seconds, so they load once the opening is over
-    // and nothing else is competing for the frame. Then the other scenes, so that moving to one is instant.
-    await scene.loadReaction();
+    // The reaction frames (and any clips) are not needed for the first seconds, so they load once the
+    // opening is over and nothing else is competing for the frame. Then the other scenes' plates, so that
+    // moving to one does not wait for its picture; their characters are fetched when they are first opened.
+    await scene.loadMore();
     ready = true;
     for (const other of scenes) {
       if (destroyed) return;

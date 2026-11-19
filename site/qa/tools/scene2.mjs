@@ -6,13 +6,15 @@
 //   node qa/tools/scene2.mjs hunt           all 20 mushrooms, the shared unlock, and state after a reload
 //   node qa/tools/scene2.mjs nav            the menu: address, back button, skip, keyboard, reduced motion, timing
 //   node qa/tools/scene2.mjs switch-frames  WebKit, production build, cold load: frame times during a switch
+//   node qa/tools/scene2.mjs lab            Rachel's lab frames: lazy loading, the patch seams, a full routine cycle, frame times
+//   node qa/tools/scene2.mjs record-lab     the lab routine and one reaction, desktop (Chrome) and iPhone (WebKit), as MP4
 import { chromium, webkit, devices } from 'playwright';
 import { execFileSync } from 'node:child_process';
 import { mkdir, readdir, rm, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
 const base = process.env.HJ_URL ?? 'http://localhost:5173/';
-const out = new URL('../scene-2/', import.meta.url).pathname;
+const out = process.env.HJ_OUT ? new URL(`../../${process.env.HJ_OUT.replace(/\/?$/, '/')}`, import.meta.url).pathname : new URL('../scene-2/', import.meta.url).pathname;
 await mkdir(out, { recursive: true });
 const SPOTS = {
   build: ['sill', 'drape', 'skirting', 'screed', 'tiles', 'conduit', 'socket', 'ladder-foot', 'ladder-step', 'toolbox'],
@@ -397,6 +399,199 @@ const run = {
     }
     await browser.close();
     await save('nav-checks', report);
+  },
+
+  // Rachel's real lab frames (reviews/scene-2-frames-dropin.md).
+  async lab() {
+    const report = {};
+
+    // 1. Lazy loading: nothing of hers is fetched until the Grow tab is first opened; then stills, then clips.
+    {
+      const browser = await chrome();
+      const page = await (await browser.newContext({ viewport: { width: 1440, height: 900 } })).newPage();
+      const requests = [];
+      page.on('request', (request) => { const m = request.url().match(/assets\/(scene2\/.*)$/); if (m) requests.push(m[1]); });
+      await page.goto(`${base}?debug&reset&intro=off&seed=7`);
+      await ready(page);
+      await page.waitForTimeout(2500);
+      const beforeOpening = [...requests];
+      await tab(page, 'grow').click();
+      await arrived(page, 'grow');
+      const atArrival = requests.slice(beforeOpening.length);
+      await page.waitForFunction(() => window.__hj.rachel.has('thumbs_up#9'), null, { timeout: 60000 });
+      const after = requests.slice(beforeOpening.length);
+      const kind = (r) => (r.includes('/stills/') ? 'still' : r.endsWith('.json') ? 'manifest' : r.includes('room') ? 'plate' : r.split('/')[2]);
+      const order = [];
+      for (const r of after) if (order.at(-1) !== kind(r)) order.push(kind(r));
+      const bytes = await page.evaluate(() => {
+        const sum = (test) => performance.getEntriesByType('resource').filter((e) => test(e.name)).reduce((n, e) => n + (e.encodedBodySize || 0), 0);
+        return { scene1: sum((n) => n.includes('/scene1/')), labPlate: sum((n) => n.includes('/scene2/room')), labStills: sum((n) => n.includes('/scene2/rachel/stills/')), labClips: sum((n) => n.includes('/scene2/rachel/') && !n.includes('/stills/') && !n.endsWith('.json')) };
+      });
+      report.lazy = { fetchedBeforeGrowIsOpened: beforeOpening, fetchedByArrival: atArrival.map(kind).filter((k, i, a) => a.indexOf(k) === i), orderAfterOpening: order, files: after.length, bytes };
+      say('lazy', report.lazy);
+      await browser.close();
+    }
+
+    // 2. The patch seam: does anything jump between a still and a clip frame on it?
+    for (const [tag, launch, options] of [
+      ['desktop-chrome', () => chrome(), { viewport: { width: 1440, height: 900 } }],
+      ['iphone-webkit', () => webkit.launch(), { ...devices['iPhone 14'], viewport: { width: 390, height: 844 } }],
+    ]) {
+      const browser = await launch();
+      const page = await (await browser.newContext(options)).newPage();
+      await page.goto(`${base}?debug&reset&intro=off&seed=7#grow`);
+      await ready(page);
+      await page.waitForFunction(() => window.__hj.rachel.has('thumbs_up#9'), null, { timeout: 60000 });
+      const seams = await page.evaluate(async () => {
+        const h = window.__hj;
+        h.player.stop();
+        const frames = await (await fetch('./assets/scene2/rachel/frames.json')).json();
+        const canvas = document.querySelector('.hj-rachel canvas');
+        const ctx = canvas.getContext('2d');
+        const grab = (pose) => { h.rachel.show(pose); return ctx.getImageData(0, 0, canvas.width, canvas.height).data; };
+        // Chrome moves a canvas from the graphics card to main memory the first time its pixels are read, and
+        // draws slightly differently there. One throwaway read first, so everything compared was drawn the same way.
+        for (let n = 0; n < 6; n++) grab(Object.keys(frames.stills)[n % 2]);
+        const s = canvas.width / frames.canvas.w;
+        const rows = [];
+        for (const [name, clip] of Object.entries(frames.clips)) {
+          const still = grab(clip.base).slice();
+          h.rachel.show(Object.keys(frames.stills).find((n) => n !== clip.base));
+          const stillAgain = grab(clip.base);
+          let redraw = 0;
+          for (let k = 0; k < still.length; k++) if (still[k] !== stillAgain[k]) redraw++;
+          let outside = 0; let ring = 0; let ringCount = 0; let ringSum = 0; let ringOver = 0; let firstCut = 0; let figure = 0;
+          // Every frame of the clip, against its still.
+          for (let i = 0; i < clip.frames.length; i++) {
+            const img = new Image(); img.src = `./assets/scene2/rachel/${clip.frames[i].replace('.png', '.webp')}`; await img.decode();
+            const x0 = clip.x * s; const y0 = clip.y * s; const x1 = (clip.x + img.naturalWidth) * s; const y1 = (clip.y + img.naturalHeight) * s;
+            const data = grab(`${name}#${i}`);
+            for (let y = 0; y < canvas.height; y++) for (let x = 0; x < canvas.width; x++) {
+              const k = (y * canvas.width + x) * 4;
+              const d = Math.max(Math.abs(data[k] - still[k]), Math.abs(data[k + 1] - still[k + 1]), Math.abs(data[k + 2] - still[k + 2]), Math.abs(data[k + 3] - still[k + 3]));
+              const inside = x >= x0 && x + 1 <= x1 && y >= y0 && y + 1 <= y1;
+              if (!inside) { if (d > outside) outside = d; continue; }
+              // The band just inside the patch's edge: there the patch shows the same picture as the still.
+              const edge = Math.min(x - x0, x1 - x - 1, y - y0, y1 - y - 1);
+              if (edge < 6 * Math.max(1, s)) { if (d > ring) ring = d; ringSum += d; ringCount++; if (d > 24) ringOver++; }
+              // The cut from the still to the clip's first frame: how much of the figure changes at once.
+              if (i === 0 && (still[k + 3] > 0 || data[k + 3] > 0)) { figure++; if (d > 24) firstCut++; }
+            }
+            h.rachel.show(clip.base);
+          }
+          rows.push({ clip: name, frames: clip.frames.length, stillRedrawnDiffers: redraw, largestDifferenceOutsidePatch: outside, meanDifferenceAtPatchEdge: Math.round((ringSum / ringCount) * 100) / 100, shareOfEdgePixelsOver24: `${Math.round((ringOver / ringCount) * 10000) / 100}%`, shareOfFigureChangingAtFirstFrame: `${Math.round((firstCut / figure) * 1000) / 10}%` });
+        }
+        h.player.start();
+        return { canvas: [canvas.width, canvas.height], scale: Math.round(s * 1000) / 1000, rows };
+      });
+      report[`seams-${tag}`] = seams;
+      say(`seams ${tag}`, seams);
+      await browser.close();
+    }
+
+    // 3. A full cycle of the routine, a reaction from misting and one from writing, and every frame's length.
+    for (const [tag, launch, options] of [
+      ['desktop-chrome', () => chrome(false), { viewport: { width: 1440, height: 900 } }],
+      ['iphone-webkit', () => webkit.launch({ headless: false }), { ...devices['iPhone 14'], viewport: { width: 390, height: 844 } }],
+    ]) {
+      const browser = await launch();
+      const context = await browser.newContext(options);
+      await context.addInitScript(() => {
+        const log = [];
+        window.__gaps = log;
+        let last = performance.now();
+        const tick = (now) => { log.push([Math.round(last), Math.round(now - last)]); last = now; requestAnimationFrame(tick); };
+        requestAnimationFrame(tick);
+      });
+      const page = await context.newPage();
+      const errors = [];
+      page.on('pageerror', (e) => errors.push(String(e)));
+      page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
+      await page.goto(`${base}?debug&reset&intro=off&seed=4#grow`);
+      await ready(page);
+      await page.waitForFunction(() => window.__hj.rachel.has('thumbs_up#9'), null, { timeout: 60000 });
+      const t0 = await page.evaluate(() => { window.__hj.poses.length = 0; return performance.now(); });
+      // Two full cycles: wait until she has come back from writing twice.
+      await page.waitForFunction(() => window.__hj.poses.filter(([p], i, a) => p === 'mist_to_write#0' && a[i - 1]?.[0] === 'mist_to_write#1').length >= 2, null, { timeout: 90000 });
+      const routine = await page.evaluate((start) => {
+        const poses = window.__hj.poses;
+        const held = poses.map(([pose, at], i) => ({ pose, ms: (poses[i + 1]?.[1] ?? at) - at })).slice(0, -1);
+        const of = (test) => held.filter((h) => test(h.pose)).map((h) => h.ms);
+        const range = (list) => (list.length ? [Math.min(...list), Math.max(...list)] : null);
+        // Cycles: from one return from writing to the next.
+        const backs = poses.filter(([p], i, a) => p === 'mist_to_write#0' && a[i - 1]?.[0] === 'mist_to_write#1').map(([, at]) => at);
+        const sprays = []; let run = 0;
+        for (const h of held) { if (h.pose === 'A2_mist_squeeze') run++; if (h.pose.startsWith('mist_to_write') && run) { sprays.push(run); run = 0; } }
+        const writes = []; let w = 0;
+        for (const h of held) { if (h.pose === 'write_loop#0') w++; if (h.pose.startsWith('mist_to_write') && w) { writes.push(w); w = 0; } }
+        const gaps = window.__gaps.filter(([at]) => at >= start);
+        return {
+          watchedS: Math.round((poses.at(-1)[1] - start) / 100) / 10,
+          cycleS: backs.slice(1).map((at, i) => Math.round((at - backs[i]) / 100) / 10),
+          spraysPerRound: sprays, writeLoopsPerRound: writes,
+          holdMs: { aim: range(of((p) => p === 'A1_mist_aim')), squeeze: range(of((p) => p === 'A2_mist_squeeze')), lift: range(of((p) => p === 'A3_mist_lift')), transitionFrame: range(of((p) => p.startsWith('mist_to_write#'))), writeFrame: range(of((p) => p.startsWith('write_loop#'))), blink: range(of((p) => p === 'A1_blink_half')) },
+          blinks: of((p) => p === 'A1_blink_half').length,
+          frames: gaps.length, longestFrameMs: Math.max(...gaps.map(([, len]) => len)), over50: gaps.filter(([, len]) => len > 50).map(([at, len]) => `${len}ms@${Math.round(at - start)}`),
+        };
+      }, t0);
+
+      // A reaction asked for while she mists, and one while she writes.
+      const reactFrom = async (spot, when) => {
+        await page.waitForFunction(when, null, { timeout: 60000 });
+        const mark = await page.evaluate(() => { window.__mark = window.__hj.poses.length; return performance.now(); });
+        await page.locator(`[data-spot="${spot}"]`).click({ force: true });
+        await page.waitForFunction(() => window.__hj.poses.slice(window.__mark).some(([p]) => p === 'K2_thumbs'), null, { timeout: 20000 });
+        await page.waitForFunction(() => !window.__hj.player.reacting, null, { timeout: 20000 });
+        return page.evaluate((start) => {
+          const poses = window.__hj.poses.slice(window.__mark);
+          const at = (test) => { const hit = poses.find(([p]) => test(p)); return hit ? Math.round(hit[1] - start) : null; };
+          const gaps = window.__gaps.filter(([t]) => t >= start);
+          const before = poses.slice(0, poses.findIndex(([p]) => p === 'look_up#0')).map(([p]) => p.split('#')[0]);
+          return { wayHome: [...new Set(before)], lookUpStartsMs: at((p) => p === 'look_up#0'), thumbsUpMs: at((p) => p === 'K2_thumbs'), backAtWorkMs: Math.round(poses.at(-1)[1] - start), reactionMs: Math.round(poses.at(-1)[1] - poses.find(([p]) => p === 'look_up#0')[1]), longestFrameMs: Math.max(...gaps.map(([, len]) => len)), over50: gaps.filter(([, len]) => len > 50).length };
+        }, mark);
+      };
+      const fromMisting = await reactFrom('pipe', () => window.__hj.rachel.current === 'A3_mist_lift');
+      const fromWriting = await reactFrom('door', () => window.__hj.rachel.current === 'write_loop#6');
+      report[`routine-${tag}`] = { routine, fromMisting, fromWriting, errors };
+      say(`routine ${tag}`, report[`routine-${tag}`]);
+      await browser.close();
+    }
+    await save('lab-checks', report);
+  },
+
+  async 'record-lab'() {
+    for (const device of ['desktop', 'iphone']) {
+      const isPhone = device === 'iphone';
+      const tmp = join(out, `.tmp-lab-${device}`);
+      await mkdir(tmp, { recursive: true });
+      const browser = isPhone ? await webkit.launch({ headless: false }) : await chrome(false);
+      const size = isPhone ? { width: 390, height: 844 } : { width: 1440, height: 900 };
+      const context = await browser.newContext({ ...(isPhone ? devices['iPhone 14'] : {}), viewport: size, recordVideo: { dir: tmp, size } });
+      const page = await context.newPage();
+      const errors = [];
+      page.on('pageerror', (e) => errors.push(String(e)));
+      page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
+      await page.goto(`${base}?debug&reset&intro=off&seed=4#grow`);
+      await ready(page);
+      await clean(page);
+      await page.waitForFunction(() => window.__hj.rachel.has('thumbs_up#9'), null, { timeout: 60000 });
+      // One full cycle: misting, into writing, and back.
+      await page.waitForFunction(() => window.__hj.poses.some(([p], i, a) => p === 'mist_to_write#0' && a[i - 1]?.[0] === 'mist_to_write#1'), null, { timeout: 90000 });
+      await page.waitForTimeout(1500);
+      // A find while she mists: look up, beam, thumbs-up, and back to work.
+      const spot = page.locator('[data-spot="pipe"]');
+      if (isPhone) await spot.tap(); else await spot.click();
+      await page.waitForFunction(() => window.__hj.poses.some(([p]) => p === 'K2_thumbs'), null, { timeout: 20000 });
+      await page.waitForFunction(() => !window.__hj.player.reacting, null, { timeout: 20000 });
+      await page.waitForTimeout(2500);
+      await context.close();
+      await browser.close();
+      const [file] = (await readdir(tmp)).filter((name) => name.endsWith('.webm'));
+      const mp4 = `${out}lab-routine-and-reaction-${device}.mp4`;
+      execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', join(tmp, file), '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '20', '-movflags', '+faststart', mp4]);
+      await rm(tmp, { recursive: true, force: true });
+      say(`recorded ${device}`, { mp4, errors });
+    }
   },
 
   // WebKit, cold load, production build: every frame's length while one scene is brushed in over the other.

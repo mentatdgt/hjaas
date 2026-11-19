@@ -6,7 +6,7 @@ Rachel at work in it and ten hidden mushrooms; finding all ten in any scene unlo
 | Scene | Address | State |
 |---|---|---|
 | **Build**: Rachel hammering in a flat under renovation | `/` or `/#build` | Complete |
-| **Grow**: Rachel in her mushroom lab | `/#grow` | Structure only. The picture is the chosen mock-up, still, until `tasks/017` delivers her frames |
+| **Grow**: Rachel in her mushroom lab, misting a tray and taking notes | `/#grow` | Complete, with task 017's frames. Her frames load when the scene is first opened |
 
 Built from `HANDOVER.md`, reworked from `reviews/scene-1-review-03-elegant.md`, and given a second scene
 from `reviews/scene-2-build.md` on the branch `site/scene-2`. Earlier versions: `site/scene-1-elegant`
@@ -46,8 +46,9 @@ Inside `src/engine/`:
 | `types.ts` | What a scene is, as data: `SceneConfig`. |
 | `scene.ts` | One scene built from its config: plate, character, mushrooms. |
 | `transition.ts`, `paint.ts` | How a picture arrives: the first-visit painting, the short brush between scenes, the 200 ms fades. |
-| `character.ts`, `player.ts`, `steps.ts` | A character's placement on the plate and the player that shows her poses. |
-| `routine.ts` | Turns a routine manifest (`routine.json`) into an idle routine: loops, cycles, transitions, blinks. |
+| `character.ts`, `player.ts`, `steps.ts` | A character's canvas (whole frames, or a patch over a still), her placement on the plate, and the player that shows her poses. |
+| `clips.ts` | Reads Wren's delivered format (`frames.json` + `routine.json`): stills, clips of patches, the routine, blinks, the reaction and its entry rule. |
+| `routine.ts` | A simpler loop manifest for whole-frame characters: loops, cycles, transitions, blinks. |
 | `reaction.ts` | Loads and plays `reaction.json` exactly as delivered. |
 | `mushrooms.ts` | Tap boxes, the short trip to the caption, the hint wiggle. |
 | `caption.ts` | The caption under the picture ("3 of 10 found") and the Contact button. |
@@ -71,12 +72,17 @@ worked example), listed in `src/scenes/index.ts`. The menu shows whatever is lis
 Also add the scene's assets folder to the small list in `index.html`, so its picture starts downloading early
 when someone opens its address directly.
 
-**The idle routine** is either code (scene 1's hammer rhythm, ported from `tools/preview_timing.py`) or a
-manifest, `routine.json`, in the character's folder. The manifest format is described at the top of
-`src/engine/routine.ts`. `public/assets/scene2/rachel/routine.json` is scene 2's, a stub with the target timings.
+**A character** comes in one of two forms:
 
-**When Rachel's lab frames arrive (`tasks/017`):** the three steps are in the comment above `LAB_CAST` in
-`src/scenes/grow.ts`.
+- **Whole frames** (scene 1): every pose is one image. The idle routine is code (scene 1's hammer rhythm,
+  ported from `tools/preview_timing.py`) or a loop manifest (format at the top of `src/engine/routine.ts`),
+  and the reaction is a `reaction.json`.
+- **Stills and clips** (scene 2), as Wren's pipeline delivers them in `frames/NNN-…/site/`: `frames.json`
+  (the stills, the clips as patches over a still, and where her canvas sits on the plate) and `routine.json`
+  (routine, blinks, reaction). The format is described at the top of `src/engine/clips.ts`. Both files are
+  copied as delivered by `npm run assets`; the config only names them.
+
+A scene's character is fetched when the scene is first opened: her stills first, then her clips.
 
 ## Swapping art
 

@@ -34,10 +34,18 @@ const add = (from, to, opts = sprite, resize, dir = out) => jobs.push({ from: jo
 
 add('scene/room-empty.png', 'room.webp', plate);
 
-// Scene 2, the lab. PLACEHOLDER until tasks/017: the plate is the chosen mock-up, which has Rachel and the
-// trolley drawn into it. When her frames exist, change this to 'scene/mushroom-lab.png' (the empty lab) and
-// add the frames to scene2/rachel/ as scene 1's are added below.
-add('reference/mockups/mockup-lab-1-trolley-CHOSEN.png', 'scene2/room.webp', plate, undefined, assets);
+// Scene 2, the lab: the empty lab plate, and Rachel as delivered by task 017: stills, and clips of patches
+// (frames.json lists them; routine.json is her routine and reaction). Both manifests are copied exactly as
+// delivered, further down; the page swaps .png for .webp itself.
+add('scene/mushroom-lab.png', 'scene2/room.webp', plate, undefined, assets);
+const lab = 'frames/017-lab-keyposes/site';
+const labFrames = JSON.parse(await readFile(join(repo, lab, 'frames.json'), 'utf8'));
+// Lossy at quality 93 with exact alpha, like scene 1's frames: the patches sit over their stills, so the two
+// must agree at the patch's edge, and they do at this quality (qa/tools/scene2.mjs frames checks the seam).
+const labFrame = { quality: 93, alphaQuality: 100, smartSubsample: true, effort: 6 };
+for (const file of [...Object.values(labFrames.stills), ...Object.values(labFrames.clips).flatMap((clip) => clip.frames)]) {
+  add(`${lab}/${file}`, `scene2/rachel/${file.replace(/\.png$/, '.webp')}`, labFrame, undefined, assets);
+}
 
 const loop = 'frames/016-upscale/approved';
 const loopFrames = ['frame_01', 'frame_02', 'frame_03', 'frame_04', 'blink_half', 'blink_closed'];
@@ -83,6 +91,9 @@ for (const { from, to, opts, resize } of jobs) {
   total += size;
   console.log(`${basename(to).padEnd(22)} ${(size / 1024).toFixed(0).padStart(5)} KB`);
 }
+
+await copyFile(join(repo, lab, 'frames.json'), join(assets, 'scene2/rachel/frames.json'));
+await copyFile(join(repo, lab, 'routine.json'), join(assets, 'scene2/rachel/routine.json'));
 
 // The reaction manifest is used as delivered; the player swaps .png for .webp itself.
 await copyFile(join(repo, reaction, 'reaction.json'), join(out, 'rachel/reaction/reaction.json'));

@@ -1,13 +1,14 @@
 // One scene, built from its config: the plate, the character on it, and the ten hidden mushrooms.
 // A scene knows nothing about the page around it; site.ts puts it in the window and takes it out again.
-import { PLATE, asset, loadFrames, loadPlate } from './assets';
+import { PLATE, asset, idle, loadFrame, loadFrames, loadPlate } from './assets';
 import { Character } from './character';
+import { checkClips, clipPose, clipReaction, clipSchedule, clipsInUse, type ClipFrames, type ClipRoutine } from './clips';
 import { Hunt } from './mushrooms';
-import { Player } from './player';
+import { Player, type Schedule } from './player';
 import { loadReaction, type Reaction } from './reaction';
 import { checkRoutine, routineFrames, routineSchedule, type RoutineManifest } from './routine';
-import { holdSchedule, type Rng, type Step } from './steps';
-import type { SceneConfig, Spot } from './types';
+import { holdSchedule, type Rng } from './steps';
+import type { ClipCast, FrameCast, SceneConfig, Spot } from './types';
 
 /** What a scene needs from the page it is shown on. */
 export interface SceneHost {
@@ -24,77 +25,161 @@ export interface SceneHost {
   onLand: (spot: Spot) => void;
   /** The plate has changed size. */
   onLayout: () => void;
+  /** QA: called on every pose change. */
+  onPose?: (pose: string, at: number) => void;
 }
+
+/** A character ready to go on the plate, and what is still to be fetched for her. */
+interface Cast {
+  character: Character;
+  routine: () => Schedule;
+  /** The reaction, once it can be played in full. Until then `still` stands in, if there is one. */
+  reaction: () => Reaction | null;
+  still: Reaction['still'];
+  /**
+   * Fetches what the first showing did not need (clips, reaction frames), one image at a time in quiet
+   * moments. `reactions: false` leaves out what only a reaction uses.
+   */
+  more: (reactions: boolean) => Promise<void>;
+}
+
+const json = async <T>(path: string): Promise<T> => {
+  const response = await fetch(asset(path));
+  if (!response.ok) throw new Error(`${path}: ${response.status}`);
+  return (await response.json()) as T;
+};
+/** The site serves WebP copies of the delivered PNGs. */
+const webp = (file: string): string => file.replace(/\.png$/i, '.webp');
+
+/** A character whose every pose is one whole image (scene 1). */
+async function frameCast(config: SceneConfig, cast: FrameCast, host: SceneHost): Promise<Cast> {
+  const dir = config.assets + cast.dir;
+  let names = [...cast.frames];
+  let routine: () => Schedule;
+  if (cast.routine.kind === 'manifest') {
+    const manifest = await json<RoutineManifest>(dir + cast.routine.file);
+    const problems = checkRoutine(manifest);
+    if (problems.length) throw new Error(`${config.id}: ${cast.routine.file}: ${problems.join(' ')}`);
+    names = [...new Set([...names, ...routineFrames(manifest)])];
+    routine = () => routineSchedule(manifest, host.rnd);
+  } else {
+    const { schedule } = cast.routine;
+    routine = () => schedule(host.rnd);
+  }
+  const character = new Character(await loadFrames(dir, names), cast);
+  let reaction: Reaction | null = null;
+  let loading: Promise<void> | null = null;
+  return {
+    character,
+    routine,
+    reaction: () => reaction,
+    still: [],
+    more: (reactions) => {
+      if (!cast.reaction || !reactions) return Promise.resolve();
+      loading ??= loadReaction(character, config.assets, cast.dir + cast.reaction).then(
+        (loaded) => void (reaction = loaded),
+        (error) => console.warn(`[hjaas] ${config.id}: reaction frames unavailable; finds still count`, error),
+      );
+      return loading;
+    },
+  };
+}
+
+/** A character delivered as stills and clips of patches (scene 2; see clips.ts). */
+async function clipCast(config: SceneConfig, cast: ClipCast, host: SceneHost): Promise<Cast> {
+  const dir = config.assets + cast.dir;
+  const [frames, routine] = await Promise.all([json<ClipFrames>(dir + cast.frames), json<ClipRoutine>(dir + cast.routine)]);
+  const problems = checkClips(frames, routine);
+  if (problems.length) throw new Error(`${config.id}: ${problems.join(' ')}`);
+
+  // The stills first: they are all she needs to start her routine.
+  const names = Object.keys(frames.stills);
+  const stills = await Promise.all(names.map((name) => loadFrame(asset(dir + webp(frames.stills[name])))));
+  const c = frames.canvas;
+  const character = new Character(new Map(names.map((name, i) => [name, stills[i]])), {
+    rest: routine.reaction?.enter_from ?? names[0],
+    placement: { kind: 'box', x: c.plate_x, y: c.plate_y, width: c.plate_w, height: c.plate_h },
+  });
+
+  // Then the clips, when asked: the routine's own, then the reaction's.
+  const loaded = new Set<string>();
+  const inUse = clipsInUse(routine);
+  const fetching = new Map<string, Promise<void>>();
+  const fetchClip = (name: string): Promise<void> => {
+    let pending = fetching.get(name);
+    if (!pending) {
+      pending = (async () => {
+        const clip = frames.clips[name];
+        for (let i = 0; i < clip.frames.length; i++) {
+          await idle();
+          character.addPatch(clipPose(name, i), { base: clip.base, x: clip.x, y: clip.y, frame: await loadFrame(asset(dir + webp(clip.frames[i]))) });
+        }
+        loaded.add(name);
+      })();
+      fetching.set(name, pending);
+      pending.catch((error) => {
+        fetching.delete(name);
+        console.warn(`[hjaas] ${config.id}: the clip "${name}" could not be loaded; she keeps to her stills`, error);
+      });
+    }
+    return pending;
+  };
+  const full = clipReaction(frames, routine);
+  return {
+    character,
+    routine: () => clipSchedule(frames, routine, host.rnd, (name) => loaded.has(name)),
+    // The full reaction needs every clip: its own, and the routine's for the way back from writing.
+    reaction: () => (full && [...inUse.routine, ...inUse.reaction].every((name) => loaded.has(name)) ? full : null),
+    still: full?.still ?? [],
+    more: async (reactions) => {
+      for (const name of inUse.routine) await fetchClip(name).catch(() => {});
+      if (reactions) for (const name of inUse.reaction) await fetchClip(name).catch(() => {});
+    },
+  };
+}
+
 
 export class Scene {
   readonly config: SceneConfig;
   /** The scene's coordinate system: children are placed in percentages of 1672 × 941. */
   readonly plate: HTMLDivElement;
   readonly hunt: Hunt;
-  readonly character: Character | null;
-  readonly player: Player | null;
+  /** Null until her frames are on the plate (see enter()), and for a scene with no character. */
+  character: Character | null = null;
+  player: Player | null = null;
   private readonly host: SceneHost;
-  private readonly routine: (() => Iterator<Step>) | null;
   private readonly layout: ResizeObserver;
-  private reaction: Reaction | null = null;
-  private loadingReaction: Promise<void> | null = null;
+  private cast: Cast | null = null;
+  private casting: Promise<void> | null = null;
   private reacting: Promise<void> = Promise.resolve();
   private working = false;
 
-  private constructor(
-    config: SceneConfig,
-    host: SceneHost,
-    plate: HTMLDivElement,
-    hunt: Hunt,
-    character: Character | null,
-    routine: (() => Iterator<Step>) | null,
-  ) {
+  private constructor(config: SceneConfig, host: SceneHost, plate: HTMLDivElement, hunt: Hunt) {
     this.config = config;
     this.host = host;
     this.plate = plate;
     this.hunt = hunt;
-    this.character = character;
-    this.routine = routine;
     // Bottom to top: the room, her shadow, the mushrooms, (a first-visit painting's sheet of paper,) the character.
-    if (character?.shadow) plate.append(character.shadow);
     plate.append(hunt.el);
-    if (character) plate.append(character.el);
-    this.player = character ? new Player(character, this.rhythm()) : null;
 
     this.layout = new ResizeObserver(() => {
       if (!plate.clientWidth) return;
       // One plate pixel in CSS pixels. Only changes on resize, never during animation.
       plate.style.setProperty('--u', `${plate.clientWidth / PLATE.w}px`);
-      character?.resize();
+      this.character?.resize();
       host.onLayout();
     });
     this.layout.observe(plate);
   }
 
-  /** Downloads and decodes everything the scene shows at rest. Resolves with the scene, ready to go on the page. */
-  static async load(config: SceneConfig, host: SceneHost): Promise<Scene> {
-    const dir = config.assets;
-    const plateSrc = loadPlate(dir + config.plate);
-
-    let character: Character | null = null;
-    let routine: (() => Iterator<Step>) | null = null;
-    const cast = config.character;
-    if (cast) {
-      let names = [...cast.frames];
-      if (cast.routine.kind === 'manifest') {
-        const response = await fetch(asset(dir + cast.dir + cast.routine.file));
-        if (!response.ok) throw new Error(`${cast.routine.file}: ${response.status}`);
-        const manifest = (await response.json()) as RoutineManifest;
-        const problems = checkRoutine(manifest);
-        if (problems.length) throw new Error(`${config.id}: ${cast.routine.file}: ${problems.join(' ')}`);
-        names = [...new Set([...names, ...routineFrames(manifest)])];
-        routine = () => routineSchedule(manifest, host.rnd);
-      } else {
-        const { schedule } = cast.routine;
-        routine = () => schedule(host.rnd);
-      }
-      character = new Character(await loadFrames(dir + cast.dir, names), cast);
-    }
+  /**
+   * Downloads and decodes the plate and the mushrooms. `withCharacter` fetches her first frames alongside
+   * (the opening scene); otherwise they are left until the scene is first opened (see enter()), so that a
+   * scene nobody has visited yet costs only its plate.
+   */
+  static async load(config: SceneConfig, host: SceneHost, withCharacter: boolean): Promise<Scene> {
+    const plateSrc = loadPlate(config.assets + config.plate);
+    const cast = withCharacter ? Scene.castFor(config, host) : null;
 
     const plate = document.createElement('div');
     plate.className = 'hj-plate';
@@ -118,7 +203,39 @@ export class Scene {
       onFind: host.onFind,
       onLand: host.onLand,
     });
-    return new Scene(config, host, plate, hunt, character, routine);
+    const scene = new Scene(config, host, plate, hunt);
+    const ready = await cast;
+    if (ready) scene.attach(ready);
+    return scene;
+  }
+
+  private static castFor(config: SceneConfig, host: SceneHost): Promise<Cast | null> {
+    const cast = config.character;
+    if (!cast) return Promise.resolve(null);
+    return cast.kind === 'clips' ? clipCast(config, cast, host) : frameCast(config, cast, host);
+  }
+
+  /**
+   * The scene is about to be shown: make sure the character's first frames are on the plate. The first
+   * time this fetches them; after that it resolves at once.
+   */
+  enter(): Promise<void> {
+    if (this.character || !this.config.character) return Promise.resolve();
+    this.casting ??= Scene.castFor(this.config, this.host).then((cast) => {
+      if (cast) this.attach(cast);
+    });
+    return this.casting;
+  }
+
+  private attach(cast: Cast): void {
+    const { character } = cast;
+    this.cast = cast;
+    this.character = character;
+    if (character.shadow) this.plate.insertBefore(character.shadow, this.hunt.el);
+    this.plate.append(character.el);
+    this.player = new Player(character, this.rhythm());
+    if (this.host.onPose) this.player.onPose = this.host.onPose;
+    character.resize();
   }
 
   get total(): number {
@@ -160,10 +277,14 @@ export class Scene {
    * reacting, that reaction carries on and its promise is returned.
    */
   react(): Promise<void> {
-    if (!this.player || !this.reaction) return Promise.resolve();
+    if (!this.player || !this.cast) return Promise.resolve();
     if (this.player.reacting) return this.reacting;
-    // Still: one held pose acknowledges the find, without the head and arm travel.
-    this.reacting = this.player.react(this.host.still() ? this.reaction.still : this.reaction.steps);
+    const reaction = this.cast.reaction();
+    // Still (paused, reduced motion, or the reaction's frames not here yet): one held pose acknowledges the
+    // find, without the head and arm travel.
+    const steps = reaction && !this.host.still() ? reaction.steps : (reaction?.still ?? this.cast.still);
+    if (steps.length === 0) return Promise.resolve();
+    this.reacting = this.player.react(steps);
     return this.reacting;
   }
 
@@ -172,17 +293,12 @@ export class Scene {
   }
 
   /**
-   * Loads the reaction's frames, one at a time in quiet moments. Not needed for the first seconds, so it is
-   * called once the scene has settled. (A scene with every mushroom found never reacts, so nothing is fetched.)
+   * Fetches what the first showing did not need: her clips, and the reaction's frames. One image at a time,
+   * in quiet moments, so it is called once the scene has settled. (A scene with every mushroom found never
+   * reacts, so the reaction's frames are not fetched for it.)
    */
-  loadReaction(): Promise<void> {
-    const cast = this.config.character;
-    if (!cast?.reaction || !this.character || this.hunt.remaining === 0) return Promise.resolve();
-    this.loadingReaction ??= loadReaction(this.character, this.config.assets, cast.dir + cast.reaction).then(
-      (reaction) => void (this.reaction = reaction),
-      (error) => console.warn(`[hjaas] ${this.config.id}: reaction frames unavailable; finds still count`, error),
-    );
-    return this.loadingReaction;
+  loadMore(): Promise<void> {
+    return this.cast?.more(this.hunt.remaining > 0) ?? Promise.resolve();
   }
 
   /**
@@ -204,8 +320,8 @@ export class Scene {
     this.plate.remove();
   }
 
-  private rhythm(): Iterator<Step> {
+  private rhythm(): Schedule {
     const rest = this.character?.rest ?? '';
-    return this.host.still() || !this.routine ? holdSchedule(rest) : this.routine();
+    return this.host.still() || !this.cast ? holdSchedule(rest) : this.cast.routine();
   }
 }

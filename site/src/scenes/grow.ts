@@ -1,6 +1,6 @@
 // Scene 2, "Grow": Rachel in her mushroom lab, misting a tray on a steel trolley.
 // Everything here is data for the engine in src/engine/; nothing in this file draws or moves anything.
-import type { CharacterConfig, SceneConfig, Spot, StrokePlan } from '../engine/types';
+import type { SceneConfig, Spot, StrokePlan } from '../engine/types';
 
 // The lab's light is cool and white, so the mushrooms lose scene 1's warm cast: a little less colour, a
 // touch brighter, and a few degrees towards blue.
@@ -11,7 +11,7 @@ const SHADE = 'brightness(0.84) saturate(0.74) hue-rotate(-8deg)';
 // Left to right, which is also the Tab order. Sizes follow depth, as in scene 1: about 18 px on the back
 // wall, about 40 px at the front of the floor. White drawings are used twice only (the lab is white), and
 // both stand where their outline shows: on the sunlit floor and beside the humidifier's base.
-// None is on the trolley or behind Rachel: her frames will cover that part of the plate.
+// None is on the trolley or behind Rachel: her frames cover that part of the plate (x 680-1170, y 210-900).
 const SPOTS: Spot[] = [
   { id: 'door', art: 3, x: 128, y: 806, h: 28, tint: LIT, grounded: true },
   { id: 'bench', art: 8, x: 236, y: 791, h: 22, tint: SHADE, grounded: true },
@@ -48,31 +48,15 @@ const STROKES: StrokePlan[] = [
   { via: [[1540, 905], [1690, 930]], width: 210, at: 3.78, takes: 0.54 },
 ];
 
-/**
- * Rachel in the lab, ready for tasks/017. Her frames will be 1672 × 941 images registered to the plate, so
- * they are drawn at the plate's corner with no placement maths. To switch her on:
- *   1. `npm run assets` with the frames added to scene2/rachel/ (and the plate changed to the empty lab);
- *   2. put `character: LAB_CAST` in the config below;
- *   3. fill in the transitions in scene2/rachel/routine.json, and add reaction/reaction.json as in scene 1.
- */
-export const LAB_CAST: CharacterConfig = {
-  dir: 'rachel/',
-  // The routine manifest names every frame it uses; they are loaded from it.
-  frames: [],
-  rest: 'A1',
-  placement: { kind: 'registered' },
-  routine: { kind: 'manifest', file: 'routine.json' },
-  reaction: 'reaction/',
-};
-
 export const grow: SceneConfig = {
   id: 'grow',
   label: 'Grow',
   picture: 'Hui Jie in her mushroom lab. Ten mushrooms are hidden in the room.',
   assets: 'scene2/',
-  // PLACEHOLDER until tasks/017: this plate is the chosen mock-up, with Rachel and the trolley drawn into
-  // it, still. There is no character, so no routine and no reaction; finds still count.
   plate: 'room.webp',
+  // Rachel as delivered by task 017 (frames/017-lab-keyposes/site/): frames.json has her stills, her clips
+  // and where her canvas sits on the plate; routine.json has her routine, her blinks and her reaction.
+  character: { kind: 'clips', dir: 'rachel/', frames: 'frames.json', routine: 'routine.json' },
   spots: SPOTS,
   strokes: STROKES,
   // A phone starts on Rachel and the trolley (about plate x 680-1180): centred on x 930 at either shape.

@@ -1,6 +1,9 @@
 import type { Character } from './character';
 import type { Step } from './steps';
 
+/** A routine. It is told, each time it is asked for a step, whether a reaction is waiting (clips.ts uses that). */
+export type Schedule = Iterator<Step, unknown, 'react' | undefined>;
+
 // A frame that arrives late is absorbed: time accumulates and the schedule catches up,
 // so one slow frame never shifts the rhythm. After a real stall we don't fast-forward further than this.
 const MAX_CATCH_UP_MS = 250;
@@ -13,7 +16,7 @@ const MAX_CATCH_UP_MS = 250;
 export class Player {
   private readonly rachel: Character;
   private readonly rest: string;
-  private loop: Iterator<Step>;
+  private loop: Schedule;
   private step: Step;
   private elapsed = 0;
   private last = 0;
@@ -28,7 +31,7 @@ export class Player {
   /** Called on every pose change. Used by QA to log the rhythm. */
   onPose: ((pose: string, at: number) => void) | null = null;
 
-  constructor(character: Character, loop: Iterator<Step>) {
+  constructor(character: Character, loop: Schedule) {
     this.rachel = character;
     this.rest = character.rest;
     this.step = { pose: this.rest, ms: 0 };
@@ -69,7 +72,7 @@ export class Player {
   }
 
   /** Swap the rhythm (reduced motion on or off). Takes effect at the next step. */
-  setLoop(loop: Iterator<Step>): void {
+  setLoop(loop: Schedule): void {
     this.loop = loop;
   }
 
@@ -133,8 +136,9 @@ export class Player {
 
   private nextLoopStep(): Step {
     for (;;) {
-      const { value } = this.loop.next();
-      if (value.ms > 0) return value;
+      const { value } = this.loop.next(this.queued ? 'react' : undefined);
+      const step = value as Step;
+      if (step.ms > 0) return step;
     }
   }
 

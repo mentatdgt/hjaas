@@ -51,6 +51,7 @@ export const build: SceneConfig = {
   assets: 'scene1/',
   plate: 'room.webp',
   character: {
+    kind: 'frames',
     dir: 'rachel/',
     frames: ['frame_01', 'frame_02', 'frame_03', 'frame_04', 'blink_half', 'blink_closed'],
     rest: CONTACT_POSE,
