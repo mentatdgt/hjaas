@@ -3,7 +3,13 @@
 For: Fable, on `site/scene-2` (so it applies to Build and Grow). Do this after the scene-2 structure and the frame drop-in.
 - Commit per item and push. Never merge into other branches.
 - The user asked for it on 2026-11-19: "the image is a hard edge then a border; feather to white along the edges, watercolour, more organic."
-- Mock-ups: `reference/mockups/edge-options-soft-vs-deckle.jpg`. Top: a **soft** smoky feather. Bottom: a **deckle**, a crisp, wobbly watercolour edge with paler paint and a little pigment pooling.
+- **UPDATED (user, 22:57):** the user prefers a **soft** feather, but **thinner** than the first mock-up, which was too diffuse and ate into the image. **No deckle, no pigment rim, no paler wash, no grey smoke:** the painting simply fades to the paper colour.
+- The mock-ups to match are in `reference/mockups/edge-options-2-ABC.jpg`. Build all three behind `?edge=a|b|c` (dev-only), default **a**:
+  - **A, light:** a thin soft edge. The fade covers about 4% of the width on the sides, 6% at the top and 2.5% at the bottom, with gentle noise so the line wanders slightly.
+  - **B, medium:** a little wider (sides about 5.5%, top 8%, bottom 3%) and wanders more.
+  - **C, corners:** the edges stay mostly intact (about 3%), and the fade is stronger toward the corners, like a soft vignette.
+- Wherever the text below says soft/deckle, read it as A/B/C. Ignore the pigment-rim and thinned-wash steps.
+- The older mock-up (`edge-options-soft-vs-deckle.jpg`) is superseded.
 
 ## Build
 1. **Remove the mat and the fine border** around the painting. The painting sits straight on the paper page.
@@ -27,7 +33,7 @@ For: Fable, on `site/scene-2` (so it applies to Build and Grow). Do this after t
 8. **Paper:** keep the page colour (`#F6F3EC`). Optionally add a very faint static grain on the page around the painting.
 
 ## QA
-- Screenshots of both edge styles, for both scenes, at 1440×900, 390×844 and 360×740.
+- Screenshots of all three edge styles (A, B, C), for both scenes, at 1440×900, 390×844 and 360×740.
 - One recording of the intro with the new edge, on desktop and iPhone (WebKit).
 - A mask-under-every-mushroom check: all ≥ 0.95.
-- Add an "Edge" section to `site/qa/REPORT.md` and a side-by-side image, `site/qa/edge/compare.jpg`, so the user can pick soft or deckle in the morning.
+- Add an "Edge" section to `site/qa/REPORT.md` and a side-by-side image, `site/qa/edge/compare.jpg`, so the user can pick A, B or C in the morning.
