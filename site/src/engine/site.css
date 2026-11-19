@@ -59,10 +59,12 @@
   --gap-head: clamp(16px, 1.5cqw, 30px);
   --gap-caption: clamp(12px, 1.1cqw, 22px);
   --caption-h: 44px;
+  /* The scene menu's own row, where it has one (phones). */
+  --menu-h: 0px;
   /* Everything on the page that is not the picture, top to bottom. */
   --chrome: calc(
-    var(--pad-top) + var(--logo-h) + var(--gap-head) + 2 * var(--mat) + 2px + var(--gap-caption) + var(--caption-h) +
-      var(--pad-bottom)
+    var(--pad-top) + var(--logo-h) + var(--menu-h) + var(--gap-head) + 2 * var(--mat) + 2px + var(--gap-caption) +
+      var(--caption-h) + var(--pad-bottom)
   );
   /* The picture: about 1040 px on a 1440 px window, never wider than the page allows, and small enough
      that the caption stays on screen. Very short windows keep a readable picture and let the page scroll. */
@@ -88,6 +90,56 @@
 
 .hj-ident {
   min-width: 0;
+}
+
+/* The scene menu: quiet tabs at the end of the masthead, just above the picture. */
+.hj-menu {
+  display: flex;
+  align-self: flex-end;
+  gap: clamp(18px, 1.8cqw, 34px);
+  margin-left: auto;
+  /* The tabs' underlines sit on the masthead's bottom edge. */
+  margin-bottom: -6px;
+}
+
+.hj-tab {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  border-bottom: 1.5px solid transparent;
+  color: var(--hj-ink-soft);
+  font-size: clamp(15.5px, 1.15cqw, 21px);
+  line-height: 1.2;
+  text-decoration: none;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+  transition:
+    color 140ms ease,
+    border-color 140ms ease;
+}
+
+/* The scene in the window. */
+.hj-tab[aria-current='page'] {
+  border-bottom-color: var(--hj-ink);
+  color: var(--hj-ink);
+  font-weight: 500;
+}
+
+.hj-tab:focus {
+  outline: none;
+}
+
+.hj-tab:focus-visible {
+  outline: 2px solid var(--hj-ink);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hj-tab:hover {
+    color: var(--hj-ink);
+  }
 }
 
 .hj-name {
@@ -1166,7 +1218,30 @@ a.hj-logo:active {
     }
 
     .hj-masthead {
-      gap: 14px;
+      flex-wrap: wrap;
+      gap: 0 14px;
+    }
+
+    /* The name stays beside the logo; its text wraps inside its own column. */
+    .hj-ident {
+      flex: 1 1 0;
+    }
+
+    /* The menu takes its own row under the identity, and stays on one row. */
+    .hj-menu {
+      flex: 0 0 100%;
+      gap: 26px;
+      margin: 2px 0 -4px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .hj-tab {
+      flex: none;
+    }
+
+    .hj-page:has(.hj-menu) {
+      --menu-h: 42px;
     }
 
     .hj-tagline {

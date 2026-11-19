@@ -411,12 +411,14 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     old.hold();
     const firstVisit = !stateOf(config.id).seen && flags.intro !== 'quick';
     const state = captionFor(config);
+    // Screen readers hear where they have arrived, and this scene's own count.
+    const arriving = `${config.label}. ${state[0]} of ${config.spots.length} mushrooms found.`;
 
     if (reducedMotion() || flags.intro === 'off') {
       // No brushwork: the old picture fades off the new one in 200 ms.
       transition.cover((ctx, origin) => old.sketch(ctx, origin), next);
       place(next);
-      caption.set(...state);
+      caption.change(...state, arriving);
       await transition.fadeOver(next);
     } else if (firstVisit) {
       // A scene never seen before gets its full painting, from a blank sheet.
@@ -425,7 +427,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       place(next);
       leave.cancel();
       transition.prepare(next);
-      caption.change(...state);
+      caption.change(...state, arriving);
       showControls(true);
       await steadyFrames();
       await transition.paint(next);
@@ -433,7 +435,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       // A scene seen before is brushed in over the one being left.
       transition.cover((ctx, origin) => old.sketch(ctx, origin), next);
       place(next);
-      caption.change(...state);
+      caption.change(...state, arriving);
       showControls(true);
       await steadyFrames(70);
       await transition.brushOver(next, pan.view);

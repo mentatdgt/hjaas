@@ -119,7 +119,7 @@ export class Transition {
     if (character) hidden.push(character.el);
     if (character?.shadow) hidden.push(character.shadow);
     if (first) hidden.push(caption);
-    gsap.set(hidden, { opacity: 0 });
+    if (hidden.length) gsap.set(hidden, { opacity: 0 });
     // Unpainted mushrooms can't be found yet, by pointer or by keyboard.
     hunt.el.inert = true;
     root.classList.remove('is-pre');

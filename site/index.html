@@ -18,8 +18,20 @@
     <meta property="og:image:alt" content="The HJaaS tape-measure logo" />
     <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png" />
-    <!-- The room is the brush's paint: fetched while the script is still downloading. Matches loadRoom()'s fetch. -->
-    <link rel="preload" href="./assets/scene1/room.webp" as="image" type="image/webp" fetchpriority="high" />
+    <!-- The opening scene's plate is the first thing the page needs: it is fetched while the script is still
+         downloading. Matches loadPlate()'s request. Keep the list in step with src/scenes/ (id: assets folder). -->
+    <script>
+      (function () {
+        var folders = { build: 'scene1', grow: 'scene2' };
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.type = 'image/webp';
+        link.setAttribute('fetchpriority', 'high');
+        link.href = './assets/' + (folders[location.hash.slice(1)] || 'scene1') + '/room.webp';
+        document.head.appendChild(link);
+      })();
+    </script>
     <style>
       /* A paper page. The scene is as tall as its content, so the page scrolls when it has to. */
       html, body { margin: 0; background: #f6f3ec; }
