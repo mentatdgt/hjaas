@@ -1,0 +1,39 @@
+# WebKit cold load, production build (npm run preview), this Mac, Playwright WebKit headless.
+# Each run: a new browser and a new context (no HTTP cache, no saved progress), so the first-visit painting plays.
+# Times are ms from the brush's sheet entering the page (about 0.15 s before the painting's clock starts: the painting waits for steady frames).
+# endGap: longest frame from 4.0 s (just before the wash) to 1 s after the painting ends. fullGap: longest frame over the whole painting.
+
+## iPhone 13 profile (390 x 664, DPR 3), 10 runs
+run 1: {"endGap":31,"endGapAt":5115,"fullGap":265,"over50":1,"slow":["265ms@150"],"loopGap":26,"loop50":0,"roomReq":168,"roomDone":194,"brush":494,"introMs":4922}
+run 2: {"endGap":31,"endGapAt":4897,"fullGap":31,"over50":0,"slow":[],"loopGap":26,"loop50":0,"roomReq":162,"roomDone":176,"brush":421,"introMs":4928}
+run 3: {"endGap":117,"endGapAt":3965,"fullGap":117,"over50":1,"slow":["117ms@3965"],"loopGap":28,"loop50":0,"roomReq":160,"roomDone":191,"brush":439,"introMs":4959}
+run 4: {"endGap":28,"endGapAt":5949,"fullGap":35,"over50":0,"slow":[],"loopGap":28,"loop50":0,"roomReq":142,"roomDone":163,"brush":423,"introMs":4949}
+run 5: {"endGap":35,"endGapAt":5173,"fullGap":43,"over50":0,"slow":[],"loopGap":22,"loop50":0,"roomReq":117,"roomDone":138,"brush":417,"introMs":4968}
+run 6: {"endGap":23,"endGapAt":5652,"fullGap":32,"over50":0,"slow":[],"loopGap":24,"loop50":0,"roomReq":124,"roomDone":149,"brush":402,"introMs":4920}
+run 7: {"endGap":32,"endGapAt":4936,"fullGap":45,"over50":0,"slow":[],"loopGap":26,"loop50":0,"roomReq":66,"roomDone":77,"brush":299,"introMs":4968}
+run 8: {"endGap":33,"endGapAt":5104,"fullGap":33,"over50":0,"slow":[],"loopGap":25,"loop50":0,"roomReq":106,"roomDone":124,"brush":352,"introMs":4923}
+run 9: {"endGap":24,"endGapAt":5848,"fullGap":32,"over50":0,"slow":[],"loopGap":27,"loop50":0,"roomReq":123,"roomDone":140,"brush":362,"introMs":4948}
+run 10: {"endGap":27,"endGapAt":4208,"fullGap":30,"over50":0,"slow":[],"loopGap":22,"loop50":0,"roomReq":162,"roomDone":171,"brush":458,"introMs":4925}
+{"profile":"iphone","load":0,"url":"http://localhost:4173/","endGap":[31,31,117,28,35,23,32,33,24,27],"fullGap":[265,31,117,35,43,32,45,33,32,30],"over50":[1,0,1,0,0,0,0,0,0,0],"loopGap":[26,26,28,28,22,24,26,25,27,22],"loop50":[0,0,0,0,0,0,0,0,0,0],"roomReq":[168,162,160,142,117,124,66,106,123,162],"brush":[494,421,439,423,417,402,299,352,362,458]}
+
+## Desktop 1280 x 760, 5 runs
+run 1: {"endGap":37,"endGapAt":5133,"fullGap":37,"over50":0,"slow":[],"loopGap":23,"loop50":0,"roomReq":142,"roomDone":160,"brush":407,"introMs":4973}
+run 2: {"endGap":30,"endGapAt":4245,"fullGap":32,"over50":0,"slow":[],"loopGap":25,"loop50":0,"roomReq":200,"roomDone":215,"brush":545,"introMs":4961}
+run 3: {"endGap":36,"endGapAt":4202,"fullGap":36,"over50":0,"slow":[],"loopGap":27,"loop50":0,"roomReq":136,"roomDone":172,"brush":436,"introMs":4927}
+run 4: {"endGap":28,"endGapAt":5613,"fullGap":28,"over50":0,"slow":[],"loopGap":28,"loop50":0,"roomReq":118,"roomDone":138,"brush":373,"introMs":4914}
+run 5: {"endGap":29,"endGapAt":5088,"fullGap":30,"over50":0,"slow":[],"loopGap":25,"loop50":0,"roomReq":120,"roomDone":140,"brush":367,"introMs":4921}
+{"profile":"desktop","load":0,"url":"http://localhost:4173/","endGap":[37,30,36,28,29],"fullGap":[37,32,36,28,30],"over50":[0,0,0,0,0],"loopGap":[23,25,27,28,25],"loop50":[0,0,0,0,0],"roomReq":[142,200,136,118,120],"brush":[407,545,436,373,367]}
+
+machine load averages: 3.78 4.72 6.43
+
+## iPhone 13 profile again, after adding a warm-up stroke to the sheet, 8 runs
+run 1: {"endGap":29,"endGapAt":4963,"fullGap":38,"over50":0,"slow":[],"loopGap":18,"loop50":0,"roomReq":146,"roomDone":159,"brush":416,"introMs":4914}
+run 2: {"endGap":56,"endGapAt":4269,"fullGap":64,"over50":2,"slow":["64ms@1","56ms@4269"],"loopGap":23,"loop50":0,"roomReq":152,"roomDone":169,"brush":528,"introMs":5007}
+run 3: {"endGap":24,"endGapAt":5065,"fullGap":24,"over50":0,"slow":[],"loopGap":20,"loop50":0,"roomReq":117,"roomDone":137,"brush":362,"introMs":4916}
+run 4: {"endGap":31,"endGapAt":5056,"fullGap":31,"over50":0,"slow":[],"loopGap":22,"loop50":0,"roomReq":138,"roomDone":148,"brush":349,"introMs":4926}
+run 5: {"endGap":27,"endGapAt":5821,"fullGap":29,"over50":0,"slow":[],"loopGap":26,"loop50":0,"roomReq":146,"roomDone":156,"brush":407,"introMs":4924}
+run 6: {"endGap":34,"endGapAt":5162,"fullGap":34,"over50":0,"slow":[],"loopGap":25,"loop50":0,"roomReq":153,"roomDone":165,"brush":409,"introMs":4940}
+run 7: {"endGap":41,"endGapAt":4248,"fullGap":47,"over50":0,"slow":[],"loopGap":25,"loop50":0,"roomReq":139,"roomDone":163,"brush":556,"introMs":4969}
+run 8: {"endGap":26,"endGapAt":5209,"fullGap":26,"over50":0,"slow":[],"loopGap":24,"loop50":0,"roomReq":118,"roomDone":133,"brush":354,"introMs":4927}
+{"profile":"iphone","load":0,"url":"http://localhost:4173/","endGap":[29,56,24,31,27,34,41,26],"fullGap":[38,64,24,31,29,34,47,26],"over50":[0,2,0,0,0,0,0,0],"loopGap":[18,23,20,22,26,25,25,24],"loop50":[0,0,0,0,0,0,0,0],"roomReq":[146,152,117,138,146,153,139,118],"brush":[416,528,362,349,407,409,556,354]}
+machine load averages: 5.03 5.11 6.37

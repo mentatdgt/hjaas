@@ -1,7 +1,9 @@
-# HJaaS site — scene 1
+# HJaaS site — scene 1, the elegant version
 
-The contracting scene: Rachel hammering in the room, ten hidden mushrooms, a counter, and the contact
-form as the prize. Built from `HANDOVER.md`.
+The contracting scene as one framed picture on a paper page: Rachel hammering in the room, ten hidden
+mushrooms, a caption that counts them, and the contact form as the prize. Built from `HANDOVER.md`, then
+reworked from `reviews/scene-1-review-03-elegant.md` on the branch `site/scene-1-elegant`. The full-screen
+version it is compared with is on `site/scene-1`.
 
 ## See it
 
@@ -32,15 +34,15 @@ Inside `src/scene1/`:
 
 | File | Job |
 |---|---|
-| `index.ts` | Puts the scene together and runs the hunt. |
+| `index.ts` | Builds the page (identity, framed picture, caption, controls) and runs the hunt. |
 | `rachel.ts`, `player.ts`, `schedule.ts` | Rachel's placement, the pose player, and the hammer rhythm (ported from `tools/preview_timing.py`). |
 | `reaction.ts` | Loads and plays `reaction.json` exactly as delivered. |
-| `mushrooms.ts` | The ten hiding spots (`SPOTS`), hit areas, the flight into the counter, the hint wiggle. |
-| `counter.ts`, `glint.ts` | The enamel-pin counter and its glint; the same pin becomes the Contact button. |
-| `logo.ts` | The logo and its glint, clipped to the image's own alpha. |
-| `intro.ts`, `paint.ts` | The painted-in opening. |
-| `pan.ts` | The portrait-phone crop and sideways panning. |
-| `finale.ts`, `form.ts`, `submit.ts` | The 10/10 finale, the contact form, and the one function that sends it. |
+| `mushrooms.ts` | The ten hiding spots (`SPOTS`), tap boxes, the short trip to the caption, the hint wiggle. |
+| `caption.ts` | The caption under the picture ("3 of 10 found"), which becomes the Contact button at 10 of 10. |
+| `logo.ts`, `glint.ts` | The logo and its glint, clipped to the image's own alpha. Nothing else glints. |
+| `intro.ts`, `paint.ts` | The opening: a five-second painting on the first visit, a 200 ms reveal afterwards, Skip and Replay. |
+| `pan.ts` | The portrait-phone crop, sideways panning, and where the visitor left it. |
+| `form.ts`, `submit.ts` | The contact form, and the one function that sends it. |
 | `state.ts` | Progress in `localStorage`. |
 | `flags.ts` | URL switches for QA (below). |
 
@@ -74,7 +76,7 @@ ignores them all, so nobody can skip the hunt with `?found=10`.
 | Add to the address | Effect |
 |---|---|
 | `?reset` | Forget saved progress first. |
-| `?intro=full`, `?intro=quick`, `?intro=off` | Choose the intro. Normally: full the first time, quick afterwards. |
+| `?intro=full`, `?intro=quick`, `?intro=off` | Choose the opening: `full` is the first-visit painting, `quick` the 200 ms reveal of a return visit, `off` none. |
 | `?found=9` | Start with that many mushrooms found (not saved). `?found=10` shows the unlocked button. |
 | `?hint=5` | Seconds before the hint wiggle, instead of 60. |
 | `?seed=7` | Repeatable hammer rhythm and brush strokes. |

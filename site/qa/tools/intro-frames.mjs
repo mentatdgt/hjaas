@@ -7,12 +7,13 @@
 //
 // Every run is a new browser and a new context: no HTTP cache, no saved progress, so the full intro plays.
 // A requestAnimationFrame loop starts before any page script and logs every interval. The brush canvas
-// (.hj-paint) going into the page marks the intro's start; the counter finishing its entrance marks the end.
+// (.hj-paint) going into the page marks the intro's start; the caption finishing its entrance marks the end.
+// (Review 03: the markers follow the elegant version, where the caption replaced the counter.)
 //
-//   endGap   longest interval from the wash (1.8 s after the brush starts) to 1 s after the intro ends
+//   endGap   longest interval from the wash (4.0 s after the brush starts) to 1 s after the intro ends
 //   fullGap  longest interval from the brush starting to 1 s after the intro ends
 //   over50   intervals longer than 50 ms in that same span
-//   slow     those intervals, as length@start (ms from the brush starting; the wash starts at 1900)
+//   slow     those intervals, as length@start (ms from the brush starting; the wash starts at 4060)
 //   loopGap  longest interval in the 4 s after that (Rachel hammering), and loop50 the count over 50 ms
 //   roomReq  when the room image request started (ms from navigation)
 //   brush    when the brush canvas went in (ms from navigation)
@@ -37,7 +38,7 @@ const probe = () => {
     // The counter's entrance is the intro timeline's last tween: its opacity reaching 1 (or being cleared)
     // is the end of the intro, before and after the review 02 fix alike.
     if (log.paintIn && !log.paintOut) {
-      const counter = document.querySelector('.hj-counter:not(.hj-ghost)');
+      const counter = document.querySelector('.hj-caption-main');
       const opacity = counter?.style.opacity;
       if (opacity !== undefined && opacity !== '' && Number(opacity) < 1) counterHidden = true;
       else if (counterHidden && (opacity === '' || opacity === '1')) log.paintOut = now;
@@ -65,7 +66,7 @@ for (let i = 0; i < runs; i++) {
     const { gaps, paintIn, paintOut } = window.__frames;
     const span = (from, to) => gaps.filter(([at, len]) => at + len >= from && at <= to);
     const max = (list) => list.reduce((m, [at, len]) => (len > m.len ? { at, len } : m), { at: 0, len: 0 });
-    const end = span(paintIn + 1800, paintOut + 1000);
+    const end = span(paintIn + 4000, paintOut + 1000);
     const full = span(paintIn, paintOut + 1000);
     const room = performance.getEntriesByType('resource').find((e) => e.name.includes('room.webp'));
     const loop = span(paintOut + 1000, paintOut + 5000);

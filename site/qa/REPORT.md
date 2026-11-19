@@ -268,3 +268,115 @@ Notes:
 - **One unexplained console error.** One quick-intro run on `npm run dev` logged an image "EncodingError". It did not happen again in 10 more runs (quick and full, dev and production), so it was most likely the dev server serving a file while `npm run assets` was rewriting it.
 
 Light QA only, as asked: one screenshot per item, no video recordings, no performance traces.
+
+## Review 03 (elegant)
+
+Built from `reviews/scene-1-review-03-elegant.md` on the new branch **`site/scene-1-elegant`**, made from
+`site/scene-1`. Nothing was merged into `site/scene-1` or `main`. One commit per item, plus four follow-up
+commits where the QA found something to fix. Evidence is in `qa/review-03/`; `qa/tools/review03.mjs` remakes it.
+
+**To see it:** `cd ~/hjaas && git checkout site/scene-1-elegant && cd site && npm install && npm run dev`, then
+open http://localhost:5173/. Add `?reset` to the address to see the first-visit painting again. The two
+versions share saved progress, so use `?reset` after switching branches too.
+
+**Before and after, side by side:** `review-03/compare.jpg`.
+
+Two things to know before reading the table:
+
+- **Nothing here has been on a real phone.** Safari was tested as Playwright's WebKit on this Mac.
+- **The painting was slow in Safari's engine, and still is on `site/scene-1`.** Measured in WebKit on this
+  Mac, the old brush ran at 10 to 20 frames a second. This branch paints a different way and runs at full
+  rate (item 4). `site/scene-1` was not touched, so it still has the slow brush.
+
+| | Item | What was done, and what was measured | Evidence |
+|---|---|---|---|
+| ✅ | **1. The page and the frame** | A chalk page (`#F6F3EC`) with warm charcoal text (`#302E29`, 12.2:1). The full-screen dark surround and the ambient glow layer are gone, with their image file. The whole room sits in a pale mat with a fine border and is **1040 px wide on a 1440 × 900 window**, 820 px at 1024 × 768 and 1799 px at 2560 × 1440. Page and caption fit the window at all three, with no scrolling. Above it: the logo and "Hui Jie" in a serif (Spectral), then a visible `TODO(copy)` line. Below it: the hunt caption. | `review-03/screen-1440x900.jpg`, `screen-1024x768.jpg`, `screen-2560x1440.jpg` |
+| ⚠️ | 1, optional paper grain | Not added. On the mat it is too narrow to see, and anywhere else it would sit under text. | – |
+| ✅ | **2. Phones** | 18 px page margins and a 6 px mat. The window is as tall as the screen allows, from 4:5 up to 2:3 (2:3 at 390 × 844, 412 × 915 and 360 × 740), and keeps review 01's framing on Rachel and the box. The swipe hint is one still line in the caption ("Swipe sideways"), shown once. | `review-03/screen-390x844.jpg`, `screen-412x915.jpg`, `screen-360x740.jpg` |
+| ✅ | 2, page scroll and sideways pan | The window no longer claims up-and-down swipes (`touch-action: pan-x pan-y`). On a screen shorter than the page (390 × 664 and 390 × 560): dragging up on the picture scrolls the page and leaves the room where it is, dragging sideways pans the room and leaves the page where it is, and a drag that starts on a mushroom scrolls without collecting it. Tested with real touch gestures in Chrome and with wheel input in WebKit (Playwright's WebKit cannot make touch gestures). | `review-03/phone-checks.json` (`scroll`) |
+| ✅ | 2, tap boxes | The boxes for `tiles`, `screed` and `toolbox` move inward and sit 5 px inside the picture's bottom edge; each drawing stays where it was painted. At all three phone sizes, in WebKit: every box is 44 × 44 px, none overlap, every edge of every box takes a tap, and the 4 px focus ring is inside the picture. | `review-03/tapboxes-390x844-right.jpg`, `tapboxes-390x844-left.jpg`, `state-phone-3-focus-ring-bottom-edge.jpg`, `phone-checks.json` |
+| ✅ | **3. Quieter interface** | The counter is caption text: "3 of 10 found" with the small mushroom, equal-width digits. A find changes the number with one 200 ms rise and fade. A collected mushroom reaches the caption in 390 ms (it was 560 ms) on a shallow arc, with no spin. The enamel, rim, squash, rolling number and the counter's glint are removed; only the logo glints. | `review-03/state-desktop-2-one-found.jpg` |
+| ✅ | 3, the 10/10 unlock | No mushroom shower. Rachel reacts, and 0.9 s later the caption fades out and a flat, outlined "Contact Hui Jie" button fades in where it stood (140 ms out, 260 ms in). | `review-03/state-desktop-4-tenth-found-reaction.jpg`, `state-desktop-5-contact-button.jpg` |
+| ✅ | 3, buttons and the form | The form is a flat sheet of the same paper that opens upward from the button (from the bottom edge on phones): fine outlines, one solid Send button, 140 ms press feedback. Control edges are 3.8:1 or better; the lowest text contrast is 5.7:1. | `review-03/state-desktop-6-form.jpg`, `state-desktop-7-form-errors.jpg`, `state-desktop-8-form-sent-test-mode.jpg`, and the same three for `phone` |
+| ✅ | 3, cursor | The cursor is the normal arrow over a mushroom, the same as over the room. Hovering one changes no pixel. No mushroom has a tooltip. | `review-03/desktop-checks.json` (`cursorAndKeyboard`) |
+| ✅ | **4. The paint-in, first visit** | The page, the identity and "Skip" are there from the first moment. Every stroke starts twice as late and takes twice as long (0.48 to 1.28 s each, 4.32 s in all), eased with `cubic-bezier(0.645, 0.045, 0.355, 1)`, on a blank sheet inside the mat. Measured in the page, in Chrome and in WebKit: mushrooms usable at 4.08–4.11 s, Rachel 4.43–4.70 s with a 4 px settle, caption 4.58–4.80 s, **first swing 4.98 s**. | `review-03/intro-first-visit-desktop.mp4`, `intro-first-visit-iphone.mp4` (WebKit), their `-stills.jpg`, `timeline.json` |
+| ✅ | 4, smooth in both browsers | The recordings above ran at **312 frames in 5.2 s with the longest frame 18 ms (Chrome)** and **311 frames, longest 45 ms (iPhone profile, WebKit)**. The old brush managed 75 to 96 frames in the same 5.2 s in WebKit, with frames of 100 to 500 ms. | `review-03/timeline.json` |
+| ✅ | 4, Skip | Finishes the picture at once: 80 ms after the click the caption, Rachel and the mushrooms are all there, and a mushroom can be found straight away. Until its part of the room is painted a mushroom cannot be found, by pointer or by keyboard. | `review-03/desktop-checks.json` (`skip`), `state-desktop-1-painting.jpg` |
+| ✅ | 4, return visits | No brushwork: everything shows together in 183 ms (measured). Found mushrooms, the unlock and the phone's pan position are kept. A "Replay painting" link sits under the picture and paints the room again from a blank sheet. | `review-03/desktop-checks.json` (`returnVisit`, `replay`) |
+| ⚠️ | 4, WebKit cold load, end of the intro | Review 02's fix is kept in spirit: nothing is swapped or cleared when the painting ends. Production build, new browser for every run. **Longest frame from the wash to 1 s after the end: 23–41 ms in 16 of 18 iPhone-profile runs; 56 ms and 117 ms in the other two.** Desktop: 28–37 ms in 5 of 5. This Mac was busy with other apps throughout (load 4 to 6), which is the likeliest cause of the two outliers, but I can't prove it. | `review-03/webkit-cold-load-raw.txt` |
+| ✅ | **5. Pause** | "Pause animation" sits with the other controls under the picture. Rachel finishes her swing and holds her working pose; the logo's idle glint stops too. "Play animation" brings both back. While paused, a find is still answered with one held thumbs-up. | `review-03/desktop-checks.json` (`pause`) |
+| ✅ | 5, reduced motion | Everything shows together in 200 ms. No strokes, no glints, no flights. Rachel holds her working pose. A found mushroom fades where it stood and the count changes at once. Skip, Pause and Replay are not offered, as there is nothing for them to act on. | `review-03/state-desktop-9-reduced-motion.jpg`, `desktop-checks.json` (`reducedMotion`) |
+| ✅ | **6. QA** | Screenshots at all six sizes, one recording of the first-visit painting on desktop and one on an iPhone profile in WebKit, the WebKit cold-load check, all ten mushrooms found by tapping at three phone sizes in WebKit, page scroll plus sideways pan, and the side-by-side image. | `review-03/` |
+
+### Performance on a slow phone profile
+
+Chrome DevTools, phone-sized window at pixel ratio 3, CPU slowed 4×.
+
+| Scenario | Frame slots | Dropped | Tasks over 50 ms | Longest task |
+|---|---|---|---|---|
+| First-visit painting, to 1 s after it ends | 348 | 6 | 2 (54 ms at the wash, 59 ms at the end) | 59 ms |
+| A find (trip to the caption, count, reaction) | 216 | 0 | 0 | 15 ms |
+| 10/10 unlock | 252 | 3 | 0 | 20 ms |
+| Form opening | 78 | 4 | 0 | 27 ms |
+| Pan across the room, then page scroll | 216 | 0 | 0 | 6 ms |
+
+With the same slowdown but the tracer off, the scene's own frame log recorded **no late frame and no long
+task** in any of the five. The target (none while anything animates) is met without the tracer and missed by
+4 and 9 ms with it, in the painting only. Layout shift is 0.00 throughout.
+
+### What the QA found, and what changed because of it
+
+| Found | Cause | Change |
+|---|---|---|
+| In WebKit the painting ran at 10 to 20 frames a second. | Each stroke was drawn with the room image as a canvas pattern, which Safari's engine does slowly. | The room and the mushrooms are on the page from the start, drawn once, under one canvas filled with the paper's colour. Each stroke rubs the paper away. A frame is now a few plain strokes on one small canvas. The picture looks the same. |
+| Rachel's first swing stalled for about 100 ms in WebKit. | The first draw of each of her frames is slow there. | Every frame is drawn once, out of sight, as it loads. |
+| One heavy frame at the start of the wash (243 ms on the slow phone profile, 53–105 ms on a WebKit cold load). | The mushrooms were styled and drawn for the first time in the same frame as the first full-sheet wash. | They are now under the paper from the start, so that cost is paid before the clock starts. As a side effect the brush paints the mushrooms in with the room. |
+| A 185 ms task as the painting ended (slow phone profile). | Swapping Skip for the other controls, and adding the swipe hint, each forced a layout. | All three controls and the hint are laid out from the start and swapped by visibility. |
+| The first frames of the painting sometimes stalled (200–330 ms). | The clock started while the browser was still drawing the picture under the sheet. | The painting waits until frames arrive on time (at least 130 ms of them) before it starts. |
+| A 73 ms task at the unlock, and a slow tap on the Contact button (slow phone profile). | The button's text was laid out for the first time at the swap; the form measured the button after changing its own classes. | The button is laid out ahead, out of sight. The form measures first. |
+| With reduced motion the thumbs-up flashed for 0.3 s. | The wink (review 01) split the hold into pieces, and the still reaction took the longest piece. | The still reaction holds the thumbs-up for the manifest's whole hold, 0.9 s. |
+
+### Motion, against the standards
+
+| Motion | Duration and easing | Verdict |
+|---|---|---|
+| Painting | 4.32 s of strokes, each `cubic-bezier(0.645, 0.045, 0.355, 1)`; the only long motion, once per visitor, skippable | ✅ a first-run moment, never repeated uninvited |
+| Rachel in, caption in | 280 ms and 200 ms, ease-out, 4 px | ✅ |
+| Return-visit reveal | 200 ms, opacity only | ✅ |
+| Mushroom to the caption | 90 ms lift, 300 ms travel, ease-in-out, fades over the last 30% | ✅ under 400 ms |
+| Count update | 200 ms, ease-out, 3 px | ✅ |
+| Caption to button | 140 ms out, 260 ms in, ease-out, 4 px | ✅ |
+| Form | 260 ms in and 180 ms out on desktop, from the button's corner; 420 ms in and 240 ms out as a sheet on phones | ✅ exits faster than entrances |
+| Press feedback | 140 ms, scale 0.97–0.98 | ✅ |
+| Opening the form from the keyboard, Escape | Instant | ✅ |
+| Automatic motion | The hammer loop and the logo's 9 s glint, both stopped by Pause | ✅ |
+
+### Decisions I made
+
+1. **The branch.** `git pull origin main` would not run on `site/scene-1`: the two have diverged, and git asked how to combine them. I did not merge `main` into `site/scene-1`. I made `site/scene-1-elegant` from it and merged `main` into the new branch to get the review file, which is how reviews 01 and 02 were done.
+2. **The serif is Spectral,** bundled with the site (22 KB). It is a new dependency (`@fontsource/spectral`).
+3. **The logo is untouched:** same file, same size rule, same link, same glint, same drop shadow. That shadow was made for the dark wall and looks heavier on paper. Yours to decide.
+4. **The second line under "Hui Jie"** shows the words `TODO(copy): what Hui Jie does, in one line`, so the placeholder is visible wherever the text is.
+5. **The line beside the count stays put.** "Find the 10 hidden mushrooms" until the first find, then "Find all 10 to reach Hui Jie". The handover had it appear once, briefly; a line that comes and goes is more motion than this version wants.
+6. **Mushrooms are painted in with the room,** and can be found from the wash on (4.06 s). The review had them appear with the wash.
+7. **Picture size.** 72.2% of the window's width, reduced when the window is too short for the caption to stay on screen, and never below 540 px. On very short windows the page scrolls.
+8. **Phones rarely need to scroll.** The window's height is fitted to the screen, so at the three test sizes everything is on one screen. The page scrolls whenever the screen is shorter than that, such as Safari with its toolbars showing.
+9. **Pause stops the logo's idle glint as well as the hammering.** It is not remembered between visits, so nobody returns to a still page without knowing why.
+10. **Paused or with reduced motion, a find is answered with one held pose** (the thumbs-up), not the full reaction. The review says Rachel holds her working pose; I kept this one change of pose because it is the only sign that she noticed.
+11. **"Replay painting" is offered after a first visit too,** not only on return visits.
+12. **Skip pressed before the art has loaded** shows the finished picture as soon as it has.
+13. **The form opens upward from the button** on desktop, sits in the middle of windows too short for that, and rises from the bottom on phones.
+14. **The scene now takes only its width from its host** and is as tall as its content, so the host page scrolls. Before, it filled a fixed box.
+15. **Removed:** `room-ambient.webp`, `finale.ts`, `counter.ts`. The link-preview image and the browser's theme colour are now the paper colour.
+16. **Impeccable's detector reports one thing:** a cream page background, which it calls a default choice. It is the colour the review asked for, so I left it.
+17. **`?intro=quick`** now means the 200 ms reveal of a return visit.
+18. **New placeholder words,** all marked `TODO(copy)` in the code: Skip, Pause animation, Play animation, Replay painting, Swipe sideways.
+19. **The older QA files** (`CHECKS.md`, `MOTION-REVIEW.md`, `traces/SUMMARY.md`, `impeccable/CRITIQUE.md`, and the tools other than `review03*.mjs` and `intro-frames.mjs`) describe `site/scene-1` and were left as they are.
+
+### Not done, or not verified
+
+- **A real phone,** and Safari itself. The paint fix is measured in Playwright's WebKit on a Mac, which shares Safari's drawing code but is not an iPhone.
+- **Touch gestures in WebKit.** Playwright's WebKit cannot make them, so scroll and pan were driven by wheel input there and by touch gestures in Chrome only.
+- **Two of 18 cold-load runs** had a frame over 50 ms at the end of the intro (above).
+- **`site/scene-1` still has the slow brush** in Safari's engine. Say if you want the same fix there.
+- Raw traces (`qa/traces/r3-*.json.gz`, 14 MB) are on this Mac only, as before.

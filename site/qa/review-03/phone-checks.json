@@ -1,0 +1,422 @@
+{
+ "sizes": [
+  {
+   "size": "390x844",
+   "engine": "webkit",
+   "ok": true,
+   "unlocked": true,
+   "overlaps": [],
+   "errors": [],
+   "rows": [
+    {
+     "id": "sill",
+     "box": "44x44",
+     "clearBelow": 195.4,
+     "clearAbove": 270.6,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    },
+    {
+     "id": "drape",
+     "box": "44x44",
+     "clearBelow": 87.6,
+     "clearAbove": 378.4,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    },
+    {
+     "id": "skirting",
+     "box": "44x44",
+     "clearBelow": 145,
+     "clearAbove": 321,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    },
+    {
+     "id": "screed",
+     "box": "44x44",
+     "clearBelow": 5.1,
+     "clearAbove": 460.9,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    },
+    {
+     "id": "tiles",
+     "box": "44x44",
+     "clearBelow": 5.1,
+     "clearAbove": 460.9,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    },
+    {
+     "id": "conduit",
+     "box": "44x44",
+     "clearBelow": 145.5,
+     "clearAbove": 320.5,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    },
+    {
+     "id": "socket",
+     "box": "44x44",
+     "clearBelow": 305.9,
+     "clearAbove": 160.1,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    },
+    {
+     "id": "ladder-foot",
+     "box": "44x44",
+     "clearBelow": 39.9,
+     "clearAbove": 426.1,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    },
+    {
+     "id": "ladder-step",
+     "box": "44x44",
+     "clearBelow": 238.8,
+     "clearAbove": 227.3,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    },
+    {
+     "id": "toolbox",
+     "box": "44x44",
+     "clearBelow": 6.3,
+     "clearAbove": 459.7,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    }
+   ]
+  },
+  {
+   "size": "412x915",
+   "engine": "webkit",
+   "ok": true,
+   "unlocked": true,
+   "overlaps": [],
+   "errors": [],
+   "rows": [
+    {
+     "id": "sill",
+     "box": "44x44",
+     "clearBelow": 209.3,
+     "clearAbove": 289.7,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    },
+    {
+     "id": "drape",
+     "box": "44x44",
+     "clearBelow": 94.5,
+     "clearAbove": 404.5,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    },
+    {
+     "id": "skirting",
+     "box": "44x44",
+     "clearBelow": 155.7,
+     "clearAbove": 343.3,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    },
+    {
+     "id": "screed",
+     "box": "44x44",
+     "clearBelow": 4.9,
+     "clearAbove": 494.1,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    },
+    {
+     "id": "tiles",
+     "box": "44x44",
+     "clearBelow": 4.9,
+     "clearAbove": 494.1,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    },
+    {
+     "id": "conduit",
+     "box": "44x44",
+     "clearBelow": 156.3,
+     "clearAbove": 342.8,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    },
+    {
+     "id": "socket",
+     "box": "44x44",
+     "clearBelow": 327.1,
+     "clearAbove": 171.9,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    },
+    {
+     "id": "ladder-foot",
+     "box": "44x44",
+     "clearBelow": 43.7,
+     "clearAbove": 455.3,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    },
+    {
+     "id": "ladder-step",
+     "box": "44x44",
+     "clearBelow": 255.5,
+     "clearAbove": 243.5,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    },
+    {
+     "id": "toolbox",
+     "box": "44x44",
+     "clearBelow": 7.9,
+     "clearAbove": 491.1,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    }
+   ]
+  },
+  {
+   "size": "360x740",
+   "engine": "webkit",
+   "ok": true,
+   "unlocked": true,
+   "overlaps": [],
+   "errors": [],
+   "rows": [
+    {
+     "id": "sill",
+     "box": "44x44",
+     "clearBelow": 176.2,
+     "clearAbove": 244.8,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    },
+    {
+     "id": "drape",
+     "box": "44x44",
+     "clearBelow": 77.9,
+     "clearAbove": 343.1,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    },
+    {
+     "id": "skirting",
+     "box": "44x44",
+     "clearBelow": 130.3,
+     "clearAbove": 290.7,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    },
+    {
+     "id": "screed",
+     "box": "44x44",
+     "clearBelow": 5.1,
+     "clearAbove": 415.9,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    },
+    {
+     "id": "tiles",
+     "box": "44x44",
+     "clearBelow": 5.1,
+     "clearAbove": 415.9,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    },
+    {
+     "id": "conduit",
+     "box": "44x44",
+     "clearBelow": 130.8,
+     "clearAbove": 290.2,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    },
+    {
+     "id": "socket",
+     "box": "44x44",
+     "clearBelow": 277,
+     "clearAbove": 144,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    },
+    {
+     "id": "ladder-foot",
+     "box": "44x44",
+     "clearBelow": 34.5,
+     "clearAbove": 386.5,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    },
+    {
+     "id": "ladder-step",
+     "box": "44x44",
+     "clearBelow": 215.8,
+     "clearAbove": 205.2,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    },
+    {
+     "id": "toolbox",
+     "box": "44x44",
+     "clearBelow": 5.1,
+     "clearAbove": 415.9,
+     "ringInside": true,
+     "artInsideBox": true,
+     "edgesTappable": "5/5",
+     "counted": true
+    }
+   ]
+  }
+ ],
+ "scroll": [
+  {
+   "size": "390x664",
+   "engine": "webkit, wheel",
+   "pageHeight": 671,
+   "screen": 664,
+   "touchAction": "pan-x pan-y",
+   "overscrollX": "contain",
+   "sideways": 0,
+   "start": {
+    "y": 0,
+    "x": 232
+   },
+   "afterDown": {
+    "y": 7,
+    "x": 232
+   },
+   "afterSide": {
+    "y": 7,
+    "x": 392
+   },
+   "pageScrolls": true,
+   "roomPans": true
+  },
+  {
+   "size": "390x664",
+   "engine": "chrome, touch gestures",
+   "start": {
+    "y": 0,
+    "x": 232
+   },
+   "afterDragUp": {
+    "y": 7,
+    "x": 232
+   },
+   "afterDragLeft": {
+    "y": 7,
+    "x": 392
+   },
+   "pageScrolls": true,
+   "roomPans": true,
+   "dragFromMushroomScrolls": true,
+   "nothingCollectedByDrag": true
+  },
+  {
+   "size": "390x560",
+   "engine": "webkit, wheel",
+   "pageHeight": 671,
+   "screen": 560,
+   "touchAction": "pan-x pan-y",
+   "overscrollX": "contain",
+   "sideways": 0,
+   "start": {
+    "y": 0,
+    "x": 232
+   },
+   "afterDown": {
+    "y": 90,
+    "x": 232
+   },
+   "afterSide": {
+    "y": 90,
+    "x": 392
+   },
+   "pageScrolls": true,
+   "roomPans": true
+  },
+  {
+   "size": "390x560",
+   "engine": "chrome, touch gestures",
+   "start": {
+    "y": 0,
+    "x": 232
+   },
+   "afterDragUp": {
+    "y": 92,
+    "x": 232
+   },
+   "afterDragLeft": {
+    "y": 92,
+    "x": 392
+   },
+   "pageScrolls": true,
+   "roomPans": true,
+   "dragFromMushroomScrolls": true,
+   "nothingCollectedByDrag": true
+  }
+ ]
+}
