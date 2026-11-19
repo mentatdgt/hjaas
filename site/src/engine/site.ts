@@ -415,27 +415,34 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   let busy = true;
   let wanted = first;
 
+  const frame1 = (): Promise<void> => new Promise((resolve) => requestAnimationFrame(() => resolve()));
+  const warn = (config: SceneConfig) => (error: unknown) => console.warn(`[hjaas] ${config.id}: the character could not be loaded; the room is shown without her`, error);
+  /** How long a switch waits, under the old picture, for the new scene's character before going on without her. */
+  const WAIT_FOR_HER_MS = 600;
+
   const switchTo = async (config: SceneConfig): Promise<void> => {
     const old = current!;
     const next = await sceneFor(config);
-    // Her first frames, the first time the scene is opened.
-    await next.enter();
     if (destroyed) return;
-    marks.switchStart = Math.round(performance.now());
-    old.hold();
+    // Her first frames, the first time the scene is opened: fetched and decoded from here on, off the
+    // page's thread. (Usually they are on their way already: see the menu's pointer listeners.)
+    next.preload();
     const firstVisit = !stateOf(config.id).seen && flags.intro !== 'quick';
+    const calm = reducedMotion() || flags.intro === 'off';
     const state = captionFor(config);
     // Screen readers hear where they have arrived, and this scene's own count.
     const arriving = `${config.label}. ${state[0]} of ${config.spots.length} mushrooms found.`;
+    // The new scene's parts are drawn for the first time one frame after another, under the old picture
+    // (or the blank sheet), not all in the frame of the tap: the room first, then her.
+    const her = (hidden: boolean): Promise<void> => next.enter({ hidden }).catch(warn(config));
 
-    if (reducedMotion() || flags.intro === 'off') {
-      // No brushwork: the old picture fades off the new one in 200 ms.
-      transition.cover((ctx, origin) => old.sketch(ctx, origin), next);
-      place(next);
-      caption.change(...state, arriving);
-      await transition.fadeOver(next);
-    } else if (firstVisit) {
-      // A scene never seen before gets its full painting, from a blank sheet.
+    if (firstVisit && !calm) {
+      // A scene never seen before gets its full painting, from a blank sheet. The painting brings her in,
+      // so it waits for her frames; the picture being left stays up until they are here.
+      await next.loaded().catch(warn(config));
+      if (destroyed) return;
+      marks.switchStart = Math.round(performance.now());
+      old.hold();
       const leave = old.plate.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 160, easing: 'ease', fill: 'forwards' });
       await leave.finished;
       place(next);
@@ -443,16 +450,32 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       transition.prepare(next);
       caption.change(...state, arriving);
       showControls(true);
+      await frame1();
+      await her(true);
       await steadyFrames();
       await transition.paint(next);
     } else {
-      // A scene seen before is brushed in over the one being left.
+      marks.switchStart = Math.round(performance.now());
+      old.hold();
+      // A copy of the old picture goes over the window, and the new one is put together underneath it.
       transition.cover((ctx, origin) => old.sketch(ctx, origin), next);
       place(next);
       caption.change(...state, arriving);
-      showControls(true);
-      await steadyFrames(70);
-      await transition.brushOver(next, pan.view);
+      if (!calm) showControls(true);
+      await frame1();
+      // Her frames are usually decoded by now. If the network is slow the brush does not wait for long:
+      // she fades in when she arrives.
+      const inTime = await Promise.race([her(false).then(() => true), new Promise<boolean>((resolve) => window.setTimeout(() => resolve(false), WAIT_FOR_HER_MS))]);
+      if (!inTime) next.arriveSoftly();
+      if (destroyed) return;
+      if (calm) {
+        // No brushwork: the old picture fades off the new one in 200 ms.
+        await transition.fadeOver(next);
+      } else {
+        // A scene seen before is brushed in over the one being left.
+        await steadyFrames(70);
+        await transition.brushOver(next, pan.view);
+      }
     }
     if (destroyed) return;
     marks.switchEnd = Math.round(performance.now());
@@ -484,6 +507,15 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     tab.addEventListener('click', () => {
       if (busy) transition.skip();
     });
+    // The pointer on a tab, a finger going down on it, or keyboard focus: the scene will probably be opened.
+    // Its character's first frames start downloading and decoding now, a moment ahead of the click.
+    const config = sceneById(tab.dataset.scene ?? '');
+    if (!config) continue;
+    // (Not while a painting is under way: nothing may compete with the brush for the page's time.)
+    const soon = (): void => {
+      if (!busy) void sceneFor(config).then((scene) => scene.preload(), () => {});
+    };
+    for (const type of ['pointerenter', 'pointerdown', 'focus'] as const) tab.addEventListener(type, soon, { passive: true });
   }
 
   // "Replay painting": she stops, the picture clears to a blank sheet, and it is painted again.

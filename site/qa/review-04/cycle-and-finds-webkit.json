@@ -1,0 +1,197 @@
+{
+ "iphone-webkit-with-window": {
+  "routine": {
+   "watchedS": 34.3,
+   "frames": 2050,
+   "longestFrameMs": 123,
+   "over50": [
+    "123 ms during write_loop#2"
+   ],
+   "over33": 1,
+   "framesSheHadToSkip": 0
+  },
+  "finds": [
+   {
+    "spot": "pipe",
+    "from": "A1_mist_aim",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 111,
+    "longestFrameInAllMs": 111,
+    "over50": [
+     "111 ms at 71 ms"
+    ]
+   },
+   {
+    "spot": "switch-box",
+    "from": "A2_mist_squeeze",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 18,
+    "longestFrameInAllMs": 19,
+    "over50": []
+   },
+   {
+    "spot": "door",
+    "from": "mist_to_write#12",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 61,
+    "longestFrameInAllMs": 61,
+    "over50": [
+     "61 ms at 28 ms"
+    ]
+   },
+   {
+    "spot": "rack",
+    "from": "write_loop#6",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 64,
+    "longestFrameInAllMs": 64,
+    "over50": [
+     "64 ms at 25 ms"
+    ]
+   },
+   {
+    "spot": "drain",
+    "from": "mist_to_write#20",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 65,
+    "longestFrameInAllMs": 65,
+    "over50": [
+     "65 ms at 31 ms"
+    ]
+   }
+  ],
+  "framesSheHadToSkip": 0,
+  "errors": [
+   "Cannot load blob: ttp://localhost:5173/95e3eaf4-c004-4ab1-baee-2eb42a8521ef due to access control checks.",
+   "Cannot load blob: ttp://localhost:5173/5878fc6d-2c80-4301-9554-ade89a5017db due to access control checks.",
+   "Cannot load blob: ttp://localhost:5173/70e6fa3e-d87b-4488-a3c7-09e02dad1b1f due to access control checks.",
+   "Cannot load blob: ttp://localhost:5173/0b1ff015-8791-45b3-aec8-0313cba00878 due to access control checks.",
+   "Cannot load blob: ttp://localhost:5173/ab4ed849-b8f1-45be-97b1-75c4df78b6c9 due to access control checks.",
+   "Cannot load blob: ttp://localhost:5173/c5dfde2f-798c-4e90-b1b5-0113bd2d06cb due to access control checks.",
+   "Cannot load blob: ttp://localhost:5173/54c3c5f6-8800-4957-9fa4-817c53d73b96 due to access control checks.",
+   "Unhandled Promise Rejection: EncodingError: Loading error.",
+   "Unhandled Promise Rejection: EncodingError: Loading error."
+  ]
+ },
+ "iphone-webkit": {
+  "routine": {
+   "watchedS": 34.3,
+   "frames": 2055,
+   "longestFrameMs": 24,
+   "over50": [],
+   "over33": 0,
+   "framesSheHadToSkip": 0
+  },
+  "finds": [
+   {
+    "spot": "pipe",
+    "from": "A1_mist_aim",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 123,
+    "longestFrameInAllMs": 123,
+    "over50": [
+     "123 ms at 65 ms",
+     "51 ms at 563 ms"
+    ]
+   },
+   {
+    "spot": "switch-box",
+    "from": "A2_mist_squeeze",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 18,
+    "longestFrameInAllMs": 19,
+    "over50": []
+   },
+   {
+    "spot": "door",
+    "from": "mist_to_write#12",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 64,
+    "longestFrameInAllMs": 64,
+    "over50": [
+     "64 ms at 27 ms"
+    ]
+   },
+   {
+    "spot": "rack",
+    "from": "write_loop#6",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 75,
+    "longestFrameInAllMs": 75,
+    "over50": [
+     "75 ms at 36 ms"
+    ]
+   },
+   {
+    "spot": "drain",
+    "from": "mist_to_write#20",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 66,
+    "longestFrameInAllMs": 66,
+    "over50": [
+     "66 ms at 23 ms"
+    ]
+   }
+  ],
+  "framesSheHadToSkip": 0,
+  "errors": []
+ },
+ "desktop-webkit-with-window": {
+  "routine": {
+   "watchedS": 34.3,
+   "frames": 2050,
+   "longestFrameMs": 107,
+   "over50": [
+    "107 ms during write_loop#1"
+   ],
+   "over33": 1,
+   "framesSheHadToSkip": 0
+  },
+  "finds": [
+   {
+    "spot": "pipe",
+    "from": "A1_mist_aim",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 102,
+    "longestFrameInAllMs": 102,
+    "over50": [
+     "102 ms at 60 ms"
+    ]
+   },
+   {
+    "spot": "switch-box",
+    "from": "A2_mist_squeeze",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 18,
+    "longestFrameInAllMs": 19,
+    "over50": []
+   },
+   {
+    "spot": "door",
+    "from": "mist_to_write#12",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 32,
+    "longestFrameInAllMs": 32,
+    "over50": []
+   },
+   {
+    "spot": "rack",
+    "from": "write_loop#6",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 35,
+    "longestFrameInAllMs": 35,
+    "over50": []
+   },
+   {
+    "spot": "drain",
+    "from": "mist_to_write#20",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 24,
+    "longestFrameInAllMs": 24,
+    "over50": []
+   }
+  ],
+  "framesSheHadToSkip": 0,
+  "errors": []
+ }
+}

@@ -5,6 +5,7 @@
 //   node qa/tools/review04.mjs corners   item 2: the mock-up beside the build at 1440×900
 //   node qa/tools/review04.mjs memory    item 3: decoded image memory through two cycles and a reaction, phone and desktop
 //   node qa/tools/review04.mjs sharp     item 3: the 1.5× set beside the 2× set on a 390×844 @3× screen
+//   node qa/tools/review04.mjs cycle     item 4: WebKit, frame times through two full cycles of the routine and five finds
 //   node qa/tools/review04.mjs slow      item 3: does decoding keep ahead of her on a slow phone? (Chrome, CPU slowed 4× and 6×)
 import { chromium, webkit, devices } from 'playwright';
 import { execFileSync } from 'node:child_process';
@@ -335,6 +336,73 @@ const run = {
       await browser.close();
     }
     await save('slow-phone', report);
+  },
+
+  // Item 4: every frame's length through two full cycles of her routine, then five finds at different
+  // moments of it (each one: the tap, the mushroom's flight, the way home, the reaction).
+  async cycle() {
+    const report = {};
+    const only = process.argv[3];
+    for (const [tag, launch, options] of [
+      ['iphone-webkit-with-window', () => webkit.launch({ headless: false }), { ...devices['iPhone 14'], viewport: { width: 390, height: 844 } }],
+      ['iphone-webkit', () => webkit.launch(), { ...devices['iPhone 14'], viewport: { width: 390, height: 844 } }],
+      ['desktop-webkit-with-window', () => webkit.launch({ headless: false }), { viewport: { width: 1280, height: 760 } }],
+    ]) {
+      if (only && !tag.includes(only)) continue;
+      const browser = await launch();
+      const context = await browser.newContext(options);
+      await context.addInitScript(() => {
+        const log = [];
+        window.__gaps = log;
+        let last = performance.now();
+        const tick = (now) => { log.push([Math.round(last), Math.round(now - last)]); last = now; requestAnimationFrame(tick); };
+        requestAnimationFrame(tick);
+      });
+      const page = await context.newPage();
+      const errors = [];
+      page.on('pageerror', (e) => errors.push(String(e)));
+      page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
+      await page.goto(`${base}?debug&reset&intro=off&seed=4#grow`);
+      await ready(page);
+      await page.waitForFunction(() => window.__hj.rachel.has('thumbs_up#9'), null, { timeout: 60000 });
+      await page.waitForTimeout(800);
+      const t0 = await page.evaluate(() => { window.__hj.poses.length = 0; return performance.now(); });
+      await page.waitForFunction(() => window.__hj.poses.filter(([p], i, a) => p === 'mist_to_write#0' && a[i - 1]?.[0] === 'mist_to_write#1').length >= 2, null, { timeout: 120000 });
+      const routine = await page.evaluate((start) => {
+        const gaps = window.__gaps.filter(([at]) => at >= start);
+        const poseAt = (t) => { let name = ''; for (const [p, at] of window.__hj.poses) { if (at > t) break; name = p; } return name; };
+        return { watchedS: Math.round((performance.now() - start) / 100) / 10, frames: gaps.length, longestFrameMs: Math.max(...gaps.map(([, len]) => len)), over50: gaps.filter(([, len]) => len > 50).map(([at, len]) => `${len} ms during ${poseAt(at)}`), over33: gaps.filter(([, len]) => len > 33).length, framesSheHadToSkip: window.__hj.rachel.missed };
+      }, t0);
+      // Five finds: while she aims, squeezes, is on her way to writing, writes, and is on her way back.
+      const moments = [
+        ['pipe', () => window.__hj.rachel.current === 'A1_mist_aim'],
+        ['switch-box', () => window.__hj.rachel.current === 'A2_mist_squeeze'],
+        ['door', () => window.__hj.rachel.current === 'mist_to_write#12' && window.__hj.poses.at(-2)?.[0] === 'mist_to_write#11'],
+        ['rack', () => window.__hj.rachel.current === 'write_loop#6'],
+        ['drain', () => window.__hj.rachel.current === 'mist_to_write#20' && window.__hj.poses.at(-2)?.[0] === 'mist_to_write#21'],
+      ];
+      const finds = [];
+      for (const [spot, when] of moments) {
+        await page.waitForFunction(() => !window.__hj.player.reacting, null, { timeout: 30000 });
+        await page.waitForTimeout(700);
+        await page.waitForFunction(when, null, { timeout: 90000, polling: 'raf' });
+        const mark = await page.evaluate(() => { window.__mark = window.__hj.poses.length; return performance.now(); });
+        const target = page.locator(`[data-spot="${spot}"]`);
+        if (tag.startsWith('iphone')) await target.tap({ force: true }); else await target.click({ force: true });
+        await page.waitForFunction(() => window.__hj.poses.slice(window.__mark).some(([p]) => p === 'K2_thumbs'), null, { timeout: 20000 });
+        await page.waitForFunction(() => !window.__hj.player.reacting, null, { timeout: 20000 });
+        finds.push(await page.evaluate(({ start, spot }) => {
+          const poses = window.__hj.poses.slice(window.__mark);
+          const gaps = window.__gaps.filter(([t, len]) => t + len >= start);
+          const first = gaps.filter(([t]) => t <= start + 600);
+          return { spot, from: window.__hj.poses[window.__mark - 1][0], fullReaction: poses.some(([p]) => p === 'look_up#3'), longestFrameAtTheTapMs: Math.max(...first.map(([, len]) => len)), longestFrameInAllMs: Math.max(...gaps.map(([, len]) => len)), over50: gaps.filter(([, len]) => len > 50).map(([t, len]) => `${len} ms at ${Math.round(t - start)} ms`) };
+        }, { start: mark, spot }));
+      }
+      report[tag] = { routine, finds, framesSheHadToSkip: await page.evaluate(() => window.__hj.rachel.missed), errors };
+      say(tag, report[tag]);
+      await browser.close();
+    }
+    if (!only) await save('cycle-and-finds-webkit', report);
   },
 };
 

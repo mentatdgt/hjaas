@@ -186,7 +186,11 @@ export class Scene {
   private readonly edge: HTMLCanvasElement;
   private readonly layout: ResizeObserver;
   private cast: Cast | null = null;
-  private casting: Promise<void> | null = null;
+  /** Her first frames being fetched and decoded. */
+  private casting: Promise<Cast | null> | null = null;
+  /** She is being put on the plate. */
+  private entering: Promise<void> | null = null;
+  private soft = false;
   private reacting: Promise<void> = Promise.resolve();
   private working = false;
 
@@ -256,29 +260,64 @@ export class Scene {
   }
 
   /**
-   * The scene is about to be shown: make sure the character's first frames are on the plate. The first
-   * time this fetches them; after that it resolves at once.
+   * Start fetching and decoding her first frames, without putting her on the plate: called as soon as it
+   * looks as if the scene will be opened (the pointer is on its tab), so the wait at the tap is short.
    */
-  enter(): Promise<void> {
+  preload(): void {
+    if (this.cast || this.casting || !this.config.character) return;
+    this.casting = Scene.castFor(this.config, this.host);
+    // If it fails (the network), the next call tries again; enter() reports it.
+    this.casting.catch(() => {
+      this.casting = null;
+      this.entering = null;
+    });
+  }
+
+  /**
+   * The scene is on the page, or about to be: put the character on the plate as soon as her first frames
+   * are decoded. Resolves when she is there. The first time this fetches them (unless preload() already
+   * has); after that it resolves at once. `hidden` puts her there unseen, for a painting to bring her in.
+   */
+  enter(options: { hidden?: boolean } = {}): Promise<void> {
     // A scene come back to: its clip frames are decoded again while the brush is still at work.
     this.cast?.wake?.();
     if (this.character || !this.config.character) return Promise.resolve();
-    this.casting ??= Scene.castFor(this.config, this.host).then((cast) => {
-      if (cast) this.attach(cast);
+    this.preload();
+    this.entering ??= this.casting!.then((cast) => {
+      if (cast && !this.character) this.attach(cast, options.hidden === true);
     });
-    return this.casting;
+    return this.entering;
   }
 
-  private attach(cast: Cast): void {
+  /** Resolves when her first frames are fetched and decoded (she is not put on the plate by this). */
+  loaded(): Promise<void> {
+    if (this.cast || !this.config.character) return Promise.resolve();
+    this.preload();
+    return this.casting!.then(() => {});
+  }
+
+  /** She is arriving after the picture is already on show (a slow network): let her fade in. */
+  arriveSoftly(): void {
+    this.soft = true;
+  }
+
+  private attach(cast: Cast, hidden = false): void {
     const { character } = cast;
     this.cast = cast;
     this.character = character;
+    if (hidden) {
+      character.el.style.opacity = '0';
+      if (character.shadow) character.shadow.style.opacity = '0';
+    }
     if (character.shadow) this.plate.insertBefore(character.shadow, this.hunt.el);
     this.plate.insertBefore(character.el, this.edge);
     this.player = new Player(character, this.rhythm());
     this.player.onStep = (step) => cast.ahead?.(step.soon ?? []);
     if (this.host.onPose) this.player.onPose = this.host.onPose;
     character.resize();
+    if (this.soft) character.el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 280, easing: 'ease-out' });
+    // The scene was set to work before she arrived.
+    if (this.working) this.work();
   }
 
   get total(): number {

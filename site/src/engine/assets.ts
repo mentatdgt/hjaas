@@ -26,8 +26,8 @@ export async function loadImage(url: string): Promise<HTMLImageElement> {
 const frameCache = new Map<string, Promise<Frame>>();
 
 /**
- * A decoded frame. An ImageBitmap made from the file's bytes is decoded off the main thread and keeps its
- * pixels in memory, so loading never stalls an animation and the browser can't evict a pose mid-loop.
+ * A decoded frame. An ImageBitmap made from the file's bytes is decoded in a worker and keeps its pixels in
+ * memory, so loading never stalls an animation and the browser can't evict a pose mid-loop.
  * Each URL is fetched and decoded once; asking again returns the same frame.
  */
 export function loadFrame(url: string): Promise<Frame> {
@@ -41,15 +41,12 @@ export function loadFrame(url: string): Promise<Frame> {
 }
 
 async function decodeFrame(url: string): Promise<Frame> {
-  if (typeof createImageBitmap === 'function') {
-    try {
-      const response = await fetch(url);
-      if (response.ok) return await createImageBitmap(await response.blob());
-    } catch {
-      // Fall through to a decoded <img>.
-    }
+  try {
+    return await decodeBlob(await fetchBlob(url));
+  } catch {
+    // The file could not be fetched this way: let an <img> try.
+    return loadImage(url);
   }
-  return loadImage(url);
 }
 
 /** A file's bytes, as downloaded: an image kept this way takes a fraction of its decoded size. */
@@ -59,9 +56,65 @@ export async function fetchBlob(url: string): Promise<Blob> {
   return response.blob();
 }
 
+// Decoding happens in a worker, so the page never waits for it. (Measured in WebKit, review 04: decoding
+// one of Rachel's lab frames on the page's own thread took about 11 ms and made frames of about 30 ms; in a
+// worker the page's frames stayed at 16 to 18 ms.) The worker is one small script, made from the text below,
+// and is started the first time something is decoded. Where it cannot run (an old browser, or a host
+// page whose rules forbid it), decoding falls back to the page's own thread.
+const DECODER = `self.onmessage = async (event) => {
+  const { id, blob } = event.data;
+  try {
+    const bitmap = await createImageBitmap(blob);
+    self.postMessage({ id, bitmap }, [bitmap]);
+  } catch (error) {
+    self.postMessage({ id, error: String(error) });
+  }
+};`;
+let decoder: Worker | null | undefined;
+let nextDecode = 0;
+const decodes = new Map<number, { resolve: (bitmap: ImageBitmap) => void; reject: (reason: unknown) => void }>();
+
+function startDecoder(): Worker | null {
+  try {
+    const url = URL.createObjectURL(new Blob([DECODER], { type: 'text/javascript' }));
+    const worker = new Worker(url);
+    worker.onmessage = (event: MessageEvent<{ id: number; bitmap?: ImageBitmap; error?: string }>) => {
+      const waiting = decodes.get(event.data.id);
+      decodes.delete(event.data.id);
+      if (event.data.bitmap) waiting?.resolve(event.data.bitmap);
+      else waiting?.reject(new Error(event.data.error));
+    };
+    worker.onerror = () => {
+      // It could not start, or it broke: everything waiting, and everything after, is decoded on the page.
+      decoder = null;
+      for (const waiting of decodes.values()) waiting.reject(new Error('decoder unavailable'));
+      decodes.clear();
+    };
+    return worker;
+  } catch {
+    return null;
+  }
+}
+
+function decodeInWorker(blob: Blob): Promise<ImageBitmap> {
+  if (decoder === undefined) decoder = typeof Worker === 'function' ? startDecoder() : null;
+  const worker = decoder;
+  if (!worker) return Promise.reject(new Error('decoder unavailable'));
+  return new Promise((resolve, reject) => {
+    const id = nextDecode++;
+    decodes.set(id, { resolve, reject });
+    worker.postMessage({ id, blob });
+  });
+}
+
 /** Decode an image from its downloaded bytes. Give the pixels back with releaseFrame() when done with it. */
 export async function decodeBlob(blob: Blob): Promise<Frame> {
   if (typeof createImageBitmap === 'function') {
+    try {
+      return await decodeInWorker(blob);
+    } catch {
+      // Fall through to the page's own thread.
+    }
     try {
       return await createImageBitmap(blob);
     } catch {
