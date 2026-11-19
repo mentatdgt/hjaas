@@ -27,7 +27,12 @@ interface Profile {
    */
   wander: number;
   /**
-   * Rounded corners: a superellipse through the middle of each side of the plate (times `reach`). `power` is
+   * Rounded corners: the radius of each corner, as a fraction of the plate's width. The straight edges are
+   * untouched; only the last `radius` of each one turns, and the fade follows the turn.
+   */
+  radius?: number;
+  /**
+   * A vignette: a superellipse through the middle of each side of the plate (times `reach`). `power` is
    * its exponent (higher is squarer) and `soft` the width of its fade, as a fraction of the half-plate.
    */
   corner?: { power: number; reach: number; soft: number };
@@ -40,10 +45,10 @@ const PROFILES: Record<EdgeStyle, Profile> = {
   b: { side: 0.055, top: 0.08, bottom: 0.03, wander: 0.45 },
   // C, corners: the edges stay mostly intact; the fade is stronger toward the corners, like a soft vignette.
   c: { side: 0.03, top: 0.035, bottom: 0.025, wander: 0.22, corner: { power: 3, reach: 1.03, soft: 0.1 } },
-  // The chosen one: A's thin soft edge, with corners that round off softly.
-  // The superellipse has exponent 6 and its fade is as thin as the bottom edge's, so it leaves the straight
-  // edges as they are in A and only turns the corners.
-  'a-round': { side: 0.04, top: 0.06, bottom: 0.025, wander: 0.28, corner: { power: 6, reach: 1, soft: 0.05 } },
+  // The chosen one: A's thin soft edge, with the corners of a rounded rectangle, as in the mock-up
+  // (reference/mockups/edge-CHOSEN-A-rounded.jpg): the long edges stay straight and thin, and only the
+  // outer 6% of the width turns at each corner.
+  'a-round': { side: 0.04, top: 0.06, bottom: 0.025, wander: 0.28, radius: 0.06 },
 };
 
 /** A fixed pseudo-random value in [0, 1) for a lattice point. */
@@ -84,9 +89,21 @@ export function edgeAlpha(style: EdgeStyle, seed: number): (x: number, y: number
   const side = p.side * PLATE.w;
   const top = p.top * PLATE.h;
   const bottom = p.bottom * PLATE.h;
+  const radius = (p.radius ?? 0) * PLATE.w;
   return (x, y) => {
     // 0 at the plate's edge, 1 where the fade ends, more further in.
     let f = Math.min(x / side, (PLATE.w - x) / side, y / top, (PLATE.h - y) / bottom);
+    // Inside a corner's square, the edge is the corner's arc, not the two straight lines.
+    const cx = radius - Math.min(x, PLATE.w - x);
+    const cy = radius - Math.min(y, PLATE.h - y);
+    if (cx > 0 && cy > 0) {
+      const d = Math.hypot(cx, cy);
+      // The fade is as wide as the side's where the arc meets the side, as the top's (or bottom's) where it
+      // meets that, and turns smoothly from one to the other in between.
+      const across = y < PLATE.h / 2 ? top : bottom;
+      const width = d > 0 ? d / Math.hypot(cx / side, cy / across) : side;
+      f = Math.min(f, (radius - d) / width);
+    }
     if (p.corner) {
       const px = Math.abs((2 * x) / PLATE.w - 1);
       const py = Math.abs((2 * y) / PLATE.h - 1);

@@ -9,7 +9,7 @@
   "smallestBox": 44,
   "everyBoxCoversItsDrawing": true,
   "boxesMovedInward": [
-   "screed 0,-7px",
+   "screed 0,-8px",
    "tiles 0,-7px",
    "toolbox 0,-5px"
   ],
@@ -26,7 +26,7 @@
   "smallestBox": 44,
   "everyBoxCoversItsDrawing": true,
   "boxesMovedInward": [
-   "floor 0,-3px"
+   "floor 0,-2px"
   ],
   "overlaps": [],
   "ok": true
@@ -41,7 +41,7 @@
   "smallestBox": 44,
   "everyBoxCoversItsDrawing": true,
   "boxesMovedInward": [
-   "screed 0,-2px",
+   "screed 0,-4px",
    "tiles 0,-2px"
   ],
   "overlaps": [],
@@ -70,9 +70,9 @@
   "smallestBox": 44,
   "everyBoxCoversItsDrawing": true,
   "boxesMovedInward": [
-   "screed 0,-9px",
+   "screed 0,-10px",
    "tiles 0,-9px",
-   "toolbox 0,-7px"
+   "toolbox 0,-6px"
   ],
   "overlaps": [],
   "ok": true
@@ -87,6 +87,38 @@
   "smallestBox": 44,
   "everyBoxCoversItsDrawing": true,
   "boxesMovedInward": [
+   "floor 0,-4px"
+  ],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "webkit",
+  "size": "360x740",
+  "scene": "build",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 1,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [
+   "screed 0,-11px",
+   "tiles 0,-10px",
+   "toolbox 0,-8px"
+  ],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "webkit",
+  "size": "360x740",
+  "scene": "grow",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 1,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [
    "floor 0,-6px"
   ],
   "overlaps": [],
@@ -94,38 +126,6 @@
  },
  {
   "engine": "webkit",
-  "size": "360x740",
-  "scene": "build",
-  "spots": 10,
-  "lowestUnderADrawing": 1,
-  "lowestUnderATapBox": 1,
-  "smallestBox": 44,
-  "everyBoxCoversItsDrawing": true,
-  "boxesMovedInward": [
-   "screed 0,-10px",
-   "tiles 0,-10px",
-   "toolbox 0,-9px"
-  ],
-  "overlaps": [],
-  "ok": true
- },
- {
-  "engine": "webkit",
-  "size": "360x740",
-  "scene": "grow",
-  "spots": 10,
-  "lowestUnderADrawing": 1,
-  "lowestUnderATapBox": 1,
-  "smallestBox": 44,
-  "everyBoxCoversItsDrawing": true,
-  "boxesMovedInward": [
-   "floor 0,-7px"
-  ],
-  "overlaps": [],
-  "ok": true
- },
- {
-  "engine": "webkit",
   "size": "320x640",
   "scene": "build",
   "spots": 10,
@@ -134,9 +134,9 @@
   "smallestBox": 44,
   "everyBoxCoversItsDrawing": true,
   "boxesMovedInward": [
-   "screed 0,-12px",
+   "screed 0,-13px",
    "tiles 0,-13px",
-   "toolbox 0,-12px"
+   "toolbox 0,-11px"
   ],
   "overlaps": [],
   "ok": true
@@ -151,7 +151,6 @@
   "smallestBox": 44,
   "everyBoxCoversItsDrawing": true,
   "boxesMovedInward": [
-   "door 6,0px",
    "floor 0,-10px"
   ],
   "overlaps": [],

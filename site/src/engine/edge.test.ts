@@ -106,13 +106,24 @@ describe('the edge itself', () => {
     }
   });
 
-  it('rounds the corners of the chosen style: paper further in at a corner than along an edge', () => {
+  it('rounds only the corners of the chosen style: the outer 6% of the width, as in the mock-up', () => {
     const alpha = edgeAlpha('a-round', edgeSeed('build'));
     const plain = edgeAlpha('a', edgeSeed('build'));
-    // On the diagonal of the top left corner, just where A's fades end: solid in A, mostly paper once rounded.
-    expect(plain(100, 56)).toBeGreaterThan(0.9);
-    expect(alpha(100, 56)).toBeLessThan(0.4);
-    // Half-way along the top edge the two are the same.
-    expect(alpha(836, 40)).toBe(plain(836, 40));
+    const r = 0.06 * PLATE.w;
+    // Just past each corner's arc: paper, where A still has paint.
+    for (const [x, y] of [[28, 28], [PLATE.w - 28, 28], [28, PLATE.h - 28], [PLATE.w - 28, PLATE.h - 28]]) {
+      expect(plain(x, y)).toBeGreaterThan(0);
+      expect(alpha(x, y)).toBe(0);
+    }
+    // Everywhere outside the four corner squares the two are the same: the long edges stay straight and thin.
+    for (let y = 0; y <= PLATE.h; y += 13) {
+      for (let x = Math.ceil(r); x <= PLATE.w - r; x += 37) expect(alpha(x, y)).toBe(plain(x, y));
+    }
+    for (let x = 0; x <= PLATE.w; x += 13) {
+      for (let y = Math.ceil(r); y <= PLATE.h - r; y += 29) expect(alpha(x, y)).toBe(plain(x, y));
+    }
+    // And the turn is smooth: no step where the arc meets the straight edges.
+    for (const y of [20, 40]) expect(Math.abs(alpha(r - 0.5, y) - alpha(r + 0.5, y))).toBeLessThan(0.05);
+    for (const x of [20, 40]) expect(Math.abs(alpha(x, r - 0.5) - alpha(x, r + 0.5))).toBeLessThan(0.05);
   });
 });

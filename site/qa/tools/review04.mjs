@@ -119,6 +119,61 @@ const run = {
     }
     await save('handoff', report);
   },
+
+  // The chosen mock-up beside the build at 1440×900, and the corners of each, enlarged.
+  async corners() {
+    const mock = new URL('../../../reference/mockups/edge-CHOSEN-A-rounded.jpg', import.meta.url).pathname;
+    // Where the painting sits in the mock-up (1100 × 656): measured from the image.
+    const M = { left: 55, top: 44, width: 992, height: 566 };
+    const browser = await chrome();
+    const shots = {};
+    for (const scene of ['build', 'grow']) {
+      const page = await (await browser.newContext({ viewport: { width: 1440, height: 900 } })).newPage();
+      await page.goto(`${base}?debug&reset&intro=off&seed=7#${scene}`);
+      await ready(page);
+      await clean(page);
+      await page.getByRole('button', { name: 'Pause animation' }).click();
+      await page.waitForTimeout(700);
+      const box = await page.locator('.hj-window').boundingBox();
+      // The same share of paper around the painting as the mock-up has.
+      const k = box.width / M.width;
+      const clip = { x: Math.round(box.x - M.left * k), y: Math.round(box.y - M.top * k), width: Math.round(1100 * k), height: Math.round(656 * k) };
+      shots[scene] = { image: await page.screenshot({ clip }), k, clip, box };
+      await page.close();
+    }
+    await browser.close();
+    const { k, clip } = shots.build;
+    const W = clip.width;
+    const H = clip.height;
+    const mockup = await sharp(mock).resize(W, H, { fit: 'fill' }).toBuffer();
+    const gap = 16;
+    const head = 34;
+    // Corner close-ups: the outer 16% of the width, twice the size.
+    const c = Math.round(W * 0.17);
+    const corner = (image, right, bottom) => sharp(image).extract({ left: right ? W - c - Math.round(M.left * k * 0.3) : Math.round(M.left * k * 0.3), top: bottom ? H - c - Math.round(M.top * k * 0.3) : Math.round(M.top * k * 0.3), width: c, height: c }).resize(c * 2, c * 2).toBuffer();
+    const tiles = [];
+    let y = gap;
+    const row = async (title, items) => {
+      tiles.push({ input: label(title, 2 * W + gap, 17), left: gap, top: y });
+      y += head;
+      let x = gap;
+      let tallest = 0;
+      for (const item of items) {
+        const meta = await sharp(item).metadata();
+        tiles.push({ input: item, left: x, top: y });
+        x += meta.width + gap;
+        tallest = Math.max(tallest, meta.height);
+      }
+      y += tallest + gap;
+    };
+    await row('The chosen mock-up (left) and the build at 1440 × 900 (right), at the same size', [mockup, shots.build.image]);
+    await row('Corners, twice the size: top left, mock-up then build; bottom right, mock-up then build', [await corner(mockup, false, false), await corner(shots.build.image, false, false), await corner(mockup, true, true), await corner(shots.build.image, true, true)]);
+    await row('Top right and bottom left, mock-up then build; and the lab (Grow) at 1440 × 900', [await corner(mockup, true, false), await corner(shots.build.image, true, false), await corner(mockup, false, true), await corner(shots.build.image, false, true)]);
+    await row('', [shots.grow.image]);
+    const file = new URL('../edge/corners.jpg', import.meta.url).pathname;
+    await sharp({ create: { width: 2 * W + 3 * gap, height: y, channels: 3, background: '#d9d6cf' } }).composite(tiles).jpeg({ quality: 90 }).toFile(file);
+    say('corners', file);
+  },
 };
 
 const command = process.argv[2];
