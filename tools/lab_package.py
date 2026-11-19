@@ -5,7 +5,7 @@ stills=['A1_mist_aim','A2_mist_squeeze','A3_mist_lift','B1_write','A1_blink_half
 for n in stills: Image.open(f'out/stills/{n}.png').save(f'{OUT}/stills/{n}.png')
 L=lambda p: np.asarray(Image.open(p)).astype(np.int16)
 clips={
- 'mist_to_write':('A1_mist_aim',[i for i in range(19,74,2) if i not in (55,57,59)]+[56]),
+ 'mist_to_write':('A1_mist_aim',[1,3,10,12,14,18]+[i for i in range(19,74,2) if i not in (55,57,59)]+[56]),
  'write_loop':('B1_write',list(range(1,74,3))+[34,61]),
  'look_up':('A1_mist_aim',[28,30,32,34,36,37,38]+[42,44,46,48,50,52,56,60,66,73]),
  'thumbs_up':('K1_beam',[1,7,13,16,20,22,24,28,40,73]),
