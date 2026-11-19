@@ -1,4 +1,5 @@
-// Portrait phones show a 4:5 crop of the room and the visitor swipes sideways to explore.
+// Portrait phones show a crop of the room as tall as the screen allows (4:5 up to 2:3) and the visitor swipes
+// sideways to explore.
 //
 // The crop is a native horizontal scroller. That is what makes it feel native: the browser itself follows
 // the finger 1:1, adds momentum and eases into the edges, all off the main thread, so panning stays smooth
@@ -7,8 +8,15 @@
 import { PLATE } from './assets';
 import { gsap, reducedMotion } from './motion';
 
-// The crop starts centred on Rachel: plate x 514-1267 at full plate height (scene/README.md).
-const START_CENTRE_X = (514 + 1267) / 2;
+// The crop starts on Rachel and the box. A 4:5 crop shows plate x 514-1267 (scene/README.md), a 2:3 crop
+// x 590-1220 (review 01); crops in between are framed in between. Plate px, at full plate height.
+const START_4_5 = { centre: (514 + 1267) / 2, width: (PLATE.h * 4) / 5 };
+const START_2_3 = { centre: (590 + 1220) / 2, width: (PLATE.h * 2) / 3 };
+
+function startCentre(visibleWidth: number): number {
+  const t = Math.min(1, Math.max(0, (START_4_5.width - visibleWidth) / (START_4_5.width - START_2_3.width)));
+  return START_4_5.centre + (START_2_3.centre - START_4_5.centre) * t;
+}
 
 const HAND = `
 <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -19,7 +27,8 @@ const CHEVRON = `<svg viewBox="0 0 10 16" aria-hidden="true" focusable="false"><
 export class Pan {
   private readonly viewport: HTMLElement;
   private readonly plate: HTMLElement;
-  private centreX = START_CENTRE_X;
+  /** Plate x at the middle of the crop, once the visitor has panned. Until then the start framing applies. */
+  private centreX: number | null = null;
   private hint: HTMLElement | null = null;
   private hintLoop: gsap.core.Timeline | null = null;
   private settingScroll = false;
@@ -44,8 +53,10 @@ export class Pan {
   layout(): void {
     if (!this.active) return;
     const u = this.plate.clientWidth / PLATE.w;
+    if (!u) return;
+    const centre = this.centreX ?? startCentre(this.viewport.clientWidth / u);
     this.settingScroll = true;
-    this.viewport.scrollLeft = this.centreX * u - this.viewport.clientWidth / 2;
+    this.viewport.scrollLeft = centre * u - this.viewport.clientWidth / 2;
     // The scroll event for this arrives asynchronously; ignore that one.
     requestAnimationFrame(() => {
       this.settingScroll = false;

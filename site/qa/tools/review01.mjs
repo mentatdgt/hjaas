@@ -277,4 +277,80 @@ if (item === 'outlines') {
   console.log(JSON.stringify({ frames: pairs.length, worstPsnrDb: worst, maxAlphaError: maxAlpha }));
 }
 
+if (item === 'phones') {
+  // Full intro, fresh visit, phone emulation (touch, DPR 3). Records layout shifts and the stage's box from
+  // first paint to 12 s, checks the page itself never scrolls, and shoots the settled scene.
+  const { webkit } = await import('playwright');
+  const sizes = [
+    { name: '390x844', engine: 'chromium', width: 390, height: 844 },
+    { name: '412x915', engine: 'chromium', width: 412, height: 915 },
+    { name: '360x740', engine: 'chromium', width: 360, height: 740 },
+    { name: '390x844', engine: 'webkit', width: 390, height: 844 },
+  ];
+  const wk = await webkit.launch();
+  const shots = [];
+  const results = [];
+  for (const s of sizes) {
+    const b = s.engine === 'webkit' ? wk : browser;
+    const context = await b.newContext({ viewport: { width: s.width, height: s.height }, deviceScaleFactor: 3, isMobile: s.engine === 'chromium', hasTouch: true });
+    const page = await context.newPage();
+    await page.addInitScript(() => {
+      window.__shifts = [];
+      try {
+        new PerformanceObserver((l) => { for (const e of l.getEntries()) window.__shifts.push(+e.value.toFixed(4)); }).observe({ type: 'layout-shift', buffered: true });
+      } catch {}
+      window.__boxes = [];
+      const watch = () => {
+        const v = document.querySelector('.hj-viewport');
+        if (v) { const r = v.getBoundingClientRect(); window.__boxes.push([r.top, r.height, r.width].map((n) => Math.round(n * 10) / 10).join(',')); }
+        if (performance.now() < 12000) requestAnimationFrame(watch);
+      };
+      requestAnimationFrame(watch);
+    });
+    await page.goto('http://localhost:5173/?reset&intro=full&seed=2');
+    await page.waitForTimeout(12500);
+    const r = await page.evaluate(() => {
+      const v = document.querySelector('.hj-viewport').getBoundingClientRect();
+      const plate = document.querySelector('.hj-plate');
+      const vp = document.querySelector('.hj-viewport');
+      const u = plate.clientWidth / 1672;
+      const se = document.scrollingElement;
+      return {
+        stage: `${Math.round(v.width)}x${Math.round(v.height)}`,
+        ratio: `1:${(v.height / v.width).toFixed(3)}`,
+        top: Math.round(v.top),
+        bottomGap: Math.round(innerHeight - v.bottom),
+        plateCrop: [Math.round(vp.scrollLeft / u), Math.round((vp.scrollLeft + vp.clientWidth) / u)],
+        pageScrolls: se.scrollHeight > innerHeight || se.scrollWidth > innerWidth,
+        distinctStageBoxes: [...new Set(window.__boxes)],
+        layoutShifts: window.__shifts,
+        swipeHint: !!document.querySelector('.hj-swipe'),
+      };
+    });
+    // Try to scroll the page itself; it must not move.
+    await page.mouse.wheel(0, 600);
+    await page.waitForTimeout(200);
+    r.scrollYAfterWheel = await page.evaluate(() => scrollY);
+    results.push({ ...s, ...r });
+    if (s.engine === 'chromium') shots.push({ name: s.name, png: await page.screenshot() });
+    await context.close();
+  }
+  await wk.close();
+  const H = 915 * 3;
+  const tiles = await Promise.all(shots.map(async ({ name, png }) => {
+    const res = results.find((x) => x.name === name && x.engine === 'chromium');
+    const img = await sharp(png).resize({ height: Math.round((sharp && (await sharp(png).metadata()).height) / 3) }).toBuffer();
+    const m = await sharp(img).metadata();
+    const label = Buffer.from(`<svg width="${m.width}" height="44"><rect width="100%" height="100%" fill="#111"/><text x="8" y="18" font-family="sans-serif" font-size="14" fill="#fff">${name}  stage ${res.stage} (${res.ratio})</text><text x="8" y="37" font-family="sans-serif" font-size="13" fill="#bbb">plate x ${res.plateCrop.join('–')}</text></svg>`);
+    return sharp(img).extend({ top: 44, bottom: 915 - m.height, background: '#111' }).composite([{ input: label, left: 0, top: 0 }]).png().toBuffer();
+  }));
+  const ms = await Promise.all(tiles.map((t) => sharp(t).metadata()));
+  let left = 0;
+  await sharp({ create: { width: ms.reduce((a, m) => a + m.width + 10, 0), height: 959, channels: 3, background: '#333' } })
+    .composite(tiles.map((input, i) => { const o = { input, left, top: 0 }; left += ms[i].width + 10; return o; }))
+    .jpeg({ quality: 85 })
+    .toFile('qa/review-01/04-phones.jpg');
+  console.log(JSON.stringify(results, null, 1));
+}
+
 await browser.close();
