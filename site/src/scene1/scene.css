@@ -52,7 +52,7 @@
   --mat: clamp(12px, 1.4cqw, 30px);
   --logo-w: clamp(160px, 14cqw, 210px);
   /* The logo's own proportions; logo.ts sets the real ones when the image arrives. */
-  --logo-ratio: 564 / 333;
+  --logo-ratio: 1651 / 630;
   --logo-h: calc(var(--logo-w) / (var(--logo-ratio)));
   --pad-top: clamp(20px, 2.2cqw, 44px);
   --pad-bottom: clamp(18px, 1.8cqw, 36px);

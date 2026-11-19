@@ -64,7 +64,7 @@ for (let i = 1; i <= 9; i++) {
   add(`frames/003-mushrooms/approved/mushroom_${n}.png`, `mushrooms/mushroom_${n}.webp`, sprite, { height: MUSHROOM_H });
 }
 
-add('assets/logo/tape-measure-temp.png', 'logo/logo.webp', sprite, { width: LOGO_W });
+add('assets/logo/hjaas-logo.png', 'logo/logo.webp', sprite, { width: LOGO_W });
 
 let total = 0;
 for (const { from, to, opts, resize } of jobs) {
@@ -82,17 +82,19 @@ await copyFile(join(repo, reaction, 'reaction.json'), join(out, 'rachel/reaction
 await writeFile(join(out, 'rachel/reaction/shared.json'), `${JSON.stringify(shared, null, 1)}\n`);
 console.log(`shared with rachel/: ${Object.keys(shared).join(', ') || 'none'}`);
 
-// Temporary favicon: the reel, cropped square from the temp logo.
-const logo = join(repo, 'assets/logo/tape-measure-temp.png');
-const reel = { left: 0, top: 6, width: 298, height: 298 };
+// Favicon and home-screen icon: the reel on its own, which is drawn square.
 for (const [size, name] of [[32, 'favicon-32.png'], [180, 'apple-touch-icon.png']]) {
-  await sharp(logo).extract(reel).resize(size, size, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } }).png().toFile(join(site, 'public', name));
+  await sharp(join(repo, 'assets/logo/hjaas-reel.png'))
+    .resize(size, size, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+    .png()
+    .toFile(join(site, 'public', name));
 }
 
-// Temporary link-preview image (og:image): the logo centred on the page colour, at the 1200 × 630 size
-// link previews expect. PNG, because not every preview scraper reads WebP.
+// Link-preview image (og:image): the logo centred on the page colour, at the 1200 × 630 size link previews
+// expect. PNG, because not every preview scraper reads WebP.
+const logo = join(repo, 'assets/logo/hjaas-logo.png');
 await sharp({ create: { width: 1200, height: 630, channels: 3, background: '#f6f3ec' } })
-  .composite([{ input: await sharp(logo).resize({ width: 760, withoutEnlargement: true }).toBuffer(), gravity: 'center' }])
+  .composite([{ input: await sharp(logo).resize({ width: 900, withoutEnlargement: true }).toBuffer(), gravity: 'center' }])
   .png({ palette: true, quality: 90, effort: 10 })
   .toFile(join(site, 'public', 'og-image.png'));
 

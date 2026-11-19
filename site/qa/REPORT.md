@@ -380,3 +380,20 @@ task** in any of the five. The target (none while anything animates) is met with
 - **Two of 18 cold-load runs** had a frame over 50 ms at the end of the intro (above).
 - **`site/scene-1` still has the slow brush** in Safari's engine. Say if you want the same fix there.
 - Raw traces (`qa/traces/r3-*.json.gz`, 14 MB) are on this Mac only, as before.
+
+## Logo swap
+
+From `reviews/logo-swap.md`, on `site/scene-1-elegant`, in one commit. Evidence: `qa/logo-swap/logo-swap.jpg`
+(`qa/tools/logo-swap.mjs` remakes it).
+
+| | Step | Result |
+|---|---|---|
+| ✅ | 1. The logo comes from `assets/logo/hjaas-logo.png` | `npm run assets` writes it at 614 × 234 px (the `LOGO_W` cap is unchanged), 48 KB. The glint is clipped to the new image's own transparency with no code change. |
+| ✅ | 2. Favicon and touch icon from `assets/logo/hjaas-reel.png` | A plain resize to 32 and 180 px. The fixed crop is gone. The reel reads clearly at 32 px. |
+| ✅ | 3. Link-preview image from the new logo | 1200 × 630, the logo 900 px wide on the paper colour. |
+| ✅ | 4. `npm run assets` run and checked | Only the logo, the two icons and the link-preview image changed; every other asset came out byte-for-byte the same. Nothing in `site/` uses `tape-measure-temp.png` any more; the file is still in the repo. |
+
+One thing to look at: **the new logo is wider and flatter** (2.6:1; the temporary one was 1.7:1). At the same
+width it is 202 × 77 px on a 1440 px window, where the old one was 202 × 119 px, so it looks smaller and the
+"HJaaS" lettering is about 10 px tall. I kept the width rule as it was. If you want it larger, it is one line:
+`--logo-w` in `scene.css`.
