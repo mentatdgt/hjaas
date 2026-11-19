@@ -1,7 +1,8 @@
 import '@fontsource-variable/bricolage-grotesque';
+import '@fontsource/spectral/latin-400.css';
 import './scene.css';
-import { PLATE, asset, loadLoopFrames, loadRoom, setAssetBase } from './assets';
-import { Counter } from './counter';
+import { PLATE, loadLoopFrames, loadRoom, setAssetBase } from './assets';
+import { Caption } from './caption';
 import { shower } from './finale';
 import { flags } from './flags';
 import { ContactForm } from './form';
@@ -30,31 +31,47 @@ export interface Scene1 {
 const TOTAL = SPOTS.length;
 const HINT_AFTER_S = 60;
 
-// All the words on screen, in one place, until the real copy arrives.
+// TODO(copy): every word on the page is a placeholder until the real copy arrives. They are all here,
+// except the form's (form.ts) and the count itself, "3 of 10 found" (caption.ts).
 const COPY = {
+  name: 'Hui Jie',
+  tagline: 'TODO(copy): what Hui Jie does, in one line',
+  picture: 'Hui Jie at work. Ten mushrooms are hidden in the room.',
   prompt: `Find the ${TOTAL} hidden mushrooms`,
   prize: `Find all ${TOTAL} to reach Hui Jie`,
   done: `You found all ${TOTAL}`,
 };
 
 /**
- * Mounts scene 1 (the contracting scene) into `host`. Everything the scene needs lives under
- * `.hj-scene`: markup, styles, state and assets. It sizes itself to the host element.
+ * Mounts scene 1 (the contracting scene) into `host`: a paper page with the room as one framed picture.
+ * Everything the scene needs lives under `.hj-scene`: markup, styles, state and assets. It takes its
+ * width from the host element and is as tall as its content, so the host page scrolls if it has to.
  */
 export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Scene1 {
   if (options.assetBase) setAssetBase(options.assetBase);
 
-  const root = document.createElement('section');
+  const root = document.createElement('div');
   root.className = 'hj-scene is-pre';
-  root.setAttribute('aria-label', 'Hui Jie at work. Ten mushrooms are hidden in the room.');
   root.innerHTML = `
-    <div class="hj-ambient" aria-hidden="true"></div>
-    <div class="hj-stage">
-      <div class="hj-hud"></div>
-      <div class="hj-viewport">
-        <div class="hj-plate">
-          <img class="hj-room" alt="" draggable="false" width="${PLATE.w}" height="${PLATE.h}" />
+    <div class="hj-page">
+      <header class="hj-masthead">
+        <div class="hj-logo-slot"></div>
+        <div class="hj-ident">
+          <h1 class="hj-name">${COPY.name}</h1>
+          <p class="hj-tagline">${COPY.tagline}</p>
         </div>
+      </header>
+      <figure class="hj-frame" role="group" aria-label="${COPY.picture}">
+        <div class="hj-window">
+          <div class="hj-viewport">
+            <div class="hj-plate">
+              <img class="hj-room" alt="" draggable="false" width="${PLATE.w}" height="${PLATE.h}" />
+            </div>
+          </div>
+        </div>
+      </figure>
+      <div class="hj-caption">
+        <div class="hj-controls"></div>
       </div>
     </div>
     <div class="hj-fly" aria-hidden="true"></div>
@@ -62,13 +79,13 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
   host.append(root);
 
   const q = <T extends HTMLElement>(selector: string): T => root.querySelector<T>(selector)!;
+  const page = q<HTMLDivElement>('.hj-page');
   const viewport = q<HTMLDivElement>('.hj-viewport');
   const plate = q<HTMLDivElement>('.hj-plate');
   const room = q<HTMLImageElement>('.hj-room');
-  const hud = q<HTMLDivElement>('.hj-hud');
+  const logoSlot = q<HTMLDivElement>('.hj-logo-slot');
+  const captionRow = q<HTMLDivElement>('.hj-caption');
   const flyLayer = q<HTMLDivElement>('.hj-fly');
-  const ambient = q<HTMLDivElement>('.hj-ambient');
-  ambient.style.backgroundImage = `url("${asset('room-ambient.webp')}")`;
 
   let destroyed = false;
   let rachel: Rachel | undefined;
@@ -111,14 +128,12 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
   const rnd = flags.seed === undefined ? Math.random : seeded(flags.seed);
   const rhythm = (): Iterator<Step> => (reducedMotion() ? gentleSchedule(rnd) : hammerSchedule(rnd));
 
-  const counter = new Counter(TOTAL, found.size);
-  hud.append(counter.el);
-  counter.measure();
+  const caption = new Caption(TOTAL, found.size);
+  captionRow.prepend(caption.el);
   // A returning visitor who already found them all goes straight to the button.
-  if (found.size === TOTAL) counter.unlock(false);
-  // Everyone else gets the unlock rehearsed out of sight while the art is still loading.
-  const rehearsed = counter.warm();
-  void document.fonts?.ready.then(() => counter.measure());
+  if (found.size === TOTAL) caption.unlock(false, COPY.done);
+  // A new visitor is told what to look for; one who has started, what the hunt is for.
+  else caption.say(found.size === 0 ? COPY.prompt : COPY.prize);
 
   const pan = new Pan(viewport, plate, progress.panned, () => {
     progress.panned = true;
@@ -159,11 +174,11 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
     return reacting;
   };
 
-  const form = new ContactForm(root, counter.action);
+  const form = new ContactForm(root, caption.action);
   // A click with detail 0 came from the keyboard: keyboard actions open at once, with no entrance.
-  counter.action.addEventListener('click', (event) => form.open(event.detail === 0));
+  caption.action.addEventListener('click', (event) => form.open(event.detail === 0));
 
-  // 10/10: one last reaction, a short shower of mushrooms, and the counter becomes the way to reach Hui Jie.
+  // 10/10: one last reaction, a short shower of mushrooms, and the caption becomes the way to reach Hui Jie.
   const celebrate = (): void => {
     progress.unlocked = true;
     save();
@@ -171,10 +186,9 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
     if (!calm) window.setTimeout(() => shower(flyLayer, viewport.getBoundingClientRect()), 160);
     window.setTimeout(
       () => {
-        counter.unlock(true);
-        counter.say(COPY.done, 4200);
+        caption.unlock(true, COPY.done);
         // Keyboard and screen-reader users land on the prize.
-        window.setTimeout(() => counter.action.focus({ preventScroll: true }), calm ? 0 : 600);
+        window.setTimeout(() => caption.action.focus({ preventScroll: true }), calm ? 0 : 600);
       },
       calm ? 400 : 1250,
     );
@@ -192,7 +206,7 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
       plate,
       flyLayer,
       found,
-      target: () => counter.targetRect(),
+      target: () => caption.targetRect(),
       onFind: (spot) => {
         quietSeconds = 0;
         found.add(spot.id);
@@ -203,24 +217,23 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
         if (found.size === TOTAL && busy) void done.then(() => react());
       },
       onLand: () => {
-        const first = counter.current === 0;
-        const next = Math.min(TOTAL, counter.current + 1);
-        counter.land(next, first && next < TOTAL ? COPY.prize : '');
-        if (counter.noteText === COPY.prompt) {
-          // The prompt has done its job. Once, briefly, say what the hunt is for.
-          if (first && next < TOTAL) counter.say(COPY.prize, 5200);
-          else counter.hush();
-        }
-        if (counter.current === TOTAL) celebrate();
+        const first = caption.current === 0;
+        const next = Math.min(TOTAL, caption.current + 1);
+        caption.land(next, first && next < TOTAL ? COPY.prize : '');
+        // The prompt has done its job: from the first find on, the caption says what the hunt is for.
+        if (next < TOTAL) caption.say(COPY.prize);
+        else celebrate();
       },
     });
     if (destroyed) return;
 
     plate.append(rachel.shadow, hunt.el, rachel.el);
-    hud.prepend(logo.el);
+    // The logo keeps its own proportions; the page reserves exactly that space for it.
+    page.style.setProperty('--logo-ratio', logo.el.style.aspectRatio);
+    logoSlot.append(logo.el);
     rachel.resize();
     logo.prepare();
-    counter.prime(found.size === 0 ? COPY.prompt : COPY.prize);
+    logo.startIdle();
     cleanup.push(() => logo.stop());
 
     player = new RachelPlayer(rachel, rhythm());
@@ -240,7 +253,7 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
     if (flags.debug) {
       const poses: Array<[string, number]> = [];
       player.onPose = (pose, at) => poses.push([pose, Math.round(at)]);
-      debug = { player, rachel, poses, hunt, counter, logo, jank, longTasks, marks: { introStart: 0, introEnd: 0 }, ready: false };
+      debug = { player, rachel, poses, hunt, caption, logo, jank, longTasks, marks: { introStart: 0, introEnd: 0 }, ready: false };
       (window as unknown as { __hj: unknown }).__hj = debug;
     }
 
@@ -255,7 +268,6 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
     // opening it later never costs a frame of Rachel's hammering.
     await document.fonts?.ready;
     form.prepare();
-    await rehearsed;
     // Let the setup above reach the screen before any motion starts.
     await new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
     if (destroyed) return;
@@ -265,31 +277,20 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
       plate,
       room,
       roomPixels: roomImage.pixels,
-      ambient,
       rachel: theRachel.el,
       shadow: theRachel.shadow,
       mushrooms: hunt.el,
-      logo: logo.el,
-      counter: counter.el,
+      caption: caption.el,
       seed: flags.seed,
       onRachel: () => {
         working = true;
         if (!document.hidden) thePlayer.start();
       },
-      onLogo: () => {
-        logo.glint();
-        logo.startIdle();
-      },
-      onCounter: () => {
-        // A new visitor keeps the prompt until the first find; a returning one is reminded what the hunt is for.
-        if (found.size === 0) counter.say(COPY.prompt);
-        else if (found.size < TOTAL) counter.say(COPY.prize, 6000);
-      },
     });
     if (destroyed) return;
     if (debug) (debug.marks as Record<string, number>).introEnd = Math.round(performance.now());
     settled = true;
-    pan.showHint(hud);
+    pan.showHint(captionRow);
     if (!progress.seenIntro) {
       progress.seenIntro = true;
       save();

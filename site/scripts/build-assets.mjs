@@ -82,14 +82,6 @@ await copyFile(join(repo, reaction, 'reaction.json'), join(out, 'rachel/reaction
 await writeFile(join(out, 'rachel/reaction/shared.json'), `${JSON.stringify(shared, null, 1)}\n`);
 console.log(`shared with rachel/: ${Object.keys(shared).join(', ') || 'none'}`);
 
-// A tiny blurred copy of the plate, stretched behind the stage so letterbox bars pick up the room's light.
-await sharp(join(repo, 'scene/room-empty.png'))
-  .resize(96)
-  .blur(6)
-  .modulate({ brightness: 0.4, saturation: 0.85 })
-  .webp({ quality: 70 })
-  .toFile(join(out, 'room-ambient.webp'));
-
 // Temporary favicon: the reel, cropped square from the temp logo.
 const logo = join(repo, 'assets/logo/tape-measure-temp.png');
 const reel = { left: 0, top: 6, width: 298, height: 298 };
@@ -99,7 +91,7 @@ for (const [size, name] of [[32, 'favicon-32.png'], [180, 'apple-touch-icon.png'
 
 // Temporary link-preview image (og:image): the logo centred on the page colour, at the 1200 × 630 size
 // link previews expect. PNG, because not every preview scraper reads WebP.
-await sharp({ create: { width: 1200, height: 630, channels: 3, background: '#1d120b' } })
+await sharp({ create: { width: 1200, height: 630, channels: 3, background: '#f6f3ec' } })
   .composite([{ input: await sharp(logo).resize({ width: 760, withoutEnlargement: true }).toBuffer(), gravity: 'center' }])
   .png({ palette: true, quality: 90, effort: 10 })
   .toFile(join(site, 'public', 'og-image.png'));

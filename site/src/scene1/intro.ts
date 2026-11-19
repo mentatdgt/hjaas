@@ -26,26 +26,20 @@ export interface IntroParts {
   room: HTMLImageElement;
   /** The plate as decoded pixels: the paint the brush uses. */
   roomPixels: CanvasImageSource;
-  ambient: HTMLElement;
   rachel: HTMLElement;
   shadow: HTMLElement;
   mushrooms: HTMLElement;
-  logo: HTMLElement;
-  counter: HTMLElement;
+  caption: HTMLElement;
   seed?: number;
   /** Rachel is in place: start the hammer loop. */
   onRachel: () => void;
-  /** The logo has landed: first glint. */
-  onLogo: () => void;
-  /** The counter is in: show the hunt prompt. */
-  onCounter: () => void;
 }
 
 /** Plays the intro. The scene starts hidden (`.is-pre`); this reveals it and resolves when all is settled. */
 export function playIntro(mode: IntroMode, parts: IntroParts): Promise<void> {
-  const { root, plate, room, ambient, rachel, shadow, mushrooms, logo, counter } = parts;
-  const scene = [room, ambient, mushrooms, shadow, rachel];
-  const hud = [logo, counter];
+  const { root, plate, room, rachel, shadow, mushrooms, caption } = parts;
+  const scene = [room, mushrooms, shadow, rachel];
+  const hud = [caption];
 
   const finish = (): void => {
     gsap.set([...scene, ...hud], { clearProps: 'opacity,transform,visibility' });
@@ -55,8 +49,6 @@ export function playIntro(mode: IntroMode, parts: IntroParts): Promise<void> {
   if (mode === 'off') {
     finish();
     parts.onRachel();
-    parts.onLogo();
-    parts.onCounter();
     return Promise.resolve();
   }
 
@@ -74,8 +66,6 @@ export function playIntro(mode: IntroMode, parts: IntroParts): Promise<void> {
         ease: 'none',
         onComplete: () => {
           finish();
-          parts.onLogo();
-          parts.onCounter();
           resolve();
         },
       });
@@ -139,7 +129,7 @@ export function playIntro(mode: IntroMode, parts: IntroParts): Promise<void> {
       { amount: 1, duration: 0.42, ease: 'power1.inOut', onUpdate: () => painter.wash(washed.amount) },
       wash,
     );
-    timeline.to([ambient, mushrooms], { opacity: 1, duration: 0.42, ease: 'power1.inOut' }, wash);
+    timeline.to(mushrooms, { opacity: 1, duration: 0.42, ease: 'power1.inOut' }, wash);
 
     // Rachel: no paint on her. A short fade and settle, then she gets to work.
     timeline.fromTo(
@@ -151,20 +141,7 @@ export function playIntro(mode: IntroMode, parts: IntroParts): Promise<void> {
     timeline.fromTo(rachel, { y: -10 }, { y: 0, duration: 0.46, ease: EASE_OUT }, rachelAt);
     timeline.call(parts.onRachel, undefined, rachelAt + 0.38);
 
-    // Logo, then the counter just behind it.
-    timeline.fromTo(
-      logo,
-      { opacity: 0, y: -10, scale: 0.97 },
-      { opacity: 1, y: 0, scale: 1, duration: 0.52, ease: EASE_OUT },
-      logoAt,
-    );
-    timeline.call(parts.onLogo, undefined, logoAt + 0.44);
-    timeline.fromTo(
-      counter,
-      { opacity: 0, y: -8 },
-      { opacity: 1, y: 0, duration: 0.44, ease: EASE_OUT },
-      logoAt + 0.14,
-    );
-    timeline.call(parts.onCounter, undefined, logoAt + 0.5);
+    // The caption, just behind her.
+    timeline.fromTo(caption, { opacity: 0, y: 4 }, { opacity: 1, y: 0, duration: 0.3, ease: EASE_OUT }, logoAt);
   });
 }

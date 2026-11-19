@@ -1,5 +1,5 @@
 // The prize for finding all ten: a contact form that opens from the counter-turned-button.
-import { MUSHROOM_ICON } from './counter';
+import { MUSHROOM_ICON } from './caption';
 import { SendError, canSend, submitContact, type ContactPayload } from './submit';
 
 const NEEDS = ['Build', 'Design', 'Film', 'Grow', 'Travel', 'Something else'] as const;

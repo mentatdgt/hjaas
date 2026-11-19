@@ -1,42 +1,35 @@
-/* Scene 1. Every rule is scoped under .hj-scene so the scene can move to another route untouched. */
+/* Scene 1, the elegant version: one framed illustration on a paper page.
+   Every rule is scoped under .hj-scene so the scene can move to another route untouched. */
 
 .hj-scene {
   --plate-w: 1672;
   --plate-h: 941;
 
-  /* Palette, sampled from the plate and the logo. */
-  --hj-ink: #2b1a10;
-  --hj-ink-soft: #6a4a2c;
-  --hj-shade: #1d120b;
-  --hj-cream: #fbf3df;
-  --hj-cream-deep: #efdfb9;
-  --hj-gold-light: #f8e3a0;
-  --hj-gold: #d9a441;
-  --hj-gold-deep: #9c6a1c;
+  /* Paper and ink. Mustard is a small accent only. */
+  --hj-paper: #f6f3ec;
+  --hj-mat: #fcfbf8;
+  --hj-ink: #302e29;
+  --hj-ink-soft: #645f55;
+  /* Fine lines: the frame, the edge of the picture, rules. */
+  --hj-line: rgba(48, 46, 41, 0.2);
   --hj-mustard: #edb525;
-  --hj-mustard-deep: #d89a12;
   --hj-red: #c9472c;
-  /* Edges of fields and chips: 3.9:1 on the field, 3.6:1 on the sheet. */
-  --hj-edge: #9c7a3a;
 
   /* One family of curves for all UI motion. */
   --hj-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --hj-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 
-  --hj-pad: clamp(12px, 2.2cqw, 28px);
   --hj-font: 'Bricolage Grotesque Variable', 'Avenir Next', 'Segoe UI', system-ui, sans-serif;
+  --hj-serif: 'Spectral', 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
 
   position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background: var(--hj-shade);
+  flex: 1 0 auto;
+  overflow-x: clip;
+  background: var(--hj-paper);
   color: var(--hj-ink);
   font-family: var(--hj-font);
-  /* The scene sizes itself from its host, not from the browser window. */
-  container-type: size;
-  -webkit-user-select: none;
-  user-select: none;
+  /* The page takes its measurements from the scene's own width, not from the browser window. */
+  container-type: inline-size;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -51,63 +44,105 @@
   color: var(--hj-ink);
 }
 
-/* Before the intro: laid out, sized and decoded, but not yet shown. */
-.hj-scene.is-pre .hj-room,
-.hj-scene.is-pre .hj-ambient,
-.hj-scene.is-pre .hj-shadow,
-.hj-scene.is-pre .hj-rachel,
-.hj-scene.is-pre .hj-mushrooms,
-.hj-scene.is-pre .hj-logo,
-.hj-scene.is-pre .hj-counter {
-  opacity: 0;
+/* ---------- The page: identity, the framed picture, the caption ---------- */
+
+.hj-page {
+  --page-margin: clamp(20px, 4cqw, 72px);
+  /* The mat: the blank border between the frame and the picture. */
+  --mat: clamp(12px, 1.4cqw, 30px);
+  --logo-w: clamp(160px, 14cqw, 210px);
+  /* The logo's own proportions; logo.ts sets the real ones when the image arrives. */
+  --logo-ratio: 564 / 333;
+  --logo-h: calc(var(--logo-w) / (var(--logo-ratio)));
+  --pad-top: clamp(20px, 2.2cqw, 44px);
+  --pad-bottom: clamp(18px, 1.8cqw, 36px);
+  --gap-head: clamp(16px, 1.5cqw, 30px);
+  --gap-caption: clamp(12px, 1.1cqw, 22px);
+  --caption-h: 44px;
+  /* Everything on the page that is not the picture, top to bottom. */
+  --chrome: calc(
+    var(--pad-top) + var(--logo-h) + var(--gap-head) + 2 * var(--mat) + 2px + var(--gap-caption) + var(--caption-h) +
+      var(--pad-bottom)
+  );
+  /* The picture: about 1040 px on a 1440 px window, never wider than the page allows, and small enough
+     that the caption stays on screen. Very short windows keep a readable picture and let the page scroll. */
+  --pic-w: min(
+    calc(100cqw - 2 * var(--page-margin) - 2 * var(--mat) - 2px),
+    max(72.2cqw, 820px),
+    max(calc((100svh - var(--chrome)) * var(--plate-w) / var(--plate-h)), 540px)
+  );
+  display: flex;
+  flex-direction: column;
+  width: calc(var(--pic-w) + 2 * var(--mat) + 2px);
+  margin: 0 auto;
+  padding: var(--pad-top) 0 var(--pad-bottom);
 }
 
-.hj-scene.is-pre .hj-mushrooms {
-  visibility: hidden;
+.hj-masthead {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 1.8cqw, 30px);
+  min-height: var(--logo-h);
+  margin-bottom: var(--gap-head);
 }
 
-/* The rehearsal copy of the pin (counter.ts, warm()): drawn, so the GPU does the work, but not seen. */
-.hj-scene .hj-counter.hj-ghost {
-  opacity: 0.02;
-  pointer-events: none;
+.hj-ident {
+  min-width: 0;
 }
 
-.hj-ghost .hj-pin {
-  --morph: 160ms;
+.hj-name {
+  margin: 0;
+  font-family: var(--hj-serif);
+  font-size: clamp(27px, 2.7cqw, 46px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.012em;
 }
 
-/* The room's own light, blurred and dimmed, behind the letterbox bars. */
-.hj-ambient {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
+.hj-tagline {
+  max-width: 44ch;
+  margin: clamp(4px, 0.5cqw, 9px) 0 0;
+  color: var(--hj-ink-soft);
+  font-family: var(--hj-serif);
+  font-size: clamp(15px, 1.2cqw, 20px);
+  line-height: 1.35;
+  text-wrap: pretty;
 }
 
-.hj-stage {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
+/* The frame: a fine border, a pale mat, then the picture. */
+.hj-frame {
+  margin: 0;
+  padding: var(--mat);
+  border: 1px solid var(--hj-line);
+  background: var(--hj-mat);
+  box-shadow:
+    0 1px 2px rgba(48, 46, 41, 0.05),
+    0 26px 44px -34px rgba(48, 46, 41, 0.3);
+  -webkit-user-select: none;
+  user-select: none;
 }
 
-/* The window onto the room. Wide screens show the whole plate. */
-.hj-viewport,
-.hj-hud {
-  grid-area: 1 / 1;
+.hj-window {
   position: relative;
-  width: min(100cqw, calc(100cqh * var(--plate-w) / var(--plate-h)));
-  aspect-ratio: 1672 / 941;
 }
 
-.hj-viewport {
-  overflow: hidden;
-}
-
-/* Logo and counter sit above the scene, in its corners. */
-.hj-hud {
+/* The picture's own edge, drawn over the art so it stays crisp. */
+.hj-window::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border: 1px solid rgba(48, 46, 41, 0.28);
   pointer-events: none;
-  z-index: 2;
+}
+
+/* The window onto the room. Wide screens show the whole plate. Unpainted, it is a blank sheet. */
+.hj-viewport {
+  position: relative;
+  width: var(--pic-w);
+  aspect-ratio: 1672 / 941;
+  overflow: hidden;
+  background: var(--hj-mat);
 }
 
 /* The plate is the scene's coordinate system: children are placed in percentages of 1672 × 941. */
@@ -128,7 +163,7 @@
   pointer-events: none;
 }
 
-/* The intro paints the room onto this canvas, stroke by stroke. It is removed when the room is complete. */
+/* The intro paints the room onto this canvas, stroke by stroke. It then stays on as the room. */
 .hj-paint {
   position: absolute;
   inset: 0;
@@ -162,6 +197,19 @@
   height: 100%;
 }
 
+/* Before the intro: laid out, sized and decoded, but not yet shown. The page around it is already there. */
+.hj-scene.is-pre .hj-room,
+.hj-scene.is-pre .hj-shadow,
+.hj-scene.is-pre .hj-rachel,
+.hj-scene.is-pre .hj-mushrooms,
+.hj-scene.is-pre .hj-caption-main {
+  opacity: 0;
+}
+
+.hj-scene.is-pre .hj-mushrooms {
+  visibility: hidden;
+}
+
 /* ---------- Mushrooms ---------- */
 
 .hj-mushrooms {
@@ -182,7 +230,7 @@
   background: none;
   transform: translate(-50%, -50%);
   pointer-events: auto;
-  /* No pointer cursor: the cursor must not give the hiding spots away. */
+  /* The normal cursor: it must not give the hiding spots away. */
   cursor: inherit;
   touch-action: manipulation;
   -webkit-appearance: none;
@@ -195,9 +243,9 @@
 
 /* Keyboard users get a clear ring: Tab is the accessible way through the hunt. */
 .hj-shroom:focus-visible {
-  outline: 2px solid var(--hj-cream);
+  outline: 2px solid #fffdf6;
   outline-offset: 1px;
-  box-shadow: 0 0 0 5px rgba(43, 26, 16, 0.72);
+  box-shadow: 0 0 0 5px rgba(48, 46, 41, 0.78);
 }
 
 .hj-shroom-art {
@@ -240,7 +288,7 @@
   background: rgba(0, 229, 255, 0.12);
 }
 
-/* Where a collected mushroom flies, above the counter. */
+/* Where a collected mushroom travels, above the page. */
 .hj-fly {
   position: absolute;
   inset: 0;
@@ -254,19 +302,24 @@
   will-change: transform, opacity;
 }
 
-/* ---------- Logo ---------- */
+/* ---------- Logo: unchanged, only its place on the page is new ---------- */
+
+/* Its place in the masthead, held from the first moment so nothing moves when the image arrives. */
+.hj-logo-slot {
+  flex: none;
+  width: var(--logo-w);
+  height: var(--logo-h);
+}
 
 .hj-logo {
-  position: absolute;
-  top: calc(var(--hj-pad) - 4px);
-  left: var(--hj-pad);
+  position: relative;
+  flex: none;
   display: block;
-  width: clamp(160px, 14cqw, 210px);
-  pointer-events: auto;
+  width: var(--logo-w);
   border-radius: 10px;
 }
 
-/* Lifts the chrome off the wall behind it. On the image only, so the glint canvas above never re-filters it. */
+/* Lifts the chrome off the page behind it. On the image only, so the glint canvas above never re-filters it. */
 .hj-logo img {
   filter: drop-shadow(0 3px 5px rgba(43, 26, 16, 0.38));
 }
@@ -284,7 +337,6 @@
   pointer-events: none;
 }
 
-/* Press feedback on its own property, so it never competes with the intro's transform. */
 .hj-logo {
   transition: scale 160ms var(--hj-ease-out);
 }
@@ -298,178 +350,72 @@ a.hj-logo:active {
 }
 
 .hj-logo:focus-visible {
-  outline: 2px solid var(--hj-cream);
+  outline: 2px solid var(--hj-ink);
   outline-offset: 4px;
-  box-shadow: 0 0 0 8px rgba(43, 26, 16, 0.72);
 }
 
-/* ---------- Counter: a small enamel pin ---------- */
+/* ---------- The caption under the picture ---------- */
 
-.hj-counter {
-  position: absolute;
-  top: var(--hj-pad);
-  right: var(--hj-pad);
+.hj-caption {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 8px;
-  font-size: 17px;
-  font-weight: 600;
-  line-height: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 28px;
+  min-height: var(--caption-h);
+  margin-top: var(--gap-caption);
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+.hj-caption-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 18px;
+  min-width: 0;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* "3 of 10 found". Equal-width digits, so the words never shift as the number changes. */
+.hj-tally {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0;
+  font-weight: 500;
   font-variant-numeric: tabular-nums lining-nums;
+  white-space: nowrap;
 }
 
-/* The pin is laid out at its final (button) width. While counting, only its right end shows. */
-.hj-pin {
-  --pin-h: 44px;
-  --wc: 118px;
-  --wb: 190px;
-  --d0: 72px;
-  --d: var(--d0);
-  --k: 0.62;
-  /* How long the counter takes to become the button. Every part of the morph shares it. */
-  --morph: 500ms;
-  position: relative;
-  width: var(--wb);
-  height: var(--pin-h);
-  transform-origin: calc(100% - var(--wc) / 2) 50%;
-  /* Keeps the pin on its own layer at a fixed raster scale, so the landing squash is only composited
-     (measured: without it the pin was re-rasterised on every frame of the squash). */
-  will-change: transform;
+.hj-tally[hidden],
+.hj-contact[hidden] {
+  display: none;
 }
 
-.hj-counter[data-state='unlocked'] .hj-pin {
-  --d: 0px;
-  transform-origin: 50% 50%;
+.hj-tally-icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
 }
 
-/* The pin's shadow is its own soft layer, stretched sideways when the pin widens.
-   (A drop-shadow filter on the pin would be re-rendered on every frame of the glint.) */
-.hj-pin-shadow {
-  position: absolute;
-  inset: 0;
-  border-radius: 999px;
-  box-shadow:
-    0 1px 1.5px rgba(43, 26, 16, 0.5),
-    0 5px 12px rgba(43, 26, 16, 0.3);
-  transform-origin: 100% 50%;
-  transform: scaleX(var(--k));
-  transition: transform var(--morph) var(--hj-ease-in-out);
-}
-
-.hj-counter[data-state='unlocked'] .hj-pin-shadow {
-  transform: none;
-}
-
-.hj-pin-rim,
-.hj-pin-face {
-  position: absolute;
-  inset: 0;
-  border-radius: 999px;
-  clip-path: inset(0 0 0 var(--d) round 999px);
-  transition: clip-path var(--morph) var(--hj-ease-in-out);
-}
-
-/* Thin gold rim, lit from above like polished metal. */
-.hj-pin-rim {
-  background: linear-gradient(
-    178deg,
-    var(--hj-gold-light) 0%,
-    var(--hj-gold) 34%,
-    var(--hj-gold-deep) 62%,
-    #e6bd5e 100%
-  );
-}
-
-/* The enamel sits a hair below the rim: a soft shadow under the top edge, a faint light along the bottom. */
-.hj-pin-face {
-  inset: 2px;
-  background: radial-gradient(130% 150% at 28% -10%, #fffaf0 0%, var(--hj-cream) 46%, var(--hj-cream-deep) 100%);
-  box-shadow:
-    inset 0 1.5px 2px rgba(110, 70, 20, 0.34),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.55);
-}
-
-.hj-pin-face--go {
-  background: radial-gradient(130% 150% at 28% -10%, #fbd565 0%, var(--hj-mustard) 48%, var(--hj-mustard-deep) 100%);
-  opacity: 0;
-  transition:
-    clip-path var(--morph) var(--hj-ease-in-out),
-    opacity 420ms var(--hj-ease-in-out) 80ms;
-}
-
-.hj-counter[data-state='unlocked'] .hj-pin-face--go {
-  opacity: 1;
-}
-
-/* The glint crosses the visible pill; the enamel face above it leaves only the rim catching the light. */
-.hj-pin-glint {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: var(--wc);
-  border-radius: 999px;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.hj-counter[data-state='unlocked'] .hj-pin-glint {
-  width: var(--wb);
-}
-
-.hj-glint-bar {
-  position: absolute;
-  top: -30%;
-  bottom: -30%;
-  left: 0;
-  width: 46px;
-  opacity: 0;
-  pointer-events: none;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 252, 240, 0.55) 30%,
-    rgba(255, 255, 255, 0.98) 50%,
-    rgba(255, 252, 240, 0.55) 70%,
-    rgba(255, 255, 255, 0) 100%
-  );
-}
-
-/* Icon, number and label live inside the same clip as the enamel, so nothing shows outside the pin. */
-.hj-pin-content {
-  position: absolute;
-  inset: 0;
-  clip-path: inset(0 0 0 var(--d) round 999px);
-  transition: clip-path var(--morph) var(--hj-ease-in-out);
-}
-
-.hj-pin-icon {
-  position: absolute;
-  top: 50%;
-  right: calc(var(--wc) - 13px - 22px);
-  width: 22px;
-  height: 22px;
-  margin-top: -11.5px;
-  transition: transform var(--morph) var(--hj-ease-in-out);
-}
-
-.hj-counter[data-state='unlocked'] .hj-pin-icon {
-  transform: translateX(calc(var(--d0) * -1));
-}
-
-.hj-pin-icon svg {
+.hj-tally-icon svg,
+.hj-contact svg {
   display: block;
   width: 100%;
   height: 100%;
   overflow: visible;
 }
 
-/* The icon is drawn like the pin itself: enamel fills held by thin metal lines. */
+.hj-tally-n {
+  display: inline-block;
+}
+
 .hj-ico-cap,
 .hj-ico-stem {
-  stroke: #7a4a12;
-  stroke-width: 1.5;
+  stroke: var(--hj-ink);
+  stroke-width: 1.4;
   stroke-linejoin: round;
 }
 
@@ -478,161 +424,23 @@ a.hj-logo:active {
 }
 
 .hj-ico-stem {
-  fill: #fff7e4;
+  fill: #fffdf6;
 }
 
 .hj-ico-dot {
   fill: #fff3d6;
 }
 
-.hj-pin-count {
-  position: absolute;
-  top: 0;
-  right: 16px;
-  height: var(--pin-h);
-  display: flex;
-  align-items: center;
-  gap: 0.24em;
-  white-space: nowrap;
-  transition:
-    opacity 220ms ease,
-    filter 220ms ease;
-}
-
-/* The number dissolves where it stands while the label takes its place: a soft blur joins the two. */
-.hj-counter[data-state='unlocked'] .hj-pin-count {
-  opacity: 0;
-  filter: blur(2px);
-}
-
-/* The number rolls like an odometer inside this window. Wide enough for "10", so nothing shifts. */
-.hj-odo {
-  display: block;
-  width: 1.24em;
-  height: 1.3em;
-  overflow: hidden;
-  text-align: center;
-  /* A new number re-lays-out only this little window, not the scene around it. */
-  contain: strict;
-}
-
-.hj-odo-strip {
-  display: flex;
-  flex-direction: column;
-}
-
-.hj-odo-strip > span {
-  display: block;
-  height: 1.3em;
-  line-height: 1.3em;
-}
-
-.hj-pin-of {
-  color: var(--hj-ink-soft);
-  font-weight: 500;
-}
-
-.hj-pin-label {
-  position: absolute;
-  top: 0;
-  /* Always the same small gap after the icon. The two travel together, so they can never collide. */
-  left: calc(100% - var(--wc) + 13px + 22px + 8px);
-  height: var(--pin-h);
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
-  letter-spacing: 0.005em;
-  opacity: 0;
-  transition:
-    transform var(--morph) var(--hj-ease-in-out),
-    opacity 160ms var(--hj-ease-out);
-}
-
-.hj-counter[data-state='unlocked'] .hj-pin-label {
-  opacity: 1;
-  transform: translateX(calc(var(--d0) * -1));
-  transition:
-    transform var(--morph) var(--hj-ease-in-out),
-    opacity 240ms ease 50ms;
-}
-
-/* The real button. It only exists once the hunt is complete. */
-.hj-pin-action {
-  position: absolute;
-  inset: 0;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  border-radius: 999px;
-  background: none;
-  cursor: pointer;
-  pointer-events: auto;
-  touch-action: manipulation;
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-.hj-pin-action:focus {
-  outline: none;
-}
-
-.hj-pin-action:focus-visible {
-  outline: 2px solid var(--hj-cream);
-  outline-offset: 2px;
-  box-shadow: 0 0 0 6px rgba(43, 26, 16, 0.72);
-}
-
-/* Restoring a returning visitor's button: no morph, it is simply there. */
-.hj-counter.is-instant * {
-  transition: none !important;
-}
-
-/* The pin is the button's face, so it answers the press. (Only once unlocked: before that,
-   the landing squash drives the pin's transform frame by frame and a transition would lag it.) */
-.hj-counter[data-state='unlocked'] .hj-pin {
-  transition: transform 160ms var(--hj-ease-out);
-}
-
-.hj-pin:has(.hj-pin-action:active) {
-  transform: scale(0.97);
-}
-
-.hj-pin-face--go {
-  filter: none;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .hj-pin:has(.hj-pin-action:hover) .hj-pin-face--go {
-    filter: brightness(1.06);
-  }
-}
-
-/* A short line under the pin: the hunt prompt, and once, what the hunt is for.
-   Made of the pin's own material (cream enamel, a hair of gold), just smaller and flatter. */
+/* What the hunt is for, in a softer voice. */
 .hj-note {
   margin: 0;
-  padding: 5px 11px 6px;
-  border: 1px solid #c2913a;
-  border-radius: 999px;
-  background: linear-gradient(180deg, #fffaf0, var(--hj-cream) 60%, var(--hj-cream-deep));
-  box-shadow: 0 1px 2px rgba(43, 26, 16, 0.35), 0 3px 8px rgba(43, 26, 16, 0.18);
-  color: var(--hj-ink);
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 1.25;
-  letter-spacing: 0.01em;
-  white-space: nowrap;
-  opacity: 0;
-  transform: translateY(-4px);
-  transition:
-    opacity 160ms var(--hj-ease-out),
-    transform 160ms var(--hj-ease-out);
+  color: var(--hj-ink-soft);
+  font-size: 15px;
+  transition: opacity 160ms ease;
 }
 
-.hj-note.is-on {
-  opacity: 1;
-  transform: none;
-  transition-duration: 200ms;
+.hj-note:empty {
+  display: none;
 }
 
 .hj-sr {
@@ -648,12 +456,109 @@ a.hj-logo:active {
   contain: strict;
 }
 
-/* ---------- Finale ---------- */
+/* The way to reach Hui Jie, once all ten are found: a flat, outlined button in the caption's place. */
+.hj-contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 44px;
+  margin: 0;
+  padding: 0 18px 0 14px;
+  border: 1.5px solid var(--hj-ink);
+  border-radius: 6px;
+  background: var(--hj-mat);
+  color: var(--hj-ink);
+  font: inherit;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-appearance: none;
+  appearance: none;
+  transition:
+    background-color 140ms ease,
+    transform 140ms var(--hj-ease-out);
+}
 
-.hj-confetti {
-  position: absolute;
-  width: auto;
-  will-change: transform, opacity;
+.hj-contact svg {
+  width: 20px;
+  height: 20px;
+}
+
+.hj-contact:active {
+  transform: scale(0.98);
+}
+
+/* Quiet controls at the end of the caption: Skip, Pause animation, Replay painting. */
+.hj-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 22px;
+  margin-left: auto;
+}
+
+.hj-link {
+  min-height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--hj-ink-soft);
+  font: inherit;
+  font-size: 14.5px;
+  text-decoration: underline;
+  text-decoration-color: rgba(48, 46, 41, 0.3);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-appearance: none;
+  appearance: none;
+  transition:
+    color 140ms ease,
+    text-decoration-color 140ms ease;
+}
+
+.hj-link[hidden] {
+  display: none;
+}
+
+.hj-link:active {
+  color: var(--hj-ink);
+}
+
+.hj-contact:focus-visible,
+.hj-link:focus-visible {
+  outline: 2px solid var(--hj-ink);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.hj-contact:focus-visible {
+  border-radius: 6px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hj-contact:hover {
+    background: #fff;
+  }
+
+  .hj-link:hover {
+    color: var(--hj-ink);
+    text-decoration-color: currentColor;
+  }
+}
+
+/* The contact sheet still wears the old enamel pin's colours here; review 03 item 3 restyles it. */
+.hj-dialog {
+  --hj-ink-soft: #6a4a2c;
+  --hj-cream: #fbf3df;
+  --hj-cream-deep: #efdfb9;
+  --hj-gold-light: #f8e3a0;
+  --hj-gold: #d9a441;
+  --hj-gold-deep: #9c6a1c;
+  --hj-mustard-deep: #d89a12;
+  --hj-edge: #9c7a3a;
 }
 
 /* ---------- Contact form: a sheet that opens from the button ---------- */
@@ -1188,179 +1093,36 @@ a.hj-logo:active {
   }
 }
 
-/* ---------- Portrait phones: a tall crop of the room (4:5 up to 2:3), panned sideways ---------- */
+/* ---------- Large monitors: the identity and the caption grow with the picture ---------- */
 
-.hj-swipe {
-  display: none;
-}
-
-@container (orientation: portrait) and (max-width: 600px) {
-  /* Logo and counter sit in a row above the room; the row and the room are centred together. */
-  .hj-stage {
-    --hud-row: 88px;
-    padding-top: var(--hud-row);
-  }
-
-  /* As tall as the screen allows, up to 2:3 (150cqw); short screens take what there is. */
-  .hj-viewport,
-  .hj-hud {
-    width: 100cqw;
-    height: min(150cqw, calc(100cqh - var(--hud-row) - 8px));
-    aspect-ratio: auto;
-  }
-
-  /* A native scroller: the browser follows the finger, adds momentum and eases into the edges. */
-  .hj-viewport {
-    overflow-x: auto;
-    overflow-y: hidden;
-    overscroll-behavior-x: contain;
-    touch-action: pan-x;
-    scrollbar-width: none;
-  }
-
-  .hj-viewport::-webkit-scrollbar {
-    display: none;
-  }
-
-  .hj-viewport.is-dragging {
-    cursor: grabbing;
-  }
-
-  .hj-logo {
-    top: auto;
-    bottom: calc(100% + 8px);
-    left: 14px;
-    width: clamp(120px, 33cqw, 140px);
-  }
-
-  .hj-counter {
-    top: auto;
-    bottom: calc(100% + 10px);
-    right: 14px;
-    gap: 7px;
-    font-size: 16px;
-  }
-
-  .hj-note {
-    font-size: 12.5px;
-  }
-
-  /* The one-time swipe hint: a small hand between two chevrons, at the foot of the room. */
-  .hj-swipe {
-    position: absolute;
-    left: 50%;
-    bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    transform: translateX(-50%);
-    padding: 6px 12px;
-    border: 1px solid #c2913a;
-    border-radius: 999px;
-    /* The same cream tag as the prompt line. */
-    background: linear-gradient(180deg, #fffaf0, var(--hj-cream) 60%, var(--hj-cream-deep));
-    box-shadow: 0 1px 2px rgba(43, 26, 16, 0.35), 0 3px 8px rgba(43, 26, 16, 0.18);
-    color: var(--hj-ink-soft);
-  }
-
-  .hj-swipe-hand svg {
-    display: block;
-    width: 26px;
-    height: 26px;
-    fill: #fffdf6;
-    stroke: var(--hj-ink);
-    stroke-width: 1.5;
-    stroke-linejoin: round;
-  }
-
-  .hj-swipe-chev svg {
-    display: block;
-    width: 8px;
-    height: 13px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    opacity: 0.8;
-  }
-
-  .hj-swipe-chev.is-right svg {
-    transform: scaleX(-1);
-  }
-}
-
-/* Narrow phones: the prompt wraps instead of running into the logo. */
-@container (orientation: portrait) and (max-width: 379px) {
-  .hj-note {
-    max-width: 164px;
-    border-radius: 14px;
-    text-align: right;
-    white-space: normal;
-  }
-}
-
-@container (orientation: portrait) and (max-width: 339px) {
-  .hj-logo {
-    left: 10px;
-    width: 112px;
-  }
-
-  .hj-counter {
-    right: 10px;
-    font-size: 15px;
-  }
-}
-
-/* Short landscape screens (phones on their side): a smaller logo, so it does not crowd the room. */
-@container (orientation: landscape) and (max-height: 520px) {
-  .hj-logo {
-    width: 120px;
-  }
-}
-
-/* Large monitors: the room fills the screen, so the logo and the pin grow with it. */
 @container (min-width: 1800px) {
-  .hj-logo {
-    width: 12cqw;
+  .hj-page {
+    --logo-w: 12cqw;
+    --caption-h: 52px;
   }
 
-  .hj-counter {
-    scale: 1.2;
-    transform-origin: 100% 0;
+  .hj-caption {
+    font-size: 19px;
   }
-}
 
-@container (min-width: 2400px) {
-  .hj-counter {
-    scale: 1.45;
+  .hj-note {
+    font-size: 18px;
+  }
+
+  .hj-link {
+    font-size: 17px;
+  }
+
+  .hj-tally-icon,
+  .hj-contact svg {
+    width: 24px;
+    height: 24px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hj-note,
-  .hj-note.is-on {
-    transform: none;
-  }
-
-  /* The counter still becomes the button, but as a cross-fade rather than a widening. */
-  .hj-pin-rim,
-  .hj-pin-face,
-  .hj-pin-shadow,
-  .hj-pin-content,
-  .hj-pin-icon,
-  .hj-pin-label,
-  .hj-pin {
-    transition-property: opacity !important;
-  }
-
-  /* The number goes at once, so the wider pin is never seen holding a fading "10 / 10". */
-  .hj-pin-count {
-    transition: none;
-    filter: none !important;
-  }
-
-  .hj-logo {
+  .hj-logo,
+  .hj-note {
     transition: none;
   }
 
