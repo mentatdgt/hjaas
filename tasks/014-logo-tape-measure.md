@@ -1,6 +1,6 @@
 ---
 id: 014-logo-tape-measure
-status: changes-requested   # draft | open | delivered | changes-requested | approved
+status: approved            # draft | open | delivered | changes-requested | approved
 type: logo-options
 frames: 6
 grid: separate images       # six images, each an EDIT of the anchor image (not a sheet)
@@ -113,3 +113,8 @@ Contact sheet: `reference/logo/014-round2-contact.png`. All six now stay faithfu
 - [ ] The word reads at 200 px wide.
 - [ ] Spelling exact.
 - [ ] Not cheesy: refined and period-correct.
+
+### Round 3 result (2026-11-19): APPROVED, user's pick
+- The chosen image is `reference/logo/014-round3-chosen.png` (1774×887): raised chrome lettering, matching the reel, plus a raised metal border on the tape. Spelling correct.
+- Wren cut it out, removing the photo's contact shadow, as `assets/logo/hjaas-logo.png` (1651×630, transparent).
+- `assets/logo/hjaas-reel.png` (643×643, transparent) is the reel only, for the favicon and other square uses.
