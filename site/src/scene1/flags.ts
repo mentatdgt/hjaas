@@ -6,8 +6,9 @@
 //   ?hint=5        seconds before the hint wiggle (default 60)
 //   ?slow=5        play the UI motion (GSAP) this many times slower, for frame-by-frame review
 //   ?debug         outline mushroom hit areas and expose window.__hj
+// Production builds ignore them all: `?found=10` would otherwise skip the hunt and open the form.
 
-const params = new URLSearchParams(typeof location === 'undefined' ? '' : location.search);
+const params = new URLSearchParams(import.meta.env.DEV && typeof location !== 'undefined' ? location.search : '');
 
 const num = (key: string): number | undefined => {
   const raw = params.get(key);

@@ -63,6 +63,9 @@ if the service wants a different shape. Until then:
 
 ## URL switches (for review, not for visitors)
 
+They only work on `npm run dev`. A production build (`npm run build`, `npm run preview`, the live site)
+ignores them all, so nobody can skip the hunt with `?found=10`.
+
 | Add to the address | Effect |
 |---|---|
 | `?reset` | Forget saved progress first. |

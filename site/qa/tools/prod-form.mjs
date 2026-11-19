@@ -7,7 +7,12 @@ const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
 const errors = [];
 page.on('pageerror', (e) => errors.push(String(e)));
 page.on('requestfailed', (r) => errors.push(`failed: ${r.url()}`));
-await page.goto('http://localhost:4173/?intro=off&found=10');
+// Production ignores ?found=10, so start from saved progress instead.
+const all = ['sill', 'drape', 'skirting', 'screed', 'tiles', 'conduit', 'socket', 'ladder-foot', 'ladder-step', 'toolbox'];
+await page.addInitScript((found) => {
+  localStorage.setItem('hjaas:scene1:v1', JSON.stringify({ found, unlocked: true, seenIntro: true, panned: false }));
+}, all);
+await page.goto('http://localhost:4173/');
 await page.waitForSelector('.hj-pin-action:not([hidden])');
 await page.waitForTimeout(1500);
 await page.click('.hj-pin-action');
