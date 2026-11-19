@@ -49,11 +49,11 @@ export interface HuntOptions {
   /** Layer above everything, where a collected mushroom flies. */
   flyLayer: HTMLElement;
   found: ReadonlySet<string>;
-  /** Screen rect the mushroom flies into. */
+  /** Screen rect the mushroom travels to. */
   target: () => DOMRect;
   /** The moment of the click or key press. */
   onFind: (spot: Spot) => void;
-  /** The moment the mushroom lands in the counter. */
+  /** The moment the mushroom reaches the caption. */
   onLand: (spot: Spot) => void;
 }
 
@@ -149,7 +149,7 @@ export class Hunt {
     // Keyboard users carry on from the next mushroom.
     if (document.activeElement === button) this.focusNext(button);
 
-    // The drawing leaves the plate and flies on its own layer, above the counter.
+    // The drawing leaves the plate and travels on its own layer, above the page.
     const flyer = document.createElement('span');
     flyer.className = 'hj-flyer';
     const img = art.querySelector('img')!.cloneNode(true) as HTMLImageElement;
@@ -176,11 +176,11 @@ export class Hunt {
 
     const dx = to.left + to.width / 2 - (from.left + from.width / 2);
     const dy = to.top + to.height / 2 - (from.top + from.height / 2);
-    const lift = Math.max(8, from.height * 0.4);
-    const popScale = 1.2;
-    const endScale = Math.min(1.1, Math.max(0.3, (to.height * 0.92) / from.height));
+    const lift = Math.max(5, from.height * 0.25);
+    const popScale = 1.08;
+    const endScale = Math.min(1, Math.max(0.3, (to.height * 0.92) / from.height));
 
-    // The arc bulges upward: a control point off the straight line, on its upper side.
+    // A shallow arc: a control point a little off the straight line, on its upper side.
     const sx = 0;
     const sy = -lift;
     const vx = dx - sx;
@@ -192,20 +192,19 @@ export class Hunt {
       nx = -nx;
       ny = -ny;
     }
-    const bulge = Math.min(150, Math.max(26, length * 0.24));
+    const bulge = Math.min(64, Math.max(12, length * 0.12));
     const cx = sx + vx * 0.45 + nx * bulge;
     const cy = sy + vy * 0.45 + ny * bulge;
-    const lean = dx >= 0 ? 1 : -1;
 
     const flight = { t: 0 };
     gsap
       .timeline({ onComplete: done })
-      // Lift and pop: it comes free of its hiding spot.
-      .to(flyer, { y: sy, scale: popScale, duration: 0.14, ease: EASE_OUT })
-      // Then the arc into the counter. Slow off the mark, quick through the middle, soft on arrival.
+      // It comes free of its hiding spot with a small lift.
+      .to(flyer, { y: sy, scale: popScale, duration: 0.09, ease: EASE_OUT })
+      // Then straight to the caption: 300 ms, no spin, fading as it arrives so it never lands on the words.
       .to(flight, {
         t: 1,
-        duration: 0.42,
+        duration: 0.3,
         ease: 'power2.inOut',
         onUpdate: () => {
           const t = flight.t;
@@ -214,8 +213,7 @@ export class Hunt {
             x: u * u * sx + 2 * u * t * cx + t * t * dx,
             y: u * u * sy + 2 * u * t * cy + t * t * dy,
             scale: popScale + (endScale - popScale) * t * t,
-            rotation: Math.sin(Math.PI * t) * 16 * lean,
-            opacity: t < 0.93 ? 1 : 1 - (t - 0.93) / 0.07,
+            opacity: t < 0.7 ? 1 : 1 - (t - 0.7) / 0.3,
           });
         },
       });

@@ -1,4 +1,5 @@
-// The prize for finding all ten: a contact form that opens from the counter-turned-button.
+// The prize for finding all ten: a contact form that opens from the caption-turned-button.
+// TODO(copy): the form's words (labels, choices, messages) are placeholders.
 import { MUSHROOM_ICON } from './caption';
 import { SendError, canSend, submitContact, type ContactPayload } from './submit';
 
@@ -188,10 +189,15 @@ export class ContactForm {
     else this.closing = window.setTimeout(finish, EXIT_MS);
   }
 
+  /** The sheet opens upward from the button, its left edge on the button's. */
   private anchor(): void {
     const anchor = this.trigger.getBoundingClientRect();
-    this.dialog.style.setProperty('--anchor-top', `${Math.round(anchor.bottom + 10)}px`);
-    this.dialog.style.setProperty('--anchor-right', `${Math.round(Math.max(12, window.innerWidth - anchor.right))}px`);
+    const width = Math.min(420, window.innerWidth - 24);
+    const left = Math.max(12, Math.min(anchor.left, window.innerWidth - width - 12));
+    // A short window leaves too little room above the button; the sheet then sits in the middle (scene.css).
+    this.dialog.classList.toggle('is-centred', anchor.top - 26 < 480 || anchor.top > window.innerHeight);
+    this.dialog.style.setProperty('--anchor-left', `${Math.round(left)}px`);
+    this.dialog.style.setProperty('--anchor-bottom', `${Math.round(window.innerHeight - anchor.top + 10)}px`);
   }
 
   private field(name: FieldName): HTMLInputElement | HTMLTextAreaElement {

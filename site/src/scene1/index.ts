@@ -3,7 +3,6 @@ import '@fontsource/spectral/latin-400.css';
 import './scene.css';
 import { PLATE, loadLoopFrames, loadRoom, setAssetBase } from './assets';
 import { Caption } from './caption';
-import { shower } from './finale';
 import { flags } from './flags';
 import { ContactForm } from './form';
 import { playIntro, type IntroMode } from './intro';
@@ -178,19 +177,25 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
   // A click with detail 0 came from the keyboard: keyboard actions open at once, with no entrance.
   caption.action.addEventListener('click', (event) => form.open(event.detail === 0));
 
-  // 10/10: one last reaction, a short shower of mushrooms, and the caption becomes the way to reach Hui Jie.
+  // 10/10: Rachel's reaction is the celebration. Once she has looked up, the caption quietly becomes the
+  // way to reach Hui Jie.
   const celebrate = (): void => {
     progress.unlocked = true;
     save();
     const calm = reducedMotion();
-    if (!calm) window.setTimeout(() => shower(flyLayer, viewport.getBoundingClientRect()), 160);
     window.setTimeout(
       () => {
         caption.unlock(true, COPY.done);
-        // Keyboard and screen-reader users land on the prize.
-        window.setTimeout(() => caption.action.focus({ preventScroll: true }), calm ? 0 : 600);
+        // Keyboard and screen-reader users land on the prize, and it is brought on screen if it was not.
+        window.setTimeout(
+          () => {
+            caption.action.focus({ preventScroll: true });
+            caption.action.scrollIntoView({ block: 'nearest', behavior: calm ? 'auto' : 'smooth' });
+          },
+          calm ? 0 : 420,
+        );
       },
-      calm ? 400 : 1250,
+      calm ? 0 : 900,
     );
   };
 
