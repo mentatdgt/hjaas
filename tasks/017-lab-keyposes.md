@@ -87,3 +87,12 @@ _(Wren writes here after each QC round)_
 - **B2_glance rejected:** the whole head was redrawn (it would jiggle against B1), and one eye is half-lidded and lopsided. The writing loop will instead be a short Higgsfield clip that starts and ends on B1 (pen moving, one glance at the tray), so it loops seamlessly.
 - Minor, accepted: a small sleeve redraw in A3.
 - Next (Higgsfield, quoted first): A1→B1 (bottle down, clipboard up), the B1 writing loop, A1→K1 (look up and beam), K1→K2 (thumbs-up). Optionally a 2× upscale of the drawn poses for phones.
+
+### Round 2 (2026-11-19): motion built. APPROVED v1
+- **2× stills** from the Higgsfield upscales, steadied against A1 so only real changes differ.
+- **Four clips** (Kling, 960×960), keyed, registered on the trolley, colour-matched once per clip. Only the moving zone is taken from video.
+  - **mist_to_write:** frames 19–73, with the squints (54, 55) and the clipboard-flip smear (57–59) dropped.
+  - **write_loop:** B1→B1, built-in blinks, on threes.
+  - **look_up:** frames 28–38 (blink as the head lifts), then 42–73. The eye smear (35) and the frames where she briefly had glasses (39–41) are dropped.
+  - **thumbs_up:** frames 1–16 and 20+; the smeared hand (17–19) is dropped.
+- **Delivery in `site/`:** `frames.json` (stills, and per-clip patches drawn over a base still at x,y), `routine.json` (timings) and `lab-routine-preview.mp4`. About 9 MB as WebP, so lazy-load scene 2.

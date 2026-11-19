@@ -1,0 +1,28 @@
+{
+ "note": "Scene 2 (lab) idle routine and reaction. Frames are listed in frames.json; holds are in ms; [a,b] = random in range. Calm and unhurried. Draw Rachel's 980x1380 canvas at plate (680,210), 490x690 plate px. Use scene/mushroom-lab.png as the plate (no longer the mock-up).",
+ "routine": [
+  {"loop": "mist", "repeat": [2, 4], "steps": [
+    {"still": "A1_mist_aim", "ms": [400, 650]},
+    {"still": "A2_mist_squeeze", "ms": [280, 360]},
+    {"still": "A3_mist_lift", "ms": [380, 480]}]},
+  {"still": "A1_mist_aim", "ms": [900, 1800], "blink_ok": true},
+  {"clip": "mist_to_write", "ms": 83},
+  {"loop": "write", "repeat": [1, 2], "clip": "write_loop", "ms": 125},
+  {"clip": "mist_to_write", "ms": 83, "reverse": true},
+  {"still": "A1_mist_aim", "ms": [600, 1200], "blink_ok": true}
+ ],
+ "blink": {"on": "A1_mist_aim", "frames": [{"still": "A1_blink_half", "ms": 50}], "every_ms": [3000, 6000], "note": "write_loop has its own blinks built in"},
+ "reaction": {
+  "enter_from": "A1_mist_aim",
+  "note": "If a find happens during writing, finish the current write_loop frame, play mist_to_write in reverse, then react.",
+  "steps": [
+   {"clip": "look_up", "ms": 70, "first_ms": 90, "first_n": 7},
+   {"hold_last": 250},
+   {"clip": "thumbs_up", "ms": 75},
+   {"still": "K2_thumbs", "ms": 1100},
+   {"clip": "thumbs_up", "ms": 55, "reverse": true},
+   {"clip": "look_up", "ms": 55, "reverse": true},
+   {"still": "A1_mist_aim", "ms": 300}
+  ]
+ }
+}
