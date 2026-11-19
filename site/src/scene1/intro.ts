@@ -8,7 +8,7 @@
 //   Mushrooms           Decoration  4.06 s    0.42 s   fade, no movement           together with the wash; usable at once
 //   Rachel + shadow     Lead        4.40 s    0.28 s   fade + 4 px settle          as the wash lands
 //   Caption             Support     4.56 s    0.20 s   fade + 4 px rise            just behind Rachel
-//   Hammer loop         -           4.68 s    -        first swing at about 5.0 s  after a brief still moment
+//   Hammer loop         -           4.74 s    -        first swing at about 5.0 s  after a brief still moment
 //
 // What stays still, and why: the page, the logo and the frame never move (the picture is the only event);
 // the mushrooms only fade (they belong to the room, and movement would give them away).
@@ -45,6 +45,14 @@ export class Intro {
 
   constructor(parts: IntroParts) {
     this.parts = parts;
+  }
+
+  /**
+   * Get the brush's canvases ready for a painting about to start. Making them takes a moment (measured:
+   * about 200 ms in Chrome and WebKit), so it is done before the clock starts, not in the first frame.
+   */
+  prepare(): void {
+    this.startPainter();
   }
 
   /** True while the room is being painted. */
@@ -87,7 +95,7 @@ export class Intro {
     // Unpainted mushrooms can't be found yet.
     gsap.set(mushrooms, { visibility: 'hidden' });
     root.classList.remove('is-pre');
-    this.startPainter();
+    if (!this.painter?.fresh) this.startPainter();
     const painter = this.painter!;
 
     return new Promise((resolve) => {
@@ -135,7 +143,7 @@ export class Intro {
       // Rachel: no paint on her. A short fade and a small settle, a still moment, then she gets to work.
       timeline.fromTo([rachel, shadow], { opacity: 0 }, { opacity: 1, duration: 0.28, ease: 'power1.out' }, rachelAt);
       timeline.fromTo(rachel, { y: -4 }, { y: 0, duration: 0.28, ease: EASE_OUT }, rachelAt);
-      timeline.call(this.parts.onRachel, undefined, rachelAt + 0.28);
+      timeline.call(this.parts.onRachel, undefined, rachelAt + 0.34);
 
       // The caption, just behind her.
       if (first) {

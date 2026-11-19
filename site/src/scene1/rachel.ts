@@ -61,6 +61,7 @@ export class Rachel {
   private readonly frames: Map<string, Frame>;
   private readonly source: { w: number; h: number };
   private pose = '';
+  private scratch: CanvasRenderingContext2D | null = null;
 
   constructor(frames: Map<string, Frame>, contact = 'frame_01') {
     this.frames = frames;
@@ -97,10 +98,21 @@ export class Rachel {
     this.el.append(this.canvas);
 
     this.pose = contact;
+    for (const frame of frames.values()) this.warm(frame);
   }
 
   add(name: string, frame: Frame): void {
     this.frames.set(name, frame);
+    this.warm(frame);
+  }
+
+  /**
+   * Draw a frame once, out of sight, so its first appearance is only a draw call. (Measured in WebKit on a
+   * Mac: the first draw of each decoded frame took about 100 ms, which stalled her first swing.)
+   */
+  private warm(frame: Frame): void {
+    this.scratch ??= document.createElement('canvas').getContext('2d');
+    this.scratch?.drawImage(frame, 0, 0, 2, 2);
   }
 
   has(name: string): boolean {

@@ -93,7 +93,7 @@
 .hj-name {
   margin: 0;
   font-family: var(--hj-serif);
-  font-size: clamp(27px, 2.7cqw, 46px);
+  font-size: clamp(27px, 2.7cqw, 62px);
   font-weight: 400;
   line-height: 1.08;
   letter-spacing: -0.012em;
@@ -104,7 +104,7 @@
   margin: clamp(4px, 0.5cqw, 9px) 0 0;
   color: var(--hj-ink-soft);
   font-family: var(--hj-serif);
-  font-size: clamp(15px, 1.2cqw, 20px);
+  font-size: clamp(15px, 1.2cqw, 26px);
   line-height: 1.35;
   text-wrap: pretty;
 }
@@ -233,7 +233,8 @@
    Its centre is the drawing's centre, unless that would push part of the box, or its focus ring, past the
    edge of the picture, where it would be cut off. Then the box moves inward and the drawing stays put. */
 .hj-shroom {
-  --edge: 7px;
+  /* Room for the focus ring (4 px) between the box and the picture's edge. */
+  --edge: 5px;
   --bw: max(44px, calc(var(--w) * var(--u) + 10px));
   --bh: max(44px, calc(var(--h) * var(--u) + 10px));
   /* The drawing's centre, then the box's centre, in CSS px from the plate's corner. */
@@ -281,8 +282,8 @@
 /* Keyboard users get a clear ring: Tab is the accessible way through the hunt. */
 .hj-shroom:focus-visible {
   outline: 2px solid #fffdf6;
-  outline-offset: 1px;
-  box-shadow: 0 0 0 5px rgba(48, 46, 41, 0.78);
+  outline-offset: 0;
+  box-shadow: 0 0 0 4px rgba(48, 46, 41, 0.8);
 }
 
 .hj-shroom-art {

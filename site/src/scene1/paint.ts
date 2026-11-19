@@ -1,9 +1,14 @@
 // "Painted into existence": the room appears as loose brush strokes, region by region.
 //
-// How it holds frame rate: nothing is masked. Each stroke is drawn onto one canvas with the room plate
-// itself as the paint (a canvas pattern), and a frame only draws the short new length of each stroke.
-// The wash happens on the same canvas, which then stays on as the room: nothing is swapped at the end.
-// Where nothing is painted yet the canvas is clear, and the blank sheet under it shows through.
+// How it holds frame rate: the brush lays plain, solid strokes onto a hidden canvas, the stencil. After
+// each frame's strokes, only the patch they touched is redrawn on the visible canvas: the stencil's patch,
+// then the room's own pixels kept only where the stencil has paint. Both are straight copies between
+// canvases of the same size, which every browser does quickly.
+// (Until review 03 the strokes were drawn with the room image as a canvas pattern. Chrome is quick at that;
+// Safari's engine is not: measured in WebKit on a Mac, the painting ran at 10 frames a second or fewer.)
+//
+// The wash happens on the same canvases, and the visible one then stays on as the room: nothing is swapped
+// at the end. Where nothing is painted yet the canvas is clear, and the blank sheet under it shows through.
 // There are no mask images; the strokes are a few hand-placed paths, roughened by a seeded generator.
 import { PLATE } from './assets';
 import { EASE_STROKE } from './motion';
@@ -159,41 +164,80 @@ function buildStroke(plan: StrokePlan, rnd: Rng): Stroke {
 }
 
 
+/** A patch of the canvas, in canvas pixels. */
+interface Patch {
+  x0: number;
+  y0: number;
+  x1: number;
+  y1: number;
+}
+
 export class Painter {
   readonly canvas: HTMLCanvasElement;
   private readonly ctx: CanvasRenderingContext2D;
+  /** Where the brush has been: solid strokes, never shown. */
+  private readonly stencil: HTMLCanvasElement;
+  private readonly brush: CanvasRenderingContext2D;
+  /** The room at the canvas's own size, so painting a patch is a straight copy. */
+  private readonly room: HTMLCanvasElement;
   private readonly strokes: Stroke[];
-  private readonly paint: CanvasPattern;
-  private readonly room: CanvasImageSource;
+  private readonly k: number;
+  private dirty: Patch | null = null;
   private washed = 0;
+  private begun = false;
 
   constructor(room: CanvasImageSource, cssWidth: number, seed = 11) {
-    this.room = room;
     // Enough pixels to look painted, few enough to stay fast: at most 2x, and never more than ~2.2 MP.
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const cssHeight = (cssWidth * PLATE.h) / PLATE.w;
     const fit = Math.min(1, Math.sqrt(2_200_000 / (cssWidth * dpr * cssHeight * dpr)));
     const k = (cssWidth * dpr * fit) / PLATE.w;
+    this.k = k;
+    const width = Math.round(PLATE.w * k);
+    const height = Math.round(PLATE.h * k);
+    const sheet = (): HTMLCanvasElement => {
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      return canvas;
+    };
 
-    this.canvas = document.createElement('canvas');
+    this.canvas = sheet();
     this.canvas.className = 'hj-paint';
     this.canvas.setAttribute('aria-hidden', 'true');
-    this.canvas.width = Math.round(PLATE.w * k);
-    this.canvas.height = Math.round(PLATE.h * k);
     this.ctx = this.canvas.getContext('2d')!;
-    // Draw in plate px from here on.
-    this.ctx.setTransform(k, 0, 0, k, 0, 0);
-    this.ctx.lineCap = 'round';
-    this.ctx.lineJoin = 'round';
-    this.paint = this.ctx.createPattern(room, 'no-repeat')!;
-    this.ctx.strokeStyle = this.paint;
+
+    this.room = sheet();
+    const roomCtx = this.room.getContext('2d')!;
+    roomCtx.imageSmoothingQuality = 'high';
+    roomCtx.drawImage(room, 0, 0, width, height);
+
+    this.stencil = sheet();
+    this.brush = this.stencil.getContext('2d')!;
+    // The brush draws in plate px.
+    this.brush.setTransform(k, 0, 0, k, 0, 0);
+    this.brush.lineCap = 'round';
+    this.brush.lineJoin = 'round';
+    this.brush.strokeStyle = '#000';
+    this.brush.fillStyle = '#000';
 
     const rnd = seeded(seed);
     this.strokes = STROKES.map((plan) => buildStroke(plan, rnd));
+
+    // Run the whole sheet through every step once, empty, so neither the first stroke nor the first frame
+    // of the wash (the only full-sheet frames) has anything to set up.
+    this.dirty = { x0: 0, y0: 0, x1: width, y1: height };
+    this.show();
+  }
+
+  /** True until the first stroke is laid: a blank sheet, ready to be painted. */
+  get fresh(): boolean {
+    return !this.begun;
   }
 
   /** Paint everything due by `seconds`. Returns true once every stroke is finished. */
   paintTo(seconds: number): boolean {
+    this.begun = true;
     let done = true;
     for (const stroke of this.strokes) {
       const { plan } = stroke;
@@ -212,28 +256,45 @@ export class Painter {
       }
       if (t < 1) done = false;
     }
+    this.show();
     return done;
   }
 
   /**
-   * The wash: the whole plate comes up under the strokes, `amount` from 0 to 1. The strokes are the plate's
-   * own pixels, so laying the plate over them at the right alpha gives exactly what the strokes over a
-   * fading copy of the plate would: coverage only ever goes from c to c + amount × (1 − c).
+   * The wash: the whole plate comes up under the strokes, `amount` from 0 to 1. Laying a thin, even coat
+   * over the stencil takes every pixel's coverage from c to c + amount × (1 − c), which is exactly what the
+   * strokes over a fading copy of the plate would give.
    */
   wash(amount: number): void {
     if (amount <= this.washed) return;
-    const { ctx } = this;
-    ctx.globalAlpha = amount >= 1 ? 1 : 1 - (1 - amount) / (1 - this.washed);
-    ctx.drawImage(this.room, 0, 0, PLATE.w, PLATE.h);
-    ctx.globalAlpha = 1;
+    if (amount >= 1) {
+      // The room is complete: draw it whole, and let go of the two working canvases.
+      this.washed = 1;
+      this.dirty = null;
+      this.ctx.drawImage(this.room, 0, 0);
+      this.stencil.width = this.stencil.height = 0;
+      this.room.width = this.room.height = 0;
+      return;
+    }
+    const { brush } = this;
+    brush.globalAlpha = 1 - (1 - amount) / (1 - this.washed);
+    brush.fillRect(0, 0, PLATE.w, PLATE.h);
+    brush.globalAlpha = 1;
     this.washed = amount;
+    this.dirty = { x0: 0, y0: 0, x1: this.canvas.width, y1: this.canvas.height };
+    this.show();
   }
 
-  /** Lay down the stretch of a stroke between two brush positions. */
+  /** Lay down the stretch of a stroke between two brush positions, on the stencil. */
   private lay(stroke: Stroke, from: number, to: number): void {
-    const { ctx } = this;
+    if (this.washed >= 1) return;
+    const { brush } = this;
     const { x, y, nx, ny, step, length } = stroke;
     const last = x.length - 1;
+    let minX = Infinity;
+    let minY = Infinity;
+    let maxX = -Infinity;
+    let maxY = -Infinity;
     for (const bristle of stroke.bristles) {
       // Each bristle paints its own stretch; a small overlap with the previous frame hides the joins.
       const a = Math.max(0, from + bristle.lead - step);
@@ -242,18 +303,58 @@ export class Painter {
       const i0 = Math.floor(a / step);
       const i1 = Math.min(last, Math.ceil(b / step));
       if (i1 <= i0) continue;
-      ctx.globalAlpha = bristle.alpha;
-      ctx.lineWidth = bristle.width;
-      ctx.beginPath();
+      const reach = bristle.width / 2 + 2;
+      brush.globalAlpha = bristle.alpha;
+      brush.lineWidth = bristle.width;
+      brush.beginPath();
       for (let i = i0; i <= i1; i++) {
         const off = bristle.offset + Math.sin(i * 0.21 + bristle.phase) * bristle.wobble;
         const px = x[i] + nx[i] * off;
         const py = y[i] + ny[i] * off;
-        if (i === i0) ctx.moveTo(px, py);
-        else ctx.lineTo(px, py);
+        if (i === i0) brush.moveTo(px, py);
+        else brush.lineTo(px, py);
+        if (px - reach < minX) minX = px - reach;
+        if (px + reach > maxX) maxX = px + reach;
+        if (py - reach < minY) minY = py - reach;
+        if (py + reach > maxY) maxY = py + reach;
       }
-      ctx.stroke();
+      brush.stroke();
     }
-    ctx.globalAlpha = 1;
+    brush.globalAlpha = 1;
+    if (minX > maxX) return;
+
+    // Remember the patch this touched, in canvas pixels.
+    const { k, canvas } = this;
+    const patch = {
+      x0: Math.max(0, Math.floor(minX * k) - 1),
+      y0: Math.max(0, Math.floor(minY * k) - 1),
+      x1: Math.min(canvas.width, Math.ceil(maxX * k) + 1),
+      y1: Math.min(canvas.height, Math.ceil(maxY * k) + 1),
+    };
+    const d = this.dirty;
+    this.dirty = d
+      ? { x0: Math.min(d.x0, patch.x0), y0: Math.min(d.y0, patch.y0), x1: Math.max(d.x1, patch.x1), y1: Math.max(d.y1, patch.y1) }
+      : patch;
+  }
+
+  /** Bring the visible canvas up to date: the room's pixels, wherever the stencil now has paint. */
+  private show(): void {
+    const d = this.dirty;
+    if (!d) return;
+    this.dirty = null;
+    const w = d.x1 - d.x0;
+    const h = d.y1 - d.y0;
+    if (w <= 0 || h <= 0) return;
+    const { ctx } = this;
+    ctx.save();
+    // Everything below stays inside the patch, in every browser.
+    ctx.beginPath();
+    ctx.rect(d.x0, d.y0, w, h);
+    ctx.clip();
+    ctx.clearRect(d.x0, d.y0, w, h);
+    ctx.drawImage(this.stencil, d.x0, d.y0, w, h, d.x0, d.y0, w, h);
+    ctx.globalCompositeOperation = 'source-in';
+    ctx.drawImage(this.room, d.x0, d.y0, w, h, d.x0, d.y0, w, h);
+    ctx.restore();
   }
 }

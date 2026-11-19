@@ -333,14 +333,6 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
       (window as unknown as { __hj: unknown }).__hj = debug;
     }
 
-    // While nothing is on screen yet: lay the contact sheet out once (with its real font), so that
-    // opening it later never costs a frame of Rachel's hammering.
-    await document.fonts?.ready;
-    form.prepare();
-    // Let the setup above reach the screen before any motion starts.
-    await new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
-    if (destroyed) return;
-    if (debug) (debug.marks as Record<string, number>).introStart = Math.round(performance.now());
     intro = new Intro({
       root,
       plate,
@@ -357,6 +349,16 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
       },
     });
     const theIntro = intro;
+
+    // While nothing is on screen yet: lay the contact sheet out once (with its real font), so that
+    // opening it later never costs a frame of Rachel's hammering, and get the brush ready.
+    await document.fonts?.ready;
+    form.prepare();
+    if (firstIntro === 'paint' && !skipped) theIntro.prepare();
+    // Let the setup above reach the screen before any motion starts.
+    await new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
+    if (destroyed) return;
+    if (debug) (debug.marks as Record<string, number>).introStart = Math.round(performance.now());
     await theIntro.play(skipped ? 'off' : firstIntro);
     if (destroyed) return;
     if (debug) (debug.marks as Record<string, number>).introEnd = Math.round(performance.now());
@@ -371,6 +373,7 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
       clearing = true;
       working = false;
       thePlayer.rest();
+      theIntro.prepare();
       const leave = plate.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 160, easing: 'ease', fill: 'forwards' });
       void leave.finished.then(async () => {
         if (destroyed) return;
