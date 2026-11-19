@@ -135,7 +135,8 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
   layout.observe(plate);
   layout.observe(viewport);
 
-  // The hint: after a minute with no find, one unfound mushroom wiggles once. Time only counts while the tab is visible.
+  // The hint: after a minute with no find, one unfound mushroom wiggles once, and only once per visit.
+  // Time only counts while the tab is visible.
   let quietSeconds = 0;
   let hunt: Hunt | undefined;
   const hintAfter = flags.hintSeconds ?? HINT_AFTER_S;
@@ -144,7 +145,7 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
     if (document.hidden || !settled || !hunt || hunt.remaining === 0) return;
     quietSeconds++;
     if (quietSeconds >= hintAfter) {
-      quietSeconds = 0;
+      window.clearInterval(hintClock);
       hunt.hint();
     }
   }, 1000);

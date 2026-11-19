@@ -222,3 +222,21 @@ the middle of the first unlock, both of which are fixed; `traces/SUMMARY.md` lis
 - **Safari performance.** WebKit was recorded and screenshotted, not traced.
 - **The only route to the form is the hunt.** The review flagged this as the page's biggest drop-off risk. It is the concept, so I left it; a later scene may want a second way in.
 - **The Contact button is at the top of the phone screen,** out of easy thumb reach, because it is the counter. Also left as designed.
+
+## Review 01
+
+Fixes from `reviews/scene-1-review-01.md`, items 1–7, on `cursor/scene-1-review-01-fixes-0663` (branched from
+`site/scene-1`, with `origin/main` merged in). Done in the order 3, 5, 1, 6, 2, 7, 4; each item is its own
+commit. Item 8 waits for Wren's files. Evidence is in `qa/review-01/`; `qa/tools/review01.mjs <item>` remakes it.
+
+| | Item | Evidence |
+|---|---|---|
+| ✅ | **1. New art from `main`.** `npm run assets` brings in the wink and the fixed K2. The player plays the new `reaction.json` with no code change. One find on desktop Chromium held the frames for half-wink 50 ms, wink 267 ms, half-wink 49 ms (manifest: 50 / 260 / 50). On an iPhone in WebKit the right frames played in the right order, but this VM's software-rendered WebKit dropped a frame there, so the wink held 391 ms and the closing half-wink was skipped. Worth one look on a real iPhone. | `review-01/01-wink.jpg` |
+| ✅ | **2. Duplicate frames load once.** `npm run assets` hashes the sources. A reaction frame that is byte-identical to an upscaled frame (`rx_frame_01`, `rx_K1`, `rx_K2`) is written once under `rachel/` and listed in `rachel/reaction/shared.json`. `loadFrame` caches by URL, so the reaction reuses the decoded frame. `reaction.json` is unchanged. Each of the 22 frame and manifest files is requested once. Before this, nothing was actually fetched twice: the site's loop never uses K1 or K2, and `rx_frame_01` has a 0 ms hold. The change makes sure it stays that way when the manifest changes. | `review-01/02-dedupe.png` |
+| ✅ | **3. Production ignores the URL switches.** They are read only when `import.meta.env.DEV` is true. On the production build, `?found=10&intro=off&debug` gives 0/10, no Contact button, the normal intro and no `window.__hj`. On `npm run dev` all switches still work. `qa/tools/prod-form.mjs` now starts from saved progress instead of `?found=10`. | `review-01/03-flags-dev-vs-prod.jpg` |
+| ✅ | **4. Phones use the screen height.** The stage is `min(150cqw, available height)`, so 2:3 where it fits. Short screens get whatever height is left, exactly as before. The pan starts on plate x 590–1220 at 2:3, and on 514–1267 at 4:5, with crops in between framed in between. At 390×844, 412×915 and 360×740 (Chromium phone emulation), and at 390×844 in WebKit: 2:3 stage, crop at plate x 591–1218, logo and counter in the top row, swipe hint shown. The page never scrolls, even when wheeled, and the stage's box is identical in every frame from first paint to 12 s. The only layout shift (0.002) is the counter's hidden rehearsal at about 60 ms, before the scene is shown. It is the same before this change. | `review-01/04-phones.jpg` |
+| ✅ | **5. One hint wiggle per visit.** The hint clock stops after the first wiggle. With `?hint=2`, 16 s without a find gives exactly one wiggle. | `review-01/05-hint-once.jpg` |
+| ✅ | **6. Ladder-foot mushroom.** It is now drawing 7, the round golden cap, instead of drawing 5, which read as a nail. It moved 14 plate px right so the wider cap clears the ladder foot. Same spot id, same height (36), so depth scaling holds and saved progress is untouched. There are still ten spots. Drawing 5 is no longer used. | `review-01/06-ladder-foot.jpg` |
+| ✅ | **7. Lossy WebP q95 for Rachel.** The loop and reaction frames go from 7.10 MB to 2.97 MB, and the scene's assets from 9.30 MB to 5.17 MB. Settings: alpha kept exact, smart chroma subsampling. At 3× the outlines show no halos and no banding. Across all 20 frames the alpha error is 0 and the worst colour PSNR is 39.7 dB (`rx_wink`), so quality stays at 95. Mushrooms, logo and favicon stay lossless; the plate stays near-lossless. | `review-01/07-outlines-3x.jpg` |
+
+Light QA only, as asked: no video recordings and no performance traces this round.

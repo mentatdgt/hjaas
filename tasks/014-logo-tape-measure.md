@@ -72,3 +72,44 @@ The delivery (`reference/logo/014-round1-drifted.png`) re-imagined the design in
 - Option 6 put the letters on top of the case instead of engraving them.
 
 **Fix:** make every image an edit of `reference/logo/anchor-tape-measure.png` (rules above), one image per variation, no sheet.
+
+### Round 2 (2026-11-17): DELIVERED, waiting for the user's pick
+Contact sheet: `reference/logo/014-round2-contact.png`. All six now stay faithful to the anchor (silver reel face, chrome dome, mustard wavy tape, same letter style). The remaining drift is minor: brighter mustard and slightly different engraving.
+- **Wren's read:**
+  - #3 (toadstool hook) best ties the logo to the site's mushroom hunt.
+  - #2 (longer tape) has the most legible wordmark for a header.
+  - #4 (five services) gets cluttered at header size.
+  - #5 (orbit) is distinctive, but its letters are small.
+  - #6 compact: the word won't read at 32 px in any version, so the favicon should be the reel alone (no text). Attempt 2 has the largest letters, for 64 px and up (e.g. a social avatar).
+
+### Round 3 (2026-11-17): the user picked #2 (Longer tape). Three lettering edits of it
+**Start from the selected #2 image** (`exec-7085cb39-a314-41a5-9173-06ec873c5a72.png` from round 2). Make each image below as an **edit of that image**, keeping its composition, reel, tape shape, tick marks, view and lighting.
+
+**Two changes in all three images:**
+1. **New lettering.** The user finds the current heavy sans cheesy.
+2. **Silver letters.** "HJaaS" becomes **raised polished chrome lettering**, matching the reel's chrome, standing slightly proud of the mustard enamel.
+   - Bevelled edges that catch the light, and the same dark reflection bands as the reel, so it reads as real metal.
+   - A thin dark shadow line on one side, so the word stays legible on the yellow.
+   - The ink tick marks stay as they are.
+
+**Make it read more like a real pin** (subtle; the user still likes the overall look): a thin raised polished-metal border following the whole outline of the tape, with the mustard enamel sitting slightly recessed inside it, like a die-struck enamel pin. Nothing else changes.
+
+**Three lettering styles (one image each):**
+| # | Lettering |
+|---|---|
+| A | **1950s chrome car badge, upright:** tall, condensed, elegant sans letters with slightly flared strokes, like the chrome model name on a 1950s car. |
+| B | **1950s chrome car badge, script:** one flowing monoline chrome script word "HJaaS" with a swash underline, like a chrome script badge on a vintage car boot. It must stay clearly readable: H and J distinct, two lowercase a's, final capital S. |
+| C | **Space-age extended:** wide, geometric, slightly rounded letters, like 1960s space-program signage. Clean and confident, not a novelty font. |
+
+**Rules:**
+- Spelling exactly `HJaaS`.
+- No other text.
+- Same white background, black-card reflections and soft contact shadow as #2.
+- Original letter shapes; don't copy any real car maker's badge or logo.
+
+**Self-check per image (max 3 attempts):**
+- [ ] Composition identical to #2 apart from the lettering and the metal border.
+- [ ] Letters are raised polished chrome, clearly metal, matching the reel.
+- [ ] The word reads at 200 px wide.
+- [ ] Spelling exact.
+- [ ] Not cheesy: refined and period-correct.

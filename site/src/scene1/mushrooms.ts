@@ -35,7 +35,8 @@ export const SPOTS: Spot[] = [
   { id: 'tiles', art: 3, x: 1152, y: 929, h: 42, tint: LIT, grounded: true },
   { id: 'conduit', art: 9, x: 1181, y: 642, h: 20, tint: LIT },
   { id: 'socket', art: 1, x: 1270, y: 345, h: 18, tint: SHADE },
-  { id: 'ladder-foot', art: 5, x: 1298, y: 845, h: 36, tint: SHADE, grounded: true },
+  // Not drawing 5: at this size its slender stem reads as a nail standing on the tiles.
+  { id: 'ladder-foot', art: 7, x: 1312, y: 845, h: 36, tint: SHADE, grounded: true },
   { id: 'ladder-step', art: 4, x: 1404, y: 472, h: 24, tint: LIT },
   // The tenth is drawing 1 again, mirrored and twice the size of the one in the socket.
   { id: 'toolbox', art: 1, x: 1432, y: 909, h: 40, flip: true, tint: SHADE, tuck: 'polygon(0 0, 61% 0, 69% 100%, 0 100%)', grounded: true },

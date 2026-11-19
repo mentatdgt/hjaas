@@ -52,6 +52,10 @@ Nothing in the code changes. Rachel's size and position are computed from `frame
 reaction plays whatever `reaction.json` lists; the logo's glint is clipped to whatever PNG is there.
 To use different source folders, edit the paths at the top of `scripts/build-assets.mjs`.
 
+A reaction frame that is byte-identical to an upscaled frame (today `rx_frame_01`, `rx_K1`, `rx_K2`) is not
+copied twice: the script lists it in `rachel/reaction/shared.json`, and the page downloads and decodes that
+one copy once. `reaction.json` is still copied exactly as delivered.
+
 ## Wiring the contact form
 
 `src/scene1/submit.ts` is the only place that sends anything, marked `TODO(form-endpoint)`. Put the
@@ -62,6 +66,9 @@ if the service wants a different shape. Until then:
 - A production build: the form shows an error and never claims a message was sent.
 
 ## URL switches (for review, not for visitors)
+
+They only work on `npm run dev`. A production build (`npm run build`, `npm run preview`, the live site)
+ignores them all, so nobody can skip the hunt with `?found=10`.
 
 | Add to the address | Effect |
 |---|---|

@@ -1188,7 +1188,7 @@ a.hj-logo:active {
   }
 }
 
-/* ---------- Portrait phones: a 4:5 crop of the room, panned sideways ---------- */
+/* ---------- Portrait phones: a tall crop of the room (4:5 up to 2:3), panned sideways ---------- */
 
 .hj-swipe {
   display: none;
@@ -1201,10 +1201,11 @@ a.hj-logo:active {
     padding-top: var(--hud-row);
   }
 
+  /* As tall as the screen allows, up to 2:3 (150cqw); short screens take what there is. */
   .hj-viewport,
   .hj-hud {
     width: 100cqw;
-    height: min(125cqw, calc(100cqh - var(--hud-row) - 8px));
+    height: min(150cqw, calc(100cqh - var(--hud-row) - 8px));
     aspect-ratio: auto;
   }
 

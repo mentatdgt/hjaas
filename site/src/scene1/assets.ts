@@ -23,11 +23,24 @@ export async function loadImage(url: string): Promise<HTMLImageElement> {
   return img;
 }
 
+const frameCache = new Map<string, Promise<Frame>>();
+
 /**
  * A decoded frame. An ImageBitmap made from the file's bytes is decoded off the main thread and keeps its
  * pixels in memory, so loading never stalls an animation and the browser can't evict a pose mid-loop.
+ * Each URL is fetched and decoded once; asking again returns the same frame.
  */
-export async function loadFrame(url: string): Promise<Frame> {
+export function loadFrame(url: string): Promise<Frame> {
+  let frame = frameCache.get(url);
+  if (!frame) {
+    frame = decodeFrame(url);
+    frameCache.set(url, frame);
+    frame.catch(() => frameCache.delete(url));
+  }
+  return frame;
+}
+
+async function decodeFrame(url: string): Promise<Frame> {
   if (typeof createImageBitmap === 'function') {
     try {
       const response = await fetch(url);

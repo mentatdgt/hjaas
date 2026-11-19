@@ -67,8 +67,28 @@
   },
   {
    "file": "rx_K2.png",
-   "ms": 900,
-   "beat": "hold (wink frames from task 015 go here)"
+   "ms": 300,
+   "beat": "hold"
+  },
+  {
+   "file": "rx_wink_half.png",
+   "ms": 50,
+   "beat": "wink"
+  },
+  {
+   "file": "rx_wink.png",
+   "ms": 260,
+   "beat": "wink"
+  },
+  {
+   "file": "rx_wink_half.png",
+   "ms": 50,
+   "beat": "wink"
+  },
+  {
+   "file": "rx_K2.png",
+   "ms": 240,
+   "beat": "hold"
   },
   {
    "file": "rx_B39.png",
