@@ -37,7 +37,7 @@ upper=yy<870          # above the trolley's top shelf edge (plate y ~645): legs,
 headzone=clean(diffmask(S['K1_beam'],S['A1_mist_aim']),30)&upper
 armzone=(clean(diffmask(S['K2_thumbs'],S['K1_beam']),40)|((xx>620)&(yy>250)&(yy<820)))&upper
 # V0 misting -> writing (skip spray burst, squints and the clipboard smear)
-f0=[i for i in range(19,74) if i not in (54,55,57,58,59)]
+f0=[1,3,10,12,14,18]+[i for i in range(19,74) if i not in (54,55,57,58,59)]
 build('v0',f0,S['A1_mist_aim'],upper,'mist_to_write')
 # V1 writing loop (B1 -> B1), all frames
 build('v1',list(range(1,74)),S['B1_write'],upper,'write_loop')
