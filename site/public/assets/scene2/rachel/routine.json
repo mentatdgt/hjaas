@@ -1,0 +1,33 @@
+{
+  "note": "STUB until tasks/017 delivers Rachel's lab frames. The timings are the targets from reviews/scene-2-build.md; tune them on a recording once the frames exist. Frame names are the task's pose names (017_A1_mist_aim.png is A1, and so on). The two transitions are empty until the in-between frames are made: add them as lists of { frame, ms }.",
+  "rest": "A1",
+  "order": ["mist", "write"],
+  "loops": {
+    "mist": {
+      "frames": [
+        { "frame": "A1", "ms": [300, 450] },
+        { "frame": "A2", "ms": [250, 350] },
+        { "frame": "A3", "ms": [350, 500] }
+      ],
+      "cycles": [2, 4],
+      "pause": { "frame": "A1", "ms": [1000, 2000] }
+    },
+    "write": {
+      "frames": [
+        { "frame": "B1", "ms": [1800, 3200] },
+        { "frame": "B2", "ms": [500, 800] },
+        { "frame": "B1", "ms": [1700, 3000] }
+      ],
+      "cycles": 1
+    }
+  },
+  "transitions": {
+    "mist>write": [],
+    "write>mist": []
+  },
+  "blink": {
+    "on": ["A1"],
+    "every": [3000, 6000],
+    "frames": [{ "frame": "A1_blink_half", "ms": 110 }]
+  }
+}

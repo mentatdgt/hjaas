@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Copies the approved art into site/public/assets/ as WebP: scene1/ for scene 1's own art, shared/ for
-// the mushrooms and the logo, which every scene uses.
+// the mushrooms and the logo, which every scene uses, scene2/ for the lab.
 // The originals in frames/, scene/ and assets/ are only read, never changed.
 // Re-run with `npm run assets` whenever Wren swaps a file; nothing else needs editing.
 import { createHash } from 'node:crypto';
@@ -33,6 +33,11 @@ const jobs = [];
 const add = (from, to, opts = sprite, resize, dir = out) => jobs.push({ from: join(repo, from), to: join(dir, to), opts, resize });
 
 add('scene/room-empty.png', 'room.webp', plate);
+
+// Scene 2, the lab. PLACEHOLDER until tasks/017: the plate is the chosen mock-up, which has Rachel and the
+// trolley drawn into it. When her frames exist, change this to 'scene/mushroom-lab.png' (the empty lab) and
+// add the frames to scene2/rachel/ as scene 1's are added below.
+add('reference/mockups/mockup-lab-1-trolley-CHOSEN.png', 'scene2/room.webp', plate, undefined, assets);
 
 const loop = 'frames/016-upscale/approved';
 const loopFrames = ['frame_01', 'frame_02', 'frame_03', 'frame_04', 'blink_half', 'blink_closed'];
