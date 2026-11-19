@@ -157,4 +157,28 @@ if (item === 'wink') {
   console.log(JSON.stringify(results));
 }
 
+if (item === 'ladder') {
+  // Before: the ladder-foot tile of the milestone-3 spots sheet. After: the same close-up now, at 2x.
+  const sheet = await sharp('qa/m3/spots.jpg').metadata();
+  const tw = sheet.width / 4, th = sheet.height / 3;
+  const before = await sharp('qa/m3/spots.jpg').extract({ left: Math.round(tw * 3), top: Math.round(th), width: Math.round(tw), height: Math.round(th) }).resize(480, 360).toBuffer();
+  const page = await browser.newPage({ viewport: { width: 1672, height: 941 }, deviceScaleFactor: 2 });
+  await page.goto('http://localhost:5173/?debug&reset&intro=off');
+  await page.waitForFunction(() => window.__hj);
+  await page.evaluate(() => { window.__hj.player.stop(); window.__hj.rachel.show('frame_01'); document.querySelector('.hj-mushrooms').classList.remove('is-debug'); });
+  await page.waitForTimeout(300);
+  const b = await page.locator('.hj-shroom[data-spot="ladder-foot"]').boundingBox();
+  // Framed on the old spot (plate x 1298), so before and after line up.
+  const after = await sharp(await page.screenshot({ clip: { x: 1298 - 120, y: b.y + b.height / 2 - 90, width: 240, height: 180 } })).resize(480, 360).toBuffer();
+  const wide = await page.screenshot({ clip: { x: 1060, y: 560, width: 560, height: 381 } });
+  await page.close();
+  const tile = (img, text) => sharp(img).extend({ top: 40, background: '#111' }).composite([{ input: Buffer.from(`<svg width="480" height="40"><rect width="100%" height="100%" fill="#111"/><text x="10" y="27" font-family="sans-serif" font-size="20" fill="#fff">${text}</text></svg>`), top: 0, left: 0 }]).png().toBuffer();
+  const wideT = await sharp(wide).resize({ height: 400 }).toBuffer();
+  const wm = await sharp(wideT).metadata();
+  await sharp({ create: { width: 480 * 2 + wm.width + 16, height: 400, channels: 3, background: '#444' } })
+    .composite([{ input: await tile(before, 'before: drawing 5 (reads as a nail)'), left: 0, top: 0 }, { input: await tile(after, 'after: drawing 7, 14 px right, same size'), left: 488, top: 0 }, { input: wideT, left: 976, top: 0 }])
+    .jpeg({ quality: 85 })
+    .toFile('qa/review-01/06-ladder-foot.jpg');
+}
+
 await browser.close();
