@@ -550,7 +550,7 @@ From `reviews/scene-edge-feather.md`, on `site/scene-2`, for both scenes. One co
 | | Asked for | What was done, and what was measured | Evidence |
 |---|---|---|---|
 | ✅ | 1. No mat, no border | Both are gone. The painting sits straight on the page. | `edge/a-round-build-1440x900.jpg` |
-| ✅ | The chosen edge as the only production edge | A with rounded corners: a thin soft fade (4% of the width at the sides, 6% of the height at the top, 2.5% at the bottom), a line that wanders with three layers of noise, corners turned by a superellipse of exponent 6, and a smoothstep to the paper colour. No deckle, rim, paler wash or grey. A, B and C exist only in development. | `edge/compare.jpg`, `src/engine/edge.ts` |
+| ✅ | The chosen edge as the only production edge | A with rounded corners: a thin soft fade (4% of the width at the sides, 6% of the height at the top, 2.5% at the bottom), a line that wanders with three layers of noise, corners turned by a superellipse of exponent 6 (since Review 04: a rounded rectangle, radius 6% of the width), and a smoothstep to the paper colour. No deckle, rim, paler wash or grey. A, B and C exist only in development. | `edge/compare.jpg`, `src/engine/edge.ts` |
 | ✅ | 2. Generated once per scene, seeded, attached to the plate | Worked out once from the scene's name, so it is the same on every visit and each scene has its own. It belongs to the plate and pans with it. | `edge/a-round-build-390x844-left.jpg`, `-right.jpg` |
 | ✅ | 4. No CSS mask on a scrolling element | The edge is one small canvas in the paper's colour (418 × 235 px) lying over the plate. Nothing is masked. | `src/engine/edge.ts` |
 | ✅ | 5. The paint-in reveals into that shape | The brush's sheet lies under the edge, so no stroke and no wash can show past it. | `edge/intro-first-visit-desktop.mp4`, `-iphone.mp4` (WebKit) |
@@ -578,7 +578,7 @@ From `reviews/scene-edge-feather.md`, on `site/scene-2`, for both scenes. One co
 
 1. **The percentages are of the width for the sides and of the height for the top and bottom.** The brief says "of the plate". Taken all of the width, the bottom fade would have been 42 px deep and covered the floor's mushrooms.
 2. **The line wanders inside the fade, never outside it.** The plate's very rim is always paper and the painting is always solid where the fade ends, so the stated widths are the whole of the edge.
-3. **The rounded corners are a little rounder than in the mock-up.** I used the exponent the brief gives (6). It is one number in `edge.ts` (`power`); 8 is tighter.
+3. **The rounded corners are a little rounder than in the mock-up.** I used the exponent the brief gives (6). It is one number in `edge.ts` (`power`); 8 is tighter. (Changed in Review 04: the corners are now a rounded rectangle.)
 4. **The edge is a paper-coloured layer over the plate,** not baked into the room image as the brief suggests. This site keeps the room as an image and paints by rubbing a sheet away, so there is no room canvas to bake into. The effect and the cost are the same, and the mushrooms and Rachel are kept inside the edge as well.
 5. **The blank sheet the brush paints on is now the page's own colour,** since there is no mat for it to sit in.
 6. **C is my reading of "stronger toward the corners".** It is for comparison only.
@@ -589,3 +589,101 @@ From `reviews/scene-edge-feather.md`, on `site/scene-2`, for both scenes. One co
 - **A real phone,** and Safari itself.
 - **The 46 to 66 ms frame when the lab is first opened** (above). It could be removed by drawing the lab ahead of time, at the cost of memory.
 - **The two frames over 50 ms in the lab's writing loop in WebKit** (Scene 2 frames, above). I could not find their cause; they did not appear in Chrome, in WebKit without a window, or on the slow phone profile.
+
+## Review 04
+
+`reviews/scene-2-review-04.md`, on `site/scene-2`. **Paused part-way, at the user's request (2026-11-20).**
+Items 1 and 2 are done, checked, committed and pushed. Items 3 and 4 are not built. `main` was pulled first
+(as a merge into `site/scene-2`); nothing was merged into any other branch and no push failed.
+
+| | Item | What was done, and what was measured | Evidence |
+|---|---|---|---|
+| ✅ | 1. New `mist_to_write` frames | `npm run assets` on the updated frames: 32 frames, patch origin read from `frames.json` (13, 13). `npm test` plays the delivered manifests: 40 of 40 pass. | `public/assets/scene2/rachel/` |
+| ✅ | 1. The hand-off from the aim still into the clip, and back | On the page, the cut from `A1_mist_aim` into the clip's first frame changes **0.5% of the figure** (iPhone profile, WebKit) and 1.2% (desktop Chrome at 2×). It was 30%. The way back out is the same. | `review-04/handoff-*-strip.jpg`, `handoff-*-frame-by-frame.mp4`, `handoff.json` |
+| ✅ | 2. Corners much tighter | The corners are now those of a rounded rectangle with a radius of **6% of the plate's width**. Outside the four corner squares the edge is exactly style A: the long edges are straight and thin (`npm test` checks this). | `edge/corners.jpg` (mock-up beside the build at 1440 × 900, with the corners enlarged) |
+| ✅ | 2. Mushrooms still on solid painting | **All 20 mushrooms and all 20 tap boxes read 1.00**, read back from the page in Chrome at 1440 × 900 and 2560 × 1440 and in WebKit at 390 × 844, 360 × 740 and 320 × 640. No two tap boxes overlap. | `edge/spots.json` |
+| ❌ | 3. Memory: decode per clip and release | **Not built.** See "Half-done" below for what is known and planned. | – |
+| ❌ | 3. A lighter 1.5× set for phones | **Not built.** | – |
+| ❌ | 3. Peak decoded memory, before and after | Only "before", from the bitmap sizes: see below. | – |
+| ❌ | 4. The WebKit frames over 50 ms | **Not built, and the checks were not re-run.** One measurement was taken that points at the cause: see below. | – |
+
+### Item 1 in numbers
+
+Every pose around the hand-off was shown one at a time on the real page, and each was compared with the one
+before it (the share of the figure's pixels that change by more than 24 levels).
+
+| From, to | iPhone profile (WebKit) | Desktop (Chrome, 2×) |
+|---|---|---|
+| Aim still into the clip's first frame | 0.5% | 1.2% |
+| The clip's first four steps | 0.9 to 1.6% | 0.9 to 1.6% |
+| The clip's last frame into the writing loop | 6.1% | 5.7% |
+| The writing loop's last frame back to its first | 1.0% | 1.0% |
+| The writing loop back into the clip (played backwards) | 6.5% | 6.1% |
+| The clip's first frame back to the aim still | 0.5% | 1.2% |
+
+Inside the clip, a step changes between 0.3% and 22% of the figure. The first step where her arm starts to
+move (the fifth) is 16%; the largest, mid-way, are 21 to 22%.
+
+### Item 2: what moved
+
+With the tighter corners, two of the three mushrooms that had moved in Build could go back:
+
+- `toolbox` is back where it was first placed (it had moved 21 px only because of the round corner).
+- `screed` is now 5 px above its first place (it was 7 px).
+- `tiles` stays 15 px above its first place: it is the straight bottom edge that covers it, not the corner.
+- Nothing in Grow moved.
+
+All 40 edge screenshots and `edge/compare.jpg` were taken again with the new corners.
+
+### Half-done: items 3 and 4
+
+Nothing of these is in the commits. What exists:
+
+- **Uncommitted, in the working folder:** `src/engine/steps.ts` and `src/engine/clips.ts`. Each step of the
+  lab routine now also lists the clip frames coming up next. Nothing uses the list yet, so the site behaves
+  exactly as committed, and `npm test` passes with it. It is the first piece of item 3.
+- **A throwaway measuring script,** `qa/tools/.exp-decode.mjs` (not committed).
+
+What was learned on the way, so it is not lost:
+
+1. **"Before", from the bitmap sizes:** with the new 32-frame clip, everything of Rachel's decoded at once is
+   **243 MB** at 2× (stills 38, `mist_to_write` 100, `write_loop` 58, `look_up` 28, `thumbs_up` 18). At 1.5×
+   the same would be 137 MB.
+2. **Decoding one whole clip at a time, as the review describes, does not reach 80 MB on a phone.** At 1.5×,
+   the stills (21 MB), the two reaction clips (26 MB) and `mist_to_write` alone (56 MB) come to 104 MB. The
+   plan is therefore to keep only about nine frames around the one being shown decoded. Estimated peak at
+   1.5×: 21 + 26 + about 20 = **about 65 to 70 MB**. This is an estimate; nothing was built or measured.
+3. **Not every clip follows a hold.** `write_loop` starts straight after `mist_to_write`, and the way back
+   starts straight after `write_loop`. So frames have to be decoded while the clip before is playing, which
+   is what the list in the uncommitted files is for.
+4. **For item 4:** decoding one of her patches on the page's main thread takes about 11 ms on this Mac and
+   produced frames of up to 29 to 32 ms in WebKit with a window. The same decode in a background worker
+   left every frame at 16 to 18 ms. Drawing a freshly decoded patch for the first time cost nothing
+   measurable in either. So the plan is to decode in a worker. The 12 first-opens, the full cycle and the
+   5 finds were not re-run; the "before" numbers are in "Scene 2 frames" and "Edge" above.
+
+### Queued, not started
+
+- `reviews/scene-2-hunt-difficulty.md` (asked for while this review was in progress). `main` has not been
+  pulled for it and nothing of it was read or built.
+
+### Decisions I made
+
+1. **A rounded rectangle, not a higher exponent.** The review offers both. A superellipse bends the long
+   edges a little whatever its exponent; a rounded rectangle leaves them exactly as they are in A.
+2. **Around each corner the fade turns smoothly** from the side's width (4% of the width) to the top's or
+   bottom's (6% and 2.5% of the height), so there is no step where the arc meets a straight edge.
+3. **`toolbox` and `screed` moved back** towards their first places, since the instruction for the edge was
+   to move spots as little as needed.
+4. **The hand-off "recording" is stepped, not filmed in real time.** Playwright films at 25 frames a second
+   and would miss frames; stepping shows every pose once, as a strip and as a film at two poses a second.
+5. **The 16% step at the start of her arm's movement is left alone.** It is in the range of the clip's other
+   fast steps. Wren can judge it in `review-04/handoff-desktop-chrome-strip.jpg`.
+6. **`main` was pulled as a merge into `site/scene-2`,** as before.
+
+### Not done, or not verified
+
+- **Items 3 and 4,** as above.
+- **A real phone,** and Safari itself.
+- **The corners against the mock-up by eye only.** The radius is the review's number; the mock-up's edge is
+  also rougher than style A's, which was not part of this review and was not changed.
