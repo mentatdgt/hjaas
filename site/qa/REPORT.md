@@ -491,3 +491,101 @@ browser drawing the new picture for the first time.
 - **The routine engine has not played real frames.** It is unit-tested, and the same player runs scene 1.
 - **The one-second pause before the first switch on a slow phone** (above). It could be shortened by drawing the next scene ahead of time, at the cost of memory; I left it.
 - **The unexplained 305 ms frame** in one of 12 desktop WebKit switches.
+
+## Scene 2 frames
+
+From `reviews/scene-2-frames-dropin.md`, on `site/scene-2`, after pulling `main`. One commit, plus the QA here.
+Evidence is in `qa/scene-2/`; `qa/tools/scene2.mjs lab`, `record-lab` and `qa/tools/lab-vs-preview.mjs` remake it.
+This replaces everything the "Scene 2 (structure)" section above lists as placeholder for the lab.
+
+**To see it:** `cd ~/hjaas && git checkout site/scene-2 && cd site && npm install && npm run dev`, then open
+http://localhost:5173/#grow
+
+| | Asked for | What was done, and what was measured | Evidence |
+|---|---|---|---|
+| ✅ | The real frames on `scene/mushroom-lab.png`; the mock-up plate removed | The lab's plate is the empty lab. Rachel is task 017's delivery: 7 stills and 4 clips (78 patches). Her canvas is drawn at plate (680, 210), 490 × 690. | `scene-2/screen-grow-1440x900.jpg` |
+| ✅ | Matches the preview video | The preview shows plate x 560–1300, y 180–920 (fitted from the room alone). With the room lined up, Rachel lines up to within 1 plate px: the difference between the two pictures is lowest at a shift of (−1, 0) and more than doubles at 4 px. Same poses, side by side, in the image. | `scene-2/lab-vs-preview.jpg`, `lab-vs-preview.json` |
+| ✅ | The engine reads the delivered format | `src/engine/clips.ts` reads `frames.json` and `routine.json` exactly as delivered (they are copied, not rewritten). A clip frame is its base still with one patch drawn over it on the same canvas, in the same step. | `src/engine/clips.ts`, `clips.test.ts` |
+| ✅ | Respect the ranges | One full cycle, watched in the page: 3 sprays, into writing, two rounds of the writing loop, and back, in 16.4 s. Measured holds against the manifest: squeeze 283–351 ms (280–360), lift 382–485 ms (380–480), transition frames 83 ms on average (66–100 at 60 frames a second), writing frames 125 ms on average (114–136), blink 50 ms, only on the aim pose. | `scene-2/lab-checks.json` (`routine-desktop-chrome`) |
+| ✅ | The reaction entry rule | A find while she mists: she finishes the pose and looks up 0.38 s after the tap. A find while she writes: she finishes the frame, plays `mist_to_write` in reverse, then looks up, 2.24–2.39 s after the tap. The reaction then runs 5.2 s, thumbs-up at its middle, as timed in `routine.json`. | `lab-checks.json` (`fromMisting`, `fromWriting`), `scene-2/lab-routine-and-reaction-desktop.mp4` |
+| ✅ | Nothing jumps between a patch and its still | Outside a patch, not one pixel differs from the still, in Chrome and in WebKit. Just inside a patch's edge the two differ by 0.5 to 1.4 levels out of 255 on average at phone size. | `lab-checks.json` (`seams-…`) |
+| ✅ | WebP, exact alpha, through `npm run assets` | Quality 93, exact alpha: stills 1.2 MB, clips 7.7 MB, the lab plate 1.2 MB. | `scripts/build-assets.mjs` |
+| ✅ | Lazy-loaded when Grow is first opened, stills first, then clips | While a visitor stays in scene 1, nothing of hers is fetched. On first opening the lab: the two manifests and the stills, and she starts misting on those. Then the clips, in this order: `mist_to_write`, `write_loop`, `look_up`, `thumbs_up`. Scene 1's own download is unchanged at 4.2 MB. | `lab-checks.json` (`lazy`) |
+| ✅ | Recordings: the routine and one reaction, desktop and iPhone (WebKit) | A full cycle (misting, writing, back), then a find and the thumbs-up, on both. | `scene-2/lab-routine-and-reaction-desktop.mp4`, `-iphone.mp4`, and their `-stills.jpg` |
+| ⚠️ | Frame timing in WebKit | Chrome: 2,242 frames in 37 s, longest 19 ms. WebKit, iPhone profile: 1,985 frames in 33 s, **two over 50 ms (65 and 54 ms)**, both in the writing loop; an earlier run had one of 119 ms. The reaction in WebKit: one frame of 92 ms at the tap when she was misting, none over 41 ms when she was writing. | `lab-checks.json` (`routine-iphone-webkit`) |
+| ✅ | On a slow phone profile (Chrome, CPU slowed 4×) | A full 17 s cycle: no late frame, no long task. The reaction, with the tracer on: no long task, longest frame 35 ms. | Measured live; raw trace on this Mac (`qa/traces/lab-reaction-mobile-4x.json.gz`) |
+| ✅ | Reaction gesture | Thumbs-up, as delivered. | – |
+
+`npm test`: 40 tests, all pass. 15 of them run the routine reader on the two delivered files.
+
+### Still placeholder in scene 2
+
+Nothing in the picture. What remains is words (the scene name and its screen-reader description are still
+`TODO(copy)`) and the things listed for Wren below.
+
+### Decisions I made
+
+1. **The lab's plate still downloads in the background** once scene 1 has settled (1.2 MB), so the first switch does not wait for it. Her frames do not: they are fetched only when Grow is first opened.
+2. **Until her clips have arrived she keeps to her stills:** sprays, pauses and blinks. A find in that time gets one held thumbs-up.
+3. **Part-way through the transition into writing, a find runs the transition back** from where it had got to, and on the way back out it simply carries on. `routine.json` only says what to do from the writing loop.
+4. **No ground shadow under her or the trolley,** as in the preview video. Scene 1 draws one in code; say if the lab should too.
+5. **A patch replaces a rectangle of its still trimmed to whole canvas pixels,** and is drawn at its exact place. That is what keeps the seam invisible at any size.
+6. **Each frame is drawn once out of sight, at its real size, as it loads.** A tiny rehearsal draw, enough for scene 1, was not enough for these larger frames in WebKit.
+7. **My own loop-manifest format from the structure round is still in the engine** (`routine.ts`, tested) but no scene uses it now. Its stub for the lab is deleted.
+
+### For Wren
+
+1. **The cut from the aim pose into `mist_to_write` is the largest in the set.** Its first frame differs from the still over about 30% of the figure; the other three clips start within 1 to 2.3% (phone size). It plays as delivered. One or two earlier frames of that clip would soften it.
+2. **Memory on phones.** Her 78 patches decode to about 180 MB, on top of scene 1's 85 MB. I could not test what an older iPhone does with that. If it matters, half-size patches for small screens would cut it to a quarter.
+3. **The blink is one half-closed frame for 50 ms.** A closed-eyes frame would make it read as a blink.
+
+## Edge
+
+From `reviews/scene-edge-feather.md`, on `site/scene-2`, for both scenes. One commit. Evidence is in `qa/edge/`;
+`qa/tools/edge.mjs` remakes it.
+
+**To choose again, or just to compare:** `qa/edge/compare.jpg` has the chosen edge beside A, B and C. On
+`npm run dev`, add `?edge=a`, `?edge=b` or `?edge=c` before the `#`.
+
+| | Asked for | What was done, and what was measured | Evidence |
+|---|---|---|---|
+| ✅ | 1. No mat, no border | Both are gone. The painting sits straight on the page. | `edge/a-round-build-1440x900.jpg` |
+| ✅ | The chosen edge as the only production edge | A with rounded corners: a thin soft fade (4% of the width at the sides, 6% of the height at the top, 2.5% at the bottom), a line that wanders with three layers of noise, corners turned by a superellipse of exponent 6, and a smoothstep to the paper colour. No deckle, rim, paler wash or grey. A, B and C exist only in development. | `edge/compare.jpg`, `src/engine/edge.ts` |
+| ✅ | 2. Generated once per scene, seeded, attached to the plate | Worked out once from the scene's name, so it is the same on every visit and each scene has its own. It belongs to the plate and pans with it. | `edge/a-round-build-390x844-left.jpg`, `-right.jpg` |
+| ✅ | 4. No CSS mask on a scrolling element | The edge is one small canvas in the paper's colour (418 × 235 px) lying over the plate. Nothing is masked. | `src/engine/edge.ts` |
+| ✅ | 5. The paint-in reveals into that shape | The brush's sheet lies under the edge, so no stroke and no wash can show past it. | `edge/intro-first-visit-desktop.mp4`, `-iphone.mp4` (WebKit) |
+| ✅ | 6. Every mushroom and tap box where the edge is at least 0.95 opaque | **All 20 mushrooms and all 20 tap boxes read 1.00**, read back from the page in Chrome at 1440 × 900 and 2560 × 1440 and in WebKit at 390 × 844, 360 × 740 and 320 × 640. Every box is 44 px or more, covers its drawing, and overlaps no other. `npm test` checks the same from the edge's formula at six sizes. | `edge/spots.json`, `src/engine/edge.test.ts` |
+| ✅ | 6, spots moved by the smallest amount | In Build, three at the front of the floor moved straight up: `screed` 7 px, `tiles` 15 px, `toolbox` 21 px (plate px). In Grow, `bench` moved 34 px along under the bench. Nothing else moved. | `src/scenes/build.ts`, `grow.ts` |
+| ✅ | 7. Phones | The window's sides have a 12 px fade into the paper; its top and bottom show the plate's real edge, and so do the far left and right when panned there. | `edge/a-round-grow-390x844.jpg`, `-left.jpg`, `-right.jpg` |
+| ⚠️ | 8. Optional paper grain | Not added. | – |
+| ✅ | QA: all styles, both scenes, three sizes | 40 screenshots: A-round, A, B and C, for Build and Grow, at 1440 × 900, 390 × 844 (with both ends of the room) and 360 × 740. | `edge/*.jpg` |
+| ✅ | QA: recording of the intro with the new edge | Desktop (Chrome) and iPhone profile (WebKit). 312 frames in 5.2 s on both, longest 19 ms and 25 ms. | `edge/intro-first-visit-*.mp4`, `edge/timeline.json` |
+| ✅ | No frame over about 50 ms at the end of the intro (WebKit, cold load, production build) | **27 to 33 ms in 10 of 10 iPhone-profile runs; 28 to 30 ms in 5 of 5 desktop runs.** | `edge/webkit-cold-intro-raw.txt` |
+| ⚠️ | No frame over about 50 ms when switching scenes (WebKit, cold load, production build) | Back to Build: 26 to 34 ms in 12 of 12. To the lab, the first time it is opened: **one or two frames of 46 to 66 ms** within 0.15 s of the tap, before the brush starts, in all 12 runs. That is the lab being drawn for the first time under the old picture. During the brush itself no frame was over 50 ms. | `edge/switch-frames-webkit-cold.json` |
+| ✅ | Panning (WebKit, phone) | 19 ms longest, in 3 of 3 runs, in both scenes. | `edge/pan-webkit.json` |
+| ✅ | On a slow phone profile (Chrome, CPU slowed 4×, tracer off) | The first-visit painting and the 3 s after it: no late frame, no long task. Panning: none. Switching: one frame of about 100 ms at the tap (67 ms the first time the lab opens), then the brush runs clean. | Measured live |
+
+### What the QA found, and what changed because of it
+
+| Found | Cause | Change |
+|---|---|---|
+| A faint line of the old picture at the right of the window during a switch. | The copy of the old picture and its edge were drawn to the same rim, so a sliver of room showed between them. | The edge is drawn a pixel wider than the room on that copy. Checked on the page too: at the plate's rim the colour is within 1 level of the paper. |
+| A 119 ms hitch 0.4 s after the intro on the slow phone profile. | The lab's edge was being worked out, at half the plate's size, while Rachel hammered. | It is worked out at a quarter of the size. The hitch is gone. |
+| Tap boxes near the corners could still touch the fade. | A fixed margin cannot follow rounded corners. | Each box is placed from the edge's real shape, each time the plate changes size. |
+| On a 320 px phone two of the lab's tap boxes overlapped. | The boxes are larger in the room's terms on small screens. | `bench` moved 34 px along; `npm test` now checks every pair at six sizes. |
+
+### Decisions I made
+
+1. **The percentages are of the width for the sides and of the height for the top and bottom.** The brief says "of the plate". Taken all of the width, the bottom fade would have been 42 px deep and covered the floor's mushrooms.
+2. **The line wanders inside the fade, never outside it.** The plate's very rim is always paper and the painting is always solid where the fade ends, so the stated widths are the whole of the edge.
+3. **The rounded corners are a little rounder than in the mock-up.** I used the exponent the brief gives (6). It is one number in `edge.ts` (`power`); 8 is tighter.
+4. **The edge is a paper-coloured layer over the plate,** not baked into the room image as the brief suggests. This site keeps the room as an image and paints by rubbing a sheet away, so there is no room canvas to bake into. The effect and the cost are the same, and the mushrooms and Rachel are kept inside the edge as well.
+5. **The blank sheet the brush paints on is now the page's own colour,** since there is no mat for it to sit in.
+6. **C is my reading of "stronger toward the corners".** It is for comparison only.
+7. **The picture is the same size as before** (1040 px on a 1440 px window). Without the mat the page is 40 px shorter.
+
+### Not done, or not verified
+
+- **A real phone,** and Safari itself.
+- **The 46 to 66 ms frame when the lab is first opened** (above). It could be removed by drawing the lab ahead of time, at the cost of memory.
+- **The two frames over 50 ms in the lab's writing loop in WebKit** (Scene 2 frames, above). I could not find their cause; they did not appear in Chrome, in WebKit without a window, or on the slow phone profile.
