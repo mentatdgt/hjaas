@@ -1,0 +1,88 @@
+{
+  "files": [
+    {
+      "file": "017_anchor_scene.png",
+      "width": 1672,
+      "height": 941,
+      "changedBelowY645": null,
+      "changedMainTray": null,
+      "leftMarginGreen": null
+    },
+    {
+      "file": "017_anchor_green.png",
+      "width": 1672,
+      "height": 941,
+      "changedBelowY645": 0,
+      "changedMainTray": 0,
+      "leftMarginGreen": true
+    },
+    {
+      "file": "017_A1_mist_aim.png",
+      "width": 1672,
+      "height": 941,
+      "changedBelowY645": 0,
+      "changedMainTray": 0,
+      "leftMarginGreen": true
+    },
+    {
+      "file": "017_A2_mist_squeeze.png",
+      "width": 1672,
+      "height": 941,
+      "changedBelowY645": 0,
+      "changedMainTray": 374,
+      "leftMarginGreen": true
+    },
+    {
+      "file": "017_A3_mist_lift.png",
+      "width": 1672,
+      "height": 941,
+      "changedBelowY645": 0,
+      "changedMainTray": 0,
+      "leftMarginGreen": true
+    },
+    {
+      "file": "017_B1_write.png",
+      "width": 1672,
+      "height": 941,
+      "changedBelowY645": 0,
+      "changedMainTray": 0,
+      "leftMarginGreen": true
+    },
+    {
+      "file": "017_B2_glance.png",
+      "width": 1672,
+      "height": 941,
+      "changedBelowY645": 0,
+      "changedMainTray": 0,
+      "leftMarginGreen": true
+    },
+    {
+      "file": "017_A1_blink_half.png",
+      "width": 1672,
+      "height": 941,
+      "changedBelowY645": 0,
+      "changedMainTray": 0,
+      "leftMarginGreen": true
+    },
+    {
+      "file": "017_K1_beam.png",
+      "width": 1672,
+      "height": 941,
+      "changedBelowY645": 0,
+      "changedMainTray": 204,
+      "leftMarginGreen": true
+    },
+    {
+      "file": "017_K2_thumbs.png",
+      "width": 1672,
+      "height": 941,
+      "changedBelowY645": 0,
+      "changedMainTray": 204,
+      "leftMarginGreen": true
+    }
+  ],
+  "A1MatchesAnchor": true,
+  "B2Below427MatchesB1": true,
+  "K2HeadMatchesK1": true,
+  "K2BottleMatchesK1": true
+}

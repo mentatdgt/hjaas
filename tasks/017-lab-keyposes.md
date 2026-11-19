@@ -1,6 +1,6 @@
 ---
 id: 017-lab-keyposes
-status: open             # draft | open | delivered | changes-requested | approved
+status: approved             # draft | open | delivered | changes-requested | approved
 frames: 9                 # 1 anchor + 8 poses
 grid: separate images     # one image per pose, all 1672×941, all registered to the lab plate
 references:
@@ -79,3 +79,11 @@ Deliver all ten files (0a, 0b and the 8 poses) with an honest report.
 
 ## Revision notes
 _(Wren writes here after each QC round)_
+
+### Round 1 (2026-11-19): APPROVED 7 of 8; B2 replaced by a video loop
+- **No glasses** in these poses, at the user's instruction to Quinn (scene 1's Rachel wears glasses; the user may want to confirm this is intended).
+- Lower body, boots, wheels and trolley are pixel-identical across poses, and all poses are registered to the lab plate (1672×941; draw at 0,0).
+- **Approved and keyed** (transparent): `approved/A1_mist_aim`, `A2_mist_squeeze`, `A3_mist_lift`, `B1_write`, `A1_blink_half`, `K1_beam`, `K2_thumbs`.
+- **B2_glance rejected:** the whole head was redrawn (it would jiggle against B1), and one eye is half-lidded and lopsided. The writing loop will instead be a short Higgsfield clip that starts and ends on B1 (pen moving, one glance at the tray), so it loops seamlessly.
+- Minor, accepted: a small sleeve redraw in A3.
+- Next (Higgsfield, quoted first): A1→B1 (bottle down, clipboard up), the B1 writing loop, A1→K1 (look up and beam), K1→K2 (thumbs-up). Optionally a 2× upscale of the drawn poses for phones.
