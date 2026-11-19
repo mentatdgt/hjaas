@@ -156,13 +156,14 @@ export class ContactForm {
   /** Opens the sheet from the button. `instant` skips the entrance (keyboard-initiated opens). */
   open(instant = false): void {
     window.clearTimeout(this.closing);
+    // Measure where the button is before anything is changed, so the measurement forces no restyle.
+    if (!this.dialog.open) this.anchor();
     this.dialog.classList.toggle('is-instant', instant);
     if (this.dialog.open) {
       // Reopened while closing: carry on from wherever the exit had got to.
       this.dialog.classList.add('is-open');
       return;
     }
-    this.anchor();
     this.dialog.showModal();
     this.body.scrollTop = 0;
     if (instant) this.dialog.classList.add('is-open');

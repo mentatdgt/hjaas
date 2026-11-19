@@ -412,6 +412,7 @@ a.hj-logo:active {
   align-items: center;
   gap: 2px 18px;
   min-width: 0;
+  position: relative;
   -webkit-user-select: none;
   user-select: none;
 }
@@ -427,9 +428,15 @@ a.hj-logo:active {
   white-space: nowrap;
 }
 
-.hj-tally[hidden],
-.hj-contact[hidden] {
+.hj-tally[hidden] {
   display: none;
+}
+
+/* Until 10 of 10: laid out, so its text is ready, but out of the flow, out of sight and out of reach. */
+.hj-contact.is-waiting {
+  position: absolute;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .hj-tally-icon {

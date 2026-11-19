@@ -14,7 +14,10 @@ export const MUSHROOM_ICON = `
 
 export class Caption {
   readonly el: HTMLDivElement;
-  /** The "Contact Hui Jie" button. Hidden until the hunt is complete. */
+  /**
+   * The "Contact Hui Jie" button. Until the hunt is complete it is laid out but out of sight and out of
+   * reach (`.is-waiting`), so that showing it later costs no first layout of its text.
+   */
   readonly action: HTMLButtonElement;
   private readonly tally: HTMLParagraphElement;
   private readonly icon: HTMLSpanElement;
@@ -36,7 +39,7 @@ export class Caption {
         <span class="hj-tally-icon">${MUSHROOM_ICON}</span>
         <span><span class="hj-tally-n">${value}</span> of ${total} found</span>
       </p>
-      <button class="hj-contact" type="button" hidden aria-haspopup="dialog">${MUSHROOM_ICON}Contact Hui Jie</button>
+      <button class="hj-contact is-waiting" type="button" aria-haspopup="dialog">${MUSHROOM_ICON}Contact Hui Jie</button>
       <p class="hj-note" aria-hidden="true"></p>
       <p class="hj-sr" role="status" aria-live="polite"></p>
     `;
@@ -89,7 +92,7 @@ export class Caption {
     this.el.dataset.state = 'unlocked';
     const swap = (): void => {
       this.tally.hidden = true;
-      this.action.hidden = false;
+      this.action.classList.remove('is-waiting');
       this.note.textContent = note;
     };
     if (animate) {
