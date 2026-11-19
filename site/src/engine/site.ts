@@ -3,6 +3,7 @@ import '@fontsource/spectral/latin-400.css';
 import './site.css';
 import { setAssetBase } from './assets';
 import { Caption } from './caption';
+import { DEFAULT_EDGE, EDGE_STYLES, edgeSeed, type EdgeStyle } from './edge';
 import { flags } from './flags';
 import { ContactForm } from './form';
 import { Logo } from './logo';
@@ -183,6 +184,10 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       marks,
     };
   }
+
+  // The painting's edge. One style ships; the others can be asked for in development, to compare.
+  const edgeStyle: EdgeStyle = EDGE_STYLES.find((style) => style === flags.edge) ?? DEFAULT_EDGE;
+  const paper = (getComputedStyle(root).backgroundColor.match(/[\d.]+/g) ?? ['246', '243', '236']).slice(0, 3).map(Number) as [number, number, number];
 
   const rnd = flags.seed === undefined ? Math.random : seeded(flags.seed);
   // The visitor can pause the routine; reduced motion never starts it. Either way she holds her rest pose.
@@ -373,6 +378,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
         if (self === current) pan.layout();
       },
       onPose: flags.debug ? (pose, at) => poses.push([pose, Math.round(at)]) : undefined,
+      edge: { style: edgeStyle, seed: edgeSeed, paper },
       },
       config.id === first.id,
     ).then((loaded) => {

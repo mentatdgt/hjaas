@@ -1,5 +1,5 @@
 // A scene's character: one canvas that shows one pose at a time, placed on the plate as her scene says.
-import { PLATE, type Frame, frameSize } from './assets';
+import { PLATE, type Frame, frameSize, idle } from './assets';
 import type { Placement } from './types';
 
 /** What a character needs to know about herself to be drawn. */
@@ -174,7 +174,17 @@ export class Character {
     this.patched = '';
     this.draw();
     // Frames added before the canvas had a size were rehearsed too small: once more, at the real size.
-    if (first) for (const frame of this.frames.values()) this.warm(frame);
+    // One at a time, in quiet moments: together they took a whole frame (measured in WebKit: about 60 ms
+    // for scene 2's seven stills), which showed as a hitch when the lab was first opened.
+    if (first) {
+      const frames = [...this.frames.values()];
+      void (async () => {
+        for (const frame of frames) {
+          await idle();
+          this.warm(frame);
+        }
+      })();
+    }
   }
 
   /** Switch pose. One draw call on one canvas: there is never a frame with two poses or none. */

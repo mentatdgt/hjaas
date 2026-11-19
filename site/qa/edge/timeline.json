@@ -1,0 +1,34 @@
+[
+ {
+  "tag": "desktop-chrome",
+  "mushroomsUsable": 4083,
+  "rachelStarts": 4432,
+  "captionStarts": 4582,
+  "rachelSettled": 4698,
+  "captionIn": 4781,
+  "firstSwing": 4982,
+  "skipPresentFromStart": true,
+  "frames": 312,
+  "longestFrameMs": 19,
+  "over50": [],
+  "over25": 0,
+  "hammeringFrames": 228,
+  "hammeringOver50": []
+ },
+ {
+  "tag": "iphone-webkit",
+  "mushroomsUsable": 4079,
+  "rachelStarts": 4429,
+  "captionStarts": 4580,
+  "rachelSettled": 4695,
+  "captionIn": 4781,
+  "firstSwing": 4981,
+  "skipPresentFromStart": true,
+  "frames": 312,
+  "longestFrameMs": 25,
+  "over50": [],
+  "over25": 0,
+  "hammeringFrames": 228,
+  "hammeringOver50": []
+ }
+]

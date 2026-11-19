@@ -14,7 +14,8 @@ const SHADE = 'brightness(0.84) saturate(0.74) hue-rotate(-8deg)';
 // None is on the trolley or behind Rachel: her frames cover that part of the plate (x 680-1170, y 210-900).
 const SPOTS: Spot[] = [
   { id: 'door', art: 3, x: 128, y: 806, h: 28, tint: LIT, grounded: true },
-  { id: 'bench', art: 8, x: 236, y: 791, h: 22, tint: SHADE, grounded: true },
+  // 34 px further right than first placed, so that on the smallest phones its tap box clears the door's.
+  { id: 'bench', art: 8, x: 270, y: 791, h: 22, tint: SHADE, grounded: true },
   { id: 'floor', art: 6, x: 470, y: 905, h: 40, tint: LIT, grounded: true },
   { id: 'bench-corner', art: 1, x: 506, y: 524, h: 18, tint: LIT },
   { id: 'under-shelf', art: 7, x: 652, y: 656, h: 18, tint: SHADE, grounded: true },

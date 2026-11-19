@@ -9,7 +9,7 @@
     "smallestBox": 44,
     "allInsidePicture": true,
     "drawingsInsideBoxes": true,
-    "smallestDrawingPx": 9.8,
+    "smallestDrawingPx": 10.1,
     "overlaps": [],
     "after": {
      "address": "",
@@ -17,7 +17,7 @@
      "current": "Build",
      "caption": "Contact Hui Jie You found all 10 All 10 mushrooms found. The Contact Hui Jie button is now available.",
      "button": true,
-     "pan": 458
+     "pan": 476
     }
    },
    "grow": {
@@ -26,7 +26,7 @@
     "smallestBox": 44,
     "allInsidePicture": true,
     "drawingsInsideBoxes": true,
-    "smallestDrawingPx": 9.8,
+    "smallestDrawingPx": 10.1,
     "overlaps": [],
     "after": {
      "address": "#grow",
@@ -34,7 +34,7 @@
      "current": "Grow",
      "caption": "Contact Hui Jie You found all 10 10 of 10 mushrooms found.",
      "button": true,
-     "pan": 566
+     "pan": 590
     }
    }
   },
@@ -44,7 +44,7 @@
    "current": "Build",
    "caption": "0 of 10 found Find the 10 hidden mushrooms",
    "button": false,
-   "pan": 320
+   "pan": 333
   },
   "arrivingInGrow": {
    "address": "#grow",
@@ -52,7 +52,7 @@
    "current": "Grow",
    "caption": "Contact Hui Jie 0 of 10 found Grow. 0 of 10 mushrooms found.",
    "button": true,
-   "pan": 333
+   "pan": 347
   },
   "afterReload": {
    "address": "#grow",
@@ -60,7 +60,7 @@
    "current": "Grow",
    "caption": "Contact Hui Jie You found all 10",
    "button": true,
-   "pan": 565
+   "pan": 590
   },
   "afterReloadBuild": {
    "address": "#build",
@@ -68,7 +68,7 @@
    "current": "Build",
    "caption": "Contact Hui Jie You found all 10 Build. 10 of 10 mushrooms found.",
    "button": true,
-   "pan": 458
+   "pan": 476
   },
   "saved": {
    "unlocked": true,
@@ -88,7 +88,7 @@
     "smallestBox": 44,
     "allInsidePicture": true,
     "drawingsInsideBoxes": true,
-    "smallestDrawingPx": 8.9,
+    "smallestDrawingPx": 9.3,
     "overlaps": [],
     "after": {
      "address": "",
@@ -96,7 +96,7 @@
      "current": "Build",
      "caption": "Contact Hui Jie You found all 10 All 10 mushrooms found. The Contact Hui Jie button is now available.",
      "button": true,
-     "pan": 420
+     "pan": 438
     }
    },
    "grow": {
@@ -105,7 +105,7 @@
     "smallestBox": 44,
     "allInsidePicture": true,
     "drawingsInsideBoxes": true,
-    "smallestDrawingPx": 8.9,
+    "smallestDrawingPx": 9.3,
     "overlaps": [],
     "after": {
      "address": "#grow",
@@ -113,7 +113,7 @@
      "current": "Grow",
      "caption": "Contact Hui Jie You found all 10 10 of 10 mushrooms found.",
      "button": true,
-     "pan": 516
+     "pan": 541
     }
    }
   },
@@ -123,7 +123,7 @@
    "current": "Build",
    "caption": "0 of 10 found Find the 10 hidden mushrooms",
    "button": false,
-   "pan": 292
+   "pan": 305
   },
   "arrivingInGrow": {
    "address": "#grow",
@@ -131,7 +131,7 @@
    "current": "Grow",
    "caption": "Contact Hui Jie 0 of 10 found Grow. 0 of 10 mushrooms found.",
    "button": true,
-   "pan": 304
+   "pan": 318
   },
   "afterReload": {
    "address": "#grow",
@@ -139,7 +139,7 @@
    "current": "Grow",
    "caption": "Contact Hui Jie You found all 10",
    "button": true,
-   "pan": 515
+   "pan": 540
   },
   "afterReloadBuild": {
    "address": "#build",
@@ -147,7 +147,7 @@
    "current": "Build",
    "caption": "Contact Hui Jie You found all 10 Build. 10 of 10 mushrooms found.",
    "button": true,
-   "pan": 420
+   "pan": 437
   },
   "saved": {
    "unlocked": true,
@@ -175,7 +175,7 @@
      "current": "Build",
      "caption": "Contact Hui Jie You found all 10 All 10 mushrooms found. The Contact Hui Jie button is now available.",
      "button": true,
-     "pan": 0
+     "pan": 1
     }
    },
    "grow": {
@@ -192,7 +192,7 @@
      "current": "Grow",
      "caption": "Contact Hui Jie You found all 10 10 of 10 mushrooms found.",
      "button": true,
-     "pan": 0
+     "pan": 1
     }
    }
   },
@@ -202,7 +202,7 @@
    "current": "Build",
    "caption": "0 of 10 found Find the 10 hidden mushrooms",
    "button": false,
-   "pan": 0
+   "pan": 1
   },
   "arrivingInGrow": {
    "address": "#grow",
@@ -210,7 +210,7 @@
    "current": "Grow",
    "caption": "Contact Hui Jie 0 of 10 found Grow. 0 of 10 mushrooms found.",
    "button": true,
-   "pan": 0
+   "pan": 1
   },
   "afterReload": {
    "address": "#grow",
@@ -244,7 +244,7 @@
    "current": "Grow",
    "caption": "0 of 10 found Find the 10 hidden mushrooms",
    "button": false,
-   "pan": 0
+   "pan": 1
   },
   "lab": {
    "address": "#grow",
@@ -252,7 +252,7 @@
    "current": "Grow",
    "caption": "Contact Hui Jie You found all 10 All 10 mushrooms found. The Contact Hui Jie button is now available.",
    "button": true,
-   "pan": 0
+   "pan": 1
   },
   "buildAfter": {
    "address": "#build",
@@ -260,19 +260,19 @@
    "current": "Build",
    "caption": "Contact Hui Jie 0 of 10 found Build. 0 of 10 mushrooms found.",
    "button": true,
-   "pan": 0
+   "pan": 1
   },
   "ok": true
  },
  {
   "check": "pan per scene",
   "openingPan": {
-   "build": 320,
-   "grow": 334
+   "build": 333,
+   "grow": 348
   },
   "labOpensOnPlateX": [
-   616,
-   1243
+   617,
+   1245
   ],
   "backInBuild": 60,
   "reloadedBuild": 60,

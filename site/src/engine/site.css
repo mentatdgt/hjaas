@@ -48,8 +48,6 @@
 
 .hj-page {
   --page-margin: clamp(20px, 4cqw, 72px);
-  /* The mat: the blank border between the frame and the picture. */
-  --mat: clamp(12px, 1.4cqw, 30px);
   --logo-w: clamp(160px, 14cqw, 210px);
   /* The logo's own proportions; logo.ts sets the real ones when the image arrives. */
   --logo-ratio: 1651 / 630;
@@ -63,19 +61,19 @@
   --menu-h: 0px;
   /* Everything on the page that is not the picture, top to bottom. */
   --chrome: calc(
-    var(--pad-top) + var(--logo-h) + var(--menu-h) + var(--gap-head) + 2 * var(--mat) + 2px + var(--gap-caption) +
-      var(--caption-h) + var(--pad-bottom)
+    var(--pad-top) + var(--logo-h) + var(--menu-h) + var(--gap-head) + var(--gap-caption) + var(--caption-h) +
+      var(--pad-bottom)
   );
   /* The picture: about 1040 px on a 1440 px window, never wider than the page allows, and small enough
      that the caption stays on screen. Very short windows keep a readable picture and let the page scroll. */
   --pic-w: min(
-    calc(100cqw - 2 * var(--page-margin) - 2 * var(--mat) - 2px),
+    calc(100cqw - 2 * var(--page-margin)),
     max(72.2cqw, 820px),
     max(calc((100svh - var(--chrome)) * var(--plate-w) / var(--plate-h)), 540px)
   );
   display: flex;
   flex-direction: column;
-  width: calc(var(--pic-w) + 2 * var(--mat) + 2px);
+  width: var(--pic-w);
   margin: 0 auto;
   padding: var(--pad-top) 0 var(--pad-bottom);
 }
@@ -161,15 +159,9 @@
   text-wrap: pretty;
 }
 
-/* The frame: a fine border, a pale mat, then the picture. */
+/* The picture sits straight on the page: no frame, no mat. Its own soft edge is part of the plate (.hj-edge). */
 .hj-frame {
   margin: 0;
-  padding: var(--mat);
-  border: 1px solid var(--hj-line);
-  background: var(--hj-mat);
-  box-shadow:
-    0 1px 2px rgba(48, 46, 41, 0.05),
-    0 26px 44px -34px rgba(48, 46, 41, 0.3);
   -webkit-user-select: none;
   user-select: none;
 }
@@ -178,23 +170,12 @@
   position: relative;
 }
 
-/* The picture's own edge, drawn over the art so it stays crisp. */
-.hj-window::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  border: 1px solid rgba(48, 46, 41, 0.28);
-  pointer-events: none;
-}
-
-/* The window onto the room. Wide screens show the whole plate. Unpainted, it is a blank sheet. */
+/* The window onto the room. Wide screens show the whole plate. Unpainted, it is the bare page. */
 .hj-viewport {
   position: relative;
   width: var(--pic-w);
   aspect-ratio: 1672 / 941;
   overflow: hidden;
-  background: var(--hj-mat);
 }
 
 /* The plate is the scene's coordinate system: children are placed in percentages of 1672 × 941. */
@@ -219,6 +200,16 @@
 
 /* The sheet the brush rubs away (paint.ts): blank paper over a scene being painted for the first time. */
 .hj-paint {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* The painting's edge: it fades into the paper along a wandering line (edge.ts). One canvas in the paper's
+   colour over the whole plate, above everything in it, so nothing ever shows past the edge. */
+.hj-edge {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -287,26 +278,17 @@
 }
 
 /* The button is the tap box: at least 44 × 44 CSS px however small the drawing is.
-   Its centre is the drawing's centre, unless that would push part of the box, or its focus ring, past the
-   edge of the picture, where it would be cut off. Then the box moves inward and the drawing stays put. */
+   Its centre is the drawing's centre, unless that would put part of the box in the painting's soft edge,
+   where the picture fades into the paper. Then the box moves inward and the drawing stays put: mushrooms.ts
+   works out where (--bx, --by, in CSS px from the plate's corner) each time the plate changes size. */
 .hj-shroom {
-  /* Room for the focus ring (4 px) between the box and the picture's edge. */
-  --edge: 5px;
   --bw: max(44px, calc(var(--w) * var(--u) + 10px));
   --bh: max(44px, calc(var(--h) * var(--u) + 10px));
-  /* The drawing's centre, then the box's centre, in CSS px from the plate's corner. */
+  /* The drawing's centre, in CSS px from the plate's corner. Until the box is placed, it is the box's too. */
   --ax: calc(var(--cx) * var(--u));
   --ay: calc(var(--cy) * var(--u));
-  --bx: clamp(
-    calc(var(--bw) / 2 + var(--edge)),
-    var(--ax),
-    calc(var(--plate-w) * var(--u) - var(--bw) / 2 - var(--edge))
-  );
-  --by: clamp(
-    calc(var(--bh) / 2 + var(--edge)),
-    var(--ay),
-    calc(var(--plate-h) * var(--u) - var(--bh) / 2 - var(--edge))
-  );
+  --bx: var(--ax);
+  --by: var(--ay);
   position: absolute;
   left: var(--bx);
   top: var(--by);
@@ -1203,7 +1185,6 @@ a.hj-logo:active {
   @container (max-width: 600px) {
     .hj-page {
       --page-margin: 18px;
-      --mat: 6px;
       --logo-w: clamp(120px, 33cqw, 140px);
       --pad-top: 14px;
       --pad-bottom: 18px;
@@ -1212,7 +1193,7 @@ a.hj-logo:active {
       /* Count, note and controls, stacked. */
       --caption-h: 104px;
       /* The width of the window onto the room. */
-      --win-w: calc(100cqw - 2 * var(--page-margin) - 2 * var(--mat) - 2px);
+      --win-w: calc(100cqw - 2 * var(--page-margin));
       width: auto;
       margin: 0 var(--page-margin);
     }
@@ -1264,6 +1245,30 @@ a.hj-logo:active {
 
     .hj-viewport::-webkit-scrollbar {
       display: none;
+    }
+
+    /* The window's own sides: a very narrow fade into the paper, so the crop does not look cut. It belongs
+       to the window, not the room: the plate's real soft edge shows when the visitor pans to either end,
+       and along the top and the bottom. */
+    .hj-window::before,
+    .hj-window::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      z-index: 3;
+      width: 12px;
+      pointer-events: none;
+    }
+
+    .hj-window::before {
+      left: 0;
+      background: linear-gradient(90deg, var(--hj-paper), rgba(246, 243, 236, 0));
+    }
+
+    .hj-window::after {
+      right: 0;
+      background: linear-gradient(270deg, var(--hj-paper), rgba(246, 243, 236, 0));
     }
 
     .hj-viewport.is-dragging {

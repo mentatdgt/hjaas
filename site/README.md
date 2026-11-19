@@ -1,6 +1,6 @@
 # HJaaS site
 
-One framed picture on a paper page, and a small menu to move between scenes. Each scene is a room with
+One painting on a paper page, its edges fading into the paper, and a small menu to move between scenes. Each scene is a room with
 Rachel at work in it and ten hidden mushrooms; finding all ten in any scene unlocks the contact form.
 
 | Scene | Address | State |
@@ -46,6 +46,7 @@ Inside `src/engine/`:
 | `types.ts` | What a scene is, as data: `SceneConfig`. |
 | `scene.ts` | One scene built from its config: plate, character, mushrooms. |
 | `transition.ts`, `paint.ts` | How a picture arrives: the first-visit painting, the short brush between scenes, the 200 ms fades. |
+| `edge.ts` | The painting's watercolour edge: it fades into the paper along a wandering line, with rounded corners. Also places each mushroom's tap box clear of the fade. |
 | `character.ts`, `player.ts`, `steps.ts` | A character's canvas (whole frames, or a patch over a still), her placement on the plate, and the player that shows her poses. |
 | `clips.ts` | Reads Wren's delivered format (`frames.json` + `routine.json`): stills, clips of patches, the routine, blinks, the reaction and its entry rule. |
 | `routine.ts` | A simpler loop manifest for whole-frame characters: loops, cycles, transitions, blinks. |
@@ -65,7 +66,8 @@ worked example), listed in `src/scenes/index.ts`. The menu shows whatever is lis
 
 - the plate image and the scene's assets folder;
 - the character: her frames, how they sit on the plate, her idle routine and her reaction folder;
-- the ten hiding spots (`SPOTS`), with a tint for that room's light;
+- the ten hiding spots (`SPOTS`), with a tint for that room's light. `npm test` checks that none of them, and
+  none of their tap boxes, sits in the painting's soft edge;
 - the paint-in strokes;
 - what a phone shows first.
 
@@ -118,6 +120,7 @@ ignores them all, so nobody can skip the hunt with `?found=10`.
 | `?found=9` | Start the opening scene with that many mushrooms found (not saved). `?found=10` shows the unlocked button. |
 | `?hint=5` | Seconds before the hint wiggle, instead of 60. |
 | `?seed=7` | Repeatable hammer rhythm and brush strokes. |
+| `?edge=a`, `?edge=b`, `?edge=c` | The other edge styles that were considered, for comparison. The site ships `a-round`. |
 | `?slow=6` | Play the interface motion six times slower. |
 | `?debug` | Outline the mushroom hit areas and expose `window.__hj` (pose log, late-frame log). |
 

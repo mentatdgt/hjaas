@@ -1,5 +1,6 @@
 // The hunt: a scene's ten tiny mushrooms, hidden around its room.
 import { asset, loadImage } from './assets';
+import { tapBox } from './edge';
 import { flags } from './flags';
 import { EASE_OUT, gsap, reducedMotion } from './motion';
 import type { Spot } from './types';
@@ -8,6 +9,8 @@ const artUrl = (art: number): string => asset(`shared/mushrooms/mushroom_${Strin
 
 export interface HuntOptions {
   spots: readonly Spot[];
+  /** How much of the painting shows at a point of the plate (edge.ts). Tap boxes keep to where it is solid. */
+  edge: (x: number, y: number) => number;
   plate: HTMLElement;
   /** Layer above everything, where a collected mushroom flies. */
   flyLayer: HTMLElement;
@@ -24,6 +27,8 @@ export class Hunt {
   readonly el: HTMLDivElement;
   private readonly options: HuntOptions;
   private readonly buttons = new Map<string, HTMLButtonElement>();
+  /** Each drawing's centre and size, in plate px. */
+  private readonly art = new Map<string, { cx: number; cy: number; w: number; h: number }>();
 
   private constructor(options: HuntOptions, aspect: Map<number, number>) {
     this.options = options;
@@ -39,9 +44,10 @@ export class Hunt {
       button.className = 'hj-shroom';
       button.dataset.spot = spot.id;
       button.setAttribute('aria-label', 'Hidden mushroom');
-      // The drawing's centre, in plate px. scene.css turns it into the tap box's position.
+      // The drawing's centre, in plate px.
       button.style.setProperty('--cx', String(spot.x));
       button.style.setProperty('--cy', String(spot.y - spot.h / 2));
+      this.art.set(spot.id, { cx: spot.x, cy: spot.y - spot.h / 2, w, h: spot.h });
       button.style.setProperty('--w', String(w));
       button.style.setProperty('--h', String(spot.h));
       if (spot.grounded) button.classList.add('is-grounded');
@@ -61,6 +67,21 @@ export class Hunt {
       button.addEventListener('click', () => this.collect(spot));
       this.buttons.set(spot.id, button);
       this.el.append(button);
+    }
+  }
+
+  /**
+   * Place every tap box for the plate's current size (`u`: CSS px per plate px). A box near the painting's
+   * soft edge moves inward until all of it is over solid painting; its drawing stays where it was painted.
+   */
+  layout(u: number): void {
+    if (!u) return;
+    for (const [id, button] of this.buttons) {
+      const art = this.art.get(id)!;
+      const box = tapBox(this.options.edge, art, u);
+      // Whole CSS pixels, so the box and its focus ring are crisp.
+      button.style.setProperty('--bx', `${Math.round(box.cx * u)}px`);
+      button.style.setProperty('--by', `${Math.round(box.cy * u)}px`);
     }
   }
 

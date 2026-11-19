@@ -6,31 +6,31 @@
    "current": "Build",
    "caption": "0 of 10 found Find the 10 hidden mushrooms",
    "button": false,
-   "pan": 0
+   "pan": 1
   },
   "afterClick": {
    "address": "#grow",
    "scene": "grow",
    "current": "Grow",
-   "caption": "0 of 10 found Find the 10 hidden mushrooms",
+   "caption": "0 of 10 found Find the 10 hidden mushrooms Grow. 0 of 10 mushrooms found.",
    "button": false,
-   "pan": 0
+   "pan": 1
   },
   "afterBack": {
    "address": "",
    "scene": "build",
    "current": "Build",
-   "caption": "0 of 10 found Find the 10 hidden mushrooms",
+   "caption": "0 of 10 found Find the 10 hidden mushrooms Build. 0 of 10 mushrooms found.",
    "button": false,
-   "pan": 0
+   "pan": 1
   },
   "afterForward": {
    "address": "#grow",
    "scene": "grow",
    "current": "Grow",
-   "caption": "0 of 10 found Find the 10 hidden mushrooms",
+   "caption": "0 of 10 found Find the 10 hidden mushrooms Grow. 0 of 10 mushrooms found.",
    "button": false,
-   "pan": 0
+   "pan": 1
   },
   "directToGrow": {
    "address": "#grow",
@@ -38,7 +38,7 @@
    "current": "Grow",
    "caption": "0 of 10 found Find the 10 hidden mushrooms",
    "button": false,
-   "pan": 0
+   "pan": 1
   },
   "unknownName": {
    "address": "#nowhere",
@@ -46,50 +46,50 @@
    "current": "Build",
    "caption": "0 of 10 found Find the 10 hidden mushrooms",
    "button": false,
-   "pan": 0
+   "pan": 1
   },
   "errors": []
  },
  "switch": {
   "toGrow": {
-   "fromClickMs": 1572,
-   "brushMs": 1500
+   "fromClickMs": 1601,
+   "brushMs": 1502
   },
   "toBuild": {
-   "fromClickMs": 1516,
-   "brushMs": 1450
+   "fromClickMs": 1485,
+   "brushMs": 1433
   },
   "midway": {
    "busy": true,
    "sheets": 1,
    "skip": "visible"
   },
-  "clickAgainFinishesInMs": 46,
-  "skipControlFinishesInMs": 63,
+  "clickAgainFinishesInMs": 43,
+  "skipControlFinishesInMs": 46,
   "changedMindEndsOn": "build",
   "errors": []
  },
  "firstVisit": {
-  "firstVisitMs": 5208,
+  "firstVisitMs": 5186,
   "during": {
    "sheetInsidePlate": true,
    "mushroomsFindable": false
   },
-  "revisitMs": 1484,
+  "revisitMs": 1487,
   "errors": []
  },
  "reducedMotion": {
-  "fadeMs": 204,
-  "opacities": 15,
+  "fadeMs": 176,
+  "opacities": 13,
   "startedAt": 1,
   "strokes": "none (the sheet only fades)",
   "after": {
    "address": "#grow",
    "scene": "grow",
    "current": "Grow",
-   "caption": "0 of 10 found Find the 10 hidden mushrooms",
+   "caption": "0 of 10 found Find the 10 hidden mushrooms Grow. 0 of 10 mushrooms found.",
    "button": false,
-   "pan": 0
+   "pan": 1
   },
   "controls": [],
   "errors": []
@@ -106,9 +106,9 @@
    "address": "#grow",
    "scene": "grow",
    "current": "Grow",
-   "caption": "0 of 10 found Find the 10 hidden mushrooms",
+   "caption": "0 of 10 found Find the 10 hidden mushrooms Grow. 0 of 10 mushrooms found.",
    "button": false,
-   "pan": 0
+   "pan": 1
   },
   "focusRing": {
    "outline": "solid",

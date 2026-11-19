@@ -95,13 +95,13 @@ export class Transition {
    * the clock starts and not in the painting's first frame.
    */
   prepare(scene: Scene): void {
-    const { root, viewport, caption } = this.stage;
+    const { root, caption } = this.stage;
     const { plate, character, hunt } = scene;
     const first = root.classList.contains('is-pre');
     this.withCaption = first;
     this.clear();
-    // The sheet has the colour of the blank window it lies in.
-    const paper = getComputedStyle(viewport).backgroundColor;
+    // The sheet has the colour of the page the painting sits on.
+    const paper = getComputedStyle(this.stage.root).backgroundColor;
     this.painter = new Painter({
       width: plate.clientWidth,
       height: plate.clientHeight,
@@ -112,8 +112,9 @@ export class Transition {
       strokes: scene.config.strokes,
       seed: this.stage.seed,
     });
-    // Over the room, her shadow and the mushrooms; under the character, who is not painted.
-    plate.insertBefore(this.painter.canvas, character?.el ?? null);
+    // Over the room, her shadow and the mushrooms; under the character, who is not painted, and under the
+    // painting's soft edge, so the brush never paints past it.
+    plate.insertBefore(this.painter.canvas, character?.el ?? plate.querySelector('.hj-edge'));
     // The caption arrives with the picture the first time; afterwards it is already there and stays.
     const hidden: HTMLElement[] = [];
     if (character) hidden.push(character.el);

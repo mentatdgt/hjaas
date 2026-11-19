@@ -2,6 +2,7 @@
 // A scene knows nothing about the page around it; site.ts puts it in the window and takes it out again.
 import { PLATE, asset, idle, loadFrame, loadFrames, loadPlate } from './assets';
 import { Character } from './character';
+import { edgeAlpha, edgeCanvas, type EdgeStyle } from './edge';
 import { checkClips, clipPose, clipReaction, clipSchedule, clipsInUse, type ClipFrames, type ClipRoutine } from './clips';
 import { Hunt } from './mushrooms';
 import { Player, type Schedule } from './player';
@@ -27,6 +28,8 @@ export interface SceneHost {
   onLayout: () => void;
   /** QA: called on every pose change. */
   onPose?: (pose: string, at: number) => void;
+  /** The painting's edge: which style, and the paper it fades into, as red, green, blue. */
+  edge: { style: EdgeStyle; seed: (scene: string) => number; paper: [number, number, number] };
 }
 
 /** A character ready to go on the plate, and what is still to be fetched for her. */
@@ -148,6 +151,8 @@ export class Scene {
   character: Character | null = null;
   player: Player | null = null;
   private readonly host: SceneHost;
+  /** The painting's soft edge: always the plate's top layer. */
+  private readonly edge: HTMLCanvasElement;
   private readonly layout: ResizeObserver;
   private cast: Cast | null = null;
   private casting: Promise<void> | null = null;
@@ -159,13 +164,16 @@ export class Scene {
     this.host = host;
     this.plate = plate;
     this.hunt = hunt;
-    // Bottom to top: the room, her shadow, the mushrooms, (a first-visit painting's sheet of paper,) the character.
-    plate.append(hunt.el);
+    // Bottom to top: the room, her shadow, the mushrooms, (a first-visit painting's sheet of paper,) the
+    // character, and over them all the painting's soft edge.
+    this.edge = edgeCanvas(host.edge.style, host.edge.seed(config.id), host.edge.paper);
+    plate.append(hunt.el, this.edge);
 
     this.layout = new ResizeObserver(() => {
       if (!plate.clientWidth) return;
       // One plate pixel in CSS pixels. Only changes on resize, never during animation.
       plate.style.setProperty('--u', `${plate.clientWidth / PLATE.w}px`);
+      hunt.layout(plate.clientWidth / PLATE.w);
       this.character?.resize();
       host.onLayout();
     });
@@ -196,6 +204,7 @@ export class Scene {
 
     const hunt = await Hunt.create({
       spots: config.spots,
+      edge: edgeAlpha(host.edge.style, host.edge.seed(config.id)),
       plate,
       flyLayer: host.flyLayer,
       found: host.found,
@@ -232,7 +241,7 @@ export class Scene {
     this.cast = cast;
     this.character = character;
     if (character.shadow) this.plate.insertBefore(character.shadow, this.hunt.el);
-    this.plate.append(character.el);
+    this.plate.insertBefore(character.el, this.edge);
     this.player = new Player(character, this.rhythm());
     if (this.host.onPose) this.player.onPose = this.host.onPose;
     character.resize();
@@ -312,6 +321,8 @@ export class Scene {
     ctx.drawImage(room, r.left - origin.left, r.top - origin.top, r.width, r.height);
     this.hunt.sketch(ctx, origin);
     this.character?.sketch(ctx, origin);
+    // A pixel wider all round, so no sliver of the room shows where the two drawings' rims meet.
+    ctx.drawImage(this.edge, r.left - origin.left - 1, r.top - origin.top - 1, r.width + 2, r.height + 2);
   }
 
   destroy(): void {

@@ -1,0 +1,160 @@
+[
+ {
+  "engine": "chrome",
+  "size": "1440x900",
+  "scene": "build",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 1,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [
+   "screed 0,-7px",
+   "tiles 0,-7px",
+   "toolbox 0,-5px"
+  ],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "chrome",
+  "size": "1440x900",
+  "scene": "grow",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 1,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [
+   "floor 0,-3px"
+  ],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "chrome",
+  "size": "2560x1440",
+  "scene": "build",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 1,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [
+   "screed 0,-2px",
+   "tiles 0,-2px"
+  ],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "chrome",
+  "size": "2560x1440",
+  "scene": "grow",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 1,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "webkit",
+  "size": "390x844",
+  "scene": "build",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 1,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [
+   "screed 0,-9px",
+   "tiles 0,-9px",
+   "toolbox 0,-7px"
+  ],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "webkit",
+  "size": "390x844",
+  "scene": "grow",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 1,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [
+   "floor 0,-6px"
+  ],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "webkit",
+  "size": "360x740",
+  "scene": "build",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 1,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [
+   "screed 0,-10px",
+   "tiles 0,-10px",
+   "toolbox 0,-9px"
+  ],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "webkit",
+  "size": "360x740",
+  "scene": "grow",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 1,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [
+   "floor 0,-7px"
+  ],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "webkit",
+  "size": "320x640",
+  "scene": "build",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 1,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [
+   "screed 0,-12px",
+   "tiles 0,-13px",
+   "toolbox 0,-12px"
+  ],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "webkit",
+  "size": "320x640",
+  "scene": "grow",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 1,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [
+   "door 6,0px",
+   "floor 0,-10px"
+  ],
+  "overlaps": [],
+  "ok": true
+ }
+]

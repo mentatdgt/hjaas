@@ -11,15 +11,18 @@ const SPOTS: Spot[] = [
   { id: 'sill', art: 7, x: 421, y: 549, h: 18, tint: LIT },
   { id: 'drape', art: 8, x: 388, y: 753, h: 28, tint: SHADE, tuck: 'polygon(17% 0, 100% 0, 100% 100%, 57% 100%)' },
   { id: 'skirting', art: 2, x: 574, y: 643, h: 20, tint: LIT, grounded: true },
-  { id: 'screed', art: 6, x: 588, y: 921, h: 40, tint: SHADE, grounded: true },
-  { id: 'tiles', art: 3, x: 1152, y: 929, h: 42, tint: LIT, grounded: true },
+  // The three at the front of the floor moved up when the painting got its soft edge (screed 7 px, tiles
+  // 15 px, toolbox 21 px): the smallest moves that keep each drawing, and its tap box on the smallest phone,
+  // on solid painting (edge.test.ts).
+  { id: 'screed', art: 6, x: 588, y: 914, h: 40, tint: SHADE, grounded: true },
+  { id: 'tiles', art: 3, x: 1152, y: 914, h: 42, tint: LIT, grounded: true },
   { id: 'conduit', art: 9, x: 1181, y: 642, h: 20, tint: LIT },
   { id: 'socket', art: 1, x: 1270, y: 345, h: 18, tint: SHADE },
   // Not drawing 5: at this size its slender stem reads as a nail standing on the tiles.
   { id: 'ladder-foot', art: 7, x: 1312, y: 845, h: 36, tint: SHADE, grounded: true },
   { id: 'ladder-step', art: 4, x: 1404, y: 472, h: 24, tint: LIT },
   // The tenth is drawing 1 again, mirrored and twice the size of the one in the socket.
-  { id: 'toolbox', art: 1, x: 1432, y: 909, h: 40, flip: true, tint: SHADE, tuck: 'polygon(0 0, 61% 0, 69% 100%, 0 100%)', grounded: true },
+  { id: 'toolbox', art: 1, x: 1432, y: 888, h: 40, flip: true, tint: SHADE, tuck: 'polygon(0 0, 61% 0, 69% 100%, 0 100%)', grounded: true },
 ];
 
 // Back wall -> window light -> floor -> props. Walls and floor leave the props' corners for the last strokes.

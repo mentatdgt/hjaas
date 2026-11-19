@@ -70,52 +70,52 @@
  },
  "seams-iphone-webkit": {
   "canvas": [
-   798,
-   1124
+   828,
+   1166
   ],
-  "scale": 0.814,
+  "scale": 0.845,
   "rows": [
    {
     "clip": "mist_to_write",
     "frames": 26,
     "stillRedrawnDiffers": 0,
     "largestDifferenceOutsidePatch": 0,
-    "meanDifferenceAtPatchEdge": 0.48,
-    "shareOfEdgePixelsOver24": "0.07%",
-    "shareOfFigureChangingAtFirstFrame": "30.4%"
+    "meanDifferenceAtPatchEdge": 0.33,
+    "shareOfEdgePixelsOver24": "0.01%",
+    "shareOfFigureChangingAtFirstFrame": "29.7%"
    },
    {
     "clip": "write_loop",
     "frames": 25,
     "stillRedrawnDiffers": 0,
     "largestDifferenceOutsidePatch": 0,
-    "meanDifferenceAtPatchEdge": 1.4,
-    "shareOfEdgePixelsOver24": "0.82%",
-    "shareOfFigureChangingAtFirstFrame": "2.3%"
+    "meanDifferenceAtPatchEdge": 0.8,
+    "shareOfEdgePixelsOver24": "0.04%",
+    "shareOfFigureChangingAtFirstFrame": "1.4%"
    },
    {
     "clip": "look_up",
     "frames": 17,
     "stillRedrawnDiffers": 0,
     "largestDifferenceOutsidePatch": 0,
-    "meanDifferenceAtPatchEdge": 1.15,
-    "shareOfEdgePixelsOver24": "0.25%",
-    "shareOfFigureChangingAtFirstFrame": "1.9%"
+    "meanDifferenceAtPatchEdge": 0.69,
+    "shareOfEdgePixelsOver24": "0.02%",
+    "shareOfFigureChangingAtFirstFrame": "1.5%"
    },
    {
     "clip": "thumbs_up",
     "frames": 10,
     "stillRedrawnDiffers": 0,
     "largestDifferenceOutsidePatch": 0,
-    "meanDifferenceAtPatchEdge": 1.19,
-    "shareOfEdgePixelsOver24": "0.21%",
-    "shareOfFigureChangingAtFirstFrame": "1.2%"
+    "meanDifferenceAtPatchEdge": 0.88,
+    "shareOfEdgePixelsOver24": "0.04%",
+    "shareOfFigureChangingAtFirstFrame": "0.2%"
    }
   ]
  },
  "routine-desktop-chrome": {
   "routine": {
-   "watchedS": 37.2,
+   "watchedS": 37.3,
    "cycleS": [
     16.4
    ],
@@ -129,60 +129,60 @@
    ],
    "holdMs": {
     "aim": [
-     349,
+     351,
      1450
     ],
     "squeeze": [
-     284,
-     350
+     283,
+     351
     ],
     "lift": [
-     384,
-     483
+     382,
+     485
     ],
     "transitionFrame": [
      66,
-     99
+     100
     ],
     "writeFrame": [
-     115,
-     135
+     114,
+     136
     ],
     "blink": [
-     50,
-     51
+     48,
+     53
     ]
    },
    "blinks": 3,
-   "frames": 2234,
+   "frames": 2242,
    "longestFrameMs": 19,
    "over50": []
   },
   "fromMisting": {
    "wayHome": [],
-   "lookUpStartsMs": 376,
-   "thumbsUpMs": 2693,
-   "backAtWorkMs": 5593,
-   "reactionMs": 5217,
-   "longestFrameMs": 50,
+   "lookUpStartsMs": 381,
+   "thumbsUpMs": 2712,
+   "backAtWorkMs": 5597,
+   "reactionMs": 5216,
+   "longestFrameMs": 34,
    "over50": 0
   },
   "fromWriting": {
    "wayHome": [
     "mist_to_write"
    ],
-   "lookUpStartsMs": 2262,
-   "thumbsUpMs": 4596,
-   "backAtWorkMs": 7480,
-   "reactionMs": 5218,
-   "longestFrameMs": 67,
-   "over50": 1
+   "lookUpStartsMs": 2237,
+   "thumbsUpMs": 4572,
+   "backAtWorkMs": 7454,
+   "reactionMs": 5217,
+   "longestFrameMs": 49,
+   "over50": 0
   },
   "errors": []
  },
  "routine-iphone-webkit": {
   "routine": {
-   "watchedS": 32.7,
+   "watchedS": 33.1,
    "cycleS": [
     16.4
    ],
@@ -196,55 +196,57 @@
    ],
    "holdMs": {
     "aim": [
-     349,
-     1100
+     351,
+     1101
     ],
     "squeeze": [
-     282,
+     299,
      351
     ],
     "lift": [
-     383,
-     483
+     398,
+     468
     ],
     "transitionFrame": [
-     66,
-     93
+     47,
+     122
     ],
     "writeFrame": [
-     64,
-     185
+     68,
+     183
     ],
     "blink": [
-     50,
+     48,
      50
     ]
    },
    "blinks": 3,
-   "frames": 1955,
-   "longestFrameMs": 119,
+   "frames": 1985,
+   "longestFrameMs": 65,
    "over50": [
-    "119ms@8659"
+    "65ms@9180",
+    "54ms@24229"
    ]
   },
   "fromMisting": {
    "wayHome": [],
-   "lookUpStartsMs": 395,
-   "thumbsUpMs": 2712,
-   "backAtWorkMs": 5596,
-   "reactionMs": 5201,
-   "longestFrameMs": 99,
+   "lookUpStartsMs": 380,
+   "thumbsUpMs": 2715,
+   "backAtWorkMs": 5597,
+   "reactionMs": 5217,
+   "longestFrameMs": 92,
    "over50": 1
   },
   "fromWriting": {
    "wayHome": [
+    "write_loop",
     "mist_to_write"
    ],
-   "lookUpStartsMs": 2239,
-   "thumbsUpMs": 4572,
-   "backAtWorkMs": 7456,
+   "lookUpStartsMs": 2390,
+   "thumbsUpMs": 4725,
+   "backAtWorkMs": 7607,
    "reactionMs": 5217,
-   "longestFrameMs": 35,
+   "longestFrameMs": 41,
    "over50": 0
   },
   "errors": []
