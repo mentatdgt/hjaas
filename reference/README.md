@@ -9,6 +9,8 @@ Source of truth for how the character looks. Quinn matches these; Wren checks de
 | `hjaas3.png` | 12 expressions, **loose hair** (neutral, warm smile, delighted, laughing, curious, thinking, skeptical, determined, surprised, worried, frustrated, sad) |
 | `hjaas4.png` | The same 12 expressions, **bandana & bun** |
 | `hjaas5.png` | Extra expressions 13 Focus (tongue out) and 14 LOL, in both hair styles |
+| `hjaas6.png` | **Lab outfit:** white lab coat over a dark top, olive cargo pants, brown boots, gold pendant, round glasses, **low ponytail with a dark tie** (no bandana). Front / three-quarter / profile / rear. For the mushroom-lab scene (scene 2, "Grow"). |
+| `hjaas7.png` | 12 expressions with the **lab ponytail** and lab coat (neutral, warm smile, delighted, LOL, curious, thinking, skeptical, determined, surprised, worried, sad, soft focus). |
 
 ## Locked character traits (every frame must match)
 - Round white-lens glasses with large pupils, thick dark outline, flat cartoon colouring (no gradients or shading)
