@@ -12,8 +12,14 @@ const site = join(dirname(fileURLToPath(import.meta.url)), '..');
 const repo = join(site, '..');
 const out = join(site, 'public/assets/scene1');
 
-// Small sprites (mushrooms, logo): lossless.
-const sprite = { lossless: true, effort: 6 };
+// Small sprites (mushrooms, logo): lossy at quality 95 with exact alpha. At 3× zoom, on the floor and on the
+// phone's dark band, they show no edges or banding next to lossless; go back to lossless if a new drawing does.
+const sprite = { quality: 95, alphaQuality: 100, smartSubsample: true, effort: 6 };
+// Sprites are sized for 2× the largest the layout shows them, on the 2560 px screens it is tuned for.
+// Mushrooms: the tallest spot (mushrooms.ts SPOTS) is 42 plate px; at 2560 px a plate px is 1.53 CSS px and a
+// find pops the mushroom to 1.2×, so 77 CSS px at most. Logo: 12cqw there, 307 CSS px. Never enlarged.
+const MUSHROOM_H = 160;
+const LOGO_W = 614;
 // Rachel's 2x frames: lossy at quality 95, the bulk of the page weight. Alpha stays exact and smart chroma
 // subsampling keeps colour from bleeding across the dark outlines. Check the outlines at 3x after raising
 // or lowering the quality (qa/tools/review01.mjs outlines): raise it if halos or banding appear.
@@ -22,7 +28,7 @@ const frame = { quality: 95, alphaQuality: 100, smartSubsample: true, effort: 6 
 const plate = { nearLossless: true, quality: 60, effort: 6 };
 
 const jobs = [];
-const add = (from, to, opts = sprite) => jobs.push({ from: join(repo, from), to: join(out, to), opts });
+const add = (from, to, opts = sprite, resize) => jobs.push({ from: join(repo, from), to: join(out, to), opts, resize });
 
 add('scene/room-empty.png', 'room.webp', plate);
 
@@ -55,15 +61,17 @@ for (const f of (await readdir(join(repo, reaction))).sort()) {
 
 for (let i = 1; i <= 9; i++) {
   const n = String(i).padStart(2, '0');
-  add(`frames/003-mushrooms/approved/mushroom_${n}.png`, `mushrooms/mushroom_${n}.webp`);
+  add(`frames/003-mushrooms/approved/mushroom_${n}.png`, `mushrooms/mushroom_${n}.webp`, sprite, { height: MUSHROOM_H });
 }
 
-add('assets/logo/tape-measure-temp.png', 'logo/logo.webp');
+add('assets/logo/tape-measure-temp.png', 'logo/logo.webp', sprite, { width: LOGO_W });
 
 let total = 0;
-for (const { from, to, opts } of jobs) {
+for (const { from, to, opts, resize } of jobs) {
   await mkdir(dirname(to), { recursive: true });
-  await sharp(from).webp(opts).toFile(to);
+  const image = sharp(from);
+  if (resize) image.resize({ ...resize, withoutEnlargement: true });
+  await image.webp(opts).toFile(to);
   const size = (await stat(to)).size;
   total += size;
   console.log(`${basename(to).padEnd(22)} ${(size / 1024).toFixed(0).padStart(5)} KB`);

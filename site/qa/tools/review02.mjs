@@ -110,6 +110,53 @@ if (item === 'load-chart') {
   await sharp(Buffer.from(svg)).png().toFile('qa/review-02/02-room-load-timeline.png');
 }
 
+if (item === 'sprites') {
+  // Item 3: the largest mushroom and the logo at their largest (2560 × 1440, 2× pixels), old files and new.
+  //   node qa/tools/review02.mjs sprites <before-url> <after-url>
+  const [before, after] = process.argv.slice(3, 5);
+  const browser = await webkit.launch();
+  const capture = async (url) => {
+    const context = await browser.newContext({ viewport: { width: 2560, height: 1440 }, deviceScaleFactor: 2 });
+    const page = await context.newPage();
+    await page.goto(url);
+    await page.waitForFunction(() => document.querySelector('.hj-note.is-on'), null, { timeout: 30000 });
+    await page.waitForTimeout(1500);
+    const box = async (selector, pad) => {
+      const b = await page.locator(selector).boundingBox();
+      return { x: b.x - pad, y: b.y - pad, width: b.width + pad * 2, height: b.height + pad * 2 };
+    };
+    const shroom = await page.screenshot({ clip: await box('.hj-shroom[data-spot="tiles"]', 30) });
+    const logo = await page.screenshot({ clip: await box('.hj-logo', 12) });
+    await context.close();
+    return { shroom, logo };
+  };
+  const a = await capture(before);
+  const b = await capture(after);
+  const zoom = (png, k) => sharp(png).metadata().then((m) => sharp(png).resize({ width: m.width * k, kernel: 'nearest' }).png().toBuffer());
+  await grid('qa/review-02/03-sprites-before-after.jpg', [
+    [
+      { png: await zoom(a.shroom, 3), text: 'before: mushroom' },
+      { png: await zoom(b.shroom, 3), text: 'after: mushroom' },
+    ],
+  ]);
+  const logos = '/tmp/review02-logos.jpg';
+  await grid(logos, [
+    [
+      { png: a.logo, text: 'before: logo' },
+      { png: b.logo, text: 'after: logo' },
+    ],
+  ]);
+  // One image for the report: mushrooms (3× zoom) above, logos (1:1 device pixels) below.
+  const top = await sharp('qa/review-02/03-sprites-before-after.jpg').toBuffer();
+  const bottom = await sharp(logos).toBuffer();
+  const [mt, mb] = await Promise.all([sharp(top).metadata(), sharp(bottom).metadata()]);
+  await sharp({ create: { width: Math.max(mt.width, mb.width), height: mt.height + mb.height + 8, channels: 3, background: '#444' } })
+    .composite([{ input: top, top: 0, left: 0 }, { input: bottom, top: mt.height + 8, left: 0 }])
+    .jpeg({ quality: 85 })
+    .toFile('qa/review-02/03-sprites-before-after.jpg');
+  await browser.close();
+}
+
 if (item === 'intro') {
   const [before, after] = process.argv.slice(3);
   const browser = await webkit.launch();
