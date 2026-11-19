@@ -224,4 +224,57 @@ if (item === 'dedupe') {
   console.log(JSON.stringify(result, null, 1));
 }
 
+if (item === 'outlines') {
+  // Source PNG vs the site's lossy WebP, over the floor tone, at 3x with no smoothing; third column is the
+  // difference amplified 8x. Also: the worst colour and alpha error over every Rachel frame.
+  const bg = { r: 176, g: 122, b: 74 };
+  const regions = [
+    ['K2 thumb', '../frames/016-upscale/approved/K2.png', 'public/assets/scene1/rachel/K2.webp', { left: 480, top: 300, width: 110, height: 90 }],
+    ['K2 eyes', '../frames/016-upscale/approved/K2.png', 'public/assets/scene1/rachel/K2.webp', { left: 300, top: 240, width: 110, height: 90 }],
+    ['wink eye', '../frames/005-reaction-motion/approved/rx_wink.png', 'public/assets/scene1/rachel/reaction/rx_wink.webp', { left: 300, top: 240, width: 110, height: 90 }],
+    ['headband', '../frames/016-upscale/approved/frame_01.png', 'public/assets/scene1/rachel/frame_01.webp', { left: 270, top: 150, width: 110, height: 90 }],
+  ];
+  const S = 3;
+  const rows = [];
+  for (const [name, png, webp, r] of regions) {
+    const a = await sharp(png).extract(r).flatten({ background: bg }).raw().toBuffer();
+    const b = await sharp(webp).extract(r).flatten({ background: bg }).raw().toBuffer();
+    const d = Buffer.alloc(a.length);
+    for (let i = 0; i < a.length; i++) d[i] = Math.min(255, Math.abs(a[i] - b[i]) * 8);
+    const raw = { raw: { width: r.width, height: r.height, channels: 3 } };
+    const up = (buf) => sharp(buf, raw).resize(r.width * S, r.height * S, { kernel: 'nearest' }).png().toBuffer();
+    const cells = await Promise.all([up(a), up(b), up(d)]);
+    const w = r.width * S, h = r.height * S;
+    const label = Buffer.from(`<svg width="${w * 3 + 16}" height="30"><rect width="100%" height="100%" fill="#111"/><text x="8" y="21" font-family="sans-serif" font-size="17" fill="#fff">${name}: source PNG | WebP q95 | difference x8</text></svg>`);
+    rows.push(await sharp({ create: { width: w * 3 + 16, height: h + 30, channels: 3, background: '#444' } })
+      .composite([{ input: label, left: 0, top: 0 }, ...cells.map((input, i) => ({ input, left: i * (w + 8), top: 30 }))]).png().toBuffer());
+  }
+  const rm = await Promise.all(rows.map((r) => sharp(r).metadata()));
+  let top = 0;
+  await sharp({ create: { width: rm[0].width, height: rm.reduce((s, m) => s + m.height + 6, 0), channels: 3, background: '#222' } })
+    .composite(rows.map((input, i) => { const o = { input, left: 0, top }; top += rm[i].height + 6; return o; }))
+    .jpeg({ quality: 92 })
+    .toFile('qa/review-01/07-outlines-3x.jpg');
+
+  const { readdir } = await import('node:fs/promises');
+  const pairs = [
+    ...['frame_01', 'frame_02', 'frame_03', 'frame_04', 'blink_half', 'blink_closed', 'K1', 'K2'].map((f) => [`../frames/016-upscale/approved/${f}.png`, `public/assets/scene1/rachel/${f}.webp`]),
+    ...(await readdir('public/assets/scene1/rachel/reaction')).filter((f) => f.endsWith('.webp')).map((f) => [`../frames/005-reaction-motion/approved/${f.replace('.webp', '.png')}`, `public/assets/scene1/rachel/reaction/${f}`]),
+  ];
+  let worst = { psnr: Infinity }, maxAlpha = 0;
+  for (const [png, webp] of pairs) {
+    const a = await sharp(png).ensureAlpha().raw().toBuffer();
+    const b = await sharp(webp).ensureAlpha().raw().toBuffer();
+    let se = 0, n = 0;
+    for (let i = 0; i < a.length; i += 4) {
+      maxAlpha = Math.max(maxAlpha, Math.abs(a[i + 3] - b[i + 3]));
+      if (a[i + 3] < 8) continue;
+      for (let c = 0; c < 3; c++) { se += (a[i + c] - b[i + c]) ** 2; n++; }
+    }
+    const psnr = 10 * Math.log10((255 * 255) / (se / n));
+    if (psnr < worst.psnr) worst = { file: webp.split('/').pop(), psnr: +psnr.toFixed(1) };
+  }
+  console.log(JSON.stringify({ frames: pairs.length, worstPsnrDb: worst, maxAlphaError: maxAlpha }));
+}
+
 await browser.close();

@@ -14,9 +14,11 @@ const out = join(site, 'public/assets/scene1');
 
 // Small sprites (mushrooms, logo): lossless.
 const sprite = { lossless: true, effort: 6 };
-// Rachel's 2x frames and the plate: near-lossless. About a third smaller than lossless,
-// and no visible difference; the 19 Rachel frames are most of the page weight.
-const frame = { nearLossless: true, quality: 60, effort: 6 };
+// Rachel's 2x frames: lossy at quality 95, the bulk of the page weight. Alpha stays exact and smart chroma
+// subsampling keeps colour from bleeding across the dark outlines. Check the outlines at 3x after raising
+// or lowering the quality (qa/tools/review01.mjs outlines): raise it if halos or banding appear.
+const frame = { quality: 95, alphaQuality: 100, smartSubsample: true, effort: 6 };
+// The plate: near-lossless. About a third smaller than lossless, and no visible difference.
 const plate = { nearLossless: true, quality: 60, effort: 6 };
 
 const jobs = [];
