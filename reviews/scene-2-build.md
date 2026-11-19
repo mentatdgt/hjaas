@@ -26,10 +26,11 @@ Rachel's lab animation frames (`tasks/017-lab-keyposes.md`) are still being draw
 
 ## 3. Scene 2: the lab
 - **Plate:** `scene/mushroom-lab.png` (1672×941), framed the same way as scene 1 in the elegant page.
-- **Rachel's spot:** open floor at about 45–68% of the width, lower half, in front of the shelving (see `tasks/008-backdrop-mushroom-lab.md`). Until her frames exist, show a **placeholder**: a cut-out of the three-quarter pose from `reference/hjaas6.png`, at a believable scale for her spot. Mark it clearly `// PLACEHOLDER until tasks/017` and list it in the report. No reaction in scene 2 until real frames exist; finds still count and animate the caption.
+- **Staging (user's choice):** `reference/mockups/mockup-lab-1-trolley-CHOSEN.png`. Rachel stands behind a small stainless trolley on wheels in the middle of the lab, misting a tray. Her frames (task 017) will be **1672×941 images registered to the plate**, so they're drawn at plate position (0,0) and need no placement maths. Build it that way.
+- **Placeholder until task 017 lands:** use the chosen mock-up itself as the scene-2 plate, so Rachel and the trolley appear in place, still. Swap to `scene/mushroom-lab.png` plus her frames when they exist. Mark it `// PLACEHOLDER until tasks/017` and list it in the report. No reaction in scene 2 until real frames exist; finds still count and animate the caption.
 - **10 mushrooms:** choose believable hiding spots in the lab, e.g. under the bottom shelf, behind a jar, beside the humidifier, on a bench corner, by the floor drain. Spread them across the whole width so phone visitors swipe. Same depth scaling, tap-box and no-glow rules as scene 1. White mushrooms are hard to see on white surfaces, so use them sparingly and fairly.
 - **Lighting tint:** the lab is cool white. Tint the mushrooms so they sit in that light, not scene 1's warm tint.
-- **Phones:** the same pannable 2:3 window, initially centred on Rachel's spot.
+- **Phones:** the same pannable 2:3 window, initially centred on Rachel and the trolley (about plate x 680–1180).
 
 ## 4. Data-driven idle routine (ready for the frames)
 The routine engine reads a manifest such as `routine.json` describing:
