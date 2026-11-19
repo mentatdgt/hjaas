@@ -24,7 +24,8 @@ http://localhost:4173/.
 | `src/main.ts`, `index.html` | The host page. It only mounts the scene. |
 | `src/scene1/` | Everything the scene needs: markup, styles, state, motion. Mount it anywhere with `mountScene1(element)`. |
 | `public/assets/scene1/` | WebP copies of the approved art, made by `npm run assets`. Never edit these by hand. |
-| `scripts/build-assets.mjs` | Reads `frames/`, `scene/` and `assets/` (never writes there) and makes the WebP copies and the favicon. |
+| `scripts/build-assets.mjs` | Reads `frames/`, `scene/` and `assets/` (never writes there) and makes the WebP copies, the favicon and the link-preview image (`og-image.png`). |
+| `public/robots.txt` | Blocks all crawling until launch. Open it up then, and give `og:image` in `index.html` the full address (`TODO(launch)`). |
 | `qa/` | Evidence: recordings, screenshots, traces, reviews, and `REPORT.md`. `qa/tools/` holds the scripts that made them. |
 
 Inside `src/scene1/`:
