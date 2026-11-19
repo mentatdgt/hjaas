@@ -29,6 +29,87 @@ async function grid(out, rows) {
     .toFile(out);
 }
 
+if (item === 'load') {
+  // Item 2: when the room request starts and when the brush starts, on cold loads of production builds.
+  //   node qa/tools/review02.mjs load <before-url> <after-url> [runs=3] [latency-ms=0]
+  const [before, after] = process.argv.slice(3, 5);
+  const runs = Number(process.argv[5] ?? 3);
+  const latency = Number(process.argv[6] ?? 0);
+  const measure = async (url) => {
+    const browser = await webkit.launch();
+    const context = await browser.newContext({ ...devices['iPhone 13'] });
+    if (latency) await context.route('**/*', async (route) => {
+      await new Promise((r) => setTimeout(r, latency));
+      await route.continue();
+    });
+    await context.addInitScript(() => {
+      new MutationObserver((list) => {
+        for (const m of list) for (const n of m.addedNodes) if (n.classList?.contains('hj-paint')) window.__brush = performance.now();
+      }).observe(document, { childList: true, subtree: true });
+    });
+    const page = await context.newPage();
+    let roomRequests = 0;
+    page.on('request', (r) => r.url().includes('room.webp') && roomRequests++);
+    await page.goto(url);
+    await page.waitForFunction(() => window.__brush > 0, null, { timeout: 60000 });
+    const r = await page.evaluate(() => {
+      const entries = performance.getEntriesByType('resource');
+      const room = entries.find((e) => e.name.includes('room.webp'));
+      const script = entries.find((e) => /\/assets\/index-.*\.js/.test(e.name));
+      return {
+        scriptStart: Math.round(script.startTime),
+        roomStart: Math.round(room.startTime),
+        roomEnd: Math.round(room.responseEnd),
+        brush: Math.round(window.__brush),
+      };
+    });
+    await browser.close();
+    return { ...r, roomRequests };
+  };
+  const out = { latency, before: [], after: [] };
+  for (let i = 0; i < runs; i++) {
+    out.before.push(await measure(before));
+    out.after.push(await measure(after));
+  }
+  for (const k of ['before', 'after']) for (const r of out[k]) console.log(k.padEnd(7), JSON.stringify(r));
+  const keep = process.argv[7];
+  if (keep) {
+    const fs = await import('node:fs');
+    fs.writeFileSync(keep, `${JSON.stringify(out)}\n`, { flag: 'a' });
+  }
+}
+
+if (item === 'load-chart') {
+  // Item 2's screenshot: the median run of each recorded setting as a timeline, before above after.
+  const fs = await import('node:fs');
+  const sets = fs.readFileSync(process.argv[3], 'utf8').trim().split('\n').map((l) => JSON.parse(l));
+  const W = 1100;
+  const scale = (W - 260) / Math.max(...sets.flatMap((s) => [...s.before, ...s.after].map((r) => r.brush))) * 0.95;
+  let y = 20;
+  let body = '';
+  const bar = (x0, x1, colour, text) => {
+    body += `<rect x="${240 + x0 * scale}" y="${y}" width="${Math.max(2, (x1 - x0) * scale)}" height="18" fill="${colour}"/>`;
+    body += `<text x="${246 + x1 * scale}" y="${y + 14}" font-size="13" fill="#ddd" font-family="sans-serif">${text}</text>`;
+  };
+  for (const set of sets) {
+    body += `<text x="16" y="${y + 14}" font-size="15" fill="#fff" font-family="sans-serif" font-weight="bold">${set.latency ? `+${set.latency} ms per request` : 'localhost, no added delay'}</text>`;
+    y += 28;
+    for (const k of ['before', 'after']) {
+      const median = (key) => set[k].map((run) => run[key]).sort((a, b) => a - b)[Math.floor(set[k].length / 2)];
+      const r = { roomStart: median('roomStart'), roomEnd: median('roomEnd'), brush: median('brush') };
+      body += `<text x="32" y="${y + 14}" font-size="14" fill="#ccc" font-family="sans-serif">${k}: room request</text>`;
+      bar(r.roomStart, r.roomEnd, k === 'before' ? '#b4573a' : '#5aa05a', `${r.roomStart}–${r.roomEnd} ms`);
+      y += 24;
+      body += `<text x="32" y="${y + 14}" font-size="14" fill="#ccc" font-family="sans-serif">${k}: brush starts</text>`;
+      bar(r.brush, r.brush + 4, '#e8c060', `${r.brush} ms`);
+      y += 30;
+    }
+    y += 10;
+  }
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${y + 10}"><rect width="100%" height="100%" fill="#1d120b"/>${body}</svg>`;
+  await sharp(Buffer.from(svg)).png().toFile('qa/review-02/02-room-load-timeline.png');
+}
+
 if (item === 'intro') {
   const [before, after] = process.argv.slice(3);
   const browser = await webkit.launch();

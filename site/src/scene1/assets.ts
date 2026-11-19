@@ -54,20 +54,16 @@ async function decodeFrame(url: string): Promise<Frame> {
 
 /** The room plate, once as an <img> source and once as decoded pixels for the intro's brush. One download. */
 export async function loadRoom(): Promise<{ src: string; pixels: CanvasImageSource }> {
-  const url = asset('room.webp');
-  if (typeof createImageBitmap === 'function') {
-    try {
-      const response = await fetch(url);
-      if (response.ok) {
-        const blob = await response.blob();
-        return { src: URL.createObjectURL(blob), pixels: await createImageBitmap(blob) };
-      }
-    } catch {
-      // Fall through.
-    }
-  }
-  const img = await loadImage(url);
-  return { src: img.src, pixels: img };
+  // An <img> request, not fetch(): it is the only kind WebKit matches to the image preload in index.html
+  // (a fetch() downloaded the room a second time).
+  const img = new Image();
+  img.setAttribute('fetchpriority', 'high');
+  img.decoding = 'async';
+  img.src = asset('room.webp');
+  await img.decode();
+  let pixels: CanvasImageSource = img;
+  if (typeof createImageBitmap === 'function') pixels = await createImageBitmap(img).catch(() => img);
+  return { src: img.src, pixels };
 }
 
 /** Resolves when the browser has a quiet moment (or soon enough anyway). */
