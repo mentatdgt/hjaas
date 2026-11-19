@@ -7,7 +7,7 @@
 // page scrolls under the same finger. This file only sets the starting position, adds mouse dragging for
 // narrow desktop windows, and shows the one-time swipe hint.
 import { PLATE } from './assets';
-import { gsap, reducedMotion } from './motion';
+import { reducedMotion } from './motion';
 
 // The crop starts on Rachel and the box. A 4:5 crop shows plate x 514-1267 (scene/README.md), a 2:3 crop
 // x 590-1220 (review 01); crops in between are framed in between. Plate px, at full plate height.
@@ -34,12 +34,13 @@ export class Pan {
   private panned: boolean;
 
   /**
-   * `saved` is what an earlier visit left: whether the visitor has ever panned, and where (plate x at the
+   * `hintHost` is where the swipe hint goes (the caption). `saved` is what an earlier visit left: whether the visitor has ever panned, and where (plate x at the
    * middle of the window). `onPan` is called with the new position on every pan.
    */
   constructor(
     viewport: HTMLElement,
     plate: HTMLElement,
+    hintHost: HTMLElement,
     saved: { panned: boolean; x: number | null },
     onPan: (centreX: number) => void,
   ) {
@@ -48,6 +49,15 @@ export class Pan {
     this.panned = saved.panned;
     this.centreX = saved.x;
     this.onPan = onPan;
+    if (!saved.panned) {
+      // Made now and shown later, so that showing it changes nothing but its opacity.
+      const hint = document.createElement('p');
+      hint.className = 'hj-swipe';
+      hint.setAttribute('aria-hidden', 'true');
+      hint.innerHTML = `${CHEVRON}<span>${SWIPE_HINT}</span>${CHEVRON.replace('<svg ', '<svg class="is-right" ')}`;
+      hintHost.append(hint);
+      this.hint = hint;
+    }
     viewport.addEventListener('scroll', this.onScroll, { passive: true });
     this.enableMouseDrag();
   }
@@ -72,15 +82,9 @@ export class Pan {
   }
 
   /** A small, still line in the caption, once the scene has settled. It leaves at the first pan. */
-  showHint(host: HTMLElement): void {
-    if (this.panned || !this.active || this.hint) return;
-    const hint = document.createElement('p');
-    hint.className = 'hj-swipe';
-    hint.setAttribute('aria-hidden', 'true');
-    hint.innerHTML = `${CHEVRON}<span>${SWIPE_HINT}</span>${CHEVRON.replace('<svg ', '<svg class="is-right" ')}`;
-    host.append(hint);
-    this.hint = hint;
-    gsap.fromTo(hint, { opacity: 0 }, { opacity: 1, duration: reducedMotion() ? 0 : 0.3, ease: 'none', delay: 0.4 });
+  showHint(): void {
+    if (this.panned || !this.active) return;
+    this.hint?.classList.add('is-on');
   }
 
   destroy(): void {
@@ -101,7 +105,8 @@ export class Pan {
     const hint = this.hint;
     if (!hint) return;
     this.hint = null;
-    gsap.to(hint, { opacity: 0, duration: 0.2, ease: 'none', onComplete: () => hint.remove() });
+    hint.classList.remove('is-on');
+    window.setTimeout(() => hint.remove(), 400);
   }
 
   /** Touch pans natively. A mouse has no native drag-to-scroll, so narrow desktop windows get one here. */

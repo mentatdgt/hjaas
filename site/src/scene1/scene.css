@@ -165,7 +165,7 @@
   pointer-events: none;
 }
 
-/* The intro paints the room onto this canvas, stroke by stroke. It then stays on as the room. */
+/* The intro's sheet of blank paper, over the room and the mushrooms. The brush rubs it away (paint.ts). */
 .hj-paint {
   position: absolute;
   inset: 0;
@@ -527,12 +527,26 @@ a.hj-logo:active {
   transform: scale(0.98);
 }
 
-/* Quiet controls at the end of the caption: Skip, Pause animation, Replay painting. */
+/* Quiet controls at the end of the caption: Skip while the room is painted, then Pause animation and
+   Replay painting. Skip shares the first control's place. */
 .hj-controls {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-items: end;
   gap: 0 22px;
   margin-left: auto;
+}
+
+.hj-controls > :nth-child(1) {
+  grid-area: 1 / 2;
+}
+
+.hj-controls > :nth-child(2) {
+  grid-area: 1 / 1;
+}
+
+.hj-controls > :nth-child(3) {
+  grid-area: 1 / 2;
 }
 
 .hj-link {
@@ -557,8 +571,9 @@ a.hj-logo:active {
     text-decoration-color 140ms ease;
 }
 
-.hj-link[hidden] {
-  display: none;
+/* Controls swap by visibility, not display: all three keep their place, so nothing on the page moves. */
+.hj-link.is-off {
+  visibility: hidden;
 }
 
 .hj-link:active {
@@ -1191,8 +1206,14 @@ a.hj-logo:active {
     }
 
     .hj-controls {
+      justify-content: start;
+      justify-items: start;
       gap: 0 26px;
       margin-left: 0;
+    }
+
+    .hj-controls > :nth-child(1) {
+      grid-area: 1 / 1;
     }
 
     .hj-swipe {
@@ -1207,6 +1228,13 @@ a.hj-logo:active {
       color: var(--hj-ink-soft);
       font-size: 14px;
       pointer-events: none;
+      opacity: 0;
+      transition: opacity 200ms linear;
+    }
+
+    .hj-swipe.is-on {
+      opacity: 1;
+      transition: opacity 300ms linear 400ms;
     }
 
     .hj-swipe svg {

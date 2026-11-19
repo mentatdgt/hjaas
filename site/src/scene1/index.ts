@@ -27,6 +27,27 @@ export interface Scene1 {
   destroy(): void;
 }
 
+/**
+ * Resolves when the page has kept up with the screen for `calmMs` in a row (never sooner than two frames,
+ * never later than `limitMs`). Whatever was set up just before has then been drawn, so the motion that
+ * follows does not start with a stalled frame.
+ */
+function steadyFrames(calmMs = 130, limitMs = 1500): Promise<void> {
+  return new Promise((resolve) => {
+    const start = performance.now();
+    let last = start;
+    let calmSince = start;
+    let frames = 0;
+    const tick = (now: number): void => {
+      if (now - last > 30) calmSince = now;
+      last = now;
+      if (++frames >= 2 && (now - calmSince >= calmMs || now - start >= limitMs)) resolve();
+      else requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  });
+}
+
 const TOTAL = SPOTS.length;
 const HINT_AFTER_S = 60;
 
@@ -144,7 +165,7 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
 
   // Where a phone visitor leaves the room is where they find it next time.
   let panSave = 0;
-  const pan = new Pan(viewport, plate, { panned: progress.panned, x: progress.panX }, (centreX) => {
+  const pan = new Pan(viewport, plate, captionRow, { panned: progress.panned, x: progress.panX }, (centreX) => {
     progress.panned = true;
     progress.panX = Math.round(centreX);
     window.clearTimeout(panSave);
@@ -152,16 +173,18 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
   });
   cleanup.push(() => pan.destroy());
 
-  // The quiet controls at the end of the caption.
+  // The quiet controls at the end of the caption. All three are laid out from the start and swapped by
+  // visibility alone (scene.css), so showing or hiding one never moves anything on the page.
   const control = (label: string): HTMLButtonElement => {
     const button = document.createElement('button');
     button.type = 'button';
-    button.className = 'hj-link';
+    button.className = 'hj-link is-off';
     button.textContent = label;
-    button.hidden = true;
     q('.hj-controls').append(button);
     return button;
   };
+  const show = (button: HTMLButtonElement, on: boolean): void => void button.classList.toggle('is-off', !on);
+  const shown = (button: HTMLButtonElement): boolean => !button.classList.contains('is-off');
   const skip = control(COPY.skip);
   const pause = control(COPY.pause);
   const replay = control(COPY.replay);
@@ -190,7 +213,7 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
   // "Skip" is there from the first moment of a painting, even while the art is still loading.
   let skipped = false;
   let intro: Intro | undefined;
-  skip.hidden = firstIntro !== 'paint';
+  show(skip, firstIntro === 'paint');
   skip.addEventListener('click', () => {
     skipped = true;
     intro?.skip();
@@ -201,11 +224,12 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
    */
   const showControls = (painting: boolean): void => {
     const focused = document.activeElement;
-    skip.hidden = !painting;
-    pause.hidden = replay.hidden = painting || reducedMotion();
+    show(skip, painting);
+    show(pause, !painting && !reducedMotion());
+    show(replay, !painting && !reducedMotion());
     // Keyboard focus follows the control that took the other's place.
-    if (focused === skip && skip.hidden && !replay.hidden) replay.focus({ preventScroll: true });
-    if (focused === replay && replay.hidden && !skip.hidden) skip.focus({ preventScroll: true });
+    if (focused === skip && !shown(skip) && shown(replay)) replay.focus({ preventScroll: true });
+    if (focused === replay && !shown(replay) && shown(skip)) skip.focus({ preventScroll: true });
   };
   cleanup.push(onReducedMotionChange(() => showControls(intro?.painting ?? false)));
 
@@ -270,9 +294,9 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
   };
 
   void (async () => {
-    const [roomImage, frames, theLogo] = await Promise.all([loadRoom(), loadLoopFrames(), Logo.create(options.homeHref)]);
+    const [roomSrc, frames, theLogo] = await Promise.all([loadRoom(), loadLoopFrames(), Logo.create(options.homeHref)]);
     if (destroyed) return;
-    room.src = roomImage.src;
+    room.src = roomSrc;
     await room.decode().catch(() => {});
     rachel = new Rachel(frames);
     const theRachel = rachel;
@@ -302,6 +326,7 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
     });
     if (destroyed) return;
 
+    // Bottom to top: the room, her shadow, the mushrooms, (the brush's sheet of paper,) Rachel.
     plate.append(rachel.shadow, hunt.el, rachel.el);
     // The logo keeps its own proportions; the page reserves exactly that space for it.
     logo = theLogo;
@@ -336,8 +361,6 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
     intro = new Intro({
       root,
       plate,
-      room,
-      roomPixels: roomImage.pixels,
       rachel: theRachel.el,
       shadow: theRachel.shadow,
       mushrooms: hunt.el,
@@ -354,9 +377,11 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
     // opening it later never costs a frame of Rachel's hammering, and get the brush ready.
     await document.fonts?.ready;
     form.prepare();
-    if (firstIntro === 'paint' && !skipped) theIntro.prepare();
-    // Let the setup above reach the screen before any motion starts.
-    await new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
+    const painting = firstIntro === 'paint' && !skipped;
+    if (painting) theIntro.prepare();
+    // Let the setup above reach the screen before any motion starts. Before a painting that includes the
+    // whole picture being drawn for the first time, under the blank sheet: wait until frames arrive on time.
+    await (painting ? steadyFrames() : steadyFrames(0));
     if (destroyed) return;
     if (debug) (debug.marks as Record<string, number>).introStart = Math.round(performance.now());
     await theIntro.play(skipped ? 'off' : firstIntro);
@@ -364,7 +389,7 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
     if (debug) (debug.marks as Record<string, number>).introEnd = Math.round(performance.now());
     settled = true;
     showControls(false);
-    pan.showHint(captionRow);
+    pan.showHint();
 
     // "Replay painting": she puts the hammer down, the picture clears to a blank sheet, and it is painted again.
     let clearing = false;
