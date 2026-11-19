@@ -30,14 +30,24 @@ export class Pan {
   private centreX: number | null = null;
   private hint: HTMLElement | null = null;
   private settingScroll = false;
-  private readonly onFirstPan: () => void;
+  private readonly onPan: (centreX: number) => void;
   private panned: boolean;
 
-  constructor(viewport: HTMLElement, plate: HTMLElement, alreadyPanned: boolean, onFirstPan: () => void) {
+  /**
+   * `saved` is what an earlier visit left: whether the visitor has ever panned, and where (plate x at the
+   * middle of the window). `onPan` is called with the new position on every pan.
+   */
+  constructor(
+    viewport: HTMLElement,
+    plate: HTMLElement,
+    saved: { panned: boolean; x: number | null },
+    onPan: (centreX: number) => void,
+  ) {
     this.viewport = viewport;
     this.plate = plate;
-    this.panned = alreadyPanned;
-    this.onFirstPan = onFirstPan;
+    this.panned = saved.panned;
+    this.centreX = saved.x;
+    this.onPan = onPan;
     viewport.addEventListener('scroll', this.onScroll, { passive: true });
     this.enableMouseDrag();
   }
@@ -82,10 +92,8 @@ export class Pan {
     const u = this.plate.clientWidth / PLATE.w;
     if (!u || this.settingScroll) return;
     this.centreX = (this.viewport.scrollLeft + this.viewport.clientWidth / 2) / u;
-    if (!this.panned) {
-      this.panned = true;
-      this.onFirstPan();
-    }
+    this.panned = true;
+    this.onPan(this.centreX);
     this.dismissHint();
   };
 

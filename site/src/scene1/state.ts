@@ -10,9 +10,11 @@ export interface Progress {
   seenIntro: boolean;
   /** The visitor has panned the room on a phone, so the swipe hint is not shown again. */
   panned: boolean;
+  /** Where they left the room on a phone: the plate x at the middle of the window. Null until they pan. */
+  panX: number | null;
 }
 
-const empty = (): Progress => ({ found: [], unlocked: false, seenIntro: false, panned: false });
+const empty = (): Progress => ({ found: [], unlocked: false, seenIntro: false, panned: false, panX: null });
 
 export function loadProgress(): Progress {
   try {
@@ -25,6 +27,7 @@ export function loadProgress(): Progress {
       unlocked: data.unlocked === true,
       seenIntro: data.seenIntro === true,
       panned: data.panned === true,
+      panX: typeof data.panX === 'number' && Number.isFinite(data.panX) ? data.panX : null,
     };
   } catch {
     return empty();

@@ -1,6 +1,6 @@
 // Switches read from the page URL. They exist for QA and for Wren's reviews; visitors never need them.
-//   ?seed=7        repeatable hammer rhythm and intro strokes
-//   ?intro=full    force the full intro   (quick | off also work)
+//   ?seed=7        repeatable hammer rhythm and brush strokes
+//   ?intro=full    force the first-visit painting   (quick: the 200 ms reveal of a return visit | off: no intro)
 //   ?reset         forget saved progress before starting
 //   ?found=9       start with this many mushrooms already found (not saved)
 //   ?hint=5        seconds before the hint wiggle (default 60)

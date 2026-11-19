@@ -3,8 +3,10 @@
 // How it holds frame rate: nothing is masked. Each stroke is drawn onto one canvas with the room plate
 // itself as the paint (a canvas pattern), and a frame only draws the short new length of each stroke.
 // The wash happens on the same canvas, which then stays on as the room: nothing is swapped at the end.
+// Where nothing is painted yet the canvas is clear, and the blank sheet under it shows through.
 // There are no mask images; the strokes are a few hand-placed paths, roughened by a seeded generator.
 import { PLATE } from './assets';
+import { EASE_STROKE } from './motion';
 import { seeded, type Rng } from './schedule';
 
 interface StrokePlan {
@@ -18,24 +20,25 @@ interface StrokePlan {
 }
 
 // Back wall -> window light -> floor -> props. Walls and floor leave the props' corners for the last strokes.
+// Unhurried: each stroke takes 0.48 to 1.28 s, and they overlap unevenly, so the painting runs 4.32 s.
 const STROKES: StrokePlan[] = [
   // Back wall
-  { via: [[890, 80], [1250, 95], [1275, 255], [905, 265], [890, 425], [1275, 440]], width: 250, at: 0, takes: 0.62 },
-  { via: [[1690, 40], [-10, 45], [-10, 165], [700, 170]], width: 195, at: 0.14, takes: 0.56 },
-  { via: [[1275, 590], [900, 565]], width: 225, at: 0.36, takes: 0.3 },
+  { via: [[890, 80], [1250, 95], [1275, 255], [905, 265], [890, 425], [1275, 440]], width: 250, at: 0, takes: 1.24 },
+  { via: [[1690, 40], [-10, 45], [-10, 165], [700, 170]], width: 195, at: 0.28, takes: 1.12 },
+  { via: [[1275, 590], [900, 565]], width: 225, at: 0.72, takes: 0.6 },
   // Window light
-  { via: [[30, 265], [700, 255], [725, 400], [40, 405], [20, 545], [720, 545]], width: 235, at: 0.56, takes: 0.64 },
-  { via: [[805, 130], [795, 640]], width: 245, at: 0.84, takes: 0.34 },
+  { via: [[30, 265], [700, 255], [725, 400], [40, 405], [20, 545], [720, 545]], width: 235, at: 1.12, takes: 1.28 },
+  { via: [[805, 130], [795, 640]], width: 245, at: 1.68, takes: 0.68 },
   // Floor
-  { via: [[900, 690], [545, 655], [545, 765], [1265, 775]], width: 195, at: 1.06, takes: 0.5 },
-  { via: [[1275, 880], [520, 870]], width: 225, at: 1.24, takes: 0.4 },
-  { via: [[560, 948], [1275, 952]], width: 150, at: 1.4, takes: 0.28 },
+  { via: [[900, 690], [545, 655], [545, 765], [1265, 775]], width: 195, at: 2.12, takes: 1 },
+  { via: [[1275, 880], [520, 870]], width: 225, at: 2.48, takes: 0.8 },
+  { via: [[560, 948], [1275, 952]], width: 150, at: 2.8, takes: 0.56 },
   // Props
-  { via: [[60, 440], [265, 600], [60, 720], [335, 800], [120, 925], [490, 905]], width: 235, at: 1.44, takes: 0.52 },
-  { via: [[425, 615], [505, 700], [645, 700]], width: 150, at: 1.62, takes: 0.24 },
-  { via: [[1345, 90], [1320, 420]], width: 180, at: 1.56, takes: 0.28 },
-  { via: [[1485, 60], [1400, 480], [1300, 865]], width: 235, at: 1.62, takes: 0.38 },
-  { via: [[1605, 80], [1640, 500], [1505, 700], [1645, 905]], width: 245, at: 1.76, takes: 0.4 },
+  { via: [[60, 440], [265, 600], [60, 720], [335, 800], [120, 925], [490, 905]], width: 235, at: 2.88, takes: 1.04 },
+  { via: [[425, 615], [505, 700], [645, 700]], width: 150, at: 3.24, takes: 0.48 },
+  { via: [[1345, 90], [1320, 420]], width: 180, at: 3.12, takes: 0.56 },
+  { via: [[1485, 60], [1400, 480], [1300, 865]], width: 235, at: 3.24, takes: 0.76 },
+  { via: [[1605, 80], [1640, 500], [1505, 700], [1645, 905]], width: 245, at: 3.52, takes: 0.8 },
 ];
 
 /** When the last stroke lifts off, in seconds (before any time scaling). */
@@ -155,8 +158,6 @@ function buildStroke(plan: StrokePlan, rnd: Rng): Stroke {
   return { plan, x, y, nx, ny, length: (n - 1) * SAMPLE_PX, step: SAMPLE_PX, bristles, drawn: 0 };
 }
 
-// The hand speeds up into a stroke and eases off at the end.
-const brushEase = (t: number): number => (t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2);
 
 export class Painter {
   readonly canvas: HTMLCanvasElement;
@@ -203,7 +204,8 @@ export class Painter {
       }
       // The brush centre runs a little past the end so the trailing bristles finish too.
       const reach = stroke.length + plan.width * 0.6;
-      const target = brushEase(Math.min(1, t)) * reach;
+      // The hand speeds up into a stroke and eases off at the end.
+      const target = EASE_STROKE(Math.min(1, t)) * reach;
       if (target > stroke.drawn) {
         this.lay(stroke, stroke.drawn, target);
         stroke.drawn = target;

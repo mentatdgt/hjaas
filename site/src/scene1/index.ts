@@ -5,7 +5,7 @@ import { PLATE, loadLoopFrames, loadRoom, setAssetBase } from './assets';
 import { Caption } from './caption';
 import { flags } from './flags';
 import { ContactForm } from './form';
-import { playIntro, type IntroMode } from './intro';
+import { Intro, type IntroMode } from './intro';
 import { Logo } from './logo';
 import { onReducedMotionChange, reducedMotion } from './motion';
 import { Hunt, SPOTS } from './mushrooms';
@@ -36,6 +36,8 @@ const COPY = {
   name: 'Hui Jie',
   tagline: 'TODO(copy): what Hui Jie does, in one line',
   picture: 'Hui Jie at work. Ten mushrooms are hidden in the room.',
+  skip: 'Skip',
+  replay: 'Replay painting',
   prompt: `Find the ${TOTAL} hidden mushrooms`,
   prize: `Find all ${TOTAL} to reach Hui Jie`,
   done: `You found all ${TOTAL}`,
@@ -134,11 +136,58 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
   // A new visitor is told what to look for; one who has started, what the hunt is for.
   else caption.say(found.size === 0 ? COPY.prompt : COPY.prize);
 
-  const pan = new Pan(viewport, plate, progress.panned, () => {
+  // Where a phone visitor leaves the room is where they find it next time.
+  let panSave = 0;
+  const pan = new Pan(viewport, plate, { panned: progress.panned, x: progress.panX }, (centreX) => {
     progress.panned = true;
-    save();
+    progress.panX = Math.round(centreX);
+    window.clearTimeout(panSave);
+    panSave = window.setTimeout(save, 300);
   });
   cleanup.push(() => pan.destroy());
+
+  // The quiet controls at the end of the caption.
+  const control = (label: string): HTMLButtonElement => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'hj-link';
+    button.textContent = label;
+    button.hidden = true;
+    q('.hj-controls').append(button);
+    return button;
+  };
+  const skip = control(COPY.skip);
+  const replay = control(COPY.replay);
+
+  // A first visit gets the painting. A return visit, or reduced motion, gets everything together in 200 ms.
+  const firstIntro: IntroMode =
+    flags.intro === 'off'
+      ? 'off'
+      : reducedMotion()
+        ? 'reveal'
+        : flags.intro === 'full'
+          ? 'paint'
+          : flags.intro === 'quick' || progress.seenIntro
+            ? 'reveal'
+            : 'paint';
+  // "Skip" is there from the first moment of a painting, even while the art is still loading.
+  let skipped = false;
+  let intro: Intro | undefined;
+  skip.hidden = firstIntro !== 'paint';
+  skip.addEventListener('click', () => {
+    skipped = true;
+    intro?.skip();
+  });
+  /** Skip while the room is being painted; afterwards, the way to see it painted again. */
+  const showControls = (painting: boolean): void => {
+    const focused = document.activeElement;
+    skip.hidden = !painting;
+    replay.hidden = painting || reducedMotion();
+    // Keyboard focus follows the control that took the other's place.
+    if (focused === skip && skip.hidden && !replay.hidden) replay.focus({ preventScroll: true });
+    if (focused === replay && replay.hidden && !skip.hidden) skip.focus({ preventScroll: true });
+  };
+  cleanup.push(onReducedMotionChange(() => showControls(intro?.painting ?? false)));
 
   const layout = new ResizeObserver(() => {
     // One plate pixel in CSS pixels. Only changes on resize, never during animation.
@@ -262,13 +311,6 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
       (window as unknown as { __hj: unknown }).__hj = debug;
     }
 
-    const introMode: IntroMode =
-      flags.intro === 'off'
-        ? 'off'
-        : reducedMotion()
-          ? 'reduced'
-          : (flags.intro ?? (progress.seenIntro ? 'quick' : 'full'));
-
     // While nothing is on screen yet: lay the contact sheet out once (with its real font), so that
     // opening it later never costs a frame of Rachel's hammering.
     await document.fonts?.ready;
@@ -277,7 +319,7 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
     await new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
     if (destroyed) return;
     if (debug) (debug.marks as Record<string, number>).introStart = Math.round(performance.now());
-    await playIntro(introMode, {
+    intro = new Intro({
       root,
       plate,
       room,
@@ -292,10 +334,32 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
         if (!document.hidden) thePlayer.start();
       },
     });
+    const theIntro = intro;
+    await theIntro.play(skipped ? 'off' : firstIntro);
     if (destroyed) return;
     if (debug) (debug.marks as Record<string, number>).introEnd = Math.round(performance.now());
     settled = true;
+    showControls(false);
     pan.showHint(captionRow);
+
+    // "Replay painting": she puts the hammer down, the picture clears to a blank sheet, and it is painted again.
+    let clearing = false;
+    replay.addEventListener('click', () => {
+      if (theIntro.painting || clearing) return;
+      clearing = true;
+      working = false;
+      thePlayer.rest();
+      const leave = plate.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 160, easing: 'ease', fill: 'forwards' });
+      void leave.finished.then(async () => {
+        if (destroyed) return;
+        const painted = theIntro.play('paint');
+        leave.cancel();
+        clearing = false;
+        showControls(true);
+        await painted;
+        if (!destroyed) showControls(false);
+      });
+    });
     if (!progress.seenIntro) {
       progress.seenIntro = true;
       save();

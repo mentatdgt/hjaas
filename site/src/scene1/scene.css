@@ -212,6 +212,15 @@
   visibility: hidden;
 }
 
+/* A return visit, or reduced motion: no brushwork, everything shows together in 200 ms. */
+.hj-scene.is-revealing .hj-room,
+.hj-scene.is-revealing .hj-shadow,
+.hj-scene.is-revealing .hj-rachel,
+.hj-scene.is-revealing .hj-mushrooms,
+.hj-scene.is-revealing .hj-caption-main {
+  transition: opacity 200ms linear;
+}
+
 /* ---------- Mushrooms ---------- */
 
 .hj-mushrooms {

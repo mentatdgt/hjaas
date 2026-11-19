@@ -49,6 +49,21 @@ export class RachelPlayer {
     cancelAnimationFrame(this.raf);
   }
 
+  /**
+   * Stop and put her back on the contact frame, dropping any reaction. start() then begins a fresh swing.
+   * Used when the room is painted again.
+   */
+  rest(): void {
+    this.stop();
+    this.queued = null;
+    this.reaction = null;
+    this.reactionDone?.();
+    this.reactionDone = null;
+    this.elapsed = 0;
+    this.step = { pose: CONTACT_POSE, ms: 0 };
+    this.rachel.show(CONTACT_POSE);
+  }
+
   /** Swap the rhythm (reduced motion on or off). Takes effect at the next step. */
   setLoop(loop: Iterator<Step>): void {
     this.loop = loop;
