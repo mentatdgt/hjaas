@@ -9,14 +9,21 @@
 import { PLATE } from './assets';
 import { reducedMotion } from './motion';
 
-// The crop starts on Rachel and the box. A 4:5 crop shows plate x 514-1267 (scene/README.md), a 2:3 crop
-// x 590-1220 (review 01); crops in between are framed in between. Plate px, at full plate height.
-const START_4_5 = { centre: (514 + 1267) / 2, width: (PLATE.h * 4) / 5 };
-const START_2_3 = { centre: (590 + 1220) / 2, width: (PLATE.h * 2) / 3 };
+/** A scene's opening framing on a phone: the plate x ranges shown by a 4:5 window and by a 2:3 window. */
+export interface PhoneStart {
+  wide: readonly [number, number];
+  tall: readonly [number, number];
+}
 
-function startCentre(visibleWidth: number): number {
-  const t = Math.min(1, Math.max(0, (START_4_5.width - visibleWidth) / (START_4_5.width - START_2_3.width)));
-  return START_4_5.centre + (START_2_3.centre - START_4_5.centre) * t;
+// Windows between 4:5 and 2:3 are framed in between. Plate px, at full plate height.
+const WIDTH_4_5 = (PLATE.h * 4) / 5;
+const WIDTH_2_3 = (PLATE.h * 2) / 3;
+
+function startCentre(start: PhoneStart, visibleWidth: number): number {
+  const wide = (start.wide[0] + start.wide[1]) / 2;
+  const tall = (start.tall[0] + start.tall[1]) / 2;
+  const t = Math.min(1, Math.max(0, (WIDTH_4_5 - visibleWidth) / (WIDTH_4_5 - WIDTH_2_3)));
+  return wide + (tall - wide) * t;
 }
 
 const CHEVRON = `<svg viewBox="0 0 10 16" aria-hidden="true" focusable="false"><path d="M7.5 2 2.5 8l5 6"/></svg>`;
@@ -25,7 +32,8 @@ const SWIPE_HINT = 'Swipe sideways';
 
 export class Pan {
   private readonly viewport: HTMLElement;
-  private readonly plate: HTMLElement;
+  private plate: HTMLElement | null = null;
+  private start: PhoneStart = { wide: [0, PLATE.w], tall: [0, PLATE.w] };
   /** Plate x at the middle of the crop, once the visitor has panned. Until then the start framing applies. */
   private centreX: number | null = null;
   private hint: HTMLElement | null = null;
@@ -34,22 +42,14 @@ export class Pan {
   private panned: boolean;
 
   /**
-   * `hintHost` is where the swipe hint goes (the caption). `saved` is what an earlier visit left: whether the visitor has ever panned, and where (plate x at the
-   * middle of the window). `onPan` is called with the new position on every pan.
+   * `hintHost` is where the swipe hint goes (the caption). `panned`: the visitor has panned before, so no
+   * hint. `onPan` is called with the new position (plate x at the middle of the window) on every pan.
    */
-  constructor(
-    viewport: HTMLElement,
-    plate: HTMLElement,
-    hintHost: HTMLElement,
-    saved: { panned: boolean; x: number | null },
-    onPan: (centreX: number) => void,
-  ) {
+  constructor(viewport: HTMLElement, hintHost: HTMLElement, panned: boolean, onPan: (centreX: number) => void) {
     this.viewport = viewport;
-    this.plate = plate;
-    this.panned = saved.panned;
-    this.centreX = saved.x;
+    this.panned = panned;
     this.onPan = onPan;
-    if (!saved.panned) {
+    if (!panned) {
       // Made now and shown later, so that showing it changes nothing but its opacity.
       const hint = document.createElement('p');
       hint.className = 'hj-swipe';
@@ -62,6 +62,24 @@ export class Pan {
     this.enableMouseDrag();
   }
 
+  /**
+   * Point the pan at a scene's plate: its opening framing, and where this visitor left it (plate x at the
+   * middle of the window, or null). Call when the plate goes into the window.
+   */
+  use(plate: HTMLElement, start: PhoneStart, savedX: number | null): void {
+    this.plate = plate;
+    this.start = start;
+    this.centreX = savedX;
+    this.layout();
+  }
+
+  /** The plate x at the window's left edge, and how many plate px the window shows. */
+  get view(): { x: number; width: number } {
+    const u = this.plate ? this.plate.clientWidth / PLATE.w : 0;
+    if (!u) return { x: 0, width: PLATE.w };
+    return { x: this.viewport.scrollLeft / u, width: this.viewport.clientWidth / u };
+  }
+
   /** True when the room is wider than its window, i.e. the visitor can pan. */
   get active(): boolean {
     return this.viewport.scrollWidth - this.viewport.clientWidth > 1;
@@ -69,10 +87,10 @@ export class Pan {
 
   /** Keep the same part of the room in the middle when the layout changes. */
   layout(): void {
-    if (!this.active) return;
+    if (!this.plate || !this.active) return;
     const u = this.plate.clientWidth / PLATE.w;
     if (!u) return;
-    const centre = this.centreX ?? startCentre(this.viewport.clientWidth / u);
+    const centre = this.centreX ?? startCentre(this.start, this.viewport.clientWidth / u);
     this.settingScroll = true;
     this.viewport.scrollLeft = centre * u - this.viewport.clientWidth / 2;
     // The scroll event for this arrives asynchronously; ignore that one.
@@ -93,7 +111,7 @@ export class Pan {
   }
 
   private onScroll = (): void => {
-    const u = this.plate.clientWidth / PLATE.w;
+    const u = this.plate ? this.plate.clientWidth / PLATE.w : 0;
     if (!u || this.settingScroll) return;
     this.centreX = (this.viewport.scrollLeft + this.viewport.clientWidth / 2) / u;
     this.panned = true;

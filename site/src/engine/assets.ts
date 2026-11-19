@@ -1,11 +1,11 @@
-// Asset loading for scene 1. Everything Rachel shows is decoded before it is needed,
-// so a pose switch is only ever a draw call.
+// Asset loading. Everything a character shows is decoded before it is needed, so a pose switch is only
+// ever a draw call. Paths are relative to the site's assets folder: `shared/…` or a scene's own `scene1/…`.
 
 export const PLATE = { w: 1672, h: 941 } as const;
 
 export type Frame = ImageBitmap | HTMLImageElement;
 
-let base = `${import.meta.env.BASE_URL}assets/scene1/`;
+let base = `${import.meta.env.BASE_URL}assets/`;
 
 export function setAssetBase(url: string): void {
   base = url.endsWith('/') ? url : `${url}/`;
@@ -52,14 +52,14 @@ async function decodeFrame(url: string): Promise<Frame> {
   return loadImage(url);
 }
 
-/** The room plate, downloaded and decoded. Resolves with the address to give the scene's <img>. */
-export async function loadRoom(): Promise<string> {
+/** A scene's plate, downloaded and decoded. Resolves with the address to give the scene's <img>. */
+export async function loadPlate(path: string): Promise<string> {
   // An <img> request, not fetch(): it is the only kind WebKit matches to the image preload in index.html
   // (a fetch() downloaded the room a second time).
   const img = new Image();
   img.setAttribute('fetchpriority', 'high');
   img.decoding = 'async';
-  img.src = asset('room.webp');
+  img.src = asset(path);
   await img.decode();
   return img.src;
 }
@@ -78,10 +78,8 @@ export function frameSize(frame: Frame): { w: number; h: number } {
     : { w: frame.width, h: frame.height };
 }
 
-export const LOOP_FRAMES = ['frame_01', 'frame_02', 'frame_03', 'frame_04', 'blink_half', 'blink_closed'] as const;
-export type LoopFrame = (typeof LOOP_FRAMES)[number];
-
-export async function loadLoopFrames(): Promise<Map<string, Frame>> {
-  const frames = await Promise.all(LOOP_FRAMES.map((name) => loadFrame(asset(`rachel/${name}.webp`))));
-  return new Map(LOOP_FRAMES.map((name, i) => [name, frames[i]]));
+/** Decodes the named frames in `dir` (a folder under the assets root, with a trailing slash). */
+export async function loadFrames(dir: string, names: readonly string[]): Promise<Map<string, Frame>> {
+  const frames = await Promise.all(names.map((name) => loadFrame(asset(`${dir}${name}.webp`))));
+  return new Map(names.map((name, i) => [name, frames[i]]));
 }

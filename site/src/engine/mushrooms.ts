@@ -1,50 +1,13 @@
-// The hunt: ten tiny mushrooms hidden around the room.
+// The hunt: a scene's ten tiny mushrooms, hidden around its room.
 import { asset, loadImage } from './assets';
 import { flags } from './flags';
 import { EASE_OUT, gsap, reducedMotion } from './motion';
+import type { Spot } from './types';
 
-export interface Spot {
-  /** Stable id, saved in localStorage. Never reuse or renumber. */
-  id: string;
-  /** Which drawing: frames/003-mushrooms/approved/mushroom_NN.png */
-  art: number;
-  /** Plate px: the centre of the drawing, left to right. */
-  x: number;
-  /** Plate px: where the drawing's base rests. */
-  y: number;
-  /** Height in plate px. Further back in the room means smaller. */
-  h: number;
-  flip?: boolean;
-  /** CSS filter so it sits in that spot's light. Static, never animated. */
-  tint?: string;
-  /** CSS clip-path, in % of the drawing's box: hides the part tucked behind something in the plate. */
-  tuck?: string;
-  /** Draw a small contact shadow (for mushrooms standing on a surface). */
-  grounded?: boolean;
-}
-
-// Left to right, which is also the Tab order.
-// Sizes follow depth: about 18 px at the back wall, about 42 px at the front edge of the floor.
-const SHADE = 'brightness(0.84) saturate(0.92) sepia(0.12)';
-const LIT = 'brightness(1.02) saturate(1.05) sepia(0.14)';
-export const SPOTS: Spot[] = [
-  { id: 'sill', art: 7, x: 421, y: 549, h: 18, tint: LIT },
-  { id: 'drape', art: 8, x: 388, y: 753, h: 28, tint: SHADE, tuck: 'polygon(17% 0, 100% 0, 100% 100%, 57% 100%)' },
-  { id: 'skirting', art: 2, x: 574, y: 643, h: 20, tint: LIT, grounded: true },
-  { id: 'screed', art: 6, x: 588, y: 921, h: 40, tint: SHADE, grounded: true },
-  { id: 'tiles', art: 3, x: 1152, y: 929, h: 42, tint: LIT, grounded: true },
-  { id: 'conduit', art: 9, x: 1181, y: 642, h: 20, tint: LIT },
-  { id: 'socket', art: 1, x: 1270, y: 345, h: 18, tint: SHADE },
-  // Not drawing 5: at this size its slender stem reads as a nail standing on the tiles.
-  { id: 'ladder-foot', art: 7, x: 1312, y: 845, h: 36, tint: SHADE, grounded: true },
-  { id: 'ladder-step', art: 4, x: 1404, y: 472, h: 24, tint: LIT },
-  // The tenth is drawing 1 again, mirrored and twice the size of the one in the socket.
-  { id: 'toolbox', art: 1, x: 1432, y: 909, h: 40, flip: true, tint: SHADE, tuck: 'polygon(0 0, 61% 0, 69% 100%, 0 100%)', grounded: true },
-];
-
-const artUrl = (art: number): string => asset(`mushrooms/mushroom_${String(art).padStart(2, '0')}.webp`);
+const artUrl = (art: number): string => asset(`shared/mushrooms/mushroom_${String(art).padStart(2, '0')}.webp`);
 
 export interface HuntOptions {
+  spots: readonly Spot[];
   plate: HTMLElement;
   /** Layer above everything, where a collected mushroom flies. */
   flyLayer: HTMLElement;
@@ -68,7 +31,7 @@ export class Hunt {
     this.el.className = 'hj-mushrooms';
     if (flags.debug) this.el.classList.add('is-debug');
 
-    for (const spot of SPOTS) {
+    for (const spot of options.spots) {
       if (options.found.has(spot.id)) continue;
       const w = spot.h * (aspect.get(spot.art) ?? 1);
       const button = document.createElement('button');
@@ -103,7 +66,7 @@ export class Hunt {
 
   /** Decodes the drawings first, so sizes are known and nothing pops in. */
   static async create(options: HuntOptions): Promise<Hunt> {
-    const arts = [...new Set(SPOTS.map((spot) => spot.art))];
+    const arts = [...new Set(options.spots.map((spot) => spot.art))];
     const images = await Promise.all(arts.map((art) => loadImage(artUrl(art))));
     const aspect = new Map(arts.map((art, i) => [art, images[i].naturalWidth / images[i].naturalHeight]));
     return new Hunt(options, aspect);
@@ -111,6 +74,52 @@ export class Hunt {
 
   get remaining(): number {
     return this.buttons.size;
+  }
+
+  /**
+   * Copy the mushrooms still hidden onto another canvas (the sheet the brush rubs away when the visitor
+   * leaves this scene). `origin` is that canvas's place on the page; the context works in CSS px.
+   */
+  sketch(ctx: CanvasRenderingContext2D, origin: DOMRect): void {
+    const tints = 'filter' in ctx;
+    for (const button of this.buttons.values()) {
+      const art = button.querySelector<HTMLElement>('.hj-shroom-art')!;
+      const img = art.querySelector('img')!;
+      const r = art.getBoundingClientRect();
+      const x = r.left - origin.left;
+      const y = r.top - origin.top;
+      ctx.save();
+      if (button.classList.contains('is-grounded')) {
+        // The same contact shadow as .hj-shroom.is-grounded::before in site.css.
+        ctx.save();
+        ctx.translate(x + r.width / 2, y + r.height);
+        ctx.scale(r.width * 0.45, r.height * 0.11);
+        const soft = ctx.createRadialGradient(0, 0, 0, 0, 0, 1);
+        soft.addColorStop(0, 'rgba(50, 25, 8, 0.42)');
+        soft.addColorStop(1, 'rgba(50, 25, 8, 0)');
+        ctx.fillStyle = soft;
+        ctx.fillRect(-1, -1, 2, 2);
+        ctx.restore();
+      }
+      // The part tucked behind something stays hidden: the same polygon as the CSS clip-path.
+      const points = [...art.style.clipPath.matchAll(/(-?[\d.]+)%?\s+(-?[\d.]+)%?/g)];
+      if (points.length >= 3) {
+        ctx.beginPath();
+        for (const [, px, py] of points) ctx.lineTo(x + (Number(px) / 100) * r.width, y + (Number(py) / 100) * r.height);
+        ctx.closePath();
+        ctx.clip();
+      }
+      // Its light. (Safari's canvas has no filters; there the copy is untinted for the second it is on screen.)
+      if (tints && art.style.filter) ctx.filter = art.style.filter;
+      if (img.classList.contains('is-flipped')) {
+        ctx.translate(x + r.width, y);
+        ctx.scale(-1, 1);
+        ctx.drawImage(img, 0, 0, r.width, r.height);
+      } else {
+        ctx.drawImage(img, x, y, r.width, r.height);
+      }
+      ctx.restore();
+    }
   }
 
   /** One unfound mushroom gives a single tiny wiggle. Prefers one the visitor can currently see. */

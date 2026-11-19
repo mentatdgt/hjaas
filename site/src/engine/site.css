@@ -1,5 +1,5 @@
-/* Scene 1, the elegant version: one framed illustration on a paper page.
-   Every rule is scoped under .hj-scene so the scene can move to another route untouched. */
+/* The site: one framed illustration on a paper page, and a small menu to move between scenes.
+   Every rule is scoped under .hj-scene so the site can move to another route untouched. */
 
 .hj-scene {
   --plate-w: 1672;
@@ -165,13 +165,18 @@
   pointer-events: none;
 }
 
-/* The intro's sheet of blank paper, over the room and the mushrooms. The brush rubs it away (paint.ts). */
+/* The sheet the brush rubs away (paint.ts): blank paper over a scene being painted for the first time. */
 .hj-paint {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
+}
+
+/* Between scenes the sheet is a copy of the picture being left, and lies over the window itself. */
+.hj-paint.is-over-window {
+  z-index: 2;
 }
 
 .hj-shadow {

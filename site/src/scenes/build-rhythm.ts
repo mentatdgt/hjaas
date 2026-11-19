@@ -1,12 +1,8 @@
-// Hammer rhythm, ported from schedule() in tools/preview_timing.py. The site never plays the
-// frames at a fixed rate: every swing is rolled fresh, so the loop never repeats.
+// Scene 1's idle routine: the hammer rhythm, ported from schedule() in tools/preview_timing.py. The site
+// never plays the frames at a fixed rate: every swing is rolled fresh, so the loop never repeats.
+// (It stays as code, not a routine manifest, so that it keeps matching the script it was ported from.)
 
-export interface Step {
-  pose: string;
-  ms: number;
-}
-
-export type Rng = () => number;
+import type { Rng, Step } from '../engine/steps';
 
 type Range = readonly [number, number];
 
@@ -33,18 +29,6 @@ const BLINK: ReadonlyArray<Step> = [
   { pose: 'blink_half', ms: 40 },
 ];
 const BLINK_MS = 150;
-
-/** Small seeded generator (mulberry32) for repeatable QA runs; the live site uses Math.random. */
-export function seeded(seed: number): Rng {
-  let a = seed >>> 0;
-  return () => {
-    a = (a + 0x6d2b79f5) >>> 0;
-    let t = a;
-    t = Math.imul(t ^ (t >>> 15), t | 1);
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
 
 const randint = (rnd: Rng, [lo, hi]: Range): number => lo + Math.floor(rnd() * (hi - lo + 1));
 const uniform = (rnd: Rng, lo: number, hi: number): number => lo + rnd() * (hi - lo);
@@ -80,14 +64,6 @@ export function* hammerSchedule(rnd: Rng = Math.random): Generator<Step, never> 
     }
     swingsUntilPause--;
   }
-}
-
-/**
- * Paused, or reduced motion: she holds her working pose. The player keeps ticking, so a find is still
- * answered and the hammering picks up again within a fifth of a second of being asked to.
- */
-export function* holdSchedule(): Generator<Step, never> {
-  for (;;) yield { pose: CONTACT, ms: 200 };
 }
 
 export const CONTACT_POSE = CONTACT;

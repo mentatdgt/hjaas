@@ -2,8 +2,8 @@
 // frames and their hold times; new in-betweens or the wink (tasks/015) arrive as a new manifest plus
 // image files, with no code changes.
 import { asset, idle, loadFrame } from './assets';
-import type { Rachel } from './rachel';
-import type { Step } from './schedule';
+import type { Character } from './character';
+import type { Step } from './steps';
 
 interface ReactionManifest {
   canvas?: [number, number];
@@ -17,11 +17,13 @@ export interface Reaction {
   still: Step[];
 }
 
-const DIR = 'rachel/reaction/';
-
-/** Loads the manifest and decodes every frame it names. Resolves once the reaction is ready to play. */
-export async function loadReaction(rachel: Rachel): Promise<Reaction> {
-  const sharing = loadShared();
+/**
+ * Loads the manifest and decodes every frame it names. Resolves once the reaction is ready to play.
+ * `sceneDir` is the scene's assets folder and `dir` the reaction's folder inside it (both end in a slash).
+ */
+export async function loadReaction(rachel: Character, sceneDir: string, dir: string): Promise<Reaction> {
+  const DIR = sceneDir + dir;
+  const sharing = loadShared(DIR);
   const response = await fetch(asset(`${DIR}reaction.json`));
   if (!response.ok) throw new Error(`reaction.json: ${response.status}`);
   const manifest = (await response.json()) as ReactionManifest;
@@ -34,7 +36,7 @@ export async function loadReaction(rachel: Rachel): Promise<Reaction> {
   for (const file of files) {
     await idle();
     // The site serves WebP copies of the delivered PNGs. A copy shared with the loop is the loop's own decoded frame.
-    const url = asset(shared[file] ?? DIR + file.replace(/\.png$/i, '.webp'));
+    const url = asset(file in shared ? sceneDir + shared[file] : DIR + file.replace(/\.png$/i, '.webp'));
     rachel.add(poseName(file), await loadFrame(url));
   }
 
@@ -43,7 +45,7 @@ export async function loadReaction(rachel: Rachel): Promise<Reaction> {
 }
 
 /** Reaction files that are byte-identical to an upscaled frame, mapped to that one copy (made by `npm run assets`). */
-async function loadShared(): Promise<Record<string, string>> {
+async function loadShared(DIR: string): Promise<Record<string, string>> {
   try {
     const response = await fetch(asset(`${DIR}shared.json`));
     return response.ok ? ((await response.json()) as Record<string, string>) : {};

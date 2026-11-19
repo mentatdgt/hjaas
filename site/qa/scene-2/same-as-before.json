@@ -1,0 +1,144 @@
+{
+ "before": "http://localhost:5199/",
+ "after": "http://localhost:5173/",
+ "exact": 11,
+ "of": 15,
+ "largestDifference": 4,
+ "rows": [
+  {
+   "size": "1440x900",
+   "state": "first screen",
+   "sameSize": true,
+   "differingPixels": 1,
+   "of": 1296000,
+   "largestDifference": 4,
+   "errors": []
+  },
+  {
+   "size": "1440x900",
+   "state": "one found",
+   "sameSize": true,
+   "differingPixels": 1,
+   "of": 1296000,
+   "largestDifference": 1,
+   "errors": []
+  },
+  {
+   "size": "1440x900",
+   "state": "nine found",
+   "sameSize": true,
+   "differingPixels": 1,
+   "of": 1296000,
+   "largestDifference": 2,
+   "errors": []
+  },
+  {
+   "size": "1440x900",
+   "state": "ten found, button",
+   "sameSize": true,
+   "differingPixels": 0,
+   "of": 1296000,
+   "largestDifference": 0,
+   "errors": []
+  },
+  {
+   "size": "1440x900",
+   "state": "form open",
+   "sameSize": true,
+   "differingPixels": 0,
+   "of": 1296000,
+   "largestDifference": 0,
+   "errors": []
+  },
+  {
+   "size": "390x844",
+   "state": "first screen",
+   "sameSize": true,
+   "differingPixels": 0,
+   "of": 1316640,
+   "largestDifference": 0,
+   "errors": []
+  },
+  {
+   "size": "390x844",
+   "state": "one found",
+   "sameSize": true,
+   "differingPixels": 6460,
+   "of": 1316640,
+   "largestDifference": 1,
+   "errors": []
+  },
+  {
+   "size": "390x844",
+   "state": "nine found",
+   "sameSize": true,
+   "differingPixels": 0,
+   "of": 1316640,
+   "largestDifference": 0,
+   "errors": []
+  },
+  {
+   "size": "390x844",
+   "state": "ten found, button",
+   "sameSize": true,
+   "differingPixels": 0,
+   "of": 1316640,
+   "largestDifference": 0,
+   "errors": []
+  },
+  {
+   "size": "390x844",
+   "state": "form open",
+   "sameSize": true,
+   "differingPixels": 0,
+   "of": 1316640,
+   "largestDifference": 0,
+   "errors": []
+  },
+  {
+   "size": "360x740",
+   "state": "first screen",
+   "sameSize": true,
+   "differingPixels": 0,
+   "of": 1065600,
+   "largestDifference": 0,
+   "errors": []
+  },
+  {
+   "size": "360x740",
+   "state": "one found",
+   "sameSize": true,
+   "differingPixels": 0,
+   "of": 1065600,
+   "largestDifference": 0,
+   "errors": []
+  },
+  {
+   "size": "360x740",
+   "state": "nine found",
+   "sameSize": true,
+   "differingPixels": 0,
+   "of": 1065600,
+   "largestDifference": 0,
+   "errors": []
+  },
+  {
+   "size": "360x740",
+   "state": "ten found, button",
+   "sameSize": true,
+   "differingPixels": 0,
+   "of": 1065600,
+   "largestDifference": 0,
+   "errors": []
+  },
+  {
+   "size": "360x740",
+   "state": "form open",
+   "sameSize": true,
+   "differingPixels": 0,
+   "of": 1065600,
+   "largestDifference": 0,
+   "errors": []
+  }
+ ]
+}

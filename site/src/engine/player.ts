@@ -1,18 +1,20 @@
-import type { Rachel } from './rachel';
-import { CONTACT_POSE, type Step } from './schedule';
+import type { Character } from './character';
+import type { Step } from './steps';
 
 // A frame that arrives late is absorbed: time accumulates and the schedule catches up,
 // so one slow frame never shifts the rhythm. After a real stall we don't fast-forward further than this.
 const MAX_CATCH_UP_MS = 250;
 
 /**
- * Plays Rachel's poses from a schedule, on requestAnimationFrame with accumulated time.
- * A reaction can be queued at any moment; it always starts from, and returns to, the contact frame.
+ * Plays a character's poses from a schedule, on requestAnimationFrame with accumulated time.
+ * A reaction can be queued at any moment; it always starts from, and returns to, the rest frame
+ * (scene 1: the hammer's contact frame).
  */
-export class RachelPlayer {
-  private readonly rachel: Rachel;
+export class Player {
+  private readonly rachel: Character;
+  private readonly rest: string;
   private loop: Iterator<Step>;
-  private step: Step = { pose: CONTACT_POSE, ms: 0 };
+  private step: Step;
   private elapsed = 0;
   private last = 0;
   private raf = 0;
@@ -26,8 +28,10 @@ export class RachelPlayer {
   /** Called on every pose change. Used by QA to log the rhythm. */
   onPose: ((pose: string, at: number) => void) | null = null;
 
-  constructor(rachel: Rachel, loop: Iterator<Step>) {
-    this.rachel = rachel;
+  constructor(character: Character, loop: Iterator<Step>) {
+    this.rachel = character;
+    this.rest = character.rest;
+    this.step = { pose: this.rest, ms: 0 };
     this.loop = loop;
   }
 
@@ -50,18 +54,18 @@ export class RachelPlayer {
   }
 
   /**
-   * Stop and put her back on the contact frame, dropping any reaction. start() then begins a fresh swing.
+   * Stop and put her back on the rest frame, dropping any reaction. start() then begins the routine afresh.
    * Used when the room is painted again.
    */
-  rest(): void {
+  settle(): void {
     this.stop();
     this.queued = null;
     this.reaction = null;
     this.reactionDone?.();
     this.reactionDone = null;
     this.elapsed = 0;
-    this.step = { pose: CONTACT_POSE, ms: 0 };
-    this.rachel.show(CONTACT_POSE);
+    this.step = { pose: this.rest, ms: 0 };
+    this.rachel.show(this.rest);
   }
 
   /** Swap the rhythm (reduced motion on or off). Takes effect at the next step. */
@@ -79,7 +83,7 @@ export class RachelPlayer {
       this.reactionDone = resolve;
       this.queued = steps;
       // On the contact frame already: go now. Otherwise the swing finishes first, so the hammer never teleports.
-      if (this.step.pose === CONTACT_POSE) {
+      if (this.step.pose === this.rest) {
         this.elapsed = 0;
         this.beginReaction();
       }
@@ -108,11 +112,11 @@ export class RachelPlayer {
       this.reaction = null;
       this.reactionDone?.();
       this.reactionDone = null;
-      this.enter({ pose: CONTACT_POSE, ms: 320 + Math.random() * 160 });
+      this.enter({ pose: this.rest, ms: 320 + Math.random() * 160 });
       return;
     }
     const next = this.nextLoopStep();
-    if (this.queued && next.pose === CONTACT_POSE) {
+    if (this.queued && next.pose === this.rest) {
       // The swing has landed. The reaction takes the place of this contact hold.
       this.beginReaction();
       return;

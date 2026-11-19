@@ -46,7 +46,7 @@ export class Logo {
   }
 
   static async create(homeHref?: string): Promise<Logo> {
-    return new Logo(await loadImage(asset('logo/logo.webp')), homeHref);
+    return new Logo(await loadImage(asset('shared/logo/logo.webp')), homeHref);
   }
 
   /** Size the glint canvas and run the logo through it once, so the first real glint has nothing to set up. */

@@ -1,6 +1,7 @@
 // The hunt's caption under the picture: "3 of 10 found" beside a small mushroom, and a line saying what
-// the hunt is for. Plain text on the page, with one quick, quiet update per find. When all the mushrooms
-// are found, the caption gives way to the "Contact Hui Jie" button.
+// the hunt is for. Plain text on the page, with one quick, quiet update per find. Each scene has its own
+// count. The first time any scene reaches 10 of 10, the "Contact Hui Jie" button joins the caption, and
+// from then on it stays, in every scene.
 import { CSS_EASE_OUT, reducedMotion } from './motion';
 
 export const MUSHROOM_ICON = `
@@ -25,21 +26,19 @@ export class Caption {
   private readonly note: HTMLParagraphElement;
   private readonly status: HTMLParagraphElement;
   private readonly total: number;
-  private value: number;
+  private value = 0;
 
-  constructor(total: number, value: number) {
+  constructor(total: number) {
     this.total = total;
-    this.value = value;
 
     this.el = document.createElement('div');
     this.el.className = 'hj-caption-main';
-    this.el.dataset.state = 'counting';
     this.el.innerHTML = `
+      <button class="hj-contact is-waiting" type="button" aria-haspopup="dialog">${MUSHROOM_ICON}Contact Hui Jie</button>
       <p class="hj-tally" aria-hidden="true">
         <span class="hj-tally-icon">${MUSHROOM_ICON}</span>
-        <span><span class="hj-tally-n">${value}</span> of ${total} found</span>
+        <span><span class="hj-tally-n">0</span> of ${total} found</span>
       </p>
-      <button class="hj-contact is-waiting" type="button" aria-haspopup="dialog">${MUSHROOM_ICON}Contact Hui Jie</button>
       <p class="hj-note" aria-hidden="true"></p>
       <p class="hj-sr" role="status" aria-live="polite"></p>
     `;
@@ -62,6 +61,39 @@ export class Caption {
   }
 
   /**
+   * Show a scene's state, with no ceremony: its count, the line beside it, and whether the Contact button
+   * has been earned. A finished scene shows only its line; the count has done its job.
+   */
+  set(count: number, note: string, unlocked: boolean): void {
+    this.value = count;
+    this.number.textContent = String(count);
+    this.tally.hidden = count >= this.total;
+    this.action.classList.toggle('is-waiting', !unlocked);
+    this.note.textContent = note;
+  }
+
+  /** The same, as a short cross-fade: out, change, in. For the unlock, a finished scene, a change of scene. */
+  change(count: number, note: string, unlocked: boolean, announce = ''): void {
+    if (announce) this.status.textContent = announce;
+    if (reducedMotion() || !this.el.isConnected) {
+      this.set(count, note, unlocked);
+      return;
+    }
+    const leave = this.el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 140, easing: 'ease', fill: 'forwards' });
+    void leave.finished.then(() => {
+      this.set(count, note, unlocked);
+      leave.cancel();
+      this.el.animate(
+        [
+          { opacity: 0, transform: 'translateY(4px)' },
+          { opacity: 1, transform: 'none' },
+        ],
+        { duration: 260, easing: CSS_EASE_OUT },
+      );
+    });
+  }
+
+  /**
    * A mushroom has landed: the number changes, with one short rise and fade (200 ms).
    * `also` is added to the screen-reader announcement.
    */
@@ -80,40 +112,7 @@ export class Caption {
   }
 
   get unlocked(): boolean {
-    return this.el.dataset.state === 'unlocked';
-  }
-
-  /**
-   * The hunt is complete: the caption fades out and the "Contact Hui Jie" button fades in where it stood,
-   * with `note` beside it. `animate: false` restores the button for a returning visitor.
-   */
-  unlock(animate: boolean, note = ''): void {
-    if (this.unlocked) return;
-    this.el.dataset.state = 'unlocked';
-    const swap = (): void => {
-      this.tally.hidden = true;
-      this.action.classList.remove('is-waiting');
-      this.note.textContent = note;
-    };
-    if (animate) {
-      this.status.textContent = `All ${this.total} mushrooms found. The Contact Hui Jie button is now available.`;
-    }
-    if (!animate || reducedMotion()) {
-      swap();
-      return;
-    }
-    const leave = this.el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 140, easing: 'ease', fill: 'forwards' });
-    void leave.finished.then(() => {
-      swap();
-      leave.cancel();
-      this.el.animate(
-        [
-          { opacity: 0, transform: 'translateY(4px)' },
-          { opacity: 1, transform: 'none' },
-        ],
-        { duration: 260, easing: CSS_EASE_OUT },
-      );
-    });
+    return !this.action.classList.contains('is-waiting');
   }
 
   /** The line beside the count. A change of words is a short cross-fade, not a movement. */

@@ -14,7 +14,8 @@ import { join } from 'node:path';
 import sharp from 'sharp';
 
 const base = process.env.HJ_URL ?? 'http://localhost:5173/';
-const out = new URL('../review-03/', import.meta.url).pathname;
+// HJ_OUT=qa/scene-2/ writes somewhere else (a later round re-running these checks keeps review 03's evidence as it was).
+const out = process.env.HJ_OUT ? new URL(`../../${process.env.HJ_OUT.replace(/\/?$/, '/')}`, import.meta.url).pathname : new URL('../review-03/', import.meta.url).pathname;
 await mkdir(out, { recursive: true });
 const SPOTS = ['sill', 'drape', 'skirting', 'screed', 'tiles', 'conduit', 'socket', 'ladder-foot', 'ladder-step', 'toolbox'];
 const chrome = (headless = true) => chromium.launch({ channel: 'chrome', headless });

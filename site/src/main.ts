@@ -1,5 +1,6 @@
-import { mountScene1 } from './scene1';
+import { mountSite } from './engine/site';
+import { SCENES } from './scenes';
 
-// The page is only a host. Scene 1 is self-contained and can be mounted on any route.
-const host = document.getElementById('scene-1');
-if (host) mountScene1(host, { homeHref: './' });
+// The page is only a host. The site is self-contained and can be mounted on any route.
+const host = document.getElementById('site');
+if (host) mountSite(host, { scenes: SCENES, homeHref: './' });

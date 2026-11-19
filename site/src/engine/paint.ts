@@ -1,52 +1,20 @@
 // "Painted into existence": the room appears as loose brush strokes, region by region.
 //
 // How it holds frame rate: the finished picture (the room and its mushrooms) is already on the page, drawn
-// once before anything moves, under a sheet of blank paper: one canvas filled with the paper's colour. Each
-// brush stroke rubs that sheet away along its path. A frame is a handful of plain strokes on one canvas;
-// the browser never redraws the room. The wash thins what is left of the sheet until nothing remains.
+// once before anything moves, under a sheet: one canvas filled with the blank paper's colour (a first
+// visit) or with a picture of the scene being left (a switch between scenes). Each brush stroke rubs that
+// sheet away along its path. A frame is a handful of plain strokes on one canvas; the browser never redraws
+// the room. The wash thins what is left of the sheet until nothing remains.
 //
 // (Until review 03 the strokes were drawn with the room image as a canvas pattern. Chrome is quick at that;
 // Safari's engine is not: measured in WebKit on a Mac, the painting ran at 10 to 20 frames a second.)
 //
 // There are no mask images; the strokes are a few hand-placed paths, roughened by a seeded generator.
-import { PLATE } from './assets';
 import { EASE_STROKE } from './motion';
-import { seeded, type Rng } from './schedule';
+import { seeded, type Rng } from './steps';
+import type { StrokePlan } from './types';
 
-interface StrokePlan {
-  /** Control points in plate px. The brush follows a smooth curve through them. */
-  via: Array<[number, number]>;
-  width: number;
-  /** Seconds from the start of the intro. */
-  at: number;
-  /** Seconds the stroke takes. */
-  takes: number;
-}
-
-// Back wall -> window light -> floor -> props. Walls and floor leave the props' corners for the last strokes.
-// Unhurried: each stroke takes 0.48 to 1.28 s, and they overlap unevenly, so the painting runs 4.32 s.
-const STROKES: StrokePlan[] = [
-  // Back wall
-  { via: [[890, 80], [1250, 95], [1275, 255], [905, 265], [890, 425], [1275, 440]], width: 250, at: 0, takes: 1.24 },
-  { via: [[1690, 40], [-10, 45], [-10, 165], [700, 170]], width: 195, at: 0.28, takes: 1.12 },
-  { via: [[1275, 590], [900, 565]], width: 225, at: 0.72, takes: 0.6 },
-  // Window light
-  { via: [[30, 265], [700, 255], [725, 400], [40, 405], [20, 545], [720, 545]], width: 235, at: 1.12, takes: 1.28 },
-  { via: [[805, 130], [795, 640]], width: 245, at: 1.68, takes: 0.68 },
-  // Floor
-  { via: [[900, 690], [545, 655], [545, 765], [1265, 775]], width: 195, at: 2.12, takes: 1 },
-  { via: [[1275, 880], [520, 870]], width: 225, at: 2.48, takes: 0.8 },
-  { via: [[560, 948], [1275, 952]], width: 150, at: 2.8, takes: 0.56 },
-  // Props
-  { via: [[60, 440], [265, 600], [60, 720], [335, 800], [120, 925], [490, 905]], width: 235, at: 2.88, takes: 1.04 },
-  { via: [[425, 615], [505, 700], [645, 700]], width: 150, at: 3.24, takes: 0.48 },
-  { via: [[1345, 90], [1320, 420]], width: 180, at: 3.12, takes: 0.56 },
-  { via: [[1485, 60], [1400, 480], [1300, 865]], width: 235, at: 3.24, takes: 0.76 },
-  { via: [[1605, 80], [1640, 500], [1505, 700], [1645, 905]], width: 245, at: 3.52, takes: 0.8 },
-];
-
-/** When the last stroke lifts off, in seconds (before any time scaling). */
-export const PAINT_SECONDS = Math.max(...STROKES.map((stroke) => stroke.at + stroke.takes));
+const PLATE_W = 1672;
 
 interface Bristle {
   offset: number; // across the stroke, in plate px
@@ -163,51 +131,88 @@ function buildStroke(plan: StrokePlan, rnd: Rng): Stroke {
 }
 
 
+export interface SheetOptions {
+  /** The sheet's size on the page, in CSS px. */
+  width: number;
+  height: number;
+  /** Fills the fresh sheet. It is given the context in sheet CSS px. */
+  fill: (ctx: CanvasRenderingContext2D, width: number, height: number) => void;
+  strokes: readonly StrokePlan[];
+  /** Plays the strokes this many times faster (the short brush between scenes). */
+  pace?: number;
+  /** Most pixels the sheet may have. A plain colour needs few; a picture needs more. */
+  maxPixels?: number;
+  seed?: number;
+}
+
 export class Painter {
-  /** The sheet of blank paper over the picture. Fully clear once the wash is done. */
+  /** The sheet over the picture. Fully clear once the wash is done. */
   readonly canvas: HTMLCanvasElement;
+  /** When the last stroke lifts off, in seconds. */
+  readonly seconds: number;
   private readonly ctx: CanvasRenderingContext2D;
   private readonly strokes: Stroke[];
+  private readonly pace: number;
+  /** Canvas pixels per CSS px. */
+  private readonly px: number;
+  private readonly size: { width: number; height: number };
+  /** The sheet's extent in plate px. */
+  private span = { x: 0, w: 0, h: 0 };
   private washed = 0;
   private begun = false;
 
-  /** `paper` is the colour of the blank sheet (any CSS colour). */
-  constructor(paper: string, cssWidth: number, seed = 11) {
-    // The sheet is one flat colour with soft-edged gaps, so it needs far fewer pixels than the picture:
-    // at most 2x, and never more than ~1.1 MP.
+  constructor(options: SheetOptions) {
+    const { width, height, pace = 1, maxPixels = 1_100_000, seed = 11 } = options;
+    // At most 2x, and never more than `maxPixels`.
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const cssHeight = (cssWidth * PLATE.h) / PLATE.w;
-    const fit = Math.min(1, Math.sqrt(1_100_000 / (cssWidth * dpr * cssHeight * dpr)));
-    const k = (cssWidth * dpr * fit) / PLATE.w;
+    const fit = Math.min(1, Math.sqrt(maxPixels / (width * dpr * height * dpr)));
+    this.px = dpr * fit;
+    this.size = { width, height };
 
     this.canvas = document.createElement('canvas');
     this.canvas.className = 'hj-paint';
     this.canvas.setAttribute('aria-hidden', 'true');
-    this.canvas.width = Math.round(PLATE.w * k);
-    this.canvas.height = Math.round(PLATE.h * k);
+    this.canvas.width = Math.round(width * this.px);
+    this.canvas.height = Math.round(height * this.px);
     this.ctx = this.canvas.getContext('2d')!;
-    this.ctx.fillStyle = paper;
-    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-    // From here on the brush works in plate px, and everything it draws takes paper away.
-    this.ctx.setTransform(k, 0, 0, k, 0, 0);
-    this.ctx.globalCompositeOperation = 'destination-out';
-    this.ctx.lineCap = 'round';
-    this.ctx.lineJoin = 'round';
-    this.ctx.strokeStyle = '#000';
-    this.ctx.fillStyle = '#000';
+    this.ctx.save();
+    this.ctx.setTransform(this.px, 0, 0, this.px, 0, 0);
+    options.fill(this.ctx, width, height);
+    this.ctx.restore();
 
     const rnd = seeded(seed);
-    this.strokes = STROKES.map((plan) => buildStroke(plan, rnd));
-
-    // One stroke off the edge of the sheet, so the first real one has nothing to set up.
-    this.ctx.lineWidth = 8;
-    this.ctx.beginPath();
-    this.ctx.moveTo(-60, -60);
-    this.ctx.lineTo(-40, -40);
-    this.ctx.stroke();
+    this.pace = pace;
+    this.strokes = options.strokes.map((plan) => buildStroke(plan, rnd));
+    this.seconds = Math.max(...options.strokes.map((stroke) => stroke.at + stroke.takes)) / pace;
+    this.aim(width / PLATE_W, 0);
   }
 
-  /** True until the first stroke is laid: a blank sheet, ready to be painted. */
+  /**
+   * Tell the brush how its plate px map onto the sheet: `unit` CSS px per plate px, and which plate x sits
+   * at the sheet's left edge. A sheet over the whole plate is aimed at 0 (the default); a sheet over a
+   * phone's window onto the plate, at that window's pan position.
+   */
+  aim(unit: number, originX: number): void {
+    const { ctx } = this;
+    const k = unit * this.px;
+    // From here on the brush works in plate px, and everything it draws takes the sheet away.
+    ctx.setTransform(k, 0, 0, k, -originX * k, 0);
+    this.span = { x: originX, w: this.size.width / unit, h: this.size.height / unit };
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.globalAlpha = 1;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = '#000';
+    ctx.fillStyle = '#000';
+    // One stroke off the edge of the sheet, so the first real one has nothing to set up.
+    ctx.lineWidth = 8;
+    ctx.beginPath();
+    ctx.moveTo(originX - 60, -60);
+    ctx.lineTo(originX - 40, -40);
+    ctx.stroke();
+  }
+
+  /** True until the first stroke is laid: a whole sheet, ready to be painted through. */
   get fresh(): boolean {
     return !this.begun;
   }
@@ -215,10 +220,11 @@ export class Painter {
   /** Paint everything due by `seconds`. Returns true once every stroke is finished. */
   paintTo(seconds: number): boolean {
     this.begun = true;
+    const at = seconds * this.pace;
     let done = true;
     for (const stroke of this.strokes) {
       const { plan } = stroke;
-      const t = (seconds - plan.at) / plan.takes;
+      const t = (at - plan.at) / plan.takes;
       if (t <= 0) {
         done = false;
         continue;
@@ -237,20 +243,20 @@ export class Painter {
   }
 
   /**
-   * The wash: whatever the brush missed comes up evenly, `amount` from 0 to 1. Each call thins the paper
+   * The wash: whatever the brush missed comes up evenly, `amount` from 0 to 1. Each call thins the sheet
    * that is left, so the picture's coverage only ever goes from c to c + amount × (1 − c).
    */
   wash(amount: number): void {
     if (amount <= this.washed) return;
     this.begun = true;
-    const { ctx } = this;
+    const { ctx, span } = this;
     ctx.globalAlpha = amount >= 1 ? 1 : 1 - (1 - amount) / (1 - this.washed);
-    ctx.fillRect(0, 0, PLATE.w, PLATE.h);
+    ctx.fillRect(span.x - 2, -2, span.w + 4, span.h + 4);
     ctx.globalAlpha = 1;
     this.washed = Math.min(1, amount);
   }
 
-  /** Rub the paper away along the stretch of a stroke between two brush positions. */
+  /** Rub the sheet away along the stretch of a stroke between two brush positions. */
   private lay(stroke: Stroke, from: number, to: number): void {
     if (this.washed >= 1) return;
     const { ctx } = this;
