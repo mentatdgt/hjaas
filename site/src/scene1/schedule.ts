@@ -82,15 +82,12 @@ export function* hammerSchedule(rnd: Rng = Math.random): Generator<Step, never> 
   }
 }
 
-/** Reduced motion: she mostly studies the work, with an occasional small tap. No full swings. */
-export function* gentleSchedule(rnd: Rng = Math.random): Generator<Step, never> {
-  for (;;) {
-    yield* withBlink(randint(rnd, [2600, 4400]), rnd);
-    for (let taps = randint(rnd, [1, 2]); taps > 0; taps--) {
-      yield { pose: CONTACT, ms: randint(rnd, [200, 260]) };
-      yield { pose: LIFT, ms: randint(rnd, [110, 140]) };
-    }
-  }
+/**
+ * Paused, or reduced motion: she holds her working pose. The player keeps ticking, so a find is still
+ * answered and the hammering picks up again within a fifth of a second of being asked to.
+ */
+export function* holdSchedule(): Generator<Step, never> {
+  for (;;) yield { pose: CONTACT, ms: 200 };
 }
 
 export const CONTACT_POSE = CONTACT;

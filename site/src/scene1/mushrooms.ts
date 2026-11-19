@@ -170,7 +170,9 @@ export class Hunt {
     };
 
     if (reducedMotion()) {
-      gsap.to(flyer, { opacity: 0, duration: 0.2, ease: 'none', onComplete: done });
+      // No flight: the count changes at once and the mushroom fades where it stood.
+      onLand(spot);
+      gsap.to(flyer, { opacity: 0, duration: 0.2, ease: 'none', onComplete: () => flyer.remove() });
       return;
     }
 

@@ -13,7 +13,7 @@ import { Pan } from './pan';
 import { RachelPlayer } from './player';
 import { Rachel } from './rachel';
 import { loadReaction, type Reaction } from './reaction';
-import { gentleSchedule, hammerSchedule, seeded, type Step } from './schedule';
+import { hammerSchedule, holdSchedule, seeded, type Step } from './schedule';
 import { loadProgress, saveProgress } from './state';
 
 export interface Scene1Options {
@@ -37,6 +37,8 @@ const COPY = {
   tagline: 'TODO(copy): what Hui Jie does, in one line',
   picture: 'Hui Jie at work. Ten mushrooms are hidden in the room.',
   skip: 'Skip',
+  pause: 'Pause animation',
+  play: 'Play animation',
   replay: 'Replay painting',
   prompt: `Find the ${TOTAL} hidden mushrooms`,
   prize: `Find all ${TOTAL} to reach Hui Jie`,
@@ -91,6 +93,7 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
   let destroyed = false;
   let rachel: Rachel | undefined;
   let player: RachelPlayer | undefined;
+  let logo: Logo | undefined;
   let reaction: Reaction | undefined;
   const cleanup: Array<() => void> = [];
   let debug: Record<string, unknown> | undefined;
@@ -127,7 +130,10 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
   }
 
   const rnd = flags.seed === undefined ? Math.random : seeded(flags.seed);
-  const rhythm = (): Iterator<Step> => (reducedMotion() ? gentleSchedule(rnd) : hammerSchedule(rnd));
+  // The visitor can pause the hammering; reduced motion never starts it. Either way she holds her working pose.
+  let paused = false;
+  const still = (): boolean => paused || reducedMotion();
+  const rhythm = (): Iterator<Step> => (still() ? holdSchedule() : hammerSchedule(rnd));
 
   const caption = new Caption(TOTAL, found.size);
   captionRow.prepend(caption.el);
@@ -157,7 +163,18 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
     return button;
   };
   const skip = control(COPY.skip);
+  const pause = control(COPY.pause);
   const replay = control(COPY.replay);
+
+  // "Pause animation" stops everything that moves by itself: the hammering and the logo's idle glint.
+  // (A find still gets its short answer, and the logo still glints under the pointer.)
+  pause.addEventListener('click', () => {
+    paused = !paused;
+    pause.textContent = paused ? COPY.play : COPY.pause;
+    player?.setLoop(rhythm());
+    if (paused) logo?.stop();
+    else logo?.startIdle();
+  });
 
   // A first visit gets the painting. A return visit, or reduced motion, gets everything together in 200 ms.
   const firstIntro: IntroMode =
@@ -178,11 +195,14 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
     skipped = true;
     intro?.skip();
   });
-  /** Skip while the room is being painted; afterwards, the way to see it painted again. */
+  /**
+   * Skip while the room is being painted; afterwards, Pause and the way to see it painted again.
+   * With reduced motion nothing moves by itself and nothing is painted, so neither is offered.
+   */
   const showControls = (painting: boolean): void => {
     const focused = document.activeElement;
     skip.hidden = !painting;
-    replay.hidden = painting || reducedMotion();
+    pause.hidden = replay.hidden = painting || reducedMotion();
     // Keyboard focus follows the control that took the other's place.
     if (focused === skip && skip.hidden && !replay.hidden) replay.focus({ preventScroll: true });
     if (focused === replay && replay.hidden && !skip.hidden) skip.focus({ preventScroll: true });
@@ -218,7 +238,8 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
   const react = (): Promise<void> => {
     if (!player || !reaction) return Promise.resolve();
     if (player.reacting) return reacting; // already reacting: the find counts, the reaction carries on
-    reacting = player.react(reducedMotion() ? reaction.still : reaction.steps);
+    // Still: one held pose acknowledges the find, without the head and arm travel.
+    reacting = player.react(still() ? reaction.still : reaction.steps);
     return reacting;
   };
 
@@ -249,7 +270,7 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
   };
 
   void (async () => {
-    const [roomImage, frames, logo] = await Promise.all([loadRoom(), loadLoopFrames(), Logo.create(options.homeHref)]);
+    const [roomImage, frames, theLogo] = await Promise.all([loadRoom(), loadLoopFrames(), Logo.create(options.homeHref)]);
     if (destroyed) return;
     room.src = roomImage.src;
     await room.decode().catch(() => {});
@@ -283,12 +304,13 @@ export function mountScene1(host: HTMLElement, options: Scene1Options = {}): Sce
 
     plate.append(rachel.shadow, hunt.el, rachel.el);
     // The logo keeps its own proportions; the page reserves exactly that space for it.
-    page.style.setProperty('--logo-ratio', logo.el.style.aspectRatio);
-    logoSlot.append(logo.el);
+    logo = theLogo;
+    page.style.setProperty('--logo-ratio', theLogo.el.style.aspectRatio);
+    logoSlot.append(theLogo.el);
     rachel.resize();
-    logo.prepare();
-    logo.startIdle();
-    cleanup.push(() => logo.stop());
+    theLogo.prepare();
+    if (!paused) theLogo.startIdle();
+    cleanup.push(() => theLogo.stop());
 
     player = new RachelPlayer(rachel, rhythm());
     const thePlayer = player;

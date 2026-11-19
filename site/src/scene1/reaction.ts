@@ -13,7 +13,7 @@ interface ReactionManifest {
 export interface Reaction {
   /** The full motion. */
   steps: Step[];
-  /** Reduced motion: only the held pose, so she acknowledges the find without the head and arm travel. */
+  /** Paused or reduced motion: only the held pose, so she acknowledges the find without the head and arm travel. */
   still: Step[];
 }
 
@@ -39,8 +39,7 @@ export async function loadReaction(rachel: Rachel): Promise<Reaction> {
   }
 
   const steps = held.map((frame) => ({ pose: poseName(frame.file), ms: frame.ms }));
-  const longest = steps.reduce((a, b) => (b.ms > a.ms ? b : a), steps[0]);
-  return { steps, still: longest ? [longest] : [] };
+  return { steps, still: stillOf(steps) };
 }
 
 /** Reaction files that are byte-identical to an upscaled frame, mapped to that one copy (made by `npm run assets`). */
@@ -51,6 +50,19 @@ async function loadShared(): Promise<Record<string, string>> {
   } catch {
     return {};
   }
+}
+
+/**
+ * The pose the reaction holds longest (the thumbs-up), for as long as the manifest stays with it: from its
+ * first appearance to its last, including whatever plays inside the hold (the wink).
+ */
+function stillOf(steps: Step[]): Step[] {
+  if (steps.length === 0) return [];
+  const longest = steps.reduce((a, b) => (b.ms > a.ms ? b : a));
+  const first = steps.findIndex((step) => step.pose === longest.pose);
+  const last = steps.map((step) => step.pose).lastIndexOf(longest.pose);
+  const ms = steps.slice(first, last + 1).reduce((sum, step) => sum + step.ms, 0);
+  return [{ pose: longest.pose, ms }];
 }
 
 function poseName(file: string): string {
