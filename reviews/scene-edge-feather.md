@@ -8,6 +8,11 @@ For: Fable, on `site/scene-2` (so it applies to Build and Grow). Do this after t
   - **A, light:** a thin soft edge. The fade covers about 4% of the width on the sides, 6% at the top and 2.5% at the bottom, with gentle noise so the line wanders slightly.
   - **B, medium:** a little wider (sides about 5.5%, top 8%, bottom 3%) and wanders more.
   - **C, corners:** the edges stay mostly intact (about 3%), and the fade is stronger toward the corners, like a soft vignette.
+- **CHOSEN (user, 23:00): "A, but with rounded corners like C."** Target `reference/mockups/edge-CHOSEN-A-rounded.jpg`.
+  - A's thin soft edge (sides ~4%, top ~6%, bottom ~2.5%) with gentle noise.
+  - Combined with a rounded-corner term: a superellipse (exponent about 6), so the corners round off softly.
+  - The fade is a smoothstep from the painting to the paper colour.
+  - Build this as the **default and only production edge.** Keep `?edge=a|b|c` in dev for reference, and add `?edge=a-round` as the default name.
 - Wherever the text below says soft/deckle, read it as A/B/C. Ignore the pigment-rim and thinned-wash steps.
 - The older mock-up (`edge-options-soft-vs-deckle.jpg`) is superseded.
 
