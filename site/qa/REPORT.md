@@ -592,20 +592,28 @@ From `reviews/scene-edge-feather.md`, on `site/scene-2`, for both scenes. One co
 
 ## Review 04
 
-`reviews/scene-2-review-04.md`, on `site/scene-2`. **Paused part-way, at the user's request (2026-11-20).**
-Items 1 and 2 are done, checked, committed and pushed. Items 3 and 4 are not built. `main` was pulled first
-(as a merge into `site/scene-2`); nothing was merged into any other branch and no push failed.
+`reviews/scene-2-review-04.md`, on `site/scene-2`. **Paused a second time, at the user's request (2026-11-20),
+during item 4.** Items 1, 2 and 3 are done, checked, committed and pushed. Item 4 is built and committed but
+only partly checked: see "Half-done" below. Nothing was merged into any other branch and no push failed.
 
 | | Item | What was done, and what was measured | Evidence |
 |---|---|---|---|
-| ✅ | 1. New `mist_to_write` frames | `npm run assets` on the updated frames: 32 frames, patch origin read from `frames.json` (13, 13). `npm test` plays the delivered manifests: 40 of 40 pass. | `public/assets/scene2/rachel/` |
+| ✅ | 1. New `mist_to_write` frames | `npm run assets` on the updated frames: 32 frames, patch origin read from `frames.json` (13, 13). | `public/assets/scene2/rachel/` |
 | ✅ | 1. The hand-off from the aim still into the clip, and back | On the page, the cut from `A1_mist_aim` into the clip's first frame changes **0.5% of the figure** (iPhone profile, WebKit) and 1.2% (desktop Chrome at 2×). It was 30%. The way back out is the same. | `review-04/handoff-*-strip.jpg`, `handoff-*-frame-by-frame.mp4`, `handoff.json` |
-| ✅ | 2. Corners much tighter | The corners are now those of a rounded rectangle with a radius of **6% of the plate's width**. Outside the four corner squares the edge is exactly style A: the long edges are straight and thin (`npm test` checks this). | `edge/corners.jpg` (mock-up beside the build at 1440 × 900, with the corners enlarged) |
-| ✅ | 2. Mushrooms still on solid painting | **All 20 mushrooms and all 20 tap boxes read 1.00**, read back from the page in Chrome at 1440 × 900 and 2560 × 1440 and in WebKit at 390 × 844, 360 × 740 and 320 × 640. No two tap boxes overlap. | `edge/spots.json` |
-| ❌ | 3. Memory: decode per clip and release | **Not built.** See "Half-done" below for what is known and planned. | – |
-| ❌ | 3. A lighter 1.5× set for phones | **Not built.** | – |
-| ❌ | 3. Peak decoded memory, before and after | Only "before", from the bitmap sizes: see below. | – |
-| ❌ | 4. The WebKit frames over 50 ms | **Not built, and the checks were not re-run.** One measurement was taken that points at the cause: see below. | – |
+| ✅ | 2. Corners much tighter | The corners are those of a rounded rectangle with a radius of **6% of the plate's width**. Outside the four corner squares the edge is exactly style A (`npm test` checks this). | `edge/corners.jpg` |
+| ✅ | 2. Mushrooms still on solid painting | **All 20 mushrooms and all 20 tap boxes read 1.00**, read back from the page in Chrome at 1440 × 900 and 2560 × 1440 and in WebKit at 390 × 844, 360 × 740 and 320 × 640. | `edge/spots.json` |
+| ✅ | 3. Decode and release | Her clip frames stay as downloaded (about 8 MB) and are decoded a few frames ahead of being shown, then given back. The 7 stills stay decoded. `look_up` and `thumbs_up` stay decoded while Grow is on show. When the visitor leaves for Build, everything but the stills is given back. | `src/engine/reel.ts`, `clips.ts` |
+| ✅ | 3. A 1.5× set for phones | `npm run assets` now also makes `scene2/rachel-1.5x/`. It is used when the picture is shown under 900 CSS px wide; desktop keeps 2×. | `scripts/build-assets.mjs`, `src/scenes/grow.ts` |
+| ✅ | 3. Edges at 1.5× still sharp at 390 × 844 @3× | Side by side with the 2× set at the screen's own pixels: I can see no difference in her outlines, face or hand. | `review-04/sharpness-390x844@3x.jpg` |
+| ✅ | 3. Peak decoded memory of her lab frames, phone profile, under 80 MB | **Before: 243 MB. After: peak 66.9 MB** (from the bitmap sizes, sampled every frame through two cycles and two reactions). After leaving for Build: 21 MB. Desktop (2×): peak 114.9 MB. | `review-04/memory.json` |
+| ⚠️ | 3. The whole page, not only the lab | **Scene 1's own Rachel frames are 84 MB decoded and stay decoded** while Grow is open. The review did not know this and I did not change it. With them, a phone that opened Build first holds about 165 MB of decoded images with Grow open. See "For Wren". | Sizes measured from the files |
+| ✅ | 4. First lab open: frames over 50 ms | **Before: 39 to 65 ms. After: 21 to 33 ms, in 12 of 12 runs** (6 iPhone profile, 6 desktop; WebKit, cold load, production build). Wren asked for 12 runs per profile; 6 per profile were done before the pause. | `review-04/first-lab-open-before-item-4.json`, `-after-item-4.json` |
+| ✅ | 4. Decoding off the page's thread | All of her frames, in both scenes, are now decoded in a background worker. Her lab stills start downloading and decoding when the pointer or a finger is on the Grow tab, or it gets keyboard focus. She is put on the plate, under the old picture, one frame after the room. | `src/engine/assets.ts`, `site.ts` |
+| ⚠️ | 4. Writing loop | WebKit without a window: **no frame over 24 ms** in two full cycles. WebKit with a window: **one frame of 107 to 123 ms**, once, at the start of the first writing loop (iPhone profile and desktop). Before it was two frames of 54 and 65 ms. Not explained yet: see "Half-done". | `review-04/cycle-and-finds-webkit.json` |
+| ⚠️ | 4. The tap of a find | Not image decoding. The first find of a visit still has a frame of 83 to 123 ms; later finds 18 to 75 ms. Traced as far as the pause allowed: see "Half-done". | `review-04/cycle-and-finds-webkit.json` |
+| ⚠️ | 4. The other checks | The menu, skip, back button, reduced motion and keyboard checks pass on the item 4 code. The 20-mushroom hunt and the lab checks were last run on the item 3 code, not after item 4. The intro's end in WebKit was not re-measured. | `review-04/nav-checks.json`, `hunt-checks.json`, `lab-checks.json` |
+
+`npm test`: 46 of 46 pass (6 new tests check that every clip frame is asked for before it is shown).
 
 ### Item 1 in numbers
 
@@ -626,64 +634,106 @@ move (the fifth) is 16%; the largest, mid-way, are 21 to 22%.
 
 ### Item 2: what moved
 
-With the tighter corners, two of the three mushrooms that had moved in Build could go back:
-
 - `toolbox` is back where it was first placed (it had moved 21 px only because of the round corner).
 - `screed` is now 5 px above its first place (it was 7 px).
 - `tiles` stays 15 px above its first place: it is the straight bottom edge that covers it, not the corner.
 - Nothing in Grow moved.
 
-All 40 edge screenshots and `edge/compare.jpg` were taken again with the new corners.
+### Item 3 in numbers
 
-### Half-done: items 3 and 4
+Decoded image memory of Rachel's lab frames, from the bitmap sizes.
 
-Nothing of these is in the commits. What exists:
+| | Before | After, phone profile (1.5× set) | After, desktop (2× set) |
+|---|---|---|---|
+| Stills (7) | 37.9 MB | 21.3 MB | 37.9 MB |
+| Clip frames | 204.8 MB, all 84 at once | 42.0 MB at most: the reaction's 27 frames (26.1 MB) and up to 9 of the routine's | 74.5 MB at most |
+| Her two canvases | about 3 MB | 3.5 MB | 2.6 MB |
+| **Peak with Grow open** | **243 MB** | **66.9 MB** | **114.9 MB** |
+| After leaving for Build | 243 MB | 21.3 MB | 37.9 MB |
 
-- **Uncommitted, in the working folder:** `src/engine/steps.ts` and `src/engine/clips.ts`. Each step of the
-  lab routine now also lists the clip frames coming up next. Nothing uses the list yet, so the site behaves
-  exactly as committed, and `npm test` passes with it. It is the first piece of item 3.
-- **A throwaway measuring script,** `qa/tools/.exp-decode.mjs` (not committed).
+- **No frame arrived late.** In two cycles and two reactions she never had to skip a frame, on the phone
+  profile, on desktop, after coming back from Build, and with the processor slowed 4× and 6× in Chrome.
+- **The patches still line up.** At 1.5× the mean difference at a patch's edge is 0.4 to 1.2 levels of 255.
+- **Download:** the 1.5× set is 7.4 MB against 9.4 MB.
 
-What was learned on the way, so it is not lost:
+### Half-done: item 4
 
-1. **"Before", from the bitmap sizes:** with the new 32-frame clip, everything of Rachel's decoded at once is
-   **243 MB** at 2× (stills 38, `mist_to_write` 100, `write_loop` 58, `look_up` 28, `thumbs_up` 18). At 1.5×
-   the same would be 137 MB.
-2. **Decoding one whole clip at a time, as the review describes, does not reach 80 MB on a phone.** At 1.5×,
-   the stills (21 MB), the two reaction clips (26 MB) and `mist_to_write` alone (56 MB) come to 104 MB. The
-   plan is therefore to keep only about nine frames around the one being shown decoded. Estimated peak at
-   1.5×: 21 + 26 + about 20 = **about 65 to 70 MB**. This is an estimate; nothing was built or measured.
-3. **Not every clip follows a hold.** `write_loop` starts straight after `mist_to_write`, and the way back
-   starts straight after `write_loop`. So frames have to be decoded while the clip before is playing, which
-   is what the list in the uncommitted files is for.
-4. **For item 4:** decoding one of her patches on the page's main thread takes about 11 ms on this Mac and
-   produced frames of up to 29 to 32 ms in WebKit with a window. The same decode in a background worker
-   left every frame at 16 to 18 ms. Drawing a freshly decoded patch for the first time cost nothing
-   measurable in either. So the plan is to decode in a worker. The 12 first-opens, the full cycle and the
-   5 finds were not re-run; the "before" numbers are in "Scene 2 frames" and "Edge" above.
+The code for item 4 is committed and works in every check that was run, but three things were open when
+the work was paused.
+
+1. **The one long frame at the start of the first writing loop, in WebKit with a window** (107 to 123 ms).
+   It happens once per visit, the first time the `B1_write` still is drawn. It does not happen in WebKit
+   without a window, or on later loops. My guess is the first drawing of that still at full size; I had not
+   tested the guess.
+2. **The tap of a find.** What I found:
+   - Each part of a find run by itself (taking the mushroom off the plate, the flying copy, her reaction,
+     saving) leaves every frame at 15 to 20 ms. A whole find started from script: 20 ms.
+   - With a real tap in the test browser, the long frame is made of three parts: 4 to 63 ms between the
+     finger lifting and the browser delivering the click, before any of the site's code runs (52 to 63 ms
+     on the first find of a visit, every time); 1 to 13 ms in the site's own handler; and up to 37 ms
+     until the next frame.
+   - Some of the 61 to 75 ms figures come from the test itself: it scrolls the room to reach a mushroom
+     that is off screen, which a visitor would have done before tapping.
+   - Not found: why the first tap on a mushroom is slow to be delivered. The mushrooms' colour filters are
+     not the cause (tested). A test of whether the mushroom's image under the finger is the cause was
+     running when the work was paused.
+3. **Checks not re-run after item 4:** the 20-mushroom hunt, the lab checks (lazy loading, seams), the
+   intro's end in WebKit, 6 more first-open runs per profile, and the recordings.
+
+Also uncommitted, in the working folder: three throwaway measuring scripts, `qa/tools/.exp-decode.mjs`,
+`.exp-find.mjs` and `.exp-tap.mjs`. The last one needs timing lines in `mushrooms.ts` that were taken
+out again before committing.
 
 ### Queued, not started
 
-- `reviews/scene-2-hunt-difficulty.md` (asked for while this review was in progress). `main` has not been
-  pulled for it and nothing of it was read or built.
+- `reviews/scene-2-hunt-difficulty.md`. `main` has not been pulled for it and nothing of it was built.
 
 ### Decisions I made
 
-1. **A rounded rectangle, not a higher exponent.** The review offers both. A superellipse bends the long
-   edges a little whatever its exponent; a rounded rectangle leaves them exactly as they are in A.
-2. **Around each corner the fade turns smoothly** from the side's width (4% of the width) to the top's or
-   bottom's (6% and 2.5% of the height), so there is no step where the arc meets a straight edge.
-3. **`toolbox` and `screed` moved back** towards their first places, since the instruction for the edge was
+1. **A rounded rectangle, not a higher exponent,** for the corners. A superellipse bends the long edges a
+   little whatever its exponent; a rounded rectangle leaves them exactly as they are in A.
+2. **`toolbox` and `screed` moved back** towards their first places, since the instruction for the edge was
    to move spots as little as needed.
-4. **The hand-off "recording" is stepped, not filmed in real time.** Playwright films at 25 frames a second
+3. **The hand-off "recording" is stepped, not filmed in real time.** Playwright films at 25 frames a second
    and would miss frames; stepping shows every pose once, as a strip and as a film at two poses a second.
-5. **The 16% step at the start of her arm's movement is left alone.** It is in the range of the clip's other
-   fast steps. Wren can judge it in `review-04/handoff-desktop-chrome-strip.jpg`.
-6. **`main` was pulled as a merge into `site/scene-2`,** as before.
+4. **Clip frames are decoded a few at a time, not a whole clip at a time.** The review asks for a whole clip
+   to be decoded in the hold before it. That cannot reach 80 MB on a phone: at 1.5× the stills (21 MB), the
+   reaction clips (26 MB) and `mist_to_write` alone (57 MB) come to 104 MB. And `write_loop` has no hold
+   before it: it follows `mist_to_write` directly. So each step of the routine names the next 5 frames, and
+   the first 3 of the way back in case a find interrupts her; at most 9 routine frames are decoded at once.
+5. **"Under 900 CSS px wide" is the width of the window the picture is shown in,** read once, when her frames
+   are first fetched. Turning a phone or resizing a browser afterwards does not swap sets.
+6. **The 1.5× patches are cut from the shrunken whole picture,** not shrunk one by one, so they still line
+   up with their still to the pixel. On a phone her canvas is then exactly the size of the art.
+7. **The asset script now encodes several images at once.** It took about ten minutes; it takes about two.
+8. **"Replay painting" restarts her routine from the top.** Before, replaying while she wrote put her back
+   on the aim still and then jumped into the middle of the writing clip.
+9. **A switch no longer waits for her frames before it reacts to the tap.** The menu and caption change at
+   once. Under the old picture the brush waits up to 0.6 s for her; on a slower network it starts without
+   her and she fades in when she arrives. A first-ever visit to a scene (the full painting) still waits,
+   with the old picture up, because the painting brings her in.
+10. **Scene 1's frames are decoded in the worker too.** It is the same code path. Its opening was not
+    re-measured after this change (see "Half-done").
+11. **Hovering a tab while a painting is under way does not start a download,** so nothing competes with
+    the brush.
+12. **I restarted `caffeinate` myself** for the unattended run, because it was no longer running, and
+    stopped it again at the pause.
+
+### For Wren
+
+- **Scene 1 holds 84 MB of decoded frames** (20 frames of 1146 × 916: 8 for the routine, 12 for the
+  reaction), for as long as the page is open. That is now more than the lab. Giving them back while Grow is
+  open, and a lighter set for phones, would work the same way as for the lab; I did not do it because the
+  review is about the lab and scene 1's timing was tuned with care.
+- **The 16% step where her arm starts to move** in `mist_to_write` is in the range of the clip's other fast
+  steps; see `review-04/handoff-desktop-chrome-strip.jpg`.
+- **On a desktop screen at 1× (not Retina),** about 10% of her figure's pixels change when any clip starts,
+  because the patch and the still are shrunk separately to a third of their size. It was like this before
+  this review; I have not judged by eye whether it shows.
 
 ### Not done, or not verified
 
-- **Items 3 and 4,** as above.
-- **A real phone,** and Safari itself.
-- **The corners against the mock-up by eye only.** The radius is the review's number; the mock-up's edge is
-  also rougher than style A's, which was not part of this review and was not changed.
+- **Item 4's open points,** as above.
+- **A real phone,** and Safari itself. The memory figures are sums of bitmap sizes, not what a phone reports.
+- **The corners against the mock-up by eye only.** The mock-up's edge is also rougher than style A's, which
+  was not part of this review and was not changed.
