@@ -97,8 +97,18 @@ export function playIntro(mode: IntroMode, parts: IntroParts): Promise<void> {
 
     const timeline = gsap.timeline({
       onComplete: () => {
-        painter.canvas.remove();
-        finish();
+        // Nothing is swapped or cleared here: the canvas stays on as the room and GSAP's end values stay
+        // inline. In WebKit, handing over to the <img> and clearing the inline styles repainted the whole
+        // plate in one frame (measured: 55–60 ms, 80–150 ms on a loaded CPU).
+        // The <img> takes over only if the plate is resized, when everything repaints anyway.
+        const paintedWidth = plate.clientWidth;
+        const handOver = new ResizeObserver(() => {
+          if (plate.clientWidth === paintedWidth) return;
+          handOver.disconnect();
+          gsap.set(room, { clearProps: 'opacity' });
+          painter.canvas.remove();
+        });
+        handOver.observe(plate);
         resolve();
       },
     });
@@ -120,10 +130,16 @@ export function playIntro(mode: IntroMode, parts: IntroParts): Promise<void> {
       0,
     );
 
-    // The wash: the real plate comes up underneath and fills whatever the brush missed.
+    // The wash: the real plate comes up underneath and fills whatever the brush missed. It is drawn into
+    // the brush's own canvas rather than faded in as the <img>, which WebKit repainted on every frame.
+    const washed = { amount: 0 };
     timeline.set(mushrooms, { visibility: 'inherit' }, wash);
-    timeline.to([room, ambient, mushrooms], { opacity: 1, duration: 0.42, ease: 'power1.inOut' }, wash);
-    timeline.to(painter.canvas, { opacity: 0, duration: 0.2, ease: 'none' }, wash + 0.42);
+    timeline.to(
+      washed,
+      { amount: 1, duration: 0.42, ease: 'power1.inOut', onUpdate: () => painter.wash(washed.amount) },
+      wash,
+    );
+    timeline.to([ambient, mushrooms], { opacity: 1, duration: 0.42, ease: 'power1.inOut' }, wash);
 
     // Rachel: no paint on her. A short fade and settle, then she gets to work.
     timeline.fromTo(

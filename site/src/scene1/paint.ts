@@ -2,6 +2,7 @@
 //
 // How it holds frame rate: nothing is masked. Each stroke is drawn onto one canvas with the room plate
 // itself as the paint (a canvas pattern), and a frame only draws the short new length of each stroke.
+// The wash happens on the same canvas, which then stays on as the room: nothing is swapped at the end.
 // There are no mask images; the strokes are a few hand-placed paths, roughened by a seeded generator.
 import { PLATE } from './assets';
 import { seeded, type Rng } from './schedule';
@@ -162,8 +163,11 @@ export class Painter {
   private readonly ctx: CanvasRenderingContext2D;
   private readonly strokes: Stroke[];
   private readonly paint: CanvasPattern;
+  private readonly room: CanvasImageSource;
+  private washed = 0;
 
   constructor(room: CanvasImageSource, cssWidth: number, seed = 11) {
+    this.room = room;
     // Enough pixels to look painted, few enough to stay fast: at most 2x, and never more than ~2.2 MP.
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const cssHeight = (cssWidth * PLATE.h) / PLATE.w;
@@ -207,6 +211,20 @@ export class Painter {
       if (t < 1) done = false;
     }
     return done;
+  }
+
+  /**
+   * The wash: the whole plate comes up under the strokes, `amount` from 0 to 1. The strokes are the plate's
+   * own pixels, so laying the plate over them at the right alpha gives exactly what the strokes over a
+   * fading copy of the plate would: coverage only ever goes from c to c + amount × (1 − c).
+   */
+  wash(amount: number): void {
+    if (amount <= this.washed) return;
+    const { ctx } = this;
+    ctx.globalAlpha = amount >= 1 ? 1 : 1 - (1 - amount) / (1 - this.washed);
+    ctx.drawImage(this.room, 0, 0, PLATE.w, PLATE.h);
+    ctx.globalAlpha = 1;
+    this.washed = amount;
   }
 
   /** Lay down the stretch of a stroke between two brush positions. */
