@@ -516,7 +516,7 @@ http://localhost:5173/#grow
 | ✅ | On a slow phone profile (Chrome, CPU slowed 4×) | A full 17 s cycle: no late frame, no long task. The reaction, with the tracer on: no long task, longest frame 35 ms. | Measured live; raw trace on this Mac (`qa/traces/lab-reaction-mobile-4x.json.gz`) |
 | ✅ | Reaction gesture | Thumbs-up, as delivered. | – |
 
-`npm test`: 40 tests, all pass. 15 of them run the routine reader on the two delivered files.
+`npm test`: 40 tests, all pass. 18 of them run the routine reader on the two delivered files.
 
 ### Still placeholder in scene 2
 
