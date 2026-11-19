@@ -101,4 +101,60 @@ if (item === 'hint') {
   console.log(JSON.stringify({ wiggles }, null, 1));
 }
 
+if (item === 'wink') {
+  // One find on desktop Chromium and on an iPhone in WebKit; the pose log shows each reaction frame and how long it held.
+  const { webkit, devices } = await import('playwright');
+  const runs = [
+    { name: 'desktop-chromium', browser, context: { viewport: { width: 1280, height: 760 } } },
+    { name: 'iphone-webkit', browser: await webkit.launch(), context: { ...devices['iPhone 13'] } },
+  ];
+  const results = {};
+  for (const run of runs) {
+    const context = await run.browser.newContext(run.context);
+    const page = await context.newPage();
+    await page.goto('http://localhost:5173/?reset&intro=off&debug&seed=3');
+    await page.waitForFunction(() => window.__hj?.ready === true, null, { timeout: 30000 });
+    await page.waitForTimeout(800);
+    await page.evaluate(() => {
+      window.__hj.poses.length = 0;
+      const shrooms = [...document.querySelectorAll('.hj-shroom')];
+      const vp = document.querySelector('.hj-viewport').getBoundingClientRect();
+      const visible = shrooms.find((b) => { const r = b.getBoundingClientRect(); return r.left > vp.left && r.right < vp.right; });
+      visible.click();
+    });
+    let shot = null;
+    const t0 = Date.now();
+    while (Date.now() - t0 < 4000) {
+      const last = await page.evaluate(() => window.__hj.poses.at(-1)?.[0]);
+      if (!shot && last === 'reaction/rx_wink.png') {
+        await page.waitForTimeout(90);
+        const box = await page.locator('.hj-rachel').boundingBox();
+        shot = { png: await page.screenshot({ clip: box }), dpr: run.context.deviceScaleFactor ?? 1 };
+      }
+      await page.waitForTimeout(15);
+    }
+    const poses = await page.evaluate(() => window.__hj.poses);
+    const rx = poses.filter(([p]) => p.startsWith('reaction/'));
+    const held = rx.map(([p, at], i) => [p.replace('reaction/', ''), rx[i + 1] ? rx[i + 1][1] - at : null]);
+    results[run.name] = { held, shot };
+    await context.close();
+  }
+  await runs[1].browser.close();
+  const tiles = await Promise.all(
+    Object.entries(results).map(async ([name, r]) => {
+      const img = await sharp(r.shot.png).resize({ height: 520 }).toBuffer();
+      const m = await sharp(img).metadata();
+      const label = Buffer.from(`<svg width="${m.width}" height="40"><rect width="100%" height="100%" fill="#111"/><text x="10" y="27" font-family="sans-serif" font-size="20" fill="#fff">${name}: rx_wink</text></svg>`);
+      return sharp(img).extend({ top: 40, background: '#111' }).composite([{ input: label, top: 0, left: 0 }]).png().toBuffer();
+    }),
+  );
+  const metas = await Promise.all(tiles.map((t) => sharp(t).metadata()));
+  await sharp({ create: { width: metas[0].width + metas[1].width + 8, height: 560, channels: 3, background: '#444' } })
+    .composite([{ input: tiles[0], left: 0, top: 0 }, { input: tiles[1], left: metas[0].width + 8, top: 0 }])
+    .jpeg({ quality: 85 })
+    .toFile('qa/review-01/01-wink.jpg');
+  for (const r of Object.values(results)) delete r.shot;
+  console.log(JSON.stringify(results));
+}
+
 await browser.close();
