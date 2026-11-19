@@ -1,5 +1,5 @@
 // The hunt: ten tiny mushrooms hidden around the room.
-import { PLATE, asset, loadImage } from './assets';
+import { asset, loadImage } from './assets';
 import { flags } from './flags';
 import { EASE_OUT, gsap, reducedMotion } from './motion';
 
@@ -76,8 +76,9 @@ export class Hunt {
       button.className = 'hj-shroom';
       button.dataset.spot = spot.id;
       button.setAttribute('aria-label', 'Hidden mushroom');
-      button.style.left = `${(spot.x / PLATE.w) * 100}%`;
-      button.style.top = `${((spot.y - spot.h / 2) / PLATE.h) * 100}%`;
+      // The drawing's centre, in plate px. scene.css turns it into the tap box's position.
+      button.style.setProperty('--cx', String(spot.x));
+      button.style.setProperty('--cy', String(spot.y - spot.h / 2));
       button.style.setProperty('--w', String(w));
       button.style.setProperty('--h', String(spot.h));
       if (spot.grounded) button.classList.add('is-grounded');

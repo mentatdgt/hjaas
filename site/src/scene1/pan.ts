@@ -3,8 +3,9 @@
 //
 // The crop is a native horizontal scroller. That is what makes it feel native: the browser itself follows
 // the finger 1:1, adds momentum and eases into the edges, all off the main thread, so panning stays smooth
-// even while Rachel is hammering. This file only sets the starting position, adds mouse dragging for
-// narrow desktop windows, and runs the one-time swipe hint.
+// even while Rachel is hammering. Up-and-down swipes are not claimed (touch-action: pan-x pan-y), so the
+// page scrolls under the same finger. This file only sets the starting position, adds mouse dragging for
+// narrow desktop windows, and shows the one-time swipe hint.
 import { PLATE } from './assets';
 import { gsap, reducedMotion } from './motion';
 
@@ -18,11 +19,9 @@ function startCentre(visibleWidth: number): number {
   return START_4_5.centre + (START_2_3.centre - START_4_5.centre) * t;
 }
 
-const HAND = `
-<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-  <path d="M9.4 11.6V5.3a1.55 1.55 0 0 1 3.1 0v5.2l4.3.9c1.2.25 2 1.4 1.8 2.6l-.6 3.9a3 3 0 0 1-3 2.6h-3.3a3 3 0 0 1-2.3-1.1l-3.6-4.3a1.4 1.4 0 0 1 2-1.95z"/>
-</svg>`;
 const CHEVRON = `<svg viewBox="0 0 10 16" aria-hidden="true" focusable="false"><path d="M7.5 2 2.5 8l5 6"/></svg>`;
+// TODO(copy): placeholder wording.
+const SWIPE_HINT = 'Swipe sideways';
 
 export class Pan {
   private readonly viewport: HTMLElement;
@@ -30,7 +29,6 @@ export class Pan {
   /** Plate x at the middle of the crop, once the visitor has panned. Until then the start framing applies. */
   private centreX: number | null = null;
   private hint: HTMLElement | null = null;
-  private hintLoop: gsap.core.Timeline | null = null;
   private settingScroll = false;
   private readonly onFirstPan: () => void;
   private panned: boolean;
@@ -63,30 +61,20 @@ export class Pan {
     });
   }
 
-  /** A small hand that nudges sideways, once the scene has settled. It leaves at the first pan. */
+  /** A small, still line in the caption, once the scene has settled. It leaves at the first pan. */
   showHint(host: HTMLElement): void {
     if (this.panned || !this.active || this.hint) return;
-    const hint = document.createElement('div');
+    const hint = document.createElement('p');
     hint.className = 'hj-swipe';
     hint.setAttribute('aria-hidden', 'true');
-    hint.innerHTML = `<span class="hj-swipe-chev">${CHEVRON}</span><span class="hj-swipe-hand">${HAND}</span><span class="hj-swipe-chev is-right">${CHEVRON}</span>`;
+    hint.innerHTML = `${CHEVRON}<span>${SWIPE_HINT}</span>${CHEVRON.replace('<svg ', '<svg class="is-right" ')}`;
     host.append(hint);
     this.hint = hint;
-    gsap.fromTo(hint, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: 'none', delay: 0.4 });
-    if (reducedMotion()) return;
-    const hand = hint.querySelector('.hj-swipe-hand');
-    // An attention loop: wait, nudge twice, rest a good while, repeat.
-    this.hintLoop = gsap
-      .timeline({ repeat: -1, repeatDelay: 3.2, delay: 1.1, defaults: { ease: 'sine.inOut' } })
-      .to(hand, { x: -9, duration: 0.34 })
-      .to(hand, { x: 7, duration: 0.44 })
-      .to(hand, { x: -6, duration: 0.4 })
-      .to(hand, { x: 0, duration: 0.34 });
+    gsap.fromTo(hint, { opacity: 0 }, { opacity: 1, duration: reducedMotion() ? 0 : 0.3, ease: 'none', delay: 0.4 });
   }
 
   destroy(): void {
     this.viewport.removeEventListener('scroll', this.onScroll);
-    this.hintLoop?.kill();
     this.hint?.remove();
   }
 
@@ -105,8 +93,6 @@ export class Pan {
     const hint = this.hint;
     if (!hint) return;
     this.hint = null;
-    this.hintLoop?.kill();
-    this.hintLoop = null;
     gsap.to(hint, { opacity: 0, duration: 0.2, ease: 'none', onComplete: () => hint.remove() });
   }
 

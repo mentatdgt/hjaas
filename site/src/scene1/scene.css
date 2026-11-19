@@ -152,6 +152,8 @@
   left: 0;
   height: 100%;
   aspect-ratio: 1672 / 941;
+  /* One plate pixel in CSS pixels; index.ts sets the real value on every resize. */
+  --u: 1px;
 }
 
 .hj-room {
@@ -218,11 +220,31 @@
   pointer-events: none;
 }
 
-/* The button is the hit area: at least 44 × 44 CSS px however small the drawing is. */
+/* The button is the tap box: at least 44 × 44 CSS px however small the drawing is.
+   Its centre is the drawing's centre, unless that would push part of the box, or its focus ring, past the
+   edge of the picture, where it would be cut off. Then the box moves inward and the drawing stays put. */
 .hj-shroom {
+  --edge: 7px;
+  --bw: max(44px, calc(var(--w) * var(--u) + 10px));
+  --bh: max(44px, calc(var(--h) * var(--u) + 10px));
+  /* The drawing's centre, then the box's centre, in CSS px from the plate's corner. */
+  --ax: calc(var(--cx) * var(--u));
+  --ay: calc(var(--cy) * var(--u));
+  --bx: clamp(
+    calc(var(--bw) / 2 + var(--edge)),
+    var(--ax),
+    calc(var(--plate-w) * var(--u) - var(--bw) / 2 - var(--edge))
+  );
+  --by: clamp(
+    calc(var(--bh) / 2 + var(--edge)),
+    var(--ay),
+    calc(var(--plate-h) * var(--u) - var(--bh) / 2 - var(--edge))
+  );
   position: absolute;
-  width: max(44px, calc(var(--w) * var(--u) + 10px));
-  height: max(44px, calc(var(--h) * var(--u) + 10px));
+  left: var(--bx);
+  top: var(--by);
+  width: var(--bw);
+  height: var(--bh);
   margin: 0;
   padding: 0;
   border: 0;
@@ -235,6 +257,12 @@
   touch-action: manipulation;
   -webkit-appearance: none;
   appearance: none;
+}
+
+/* However far the box has moved, the drawing and its shadow stay where they were painted. */
+.hj-shroom-art,
+.hj-shroom.is-grounded::before {
+  translate: calc(var(--ax) - var(--bx)) calc(var(--ay) - var(--by));
 }
 
 .hj-shroom:focus {
@@ -1090,6 +1118,119 @@ a.hj-logo:active {
 
   .hj-sheet-body {
     padding: 2px 18px calc(20px + env(safe-area-inset-bottom));
+  }
+}
+
+/* ---------- Phones: a tall crop of the room inside a thin mat, panned sideways ---------- */
+
+/* The one-time swipe hint lives in the caption, never over the picture. */
+.hj-swipe {
+  display: none;
+}
+
+@media (orientation: portrait) {
+  @container (max-width: 600px) {
+    .hj-page {
+      --page-margin: 18px;
+      --mat: 6px;
+      --logo-w: clamp(120px, 33cqw, 140px);
+      --pad-top: 14px;
+      --pad-bottom: 18px;
+      --gap-head: 12px;
+      --gap-caption: 8px;
+      /* Count, note and controls, stacked. */
+      --caption-h: 104px;
+      /* The width of the window onto the room. */
+      --win-w: calc(100cqw - 2 * var(--page-margin) - 2 * var(--mat) - 2px);
+      width: auto;
+      margin: 0 var(--page-margin);
+    }
+
+    .hj-masthead {
+      gap: 14px;
+    }
+
+    .hj-tagline {
+      font-size: 14.5px;
+      line-height: 1.3;
+    }
+
+    /* As tall as the screen allows, from 4:5 up to 2:3. A native scroller: the browser follows the finger
+       sideways, adds momentum and eases into the edges. Up-and-down swipes are left to the page. */
+    .hj-viewport {
+      width: 100%;
+      height: clamp(calc(var(--win-w) * 1.25), calc(100svh - var(--chrome)), calc(var(--win-w) * 1.5));
+      aspect-ratio: auto;
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-x: contain;
+      touch-action: pan-x pan-y;
+      scrollbar-width: none;
+    }
+
+    .hj-viewport::-webkit-scrollbar {
+      display: none;
+    }
+
+    .hj-viewport.is-dragging {
+      cursor: grabbing;
+    }
+
+    .hj-caption {
+      position: relative;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      align-items: stretch;
+      justify-content: flex-start;
+      gap: 0;
+    }
+
+    .hj-caption-main {
+      flex-direction: column;
+      flex-wrap: nowrap;
+      align-items: flex-start;
+      gap: 2px;
+      min-height: 56px;
+      padding-top: 4px;
+    }
+
+    .hj-tally {
+      min-height: 28px;
+    }
+
+    .hj-controls {
+      gap: 0 26px;
+      margin-left: 0;
+    }
+
+    .hj-swipe {
+      position: absolute;
+      top: 4px;
+      right: 0;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      height: 28px;
+      margin: 0;
+      color: var(--hj-ink-soft);
+      font-size: 14px;
+      pointer-events: none;
+    }
+
+    .hj-swipe svg {
+      display: block;
+      width: 7px;
+      height: 12px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .hj-swipe svg.is-right {
+      transform: scaleX(-1);
+    }
   }
 }
 
