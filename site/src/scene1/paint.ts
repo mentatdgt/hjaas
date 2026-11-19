@@ -198,6 +198,13 @@ export class Painter {
 
     const rnd = seeded(seed);
     this.strokes = STROKES.map((plan) => buildStroke(plan, rnd));
+
+    // One stroke off the edge of the sheet, so the first real one has nothing to set up.
+    this.ctx.lineWidth = 8;
+    this.ctx.beginPath();
+    this.ctx.moveTo(-60, -60);
+    this.ctx.lineTo(-40, -40);
+    this.ctx.stroke();
   }
 
   /** True until the first stroke is laid: a blank sheet, ready to be painted. */
