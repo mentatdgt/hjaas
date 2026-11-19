@@ -1,0 +1,128 @@
+{
+ "canvas": {
+  "w": 980,
+  "h": 1380,
+  "plate_x": 680,
+  "plate_y": 210,
+  "plate_w": 490,
+  "plate_h": 690,
+  "note": "Rachel canvas is 2x. Draw it at plate (680,210) sized 490x690 plate px. Each clip frame = its base still + a patch drawn at (x,y) on the canvas."
+ },
+ "stills": {
+  "A1_mist_aim": "stills/A1_mist_aim.png",
+  "A2_mist_squeeze": "stills/A2_mist_squeeze.png",
+  "A3_mist_lift": "stills/A3_mist_lift.png",
+  "B1_write": "stills/B1_write.png",
+  "A1_blink_half": "stills/A1_blink_half.png",
+  "K1_beam": "stills/K1_beam.png",
+  "K2_thumbs": "stills/K2_thumbs.png"
+ },
+ "clips": {
+  "mist_to_write": {
+   "base": "A1_mist_aim",
+   "x": 13,
+   "y": 13,
+   "frames": [
+    "mist_to_write/mist_to_write_019.png",
+    "mist_to_write/mist_to_write_021.png",
+    "mist_to_write/mist_to_write_023.png",
+    "mist_to_write/mist_to_write_025.png",
+    "mist_to_write/mist_to_write_027.png",
+    "mist_to_write/mist_to_write_029.png",
+    "mist_to_write/mist_to_write_031.png",
+    "mist_to_write/mist_to_write_033.png",
+    "mist_to_write/mist_to_write_035.png",
+    "mist_to_write/mist_to_write_037.png",
+    "mist_to_write/mist_to_write_039.png",
+    "mist_to_write/mist_to_write_041.png",
+    "mist_to_write/mist_to_write_043.png",
+    "mist_to_write/mist_to_write_045.png",
+    "mist_to_write/mist_to_write_047.png",
+    "mist_to_write/mist_to_write_049.png",
+    "mist_to_write/mist_to_write_051.png",
+    "mist_to_write/mist_to_write_053.png",
+    "mist_to_write/mist_to_write_056.png",
+    "mist_to_write/mist_to_write_061.png",
+    "mist_to_write/mist_to_write_063.png",
+    "mist_to_write/mist_to_write_065.png",
+    "mist_to_write/mist_to_write_067.png",
+    "mist_to_write/mist_to_write_069.png",
+    "mist_to_write/mist_to_write_071.png",
+    "mist_to_write/mist_to_write_073.png"
+   ]
+  },
+  "write_loop": {
+   "base": "B1_write",
+   "x": 105,
+   "y": 149,
+   "frames": [
+    "write_loop/write_loop_001.png",
+    "write_loop/write_loop_004.png",
+    "write_loop/write_loop_007.png",
+    "write_loop/write_loop_010.png",
+    "write_loop/write_loop_013.png",
+    "write_loop/write_loop_016.png",
+    "write_loop/write_loop_019.png",
+    "write_loop/write_loop_022.png",
+    "write_loop/write_loop_025.png",
+    "write_loop/write_loop_028.png",
+    "write_loop/write_loop_031.png",
+    "write_loop/write_loop_034.png",
+    "write_loop/write_loop_037.png",
+    "write_loop/write_loop_040.png",
+    "write_loop/write_loop_043.png",
+    "write_loop/write_loop_046.png",
+    "write_loop/write_loop_049.png",
+    "write_loop/write_loop_052.png",
+    "write_loop/write_loop_055.png",
+    "write_loop/write_loop_058.png",
+    "write_loop/write_loop_061.png",
+    "write_loop/write_loop_064.png",
+    "write_loop/write_loop_067.png",
+    "write_loop/write_loop_070.png",
+    "write_loop/write_loop_073.png"
+   ]
+  },
+  "look_up": {
+   "base": "A1_mist_aim",
+   "x": 284,
+   "y": 15,
+   "frames": [
+    "look_up/look_up_028.png",
+    "look_up/look_up_030.png",
+    "look_up/look_up_032.png",
+    "look_up/look_up_034.png",
+    "look_up/look_up_036.png",
+    "look_up/look_up_037.png",
+    "look_up/look_up_038.png",
+    "look_up/look_up_042.png",
+    "look_up/look_up_044.png",
+    "look_up/look_up_046.png",
+    "look_up/look_up_048.png",
+    "look_up/look_up_050.png",
+    "look_up/look_up_052.png",
+    "look_up/look_up_056.png",
+    "look_up/look_up_060.png",
+    "look_up/look_up_066.png",
+    "look_up/look_up_073.png"
+   ]
+  },
+  "thumbs_up": {
+   "base": "K1_beam",
+   "x": 250,
+   "y": 237,
+   "frames": [
+    "thumbs_up/thumbs_up_001.png",
+    "thumbs_up/thumbs_up_007.png",
+    "thumbs_up/thumbs_up_013.png",
+    "thumbs_up/thumbs_up_016.png",
+    "thumbs_up/thumbs_up_020.png",
+    "thumbs_up/thumbs_up_022.png",
+    "thumbs_up/thumbs_up_024.png",
+    "thumbs_up/thumbs_up_028.png",
+    "thumbs_up/thumbs_up_040.png",
+    "thumbs_up/thumbs_up_073.png"
+   ]
+  }
+ }
+}
