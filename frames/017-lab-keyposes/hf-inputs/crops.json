@@ -1,0 +1,15 @@
+{
+ "upscale_crop": [
+  680,
+  210,
+  1170,
+  900
+ ],
+ "video_crop": [
+  562,
+  195,
+  1282,
+  915
+ ],
+ "note": "Crops of the 1672x941 plate-registered frames, on #00FF00, sent to Higgsfield."
+}
