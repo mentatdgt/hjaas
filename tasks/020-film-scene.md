@@ -157,3 +157,6 @@ Preview: `film-preview.mp4` (v2).
 
 ### Package (2026-11-21, Wren)
 `frames/020-film-scene/site/` holds `plate.png`, three RGBA layers (water, presenter, rachel; 16 stills, soft 1 px edges), `frames.json` (with `camera_screen`), `routine.json` and `stability.json`, built by `tools/film_package.py`. Rebuilt from the package, the base frame matches the approved scene except the intended fixes. Pencil line map: `scene/pencil/film-lines.png`. Fable brief: `reviews/scene-4-build.md`.
+
+### Round 6 (2026-11-21, user): presenter's glasses
+A grey wedge hung under the arm of his glasses, beside the ear. Wren removed it (inpainted with skin) and redrew the arm as a clean line from the lens to the ear, then applied the same patch to all 10 presenter stills (pixel-identical faces; M_1_blink keeps its 12 eyelid pixels). Approved, final/ and site/ were rebuilt; preview v3.
