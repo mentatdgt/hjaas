@@ -284,6 +284,9 @@ export function* clipSchedule(
           yield { step: steps[i], home: frames.clips[item.clip].base === rest ? played : [] };
         }
       } else {
+        // Without her clips, a pose that only a clip leads to is passed over with it (the cup at her lips).
+        const before = routine.routine[index - 1];
+        if (!withClips && before && 'clip' in before && !('loop' in before) && !before.reverse && item.still !== frames.clips[before.clip].base) continue;
         const elsewhere = rest && withClips && item.still !== null && item.still !== rest;
         yield* hold(item.still, roll(item.ms), item.blink_ok === true, elsewhere ? wayBack(index) : null);
       }
