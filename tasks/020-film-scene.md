@@ -146,3 +146,11 @@ Quinn delivered M_12 and M_13 in about 5 minutes. Wren pasted back only the chan
 
 ### Loop job 020b (2026-11-21, 03:44 JST): APPROVED
 R_K0 is a side profile with one eye, the start of a smile and her hair mid-swing. Wren pasted back only the head and shoulders (scaled 1024 → 700, at x840, y241; everything below y 765 is locked to A1) and removed a green fringe from the hair edge (also on M_12 and M_13). All in-betweens are done. Next: preview, package, Fable brief.
+
+### Round 5 (2026-11-21, the user's preview notes): fixed
+1. **Cheek:** in A1, the pointed cheek beside her hair is now a thin, flat sliver (loop job 020c). K0's profile cheek is slightly flatter. Only the cheek area was pasted back.
+2. **"Pixelated" head:** the stair-stepped edges come from the hard green cut-outs and from Quinn's flat fills. All character frames now get the same smoothing pass (4× nearest → median 7 → box down: `tools/aa_art.py`), keep the original silhouette, have green bleed removed at the edge, and composite with a soft 1-px alpha (`tools/softedge.py`). Results are in `final/`; build with `tools/film_build_final.py`.
+3. **Glance dropped (the user's call):** the A1 ↔ B1 dissolve looked choppy, so Rachel holds still while filming. B1 is kept but not used.
+4. **Watch:** with the palms out (the M_1 family), the watch face shouldn't show. It's now a plain red strap in M_1, M_1_mid, M_1_closed and M_1_blink.
+5. **Camera screen during the look-back:** the screen rectangle depends on the pose: A1 and K0 x1072–1116, y507–547; K1 x1053–1096, y550–589. The live mirror and REC dot follow it.
+Preview: `film-preview.mp4` (v2).
