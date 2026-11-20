@@ -23,7 +23,7 @@ describe("the café's package", () => {
     expect(problems).toEqual([]);
   });
 
-  it('is six actors, bottom to top, each with a routine of their own', () => {
+  it('is its actors, bottom to top, each with a routine of their own', () => {
     expect(actors.map((a) => a.name)).toEqual(frames.layers.map((layer) => layer.actor));
     expect(actors.length).toBeGreaterThanOrEqual(2);
     for (const a of actors) expect(Object.keys(routines.actors), a.name).toContain(a.name);
@@ -99,7 +99,7 @@ describe('every actor plays by themselves', () => {
       return take(name, 200, 3).map((step) => (at += step.ms));
     };
     const cat = new Set(times('cat').map((t) => Math.round(t)));
-    const together = times('barista').filter((t) => cat.has(Math.round(t))).length;
+    const together = times('child').filter((t) => cat.has(Math.round(t))).length;
     expect(together).toBeLessThan(5);
   });
 
@@ -177,10 +177,15 @@ describe('fade_ms: a dissolve into a still', () => {
     }
   });
 
-  it("is what the café's package uses everywhere but in blinks", () => {
+  it('is only ever written between two stills of the same loop: every other change is a cut (the package\'s rule)', () => {
+    for (const a of actors) {
+      for (const item of a.routine.routine) if (!('steps' in item)) expect((item as { fade_ms?: number }).fade_ms, `${a.name}, outside a loop`).toBeUndefined();
+      for (const item of a.routine.reaction?.steps ?? []) expect((item as { fade_ms?: number }).fade_ms, `${a.name}'s reaction`).toBeUndefined();
+    }
+    // The cat breathes on dissolves; the mum's blink and the old man's page turn cut.
     expect(take('cat', 50).filter((step) => step.fade === 1000).length).toBeGreaterThan(30);
     expect(take('mum', 50).every((step) => step.fade === undefined)).toBe(true);
-    expect(take('barista', 50).every((step) => step.fade !== undefined)).toBe(true);
+    expect(take('oldman', 50).every((step) => step.fade === undefined)).toBe(true);
   });
 
   it('never outlasts the hold it opens', () => {
@@ -188,14 +193,38 @@ describe('fade_ms: a dissolve into a still', () => {
   });
 });
 
+describe('a piece of the room that moves (the fan)', () => {
+  const fan = actors.find((a) => a.name === 'fan');
+  it.runIf(fan)('plays its frames round and round, evenly, and never reacts', () => {
+    const steps = take('fan', 200);
+    const frames = Object.keys(fan!.frames.stills);
+    steps.forEach((step, i) => {
+      expect(step.pose).toBe(frames[i % frames.length]);
+      expect(step.ms).toBe(steps[0].ms);
+      expect(step.fade).toBeUndefined();
+    });
+    expect(fan!.reacts).toBe(false);
+  });
+
+  it.runIf(fan)('is rolled a few steps at a time, however many times its loop runs', () => {
+    let rolls = 0;
+    const schedule = clipSchedule(fan!.frames, fan!.routine, () => (rolls++, 0.5));
+    for (let i = 0; i < 100; i++) schedule.next();
+    // (A thousand turns of the loop rolled at once would ask for a time 24,000 times.)
+    expect(rolls).toBeLessThan(200);
+  });
+});
+
 describe('only the stills the manifests show are loaded', () => {
   it('leaves out a pose no routine uses', () => {
-    const used = stillsInUse(actor('barista').frames, actor('barista').routine);
-    expect(used).toEqual(['B_1', 'B_2', 'B_4']);
-    expect(Object.keys(actor('barista').frames.stills)).toContain('B_3');
+    const { frames: own, routine } = actor('barista');
+    const used = stillsInUse(own, routine);
+    expect(used.length).toBeGreaterThan(0);
+    // A pose for a later routine, carried in the package but not yet played.
+    const more: ClipFrames = { ...own, stills: { ...own.stills, B_polish: 'barista/B_polish.png' } };
+    expect(stillsInUse(more, routine)).toEqual(used);
     const hers = stillsInUse(actor('rachel').frames, actor('rachel').routine);
     expect(hers).toEqual(expect.arrayContaining(['R_A1_sketch', 'R_A2_stroke', 'R_A1_blink', 'R_K1_blink', 'R_K1_look', 'R_K2_smile']));
-    expect(hers).not.toContain('R_B1_sip');
   });
 
   it('never leaves out one that is shown', () => {

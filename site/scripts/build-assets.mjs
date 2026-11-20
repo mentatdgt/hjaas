@@ -151,7 +151,11 @@ for (const layer of cafeFrames.layers) {
 // actor's box (nothing of the hunt may be put in one), and the smaller rectangle that holds every pixel
 // the actor ever covers, stills and clips together (the painting's edge keeps clear of those). In plate px,
 // rounded outward. Written further down as src/scenes/design-cast.json.
-const cafeCast = { note: `Made by npm run assets from ${cafe}/frames.json. Do not edit.`, boxes: {}, covers: {} };
+//
+// An actor whose every still is a solid rectangle, with nothing cut out, is a piece of the room that moves
+// (the café's ceiling fan): the edge fades it as it fades the plate, so it is listed under `room`, not
+// under `covers`.
+const cafeCast = { note: `Made by npm run assets from ${cafe}/frames.json. Do not edit.`, boxes: {}, covers: {}, room: [] };
 {
   const k = 1672 / cafeFrames.canvas.w;
   const outward = ([l, t, r, b]) => [Math.floor(l * k), Math.floor(t * k), Math.ceil(r * k), Math.ceil(b * k)];
@@ -163,16 +167,19 @@ const cafeCast = { note: `Made by npm run assets from ${cafe}/frames.json. Do no
       ...Object.values(cafeFrames.clips ?? {}).filter((clip) => clip.layer === layer.actor).flatMap((clip) => [...new Set(clip.frames)].map((file) => ({ file, x: original.x + clip.x, y: original.y + clip.y }))),
     ];
     let box = [Infinity, Infinity, -Infinity, -Infinity];
+    let solid = true;
     for (const piece of pieces) {
       const { data, info } = await sharp(join(repo, cafe, piece.file)).ensureAlpha().extractChannel(3).raw().toBuffer({ resolveWithObject: true });
       for (let y = 0; y < info.height; y++) {
         for (let x = 0; x < info.width; x++) {
+          if (data[y * info.width + x] < 255) solid = false;
           if (data[y * info.width + x] <= 8) continue;
           box = [Math.min(box[0], piece.x + x), Math.min(box[1], piece.y + y), Math.max(box[2], piece.x + x + 1), Math.max(box[3], piece.y + y + 1)];
         }
       }
     }
-    if (box[0] <= box[2]) cafeCast.covers[layer.actor] = outward(box);
+    if (solid) cafeCast.room.push(layer.actor);
+    else if (box[0] <= box[2]) cafeCast.covers[layer.actor] = outward(box);
   }
 }
 

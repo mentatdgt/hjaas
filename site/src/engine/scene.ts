@@ -1,6 +1,6 @@
 // One scene, built from its config: the plate, the character on it, and the ten hidden mushrooms.
 // A scene knows nothing about the page around it; site.ts puts it in the window and takes it out again.
-import { PLATE, type Frame, asset, decodeBlob, fetchBlob, idle, loadFrame, loadPlate, releaseFrame, unloadFrame } from './assets';
+import { PLATE, asset, decodeBlob, fetchBlob, fetchFrame, idle, loadFrame, loadPlate, releaseFrame, unloadFrame } from './assets';
 import { leadOf, splitCast, type CastFrames, type CastRoutines } from './cast';
 import { Character } from './character';
 import { edgeAlpha, edgeName, makeEdge, type Edge, type EdgeStyle } from './edge';
@@ -80,8 +80,16 @@ const json = async <T>(path: string): Promise<T> => {
 /** The site serves WebP copies of the delivered PNGs. */
 const webp = (file: string): string => file.replace(/\.png$/i, '.webp');
 
+/**
+ * A cast whose files are here but not yet decoded. A scene's files are fetched as soon as it looks as if it
+ * will be opened, while another scene is still on show; they are decoded only when the scene goes on the
+ * plate, after the one being left has given its own decoded frames back. The two sets are never in memory
+ * together: that is what keeps the page inside a phone's budget.
+ */
+type Decode<T> = () => Promise<T>;
+
 /** A character whose every pose is one whole image (scene 1). */
-async function frameCast(config: SceneConfig, cast: FrameCast, host: SceneHost): Promise<Cast> {
+async function frameCast(config: SceneConfig, cast: FrameCast, host: SceneHost): Promise<Decode<Cast>> {
   let names = [...cast.frames];
   let routine: () => Schedule;
   if (cast.routine.kind === 'manifest') {
@@ -96,67 +104,69 @@ async function frameCast(config: SceneConfig, cast: FrameCast, host: SceneHost):
   }
   // A narrow screen gets the lighter copy of the folder, if the scene has one.
   const light = cast.small && host.shownWidth() < cast.small.below ? cast.small.dir : null;
-  const fetchAll = async (folder: string): Promise<{ folder: string; frames: Frame[] }> => ({
-    folder,
-    frames: await Promise.all(names.map((name) => loadFrame(asset(`${config.assets}${folder}${name}.webp`)))),
-  });
-  const loaded = await (light ? fetchAll(light).catch(() => fetchAll(cast.dir)) : fetchAll(cast.dir));
-  const dir = loaded.folder;
+  const fetchAll = async (folder: string): Promise<string> => {
+    await Promise.all(names.map((name) => fetchFrame(asset(`${config.assets}${folder}${name}.webp`))));
+    return folder;
+  };
+  const dir = await (light ? fetchAll(light).catch(() => fetchAll(cast.dir)) : fetchAll(cast.dir));
   // Every pose's file, routine first: the order they are brought back in after a sleep.
   const files = new Map(names.map((name) => [name, asset(`${config.assets}${dir}${name}.webp`)]));
-  const character = new Character(new Map(names.map((name, i) => [name, loaded.frames[i]])), cast);
-  let reaction: Reaction | null = null;
-  let loading: Promise<void> | null = null;
-  let awake = true;
-  return {
-    character,
-    routine,
-    reacts: true,
-    keeps: true,
-    // (Not while her frames are still coming back after a sleep: she would skip the ones not there yet.)
-    reaction: () => (reaction && reaction.steps.every((step) => character.has(step.pose)) ? reaction : null),
-    still: [],
-    more: (reactions) => {
-      if (!cast.reaction || !reactions) return Promise.resolve();
-      loading ??= loadReaction(character, config.assets, dir + cast.reaction).then(
-        (ready) => {
-          reaction = ready;
-          for (const [pose, url] of ready.files) files.set(pose, url);
-        },
-        (error) => console.warn(`[hjaas] ${config.id}: reaction frames unavailable; finds still count`, error),
-      );
-      return loading;
-    },
-    sleep: () => {
-      awake = false;
-      const keep = new Set(character.showing);
-      const kept = new Set([...keep].map((name) => files.get(name)));
-      for (const name of files.keys()) if (!keep.has(name)) character.drop(name);
-      // One file can stand for two poses (a reaction frame that is also a routine frame).
-      for (const url of new Set(files.values())) if (!kept.has(url)) unloadFrame(url);
-      character.sleep();
-    },
-    wake: () => {
-      if (awake) return Promise.resolve();
-      awake = true;
-      void (async () => {
-        for (const [name, url] of files) {
-          if (!awake) return;
-          if (character.has(name)) continue;
-          const frame = await loadFrame(url).catch(() => null);
-          // She went out of sight again while this one was being decoded: sleep() has dealt with it.
-          if (!awake) return;
-          if (frame) character.add(name, frame);
-        }
-      })();
-      return Promise.resolve();
-    },
-    memory: () => ({ ...character.bytes, clipFrames: 0, clipFramesPeak: 0, canvasWidth: character.sourceWidth }),
+  return async () => {
+    const frames = await Promise.all(names.map((name) => loadFrame(files.get(name)!)));
+    const character = new Character(new Map(names.map((name, i) => [name, frames[i]])), cast);
+    let reaction: Reaction | null = null;
+    let loading: Promise<void> | null = null;
+    let awake = true;
+    return {
+      character,
+      routine,
+      reacts: true,
+      keeps: true,
+      // (Not while her frames are still coming back after a sleep: she would skip the ones not there yet.)
+      reaction: () => (reaction && reaction.steps.every((step) => character.has(step.pose)) ? reaction : null),
+      still: [],
+      more: (reactions) => {
+        if (!cast.reaction || !reactions) return Promise.resolve();
+        loading ??= loadReaction(character, config.assets, dir + cast.reaction).then(
+          (ready) => {
+            reaction = ready;
+            for (const [pose, url] of ready.files) files.set(pose, url);
+          },
+          (error) => console.warn(`[hjaas] ${config.id}: reaction frames unavailable; finds still count`, error),
+        );
+        return loading;
+      },
+      sleep: () => {
+        awake = false;
+        const keep = new Set(character.showing);
+        const kept = new Set([...keep].map((name) => files.get(name)));
+        for (const name of files.keys()) if (!keep.has(name)) character.drop(name);
+        // One file can stand for two poses (a reaction frame that is also a routine frame).
+        for (const url of new Set(files.values())) if (!kept.has(url)) unloadFrame(url);
+        character.sleep();
+      },
+      wake: () => {
+        if (awake) return Promise.resolve();
+        awake = true;
+        void (async () => {
+          for (const [name, url] of files) {
+            if (!awake) return;
+            if (character.has(name)) continue;
+            const frame = await loadFrame(url).catch(() => null);
+            // She went out of sight again while this one was being decoded: sleep() has dealt with it.
+            if (!awake) return;
+            if (frame) character.add(name, frame);
+          }
+        })();
+        return Promise.resolve();
+      },
+      memory: () => ({ ...character.bytes, clipFrames: 0, clipFramesPeak: 0, canvasWidth: character.sourceWidth }),
+    };
   };
 }
 
 /** A character delivered as stills and clips of patches (scene 2; see clips.ts and reel.ts). */
-async function clipCast(config: SceneConfig, cast: ClipCast, host: SceneHost): Promise<Cast> {
+async function clipCast(config: SceneConfig, cast: ClipCast, host: SceneHost): Promise<Decode<Cast>> {
   const dir = config.assets + cast.dir;
   // A narrow screen gets the lighter set of the same frames, if the scene has one.
   const light = cast.small && host.shownWidth() < cast.small.below ? config.assets + cast.small.dir : null;
@@ -178,19 +188,20 @@ async function clipCast(config: SceneConfig, cast: ClipCast, host: SceneHost): P
  * A whole cast delivered in one package (scene 3; see cast.ts): every actor is played by the same code as the
  * lab's Rachel, each from its own share of the two manifests. Bottom to top.
  */
-async function troupe(config: SceneConfig, cast: Troupe, host: SceneHost): Promise<Cast[]> {
+async function troupe(config: SceneConfig, cast: Troupe, host: SceneHost): Promise<Decode<Cast[]>> {
   const dir = config.assets + cast.dir;
   const [frames, routines] = await Promise.all([json<CastFrames>(dir + cast.frames), json<CastRoutines>(dir + cast.routine)]);
   const { actors, problems } = splitCast(frames, routines, PLATE.w);
   if (problems.length) throw new Error(`${config.id}: ${problems.join(' ')}`);
   const lead = leadOf(actors);
   const load = (file: string): Promise<Blob> => fetchBlob(asset(dir + webp(file)));
-  return Promise.all(
+  const fetched = await Promise.all(
     actors.map((actor) => actorCast(`${config.id}, ${actor.name}`, actor.frames, actor.routine, host, load, { keeps: false, className: actor === lead ? 'hj-rachel' : 'hj-actor', name: actor.name })),
   );
+  return () => Promise.all(fetched.map((decode) => decode()));
 }
 
-/** One actor from her two manifests: her stills now, her clips when asked. */
+/** One actor from her two manifests: her stills' files now, her clips' when asked. */
 async function actorCast(
   id: string,
   frames: ClipFrames,
@@ -198,114 +209,116 @@ async function actorCast(
   host: SceneHost,
   load: (file: string) => Promise<Blob>,
   options: { keeps: boolean; className?: string; name?: string },
-): Promise<Cast> {
+): Promise<Decode<Cast>> {
   // The stills first: they are all she needs to start her routine, and they stay decoded while the scene
   // is on show. Their files are kept, so they can be decoded again after a sleep. Only the stills the
   // routine, the blinks and the reaction ever show: a package may carry others (a pose for a later routine).
   const names = stillsInUse(frames, routine);
   const stillFiles = await Promise.all(names.map((name) => load(frames.stills[name])));
-  const stills = await Promise.all(stillFiles.map(decodeBlob));
-  const c = frames.canvas;
-  const rest = restOf(frames, routine);
-  const character = new Character(new Map(names.map((name, i) => [name, stills[i]])), {
-    rest,
-    placement: { kind: 'box', x: c.plate_x, y: c.plate_y, width: c.plate_w, height: c.plate_h },
-    size: { w: c.w, h: c.h },
-    className: options.className,
-  });
-  if (options.name) character.el.dataset.actor = options.name;
+  return async () => {
+    const stills = await Promise.all(stillFiles.map(decodeBlob));
+    const c = frames.canvas;
+    const rest = restOf(frames, routine);
+    const character = new Character(new Map(names.map((name, i) => [name, stills[i]])), {
+      rest,
+      placement: { kind: 'box', x: c.plate_x, y: c.plate_y, width: c.plate_w, height: c.plate_h },
+      size: { w: c.w, h: c.h },
+      className: options.className,
+    });
+    if (options.name) character.el.dataset.actor = options.name;
 
-  // Then the clips, when asked: the routine's own, then the reaction's. They are only downloaded here;
-  // the reel decodes each frame shortly before it is shown.
-  const reel = new Reel(character);
-  reel.wake();
-  let awake = true;
-  const loaded = new Set<string>();
-  const inUse = clipsInUse(routine);
-  const fetching = new Map<string, Promise<void>>();
-  const fetchClip = (name: string): Promise<void> => {
-    let pending = fetching.get(name);
-    if (!pending) {
-      pending = (async () => {
-        const clip = frames.clips[name];
-        for (let i = 0; i < clip.frames.length; i++) {
-          await idle();
-          reel.add(clipPose(name, i), { blob: await load(clip.frames[i]), base: clip.base, x: clip.x, y: clip.y });
-        }
-        loaded.add(name);
-      })();
-      fetching.set(name, pending);
-      pending.catch((error) => {
-        fetching.delete(name);
-        console.warn(`[hjaas] ${id}: the clip "${name}" could not be loaded; she keeps to her stills`, error);
-      });
-    }
-    return pending;
-  };
-  const full = clipReaction(frames, routine);
-  // A reaction can start at any moment, so its clip frames stay decoded while the scene is on show.
-  const reactionFrames = [...new Set((full?.steps ?? []).map((step) => step.pose).filter((pose) => !(pose in frames.stills)))];
-  return {
-    character,
-    routine: () => clipSchedule(frames, routine, host.rnd, (name) => loaded.has(name)),
-    reacts: full !== null,
-    keeps: options.keeps,
-    // The full reaction needs every clip: its own, decoded, and the routine's for the way back from writing.
-    reaction: () =>
-      full && [...inUse.routine, ...inUse.reaction].every((name) => loaded.has(name)) && reel.ready(reactionFrames) && names.every((name) => character.has(name))
-        ? full
-        : null,
-    still: full?.still ?? [],
-    more: async (reactions) => {
-      for (const name of inUse.routine) await fetchClip(name).catch(() => {});
-      if (!reactions || !full) return;
-      reel.pin(reactionFrames);
-      for (const name of inUse.reaction) await fetchClip(name).catch(() => {});
-    },
-    ahead: (poses) => reel.want(poses),
-    sleep: () => {
-      awake = false;
-      reel.sleep();
-      const keep = new Set(options.keeps ? character.showing : []);
-      names.forEach((name, i) => {
-        if (keep.has(name) || !character.has(name)) return;
-        character.drop(name);
-        releaseFrame(stills[i]);
-      });
-      character.sleep();
-    },
-    wake: () => {
-      if (awake) return Promise.resolve();
-      awake = true;
-      // The frame her canvas needs comes back first: until it has, she cannot be drawn.
-      const order = [...names.keys()].sort((a, b) => Number(names[b] === character.current) - Number(names[a] === character.current));
-      let shown: () => void = () => {};
-      const back = new Promise<void>((resolve) => (shown = resolve));
-      void (async () => {
-        try {
-          for (const i of order) {
-            if (!awake) return;
-            if (!character.has(names[i])) {
-              const frame = await decodeBlob(stillFiles[i]).catch(() => null);
-              if (!frame) continue;
-              // She went out of sight again while this one was being decoded.
-              if (!awake) {
-                releaseFrame(frame);
-                return;
-              }
-              stills[i] = frame;
-              character.add(names[i], frame);
-            }
-            if (i === order[0]) shown();
+    // Then the clips, when asked: the routine's own, then the reaction's. They are only downloaded here;
+    // the reel decodes each frame shortly before it is shown.
+    const reel = new Reel(character);
+    reel.wake();
+    let awake = true;
+    const loaded = new Set<string>();
+    const inUse = clipsInUse(routine);
+    const fetching = new Map<string, Promise<void>>();
+    const fetchClip = (name: string): Promise<void> => {
+      let pending = fetching.get(name);
+      if (!pending) {
+        pending = (async () => {
+          const clip = frames.clips[name];
+          for (let i = 0; i < clip.frames.length; i++) {
+            await idle();
+            reel.add(clipPose(name, i), { blob: await load(clip.frames[i]), base: clip.base, x: clip.x, y: clip.y });
           }
-          if (awake) reel.wake();
-        } finally {
-          shown();
-        }
-      })();
-      return options.keeps ? Promise.resolve() : back;
-    },
-    memory: () => ({ ...character.bytes, clipFrames: reel.bytes, clipFramesPeak: reel.peak, canvasWidth: c.w }),
+          loaded.add(name);
+        })();
+        fetching.set(name, pending);
+        pending.catch((error) => {
+          fetching.delete(name);
+          console.warn(`[hjaas] ${id}: the clip "${name}" could not be loaded; she keeps to her stills`, error);
+        });
+      }
+      return pending;
+    };
+    const full = clipReaction(frames, routine);
+    // A reaction can start at any moment, so its clip frames stay decoded while the scene is on show.
+    const reactionFrames = [...new Set((full?.steps ?? []).map((step) => step.pose).filter((pose) => !(pose in frames.stills)))];
+    return {
+      character,
+      routine: () => clipSchedule(frames, routine, host.rnd, (name) => loaded.has(name)),
+      reacts: full !== null,
+      keeps: options.keeps,
+      // The full reaction needs every clip: its own, decoded, and the routine's for the way back from writing.
+      reaction: () =>
+        full && [...inUse.routine, ...inUse.reaction].every((name) => loaded.has(name)) && reel.ready(reactionFrames) && names.every((name) => character.has(name))
+          ? full
+          : null,
+      still: full?.still ?? [],
+      more: async (reactions) => {
+        for (const name of inUse.routine) await fetchClip(name).catch(() => {});
+        if (!reactions || !full) return;
+        reel.pin(reactionFrames);
+        for (const name of inUse.reaction) await fetchClip(name).catch(() => {});
+      },
+      ahead: (poses) => reel.want(poses),
+      sleep: () => {
+        awake = false;
+        reel.sleep();
+        const keep = new Set(options.keeps ? character.showing : []);
+        names.forEach((name, i) => {
+          if (keep.has(name) || !character.has(name)) return;
+          character.drop(name);
+          releaseFrame(stills[i]);
+        });
+        character.sleep();
+      },
+      wake: () => {
+        if (awake) return Promise.resolve();
+        awake = true;
+        // The frame her canvas needs comes back first: until it has, she cannot be drawn.
+        const order = [...names.keys()].sort((a, b) => Number(names[b] === character.current) - Number(names[a] === character.current));
+        let shown: () => void = () => {};
+        const back = new Promise<void>((resolve) => (shown = resolve));
+        void (async () => {
+          try {
+            for (const i of order) {
+              if (!awake) return;
+              if (!character.has(names[i])) {
+                const frame = await decodeBlob(stillFiles[i]).catch(() => null);
+                if (!frame) continue;
+                // She went out of sight again while this one was being decoded.
+                if (!awake) {
+                  releaseFrame(frame);
+                  return;
+                }
+                stills[i] = frame;
+                character.add(names[i], frame);
+              }
+              if (i === order[0]) shown();
+            }
+            if (awake) reel.wake();
+          } finally {
+            shown();
+          }
+        })();
+        return options.keeps ? Promise.resolve() : back;
+      },
+      memory: () => ({ ...character.bytes, clipFrames: reel.bytes, clipFramesPeak: reel.peak, canvasWidth: c.w }),
+    };
   };
 }
 
@@ -338,8 +351,8 @@ export class Scene {
   private casts: Cast[] = [];
   private readonly players = new Map<Cast, Player>();
   private cast: Cast | null = null;
-  /** Their first frames being fetched and decoded. */
-  private casting: Promise<Cast[] | null> | null = null;
+  /** Their first frames' files being fetched. (They are decoded when the scene goes on the plate: see Decode.) */
+  private casting: Promise<Decode<Cast[]> | null> | null = null;
   /** She is being put on the plate. */
   private entering: Promise<void> | null = null;
   private soft = false;
@@ -376,7 +389,8 @@ export class Scene {
    */
   static async load(config: SceneConfig, host: SceneHost, withCharacter: boolean): Promise<Scene> {
     const plateSrc = loadPlate(config.assets + config.plate);
-    const cast = withCharacter ? Scene.castFor(config, host) : null;
+    // (The opening scene: nothing else is on show, so its frames are decoded as soon as they are here.)
+    const cast = withCharacter ? Scene.castFor(config, host).then((decode) => decode?.() ?? null) : null;
 
     const plate = document.createElement('div');
     plate.className = 'hj-plate';
@@ -408,16 +422,18 @@ export class Scene {
     return scene;
   }
 
-  private static async castFor(config: SceneConfig, host: SceneHost): Promise<Cast[] | null> {
+  private static async castFor(config: SceneConfig, host: SceneHost): Promise<Decode<Cast[]> | null> {
     const cast = config.character;
     if (!cast) return null;
     if (cast.kind === 'cast') return troupe(config, cast, host);
-    return [await (cast.kind === 'clips' ? clipCast(config, cast, host) : frameCast(config, cast, host))];
+    const one = await (cast.kind === 'clips' ? clipCast(config, cast, host) : frameCast(config, cast, host));
+    return async () => [await one()];
   }
 
   /**
-   * Start fetching and decoding her first frames, without putting her on the plate: called as soon as it
-   * looks as if the scene will be opened (the pointer is on its tab), so the wait at the tap is short.
+   * Start fetching her first frames' files, without decoding them or putting her on the plate: called as
+   * soon as it looks as if the scene will be opened (the pointer is on its tab), so the wait at the tap is
+   * short.
    */
   preload(): void {
     if (this.cast || this.casting || !this.config.character) return;
@@ -440,13 +456,15 @@ export class Scene {
     const back = Promise.all(this.casts.map((cast) => cast.wake())).then(() => {});
     if (this.character || !this.config.character) return back;
     this.preload();
-    this.entering ??= this.casting!.then((casts) => {
-      if (casts && !this.character) this.attach(casts, options.hidden === true);
-    });
+    this.entering ??= this.casting!
+      .then((decode) => decode?.() ?? null)
+      .then((casts) => {
+        if (casts && !this.character) this.attach(casts, options.hidden === true);
+      });
     return this.entering;
   }
 
-  /** Resolves when her first frames are fetched and decoded (she is not put on the plate by this). */
+  /** Resolves when her first frames' files are here (they are decoded, and she is put on the plate, by enter()). */
   loaded(): Promise<void> {
     if (this.cast || !this.config.character) return Promise.resolve();
     this.preload();

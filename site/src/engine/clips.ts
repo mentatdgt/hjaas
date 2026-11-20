@@ -330,15 +330,25 @@ export function* clipSchedule(
   const clipFrames = (steps: readonly Step[]): string[] => [...new Set(steps.map((step) => step.pose).filter((pose) => pose !== NOTHING && !(pose in frames.stills)))];
 
   for (;;) {
-    // A whole pass is rolled at once, so that every step can say what follows it.
-    const moments = [...pass()];
-    for (let i = 0; i < moments.length; i++) {
-      const { step, home } = moments[i];
+    // A pass is rolled a few steps ahead of where she is, so that every step can say what follows it. (Not
+    // all at once: a loop may run a thousand times, as the café's fan does.)
+    const rolling = pass();
+    const ahead: Moment[] = [];
+    const rollAhead = (): void => {
+      while (ahead.length <= AHEAD) {
+        const next = rolling.next();
+        if (next.done) return;
+        ahead.push(next.value);
+      }
+    };
+    for (rollAhead(); ahead.length; rollAhead()) {
+      const { step, home } = ahead.shift()!;
+      rollAhead();
       const soon = clipFrames([
-        ...moments.slice(i + 1, i + 1 + AHEAD).map((moment) => moment.step),
+        ...ahead.slice(0, AHEAD).map((moment) => moment.step),
         // Should a reaction be asked for during this step or the next: the start of the way home from each.
         ...home.slice(0, HOME_READY),
-        ...(moments[i + 1]?.home.slice(0, HOME_READY) ?? []),
+        ...(ahead[0]?.home.slice(0, HOME_READY) ?? []),
       ]);
       const signal = yield { ...step, soon };
       if (signal !== 'react' || !rest || step.pose === rest) continue;

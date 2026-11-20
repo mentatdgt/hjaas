@@ -6,13 +6,14 @@
     "awayIn": "build",
     "cafeHeldWhileAwayMB": 0,
     "msFromTheTapUntilEachActorIsDrawnAgain": {
-     "cat": 193,
-     "child": 193,
-     "oldman": 193,
-     "barista": 193,
-     "rachel": 193
+     "fan": 145,
+     "cat": 145,
+     "child": 145,
+     "oldman": 145,
+     "barista": 145,
+     "rachel": 145
     },
-    "msFromTheTapUntilTheBrushStarts": 402,
+    "msFromTheTapUntilTheBrushStarts": 359,
     "everyoneDrawnBeforeTheBrush": true,
     "sheStartsFromHerRestPose": "R_A1_sketch",
     "posesSheMissed": 0
@@ -21,13 +22,14 @@
     "awayIn": "grow",
     "cafeHeldWhileAwayMB": 0,
     "msFromTheTapUntilEachActorIsDrawnAgain": {
-     "cat": 138,
-     "child": 138,
-     "oldman": 138,
-     "barista": 138,
-     "rachel": 138
+     "fan": 118,
+     "cat": 118,
+     "child": 118,
+     "oldman": 118,
+     "barista": 118,
+     "rachel": 134
     },
-    "msFromTheTapUntilTheBrushStarts": 346,
+    "msFromTheTapUntilTheBrushStarts": 327,
     "everyoneDrawnBeforeTheBrush": true,
     "sheStartsFromHerRestPose": "R_A1_sketch",
     "posesSheMissed": 0
@@ -36,13 +38,14 @@
     "awayIn": "build",
     "cafeHeldWhileAwayMB": 0,
     "msFromTheTapUntilEachActorIsDrawnAgain": {
-     "cat": 132,
-     "child": 132,
-     "oldman": 132,
-     "barista": 132,
-     "rachel": 155
+     "fan": 129,
+     "cat": 129,
+     "child": 129,
+     "oldman": 129,
+     "barista": 129,
+     "rachel": 147
     },
-    "msFromTheTapUntilTheBrushStarts": 344,
+    "msFromTheTapUntilTheBrushStarts": 357,
     "everyoneDrawnBeforeTheBrush": true,
     "sheStartsFromHerRestPose": "R_A1_sketch",
     "posesSheMissed": 0
@@ -58,13 +61,14 @@
     "awayIn": "build",
     "cafeHeldWhileAwayMB": 0,
     "msFromTheTapUntilEachActorIsDrawnAgain": {
-     "cat": 76,
-     "child": 76,
-     "oldman": 91,
-     "barista": 91,
-     "rachel": 91
+     "fan": 79,
+     "cat": 79,
+     "child": 79,
+     "oldman": 106,
+     "barista": 106,
+     "rachel": 106
     },
-    "msFromTheTapUntilTheBrushStarts": 393,
+    "msFromTheTapUntilTheBrushStarts": 397,
     "everyoneDrawnBeforeTheBrush": true,
     "sheStartsFromHerRestPose": "R_A1_sketch",
     "posesSheMissed": 0
@@ -73,13 +77,14 @@
     "awayIn": "grow",
     "cafeHeldWhileAwayMB": 0,
     "msFromTheTapUntilEachActorIsDrawnAgain": {
-     "cat": 178,
-     "child": 178,
-     "oldman": 190,
-     "barista": 190,
-     "rachel": 211
+     "fan": 76,
+     "cat": 76,
+     "child": 76,
+     "oldman": 76,
+     "barista": 76,
+     "rachel": 96
     },
-    "msFromTheTapUntilTheBrushStarts": 457,
+    "msFromTheTapUntilTheBrushStarts": 344,
     "everyoneDrawnBeforeTheBrush": true,
     "sheStartsFromHerRestPose": "R_A1_sketch",
     "posesSheMissed": 0
@@ -88,13 +93,14 @@
     "awayIn": "build",
     "cafeHeldWhileAwayMB": 0,
     "msFromTheTapUntilEachActorIsDrawnAgain": {
-     "cat": 78,
-     "child": 78,
-     "oldman": 78,
-     "barista": 78,
-     "rachel": 97
+     "fan": 80,
+     "cat": 80,
+     "child": 80,
+     "oldman": 80,
+     "barista": 80,
+     "rachel": 101
     },
-    "msFromTheTapUntilTheBrushStarts": 345,
+    "msFromTheTapUntilTheBrushStarts": 363,
     "everyoneDrawnBeforeTheBrush": true,
     "sheStartsFromHerRestPose": "R_A1_sketch",
     "posesSheMissed": 0

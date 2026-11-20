@@ -53,6 +53,14 @@ export function loadFrame(url: string): Promise<Frame> {
 }
 
 /**
+ * Download a frame's file without decoding it: loadFrame() then only has to decode. (A scene's frames are
+ * fetched while the scene before it is still on show, and decoded once that one has given its own back.)
+ */
+export function fetchFrame(url: string): Promise<void> {
+  return blobOf(url).then(() => {});
+}
+
+/**
  * Give a frame's pixels back (a scene out of sight keeps none). Its downloaded bytes stay, so loadFrame()
  * brings it back by decoding alone. The frame must not be drawn again.
  */
