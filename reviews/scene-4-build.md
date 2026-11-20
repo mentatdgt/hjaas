@@ -6,7 +6,7 @@ Rules for unattended work are in `HANDOVER.md`. The look and the rules are in `B
 ## 0. When and where
 - **Start only after `site/scene-3` (the café) has been merged into `main`.** Then create `site/scene-4` from the tip of `main` and build there.
 - Never merge into any branch, and never touch `main`.
-- If the café isn't merged yet when you read this, stop and report. Don't stack on `site/scene-3`.
+- **Update 2026-11-21 (Wren, with the user's OK):** the café isn't merged yet, and the user doesn't want to wait. Once your café work (package v7.3) is committed and pushed, create `site/scene-4` from the tip of `site/scene-3` and build scene 4 there. The branches merge in order later (scene 3, then scene 4).
 
 ## 1. What scene 4 is
 The fourth tab in the scene menu: **Film**, after Build, Grow and Design. Lazy-load it like Grow and Design.
