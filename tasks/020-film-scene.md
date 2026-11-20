@@ -1,6 +1,6 @@
 ---
 id: 020-film-scene
-status: open             # draft | open | delivered | changes-requested | approved
+status: changes-requested            # draft | open | delivered | changes-requested | approved
 frames: many              # see the lists below
 grid: separate images     # one image per file, ALL the same size as 020_scene.png and registered to it
 references:
@@ -84,3 +84,13 @@ Phone window note for Fable: her head now sits at about 72–85% of the width, s
 
 ### Round 1 (plate only, 2026-11-20): the car is too long
 Seen in the plate, the car reads as a stretched limo: two rear doors and three side windows, with the wheels about 3.4 car-heights apart. In `020_plate`, shorten it to a normal fastback saloon: one front door and one rear door, two side windows, the wheels about 2 car-heights apart. Keep the nose, the front wheel and the colours where they are; move the rear wheel and the tail right. Fill in the promenade, railing and bollard behind. Also remove the faint ghost of the water jet in the sky. The anchors and poses are unaffected. Wren rebuilds `020_scene` as the plate plus the anchors once the new plate is in.
+
+### QC round 1, batch 1 (2026-11-20, Wren)
+All 16 files are 1672×941, with pure `#00FF00` backgrounds. Every anchor matches the scene pixel for pixel. The car is now a normal fastback (wheelbase about 2.2 car-heights), and the water ghost is gone. Clearance between the presenter and the camera is 81 px or more in every pose.
+- **PASS → `approved/`:** the three anchors; R_A1, R_B1; M_1, M_1_closed, M_1_blink, M_2, M_3; W_1–3.
+- **Wren fixes:** `approved/020_plate.png` gets the presenter's ground shadow back from the original scene (his feet never move, and without it he floated). `approved/020_scene.png` is rebuilt as the plate plus W_1, M_1 and R_A1, so it now has the shorter car.
+- **Accepted:** M_2 points left, toward Marina Bay Sands and the spout, not at the Merlion. The brief had the side wrong, and it reads well. The peace-sign pose is dropped.
+- **FAIL:** `020_R_K1_look.png`: **Rachel wears glasses.**
+
+### Round 2 (Quinn)
+Redo `020_R_K1_look.png` only, as an edit of `020_rachel_green.png`: the same look back over her shoulder with a warm smile, the same hair, tank, camera and hands, **with no glasses at all**. Draw the bare eyes as in `reference/hjaas3.png` "warm smile", without the frames. Keep her waist and shorts at exactly the same pixels. 1672×941, green background.
