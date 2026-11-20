@@ -13,7 +13,7 @@ What's decided. Everyone (Wren, Quinn, Fable, Foreman) follows this. If a task, 
 ## 2. Look and motion
 - **Art:** flat colours, thick dark outlines, warm light from the left, hand-drawn proportions (large head, small hands). Match `reference/` and the approved scene-1 frames.
 - **Logo:** the tape-measure pin, `assets/logo/hjaas-logo.png`; favicon `assets/logo/hjaas-reel.png`.
-- **Page:** paper-coloured page with the scene inset; the edge is the **organic watercolour feather** (`reviews/scene-edge-organic.md`).
+- **Page:** paper-coloured page with the scene inset; the edge is the **organic watercolour feather with a pencil trail** (option B, `reviews/scene-edge-pencil.md`): the colour fades, pencil lines carry on a little and trail off into the paper. Never a hard straight cut.
 - **Intro:** 5 s watercolour paint-in with doubled strokes, easing `cubic-bezier(0.645, 0.045, 0.355, 1)`. Skip and pause available; reduced motion respected.
 - **UI:** quiet and small. The counter is a little enamel-pin jewel, not a HUD.
 - **Motion bar:** smooth and human, never jerky. Randomised holds, natural blinks, no popping or pose glitches. 60 fps on a throttled phone.
