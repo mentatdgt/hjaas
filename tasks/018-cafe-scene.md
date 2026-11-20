@@ -34,6 +34,7 @@ Same image as `018_scene.png`, but everything except that character replaced by 
 - `018_child_green.png`: the child only (not the chair or table). Where the table hides part of her, leave that part out, cut along the table's edge.
 - `018_oldman_green.png`: the old man and his newspaper only (not the chair or table). The kopi cup stays in the plate.
 - `018_cat_green.png`: the cat only.
+- `018_mum_green.png`: the mum only (she also stays in the plate; this anchor is just for her blink).
 
 **Rule for all green images:** each contains exactly what a visitor sees of that character in `018_scene.png`. No shadows, no floor.
 
@@ -53,11 +54,12 @@ Same canvas, green background, character in exactly the same place. Change only 
 | File | Pose |
 |---|---|
 | `018_B_1.png`, `018_B_2.png`, `018_B_3.png` | Barista polishing the cup: three positions of the cloth and cup, as a gentle loop. |
-| `018_B_4.png` | The barista glances up and out into the café with a small smile; hands as in B_1. |
+| `018_B_4.png` | The barista glances over at **Rachel** with a small, friendly smile, like seeing a regular; hands as in B_1. |
 | `018_C_1.png`, `018_C_2.png` | The child colouring: crayon in two positions. |
-| `018_C_3.png` | The child looks up and grins, crayon raised. |
+| `018_C_3.png` | The child looks up at **his mum** on the window seat and grins, crayon raised. |
 | `018_O_1.png`, `018_O_2.png`, `018_O_3.png` | The old man reading (1), lifting the page corner (2), and the page turned over (3). |
-| `018_cat_1.png`, `018_cat_2.png` | The cat asleep (1); the same with its tail tip curled and the body slightly rounder, as if breathing in (2). |
+| `018_cat_1.png`, `018_cat_2.png`, `018_cat_3.png` | The cat asleep (1); body slightly rounder, as if breathing in (2); the same as 1 but with the **tail tip flicked up** (3). |
+| `018_M_blink_half.png`, `018_M_blink_closed.png` | The mum, edits of `018_mum_green`: eyes half closed, then fully closed. Nothing else changes. |
 
 ## Delivery
 - All files above, named exactly, each 1672×941.
