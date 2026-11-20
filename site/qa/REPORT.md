@@ -592,9 +592,12 @@ From `reviews/scene-edge-feather.md`, on `site/scene-2`, for both scenes. One co
 
 ## Review 04
 
-`reviews/scene-2-review-04.md`, on `site/scene-2`. **Paused a second time, at the user's request (2026-11-20),
-during item 4.** Items 1, 2 and 3 are done, checked, committed and pushed. Item 4 is built and committed but
-only partly checked: see "Half-done" below. Nothing was merged into any other branch and no push failed.
+`reviews/scene-2-review-04.md`, on `site/scene-2`. All four items are built, committed and pushed (the work
+was paused twice at the user's request and picked up again). `main` was pulled first, as a merge into
+`site/scene-2`; nothing was merged into any other branch and no push failed.
+
+Two things are not a clean ✅: the page's total memory, because of scene 1 (item 3), and the tap of a
+find, which is much shorter but still over 50 ms on the first find in the test browser (item 4).
 
 | | Item | What was done, and what was measured | Evidence |
 |---|---|---|---|
@@ -607,11 +610,14 @@ only partly checked: see "Half-done" below. Nothing was merged into any other br
 | ✅ | 3. Edges at 1.5× still sharp at 390 × 844 @3× | Side by side with the 2× set at the screen's own pixels: I can see no difference in her outlines, face or hand. | `review-04/sharpness-390x844@3x.jpg` |
 | ✅ | 3. Peak decoded memory of her lab frames, phone profile, under 80 MB | **Before: 243 MB. After: peak 66.9 MB** (from the bitmap sizes, sampled every frame through two cycles and two reactions). After leaving for Build: 21 MB. Desktop (2×): peak 114.9 MB. | `review-04/memory.json` |
 | ⚠️ | 3. The whole page, not only the lab | **Scene 1's own Rachel frames are 84 MB decoded and stay decoded** while Grow is open. The review did not know this and I did not change it. With them, a phone that opened Build first holds about 165 MB of decoded images with Grow open. See "For Wren". | Sizes measured from the files |
-| ✅ | 4. First lab open: frames over 50 ms | **Before: 39 to 65 ms. After: 21 to 33 ms, in 12 of 12 runs** (6 iPhone profile, 6 desktop; WebKit, cold load, production build). Wren asked for 12 runs per profile; 6 per profile were done before the pause. | `review-04/first-lab-open-before-item-4.json`, `-after-item-4.json` |
-| ✅ | 4. Decoding off the page's thread | All of her frames, in both scenes, are now decoded in a background worker. Her lab stills start downloading and decoding when the pointer or a finger is on the Grow tab, or it gets keyboard focus. She is put on the plate, under the old picture, one frame after the room. | `src/engine/assets.ts`, `site.ts` |
-| ⚠️ | 4. Writing loop | WebKit without a window: **no frame over 24 ms** in two full cycles. WebKit with a window: **one frame of 107 to 123 ms**, once, at the start of the first writing loop (iPhone profile and desktop). Before it was two frames of 54 and 65 ms. Not explained yet: see "Half-done". | `review-04/cycle-and-finds-webkit.json` |
-| ⚠️ | 4. The tap of a find | Not image decoding. The first find of a visit still has a frame of 83 to 123 ms; later finds 18 to 75 ms. Traced as far as the pause allowed: see "Half-done". | `review-04/cycle-and-finds-webkit.json` |
-| ⚠️ | 4. The other checks | The menu, skip, back button, reduced motion and keyboard checks pass on the item 4 code. The 20-mushroom hunt and the lab checks were last run on the item 3 code, not after item 4. The intro's end in WebKit was not re-measured. | `review-04/nav-checks.json`, `hunt-checks.json`, `lab-checks.json` |
+| ✅ | 4. First lab open: no frame over 50 ms | **Before: 39 to 65 ms. After: 21 to 43 ms on the iPhone profile and 29 to 39 ms on desktop, in 12 of 12 runs each** (WebKit, cold load, production build). | `review-04/first-lab-open-before-item-4.json`, `-after-item-4.json` |
+| ✅ | 4. Decoding off the page's thread | All of her frames, in both scenes, are decoded in a background worker. Her lab stills start downloading and decoding when the pointer or a finger is on the Grow tab, or it gets keyboard focus. On a switch the room is drawn first and she one frame later, under the old picture. | `src/engine/assets.ts`, `site.ts`, `scene.ts` |
+| ✅ | 4. Writing loop: no decode mid-loop, no frame over 50 ms | WebKit without a window: **longest frame 20 ms** in two full cycles (it was 65 and 54 ms). With a window there is one frame of 100 to 116 ms, always 15.2 s after the page opens. **That one is the test browser, not the site:** an empty page in the same browser has it too (119 ms at 15.1 s). Wren's two earlier frames were 15.05 s apart for the same reason. | `review-04/cycle-and-finds-webkit.json`, `webkit-window-stalls.json` |
+| ⚠️ | 4. The tap of a find | **It was not image decoding.** With the image as the tap's target, WebKit delivered the click up to 55 ms after the finger lifted. The tap now lands on the button and the click arrives within 3 ms. Five finds, iPhone profile: **the first 60 to 68 ms (it was 92 to 123), the others 18 to 52 ms.** On desktop all five are 17 to 35 ms. What is left of the first one starts 41 to 51 ms before the click reaches the page, so it is the test delivering the tap; the site's own share is under 20 ms. | `review-04/cycle-and-finds-webkit.json` |
+| ⚠️ | 4. The landing of a find | The frame in which a mushroom lands at the caption is 18 to 45 ms on the iPhone profile. Not over 50, but the longest thing left; the first change of the number costs about 34 ms once. | same |
+| ✅ | 4. Nothing else broke | All 20 mushrooms can still be found and counted at 390 × 844, 360 × 740 and 1440 × 900. Menu, skip, back button, reduced motion, keyboard: pass. Lazy loading unchanged: nothing of hers is fetched before Grow is opened. No frame of hers arrived late, also with the processor slowed 6×. | `review-04/hunt-checks.json`, `nav-checks.json`, `lab-checks.json`, `slow-phone.json` |
+| ⚠️ | 4. The opening painting, re-measured | Not conclusive: the Mac was busy with an iCloud sync and both the old and the new build stalled now and then. Old and new alternating, 12 runs each: the end of the intro was 18 to 34 ms (old) and 18 to 58 ms (new: ten runs of 18 to 23, one of 46, one of 58). The first, quiet batch of the new build was 19 ms in 5 of 5. | `review-04/intro-webkit-cold.txt` |
+| ✅ | Recordings | The lab routine with one reaction, and Build → Grow → Build, on desktop (Chrome) and the iPhone profile (WebKit), from the final code. | `review-04/lab-routine-and-reaction-*.mp4`, `switch-build-grow-build-*.mp4` |
 
 `npm test`: 46 of 46 pass (6 new tests check that every clip frame is asked for before it is shown).
 
@@ -656,37 +662,34 @@ Decoded image memory of Rachel's lab frames, from the bitmap sizes.
 - **The patches still line up.** At 1.5× the mean difference at a patch's edge is 0.4 to 1.2 levels of 255.
 - **Download:** the 1.5× set is 7.4 MB against 9.4 MB.
 
-### Half-done: item 4
+### Item 4: what the tracing showed
 
-The code for item 4 is committed and works in every check that was run, but three things were open when
-the work was paused.
+**The long frames "in the writing loop".** They were never in the writing loop. WebKit with a window, as
+Playwright runs it on this Mac, stalls for 60 to 120 ms about 15 s after a page opens, and sometimes again
+15 s later, whatever the page is doing. Rachel reaches her first writing loop at about that time. An empty
+page shows the same stall; the lab with Rachel paused shows it; WebKit without a window never does.
 
-1. **The one long frame at the start of the first writing loop, in WebKit with a window** (107 to 123 ms).
-   It happens once per visit, the first time the `B1_write` still is drawn. It does not happen in WebKit
-   without a window, or on later loops. My guess is the first drawing of that still at full size; I had not
-   tested the guess.
-2. **The tap of a find.** What I found:
-   - Each part of a find run by itself (taking the mushroom off the plate, the flying copy, her reaction,
-     saving) leaves every frame at 15 to 20 ms. A whole find started from script: 20 ms.
-   - With a real tap in the test browser, the long frame is made of three parts: 4 to 63 ms between the
-     finger lifting and the browser delivering the click, before any of the site's code runs (52 to 63 ms
-     on the first find of a visit, every time); 1 to 13 ms in the site's own handler; and up to 37 ms
-     until the next frame.
-   - Some of the 61 to 75 ms figures come from the test itself: it scrolls the room to reach a mushroom
-     that is off screen, which a visitor would have done before tapping.
-   - Not found: why the first tap on a mushroom is slow to be delivered. The mushrooms' colour filters are
-     not the cause (tested). A test of whether the mushroom's image under the finger is the cause was
-     running when the work was paused.
-3. **Checks not re-run after item 4:** the 20-mushroom hunt, the lab checks (lazy loading, seams), the
-   intro's end in WebKit, 6 more first-open runs per profile, and the recordings.
+**The tap of a find.** Each part of a find run by itself (the mushroom leaving the plate, the flying copy,
+her reaction, saving) leaves every frame at 15 to 20 ms. The time went before the site's code ran:
 
-Also uncommitted, in the working folder: three throwaway measuring scripts, `qa/tools/.exp-decode.mjs`,
-`.exp-find.mjs` and `.exp-tap.mjs`. The last one needs timing lines in `mushrooms.ts` that were taken
-out again before committing.
+| Part of the frame | Before | After |
+|---|---|---|
+| From the finger lifting to the click reaching the page | 52 to 63 ms on the first find, 12 to 26 ms on most later ones | 0 to 6 ms |
+| The site's own handler | 1 to 13 ms | 1 to 6 ms (the flying mushroom is the drawing's own image, moved; it used to be a copy) |
+| Longest frame at the tap, first find, iPhone profile | 92 to 123 ms | 60 to 68 ms |
+| Longest frame at the tap, later finds, iPhone profile | 61 to 75 ms | 18 to 52 ms |
 
-### Queued, not started
+Two things about the "before" figures: part of the 61 to 75 ms came from the test scrolling the room to
+reach a mushroom that was off screen (the test now pans first, as a visitor would), and the colour filters
+on the mushrooms turned out not to matter (tested).
 
-- `reviews/scene-2-hunt-difficulty.md`. `main` has not been pulled for it and nothing of it was built.
+### Still open
+
+- **The first find's tap frame is still 60 to 68 ms in the test browser.** It begins before the click
+  arrives, so I cannot shorten it from the site. A real iPhone delivers taps differently; this needs a look
+  on a real phone.
+- **The opening painting should be measured again on a quiet Mac** (see the table).
+- **Scene 1's 84 MB** (see "For Wren").
 
 ### Decisions I made
 
@@ -712,12 +715,15 @@ out again before committing.
    once. Under the old picture the brush waits up to 0.6 s for her; on a slower network it starts without
    her and she fades in when she arrives. A first-ever visit to a scene (the full painting) still waits,
    with the old picture up, because the painting brings her in.
-10. **Scene 1's frames are decoded in the worker too.** It is the same code path. Its opening was not
-    re-measured after this change (see "Half-done").
+10. **Scene 1's frames are decoded in the worker too.** It is the same code path.
 11. **Hovering a tab while a painting is under way does not start a download,** so nothing competes with
     the brush.
-12. **I restarted `caffeinate` myself** for the unattended run, because it was no longer running, and
-    stopped it again at the pause.
+12. **A tap lands on a mushroom's button, never on the image inside it** (`pointer-events: none` on the
+    drawing). The button always covers its drawing, so what can be tapped is unchanged.
+13. **The five-finds test pans the room to the mushroom before timing the tap.** Otherwise the test's own
+    scrolling is counted as part of the tap.
+14. **I did not chase the 34 ms first change of the number,** or the first find's remaining frame, any
+    further: neither is the site's to shorten, as far as I could measure.
 
 ### For Wren
 
@@ -733,7 +739,7 @@ out again before committing.
 
 ### Not done, or not verified
 
-- **Item 4's open points,** as above.
+- **"Still open",** above.
 - **A real phone,** and Safari itself. The memory figures are sums of bitmap sizes, not what a phone reports.
 - **The corners against the mock-up by eye only.** The mock-up's edge is also rougher than style A's, which
   was not part of this review and was not changed.
