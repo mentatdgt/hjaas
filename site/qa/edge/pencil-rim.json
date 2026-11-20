@@ -40,12 +40,12 @@
   },
   "strongestPencilOnTheDrawnEdge": {
    "0px": 0,
-   "1px": 0.006,
-   "2px": 0.012,
-   "4px": 0.048,
-   "8px": 0.161,
-   "14px": 0.375,
-   "20px": 0.625,
+   "1px": 0,
+   "2px": 0.006,
+   "4px": 0.024,
+   "8px": 0.089,
+   "14px": 0.333,
+   "20px": 0.542,
    "27px": 0.815
   },
   "theMostTheRimFadeAllowsThere": {
@@ -69,15 +69,15 @@
   "onTheScreenAt1440x900": {
    "alongThePlatesOutline": {
     "screenPixels": 6498,
-    "furthestFromPaperOutOf255": 1
+    "furthestFromPaperOutOf255": 0
    },
    "1 CSS px inside it": {
     "screenPixels": 6482,
-    "furthestFromPaperOutOf255": 3
+    "furthestFromPaperOutOf255": 1
    },
    "2 CSS px inside it": {
     "screenPixels": 6466,
-    "furthestFromPaperOutOf255": 9
+    "furthestFromPaperOutOf255": 2
    }
   },
   "ok": true

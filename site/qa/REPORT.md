@@ -1064,7 +1064,8 @@ every scene, and the quick way of drawing it agreeing with the formula.
   scene gives its edge back when it leaves and draws it again when it returns. That is why the peak went
   down by 0.5 MB although the edge grew.
 - **Nothing else was freed.** The lab still keeps four frames decoded ahead.
-- **Page weight:** two small line pictures per scene, 118 KB for Build and 115 KB for Grow.
+- **Page weight:** two small line pictures per scene, 86 KB for Build and 115 KB for Grow (Build's were
+  118 KB before the line maps were made again, see the end of this section).
 - **The opening appears about 0.1 to 0.2 s later** on a cold load (the brush's sheet goes in 309 to 621 ms
   after the page starts, against 224 to 349 ms), because the edge is drawn first. In exchange the opening
   is smoother: see the next section.
@@ -1118,9 +1119,8 @@ but the numbers are clean. (`edge/pencil-intro-frames-webkit.txt`)
 
 ### For Wren
 
-- **Build's toolbox becomes a dark graphite patch at the right edge,** because its line map is nearly solid
-  there. Mock-up B shows the same. If it should be lighter, thin the line map there; nothing in the code
-  needs to change (`npm run assets` after replacing the file).
+- **Build's toolbox became a dark graphite patch at the right edge,** because its line map was nearly solid
+  there. Fixed since by Wren in the line maps: see "After Wren's review" at the end of this section.
 - **The café:** put its line map in `scene/pencil/`, add one line to the list in
   `scripts/build-assets.mjs`, set `lines: 'pencil'` in its config, and run `node qa/tools/pencil.mjs pick`.
   The tool takes everything the scene's character ever covers and lists the edges that keep the colour
@@ -1144,3 +1144,24 @@ but the numbers are clean. (`edge/pencil-intro-frames-webkit.txt`)
   also holds one strip's pixels as numbers (1 MB at most) for a few tens of milliseconds; that is not in
   the figures, and it is never at the lab's peak.
 - **The match with the mock-up is by eye.** The shapes cannot be the same: the mock-up's seed is its own.
+
+### After Wren's review (2026-11-20): new line maps, no code changes
+
+Round 3 was approved. Wren made both line maps again on `main` (outlines only; big dark fills no longer
+turn into graphite). I merged `main`, ran `npm run assets -- pencil` and checked again. No code changed,
+and the edge is still drawn again when a scene returns, as decided.
+
+| | Check | Result | Evidence |
+|---|---|---|---|
+| ✅ | The graphite patch by the toolbox | Gone. In the strip beside the toolbox the line map was over half strength on 80% of the pixels; now on 7%. What is left there is the toolbox's own dark paint fading out, like every other colour at the edge. | `edge/pencil-toolbox-before-after.jpg` |
+| ✅ | Every mushroom at 0.95 or more | Unchanged at five sizes: every drawing 1.00, every tap box 0.969 or more, no pencil over a drawing. | `edge/pencil-spots.json` |
+| ✅ | Rachel fully opaque | Unchanged: 1.00 under all 31,445 (Build) and 40,322 (Grow) pixels she covers, no pencil over her. | `edge/pencil-rachel.json` |
+| ✅ | No straight cut | Unchanged: the rim is paper all the way round in both scenes. | `edge/pencil-rim.json` |
+| ✅ | Shot again | `pencil-compare.jpg`, `pencil-corners.jpg`, and the screenshots at the three sizes (they showed the old patch). | `edge/` |
+
+- **Mock-up B in `pencil-compare.jpg` still shows the patch,** because the mock-up picture in `reference/`
+  was made with the old line maps. The build beside it no longer has it.
+- **Not shot again:** the films and the painting stills (`pencil-film-*`, `pencil-*-painting-*`). They show
+  the old patch by the toolbox; nothing else in them changed.
+- **Not measured again:** memory, timings and the finding of all 20 mushrooms. The line pictures have the
+  same pixel sizes and no code changed, so none of these can have moved.
