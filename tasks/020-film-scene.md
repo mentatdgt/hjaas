@@ -160,3 +160,4 @@ Preview: `film-preview.mp4` (v2).
 
 ### Round 6 (2026-11-21, user): presenter's glasses
 A grey wedge hung under the arm of his glasses, beside the ear. Wren removed it (inpainted with skin) and redrew the arm as a clean line from the lens to the ear, then applied the same patch to all 10 presenter stills (pixel-identical faces; M_1_blink keeps its 12 eyelid pixels). Approved, final/ and site/ were rebuilt; preview v3.
+- Round 6b (user): the ear looked detached, because the wedge's left edge had also been the line where his ear meets his face. Wren redrew it as a tapered curve from the top of the ear down to the cheek, in all 10 stills; package and preview rebuilt.
