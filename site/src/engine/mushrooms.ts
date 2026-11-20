@@ -182,8 +182,8 @@ export class Hunt {
     // The drawing leaves the plate and travels on its own layer, above the page.
     const flyer = document.createElement('span');
     flyer.className = 'hj-flyer';
-    const img = art.querySelector('img')!.cloneNode(true) as HTMLImageElement;
-    flyer.append(img);
+    // The drawing's own image is moved, not copied: it is already decoded and drawn at this size.
+    flyer.append(art.querySelector('img')!);
     Object.assign(flyer.style, {
       left: `${from.left - layer.left}px`,
       top: `${from.top - layer.top}px`,

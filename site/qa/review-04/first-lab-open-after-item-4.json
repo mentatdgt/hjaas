@@ -3,38 +3,62 @@
   "url": "http://localhost:4173/",
   "iphone": {
    "toGrow": [
-    24,
-    28,
-    21,
-    27,
     30,
-    26
+    33,
+    33,
+    34,
+    24,
+    40,
+    21,
+    33,
+    27,
+    43,
+    28,
+    28
    ],
    "toBuild": [
-    20,
-    22,
     19,
     19,
     19,
-    19
+    19,
+    19,
+    21,
+    19,
+    19,
+    19,
+    19,
+    19,
+    20
    ]
   },
   "desktop": {
    "toGrow": [
-    32,
     29,
     31,
     31,
-    33,
-    31
+    31,
+    32,
+    39,
+    30,
+    36,
+    35,
+    32,
+    34,
+    33
    ],
    "toBuild": [
-    26,
-    28,
-    27,
+    31,
     28,
     29,
-    28
+    29,
+    28,
+    27,
+    27,
+    27,
+    28,
+    27,
+    25,
+    27
    ]
   }
  },
@@ -43,63 +67,7 @@
    "profile": "iphone",
    "run": 1,
    "toGrow": {
-    "frames": 123,
-    "longest": 24,
-    "over50": []
-   },
-   "toBuild": {
     "frames": 122,
-    "longest": 20,
-    "over50": []
-   }
-  },
-  {
-   "profile": "iphone",
-   "run": 2,
-   "toGrow": {
-    "frames": 122,
-    "longest": 28,
-    "over50": []
-   },
-   "toBuild": {
-    "frames": 122,
-    "longest": 22,
-    "over50": []
-   }
-  },
-  {
-   "profile": "iphone",
-   "run": 3,
-   "toGrow": {
-    "frames": 122,
-    "longest": 21,
-    "over50": []
-   },
-   "toBuild": {
-    "frames": 122,
-    "longest": 19,
-    "over50": []
-   }
-  },
-  {
-   "profile": "iphone",
-   "run": 4,
-   "toGrow": {
-    "frames": 122,
-    "longest": 27,
-    "over50": []
-   },
-   "toBuild": {
-    "frames": 122,
-    "longest": 19,
-    "over50": []
-   }
-  },
-  {
-   "profile": "iphone",
-   "run": 5,
-   "toGrow": {
-    "frames": 121,
     "longest": 30,
     "over50": []
    },
@@ -111,10 +79,24 @@
   },
   {
    "profile": "iphone",
-   "run": 6,
+   "run": 2,
    "toGrow": {
+    "frames": 121,
+    "longest": 33,
+    "over50": []
+   },
+   "toBuild": {
     "frames": 123,
-    "longest": 26,
+    "longest": 19,
+    "over50": []
+   }
+  },
+  {
+   "profile": "iphone",
+   "run": 3,
+   "toGrow": {
+    "frames": 121,
+    "longest": 33,
     "over50": []
    },
    "toBuild": {
@@ -124,16 +106,142 @@
    }
   },
   {
-   "profile": "desktop",
-   "run": 1,
+   "profile": "iphone",
+   "run": 4,
    "toGrow": {
     "frames": 121,
-    "longest": 32,
+    "longest": 34,
     "over50": []
    },
    "toBuild": {
     "frames": 122,
-    "longest": 26,
+    "longest": 19,
+    "over50": []
+   }
+  },
+  {
+   "profile": "iphone",
+   "run": 5,
+   "toGrow": {
+    "frames": 122,
+    "longest": 24,
+    "over50": []
+   },
+   "toBuild": {
+    "frames": 123,
+    "longest": 19,
+    "over50": []
+   }
+  },
+  {
+   "profile": "iphone",
+   "run": 6,
+   "toGrow": {
+    "frames": 121,
+    "longest": 40,
+    "over50": []
+   },
+   "toBuild": {
+    "frames": 123,
+    "longest": 21,
+    "over50": []
+   }
+  },
+  {
+   "profile": "iphone",
+   "run": 7,
+   "toGrow": {
+    "frames": 123,
+    "longest": 21,
+    "over50": []
+   },
+   "toBuild": {
+    "frames": 122,
+    "longest": 19,
+    "over50": []
+   }
+  },
+  {
+   "profile": "iphone",
+   "run": 8,
+   "toGrow": {
+    "frames": 122,
+    "longest": 33,
+    "over50": []
+   },
+   "toBuild": {
+    "frames": 123,
+    "longest": 19,
+    "over50": []
+   }
+  },
+  {
+   "profile": "iphone",
+   "run": 9,
+   "toGrow": {
+    "frames": 123,
+    "longest": 27,
+    "over50": []
+   },
+   "toBuild": {
+    "frames": 122,
+    "longest": 19,
+    "over50": []
+   }
+  },
+  {
+   "profile": "iphone",
+   "run": 10,
+   "toGrow": {
+    "frames": 121,
+    "longest": 43,
+    "over50": []
+   },
+   "toBuild": {
+    "frames": 123,
+    "longest": 19,
+    "over50": []
+   }
+  },
+  {
+   "profile": "iphone",
+   "run": 11,
+   "toGrow": {
+    "frames": 121,
+    "longest": 28,
+    "over50": []
+   },
+   "toBuild": {
+    "frames": 122,
+    "longest": 19,
+    "over50": []
+   }
+  },
+  {
+   "profile": "iphone",
+   "run": 12,
+   "toGrow": {
+    "frames": 123,
+    "longest": 28,
+    "over50": []
+   },
+   "toBuild": {
+    "frames": 123,
+    "longest": 20,
+    "over50": []
+   }
+  },
+  {
+   "profile": "desktop",
+   "run": 1,
+   "toGrow": {
+    "frames": 122,
+    "longest": 29,
+    "over50": []
+   },
+   "toBuild": {
+    "frames": 122,
+    "longest": 31,
     "over50": []
    }
   },
@@ -141,8 +249,8 @@
    "profile": "desktop",
    "run": 2,
    "toGrow": {
-    "frames": 122,
-    "longest": 29,
+    "frames": 121,
+    "longest": 31,
     "over50": []
    },
    "toBuild": {
@@ -160,8 +268,8 @@
     "over50": []
    },
    "toBuild": {
-    "frames": 121,
-    "longest": 27,
+    "frames": 122,
+    "longest": 29,
     "over50": []
    }
   },
@@ -175,7 +283,7 @@
    },
    "toBuild": {
     "frames": 122,
-    "longest": 28,
+    "longest": 29,
     "over50": []
    }
   },
@@ -184,12 +292,12 @@
    "run": 5,
    "toGrow": {
     "frames": 122,
-    "longest": 33,
+    "longest": 32,
     "over50": []
    },
    "toBuild": {
     "frames": 123,
-    "longest": 29,
+    "longest": 28,
     "over50": []
    }
   },
@@ -197,13 +305,97 @@
    "profile": "desktop",
    "run": 6,
    "toGrow": {
+    "frames": 121,
+    "longest": 39,
+    "over50": []
+   },
+   "toBuild": {
     "frames": 122,
-    "longest": 31,
+    "longest": 27,
+    "over50": []
+   }
+  },
+  {
+   "profile": "desktop",
+   "run": 7,
+   "toGrow": {
+    "frames": 122,
+    "longest": 30,
     "over50": []
    },
    "toBuild": {
     "frames": 123,
+    "longest": 27,
+    "over50": []
+   }
+  },
+  {
+   "profile": "desktop",
+   "run": 8,
+   "toGrow": {
+    "frames": 122,
+    "longest": 36,
+    "over50": []
+   },
+   "toBuild": {
+    "frames": 122,
+    "longest": 27,
+    "over50": []
+   }
+  },
+  {
+   "profile": "desktop",
+   "run": 9,
+   "toGrow": {
+    "frames": 121,
+    "longest": 35,
+    "over50": []
+   },
+   "toBuild": {
+    "frames": 122,
     "longest": 28,
+    "over50": []
+   }
+  },
+  {
+   "profile": "desktop",
+   "run": 10,
+   "toGrow": {
+    "frames": 122,
+    "longest": 32,
+    "over50": []
+   },
+   "toBuild": {
+    "frames": 122,
+    "longest": 27,
+    "over50": []
+   }
+  },
+  {
+   "profile": "desktop",
+   "run": 11,
+   "toGrow": {
+    "frames": 122,
+    "longest": 34,
+    "over50": []
+   },
+   "toBuild": {
+    "frames": 122,
+    "longest": 25,
+    "over50": []
+   }
+  },
+  {
+   "profile": "desktop",
+   "run": 12,
+   "toGrow": {
+    "frames": 122,
+    "longest": 33,
+    "over50": []
+   },
+   "toBuild": {
+    "frames": 123,
+    "longest": 27,
     "over50": []
    }
   }

@@ -117,7 +117,7 @@
  },
  "routine-desktop-chrome": {
   "routine": {
-   "watchedS": 39.3,
+   "watchedS": 39.2,
    "cycleS": [
     17.4
    ],
@@ -131,24 +131,24 @@
    ],
    "holdMs": {
     "aim": [
-     351,
-     1468
+     350,
+     1450
     ],
     "squeeze": [
      283,
-     351
+     350
     ],
     "lift": [
-     401,
-     467
+     383,
+     483
     ],
     "transitionFrame": [
-     65,
-     101
+     66,
+     85
     ],
     "writeFrame": [
-     113,
-     137
+     115,
+     135
     ],
     "blink": [
      49,
@@ -156,16 +156,16 @@
     ]
    },
    "blinks": 3,
-   "frames": 2358,
-   "longestFrameMs": 19,
+   "frames": 2355,
+   "longestFrameMs": 18,
    "over50": []
   },
   "fromMisting": {
    "wayHome": [],
-   "lookUpStartsMs": 380,
-   "thumbsUpMs": 2712,
-   "backAtWorkMs": 5597,
-   "reactionMs": 5217,
+   "lookUpStartsMs": 376,
+   "thumbsUpMs": 2709,
+   "backAtWorkMs": 5592,
+   "reactionMs": 5216,
    "longestFrameMs": 33,
    "over50": 0
   },
@@ -173,18 +173,18 @@
    "wayHome": [
     "mist_to_write"
    ],
-   "lookUpStartsMs": 2772,
-   "thumbsUpMs": 5106,
+   "lookUpStartsMs": 2771,
+   "thumbsUpMs": 5105,
    "backAtWorkMs": 7988,
-   "reactionMs": 5216,
-   "longestFrameMs": 50,
+   "reactionMs": 5217,
+   "longestFrameMs": 18,
    "over50": 0
   },
   "errors": []
  },
  "routine-iphone-webkit": {
   "routine": {
-   "watchedS": 35,
+   "watchedS": 35.1,
    "cycleS": [
     17.4
    ],
@@ -198,24 +198,24 @@
    ],
    "holdMs": {
     "aim": [
-     349,
-     1099
+     351,
+     1117
     ],
     "squeeze": [
-     284,
-     352
+     300,
+     334
     ],
     "lift": [
-     381,
-     466
+     400,
+     467
     ],
     "transitionFrame": [
      67,
-     99
+     86
     ],
     "writeFrame": [
-     47,
-     203
+     115,
+     134
     ],
     "blink": [
      49,
@@ -224,29 +224,29 @@
    },
    "blinks": 3,
    "frames": 2100,
-   "longestFrameMs": 85,
+   "longestFrameMs": 111,
    "over50": [
-    "85ms@9085"
+    "111ms@9147"
    ]
   },
   "fromMisting": {
    "wayHome": [],
-   "lookUpStartsMs": 365,
-   "thumbsUpMs": 2698,
-   "backAtWorkMs": 5581,
-   "reactionMs": 5216,
-   "longestFrameMs": 65,
-   "over50": 1
+   "lookUpStartsMs": 375,
+   "thumbsUpMs": 2708,
+   "backAtWorkMs": 5592,
+   "reactionMs": 5217,
+   "longestFrameMs": 48,
+   "over50": 0
   },
   "fromWriting": {
    "wayHome": [
     "mist_to_write"
    ],
-   "lookUpStartsMs": 2768,
-   "thumbsUpMs": 5100,
-   "backAtWorkMs": 7985,
-   "reactionMs": 5217,
-   "longestFrameMs": 23,
+   "lookUpStartsMs": 2739,
+   "thumbsUpMs": 5073,
+   "backAtWorkMs": 7955,
+   "reactionMs": 5216,
+   "longestFrameMs": 24,
    "over50": 0
   },
   "errors": []

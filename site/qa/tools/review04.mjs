@@ -6,6 +6,7 @@
 //   node qa/tools/review04.mjs memory    item 3: decoded image memory through two cycles and a reaction, phone and desktop
 //   node qa/tools/review04.mjs sharp     item 3: the 1.5× set beside the 2× set on a 390×844 @3× screen
 //   node qa/tools/review04.mjs cycle     item 4: WebKit, frame times through two full cycles of the routine and five finds
+//   node qa/tools/review04.mjs stalls    item 4: WebKit with a window: long frames on an empty page, for comparison
 //   node qa/tools/review04.mjs slow      item 3: does decoding keep ahead of her on a slow phone? (Chrome, CPU slowed 4× and 6×)
 import { chromium, webkit, devices } from 'playwright';
 import { execFileSync } from 'node:child_process';
@@ -371,7 +372,7 @@ const run = {
       const routine = await page.evaluate((start) => {
         const gaps = window.__gaps.filter(([at]) => at >= start);
         const poseAt = (t) => { let name = ''; for (const [p, at] of window.__hj.poses) { if (at > t) break; name = p; } return name; };
-        return { watchedS: Math.round((performance.now() - start) / 100) / 10, frames: gaps.length, longestFrameMs: Math.max(...gaps.map(([, len]) => len)), over50: gaps.filter(([, len]) => len > 50).map(([at, len]) => `${len} ms during ${poseAt(at)}`), over33: gaps.filter(([, len]) => len > 33).length, framesSheHadToSkip: window.__hj.rachel.missed };
+        return { watchedS: Math.round((performance.now() - start) / 100) / 10, frames: gaps.length, longestFrameMs: Math.max(...gaps.map(([, len]) => len)), over50: gaps.filter(([, len]) => len > 50).map(([at, len]) => `${len} ms during ${poseAt(at)}, ${Math.round(at / 100) / 10} s after the page opened`), over33: gaps.filter(([, len]) => len > 33).length, framesSheHadToSkip: window.__hj.rachel.missed };
       }, t0);
       // Five finds: while she aims, squeezes, is on her way to writing, writes, and is on her way back.
       const moments = [
@@ -384,18 +385,25 @@ const run = {
       const finds = [];
       for (const [spot, when] of moments) {
         await page.waitForFunction(() => !window.__hj.player.reacting, null, { timeout: 30000 });
-        await page.waitForTimeout(700);
-        await page.waitForFunction(when, null, { timeout: 90000, polling: 'raf' });
-        const mark = await page.evaluate(() => { window.__mark = window.__hj.poses.length; return performance.now(); });
         const target = page.locator(`[data-spot="${spot}"]`);
+        // The room is panned to the mushroom first, as a visitor would have done before tapping it.
+        await target.scrollIntoViewIfNeeded();
+        await page.waitForTimeout(900);
+        await page.waitForFunction(when, null, { timeout: 90000, polling: 'raf' });
+        const mark = await page.evaluate(() => { window.__mark = window.__hj.poses.length; window.__clickAt = 0; addEventListener('click', () => { window.__clickAt = performance.now(); }, { capture: true, once: true }); return performance.now(); });
         if (tag.startsWith('iphone')) await target.tap({ force: true }); else await target.click({ force: true });
         await page.waitForFunction(() => window.__hj.poses.slice(window.__mark).some(([p]) => p === 'K2_thumbs'), null, { timeout: 20000 });
         await page.waitForFunction(() => !window.__hj.player.reacting, null, { timeout: 20000 });
         finds.push(await page.evaluate(({ start, spot }) => {
           const poses = window.__hj.poses.slice(window.__mark);
           const gaps = window.__gaps.filter(([t, len]) => t + len >= start);
-          const first = gaps.filter(([t]) => t <= start + 600);
-          return { spot, from: window.__hj.poses[window.__mark - 1][0], fullReaction: poses.some(([p]) => p === 'look_up#3'), longestFrameAtTheTapMs: Math.max(...first.map(([, len]) => len)), longestFrameInAllMs: Math.max(...gaps.map(([, len]) => len)), over50: gaps.filter(([, len]) => len > 50).map(([t, len]) => `${len} ms at ${Math.round(t - start)} ms`) };
+          // The tap: from the test sending it to 250 ms after the click reached the page. The landing: the
+          // mushroom arrives at the caption about 390 ms after the click.
+          const click = window.__clickAt;
+          const longest = (list) => (list.length ? Math.max(...list.map(([, len]) => len)) : 0);
+          const tap = gaps.filter(([t]) => t <= click + 250);
+          const landing = gaps.filter(([t, len]) => t + len > click + 250 && t <= click + 700);
+          return { spot, from: window.__hj.poses[window.__mark - 1][0], fullReaction: poses.some(([p]) => p === 'look_up#3'), longestFrameAtTheTapMs: longest(tap), longestFrameAtTheLandingMs: longest(landing), longestFrameInAllMs: longest(gaps), over50: gaps.filter(([, len]) => len > 50).map(([t, len]) => `${len} ms, ${Math.round(t - click)} ms after the click`) };
         }, { start: mark, spot }));
       }
       report[tag] = { routine, finds, framesSheHadToSkip: await page.evaluate(() => window.__hj.rachel.missed), errors };
@@ -403,6 +411,40 @@ const run = {
       await browser.close();
     }
     if (!only) await save('cycle-and-finds-webkit', report);
+  },
+
+  // WebKit with a window stalls now and then by itself. Every frame over 40 ms in 32 s, on an empty page, on
+  // a page that only repaints a canvas ten times a second, and on the lab with Rachel paused (nothing moves).
+  async stalls() {
+    const browser = await webkit.launch({ headless: false });
+    const phone = { ...devices['iPhone 14'], viewport: { width: 390, height: 844 } };
+    const report = [];
+    const watch = async (what, url, prepare) => {
+      const context = await browser.newContext(phone);
+      await context.addInitScript(() => {
+        window.__gaps = [];
+        let last = performance.now();
+        const tick = (now) => { if (now - last > 40) window.__gaps.push([Math.round(last), Math.round(now - last)]); last = now; requestAnimationFrame(tick); };
+        requestAnimationFrame(tick);
+      });
+      const page = await context.newPage();
+      await page.goto(url);
+      if (prepare) await prepare(page);
+      const from = await page.evaluate(() => performance.now());
+      await page.waitForTimeout(32000);
+      const gaps = await page.evaluate((start) => window.__gaps.filter(([at]) => at > start + 1000).map(([at, len]) => `${len} ms at ${Math.round(at / 100) / 10} s`), from);
+      report.push({ page: what, framesOver40msIn32s: gaps });
+      say(what, gaps);
+      await context.close();
+    };
+    for (let i = 0; i < 2; i++) {
+      await watch('an empty page', 'data:text/html,<title>empty</title><p>nothing</p>');
+      await watch('a page that repaints one canvas ten times a second', 'data:text/html,<canvas id=c width=800 height=1200 style="width:270px"></canvas><script>const x=c.getContext("2d");let i=0;setInterval(()=>{x.fillStyle=i++%2?"red":"blue";x.fillRect(0,0,800,1200)},100)</script>');
+      await watch('the lab, Rachel paused', `${base}?debug&reset&intro=off&seed=4#grow`, async (page) => { await ready(page); await page.getByRole('button', { name: 'Pause animation' }).click(); });
+      await watch('the lab, Rachel working', `${base}?debug&reset&intro=off&seed=4#grow`, async (page) => { await ready(page); await page.waitForFunction(() => window.__hj.rachel.has('thumbs_up#9'), null, { timeout: 60000 }); });
+    }
+    await browser.close();
+    await save('webkit-window-stalls', report);
   },
 };
 

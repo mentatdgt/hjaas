@@ -4,20 +4,20 @@
   "posesShown": 400,
   "framesSheHadToSkip": 0,
   "fullReaction": true,
-  "frames": 3289,
+  "frames": 3283,
   "medianFrameMs": 17,
-  "longestFrameMs": 83,
+  "longestFrameMs": 117,
   "over50": 2,
   "peakMB": 66.9
  },
  "cpu-6x": {
   "set": "1.5x",
-  "posesShown": 401,
+  "posesShown": 400,
   "framesSheHadToSkip": 0,
   "fullReaction": true,
-  "frames": 3281,
+  "frames": 3282,
   "medianFrameMs": 17,
-  "longestFrameMs": 167,
+  "longestFrameMs": 100,
   "over50": 4,
   "peakMB": 66.9
  }

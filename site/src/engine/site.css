@@ -333,6 +333,10 @@
   height: calc(var(--h) * var(--u));
   margin: calc(var(--h) * var(--u) / -2) 0 0 calc(var(--w) * var(--u) / -2);
   transform-origin: 50% 100%;
+  /* A tap lands on the button, never on the image inside it. (Measured in WebKit, review 04: with the image
+     as the tap's target, the click reached the page up to 55 ms after the finger lifted; with the button,
+     within 3 ms. The button always covers its drawing, so nothing else changes.) */
+  pointer-events: none;
 }
 
 .hj-shroom-art img,
