@@ -140,3 +140,6 @@ The café showed that Kling redraws flat-style faces (BIBLE §5: no AI video for
   - Rachel: holds A1 with the REC dot blinking; every 8–14 s, a soft 150 ms dissolve to B1 (glance), holds 1–1.5 s, and dissolves back.
   - Reaction (on a find): cut A1 → K0 (90 ms) → K1, holds 1.8 s, then K1 → K0 → A1.
   - Water: W_1–3 at 8–10 fps.
+
+### Loop job 020a (2026-11-21, 03:39 JST): APPROVED
+Quinn delivered M_12 and M_13 in about 5 minutes. Wren pasted back only the changed arms (scaled 1024 → 640 and pasted at x440, y240 onto M_1), so the head, face, legs and shoes are M_1's own pixels. Steps: `incoming/wren_presenter_steps.png`.
