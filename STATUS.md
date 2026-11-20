@@ -1,6 +1,6 @@
 # HJaaS: status
 
-Where everything stands. Update this whenever a scene changes state. **Last updated: 2026-11-21 00:45 (Wren, café chat).**
+Where everything stands. Update this whenever a scene changes state. **Last updated: 2026-11-21 morning (Wren, café chat).**
 
 New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a scene gets made) and the handover for your scene: `HANDOVER-scene-3.md` (café, finishing in the original Wren chat) or `HANDOVER-next-scene.md` (scene 4, new chat).
 
@@ -10,7 +10,7 @@ New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a
 |---|---|---|---|---|---|
 | 1 | Build | Contracting: Rachel hammers a box in an unfinished room | ✅ Approved, but **needs glasses removed and a restyle to the model sheet** | ✅ Built (elegant version) | ❌ Waiting to merge |
 | 2 | Grow | Mushroom lab: misting, writing, rotating the rack | ✅ Approved (task 017); later, a light restyle to the model sheet | ✅ Pencil edge done; Round 3b (pencil arrives with the colour) overnight | ❌ Waiting for your phone check, then merge |
-| 3 | Design | Café: Rachel sketches and reacts; barista, mum, child, old man, cat, ceiling fan | ✅ Package v5, stabilised (no flicker by construction). 🔧 Still to add: Rachel's coffee sip, the barista polishing | 🔧 Fable building on `site/scene-3`; v5 is a file swap (`reviews/scene-3-build.md`) | — |
+| 3 | Design | Café: Rachel sketches, sips coffee and reacts; barista, mum, child, old man, cat, ceiling fan | ✅ Art final: package v7.3 (user OK 2026-11-21) | 🔧 Fable: swap in v7.3 on `site/scene-3`, re-run QA | — |
 | 4 | Film | Merlion at night: Rachel (from behind) films a presenter by a silver car | ✅ Art done, preview v2 approved by you. ✅ Package `frames/020-film-scene/site/` + pencil map + Fable brief (`reviews/scene-4-build.md`). No AI video, 0 credits | ⏳ Fable builds on `site/scene-4` once the café is merged into `main` | — |
 | 5 | Travel | Lookout | ⏳ Backdrop only (`scene/travel-lookout.png`); location to confirm | ⏳ | — |
 
