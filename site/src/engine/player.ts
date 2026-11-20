@@ -52,6 +52,11 @@ export class Player {
     this.raf = requestAnimationFrame(this.tick);
   }
 
+  /** Put the next pose change off by this long (one of several actors, so that they do not all move at once). */
+  delay(ms: number): void {
+    this.elapsed -= ms;
+  }
+
   /** Stops on the current pose. start() carries on from the same point. */
   stop(): void {
     this.running = false;
@@ -92,6 +97,9 @@ export class Player {
       if (this.step.pose === this.rest) {
         this.elapsed = 0;
         this.beginReaction();
+      } else if (this.step.brief !== undefined) {
+        // A long hold somewhere else (the café: the cup at her lips) ends early, and the routine takes her home.
+        this.step = { ...this.step, ms: Math.min(this.step.ms, Math.max(this.elapsed, this.step.brief)) };
       }
     });
   }

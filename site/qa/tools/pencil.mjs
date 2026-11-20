@@ -14,7 +14,7 @@
 //   node qa/tools/pencil.mjs pan       WebKit, phone: frame times while the room is panned end to end (HJ_EDGE=organic for the edge before)
 //   (memory: HJ_SAVE=qa/edge/pencil-memory.json node qa/tools/review05.mjs memory)
 //   node qa/tools/pencil.mjs cost      what making the edge costs the page's thread
-//   node qa/tools/pencil.mjs pick [n]  which of each scene's possible edges keeps Rachel solid and moves the fewest mushrooms
+//   node qa/tools/pencil.mjs pick [n] [scene]  which of each scene's possible edges keeps its cast solid and moves the fewest mushrooms
 import { chromium, webkit, devices } from 'playwright';
 import { mkdir, writeFile } from 'node:fs/promises';
 import sharp from 'sharp';
@@ -58,7 +58,15 @@ const unionOf = async (scene) => {
   const bitmap = async (url) => createImageBitmap(await (await fetch(url)).blob());
   const canvas = new OffscreenCanvas(W, H);
   const ctx = canvas.getContext('2d', { willReadFrequently: true });
-  if (scene.character.kind === 'clips') {
+  if (scene.character.kind === 'cast') {
+    // A whole cast: every still of every actor where its layer puts it, and every patch of every clip.
+    const dir = `./assets/${scene.assets}${scene.character.dir}`;
+    const frames = await (await fetch(dir + scene.character.frames)).json();
+    const k = W / frames.canvas.w;
+    const layers = Object.fromEntries(frames.layers.map((layer) => [layer.actor, layer]));
+    for (const layer of frames.layers) for (const still of layer.stills) { const b = await bitmap(dir + frames.stills[still].replace('.png', '.webp')); ctx.drawImage(b, layer.x * k, layer.y * k, b.width * k, b.height * k); }
+    for (const clip of Object.values(frames.clips ?? {})) for (const file of new Set(clip.frames)) { const b = await bitmap(dir + file.replace('.png', '.webp')); ctx.drawImage(b, (layers[clip.layer].x + clip.x) * k, (layers[clip.layer].y + clip.y) * k, b.width * k, b.height * k); }
+  } else if (scene.character.kind === 'clips') {
     const dir = `./assets/${scene.assets}${scene.character.dir}`;
     const frames = await (await fetch(dir + scene.character.frames)).json();
     const c = frames.canvas; const k = c.plate_w / c.w;
@@ -265,7 +273,7 @@ run.rim = async () => {
       const config = SCENES.find((s) => s.id === id);
       const seed = edgeSeed(edgeName(config));
       // (The organic edge as it shipped last round: Build used its 22nd edge, Grow its first.)
-      const paint = edgeAlpha('pencil', seed); const pencil = pencilReach(seed); const organic = edgeAlpha('organic', edgeSeed(id === 'build' ? 'build:22' : id));
+      const paint = edgeAlpha('pencil', seed, config.keep); const pencil = pencilReach(seed, config.keep); const organic = edgeAlpha('organic', edgeSeed(id === 'build' ? 'build:22' : id));
       const edge = window.__readEdge();
       // Rings of the plate: the pixels `d` px in from the rim, all the way round.
       const ring = (d, fn) => { let most = 0; for (let x = d; x < W - d; x++) { most = Math.max(most, fn(x + 0.5, d + 0.5), fn(x + 0.5, H - d - 0.5)); } for (let y = d; y < H - d; y++) { most = Math.max(most, fn(d + 0.5, y + 0.5), fn(W - d - 0.5, y + 0.5)); } return Math.round(most * 1000) / 1000; };
@@ -377,7 +385,7 @@ run.rachel = async () => {
       window.__buildBox = buildBox;
       const scene = SCENES.find((s) => s.id === id);
       const hers = await window.__unionOf(scene);
-      const alpha = edgeAlpha('pencil', edgeSeed(edgeName(scene)));
+      const alpha = edgeAlpha('pencil', edgeSeed(edgeName(scene)), scene.keep);
       const edge = window.__readEdge();
       let formula = 1; let drawn = 1; let pencil = 0; let worst = null;
       for (const [x, y] of hers.points) {
@@ -457,8 +465,9 @@ const isPencil = (p) => { const t = (246 - p[0]) / 168; return t >= -0.03 && t <
 const pointsOf = (page, id) => page.evaluate(async (id) => {
   const { edgeAlpha, edgeSeed, edgeName, pencilReach } = await import('/src/engine/edge.ts');
   const { SCENES } = await import('/src/scenes/index.ts');
-  const seed = edgeSeed(edgeName(SCENES.find((s) => s.id === id)));
-  const paint = edgeAlpha('pencil', seed); const pencil = pencilReach(seed);
+  const scene = SCENES.find((s) => s.id === id);
+  const seed = edgeSeed(edgeName(scene));
+  const paint = edgeAlpha('pencil', seed, scene.keep); const pencil = pencilReach(seed, scene.keep);
   const paper = []; const sketch = []; const inside = [];
   // "Paper" and "no colour" mean so there and for 4 px around: the screenshot is smaller than the plate.
   const around = [[0, 0], [4, 0], [-4, 0], [0, 4], [0, -4], [3, 3], [-3, 3], [3, -3], [-3, -3]];
@@ -494,8 +503,9 @@ run.reveal = async () => {
       watched.push({ engine, ...(await page.evaluate(async (id) => {
         const { edgeAlpha, edgeSeed, edgeName, pencilReach } = await import('/src/engine/edge.ts');
         const { SCENES } = await import('/src/scenes/index.ts');
-        const seed = edgeSeed(edgeName(SCENES.find((s) => s.id === id)));
-        const paint = edgeAlpha('pencil', seed); const pencil = pencilReach(seed);
+        const scene = SCENES.find((s) => s.id === id);
+        const seed = edgeSeed(edgeName(scene));
+        const paint = edgeAlpha('pencil', seed, scene.keep); const pencil = pencilReach(seed, scene.keep);
         const w = window.__watch; const { W, H } = w;
         const kx = 1672 / W; const ky = 941 / H;
         const P = new Float32Array(W * H); const Q = new Float32Array(W * H);
@@ -672,7 +682,7 @@ run.pick = async () => {
   await ready(page);
   await page.getByRole('button', { name: 'Pause animation' }).click();
   await page.evaluate(`window.__unionOf = ${unionOf.toString()}`);
-  const result = await page.evaluate(async (tries) => {
+  const result = await page.evaluate(async ([tries, only]) => {
     const { edgeAlpha, edgeSeed, tapBox, lowestAlpha, SOLID, STRIPS } = await import('/src/engine/edge.ts');
     const { SCENES } = await import('/src/scenes/index.ts');
     const W = 1672; const H = 941;
@@ -681,6 +691,7 @@ run.pick = async () => {
     const inner = { left: STRIPS.left.w, right: W - STRIPS.right.w, top: STRIPS.left.y, bottom: STRIPS.left.y + STRIPS.left.h };
     const out = {};
     for (const scene of SCENES) {
+      if (only && scene.id !== only) continue;
       // (The page was opened on the first scene, where scene 1's placement is known.)
       const hers = await window.__unionOf(scene);
       // Her pixels near the plate's sides are the only ones the edge can reach; the lowest first.
@@ -688,7 +699,7 @@ run.pick = async () => {
       const rows = [];
       let solidUnderHer = 0;
       for (let n = 0; n < tries; n++) {
-        const alpha = edgeAlpha('pencil', edgeSeed(n ? `${scene.id}:${n}` : scene.id));
+        const alpha = edgeAlpha('pencil', edgeSeed(n ? `${scene.id}:${n}` : scene.id), scene.keep);
         if (near.some(([x, y]) => alpha(x, y) < 1)) continue;
         solidUnderHer++;
         // Inside the strips the painting must be whole: along their inner sides is where it would first fail.
@@ -733,13 +744,14 @@ run.pick = async () => {
       out[scene.id] = { rachelCovers: hers.box, tried: tries, solidUnderRachel: solidUnderHer, usable: rows.length, inUse: scene.edge ?? 0, inUseRow: rows.find((r) => r.n === (scene.edge ?? 0)) ?? null, best: rows.slice(0, 12) };
     }
     return out;
-  }, Number(process.argv[3] ?? 1500));
+  }, [Number(process.argv[3] ?? 1500), process.argv[4] ?? null]);
   for (const [id, r] of Object.entries(result)) {
     say(`${id}: Rachel covers plate x ${r.rachelCovers[0]}-${r.rachelCovers[2]}, y ${r.rachelCovers[1]}-${r.rachelCovers[3]}`, `${r.solidUnderRachel} of ${r.tried} edges keep the colour whole under her; ${r.usable} of those fit the strips with no tap boxes overlapping. In use: ${r.inUse} ${JSON.stringify(r.inUseRow)}`);
     for (const row of r.best) console.log(`   ${String(row.n).padStart(4)}  ${row.moves.length ? `to move (plate px): ${row.moves.join(', ')}` : 'all mushrooms clear'}`);
   }
   await browser.close();
-  await save('pencil-pick.json', result);
+  // (A run for one scene is a look, not the record.)
+  if (!process.argv[4]) await save('pencil-pick.json', result);
 };
 
 // Frame times while a phone pans the room end to end, in WebKit (the edge is four canvases now, not one).
@@ -816,7 +828,7 @@ run.switch = async () => {
       const points = await page.evaluate(async ({ before, after }) => {
         const { edgeAlpha, edgeSeed, edgeName, pencilReach } = await import('/src/engine/edge.ts');
         const { SCENES } = await import('/src/scenes/index.ts');
-        const sides = [before, after].map((side) => { const seed = edgeSeed(edgeName(SCENES.find((s) => s.id === side.scene))); return { ...side, paint: edgeAlpha('pencil', seed), pencil: pencilReach(seed), u: side.plate[2] / 1672 }; });
+        const sides = [before, after].map((side) => { const scene = SCENES.find((s) => s.id === side.scene); const seed = edgeSeed(edgeName(scene)); return { ...side, paint: edgeAlpha('pencil', seed, scene.keep), pencil: pencilReach(seed, scene.keep), u: side.plate[2] / 1672 }; });
         const around = [[0, 0], [4, 0], [-4, 0], [0, 4], [0, -4], [3, 3], [-3, 3], [3, -3], [-3, -3]];
         const paper = []; const sketch = [];
         const [vx, vy, vw, vh] = before.view;

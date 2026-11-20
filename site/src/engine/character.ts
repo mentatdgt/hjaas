@@ -1,12 +1,17 @@
 // A scene's character: one canvas that shows one pose at a time, placed on the plate as her scene says.
 import { PLATE, type Frame, frameSize, idle, releaseFrame } from './assets';
+import { NOTHING } from './clips';
 import type { Placement } from './types';
 
 /** What a character needs to know about herself to be drawn. */
 export interface CharacterSetup {
-  /** The frame she rests on. */
+  /** The frame she rests on. NOTHING for an actor who is part of the plate and only drawn now and then. */
   rest: string;
   placement: Placement;
+  /** The size of her frames, in their own pixels. Leave out and it is the rest frame's. */
+  size?: { w: number; h: number };
+  /** Her element's class: `hj-rachel` (the default) for the one the scene is about, `hj-actor` for the rest of a cast. */
+  className?: string;
 }
 
 /** A clip frame: one patch, drawn over its base still at (x, y) in the still's own pixels, replacing what was there. */
@@ -65,11 +70,13 @@ function alphaRows(frame: Frame): { top: number; bot: number } {
  * Where every frame of the character goes on the plate, in plate px. For a standing figure it is worked
  * out from the rest frame's own pixels, so sharper art is only a file swap.
  */
-export function place(rest: Frame, placement: Placement): Box {
-  const { w, h } = frameSize(rest);
+export function place(rest: Frame | null, placement: Placement, size?: { w: number; h: number }): Box {
   if (placement.kind === 'box') {
+    const w = size?.w ?? (rest ? frameSize(rest).w : placement.width);
     return { left: placement.x, top: placement.y, width: placement.width, height: placement.height, scale: placement.width / w };
   }
+  if (!rest) throw new Error('Character: a standing figure is placed by her rest frame.');
+  const { w, h } = frameSize(rest);
   const { top, bot } = alphaRows(rest);
   const scale = placement.height / (bot - top);
   return { left: placement.left, top: placement.baseline - bot * scale, width: w * scale, height: h * scale, scale };
@@ -102,10 +109,10 @@ export class Character {
   constructor(frames: Map<string, Frame>, config: CharacterSetup) {
     this.frames = frames;
     this.rest = config.rest;
-    const first = frames.get(config.rest);
-    if (!first) throw new Error(`Character: missing rest frame "${config.rest}"`);
-    this.source = frameSize(first);
-    this.placement = place(first, config.placement);
+    const first = frames.get(config.rest) ?? null;
+    if (!first && !config.size) throw new Error(`Character: missing rest frame "${config.rest}"`);
+    this.source = config.size ?? frameSize(first!);
+    this.placement = place(first, config.placement, config.size);
     const p = this.placement;
 
     if (config.placement.kind === 'standing' && config.placement.shadow) {
@@ -123,7 +130,7 @@ export class Character {
     }
 
     this.el = document.createElement('div');
-    this.el.className = 'hj-rachel';
+    this.el.className = config.className ?? 'hj-rachel';
     Object.assign(this.el.style, {
       left: pct(p.left, PLATE.w),
       top: pct(p.top, PLATE.h),
@@ -143,6 +150,8 @@ export class Character {
   add(name: string, frame: Frame): void {
     this.frames.set(name, frame);
     this.warm(frame);
+    // The frame her canvas was waiting for (a scene come back to, whose frames had all been given back).
+    if (!this.drawn && (name === this.pose || name === this.patches.get(this.pose)?.base)) this.draw();
   }
 
   /**
@@ -210,7 +219,7 @@ export class Character {
   }
 
   has(name: string): boolean {
-    return this.frames.has(name) || this.patches.has(name);
+    return name === NOTHING || this.frames.has(name) || this.patches.has(name);
   }
 
   get current(): string {
@@ -316,6 +325,12 @@ export class Character {
   private draw(): void {
     const { ctx, canvas } = this;
     if (!canvas.width) return;
+    if (this.pose === NOTHING) {
+      if (this.drawn) ctx.clearRect(0, 0, canvas.width, canvas.height);
+      this.drawn = '';
+      this.patched = '';
+      return;
+    }
     const patch = this.patches.get(this.pose);
     const whole = patch ? patch.base : this.pose;
     const frame = this.frames.get(whole);

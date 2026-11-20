@@ -1,5 +1,6 @@
 // What a scene is, as data. The engine (this folder) knows how to show any scene; a scene's own file in
 // src/scenes/ only describes it: its plate, its character, its hiding spots and its brush strokes.
+import type { KeepBox } from './edge';
 import type { Rng, Step } from './steps';
 
 /** One brush stroke of a scene's paint-in. */
@@ -93,7 +94,22 @@ export interface ClipCast {
   small?: { dir: string; below: number };
 }
 
-export type CharacterConfig = FrameCast | ClipCast;
+/**
+ * A whole cast delivered in one package: several actors, each with its own layer, stills and routine, all in
+ * two manifests (scene 3; the format is described in cast.ts). Who they are, where they stand, what they do
+ * and which of them answers a find all come from the two files.
+ */
+export interface Troupe {
+  kind: 'cast';
+  /** Folder under the scene's assets that holds everything, with a trailing slash. */
+  dir: string;
+  /** The frame manifest, in that folder. */
+  frames: string;
+  /** The routine manifest, in that folder. */
+  routine: string;
+}
+
+export type CharacterConfig = FrameCast | ClipCast | Troupe;
 
 export interface SceneConfig {
   /** Short name used in the address (`#grow`) and in saved progress. Never change it once live. */
@@ -127,6 +143,12 @@ export interface SceneConfig {
    * Leave out and the colour fades the same way, with no pencil.
    */
   lines?: string;
+  /**
+   * Rectangles of the plate the painting must be whole in, where the scene's cast comes nearer the rim than
+   * the edge's line may wander (see KeepBox in edge.ts). Leave out for a scene whose character keeps clear
+   * of the edge by the choice of `edge` alone.
+   */
+  keep?: readonly KeepBox[];
   /** The first-visit painting. The same strokes, played quickly, brush the scene in over another one. */
   strokes: readonly StrokePlan[];
   /**

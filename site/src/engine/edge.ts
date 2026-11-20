@@ -204,15 +204,105 @@ function washFrom(din: number, bottom: number, wander: number, swing: number, ou
   out.pencil = smooth((line - p.pencilInset * inset) / width) * rim;
 }
 
+/**
+ * A rectangle of the plate that the painting must be whole in, as [left, top, right, bottom] in plate px:
+ * where a scene's cast comes nearer the plate's rim than the edge's line may wander (the café: Rachel's
+ * boots and the cat are 35 px from the bottom, the old man's chair 60 px from the side). Around each one
+ * the painting reaches out toward the rim in a soft lobe, as far as it needs to and no further; everywhere
+ * else the edge is exactly what it is without them.
+ *
+ * The rule, as agreed with Wren (reviews/scene-3-build.md, section 5):
+ * - only around the boxes that need it: a box further in than the edge can reach changes nothing;
+ * - the plate's outer rim stays bare paper all the way round: the 28 px rim fade applies to the lobe too, so
+ *   from paper to the whole painting is never less than 28 px;
+ * - no pencil band there: beside the box the pencil ends where the colour does, and comes back along the
+ *   lobe's shoulders;
+ * - everywhere else, the ordinary pencil edge.
+ */
+export type KeepBox = readonly [number, number, number, number];
+
+/** One side of a box the edge has to make room for: where along that side, and how near the rim it comes. */
+interface Hold {
+  side: 'top' | 'bottom' | 'left' | 'right';
+  from: number;
+  to: number;
+  /** How far inside the plate the box's outer side is: the painting must be whole from here inward. */
+  room: number;
+}
+
+const HOLD = {
+  /** The lobe is whole this far beyond the box's ends, then eases back to the ordinary edge over `ease` px. */
+  margin: 14,
+  ease: 150,
+  /** Its fade is at most this wide, and never more than this share of the room there is. */
+  width: 24,
+  share: 0.6,
+  /** Where its fade starts wanders between this share of the room left over and all of it. */
+  least: 0.35,
+  /** Toward a corner of the plate, where another side is the nearer one, the lobe draws back over this many px. */
+  corner: 70,
+} as const;
+
+function holdsOf(keep: readonly KeepBox[] | undefined): Hold[] {
+  const holds: Hold[] = [];
+  const radius = ORGANIC.radius * PLATE.w;
+  for (const [left, top, right, bottom] of keep ?? []) {
+    const sides: Array<[Hold['side'], number, number, number, number, number, number]> = [
+      ['top', left, right, left, top, right, top],
+      ['bottom', left, right, left, bottom, right, bottom],
+      ['left', top, bottom, left, top, left, bottom],
+      ['right', top, bottom, right, top, right, bottom],
+    ];
+    for (const [side, from, to, ax, ay, bx, by] of sides) {
+      // (Measured the way the edge measures: round the plate's corners.)
+      const room = Math.min(inside(ax, ay, radius), inside(bx, by, radius));
+      if (room < PENCIL_REACH) holds.push({ side, from, to, room });
+    }
+  }
+  return holds;
+}
+
+/**
+ * Raise both edges, at a point `din` inside the plate, to what the boxes near it need: over a box and a
+ * little to each side, the painting is whole from the box's outer side inward; further along, the lobe
+ * draws back until the ordinary edge takes over. `wander` is the same noise that moves the ordinary edge.
+ */
+function lift(holds: readonly Hold[], x: number, y: number, din: number, wander: number, out: Wash): void {
+  const p = PENCIL;
+  for (const hold of holds) {
+    const level = hold.side === 'top' || hold.side === 'bottom';
+    // The lobe is measured from its own side of the plate, and belongs to the part of the plate that side governs.
+    const across = hold.side === 'top' ? y : hold.side === 'bottom' ? PLATE.h - y : hold.side === 'left' ? x : PLATE.w - x;
+    if (across >= PENCIL_REACH) continue;
+    const other = level ? Math.min(x, PLATE.w - x) : Math.min(y, PLATE.h - y);
+    const mine = smooth((other - across + HOLD.corner) / HOLD.corner);
+    if (mine <= 0) continue;
+    const along = level ? x : y;
+    const off = along < hold.from ? hold.from - along : along > hold.to ? along - hold.to : 0;
+    if (off >= HOLD.margin + HOLD.ease) continue;
+    const away = smooth((off - HOLD.margin) / HOLD.ease);
+    const back = (away + (1 - mine)) * PENCIL_REACH;
+    const width = Math.max(1, Math.min(HOLD.width, hold.room * HOLD.share));
+    const start = Math.max(0, hold.room - width - 1) * (HOLD.least + (1 - HOLD.least) * (0.5 + 0.5 * wander)) + back;
+    const rim = smooth(din / p.rim);
+    const paint = smooth((across - start) / width) * rim;
+    if (paint > out.paint) out.paint = paint;
+    // No pencil band beside the box: there the pencil ends with the colour. It comes back as the lobe draws back.
+    const beside = (1 - away) * mine;
+    out.pencil = Math.max(out.paint, out.pencil - (out.pencil - out.paint) * beside);
+  }
+}
+
 const sum = (values: readonly number[]): number => {
   let total = 0;
   for (const value of values) total += value;
   return total;
 };
 
-function pencilWash(seed: number): (x: number, y: number, out: Wash) => void {
+function pencilWash(seed: number, keep?: readonly KeepBox[]): (x: number, y: number, out: Wash) => void {
   const o = ORGANIC;
   const radius = o.radius * PLATE.w;
+  const holds = holdsOf(keep);
   /** Layered value noise, from about -1 to 1. */
   const layers = (cells: readonly number[], weights: readonly number[], salt: number) => (x: number, y: number): number => {
     let total = 0;
@@ -225,7 +315,11 @@ function pencilWash(seed: number): (x: number, y: number, out: Wash) => void {
     const din = inside(x, y, radius);
     if (din <= 0) out.paint = out.pencil = 0;
     else if (din >= PENCIL_REACH) out.paint = out.pencil = 1;
-    else washFrom(din, bottomOf(y), wanderAt(x, y), swingAt(x, y), out);
+    else {
+      const wander = wanderAt(x, y);
+      washFrom(din, bottomOf(y), wander, swingAt(x, y), out);
+      if (holds.length) lift(holds, x, y, din, wander, out);
+    }
   };
 }
 
@@ -274,9 +368,10 @@ function rowNoise(cell: number, seed: number, x0: number, w: number): { row: (y:
  * pencilWash() gives at each pixel's middle (to a dozen decimal places), and the break-up noise there. `x0`, `w`: the columns (plate px,
  * inside the plate).
  */
-export function pencilRows(seed: number, x0: number, w: number): { row: (y: number) => void; at: (i: number, out: Wash) => void; breakUp: (i: number) => number } {
+export function pencilRows(seed: number, x0: number, w: number, keep?: readonly KeepBox[]): { row: (y: number) => void; at: (i: number, out: Wash) => void; breakUp: (i: number) => number } {
   const o = ORGANIC;
   const radius = o.radius * PLATE.w;
+  const holds = holdsOf(keep);
   const wander = o.cells.map((cell, i) => rowNoise(cell, seed + i, x0, w));
   const swing = o.widthCells.map((cell, i) => rowNoise(cell, seed + 100 + i, x0, w));
   const breaks = rowNoise(PENCIL.breakCell, seed + PENCIL.breakSalt, x0, w);
@@ -306,14 +401,15 @@ export function pencilRows(seed: number, x0: number, w: number): { row: (y: numb
       let width = 0;
       for (let n = 0; n < swing.length; n++) width += (2 * swing[n].at(i) - 1) * o.widthWeights[n];
       washFrom(din, bottom, line / wanderTotal, width / swingTotal, out);
+      if (holds.length) lift(holds, x0 + i + 0.5, y, din, line / wanderTotal, out);
     },
     breakUp: (i) => breaks.at(i),
   };
 }
 
 /** How far the pencil reaches at a point of the plate: 0 where there is none, 1 from where it is at full strength. */
-export function pencilReach(seed: number): (x: number, y: number) => number {
-  const at = pencilWash(seed);
+export function pencilReach(seed: number, keep?: readonly KeepBox[]): (x: number, y: number) => number {
+  const at = pencilWash(seed, keep);
   const out: Wash = { paint: 0, pencil: 0 };
   return (x, y) => (at(x, y, out), out.pencil);
 }
@@ -322,9 +418,9 @@ export function pencilReach(seed: number): (x: number, y: number) => number {
  * How much of the painting shows at a point of the plate (plate px): 0 on the paper, 1 well inside.
  * In between, a smoothstep.
  */
-export function edgeAlpha(style: EdgeStyle, seed: number): (x: number, y: number) => number {
+export function edgeAlpha(style: EdgeStyle, seed: number, keep?: readonly KeepBox[]): (x: number, y: number) => number {
   if (style === 'pencil') {
-    const at = pencilWash(seed);
+    const at = pencilWash(seed, keep);
     const out: Wash = { paint: 0, pencil: 0 };
     return (x, y) => (at(x, y, out), out.paint);
   }
@@ -486,9 +582,9 @@ function share(name: keyof typeof STRIPS, x: number, y: number): number {
 /**
  * The edge of a scene. `lines` is the address of the scene's pencil line maps, without the `-tb.webp` and
  * `-lr.webp` they end in (scripts/build-assets.mjs cuts them from scene/pencil/); without it, or if they
- * cannot be fetched, the colour fades the same way and there is simply no pencil.
+ * cannot be fetched, the colour fades the same way and there is simply no pencil. `keep`: see KeepBox.
  */
-export function makeEdge(style: EdgeStyle, seed: number, paper: [number, number, number], lines?: string): Edge {
+export function makeEdge(style: EdgeStyle, seed: number, paper: [number, number, number], lines?: string, keep?: readonly KeepBox[]): Edge {
   const el = document.createElement('div');
   el.className = 'hj-edge';
   el.setAttribute('aria-hidden', 'true');
@@ -611,7 +707,7 @@ export function makeEdge(style: EdgeStyle, seed: number, paper: [number, number,
             const [which, mx, my] = inMap[strip.name];
             if (which !== map) continue;
             const { canvas, w, h } = strip;
-            const wash = pencilRows(seed, strip.x, w);
+            const wash = pencilRows(seed, strip.x, w, keep);
             // The strip's lines, read back as numbers once (their red is the line's strength), and then
             // turned into the edge where they are.
             let image: ImageData;

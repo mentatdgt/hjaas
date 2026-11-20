@@ -21,7 +21,7 @@ const SCALES = {
 
 describe('the painting behind every mushroom', () => {
   for (const scene of SCENES) {
-    const alpha = edgeAlpha(DEFAULT_EDGE, edgeSeed(edgeName(scene)));
+    const alpha = edgeAlpha(DEFAULT_EDGE, edgeSeed(edgeName(scene)), scene.keep);
 
     it(`${scene.label}: every drawing sits where the painting is at least 0.95 opaque`, () => {
       for (const spot of scene.spots) {
@@ -136,8 +136,8 @@ describe('the edge itself', () => {
 
     it('never ends on a straight cut: the plate\'s rim is paper all the way round, and the last 28 px always fade', () => {
       for (const scene of SCENES) {
-        const paint = edgeAlpha('pencil', edgeSeed(edgeName(scene)));
-        const pencil = pencilReach(edgeSeed(edgeName(scene)));
+        const paint = edgeAlpha('pencil', edgeSeed(edgeName(scene)), scene.keep);
+        const pencil = pencilReach(edgeSeed(edgeName(scene)), scene.keep);
         for (let i = 0; i <= 2000; i++) {
           const x = (PLATE.w * i) / 2000;
           const y = (PLATE.h * i) / 2000;
@@ -216,7 +216,7 @@ describe('the edge itself', () => {
       // of them meet, the painting must be whole, or it would be cut off along a straight line.
       expect(STRIPS.left.y).toBe(BAND.top - BAND.lap);
       for (const scene of SCENES) {
-        const paint = edgeAlpha('pencil', edgeSeed(edgeName(scene)));
+        const paint = edgeAlpha('pencil', edgeSeed(edgeName(scene)), scene.keep);
         for (let y = BAND.top - BAND.lap - 1; y <= PLATE.h - BAND.bottom + BAND.lap + 1; y += 1) {
           for (let x = BAND.side - 1; x <= PLATE.w - BAND.side + 1; x += y < BAND.top + 2 || y > PLATE.h - BAND.bottom - 2 ? 1 : 3) {
             if (paint(x, y) < 1) throw new Error(`${scene.id}: the painting is ${paint(x, y)} at ${x}, ${y}, inside the strips. Deepen edge-band.json (and run npm run assets) or choose another edge.`);

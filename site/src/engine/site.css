@@ -240,12 +240,14 @@
   );
 }
 
-.hj-rachel {
+.hj-rachel,
+.hj-actor {
   position: absolute;
   pointer-events: none;
 }
 
-.hj-rachel canvas {
+.hj-rachel canvas,
+.hj-actor canvas {
   display: block;
   width: 100%;
   height: 100%;
@@ -255,6 +257,7 @@
 .hj-scene.is-pre .hj-room,
 .hj-scene.is-pre .hj-shadow,
 .hj-scene.is-pre .hj-rachel,
+.hj-scene.is-pre .hj-actor,
 .hj-scene.is-pre .hj-mushrooms,
 .hj-scene.is-pre .hj-edge,
 .hj-scene.is-pre .hj-caption-main {

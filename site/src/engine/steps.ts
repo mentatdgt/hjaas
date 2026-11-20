@@ -9,6 +9,11 @@ export interface Step {
    * are needed. Left out by routines whose every pose is always ready.
    */
   soon?: readonly string[];
+  /**
+   * A long hold that may be cut short: when a reaction is waiting, it ends once it has lasted this many ms
+   * (clips.ts: a hold away from the rest pose, with a way home after it).
+   */
+  brief?: number;
 }
 
 export type Rng = () => number;

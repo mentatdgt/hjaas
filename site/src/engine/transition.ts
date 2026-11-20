@@ -142,7 +142,7 @@ export class Transition {
    */
   prepare(scene: Scene): void {
     const { root, caption } = this.stage;
-    const { plate, character, hunt } = scene;
+    const { plate, hunt } = scene;
     const first = root.classList.contains('is-pre');
     this.withCaption = first;
     this.clear();
@@ -158,9 +158,9 @@ export class Transition {
       strokes: scene.config.strokes,
       seed: this.stage.seed,
     });
-    // Over the room, her shadow and the mushrooms; under the character, who is not painted, and under the
-    // painting's soft edge, so the brush never paints past it.
-    plate.insertBefore(this.painter.canvas, character?.el ?? plate.querySelector('.hj-edge'));
+    // Over the room, her shadow and the mushrooms (and those of a cast who are painted with the room); under
+    // the character, who is not painted, and under the painting's soft edge, so the brush never paints past it.
+    scene.mark.after(this.painter.canvas);
     // The edge's pencil would be there before any paint, so it gets a veil of the same paper, which the
     // same strokes take away as they pass. On top of the plate; it goes on the page now, empty, and takes
     // its shape from the edge as soon as that is drawn. Until then the edge stays out of sight.
@@ -181,8 +181,7 @@ export class Transition {
     const hidden: HTMLElement[] = [];
     const edge = plate.querySelector<HTMLElement>('.hj-edge');
     if (edge && !this.veiled) hidden.push(edge);
-    if (character) hidden.push(character.el);
-    if (character?.shadow) hidden.push(character.shadow);
+    hidden.push(...scene.entrance);
     if (first) hidden.push(caption);
     if (hidden.length) gsap.set(hidden, { opacity: 0 });
     // Unpainted mushrooms can't be found yet, by pointer or by keyboard.
@@ -207,6 +206,7 @@ export class Transition {
   paint(scene: Scene): Promise<void> {
     const { caption } = this.stage;
     const { character, hunt } = scene;
+    const parts = scene.entrance;
     if (!this.painter?.fresh) this.prepare(scene);
     const painter = this.painter!;
     const veil = this.veil;
@@ -245,7 +245,6 @@ export class Transition {
 
       // The character: no paint on her. A short fade and a small settle, a still moment, then she gets to work.
       if (character) {
-        const parts = character.shadow ? [character.el, character.shadow] : [character.el];
         timeline.fromTo(parts, { opacity: 0 }, { opacity: 1, duration: 0.28, ease: 'power1.out' }, characterAt);
         timeline.fromTo(character.el, { y: -4 }, { y: 0, duration: 0.28, ease: EASE_OUT }, characterAt);
       }
