@@ -84,3 +84,20 @@ Performance panel. To record them again: emulate `390x844x3,mobile,touch` with C
 - The intro trace was taken just before the last pre-intro change (laying the form out before the
   scene appears). That work happens before the measured window; the untraced run above is on the final code.
 - Safari was not traced. The WebKit recordings in `../video/` show the same motion running there.
+
+## Scene 3 (the café), 2026-11-21
+
+Two more traces, same phone profile (`390x844x3,mobile,touch`, CPU throttling 4), production build
+(`npm run build && npm run preview`), recorded with the Chrome DevTools MCP server. Raw files, not in git:
+`s3-cafe-paint-in-mobile-4x.json.gz` and `s3-switching-mobile-4x.json.gz`.
+
+| Trace | What | Result (`node qa/tools/analyze-trace.mjs <trace> --tasks`) |
+|---|---|---|
+| café paint-in | A new visitor opens `#design` (storage cleared, reload): the first-visit painting with the fan and the supporting cast painted in, then Rachel. Window 1.4 to 7.4 s after navigation. | 360 frames begun, 1 dropped. No main-thread task over 50 ms; the longest 38 ms (at 4× slow-down). LCP 1.38 s, CLS 0.01. |
+| switching | From the café: Build (first visit, full painting), Grow (first visit), back to the café and to Build (the short brush). 24 s. | 1454 frames begun, 77 dropped, in four clusters: 21 as Build is put on the plate for the first time (a 166 ms task: layout, and measuring her rest frame), 5 as Grow is, 42 on the way back to the café, 9 on the way back to Build. Six tasks over 50 ms; the two at the short-brush switches are the room's picture being decoded again (89 and 97 ms at 4× slow-down), which every scene pays on the way back since review 05. |
+
+The frame times without the tracer, in WebKit and in throttled Chrome, are in `../scene3/frames.json`. With
+the tracer on, the way back to the café is the busiest moment of all: its 43 stills (24 of them the fan's)
+are decoded and drawn once again while the brush is at work. Unthrottled in WebKit the same switch is 20 to
+27 ms a frame.
+

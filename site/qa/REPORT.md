@@ -1270,7 +1270,7 @@ was measured on.
 | ✅ | 60 fps; no long tasks in WebKit | WebKit, iPhone profile, production build: the café's opening painting 23 to 36 ms at the longest frame over 6 cold loads, none over 50 ms; the café at work 19 to 23 ms; every short-brush switch 20 to 27 ms. One exception, below. | `scene3/frames.json`, `frames-notes.txt` |
 | ✅ | Screenshots | Design at 1440 × 900, and at 390 × 844 and 360 × 740 as it opens and panned to each end. | `scene3/design-*.jpg` |
 | ✅ | A 30 s recording with one reaction, desktop and iPhone profile | Each starts with the café's first-visit painting, then the café at work, a find at about 20 s, and her reaction. | `scene3/design-film-desktop.mp4`, `design-film-iphone.mp4`, and their stills |
-| ⚠️ | Traces: the paint-in, and Build → Grow → Design → Build | Frame times logged by script in WebKit and in Chrome with the processor slowed four times, not DevTools trace files. | `scene3/frames.json` |
+| ✅ | Traces: the paint-in, and Build → Grow → Design → Build | Chrome DevTools traces on the phone profile with the processor slowed four times. The café's paint-in: 1 frame dropped of 360, no task over 50 ms. The switches: 77 frames dropped of 1454, in clusters where each scene goes on the plate (below). Frame times were also logged without the tracer, in WebKit and in throttled Chrome. | `traces/SUMMARY.md`, `scene3/frames.json` |
 | ✅ | Checked against the animation standards | Below. | |
 
 ### How to see it
@@ -1322,6 +1322,12 @@ WebKit on the iPhone profile, production build, after midnight with the Mac calm
 Chrome with the processor slowed four times: the café's painting and the café at work 17 ms. Every
 short-brush switch has one frame of about 100 ms at the tap, to any scene; the build before this work does
 the same between Build and Grow (83 to 133 ms), so it is not the café's.
+
+The DevTools trace of the switches, at four times slow-down with the tracer on, drops frames in four
+clusters: 21 as Build is put on the plate for the first time, 5 as Grow is, 42 on the way back to the café
+(its 43 stills, 24 of them the fan's, are decoded and drawn once again while the brush is at work) and 9 on
+the way back to Build. The ~100 ms frame at every short-brush switch is the room's picture being decoded
+again, as since review 05.
 
 Earlier the same night, with the Mac busier, the same checks were noisier: see `scene3/frames-notes.txt`.
 
@@ -1408,7 +1414,6 @@ Earlier the same night, with the Mac busier, the same checks were noisier: see `
 ### Not done, or not verified
 
 - **A real phone.** Everything is Playwright's WebKit and Chrome on this Mac.
-- **DevTools trace files.** The frame times are from a script in the page, in WebKit and throttled Chrome.
 - **The 56 to 66 ms frames** in some switches (above). The same kind was there before this scene; I did not
   trace them.
 - **The copy.** The café uses the same placeholder caption lines as the other scenes.
