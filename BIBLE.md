@@ -11,7 +11,7 @@ What's decided. Everyone (Wren, Quinn, Fable, Foreman) follows this. If a task, 
 - **Text:** none yet besides the logo, counter, hunt prompt, unlock moment and form labels. The user adds copy later.
 
 ## 2. Look and motion
-- **Art:** flat colours, thick dark outlines, warm light from the left, hand-drawn proportions (large head, small hands). Match `reference/` and the approved scene-1 frames.
+- **Art:** a Gravity Falls-*style* 2D cartoon (style only, original characters). Characters have round white eyes with dot pupils (no lashes or eyeliner), hair as solid shapes, flat colour with one hard shadow tone, thick even outlines, slightly stylised proportions. Not anime, not cosy painterly illustration. Backgrounds can be painted and detailed, with warm light from the left. **Rachel's master look: `M01_rachel_model.png`** (task M01, pending approval). Its style table is the rule for every character.
 - **Logo:** the tape-measure pin, `assets/logo/hjaas-logo.png`; favicon `assets/logo/hjaas-reel.png`.
 - **Page:** paper-coloured page with the scene inset; the edge is the **organic watercolour feather with a pencil trail** (option B, `reviews/scene-edge-pencil.md`): the colour fades, pencil lines carry on a little and trail off into the paper. Never a hard straight cut.
 - **Intro:** 5 s watercolour paint-in with doubled strokes, easing `cubic-bezier(0.645, 0.045, 0.355, 1)`. Skip and pause available; reduced motion respected.
