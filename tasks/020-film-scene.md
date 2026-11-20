@@ -143,3 +143,6 @@ The café showed that Kling redraws flat-style faces (BIBLE §5: no AI video for
 
 ### Loop job 020a (2026-11-21, 03:39 JST): APPROVED
 Quinn delivered M_12 and M_13 in about 5 minutes. Wren pasted back only the changed arms (scaled 1024 → 640 and pasted at x440, y240 onto M_1), so the head, face, legs and shoes are M_1's own pixels. Steps: `incoming/wren_presenter_steps.png`.
+
+### Loop job 020b (2026-11-21, 03:44 JST): APPROVED
+R_K0 is a side profile with one eye, the start of a smile and her hair mid-swing. Wren pasted back only the head and shoulders (scaled 1024 → 700, at x840, y241; everything below y 765 is locked to A1) and removed a green fringe from the hair edge (also on M_12 and M_13). All in-betweens are done. Next: preview, package, Fable brief.
