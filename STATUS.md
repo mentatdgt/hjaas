@@ -19,7 +19,7 @@ New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a
 - **Quinn loop:** smoke test, then job 001 (Rachel's sip poses).
 - **Fable:** café build on `site/scene-3`; swap in package v5.
 - **Wren (café chat):** run the Quinn loop, add the sip and the barista's polishing, final preview.
-- **Film chat:** task 020. Read the new rules in `BIBLE.md` §5 and `SCENE-RECIPE.md` before making poses or clips.
+- **Film chat:** task 020. **Read first, Film chat:** the café's AI video clips of the flat-style Rachel failed (face and hair redrawn, pops at both ends; 9 credits lost). Before buying the 4 clips, read `BIBLE.md` §5 and `SCENE-RECIPE.md` §4: buy ONE clip as a test, composite only the moving part onto the approved base, and build every pose as base + moving part. Read the new rules in `BIBLE.md` §5 and `SCENE-RECIPE.md` before making poses or clips.
 
 ## Next
 1. Approve scene 2 on a phone → merge `site/scene-2` into `main` (it includes scene 1).
