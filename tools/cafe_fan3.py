@@ -72,7 +72,7 @@ PITCH = np.radians(12); KV = 0.95 * a        # 3D vertical -> image px (camera ~
 def project(sx, tz, yv):                     # plane coords (x, z) + height y -> image
     q = (M @ np.vstack([sx, tz])).T; return np.c_[Hc[0] + q[:, 0], Hc[1] + q[:, 1] - KV * yv]
 SS = 3
-def render(theta):
+def render(theta, side):
     img = Image.new('RGBA', (W * SS, H * SS), (0, 0, 0, 0)); d = ImageDraw.Draw(img)
     blades = []
     for j in range(3):
@@ -88,6 +88,7 @@ def render(theta):
         blades.append((depth, pts, sh, ip))
     lw = int(round(3.0 * SS))
     for depth, pts, sh, ip in sorted(blades, key=lambda z: z[0]):
+        if (depth >= 0) != (side == 'near'): continue
         P_ = [tuple(p * SS) for p in pts]; S_ = [tuple(p * SS) for p in sh]; I_ = [tuple(p * SS) for p in ip]
         d.polygon(I_, fill=tuple(int(c) for c in BRONZE) + (255,), outline=tuple(int(c) for c in LINE) + (255,), width=lw)
         d.polygon(P_, fill=tuple(int(c) for c in BASE) + (255,))
@@ -100,12 +101,22 @@ def render(theta):
     warm = np.stack([light * 1.01, light, light * 0.97], -1)
     out[..., :3] = np.where(out[..., 3:] > 0, np.clip(ndi.gaussian_filter(out[..., :3], (1.2, 1.2, 0)) * 0 + out[..., :3] * warm, 0, 255), out[..., :3])
     return out
-hub_rgba = np.dstack([drawn, ndi.gaussian_filter(hub.astype(np.float32), 0.6) * 255])
+# the blades sit at the collar: the motor body is above that plane, the lower cap below it
+split = int(Hc[1] + 6)
+body = hub.copy(); body[split:] = False; cap = hub.copy(); cap[:split] = False
+hubsrc = nofan.copy()                      # Quinn's clean hub (no blade roots on it), matched to the drawn hub's warmer tone
+sel = hub & ~ndi.binary_dilation(masks[0] | masks[1] | masks[2], iterations=8) & (drawn.mean(-1) > 60) & (nofan.mean(-1) > 40)
+gain = np.clip(np.median(drawn[sel], 0) / np.maximum(np.median(nofan[sel], 0), 1), 1.0, 1.3)   # gain only: keeps the outlines dark
+hubsrc = np.clip(nofan * gain, 0, 255)
+print('hub gain', gain.round(3))
+def rgba(m): return np.dstack([hubsrc, ndi.gaussian_filter(m.astype(np.float32), 0.6) * 255])
+body_rgba, cap_rgba = rgba(body), rgba(cap)
+def over(acc, x): return acc * (1 - x[..., 3:] / 255) + x[..., :3] * (x[..., 3:] / 255)
 n = int(round(120 / STEP)); frames = []; sweep = np.zeros((H, W), bool)
 for f in range(n):
-    b_ = render(np.radians(f * STEP)); sweep |= b_[..., 3] > 6
-    acc = nofan * (1 - b_[..., 3:] / 255) + b_[..., :3] * (b_[..., 3:] / 255)
-    acc = acc * (1 - hub_rgba[..., 3:] / 255) + hub_rgba[..., :3] * (hub_rgba[..., 3:] / 255)
+    far, near = render(np.radians(f * STEP), 'far'), render(np.radians(f * STEP), 'near')
+    sweep |= (far[..., 3] > 6) | (near[..., 3] > 6)
+    acc = over(over(over(over(nofan, far), body_rgba), near), cap_rgba)   # far blades, motor, near blades, cap
     frames.append(acc)
 sw = ndi.binary_dilation(sweep | fanm, iterations=8)
 yy, xx = np.where(sw); bx0, by0, bx1, by1 = xx.min(), yy.min(), xx.max() + 1, yy.max() + 1

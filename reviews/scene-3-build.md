@@ -102,3 +102,6 @@ The user's notes on v6: the child's eyes, a photographic fan, Rachel and the bar
 
 ## Update 2026-11-21 04:45 (Wren): package v7.1 = v7 + the child's look-up
 `C_3` added: he looks up at his mum and grins, matching his new head. The child's routine in `routine.json` now ends each colouring stretch with `C_1` → `C_3` (1.5–2 s) → `C_1`, as cuts. Nothing else changed. File swap; `cafe-preview.mp4` updated.
+
+## Update 2026-11-21 07:40 (Wren): package v7.2 = v7.1 with the fan fixed
+User: the blades didn't attach to the fan's hub. Now the blades nearer the viewer pass in front of the motor and under the lower cap, the far ones go behind it, and the hub is Quinn's clean drawing with no frozen blade stub on it. Only `fan/fan_*.png` and `plate.png` changed. File swap.
