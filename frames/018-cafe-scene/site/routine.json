@@ -282,13 +282,13 @@
    ]
   },
   "child": {
-   "note": "He colours with his head down; the crayon moves (C_1/C_2, short dissolve). No look-up yet (C_3 is being redrawn to match the new head).",
+   "note": "Colours with his head down (C_1/C_2, the crayon moves with a short dissolve), then looks up at his mum and grins (C_3, cuts).",
    "routine": [
     {
      "loop": "colour",
      "repeat": [
-      1000,
-      1000
+      8,
+      14
      ],
      "steps": [
       {
@@ -307,6 +307,27 @@
        ],
        "fade_ms": 150
       }
+     ]
+    },
+    {
+     "still": "C_1",
+     "ms": [
+      300,
+      500
+     ]
+    },
+    {
+     "still": "C_3",
+     "ms": [
+      1500,
+      2000
+     ]
+    },
+    {
+     "still": "C_1",
+     "ms": [
+      600,
+      900
      ]
     }
    ]

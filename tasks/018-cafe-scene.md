@@ -248,3 +248,5 @@ The user's notes:
 - Built by `tools/cafe_build7.py`. Every pose = master + moving part; Rachel's arm poses exclude her hair (hair-coloured pixels unchanged in both images are kept from the master).
 - Fan: `tools/cafe_fan3.py`, a rigid model fitted to Quinn's drawing, with a soft gradation added (user, 03:52: everything in the café gets subtle gradation).
 - Pending: job 009, the child looks up at his mum (`C_3`) to match the new head. It goes in when it passes QC.
+
+- 04:45: job 009 accepted (`approved/round9/C_3_LOOK_UP.png`), package v7.1. Fixed in `tools/quinn_register.py`: a wrapped edge strip after the alignment shift.

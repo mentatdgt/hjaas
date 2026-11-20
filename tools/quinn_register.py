@@ -24,5 +24,10 @@ def place(path, box, ref_alpha_full):
             if e < best[0]: best = (e, dx, dy)
     _, dx, dy = best
     rgb = np.roll(np.roll(rgb, dy, 0), dx, 1); al = np.roll(np.roll(al, dy, 0), dx, 1)
+    # np.roll wraps: clear the strips that wrapped round from the opposite edge
+    if dy > 0: al[:dy] = 0
+    if dy < 0: al[dy:] = 0
+    if dx > 0: al[:, :dx] = 0
+    if dx < 0: al[:, dx:] = 0
     full = np.zeros((1432, 2580, 4), np.float32); full[y0:y1, x0:x1, :3] = rgb; full[y0:y1, x0:x1, 3] = al * 255
     return full, (dx, dy, round(float(best[0]), 4))

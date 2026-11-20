@@ -57,7 +57,8 @@
    "h": 371,
    "stills": [
     "C_1",
-    "C_2"
+    "C_2",
+    "C_3"
    ]
   },
   {
@@ -141,6 +142,7 @@
   "cat_3": "cat/cat_3.png",
   "C_1": "child/C_1.png",
   "C_2": "child/C_2.png",
+  "C_3": "child/C_3.png",
   "O_1": "oldman/O_1.png",
   "O_2": "oldman/O_2.png",
   "O_3": "oldman/O_3.png",

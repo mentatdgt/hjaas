@@ -99,3 +99,6 @@ The user's notes on v6: the child's eyes, a photographic fan, Rachel and the bar
 - **Child:** his whole head tilts down to his drawing (`C_1`, `C_2`). No look-up yet: `C_3` is being redrawn to match the new head and will come as a drop-in.
 - **Fan:** 20 frames, a rigid three-blade model in the drawn style, 6° per frame at 42 ms (24 rpm), an exact loop. `plate.png` has the blades removed.
 - **Still names changed:** see `frames.json`. `cafe-preview.mp4` is the reference. Audit: nothing changes outside the actors; Rachel's legs, table and chair never change; her hair changes only during the reaction.
+
+## Update 2026-11-21 04:45 (Wren): package v7.1 = v7 + the child's look-up
+`C_3` added: he looks up at his mum and grins, matching his new head. The child's routine in `routine.json` now ends each colouring stretch with `C_1` → `C_3` (1.5–2 s) → `C_1`, as cuts. Nothing else changed. File swap; `cafe-preview.mp4` updated.
