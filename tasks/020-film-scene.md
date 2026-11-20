@@ -1,6 +1,6 @@
 ---
 id: 020-film-scene
-status: open             # draft | open | delivered | changes-requested | approved
+status: changes-requested            # draft | open | delivered | changes-requested | approved
 frames: many              # see the lists below
 grid: separate images     # one image per file, ALL the same size as 020_scene.png and registered to it
 references:
@@ -84,3 +84,42 @@ Phone window note for Fable: her head now sits at about 72–85% of the width, s
 
 ### Round 1 (plate only, 2026-11-20): the car is too long
 Seen in the plate, the car reads as a stretched limo: two rear doors and three side windows, with the wheels about 3.4 car-heights apart. In `020_plate`, shorten it to a normal fastback saloon: one front door and one rear door, two side windows, the wheels about 2 car-heights apart. Keep the nose, the front wheel and the colours where they are; move the rear wheel and the tail right. Fill in the promenade, railing and bollard behind. Also remove the faint ghost of the water jet in the sky. The anchors and poses are unaffected. Wren rebuilds `020_scene` as the plate plus the anchors once the new plate is in.
+
+### QC round 1, batch 1 (2026-11-20, Wren)
+All 16 files are 1672×941, with pure `#00FF00` backgrounds. Every anchor matches the scene pixel for pixel. The car is now a normal fastback (wheelbase about 2.2 car-heights), and the water ghost is gone. Clearance between the presenter and the camera is 81 px or more in every pose.
+- **PASS → `approved/`:** the three anchors; R_A1, R_B1; M_1, M_1_closed, M_1_blink, M_2, M_3; W_1–3.
+- **Wren fixes:** `approved/020_plate.png` gets the presenter's ground shadow back from the original scene (his feet never move, and without it he floated). `approved/020_scene.png` is rebuilt as the plate plus W_1, M_1 and R_A1, so it now has the shorter car.
+- **Accepted:** M_2 points left, toward Marina Bay Sands and the spout, not at the Merlion. The brief had the side wrong, and it reads well. The peace-sign pose is dropped.
+- **FAIL:** `020_R_K1_look.png`: **Rachel wears glasses.**
+
+### Round 2 (Quinn)
+Redo `020_R_K1_look.png` only, as an edit of `020_rachel_green.png`: the same look back over her shoulder with a warm smile, the same hair, tank, camera and hands, **with no glasses at all**. Draw the bare eyes as in `reference/hjaas3.png` "warm smile", without the frames. Keep her waist and shorts at exactly the same pixels. 1672×941, green background.
+
+### QC round 2 (2026-11-20, Wren): APPROVED
+`020_R_K1_look` has no glasses, a warm smile and bare eyes, and the waist and shorts match the anchor exactly. All 14 pieces are in `approved/`. Next: Higgsfield in-betweens (quote first).
+
+### Round 3 (Quinn): restyle Rachel to the new master look
+While 020 was in progress, the café chat approved Rachel's master look, `reference/rachel/M01_rachel_model.png`. BIBLE §2 now requires it for every scene. Scene 4's Rachel was drawn from the old sheets, so her four files need the same restyle the café got. **The presenter, water, plate and scene stay as they are.**
+
+Files, each an EDIT of the current approved file, 1672×941, flat `#00FF00`: `020_rachel_green`, `020_R_A1_film`, `020_R_B1_glance`, `020_R_K1_look`.
+- **Hair:** M01's hair: big, soft waves with volume, M01's brown, drawn as a few solid shapes with **one** hard shadow tone. No gradients, no gloss. It may grow a little up and out to the right, but **never further left than now** (it must stay clear of the presenter's hands).
+- **Skin:** M01's warm tan, flat plus one hard shadow tone.
+- **K1 face (eye rule):** big round white eyes, each about ¼ of the face's width, almost touching; the small curved "C" nose overlaps their inner edges; dot pupils, no lashes. A warm smile like M01's. **No glasses.**
+- **Unchanged pixels:** camera, hands, arms' position, tank top, shorts, and the bottom crop. B1 stays a head tip toward the camera; K1 stays a look back over her shoulder at the viewer.
+- Outline weight: the same as the presenter's.
+
+Self-check: all four files keep the same pose differences; the hair never extends further left than before; there are no glasses; and the A1 and K1 hair and skin colours match M01. Deliver the four files plus one image of A1 and K1 next to the M01 face.
+
+### QC round 3 (2026-11-20, Wren): close; three fixes
+Registration is perfect: the camera, hands, tank, shorts and bottom crop are pixel-identical; the hair never goes further left than x 1017 (999 in K1); the green is pure. The hair now has M01's volume and colour. See `incoming/round3/wren_r3_on_plate.png`.
+1. **K1 eyes:** the whites have no outline and are a touch small. Use M01's eyes: round whites with the **same thick dark outline** as the rest of her, each about ¼ of the face's width, almost touching, with the "C" nose overlapping their inner edges.
+2. **A1, B1 (and rachel_green) hair shadow:** the one big dark blob in the middle of the back of her hair reads as a hole. Replace it with **2–3 narrow dark strands following the waves**, like the inner layers on M01. Same silhouette.
+3. **Skin:** her arms, shoulders and hands are still the old pale peach, so in K1 they don't match her new orange-tan face. Recolour all her visible skin (all four files) to M01's warm tan, with one hard shadow tone. Shapes and pixels' positions stay identical.
+Everything else stays.
+
+### Round 3, presenter additions (user, 2026-11-20): he must look like he's talking in every pose
+Lip-flap is done in code by swapping mouth frames, so every held pose needs a closed mouth. Each file is an edit of the existing one, nothing else changes:
+- `020_M_2_closed.png`: M_2 with his mouth closed in a smile.
+- `020_M_3_closed.png`: M_3 with his mouth closed in a smile.
+- `020_M_1_mid.png`: M_1 with his mouth half open (a third mouth shape for lip-sync).
+Higgsfield prompts will say "talking animatedly". If a clip's mouth looks wrong, Wren overlays the drawn mouth frames instead.
