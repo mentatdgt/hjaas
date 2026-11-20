@@ -1,6 +1,6 @@
 ---
 id: 019-film-staging
-status: open             # draft | open | delivered | changes-requested | approved
+status: approved            # draft | open | delivered | changes-requested | approved
 type: staging
 frames: 5                 # five separate options, one image each
 grid: separate images     # one full scene per file, landscape 16:9, 1672×941
