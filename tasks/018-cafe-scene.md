@@ -74,4 +74,14 @@ Same canvas, green background, character in exactly the same place. Change only 
 - [ ] Flat green backgrounds, no shadows, no text.
 
 ## Revision notes
-_(Wren writes here after each QC round)_
+
+### Round 1 (step 1 only), `frames/018-cafe-scene/incoming/018_scene_r1.png`
+The layout, light, Rachel's position and the cat are approved. Edit this image (don't redraw it) and fix only these:
+1. **Old man:** he sits properly on ONE chair, the right-hand chair at his table. Remove the other chair at his table and fill in the floor and wall behind it. He looks DOWN at his newspaper (eyes on the page), not across the room.
+2. **Barista, position:** move her to the LEFT end of the counter, standing behind it to the left of the espresso machine, so the machine and grinder are on her right. Leave clear space between her and the old man. Move the small plant on that end of the counter aside if needed. Same look, same size, still partly hidden by the counter.
+3. **Barista, cup:** she polishes a clearly readable white ceramic coffee cup with a handle, using a white cloth. No round ball shape. Her eyes are on the cup.
+4. **Child:** he sits (kneeling is fine) on the chair BEHIND the left table, the one between the other two chairs. He faces out toward Rachel (to the right), still colouring. The rightmost chair at that table is left empty.
+5. **Rachel's iPad:** fix the area under her right forearm. The iPad sits entirely on the tabletop on a simple folio stand. No part of it extends past the table edge. The table's marble edge and the background show correctly around it.
+6. **Gaze balance:** the mum can keep watching her child. The child looks toward Rachel and the old man looks at his paper, so not everyone looks to the left.
+
+Deliver `018_scene.png` (1672×941) and **stop for approval** before steps 2–4.
