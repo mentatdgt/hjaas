@@ -110,3 +110,64 @@ All 28 files are at 2580×1432. The scene is byte-identical to the approved one,
 **Plate repaired by Wren:** Quinn's plate had changed pixels well outside the characters (visible rectangles on the floor, and the floor shadows under Rachel's chair, the cat and the old man were removed). `018_plate.png` is now the original scene everywhere except inside the union of every pose (dilated 4 px). Inside that, Quinn's fill is used, colour-matched to its surroundings (`tools/cafe_plate_union.py`, `tools/cafe_plate_colourmatch.py`). Quinn's original is kept as `018_plate_quinn.png`.
 
 Minor, accepted: the cat_2/cat_3 outlines are slightly stair-stepped at full zoom (invisible at site size).
+
+### Round 4: restyle Rachel and the barista to the model sheet (after M01 is approved)
+Rachel and the barista drifted towards anime (eyeliner, lashes, glossy strand hair, gradient skin). Redo them in the style of the approved `reference/rachel/M01_rachel_model.png` (rules in `tasks/M01-rachel-model-sheet.md`). Everything else in the café stays exactly as it is.
+- **Rachel:** `018_R_A1_sketch`, `018_R_A2_stroke`, `018_R_A1_blink`, `018_R_B1_sip`, `018_R_K1_look`, plus `018_rachel_green` (= A1).
+- **Barista:** `018_B_1`–`B_4` and `018_barista_green` (= B_1), with the same style rules: round white eyes with dot pupils, solid hair shapes, flat shading. She keeps her look: warm deep brown skin, long dark hair with curtain bangs, silver hoops, white ribbed top, dark apron.
+- Each is an **edit of the current file**: same canvas (2580×1432), same position, size, pose, outline silhouette and props, on flat `#00FF00`. Only the style of the face, hair and shading changes. Keep the poses' differences exactly as they are now (stroke, blink, sip, look, polishing, glance).
+- Deliver the 12 files plus a contact sheet that shows each composited over `018_scene.png`, then run the self-check (same rules as before, plus the M01 style table).
+
+**Round 4 also: a more natural reaction.** The user found the look to camera stiff and artificial. Three causes: a wide-eyed fixed stare, a frozen 1.3 s hold, and the same clip played backwards (blink included). Redraw `018_R_K1_look` in the new style as a **soft, friendly glance**: head lifted, very slight tilt, eyes on the viewer, small natural smile, relaxed brows. Add two new poses, both edits of the new K1:
+- `018_R_K2_smile`: the smile widens and her eyes soften into happy curves, as if pleased; her head tilts a touch more. Hands unchanged.
+- `018_R_K1_blink`: K1 with her eyes closed (a simple curved line).
+
+### QC round 4: PASS with one fix (Wren, 2026-11-20)
+- The style now matches the model sheet: round white eyes, dot pupils, solid hair, simple brows. Registration is exact (Quinn kept every silhouette). The sip and K2 smile are lovely.
+- **Round 5 below replaces the one-file B_4 fix** (red-team, 2026-11-20).
+- Wren will handle in packaging: the binary green key leaves stair-stepped hair outlines at 2×, so the alpha edge gets anti-aliased.
+- Accepted: the arms and clothes keep a little soft shading (mild). K1's wide-eyed look is only a passing frame; the reaction holds on K2's smile.
+
+### Round 5: one-shot consistency pass (red-team findings)
+Rachel and the barista were restyled, but they still don't match each other or the rest of the cast:
+1. **The barista's eyes are too small:** small ovals set far apart. That isn't the model-sheet look.
+2. **Rachel's eyes change shape between poses.** `R_A1_blink` turns into drowsy almond eyes, and `R_K1_look` has smaller, different eyes from A1.
+3. **The child, mum, old man and cat are still painterly:** glossy, gradient hair, soft shading and soft brown lines. Next to the flat Rachel and barista, they now look like a different show.
+4. **`B_4`'s glance must clearly go LEFT and slightly down, to Rachel.**
+
+**The eye rule for every character** (from `reference/rachel/M01_rachel_model.png`):
+- Each eye is a big round white, about **a quarter of the face's width**.
+- The two eyes **almost touch**, and the small curved "C" nose overlaps their inner edges.
+- Small solid black dot pupils. No lashes, irises or shine.
+- **Half-closed** = the same round white with a flat upper-lid line across its top half (not an almond shape). **Closed** = a single curved line.
+- The old man's small glasses stay: he's the only one who wears them.
+
+**The rendering rule for every character:**
+- Flat colour plus **one** hard-edged shadow tone.
+- Hair as a few solid shapes.
+- Thick, even, dark outlines, **the same weight on everyone**: match Rachel's current outline.
+- No gradients, glossy highlights, blush or airbrushing. Their colours, clothes and props stay the same.
+
+**Files: every one an EDIT of the current file, same 2580×1432 canvas, and *identical silhouette*** (same foreground mask, as in round 4). Only the face and the rendering inside change.
+| Who | Files | What |
+|---|---|---|
+| Rachel | `018_R_A1_blink`, `018_R_K1_look` | Eyes the same size, shape and spacing as `R_A1_sketch`. A1_blink = half-closed per the rule (pupils as A1). K1 = looking at the viewer, soft and friendly, eyes exactly A1's size. |
+| Barista | `018_barista_green`, `018_B_1`, `018_B_2`, `018_B_3`, `018_B_4` | Eyes enlarged to the rule. B_1–B_3 look down at the cup. B_4 glances clearly LEFT and slightly down, at Rachel, with a small smile. |
+| Child | `018_child_green`, `018_C_1`, `018_C_2`, `018_C_3` | Rendering rule. Eyes already round: just clean them to the rule. C_3 still looks up-right at his mum. |
+| Old man | `018_oldman_green`, `018_O_1`, `018_O_2`, `018_O_3` | Rendering rule. Keep his glasses and moustache. |
+| Mum | `018_mum_green`, `018_M_blink_half`, `018_M_blink_closed` | Rendering rule, with eyes per the rule (half = the lid line, closed = a curve). Wren puts the restyled mum back into the plate. |
+| Cat | `018_cat_green`, `018_cat_1`, `018_cat_2`, `018_cat_3` | Rendering rule (flat orange, one shadow tone, even outline). Keep the breathing and tail differences. |
+
+**Don't change:** `018_R_A1_sketch`, `018_R_A2_stroke`, `018_R_B1_sip`, `018_R_K2_smile`, `018_R_K1_blink`, `018_rachel_green`, the plate, the scene.
+
+**Deliver** one zip with these 22 files, plus:
+- a contact sheet of every character's faces side by side, beside the model sheet's face;
+- a contact sheet of all of them placed over `018_plate.png`;
+- the self-check below.
+
+**Self-check:**
+- [ ] Same silhouette mask as the source file for every file.
+- [ ] Every open eye is about ¼ of its face's width, the eyes almost touch, and there are dot pupils.
+- [ ] One outline weight across all characters.
+- [ ] No gradients or glossy hair anywhere.
+- [ ] Every pose keeps its difference (crayon, page, tail, blink, glance).

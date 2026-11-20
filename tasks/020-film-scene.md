@@ -73,9 +73,14 @@ Same canvas, green background, piece in exactly the same place. Change only what
 - **Layers:** plate → water → presenter → Rachel.
 - **Water:** cycle W_1–3 at about 8–10 fps with short crossfades. Add a subtle shimmer to the bay reflections in code.
 - **REC light and screen:** code, no art. Draw a blinking red dot (about 1 s cycle) on the camera screen. Proposed: the screen shows a live, scaled copy of the presenter layer.
-- **Phone window:** shifted for this scene to about 36–81% of the width, so both people fit.
+- **Phone window:** shifted for this scene to about 37–85% of the width, so both people fit.
 - **Higgsfield clips** (quote first): Rachel A1→B1 (glance) and A1→K1 (look back), and the presenter M_1→M_2 and M_1→M_3. That's 4 × 4.5 = 18 credits, No upscales if the scene comes at 2580×1432.
 - **Hunt nooks:** wheel arches, the bollard lamps, the railing posts, the planter kerb, the lit steps, paving cracks, the kiosk base.
 
 ## Revision notes
-_(Wren writes here after each QC round)_
+### Step 1 (2026-11-20, Wren): APPROVED from a screenshot preview
+Rachel has moved right: her lens is now about 11% of the width clear of the presenter's hand. The camera screen is a plain dark rectangle, and nothing else has changed. Quinn continues with steps 2–4. The original is in `frames/020-film-scene/incoming/020_scene.png`, at **1672×941** (Quinn's output, the same size as scenes 1 and 2). Every step 2–4 file must be exactly 1672×941. Upscale the Higgsfield clips if phones need it.
+Phone window note for Fable: her head now sits at about 72–85% of the width, so shift the window to about 37–85%.
+
+### Round 1 (plate only, 2026-11-20): the car is too long
+Seen in the plate, the car reads as a stretched limo: two rear doors and three side windows, with the wheels about 3.4 car-heights apart. In `020_plate`, shorten it to a normal fastback saloon: one front door and one rear door, two side windows, the wheels about 2 car-heights apart. Keep the nose, the front wheel and the colours where they are; move the rear wheel and the tail right. Fill in the promenade, railing and bollard behind. Also remove the faint ghost of the water jet in the sky. The anchors and poses are unaffected. Wren rebuilds `020_scene` as the plate plus the anchors once the new plate is in.
