@@ -1,62 +1,66 @@
 {
  "cat_2": {
-  "changed_px_pct_of_actor": 46.2,
+  "changed_pct_of_actor": 46.2,
   "changed_outside_zone_px": 0
  },
  "cat_3": {
-  "changed_px_pct_of_actor": 30.6,
+  "changed_pct_of_actor": 30.6,
   "changed_outside_zone_px": 0
  },
  "C_2": {
-  "changed_px_pct_of_actor": 17.5,
-  "changed_outside_zone_px": 0
- },
- "C_3": {
-  "changed_px_pct_of_actor": 114.7,
+  "changed_pct_of_actor": 17.1,
   "changed_outside_zone_px": 0
  },
  "O_2": {
-  "changed_px_pct_of_actor": 33.6,
+  "changed_pct_of_actor": 33.4,
   "changed_outside_zone_px": 0
  },
  "O_3": {
-  "changed_px_pct_of_actor": 35.1,
+  "changed_pct_of_actor": 32.4,
   "changed_outside_zone_px": 0
  },
- "B_4": {
-  "changed_px_pct_of_actor": 12.9,
+ "B_2_polish": {
+  "changed_pct_of_actor": 15.8,
+  "changed_outside_zone_px": 0
+ },
+ "B_3_polish": {
+  "changed_pct_of_actor": 22.0,
+  "changed_outside_zone_px": 0
+ },
+ "B_4_glance": {
+  "changed_pct_of_actor": 4.2,
   "changed_outside_zone_px": 0
  },
  "R_A2_stroke": {
-  "changed_px_pct_of_actor": 3.1,
+  "changed_pct_of_actor": 5.5,
   "changed_outside_zone_px": 0
  },
  "R_A1_blink": {
-  "changed_px_pct_of_actor": 4.0,
+  "changed_pct_of_actor": 4.0,
   "changed_outside_zone_px": 0
  },
  "R_S1_reach": {
-  "changed_px_pct_of_actor": 7.4,
+  "changed_pct_of_actor": 7.9,
   "changed_outside_zone_px": 0
  },
  "R_S2_lift": {
-  "changed_px_pct_of_actor": 21.5,
+  "changed_pct_of_actor": 22.6,
   "changed_outside_zone_px": 0
  },
  "R_B1_sip": {
-  "changed_px_pct_of_actor": 42.4,
-  "changed_outside_zone_px": 0
- },
- "R_K1_blink": {
-  "changed_px_pct_of_actor": 15.1,
+  "changed_pct_of_actor": 27.4,
   "changed_outside_zone_px": 0
  },
  "R_K1_look": {
-  "changed_px_pct_of_actor": 15.1,
+  "changed_pct_of_actor": 19.9,
+  "changed_outside_zone_px": 0
+ },
+ "R_K1_blink": {
+  "changed_pct_of_actor": 19.9,
   "changed_outside_zone_px": 0
  },
  "R_K2_smile": {
-  "changed_px_pct_of_actor": 15.1,
+  "changed_pct_of_actor": 19.9,
   "changed_outside_zone_px": 0
  }
 }

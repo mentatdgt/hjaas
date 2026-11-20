@@ -242,3 +242,9 @@ The user's notes:
 ### Round 9, user notes at 03:44
 - **Child:** eyes alone looking down read wrong; his head must tilt down too. Job `008-cafe-child-head-down` (the whole head tilts 15–20° toward the paper; body unchanged). Wren pastes the whole head region.
 - **Fan:** the warped drawing moved non-physically (blades bending and stretching). Replaced by `tools/cafe_fan3.py`: a rigid three-blade model, its geometry fitted to Quinn's drawn fan (tip ellipse, blade width and root), rotating in its own plane at 6°/frame (24 rpm). It has a 12° blade pitch, correct front/back order, and is rendered in the drawn style (Quinn's colours, one shadow band, a constant 3 px outline). Quinn's hub, downrod and ceiling are used as drawn. Test: `round9/fan-spin-test-2.mp4`.
+
+### Round 9 result: package v7 (2026-11-21 04:30)
+- Quinn-loop jobs 002–008 accepted: Rachel master A with 8 poses, barista master A with 3 poses, child head-down **b** (a: the cheek went rounder), fan drawing.
+- Built by `tools/cafe_build7.py`. Every pose = master + moving part; Rachel's arm poses exclude her hair (hair-coloured pixels unchanged in both images are kept from the master).
+- Fan: `tools/cafe_fan3.py`, a rigid model fitted to Quinn's drawing, with a soft gradation added (user, 03:52: everything in the café gets subtle gradation).
+- Pending: job 009, the child looks up at his mum (`C_3`) to match the new head. It goes in when it passes QC.
