@@ -11,7 +11,7 @@ Pick the scene, then record these in `BIBLE.md` §3: outfit, hair, the loop (two
 3. Wren writes the task (`tasks/NNN-name.md`) from `_TEMPLATE.md`.
 
 ## 2. Pieces (Quinn, one task, in order)
-All at 1672×941, each an **edit** of the previous image, so everything stays registered.
+All at **the exact size of the approved scene** (no resizing; Wren normalises to the site ratio at packaging), each an **edit** of the previous image, so everything stays registered.
 1. **`NNN_scene.png`:** the final approved scene. Stop for the user's approval.
 2. **`NNN_plate.png`:** the same scene with every moving character removed and the background filled in. Still characters stay.
 3. **Green anchors:** one per moving character, everything else flat `#00FF00`. A character hidden behind furniture is cut along that edge.

@@ -94,3 +94,10 @@ All Round 1 fixes landed. The user approves this layout, including the cat's new
 4. **Move the espresso machine, the barista and the grinder left together by about 100 px**, keeping their spacing, so the grinder sits well inside the counter top instead of near its right end (it currently looks precarious). Fill in the counter and wall behind where they were.
 
 Save the result as `018_scene.png` and **stop for the user's approval**; then do steps 2, 3 and 4 using it as the base. For step 2 the cat is removed from its new spot. For step 3, `018_cat_green` uses the cat's new spot.
+
+### Round 3: `018_scene` APPROVED (2026-11-20)
+Saved as `frames/018-cafe-scene/approved/018_scene.png`. No glasses; Rachel, the machine, the barista and the grinder have all moved left; the cat is at the lower right.
+
+**Size change:** this image is **2580×1432**, Quinn's native size. Keep it: it's sharper than 1672×941 and gives the phone set for free. **Every remaining image (plate, anchors, poses) must be exactly 2580×1432, the same as `018_scene.png`. Don't resize or crop.** Wren crops all files identically to the site's 16:9-ish ratio at packaging (about 18 px off each side).
+
+Next: steps 2, 3 and 4.
