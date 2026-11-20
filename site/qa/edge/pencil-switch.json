@@ -6,16 +6,17 @@
     "to": "grow",
     "kind": "first visit: the full painting",
     "arrived": true,
-    "screenshotsThrough": 69,
+    "screenshotsThrough": 63,
     "barePaperPoints": 211,
     "notPaperInAnyScreenshot": 0,
     "pointsPastTheColour": 4354,
     "withPaintInAnyScreenshot": 0,
-    "drawingTheEdgeTookMs": 53,
-    "wholeSwitchMs": 5530,
+    "drawingTheEdgeTookMs": 80,
+    "wholeSwitchMs": 5201,
     "edgeMegabytesAfter": {
      "build.edge": 0,
-     "grow.edge": 2.6
+     "grow.edge": 2.6,
+     "design.edge": 0
     }
    },
    {
@@ -27,65 +28,67 @@
     "notPaperInAnyScreenshot": 0,
     "pointsPastTheColour": 4354,
     "withPaintInAnyScreenshot": 0,
-    "drawingTheEdgeTookMs": 61,
-    "wholeSwitchMs": 1649,
+    "drawingTheEdgeTookMs": 59,
+    "wholeSwitchMs": 1533,
     "edgeMegabytesAfter": {
      "build.edge": 2.6,
-     "grow.edge": 0
+     "grow.edge": 0,
+     "design.edge": 0
     }
    },
    {
     "to": "grow",
     "kind": "the short brush",
     "arrived": true,
-    "screenshotsThrough": 14,
+    "screenshotsThrough": 13,
     "barePaperPoints": 211,
     "notPaperInAnyScreenshot": 0,
     "pointsPastTheColour": 4354,
     "withPaintInAnyScreenshot": 0,
-    "drawingTheEdgeTookMs": 68,
-    "wholeSwitchMs": 1683,
+    "drawingTheEdgeTookMs": 53,
+    "wholeSwitchMs": 1563,
     "edgeMegabytesAfter": {
      "build.edge": 0,
-     "grow.edge": 2.6
+     "grow.edge": 2.6,
+     "design.edge": 0
     }
    }
   ],
   "timingsWithNothingWatching": {
    "pencil": {
     "drawingTheEdgeMs": [
-     53,
-     53,
+     58,
      57,
-     62,
-     59,
-     64
+     58,
+     71,
+     68,
+     66
     ],
     "tapToEndOfBrushMs": [
-     1596,
      1577,
-     1592,
-     1574,
-     1591,
-     1591
+     1590,
+     1607,
+     1603,
+     1606,
+     1620
     ]
    },
    "organic": {
     "drawingTheEdgeMs": [
-     31,
-     37,
-     27,
+     70,
      29,
+     28,
      29,
-     33
+     28,
+     30
     ],
     "tapToEndOfBrushMs": [
-     1559,
-     1557,
-     1600,
-     1593,
-     1584,
-     1586
+     1596,
+     1572,
+     1560,
+     1572,
+     1573,
+     1561
     ]
    }
   },
@@ -99,16 +102,17 @@
     "to": "grow",
     "kind": "first visit: the full painting",
     "arrived": true,
-    "screenshotsThrough": 125,
+    "screenshotsThrough": 114,
     "barePaperPoints": 0,
     "notPaperInAnyScreenshot": 0,
     "pointsPastTheColour": 401,
     "withPaintInAnyScreenshot": 0,
-    "drawingTheEdgeTookMs": 166,
-    "wholeSwitchMs": 7085,
+    "drawingTheEdgeTookMs": 343,
+    "wholeSwitchMs": 6838,
     "edgeMegabytesAfter": {
      "build.edge": 0,
-     "grow.edge": 2.6
+     "grow.edge": 2.6,
+     "design.edge": 0
     }
    },
    {
@@ -120,65 +124,67 @@
     "notPaperInAnyScreenshot": 0,
     "pointsPastTheColour": 401,
     "withPaintInAnyScreenshot": 0,
-    "drawingTheEdgeTookMs": 221,
-    "wholeSwitchMs": 3197,
+    "drawingTheEdgeTookMs": 155,
+    "wholeSwitchMs": 3160,
     "edgeMegabytesAfter": {
      "build.edge": 2.6,
-     "grow.edge": 0
+     "grow.edge": 0,
+     "design.edge": 0
     }
    },
    {
     "to": "grow",
     "kind": "the short brush",
     "arrived": true,
-    "screenshotsThrough": 33,
+    "screenshotsThrough": 34,
     "barePaperPoints": 0,
     "notPaperInAnyScreenshot": 0,
     "pointsPastTheColour": 401,
     "withPaintInAnyScreenshot": 0,
-    "drawingTheEdgeTookMs": 237,
-    "wholeSwitchMs": 3239,
+    "drawingTheEdgeTookMs": 257,
+    "wholeSwitchMs": 3323,
     "edgeMegabytesAfter": {
      "build.edge": 0,
-     "grow.edge": 2.6
+     "grow.edge": 2.6,
+     "design.edge": 0
     }
    }
   ],
   "timingsWithNothingWatching": {
    "pencil": {
     "drawingTheEdgeMs": [
-     89,
-     77,
-     61,
-     83,
-     62,
-     83
+     81,
+     87,
+     54,
+     80,
+     63,
+     81
     ],
     "tapToEndOfBrushMs": [
      1593,
-     1578,
-     1573,
-     1574,
-     1587,
-     1591
+     1595,
+     1560,
+     1579,
+     1577,
+     1593
     ]
    },
    "organic": {
     "drawingTheEdgeMs": [
-     16,
-     17,
+     23,
      30,
-     21,
-     18,
-     21
+     30,
+     30,
+     24,
+     27
     ],
     "tapToEndOfBrushMs": [
-     1526,
-     1529,
-     1555,
+     1528,
+     1525,
      1541,
-     1507,
-     1528
+     1526,
+     1510,
+     1511
     ]
    }
   },

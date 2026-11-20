@@ -106,7 +106,9 @@ when someone opens its address directly.
   clips, each belonging to one layer); `routine.json` has one routine per actor under `actors`. The format is
   described at the top of `src/engine/cast.ts`. Every actor has a canvas and a player of its own and they run
   out of step. The actor with a `reaction` answers a find and is the one a first-visit painting brings in at
-  the end; actors drawn before her are painted with the room. Nothing in the code names an actor.
+  the end; actors drawn before her are painted with the room. An actor whose every still is a solid
+  rectangle, with nothing cut out, is a piece of the room that moves (the café's ceiling fan): the edge
+  fades it as it fades the plate. Nothing in the code names an actor.
 
 **The routine vocabulary** (`routine.json`, for a clip character or each actor of a cast):
 
@@ -130,13 +132,16 @@ a find is waiting, and those clips take her back. Only the stills the manifests 
 **A new delivery of the café** is a file swap: replace `frames/018-cafe-scene/site/` (and the line map in
 `scene/pencil/` if the plate changed), run `npm run assets` and `npm test`. `npm run assets` shrinks the
 plate to the page's size, uses the cast at the size delivered, grows an actor's box to hold any clip patch
-that reaches outside it, and writes `src/scenes/design-cast.json`: each actor's box, and the rectangle of
-every pixel it ever covers. The scene's config reads that file for `keep`, and `npm test` holds the hunt to
+that reaches outside it, and writes `src/scenes/design-cast.json`: each actor's box, the rectangle of
+every pixel it ever covers, and which actors are pieces of the room. The scene's config reads that file for `keep`, and `npm test` holds the hunt to
 it (no mushroom in any actor's box), so the tests say so if new drawings cover a hiding place. If they do,
 or if the edge no longer leaves every mushroom clear, `node qa/tools/pencil.mjs pick 400 design` lists the
 edges that do.
 
-A scene's character is fetched when the scene is first opened: her stills first, then her clips.
+A scene's character is fetched when the scene is first opened (or its tab is hovered): her stills first,
+then her clips. The files are only downloaded then. They are decoded when the scene goes on the plate, after
+the scene being left has given its own decoded frames back, so two scenes' frames are never in memory
+together.
 
 **Memory.** Only the scene on show keeps decoded images. When the visitor leaves a scene it gives back its
 room's picture, its edge and all of its character's frames but the one on her canvas (`Scene.rest()`; a

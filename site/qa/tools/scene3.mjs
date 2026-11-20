@@ -431,7 +431,7 @@ run.frames = async () => {
       rows.push(await stretch('the café painted for a new visitor', from, await now()));
       from = await now();
       await page.waitForTimeout(8000);
-      rows.push(await stretch('the café at work, 8 s (every actor moving, the clips of nobody: there are none)', from, await now()));
+      rows.push(await stretch('the café at work, 8 s', from, await now()));
       // Build and Grow for the first time (their full paintings), back to the café and to Build (the short
       // brush); then round once more, every switch the short brush.
       const seen = new Set(['design']);

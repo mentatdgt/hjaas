@@ -1244,18 +1244,20 @@ later that night (load about 5):
 
 ## Scene 3: Design (the café)
 
-On `site/scene-3`, made from the tip of `site/scene-2`. Brief: `reviews/scene-3-build.md`, with Wren's two
-steers during the night (the edge rule; the package without clips and with `fade_ms`).
+On `site/scene-3`, made from the tip of `site/scene-2`. Brief: `reviews/scene-3-build.md`, with Wren's
+steers and updates during the night: the edge rule; the package without clips and with `fade_ms`; and
+package v5 (stabilised poses, the ceiling fan), which is what is on the branch and what every figure below
+was measured on.
 
 | | Asked for | Result | Evidence |
 |---|---|---|---|
 | ✅ | A third tab, "Design", loaded only when opened | In the menu after Build and Grow, at `#design`. Its plate is fetched with the page; its cast when the tab is first opened (or hovered). | `scene3/design-1440x900.jpg` |
-| ✅ | Built from `frames/018-cafe-scene/site/` and `scene/pencil/design-lines.png` | `npm run assets` makes `public/assets/scene3/` from the package: the plate at the page's size, the cast as delivered, the pencil strips. 2.1 MB in all. | `scripts/build-assets.mjs` |
-| ✅ | The routine engine for several independent actors, from data | Six actors, each with a canvas and a player of its own, out of step. Nothing in the code names an actor: who is there, where, what they do and who answers a find all come from the two files. | `src/engine/cast.ts`, `cast.test.ts` (33 tests) |
+| ✅ | Built from `frames/018-cafe-scene/site/` and `scene/pencil/design-lines.png` | `npm run assets` makes `public/assets/scene3/` from the package: the plate at the page's size, the cast as delivered, the pencil strips. 2.4 MB in all. | `scripts/build-assets.mjs` |
+| ✅ | The routine engine for several independent actors, from data | Seven layers (the ceiling fan and six actors), each with a canvas and a player of its own, out of step. Nothing in the code names an actor: who is there, where, what they do and who answers a find all come from the two files. | `src/engine/cast.ts`, `cast.test.ts` (36 tests) |
 | ✅ | `still: null` | The mum is drawn only for her blinks (under 6% of the time); otherwise she is the plate. | `cast.test.ts` |
-| ✅ | `fade_ms`: a true cross-dissolve into a still | Done on each actor's own canvas: every pixel is the weighted sum of the two drawings, colour and coverage alike, eased as the preview eases it. Measured for all six actors in Chrome and WebKit: within 2 to 2.6 of 255 of the exact sum (rounding), and exactly the new pose at the end. No `fade_ms`: an instant cut (the blinks). | `scene3/react.json` |
-| ✅ | Only Rachel reacts to a find | As `routine.json` says: blink, look up, the smile dissolved in over 150 ms, and back. 0.68 to 0.70 s from the find to her first move when caught mid-stroke (she finishes the stroke), at once when on her rest pose. With reduced motion: the smile, held 1.25 s. No pose missed. | `scene3/react.json`, `design-film-*-stills-find.jpg` |
-| ✅ | A new package is a drop-in with no code change | It already happened once tonight: the second package (no clips, new stills, new boxes, `fade_ms`) went in with `npm run assets`. The tests read the package itself and fail first if the engine cannot play it. Steps: README, "A new delivery of the café". | `README.md` |
+| ✅ | `fade_ms`: a true cross-dissolve into a still | Done on each actor's own canvas: every pixel is the weighted sum of the two drawings, colour and coverage alike, eased as the preview eases it. Measured for every layer in Chrome and WebKit: within 1 to 2.8 of 255 of the exact sum (rounding), and exactly the new pose at the end. No `fade_ms`: an instant cut. The package's own rule (dissolves only between two stills of the same loop; head turns, blinks and the whole reaction cut) is in its data, and a test holds the files to it. | `scene3/react.json` |
+| ✅ | Only Rachel reacts to a find | As `routine.json` says: a blink that hides the head lift, the look, the smile, and back, all cuts. 0.62 to 0.63 s from the find to her first move when caught mid-stroke (she finishes the stroke), at once when on her rest pose. With reduced motion: the smile, held 1.25 s. No pose missed. | `scene3/react.json`, `design-film-*-stills-find.jpg` |
+| ✅ | A new package is a drop-in with no code change | It happened twice tonight after the first build: the package without clips went in with `npm run assets` plus the new `fade_ms`, and package v5 (a new layer, the fan; other stills, other boxes) with `npm run assets` and two general fixes it showed up (decisions 14 and 16). The tests read the package itself and fail first if the engine cannot play it. Steps: README, "A new delivery of the café". | `README.md` |
 | ✅ | The reaction shape of the next delivery | A reaction of held stills with ranges, dissolves and blinks plays now (it is tonight's). The clip forms the first brief described (a clip up, held looks, a smile she may blink in, a way back by another clip or a reversed one, a hold cut short when a find is waiting) are kept and tested on a made-up actor, since the café has no clips for now. | `cast.test.ts` |
 | ✅ | 10 mushrooms: 3 easy, 4 medium, 3 hard, across the full width | Easy: `floor`, `window-seat`, `corner` (red on the pale floor). Medium: `bench`, `chair`, `niche`, `cat`. Hard: `sunlight` (cream on the terrazzo), `cups` (cream, at the end of the row of cups), `counter` (a chanterelle against the orange wood). Four, two and four in the three thirds of the room (Rachel's own table takes most of the middle). | `scene3/hunt-desktop-circled.jpg`, `hunt-phone-*.jpg` |
 | ✅ | Fairness rules | Always in full view, 18 px tall or more on the plate, never the nail-shaped drawing. Tap boxes 44 px at every size, none overlapping. I can find each hard one on the phone screenshots at phone size. | `scene3/hunt-checks.json`, `hunt-phone-hard-*-at-phone-size.jpg` |
@@ -1264,8 +1266,8 @@ steers during the night (the edge rule; the package without clips and with `fade
 | ✅ | All 30 findable | Every mushroom of all three scenes clicked or tapped on its drawing: 30 of 30 on desktop, the iPhone profile and a 320 px phone. | `edge/pencil-find.json` |
 | ✅ | `aPaint` = 1 under every actor and the mum | 1.00 under all 47,423 points the cast ever covers, by the formula and on the edge as drawn, and no pencil over anyone. The mum's whole figure is far inside the painting. This needed the edge rule below. | `edge/pencil-rachel.json` |
 | ✅ | Pencil edge B with round 3b's reveal | The café's first-visit painting: the pencil never more than 49 px from paint already there, none of the bare-paper points ever showed anything, none of the points past the colour showed paint. The rim is paper all the way round. | `edge/pencil-reveal-design.json`, `pencil-reveal-design-*.jpg`, `pencil-rim.json` |
-| ✅ | Under 80 MB with all three scenes visited, in any order | Every order, as a new visitor and as a returning one, with a find in each scene: the highest is 77.5 MB, and it is always the lab alone (as before this scene). The café by itself is 32 to 37 MB. Away from the café, it holds nothing. | `scene3/memory.json` |
-| ✅ | 60 fps; no long tasks in WebKit | WebKit, iPhone profile, production build: the café's opening painting 28 to 41 ms at the longest frame over 6 cold loads, none over 50 ms; the café at work 19 ms. Details and the exceptions below. | `scene3/frames.json`, `frames-notes.txt` |
+| ✅ | Under 80 MB with all three scenes visited, in any order | Every order, as a new visitor and as a returning one, with a find in each scene: the highest is 77.5 MB, and it is always the lab alone (as before this scene). The café by itself is 50 to 55 MB (17 MB of that is the fan's 24 frames). Away from the café, it holds nothing. See decision 15: the count is now also right while a scene is opened for the first time. | `scene3/memory.json` |
+| ✅ | 60 fps; no long tasks in WebKit | WebKit, iPhone profile, production build: the café's opening painting 23 to 36 ms at the longest frame over 6 cold loads, none over 50 ms; the café at work 19 to 23 ms; every short-brush switch 20 to 27 ms. One exception, below. | `scene3/frames.json`, `frames-notes.txt` |
 | ✅ | Screenshots | Design at 1440 × 900, and at 390 × 844 and 360 × 740 as it opens and panned to each end. | `scene3/design-*.jpg` |
 | ✅ | A 30 s recording with one reaction, desktop and iPhone profile | Each starts with the café's first-visit painting, then the café at work, a find at about 20 s, and her reaction. | `scene3/design-film-desktop.mp4`, `design-film-iphone.mp4`, and their stills |
 | ⚠️ | Traces: the paint-in, and Build → Grow → Design → Build | Frame times logged by script in WebKit and in Chrome with the processor slowed four times, not DevTools trace files. | `scene3/frames.json` |
@@ -1306,20 +1308,22 @@ passed at the bottom and one at the right, none both. So the painting is told wh
 
 ### Frame times
 
-WebKit on the iPhone profile, production build, late at night with the Mac calmer (load about 5 to 7):
+WebKit on the iPhone profile, production build, after midnight with the Mac calm (load 3.5 to 5):
 
-- **The café's opening painting:** longest frame 28 to 41 ms over 6 cold loads, none over 50 ms. It takes
-  4.92 to 4.96 s, as the other scenes' do.
-- **The café at work** (six actors, their dissolves): 19 ms at the longest in 5 of 6 runs of 8 s.
-- **Switches, the short brush:** 19 to 49 ms in 25 of 30 switches. Four had one frame of 56 to 59 ms (to the
-  café three times, to Grow once), and one a 225 ms frame, in the run that met a busy moment on the Mac.
-- **Build and Grow opened for the first time from the café:** 21 to 44 ms in one set of three runs; 40 to
-  66 ms in the other, bar the busy run (298 ms during Build's painting; it is in the file). The lab's first
-  opening had the same 53 to 65 ms frame before this work.
+- **The café's opening painting:** longest frame 23 to 36 ms over 6 cold loads, none over 50 ms. It takes
+  4.91 to 4.93 s, as the other scenes' do.
+- **The café at work** (the fan turning at 24 frames a second, six actors, their dissolves): 19 to 23 ms at
+  the longest in three runs of 8 s.
+- **Switches, the short brush:** 20 to 27 ms in all 15 (to the café, to Build, to Grow).
+- **Grow opened for the first time from the café:** 33 to 34 ms.
+- **Build opened for the first time from the café:** 45 ms in one run, and one or two frames of 63 and 83 ms
+  in the other two. The lab's first opening had the same kind of frame in earlier rounds; I did not trace it.
 
-Chrome with the processor slowed four times: the café's painting and the café at work 17 to 33 ms. Every
+Chrome with the processor slowed four times: the café's painting and the café at work 17 ms. Every
 short-brush switch has one frame of about 100 ms at the tap, to any scene; the build before this work does
 the same between Build and Grow (83 to 133 ms), so it is not the café's.
+
+Earlier the same night, with the Mac busier, the same checks were noisier: see `scene3/frames-notes.txt`.
 
 ### Against the animation standards (`.claude/skills/review-animations/STANDARDS.md`)
 
@@ -1331,7 +1335,7 @@ the same between Build and Grow (83 to 133 ms), so it is not the café's.
 | ✅ | Stagger; nothing moves in step | Each actor starts up to 0.9 s after the others and rolls its own times, so no two change pose together. |
 | ✅ | Interruptible | A find is answered from her rest pose or at the end of the stroke she is on. Pause, a hidden tab, or leaving the scene mid-dissolve all leave a clean pose. |
 | ✅ | Reduced motion means fewer and gentler | Everyone holds their rest pose; a find is answered by one held smile; the painting is the 200 ms reveal. |
-| ⚠️ | Prefer transform and opacity | A dissolve is two draws on a small canvas per frame, on the page's own thread. Two layers cross-faded by opacity would be cheaper, but where two poses' outlines differ the old one would show at full strength until it vanished. Measured cost: 19 ms at the longest frame, with all six at work, in 5 of 6 runs of 8 s. |
+| ⚠️ | Prefer transform and opacity | A dissolve is two draws on a small canvas per frame, on the page's own thread. Two layers cross-faded by opacity would be cheaper, but where two poses' outlines differ the old one would show at full strength until it vanished. Measured cost: 19 to 23 ms at the longest frame with everyone at work. |
 | ✅ | Feedback is immediate | The mushroom answers the tap at once, as in the other scenes. Rachel's own answer can wait up to 0.9 s for the end of a stroke. |
 
 ### Decisions I made
@@ -1348,8 +1352,8 @@ the same between Build and Grow (83 to 133 ms), so it is not the café's.
    way back. Build and Grow each keep the one frame on Rachel's canvas; a third scene doing so would have
    put the lab at about 80.7 MB. Everyone is drawn again 76 to 211 ms after the tap, before the brush starts
    at 344 to 457 ms (`scene3/back.json`).
-5. **Only the stills a routine shows are downloaded.** The package carries `B_3` and `R_B1_sip`, which no
-   routine uses now: they are not fetched (2 MB less memory).
+5. **Only the stills a routine shows are downloaded.** A package may carry a pose for a later routine (the
+   second one did: `B_3` and `R_B1_sip`); it is not fetched until a routine names it.
 6. **A blink waits for the dissolve into the pose to finish,** and a dissolve belongs to the start of a hold:
    after a blink in the middle of it, the pose cuts back.
 7. **Blinks are allowed in a loop's steps** when the step says `blink_ok` (the new package puts Rachel's there).
@@ -1366,6 +1370,22 @@ the same between Build and Grow (83 to 133 ms), so it is not the café's.
     300 ms and the sip runs backwards before she reacts; part-way into a sip it runs back from where it was.
 13. **I committed one QA note to `site/scene-2` after starting scene 3** (round 3b's frame budget, measured
     again on a calmer Mac) and copied the same commit here. No merge.
+14. **A layer of solid rectangles, with nothing cut out, is a piece of the room** (the fan). Wren's note in
+    `routine.json` says to let the edge fade the fan like the plate and to leave it out of the rule for
+    actors. The package has no field for that, so the rule is read from the drawings: `npm run assets` lists
+    such a layer under `room` in `design-cast.json`, and the edge does not keep clear of it. The fan is
+    still an actor in every other way: painted in with the room, stopped by Pause, no mushroom in its box.
+15. **A scene's frames are now decoded only when it goes on the plate.** Until tonight they were decoded as
+    soon as they were downloaded, which could be while another scene was still on show (a first visit to a
+    scene, or just pointing at its tab). For that moment two scenes' frames were in memory together, and the
+    page's own count, which QA reads, did not include the new scene's until it was on the plate. So the
+    first-visit peaks reported in earlier rounds were too low (my estimate: Build plus the lab's stills came
+    to about 80 MB, and the lab plus Build's frames to over 100 MB, for under a second). Now the files are
+    fetched early and decoded after the scene being left has given its own frames back. Every order was
+    measured again after the change: 77.5 MB at most. It costs about 0.15 s of blank paper before a
+    first-visit painting starts.
+16. **A long loop is rolled a few steps ahead, not all at once.** The fan's loop is written as a thousand
+    turns of 24 frames; rolled whole, that was 24,000 steps in one go each time it came round.
 
 ### For Wren
 
@@ -1374,7 +1394,12 @@ the same between Build and Grow (83 to 133 ms), so it is not the café's.
   her layer, would fix it.
 - **More room under the boots and the cat would let the edge wander there.** With 32 to 41 px the fade has
   to sit right at the rim. About 80 px (plate scale) would give the ordinary edge back.
-- **Unused in the package:** `B_3` and `R_B1_sip` (noted in `routine.json`).
+- **The café's pencil line map still has the fan's blades.** `scene/pencil/design-lines.png` was made from
+  the plate before v5. Where the colour fades at the top, the pencil shows still blades above the turning
+  fan. Making the map again from the new plate fixes it (`npm run assets -- pencil` after).
+- **A field for "part of the room" would be safer than my reading of the drawings** (decision 14):
+  for example `"room": true` on the fan's layer.
+- **The fan is 17 MB decoded** (24 frames of 747 × 240). It fits, but it is a third of the café.
 - **Her answer to a find can wait for a stroke to end** (up to 0.9 s). If she should break off the stroke at
   once, say so: it is one line.
 - **`reaction.enter_from` is not in the café's file.** She starts from the still the routine opens on.

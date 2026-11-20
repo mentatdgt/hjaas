@@ -147,7 +147,7 @@
    "floor 0,-8px",
    "sunlight 0,-11px",
    "cat 0,-14px",
-   "corner -11,-1px"
+   "corner -11,0px"
   ],
   "overlaps": [],
   "ok": true
@@ -202,7 +202,7 @@
    "floor 0,-10px",
    "sunlight 0,-12px",
    "cat -1,-15px",
-   "corner -13,0px"
+   "corner -13,-1px"
   ],
   "overlaps": [],
   "ok": true

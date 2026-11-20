@@ -1,5 +1,5 @@
 {
- "machine": "23:40  up 9 days,  6:50, 1 user, load averages: 7.31 5.65 5.44",
+ "machine": "0:55  up 9 days,  8:04, 1 user, load averages: 5.29 5.08 5.75",
  "runs": [
   {
    "browser": "webkit, iPhone 14 profile",
@@ -8,71 +8,71 @@
     {
      "stretch": "the café painted for a new visitor",
      "frames": 391,
-     "longestMs": 19,
+     "longestMs": 39,
      "over50": 0,
-     "over33": 0,
+     "over33": 1,
      "medianMs": 17
     },
     {
-     "stretch": "the café at work, 8 s (every actor moving, the clips of nobody: there are none)",
+     "stretch": "the café at work, 8 s",
      "frames": 481,
-     "longestMs": 19,
+     "longestMs": 21,
      "over50": 0,
      "over33": 0,
      "medianMs": 17
     },
     {
      "stretch": "to build (first visit: its full painting)",
-     "frames": 516,
-     "longestMs": 53,
-     "over50": 1,
-     "over33": 2,
-     "medianMs": 17
-    },
-    {
-     "stretch": "to grow (first visit: its full painting)",
-     "frames": 517,
-     "longestMs": 43,
+     "frames": 515,
+     "longestMs": 45,
      "over50": 0,
      "over33": 2,
      "medianMs": 17
     },
     {
+     "stretch": "to grow (first visit: its full painting)",
+     "frames": 513,
+     "longestMs": 33,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
      "stretch": "to design (the short brush)",
-     "frames": 195,
-     "longestMs": 57,
-     "over50": 1,
-     "over33": 1,
+     "frames": 197,
+     "longestMs": 26,
+     "over50": 0,
+     "over33": 0,
      "medianMs": 17
     },
     {
      "stretch": "to build (the short brush)",
-     "frames": 197,
-     "longestMs": 22,
+     "frames": 196,
+     "longestMs": 27,
      "over50": 0,
      "over33": 0,
      "medianMs": 17
     },
     {
      "stretch": "to grow (the short brush)",
-     "frames": 197,
-     "longestMs": 56,
-     "over50": 1,
-     "over33": 1,
+     "frames": 195,
+     "longestMs": 22,
+     "over50": 0,
+     "over33": 0,
      "medianMs": 17
     },
     {
      "stretch": "to design (the short brush)",
-     "frames": 195,
-     "longestMs": 24,
+     "frames": 196,
+     "longestMs": 23,
      "over50": 0,
      "over33": 0,
      "medianMs": 17
     },
     {
      "stretch": "to build (the short brush)",
-     "frames": 197,
-     "longestMs": 23,
+     "frames": 195,
+     "longestMs": 22,
      "over50": 0,
      "over33": 0,
      "medianMs": 17
@@ -85,14 +85,14 @@
    "stretches": [
     {
      "stretch": "the café painted for a new visitor",
-     "frames": 388,
-     "longestMs": 42,
+     "frames": 392,
+     "longestMs": 24,
      "over50": 0,
-     "over33": 3,
+     "over33": 0,
      "medianMs": 17
     },
     {
-     "stretch": "the café at work, 8 s (every actor moving, the clips of nobody: there are none)",
+     "stretch": "the café at work, 8 s",
      "frames": 480,
      "longestMs": 19,
      "over50": 0,
@@ -101,40 +101,16 @@
     },
     {
      "stretch": "to build (first visit: its full painting)",
-     "frames": 517,
-     "longestMs": 66,
-     "over50": 1,
+     "frames": 515,
+     "longestMs": 63,
+     "over50": 2,
      "over33": 2,
      "medianMs": 17
     },
     {
      "stretch": "to grow (first visit: its full painting)",
-     "frames": 514,
-     "longestMs": 40,
-     "over50": 0,
-     "over33": 2,
-     "medianMs": 17
-    },
-    {
-     "stretch": "to design (the short brush)",
-     "frames": 195,
-     "longestMs": 57,
-     "over50": 1,
-     "over33": 2,
-     "medianMs": 17
-    },
-    {
-     "stretch": "to build (the short brush)",
-     "frames": 196,
-     "longestMs": 23,
-     "over50": 0,
-     "over33": 0,
-     "medianMs": 17
-    },
-    {
-     "stretch": "to grow (the short brush)",
-     "frames": 194,
-     "longestMs": 23,
+     "frames": 515,
+     "longestMs": 33,
      "over50": 0,
      "over33": 0,
      "medianMs": 17
@@ -150,7 +126,31 @@
     {
      "stretch": "to build (the short brush)",
      "frames": 195,
-     "longestMs": 22,
+     "longestMs": 24,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to grow (the short brush)",
+     "frames": 197,
+     "longestMs": 20,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to design (the short brush)",
+     "frames": 195,
+     "longestMs": 25,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to build (the short brush)",
+     "frames": 195,
+     "longestMs": 20,
      "over50": 0,
      "over33": 0,
      "medianMs": 17
@@ -164,55 +164,55 @@
     {
      "stretch": "the café painted for a new visitor",
      "frames": 391,
-     "longestMs": 31,
+     "longestMs": 23,
      "over50": 0,
      "over33": 0,
      "medianMs": 17
     },
     {
-     "stretch": "the café at work, 8 s (every actor moving, the clips of nobody: there are none)",
-     "frames": 477,
-     "longestMs": 87,
-     "over50": 1,
-     "over33": 1,
+     "stretch": "the café at work, 8 s",
+     "frames": 481,
+     "longestMs": 23,
+     "over50": 0,
+     "over33": 0,
      "medianMs": 17
     },
     {
      "stretch": "to build (first visit: its full painting)",
-     "frames": 478,
-     "longestMs": 298,
-     "over50": 6,
-     "over33": 11,
+     "frames": 513,
+     "longestMs": 83,
+     "over50": 2,
+     "over33": 2,
      "medianMs": 17
     },
     {
      "stretch": "to grow (first visit: its full painting)",
-     "frames": 516,
-     "longestMs": 97,
-     "over50": 1,
-     "over33": 3,
+     "frames": 513,
+     "longestMs": 34,
+     "over50": 0,
+     "over33": 1,
      "medianMs": 17
     },
     {
      "stretch": "to design (the short brush)",
-     "frames": 194,
-     "longestMs": 225,
-     "over50": 2,
-     "over33": 3,
+     "frames": 197,
+     "longestMs": 25,
+     "over50": 0,
+     "over33": 0,
      "medianMs": 17
     },
     {
      "stretch": "to build (the short brush)",
      "frames": 196,
-     "longestMs": 32,
+     "longestMs": 25,
      "over50": 0,
      "over33": 0,
      "medianMs": 17
     },
     {
      "stretch": "to grow (the short brush)",
-     "frames": 194,
-     "longestMs": 22,
+     "frames": 195,
+     "longestMs": 21,
      "over50": 0,
      "over33": 0,
      "medianMs": 17
@@ -220,7 +220,7 @@
     {
      "stretch": "to design (the short brush)",
      "frames": 194,
-     "longestMs": 20,
+     "longestMs": 24,
      "over50": 0,
      "over33": 0,
      "medianMs": 17
@@ -241,14 +241,14 @@
    "stretches": [
     {
      "stretch": "the café painted for a new visitor",
-     "frames": 391,
+     "frames": 390,
      "longestMs": 17,
      "over50": 0,
      "over33": 0,
      "medianMs": 17
     },
     {
-     "stretch": "the café at work, 8 s (every actor moving, the clips of nobody: there are none)",
+     "stretch": "the café at work, 8 s",
      "frames": 480,
      "longestMs": 17,
      "over50": 0,
@@ -257,23 +257,23 @@
     },
     {
      "stretch": "to build (first visit: its full painting)",
-     "frames": 520,
-     "longestMs": 50,
-     "over50": 0,
-     "over33": 2,
+     "frames": 516,
+     "longestMs": 67,
+     "over50": 1,
+     "over33": 1,
      "medianMs": 17
     },
     {
      "stretch": "to grow (first visit: its full painting)",
-     "frames": 514,
-     "longestMs": 33,
+     "frames": 512,
+     "longestMs": 50,
      "over50": 0,
-     "over33": 0,
+     "over33": 1,
      "medianMs": 17
     },
     {
      "stretch": "to design (the short brush)",
-     "frames": 190,
+     "frames": 188,
      "longestMs": 117,
      "over50": 1,
      "over33": 1,
@@ -281,7 +281,7 @@
     },
     {
      "stretch": "to build (the short brush)",
-     "frames": 191,
+     "frames": 188,
      "longestMs": 100,
      "over50": 1,
      "over33": 1,
@@ -289,15 +289,15 @@
     },
     {
      "stretch": "to grow (the short brush)",
-     "frames": 191,
-     "longestMs": 83,
+     "frames": 189,
+     "longestMs": 117,
      "over50": 1,
      "over33": 1,
      "medianMs": 17
     },
     {
      "stretch": "to design (the short brush)",
-     "frames": 189,
+     "frames": 191,
      "longestMs": 100,
      "over50": 1,
      "over33": 1,
@@ -305,7 +305,7 @@
     },
     {
      "stretch": "to build (the short brush)",
-     "frames": 191,
+     "frames": 190,
      "longestMs": 100,
      "over50": 1,
      "over33": 1,
@@ -319,14 +319,14 @@
    "stretches": [
     {
      "stretch": "the café painted for a new visitor",
-     "frames": 391,
-     "longestMs": 33,
+     "frames": 390,
+     "longestMs": 17,
      "over50": 0,
      "over33": 0,
      "medianMs": 17
     },
     {
-     "stretch": "the café at work, 8 s (every actor moving, the clips of nobody: there are none)",
+     "stretch": "the café at work, 8 s",
      "frames": 480,
      "longestMs": 17,
      "over50": 0,
@@ -335,15 +335,15 @@
     },
     {
      "stretch": "to build (first visit: its full painting)",
-     "frames": 521,
-     "longestMs": 33,
-     "over50": 0,
-     "over33": 0,
+     "frames": 517,
+     "longestMs": 67,
+     "over50": 1,
+     "over33": 2,
      "medianMs": 17
     },
     {
      "stretch": "to grow (first visit: its full painting)",
-     "frames": 514,
+     "frames": 512,
      "longestMs": 33,
      "over50": 0,
      "over33": 0,
@@ -351,7 +351,7 @@
     },
     {
      "stretch": "to design (the short brush)",
-     "frames": 188,
+     "frames": 189,
      "longestMs": 117,
      "over50": 1,
      "over33": 1,
@@ -359,22 +359,6 @@
     },
     {
      "stretch": "to build (the short brush)",
-     "frames": 190,
-     "longestMs": 100,
-     "over50": 1,
-     "over33": 1,
-     "medianMs": 17
-    },
-    {
-     "stretch": "to grow (the short brush)",
-     "frames": 190,
-     "longestMs": 100,
-     "over50": 1,
-     "over33": 1,
-     "medianMs": 17
-    },
-    {
-     "stretch": "to design (the short brush)",
      "frames": 191,
      "longestMs": 100,
      "over50": 1,
@@ -382,9 +366,25 @@
      "medianMs": 17
     },
     {
-     "stretch": "to build (the short brush)",
+     "stretch": "to grow (the short brush)",
+     "frames": 191,
+     "longestMs": 100,
+     "over50": 1,
+     "over33": 1,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to design (the short brush)",
      "frames": 190,
      "longestMs": 100,
+     "over50": 1,
+     "over33": 1,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to build (the short brush)",
+     "frames": 189,
+     "longestMs": 117,
      "over50": 1,
      "over33": 1,
      "medianMs": 17
@@ -404,8 +404,8 @@
      "medianMs": 17
     },
     {
-     "stretch": "the café at work, 8 s (every actor moving, the clips of nobody: there are none)",
-     "frames": 480,
+     "stretch": "the café at work, 8 s",
+     "frames": 481,
      "longestMs": 17,
      "over50": 0,
      "over33": 0,
@@ -414,30 +414,30 @@
     {
      "stretch": "to build (first visit: its full painting)",
      "frames": 518,
-     "longestMs": 50,
-     "over50": 0,
+     "longestMs": 83,
+     "over50": 1,
      "over33": 3,
      "medianMs": 17
     },
     {
      "stretch": "to grow (first visit: its full painting)",
-     "frames": 516,
-     "longestMs": 33,
+     "frames": 513,
+     "longestMs": 50,
      "over50": 0,
-     "over33": 0,
+     "over33": 1,
      "medianMs": 17
     },
     {
      "stretch": "to design (the short brush)",
-     "frames": 190,
+     "frames": 188,
      "longestMs": 133,
      "over50": 1,
-     "over33": 2,
+     "over33": 1,
      "medianMs": 17
     },
     {
      "stretch": "to build (the short brush)",
-     "frames": 189,
+     "frames": 190,
      "longestMs": 100,
      "over50": 1,
      "over33": 1,
@@ -445,7 +445,7 @@
     },
     {
      "stretch": "to grow (the short brush)",
-     "frames": 190,
+     "frames": 192,
      "longestMs": 100,
      "over50": 1,
      "over33": 1,
@@ -461,10 +461,10 @@
     },
     {
      "stretch": "to build (the short brush)",
-     "frames": 191,
-     "longestMs": 67,
+     "frames": 190,
+     "longestMs": 100,
      "over50": 1,
-     "over33": 2,
+     "over33": 1,
      "medianMs": 17
     }
    ]

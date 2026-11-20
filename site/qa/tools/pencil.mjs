@@ -64,7 +64,19 @@ const unionOf = async (scene) => {
     const frames = await (await fetch(dir + scene.character.frames)).json();
     const k = W / frames.canvas.w;
     const layers = Object.fromEntries(frames.layers.map((layer) => [layer.actor, layer]));
-    for (const layer of frames.layers) for (const still of layer.stills) { const b = await bitmap(dir + frames.stills[still].replace('.png', '.webp')); ctx.drawImage(b, layer.x * k, layer.y * k, b.width * k, b.height * k); }
+    for (const layer of frames.layers) {
+      const stills = [];
+      for (const still of layer.stills) stills.push(await bitmap(dir + frames.stills[still].replace('.png', '.webp')));
+      // A layer of solid rectangles, with nothing cut out, is a piece of the room that moves (the café's
+      // fan), not an actor: the edge fades it as it fades the plate.
+      const probe = new OffscreenCanvas(stills[0].width, stills[0].height).getContext('2d', { willReadFrequently: true });
+      probe.drawImage(stills[0], 0, 0);
+      const alpha = probe.getImageData(0, 0, stills[0].width, stills[0].height).data;
+      let solid = true;
+      for (let i = 3; i < alpha.length && solid; i += 4) solid = alpha[i] === 255;
+      if (solid) continue;
+      for (const b of stills) ctx.drawImage(b, layer.x * k, layer.y * k, b.width * k, b.height * k);
+    }
     for (const clip of Object.values(frames.clips ?? {})) for (const file of new Set(clip.frames)) { const b = await bitmap(dir + file.replace('.png', '.webp')); ctx.drawImage(b, (layers[clip.layer].x + clip.x) * k, (layers[clip.layer].y + clip.y) * k, b.width * k, b.height * k); }
   } else if (scene.character.kind === 'clips') {
     const dir = `./assets/${scene.assets}${scene.character.dir}`;

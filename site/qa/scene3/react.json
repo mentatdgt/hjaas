@@ -2,30 +2,40 @@
  {
   "browser": "chrome, 1440 × 900",
   "fromTheFind": [
-   "-3 ms: R_A2_stroke, 697 ms, dissolved in over 120",
-   "695 ms: R_A1_blink, 70 ms",
-   "762 ms: R_K1_blink, 70 ms",
-   "830 ms: R_K1_look, 434 ms",
-   "1263 ms: R_K2_smile, 1278 ms, dissolved in over 150",
-   "2546 ms: R_K1_look, 250 ms, dissolved in over 150",
-   "2796 ms: R_K1_blink, 70 ms",
-   "2862 ms: R_A1_blink, 80 ms",
-   "2946 ms: R_A1_sketch, 400 ms",
-   "3346 ms: R_A1_sketch, 397 ms",
-   "3745 ms: R_A1_sketch, 1284 ms, dissolved in over 120"
+   "-2 ms: R_A2_stroke, 622 ms, dissolved in over 120",
+   "615 ms: R_A1_blink, 70 ms",
+   "681 ms: R_K1_blink, 70 ms",
+   "750 ms: R_K1_look, 412 ms",
+   "1166 ms: R_K2_smile, 1376 ms",
+   "2550 ms: R_K1_look, 250 ms",
+   "2798 ms: R_K1_blink, 70 ms",
+   "2864 ms: R_A1_blink, 80 ms",
+   "2949 ms: R_A1_sketch, 400 ms",
+   "3349 ms: R_A1_sketch, 425 ms",
+   "3766 ms: R_A1_sketch, 166 ms, dissolved in over 120",
+   "3932 ms: R_A1_blink, 90 ms",
+   "4032 ms: R_A1_sketch, 554 ms"
   ],
-  "msFromTheFindToHerFirstMove": 695,
-  "msFromTheFindToTheSmile": 1263,
+  "msFromTheFindToHerFirstMove": 615,
+  "msFromTheFindToTheSmile": 1166,
   "posesSheMissed": 0,
   "countAfter": 9,
   "errors": [],
   "theDissolve": {
+   "fan": {
+    "canvasPx": [
+     305,
+     98
+    ],
+    "furthestFromTheWeightedSumOutOf255": 2,
+    "atTheEndItIsTheNewPoseExactly": true
+   },
    "cat": {
     "canvasPx": [
      101,
      58
     ],
-    "furthestFromTheWeightedSumOutOf255": 2,
+    "furthestFromTheWeightedSumOutOf255": 2.4,
     "atTheEndItIsTheNewPoseExactly": true
    },
    "child": {
@@ -33,7 +43,7 @@
      74,
      153
     ],
-    "furthestFromTheWeightedSumOutOf255": 2.5,
+    "furthestFromTheWeightedSumOutOf255": 2.8,
     "atTheEndItIsTheNewPoseExactly": true
    },
    "oldman": {
@@ -41,7 +51,7 @@
      116,
      230
     ],
-    "furthestFromTheWeightedSumOutOf255": 2.6,
+    "furthestFromTheWeightedSumOutOf255": 2.7,
     "atTheEndItIsTheNewPoseExactly": true
    },
    "barista": {
@@ -49,7 +59,7 @@
      79,
      114
     ],
-    "furthestFromTheWeightedSumOutOf255": 2.2,
+    "furthestFromTheWeightedSumOutOf255": 2,
     "atTheEndItIsTheNewPoseExactly": true
    },
    "rachel": {
@@ -57,15 +67,15 @@
      241,
      328
     ],
-    "furthestFromTheWeightedSumOutOf255": 2.6,
+    "furthestFromTheWeightedSumOutOf255": 2.7,
     "atTheEndItIsTheNewPoseExactly": true
    },
    "mum": {
     "canvasPx": [
-     35,
-     26
+     37,
+     28
     ],
-    "furthestFromTheWeightedSumOutOf255": 2.3,
+    "furthestFromTheWeightedSumOutOf255": 2.4,
     "atTheEndItIsTheNewPoseExactly": true
    }
   }
@@ -73,24 +83,35 @@
  {
   "browser": "webkit, iPhone 14 profile",
   "fromTheFind": [
-   "-3 ms: R_A2_stroke, 697 ms, dissolved in over 120",
-   "683 ms: R_A1_blink, 70 ms",
-   "765 ms: R_K1_blink, 70 ms",
-   "832 ms: R_K1_look, 434 ms",
-   "1266 ms: R_K2_smile, 1278 ms, dissolved in over 150",
-   "2549 ms: R_K1_look, 250 ms, dissolved in over 150",
-   "2799 ms: R_K1_blink, 70 ms",
-   "2865 ms: R_A1_blink, 80 ms",
-   "2933 ms: R_A1_sketch, 400 ms",
-   "3347 ms: R_A1_sketch, 439 ms",
-   "3782 ms: R_A1_sketch, 1284 ms, dissolved in over 120"
+   "-6 ms: R_A2_stroke, 622 ms, dissolved in over 120",
+   "628 ms: R_A1_blink, 70 ms",
+   "694 ms: R_K1_blink, 70 ms",
+   "761 ms: R_K1_look, 412 ms",
+   "1178 ms: R_K2_smile, 1376 ms",
+   "2544 ms: R_K1_look, 250 ms",
+   "2794 ms: R_K1_blink, 70 ms",
+   "2878 ms: R_A1_blink, 80 ms",
+   "2945 ms: R_A1_sketch, 400 ms",
+   "3344 ms: R_A1_sketch, 373 ms",
+   "3727 ms: R_A1_sketch, 166 ms, dissolved in over 120",
+   "3893 ms: R_A1_blink, 90 ms",
+   "3977 ms: R_A1_sketch, 554 ms",
+   "4526 ms: R_A2_stroke, 711 ms, dissolved in over 120"
   ],
-  "msFromTheFindToHerFirstMove": 683,
-  "msFromTheFindToTheSmile": 1266,
+  "msFromTheFindToHerFirstMove": 628,
+  "msFromTheFindToTheSmile": 1178,
   "posesSheMissed": 0,
   "countAfter": 9,
   "errors": [],
   "theDissolve": {
+   "fan": {
+    "canvasPx": [
+     747,
+     240
+    ],
+    "furthestFromTheWeightedSumOutOf255": 1,
+    "atTheEndItIsTheNewPoseExactly": true
+   },
    "cat": {
     "canvasPx": [
      246,
@@ -126,17 +147,17 @@
    "rachel": {
     "canvasPx": [
      590,
-     804
+     803
     ],
     "furthestFromTheWeightedSumOutOf255": 2,
     "atTheEndItIsTheNewPoseExactly": true
    },
    "mum": {
     "canvasPx": [
-     86,
-     65
+     90,
+     69
     ],
-    "furthestFromTheWeightedSumOutOf255": 2,
+    "furthestFromTheWeightedSumOutOf255": 1.9,
     "atTheEndItIsTheNewPoseExactly": true
    }
   }
@@ -144,20 +165,20 @@
  {
   "browser": "chrome, reduced motion",
   "fromTheFind": [
-   "-713 ms: R_A1_sketch, 200 ms",
-   "-512 ms: R_A1_sketch, 200 ms",
-   "-312 ms: R_A1_sketch, 200 ms",
-   "-113 ms: R_A1_sketch, 200 ms",
-   "2 ms: R_K2_smile, 1250 ms",
-   "1253 ms: R_A1_sketch, 350 ms",
-   "1605 ms: R_A1_sketch, 200 ms",
-   "1804 ms: R_A1_sketch, 200 ms",
-   "2005 ms: R_A1_sketch, 200 ms",
-   "2205 ms: R_A1_sketch, 200 ms",
-   "2403 ms: R_A1_sketch, 200 ms"
+   "-708 ms: R_A1_sketch, 200 ms",
+   "-509 ms: R_A1_sketch, 200 ms",
+   "-308 ms: R_A1_sketch, 200 ms",
+   "-108 ms: R_A1_sketch, 200 ms",
+   "3 ms: R_K2_smile, 1250 ms",
+   "1258 ms: R_A1_sketch, 336 ms",
+   "1592 ms: R_A1_sketch, 200 ms",
+   "1792 ms: R_A1_sketch, 200 ms",
+   "1992 ms: R_A1_sketch, 200 ms",
+   "2192 ms: R_A1_sketch, 200 ms",
+   "2392 ms: R_A1_sketch, 200 ms"
   ],
-  "msFromTheFindToHerFirstMove": 2,
-  "msFromTheFindToTheSmile": 2,
+  "msFromTheFindToHerFirstMove": 3,
+  "msFromTheFindToTheSmile": 3,
   "posesSheMissed": 0,
   "countAfter": 9,
   "errors": []

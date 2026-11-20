@@ -1,18 +1,21 @@
-The café's opening painting: frame times in WebKit, iPhone 13 profile, production build, six cold loads.
-node qa/tools/intro-frames.mjs 6 iphone 0 http://localhost:4173/#design   (2026-11-20, about 23:40; load average about 5 to 7)
+The café's opening painting (package v5): frame times in WebKit, iPhone 13 profile, production build, six cold loads.
+node qa/tools/intro-frames.mjs 6 iphone 0 http://localhost:4173/#design   (2026-11-21, about 00:53; load average about 4 to 5)
 fullGap: the longest frame from the sheet going in to 1 s after the intro ends; loopGap: the 4 s after; introMs: how long the painting took.
 
-run 1: {"endGap":24,"endGapAt":4969,"fullGap":30,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":297,"roomDone":313,"brush":751,"introMs":4920}
-run 2: {"endGap":20,"endGapAt":4592,"fullGap":34,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":134,"roomDone":149,"brush":517,"introMs":4958}
-run 3: {"endGap":19,"endGapAt":4026,"fullGap":41,"over50":0,"slow":[],"loopGap":40,"loop50":0,"roomReq":68,"roomDone":80,"brush":414,"introMs":4961}
-run 4: {"endGap":19,"endGapAt":4403,"fullGap":28,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":128,"roomDone":140,"brush":481,"introMs":4922}
-run 5: {"endGap":36,"endGapAt":4696,"fullGap":36,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":79,"roomDone":97,"brush":393,"introMs":4929}
-run 6: {"endGap":18,"endGapAt":4061,"fullGap":28,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":101,"roomDone":121,"brush":460,"introMs":4928}
-fullGap [30, 34, 41, 28, 36, 28]  over50 [0, 0, 0, 0, 0, 0]  loopGap [19, 19, 40, 19, 19, 19]
+run 1: {"endGap":19,"endGapAt":4703,"fullGap":29,"over50":0,"slow":[],"loopGap":20,"loop50":0,"roomReq":156,"roomDone":172,"brush":508,"introMs":4920}
+run 2: {"endGap":25,"endGapAt":4703,"fullGap":36,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":64,"roomDone":73,"brush":477,"introMs":4919}
+run 3: {"endGap":20,"endGapAt":4531,"fullGap":23,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":100,"roomDone":112,"brush":476,"introMs":4913}
+run 4: {"endGap":27,"endGapAt":4539,"fullGap":27,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":81,"roomDone":95,"brush":482,"introMs":4922}
+run 5: {"endGap":19,"endGapAt":4709,"fullGap":25,"over50":0,"slow":[],"loopGap":20,"loop50":0,"roomReq":92,"roomDone":102,"brush":438,"introMs":4925}
+run 6: {"endGap":36,"endGapAt":4197,"fullGap":36,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":95,"roomDone":109,"brush":510,"introMs":4927}
+fullGap [29, 36, 23, 27, 25, 36]  over50 [0, 0, 0, 0, 0, 0]  loopGap [20, 19, 19, 19, 20, 19]
+
+frames.json (node qa/tools/scene3.mjs frames 3) is from the same hour, load 3.5 to 5.
 
 Switching, with the processor slowed four times in Chrome: every short-brush switch has one frame of about 100 ms at the tap, to any scene.
-The build before this work does the same between Build and Grow (commit b727976, same night, two runs: 133, 83, 117, 100 ms; this build: 117, 83, 117, 83 ms).
+The build before this work does the same between Build and Grow (commit b727976, 2026-11-20 about 23:45, two runs: 133, 83, 117, 100 ms; this branch then: 117, 83, 117, 83 ms).
 
-An earlier run of 'node qa/tools/scene3.mjs frames 3' the same night (its second lap began with a tap on the tab already open, since corrected), WebKit:
-  the café painted: 32, 19, 19 ms; the café at work: 19, 19, 19 ms; to Build and Grow for the first time: 21 to 44 ms; the short brush: 19 to 49 ms, and one 59 ms frame (to Design, run 3).
-The run kept in frames.json came after it; its third WebKit run met a busy moment on the Mac (a 298 ms frame during Build's first painting).
+EARLIER THE SAME NIGHT (2026-11-20, 23:27 to 23:45, load 5 to 7, the package before v5, no fan):
+  first run, WebKit: the café painted 32, 19, 19 ms; at work 19, 19, 19 ms; Build and Grow for the first time 21 to 44 ms; the short brush 19 to 49 ms and one 59 ms frame.
+  second run, WebKit: the café painted 19, 42, 31 ms; at work 19, 19, 87 ms; Build for the first time 53, 66, 298 ms and Grow 43, 40, 97 ms (the third run met a busy moment);
+  the short brush 20 to 32 ms, with 57, 56, 57 and 225 ms frames in four switches.
