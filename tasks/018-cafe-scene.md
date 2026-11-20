@@ -171,3 +171,9 @@ Rachel and the barista were restyled, but they still don't match each other or t
 - [ ] One outline weight across all characters.
 - [ ] No gradients or glossy hair anywhere.
 - [ ] Every pose keeps its difference (crayon, page, tail, blink, glance).
+
+### QC round 5: PASS (Wren, 2026-11-20 22:05)
+- Every silhouette is identical to its source (0 px mask difference, checked). Every character now follows the eye rule and the rendering rule, matches the model sheet, and uses one outline weight. The scene reads as one style (`round5-scene.jpg`, `round5-faces-vs-model.jpg`).
+- The restyled mum is now in `018_plate.png`, anti-aliased. The previous plate is in `pre-round5/`.
+- Known, minor: the hair edges of the mum and child are slightly blocky at full zoom (Quinn's editor resolution). At site sizes the downscale hides it, and Wren anti-aliases every key edge at packaging.
+- Next: re-cut Rachel's clips from the new A1/B1/K1/K2 (needs the user's OK on credits), then rebuild the package (`tools/cafe_build.py`, with alpha smoothing added).
