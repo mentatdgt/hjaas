@@ -194,3 +194,15 @@ The user likes these three as originally drawn, but their colours use soft gradi
   Same palette across one character's poses, so nothing flickers.
 - **Do the child's `018_child_green` first and STOP for approval**, then the rest.
 - Wren will check automatically that every line pixel is unchanged.
+
+### Round 7: no more video; everything is drawn (user, 2026-11-20 22:36)
+The user found that the preview jitters when the sip starts, and that Rachel's face morphs during the sip. Wren confirms: Kling redraws her head in its own way (hair outline, face shape), so the cut from the drawn A1 to the first clip frame pops, and the face drifts mid-sip. **Decision: no AI video in-betweens for flat-style characters.** Every movement is drawn poses with timed holds and blinks: limited animation, as in TV cartoons.
+
+**New Rachel poses**, edits of the current files at 2580×1432 on flat `#00FF00`. Same style, face, hair and position; only the arms, hands, cup, stylus and eyes change.
+- `018_R_S1_reach`: from A1. The stylus is laid on the table beside the iPad, and her right hand reaches to the cup's handle. She's still looking down, eyes on the cup.
+- `018_R_S2_lift`: between S1 and B1. The cup and saucer are lifted halfway to her mouth, with her eyes half closed (lid line, per the eye rule).
+- The silhouette may differ from A1 only where the arms, cup and stylus move. The head and hair silhouette stays identical.
+
+**The child's gaze (with Round 6's colour pass):**
+- `018_child_green`, `018_C_1` and `018_C_2`: he looks DOWN at his drawing, focused, mouth closed (a small content line). The crayon stays where it is in each pose.
+- `018_C_3`: unchanged in pose. He looks up at his mum with a grin.
