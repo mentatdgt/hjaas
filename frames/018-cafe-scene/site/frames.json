@@ -109,46 +109,5 @@
   "M_blink_half": "mum/M_blink_half.png",
   "M_blink_closed": "mum/M_blink_closed.png"
  },
- "clips": {
-  "sip": {
-   "layer": "rachel",
-   "base": "R_A1_sketch",
-   "x": 148,
-   "y": 9,
-   "frames": [
-    "rachel/sip/sip_008.png",
-    "rachel/sip/sip_010.png",
-    "rachel/sip/sip_012.png",
-    "rachel/sip/sip_014.png",
-    "rachel/sip/sip_016.png",
-    "rachel/sip/sip_018.png",
-    "rachel/sip/sip_020.png",
-    "rachel/sip/sip_022.png",
-    "rachel/sip/sip_024.png",
-    "rachel/sip/sip_026.png",
-    "rachel/sip/sip_028.png",
-    "rachel/sip/sip_030.png",
-    "rachel/sip/sip_032.png",
-    "rachel/sip/sip_034.png",
-    "rachel/sip/sip_036.png",
-    "rachel/sip/sip_038.png",
-    "rachel/sip/sip_040.png",
-    "rachel/sip/sip_042.png",
-    "rachel/sip/sip_044.png",
-    "rachel/sip/sip_046.png",
-    "rachel/sip/sip_048.png",
-    "rachel/sip/sip_050.png",
-    "rachel/sip/sip_052.png",
-    "rachel/sip/sip_054.png",
-    "rachel/sip/sip_056.png",
-    "rachel/sip/sip_058.png",
-    "rachel/sip/sip_060.png",
-    "rachel/sip/sip_062.png",
-    "rachel/sip/sip_064.png",
-    "rachel/sip/sip_066.png",
-    "rachel/sip/sip_070.png",
-    "rachel/sip/sip_073.png"
-   ]
-  }
- }
+ "clips": {}
 }

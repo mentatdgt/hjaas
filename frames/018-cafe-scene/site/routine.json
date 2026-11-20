@@ -1,5 +1,5 @@
 {
- "note": "Scene 3 (caf\u00e9) routines. Holds in ms; [a,b] = random in range. Every actor runs its own routine independently and out of sync. Calm and slow. Layer order and positions are in frames.json.",
+ "note": "Scene 3 (caf\u00e9) routines. Holds in ms; [a,b] = random in range. Each actor runs independently and out of sync. 'fade_ms' = a true cross-dissolve INTO this still from the previous one (lerp of the two composited results), at the start of the step; no fade_ms = an instant cut (blinks). Calm and slow.",
  "actors": {
   "rachel": {
    "routine": [
@@ -13,41 +13,20 @@
       {
        "still": "R_A1_sketch",
        "ms": [
-        500,
-        900
+        800,
+        1300
        ],
+       "fade_ms": 120,
        "blink_ok": true
       },
       {
        "still": "R_A2_stroke",
        "ms": [
-        350,
-        600
-       ]
+        600,
+        900
+       ],
+       "fade_ms": 120
       }
-     ]
-    },
-    {
-     "clip": "sip",
-     "ms": 83
-    },
-    {
-     "still": "R_B1_sip",
-     "ms": [
-      1800,
-      2600
-     ]
-    },
-    {
-     "clip": "sip",
-     "ms": 70,
-     "reverse": true
-    },
-    {
-     "still": "R_A1_sketch",
-     "ms": [
-      600,
-      1000
      ]
     }
    ],
@@ -65,7 +44,7 @@
     ]
    },
    "reaction": {
-    "note": "On a mushroom find. Drawn holds, no clip: a light glance up hidden by a blink, a smile, then a glance back down. If she's mid-sip, hold B1 300 ms, play sip in reverse, then react.",
+    "note": "On a mushroom find. Drawn holds only, blinks hide the head move.",
     "steps": [
      {
       "still": "R_A1_blink",
@@ -87,11 +66,13 @@
       "ms": [
        1100,
        1400
-      ]
+      ],
+      "fade_ms": 150
      },
      {
       "still": "R_K1_look",
-      "ms": 250
+      "ms": 250,
+      "fade_ms": 150
      },
      {
       "still": "R_K1_blink",
@@ -106,87 +87,81 @@
       "ms": 400
      }
     ]
-   }
+   },
+   "note": "Sip removed until the drawn S1/S2 poses arrive (round 7); no video clips."
   },
   "barista": {
    "routine": [
     {
      "loop": "polish",
      "repeat": [
-      5,
-      9
+      4,
+      7
      ],
      "steps": [
       {
        "still": "B_1",
        "ms": [
-        500,
-        800
-       ]
+        900,
+        1400
+       ],
+       "fade_ms": 250
       },
       {
        "still": "B_2",
        "ms": [
-        500,
-        800
-       ]
-      },
-      {
-       "still": "B_3",
-       "ms": [
-        500,
-        800
-       ]
-      },
-      {
-       "still": "B_2",
-       "ms": [
-        500,
-        800
-       ]
+        900,
+        1400
+       ],
+       "fade_ms": 250
       }
      ]
     },
     {
      "still": "B_4",
      "ms": [
-      1200,
-      1800
-     ]
+      1500,
+      2200
+     ],
+     "fade_ms": 200
     }
-   ]
+   ],
+   "note": "B_3 is not used: it jumps too far from B_1 and B_2."
   },
   "child": {
    "routine": [
     {
      "loop": "colour",
      "repeat": [
-      10,
-      18
+      8,
+      14
      ],
      "steps": [
       {
        "still": "C_1",
        "ms": [
-        300,
-        550
-       ]
+        700,
+        1100
+       ],
+       "fade_ms": 150
       },
       {
        "still": "C_2",
        "ms": [
-        300,
-        550
-       ]
+        700,
+        1100
+       ],
+       "fade_ms": 150
       }
      ]
     },
     {
      "still": "C_3",
      "ms": [
-      1200,
-      1600
-     ]
+      1400,
+      1900
+     ],
+     "fade_ms": 120
     }
    ]
   },
@@ -196,19 +171,22 @@
      "still": "O_1",
      "ms": [
       8000,
-      15000
-     ]
+      14000
+     ],
+     "fade_ms": 300
     },
     {
      "still": "O_2",
-     "ms": 450
+     "ms": 500,
+     "fade_ms": 150
     },
     {
      "still": "O_3",
      "ms": [
       8000,
-      15000
-     ]
+      14000
+     ],
+     "fade_ms": 150
     }
    ]
   },
@@ -217,29 +195,32 @@
     {
      "loop": "breathe",
      "repeat": [
-      4,
-      8
+      3,
+      6
      ],
      "steps": [
       {
        "still": "cat_1",
        "ms": [
-        1000,
-        1300
-       ]
+        1400,
+        1800
+       ],
+       "fade_ms": 1000
       },
       {
        "still": "cat_2",
        "ms": [
-        1000,
-        1300
-       ]
+        1400,
+        1800
+       ],
+       "fade_ms": 1000
       }
      ]
     },
     {
      "still": "cat_3",
-     "ms": 450
+     "ms": 600,
+     "fade_ms": 250
     }
    ]
   },

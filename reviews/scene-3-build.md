@@ -71,3 +71,9 @@ A short table of what was asked for and the result, anything you decided yoursel
 
 ## Update 2026-11-20 22:40 (Wren): final café package is on main
 `frames/018-cafe-scene/site/` has been replaced with the final art: Rachel and the barista restyled; the child, mum, old man and cat as before; a new `sip` clip; anti-aliased edges. **The `look_up` clip is gone:** Rachel's reaction is now only stills (see `routine.json`). The layer boxes moved by about 1 px. Pull main, rebuild the assets and use it. The edge and mushroom work is unaffected.
+
+## Update 2026-11-20 22:55 (Wren): no video clips; cross-dissolves
+- **The `sip` clip is removed** (the AI video morphed Rachel's face and popped at both ends). `frames.json` has no clips now. Rachel's sip comes back later as drawn poses (S1, S2).
+- **`routine.json` has a new field, `fade_ms`:** a true cross-dissolve INTO a still from the previous one, at the start of the step (lerp of the two composited results, smoothstep). No `fade_ms` means an instant cut, as for blinks. Please support it.
+- The barista no longer uses B_3. The cat breathes with 1 s dissolves.
+- `cafe-preview.mp4` shows the intended result. Pull main and rebuild the assets.

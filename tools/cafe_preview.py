@@ -23,7 +23,7 @@ def expand(steps):
             c = man['clips'][s['clip']]; fr = c['frames'][::-1] if s.get('reverse') else c['frames']
             out += [(('clip', s['clip'], f), s['ms']) for f in fr]
         else:
-            out.append((('still', s['still'], None), R(s['ms'])))
+            out.append((('still', s['still'], s.get('fade_ms', 0)), R(s['ms'])))
     return out
 def timeline(actor, total_ms, react_ms=None):
     a = rt['actors'][actor]; tl = []; t = 0
@@ -48,21 +48,29 @@ W, H = plate.size; ow, oh = int(W * SCALE) // 2 * 2, int(H * SCALE) // 2 * 2
 tmp = tempfile.mkdtemp()
 order = [l['actor'] for l in man['layers']]
 def at(tl, ms):
-    cur = tl[0][1]
+    cur, prev, start = tl[0][1], None, 0
     for t0, ev in tl:
-        if t0 <= ms: cur = ev
+        if t0 <= ms: prev, cur, start = cur, ev, t0
         else: break
-    return cur
+    return cur, prev, ms - start
 for fi in range(int(SECS * FPS)):
     ms = fi * 1000 / FPS
     fr = plate.copy()
     for actor in order:
-        L = layers[actor]; ev = at(TL[actor], ms)
+        L = layers[actor]; ev, pev, since = at(TL[actor], ms)
         kind, name, f = ev
         if kind == 'still':
             if name is None: continue
             if actor == 'rachel' and name == 'R_A1_sketch' and any(b <= ms < b + 90 for b in blinks): name = 'R_A1_blink'
-            fr.alpha_composite(img(man['stills'][name]), (L['x'], L['y']))
+            fade = f or 0
+            if fade and pev and pev[0] == 'still' and pev[1] and since < fade and pev[1] != name:
+                box = (L['x'], L['y'], L['x'] + L['w'], L['y'] + L['h'])
+                a = fr.crop(box); b = fr.crop(box)
+                a.alpha_composite(img(man['stills'][pev[1]])); b.alpha_composite(img(man['stills'][name]))
+                t = since / fade; t = t * t * (3 - 2 * t)
+                fr.paste(Image.blend(a, b, t), box[:2])
+            else:
+                fr.alpha_composite(img(man['stills'][name]), (L['x'], L['y']))
         else:
             c = man['clips'][name]
             fr.alpha_composite(img(man['stills'][c['base']]), (L['x'], L['y']))
