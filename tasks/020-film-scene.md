@@ -73,9 +73,11 @@ Same canvas, green background, piece in exactly the same place. Change only what
 - **Layers:** plate → water → presenter → Rachel.
 - **Water:** cycle W_1–3 at about 8–10 fps with short crossfades. Add a subtle shimmer to the bay reflections in code.
 - **REC light and screen:** code, no art. Draw a blinking red dot (about 1 s cycle) on the camera screen. Proposed: the screen shows a live, scaled copy of the presenter layer.
-- **Phone window:** shifted for this scene to about 36–81% of the width, so both people fit.
+- **Phone window:** shifted for this scene to about 37–85% of the width, so both people fit.
 - **Higgsfield clips** (quote first): Rachel A1→B1 (glance) and A1→K1 (look back), and the presenter M_1→M_2 and M_1→M_3. That's 4 × 4.5 = 18 credits, No upscales if the scene comes at 2580×1432.
 - **Hunt nooks:** wheel arches, the bollard lamps, the railing posts, the planter kerb, the lit steps, paving cracks, the kiosk base.
 
 ## Revision notes
-_(Wren writes here after each QC round)_
+### Step 1 (2026-11-20, Wren): APPROVED from a screenshot preview
+Rachel has moved right: her lens is now about 11% of the width clear of the presenter's hand. The camera screen is a plain dark rectangle, and nothing else has changed. Quinn continues with steps 2–4. Wren needs the original downloaded `020_scene.png` (not a screenshot) to check registration at QC.
+Phone window note for Fable: her head now sits at about 72–85% of the width, so shift the window to about 37–85%.
