@@ -101,3 +101,16 @@ the tracer on, the way back to the café is the busiest moment of all: its 43 st
 are decoded and drawn once again while the brush is at work. Unthrottled in WebKit the same switch is 20 to
 27 ms a frame.
 
+
+## Scene 3 again, café package v7.3 (the final art), 2026-11-21
+
+The same two traces on v7.3 (20 fan frames, Rachel's nine stills), same profile, production build. Raw
+files, not in git: `s3-v73-cafe-paint-in-mobile-4x.json.gz` and `s3-v73-switching-mobile-4x.json.gz`.
+
+| Trace | What | Result (`node qa/tools/analyze-trace.mjs <trace> --tasks`) |
+|---|---|---|
+| café paint-in | A new visitor opens `#design` (storage cleared before the page's script runs, reload). Window 0.7 to 6.7 s after navigation. | 360 frames begun, none dropped. No main-thread task over 50 ms; the longest 9 ms (at 4× slow-down). LCP 0.73 s, CLS 0.00. |
+| switching | From the café: Build (first visit, full painting), Grow (first visit), back to the café and to Build (the short brush). 24 s. | 1420 frames begun, 43 dropped, in the same four clusters: 19 as Build is put on the plate for the first time (a 117 ms task: layout), 5 as Grow is, 10 on the way back to the café (42 with v5), 9 on the way back to Build. Four tasks over 50 ms; the two at the short-brush switches are the room's picture being decoded again (97 and 102 ms at 4× slow-down). CLS 0.02. |
+
+(A first try at the paint-in trace cleared the storage and then reloaded: the page saves its progress as it
+is left, so the reload was a return visit with the 200 ms reveal. That file was replaced.)

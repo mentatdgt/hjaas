@@ -1273,6 +1273,90 @@ was measured on.
 | ✅ | Traces: the paint-in, and Build → Grow → Design → Build | Chrome DevTools traces on the phone profile with the processor slowed four times. The café's paint-in: 1 frame dropped of 360, no task over 50 ms. The switches: 77 frames dropped of 1454, in clusters where each scene goes on the plate (below). Frame times were also logged without the tracer, in WebKit and in throttled Chrome. | `traces/SUMMARY.md`, `scene3/frames.json` |
 | ✅ | Checked against the animation standards | Below. | |
 
+### Package v7.3 (2026-11-21): the final café art
+
+Wren's updates of 2026-11-21 (v6, v7, v7.1, v7.2, v7.3) replace every earlier package. Everything in this
+subsection was measured on v7.3; where it differs from the tables above, this is the current figure.
+
+| | Asked for | Result | Evidence |
+|---|---|---|---|
+| ✅ | Rebuild the assets from v7.3 | `npm run assets`, no change to the scene's file: the new plate, Rachel's nine stills (the sip is three new ones), the barista's four, the child's three, the 20-frame fan. 2.8 MB in all. Old files the package dropped are removed. | `public/assets/scene3/`, `src/scenes/design-cast.json` |
+| ✅ | `fade_ms` only between stills of the same loop | Now the engine's own rule, not only the data's: a dissolve is played from one still of a loop into another still of that loop. Coming into a loop (the cat after its stretch), a still by itself, a blink and the whole reaction cut, even if a manifest asks otherwise. In 40 s in the browser the only dissolves seen were cat_1 ↔ cat_2, C_1 ↔ C_2 and Rachel's sketch ↔ stroke. | `cast.test.ts`, `scene3/react.json` (`dissolvesSeenIn40s`) |
+| ✅ | Rachel finishes a sip before reacting | Found as she reaches for the cup: reach, lift, the cup at her lips for 300 ms, lift, reach, then the reaction, 1.00 to 1.06 s after the find. Found with the cup at her lips: that hold ends at 300 ms, then lift, reach and the reaction, 0.61 to 0.62 s after. No dissolve and no blink on the way. Chrome and WebKit. | `scene3/react.json` (`duringTheSip`), `cast.test.ts` |
+| ✅ | No blink during the sip | She blinks only on the sketch pose, in the holds marked for it. 4000 steps of her routine: no blink on or beside a sip pose. | `cast.test.ts` |
+| ✅ | The fan: an endless loop, exempt from the rule for actors | 20 frames at 42 ms, round and round, never reacting. It is a piece of the room: the edge fades it as it fades the plate, and the painting does not reach out around it. | `cast.test.ts`, `design-cast.json` (`room`) |
+| ✅ | The 10 mushrooms against the new boxes | The boxes moved by 2 px at most. No mushroom is in any actor's box or the fan's; every drawing and tap box is over 1.00 of the painting at five sizes; tap boxes 44 px, none overlapping. **None had to move.** | `scenes.test.ts`, `edge/pencil-spots.json`, `scene3/hunt-checks.json` |
+| ✅ | Every actor still fully painted | 1.00 under all 46,937 points the cast ever covers, no pencil over anyone, with the same edge (95). The rim is paper all the way round. | `edge/pencil-rachel.json`, `edge/pencil-rim.json` |
+| ✅ | Screenshots at the three sizes | 1440 × 900, 390 × 844 and 360 × 740 (the phones also panned to each end). | `scene3/design-*.jpg` |
+| ✅ | A 30 s recording, desktop and iPhone profile, with one reaction | Each: the first-visit painting, then 31 s at work with the coffee sip (at 21 s) and a find (at 26 s) with her whole answer. | `scene3/design-film-desktop.mp4`, `design-film-iphone.mp4`, `*-stills-sip.jpg`, `*-stills-find.jpg` |
+| ✅ | Traces: the paint-in and switching | Phone profile, processor slowed four times. Paint-in: 360 frames, none dropped, no task over 50 ms. Switching: 43 dropped of 1420, where each scene goes on the plate, as before (the way back to the café fell from 42 to 10). | `traces/SUMMARY.md` |
+| ✅ | All 30 mushrooms findable | 30 of 30 on desktop, the iPhone profile and a 320 px phone. | `edge/pencil-find.json` |
+| ✅ | Peak memory under 80 MB on the phone profile, all three scenes visited | Every order of visiting, as a new visitor and as a returning one, with a find in each scene: 77.5 MB at most, and it is the lab alone, as before. The café by itself is 51 to 56 MB. Away from the café it holds nothing. | `scene3/memory.json` |
+| ✅ | Frame times | WebKit, iPhone profile, 12 runs: the café's painting 20 to 32 ms at the longest frame, the café at work 19 to 24 ms, none over 50 ms. Two caveats under "Frame times, v7.3". | `scene3/frames.json`, `frames-notes.txt` |
+| ✅ | Compared with `cafe-preview.mp4` | The preview is the plate with each actor's still drawn at its layer's place. The page was put on the same poses (at rest, the sip, the smile, reaching) and compared with that picture made from the package: inside the edge they differ by 2.6 of 255 on average (the compression), and every actor is where the package puts it, to within about one screen pixel (each actor's canvas sits on whole screen pixels). The routines are the same file. Three intended differences below. | `scene3/preview.json`, `preview-compare.jpg` |
+
+**Where the page differs from the preview, on purpose:**
+
+1. **The fan is partly in the paper.** The preview has no edge. On the page the fan hangs in the top edge,
+   so the upper half of its sweep fades into the paper as Wren's note asks ("let the edge fade it like the
+   plate"): a blade is clearest low in its turn and fades as it comes round the top. If the whole fan
+   should show, the painting would have to reach up around it; that is a decision for Wren and the user,
+   not one I took.
+2. **A find while she sketches is answered within 0.3 s**, not at that instant: the stroke she is on is cut
+   to 300 ms and the reaction starts from there (0.30 s measured mid-stroke; at once on her rest pose).
+   Last night this could take 0.9 s.
+3. **Blinks** come only in the holds the routine marks `blink_ok`. The preview blinks on any sketch frame.
+
+**The fan's blades in pencil.** `scene/pencil/design-lines.png` was made from a plate that still had the
+old fan's blades, so the edge drew three still blades in pencil around the turning fan. The build now
+checks the line map against the delivered plate inside the box of a moving piece of the room and keeps only
+the lines the plate itself has: the rod, the hub and the beams stay, the old blades go (a few short dashes
+are left where a blade ran along a beam). A new line map made from the v7.3 plate would pass through
+untouched and would be cleaner.
+
+#### Frame times, v7.3
+
+WebKit on the iPhone profile, production build, 08:15 to 08:36 with the Mac calm (load 2 to 4), 12 runs:
+
+- **The café's opening painting:** 20 to 32 ms at the longest frame. **At work:** 19 to 24 ms. None over 50.
+- **The short brush:** 19 to 48 ms in 58 of 60 switches. ⚠️ In one run the last two switches (to the café,
+  then to Build) had frames of 529 and 333 ms. The other 11 runs did those two switches at 20 to 27 ms; I
+  take it for a busy moment on the Mac but cannot prove it.
+- **Build opened for the first time:** 25 to 46 ms in 8 runs, one or two frames of 52 to 94 ms in 4 (the
+  same exception as last night, still not traced). **Grow for the first time:** 29 to 48 ms.
+
+Chrome with the processor slowed four times: the café's painting and the café at work 17 ms (50 ms once);
+one frame of 83 to 150 ms at every short-brush switch, as before; ⚠️ one frame of 817 ms in one run as Grow
+was opened for the first time, not seen in the other 11.
+
+#### Decisions I made (v7.3)
+
+17. **The fade rule is enforced by the engine.** `fade_ms` anywhere but on a still of a loop, following
+    another still of the same loop, is ignored. Last night the engine played whatever the data said.
+18. **The way home from the sip is the routine itself.** Away from her rest pose on stills the routine
+    goes through one after another, a find does not interrupt: the routine carries on to the rest pose with
+    any hold on the way cut to 300 ms. Nothing names the sip; a later routine of the same shape behaves the
+    same.
+19. **A stroke may end early for a find** (item 2 above). It also applies to the lab's misting loop, where
+    it can shorten one hold by up to 0.18 s when a find is waiting; the lab's reaction was played in full in
+    every memory run.
+20. **The old fan's pencil blades are removed by the build,** not by editing the line map (which is Wren's).
+21. **The film waits for the sip,** then makes the find 5.5 s later, so both are in the 30 s.
+
+#### For Wren (v7.3)
+
+- The line map `scene/pencil/design-lines.png` wants remaking from the v7.3 plate (see above).
+- The fan in the edge: is the fade as intended, or should the painting reach up around it?
+- Still open from last night: Rachel's shadow is in the plate and shows for about two seconds before she
+  comes in during the first-visit painting; 32 to 41 px under the boots and the cat; a `"room": true` field
+  for the fan would be safer than reading it from the drawings.
+
+#### Not done, or not verified (v7.3)
+
+- Nothing was tested on a real phone.
+- The two long-frame runs above were not reproduced and not traced.
+- `site/scene-2` still decodes a new scene's frames early (decision 15); fixed on this branch only.
+
 ### How to see it
 
 ```

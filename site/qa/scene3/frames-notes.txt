@@ -1,3 +1,24 @@
+PACKAGE v7.3 (2026-11-21, 08:15 to 08:36, load average 2 to 4). Production build, node qa/tools/scene3.mjs frames 3, run four times: 12 runs in each browser. All in frames.json.
+Longest frame in each run, sorted:
+
+  WebKit, iPhone 14 profile
+    the café painted for a new visitor        20 22 23 24 24 24 25 25 27 30 31 32 ms    none over 50
+    the café at work, 8 s                     19 19 19 19 19 19 19 20 21 21 21 24 ms    none over 50
+    Build opened for the first time           25 38 39 41 42 43 44 46 52 57 65 94 ms    4 runs of 12 with one or two frames over 50
+    Grow opened for the first time            29 31 36 39 39 40 40 40 40 41 42 48 ms    none over 50
+    the short brush, 60 switches              19 to 48 ms in 58 of them; in one run the last two switches (to the café, then to Build) had frames of 529 and 333 ms.
+                                              The 11 other runs did the same two switches at 20 to 27 ms, so I take it for a busy moment on the Mac, but I cannot prove it.
+
+  Chrome, phone size, processor slowed four times
+    the café painted for a new visitor        17 ms in 11 runs, 50 ms in one
+    the café at work, 8 s                     17 ms in all 12
+    Build opened for the first time           50 to 100 ms (one or two frames at the moment it goes on the plate, as before)
+    Grow opened for the first time            33 to 67 ms in 11 runs; one frame of 817 ms in one run, not seen again
+    the short brush, 60 switches              83 to 150 ms: one frame at the tap in every one (the room's picture decoded again, as since review 05)
+
+Against v5 the night before: the same picture. The café's own numbers (its painting, at work, the short brush back to it) are unchanged.
+
+
 The café's opening painting (package v5): frame times in WebKit, iPhone 13 profile, production build, six cold loads.
 node qa/tools/intro-frames.mjs 6 iphone 0 http://localhost:4173/#design   (2026-11-21, about 00:53; load average about 4 to 5)
 fullGap: the longest frame from the sheet going in to 1 s after the intro ends; loopGap: the 4 s after; introMs: how long the painting took.
