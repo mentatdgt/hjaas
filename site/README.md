@@ -89,11 +89,15 @@ when someone opens its address directly.
 
 A scene's character is fetched when the scene is first opened: her stills first, then her clips.
 
-**Memory.** A clip character's stills stay decoded; her clip frames do not (all of the lab's, decoded, would
-be over 200 MB). Each step of the routine names the frames that may follow it, `reel.ts` decodes those and
-gives the others back, and the reaction's frames stay decoded while the scene is on show. `npm run assets`
-also makes a lighter set of the lab frames, `scene2/rachel-1.5x/` (three quarters of the size, with its own
-`frames.json`), which the scene's config (`small`) uses when the picture is shown under 900 px wide.
+**Memory.** Only the scene on show keeps decoded images. When the visitor leaves a scene it gives back its
+room's picture and all of its character's frames but the one on her canvas (`Scene.rest()`); the downloaded
+files are kept, so coming back decodes them again while the brush is at work (`Scene.ready()`, `enter()`).
+A clip character's clip frames are never all decoded even then (all of the lab's would be over 200 MB): each
+step of the routine names the frames that may follow it, `reel.ts` decodes those and gives the others back,
+and the reaction's frames stay decoded while the scene is on show. `npm run assets` also makes a lighter set
+of each character's frames at three quarters of the size (`scene1/rachel-1.5x/`, `scene2/rachel-1.5x/`),
+which the scene's config (`small`) uses when the picture is shown under 900 px wide. `?debug` adds
+`__hj.memory`: the page's own account of its decoded images and canvases, from their sizes.
 
 ## Swapping art
 

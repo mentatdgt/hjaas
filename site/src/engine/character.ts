@@ -97,6 +97,7 @@ export class Character {
   /** The rectangle of that frame now covered by a patch ('' when it is clean). */
   private patched = '';
   private scratch: CanvasRenderingContext2D | null = null;
+  private scratchIdle = 0;
 
   constructor(frames: Map<string, Frame>, config: CharacterSetup) {
     this.frames = frames;
@@ -144,6 +145,35 @@ export class Character {
     this.warm(frame);
   }
 
+  /**
+   * Take a whole frame away again (a scene out of sight gives its frames back). The caller releases its
+   * pixels: one image can stand for two poses.
+   */
+  drop(name: string): void {
+    this.frames.delete(name);
+  }
+
+  /** The frames her canvas needs to be drawn again as it is: the pose on show, and the still under a clip frame. */
+  get showing(): string[] {
+    const patch = this.patches.get(this.pose);
+    return patch ? [this.pose, patch.base] : [this.pose];
+  }
+
+  /**
+   * Out of sight: give back the canvases' own memory. resize() draws her again, as she was, when her
+   * scene is back on the page.
+   */
+  sleep(): void {
+    this.canvas.width = 0;
+    this.canvas.height = 0;
+    if (this.scratch) {
+      this.scratch.canvas.width = 0;
+      this.scratch.canvas.height = 0;
+    }
+    this.drawn = '';
+    this.patched = '';
+  }
+
   /** Add a clip frame: a patch over one of her stills. */
   addPatch(name: string, patch: Patch): void {
     const old = this.patches.get(name);
@@ -162,10 +192,16 @@ export class Character {
     releaseFrame(patch.frame);
   }
 
+  /** The width of her art, in its own pixels (QA: tells the full-size set from the lighter one). */
+  get sourceWidth(): number {
+    return this.source.w;
+  }
+
   /** What her decoded stills and her canvases take, in bytes (clip frames are counted by the reel). */
   get bytes(): { stills: number; canvases: number } {
     let stills = 0;
-    for (const frame of this.frames.values()) {
+    // One image can stand for two poses: it is counted once.
+    for (const frame of new Set(this.frames.values())) {
       const { w, h } = frameSize(frame);
       stills += w * h * 4;
     }
@@ -269,6 +305,12 @@ export class Character {
     scratch.imageSmoothingQuality = 'high';
     scratch.globalCompositeOperation = 'copy';
     scratch.drawImage(frame, 0, 0, w, h);
+    // The rehearsal canvas is as large as her own: it is given back once the frames have stopped arriving.
+    window.clearTimeout(this.scratchIdle);
+    this.scratchIdle = window.setTimeout(() => {
+      scratch.canvas.width = 0;
+      scratch.canvas.height = 0;
+    }, 1500);
   }
 
   private draw(): void {

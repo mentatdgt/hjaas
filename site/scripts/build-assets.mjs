@@ -7,7 +7,7 @@
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile, copyFile, readdir, rm, stat } from 'node:fs/promises';
 import { availableParallelism } from 'node:os';
-import { dirname, join } from 'node:path';
+import { dirname, join, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 
@@ -131,6 +131,20 @@ for (let i = 1; i <= 9; i++) {
 
 add('assets/logo/hjaas-logo.png', 'shared/logo/logo.webp', sprite, { width: LOGO_W }, assets);
 
+// Scene 1's frames at three quarters of the size as well, for narrow screens: the same files in a folder
+// beside the full-size one, so the page only has to look in the other folder.
+const small1 = join(out, 'rachel-1.5x');
+for (const job of jobs.filter((j) => j.from && j.to.startsWith(join(out, 'rachel') + sep))) {
+  jobs.push({
+    make: async () => {
+      const size = await sharp(job.from).metadata();
+      return sharp(job.from).resize(Math.round(size.width * SMALL), Math.round(size.height * SMALL), { kernel: 'lanczos3' });
+    },
+    to: join(small1, job.to.slice(join(out, 'rachel').length + 1)),
+    opts: job.opts,
+  });
+}
+
 // Several at a time: encoding is slow (a few seconds for one of Rachel's frames) and each uses one core.
 let total = 0;
 const queue = [...jobs];
@@ -156,6 +170,9 @@ await writeFile(join(assets, smallDir, 'frames.json'), `${JSON.stringify(smallFr
 await copyFile(join(repo, reaction, 'reaction.json'), join(out, 'rachel/reaction/reaction.json'));
 await writeFile(join(out, 'rachel/reaction/shared.json'), `${JSON.stringify(shared, null, 1)}\n`);
 console.log(`shared with rachel/: ${Object.keys(shared).join(', ') || 'none'}`);
+// The same two files for the smaller set, pointing at its own copies.
+await copyFile(join(repo, reaction, 'reaction.json'), join(small1, 'reaction/reaction.json'));
+await writeFile(join(small1, 'reaction/shared.json'), `${JSON.stringify(Object.fromEntries(Object.entries(shared).map(([file, path]) => [file, path.replace(/^rachel\//, 'rachel-1.5x/')])), null, 1)}\n`);
 
 // Favicon and home-screen icon: the reel on its own, which is drawn square.
 for (const [size, name] of [[32, 'favicon-32.png'], [180, 'apple-touch-icon.png']]) {

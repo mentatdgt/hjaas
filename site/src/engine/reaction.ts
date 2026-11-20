@@ -13,6 +13,8 @@ interface ReactionManifest {
 export interface Reaction {
   /** The full motion. */
   steps: Step[];
+  /** Each pose's image file, so that a scene out of sight can give the frames back and decode them again. */
+  files: Map<string, string>;
   /** Paused or reduced motion: only the held pose, so she acknowledges the find without the head and arm travel. */
   still: Step[];
 }
@@ -33,15 +35,17 @@ export async function loadReaction(rachel: Character, sceneDir: string, dir: str
   const held = manifest.frames.filter((frame) => frame.ms > 0);
   const files = [...new Set(held.map((frame) => frame.file))];
   // One at a time, in quiet moments: Rachel is already hammering while these arrive.
+  const urls = new Map<string, string>();
   for (const file of files) {
     await idle();
     // The site serves WebP copies of the delivered PNGs. A copy shared with the loop is the loop's own decoded frame.
     const url = asset(file in shared ? sceneDir + shared[file] : DIR + file.replace(/\.png$/i, '.webp'));
+    urls.set(poseName(file), url);
     rachel.add(poseName(file), await loadFrame(url));
   }
 
   const steps = held.map((frame) => ({ pose: poseName(frame.file), ms: frame.ms }));
-  return { steps, still: stillOf(steps) };
+  return { steps, still: stillOf(steps), files: urls };
 }
 
 /** Reaction files that are byte-identical to an upscaled frame, mapped to that one copy (made by `npm run assets`). */

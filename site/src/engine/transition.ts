@@ -55,6 +55,12 @@ export class Transition {
     this.stage = stage;
   }
 
+  /** QA: what the sheet on the page takes, in bytes (none when there is no sheet). */
+  get sheetBytes(): number {
+    const canvas = this.painter?.canvas;
+    return canvas ? canvas.width * canvas.height * 4 : 0;
+  }
+
   /** True while a brush is at work. */
   get running(): boolean {
     return this.timeline !== null;

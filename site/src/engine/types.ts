@@ -66,6 +66,11 @@ export interface FrameCast {
   routine: Routine;
   /** Folder (under `dir`) holding reaction.json and its frames. Leave out for no reaction. */
   reaction?: string;
+  /**
+   * A lighter copy of the same folder (made by `npm run assets`), used when the picture is shown less
+   * than `below` CSS px wide: phones, where memory is short.
+   */
+  small?: { dir: string; below: number };
 }
 
 /**

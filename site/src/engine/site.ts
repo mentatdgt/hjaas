@@ -29,6 +29,8 @@ export interface Site {
 }
 
 const HINT_AFTER_S = 60;
+// QA: the nine mushroom drawings, decoded (see scripts/build-assets.mjs for their size).
+const SPRITE_BYTES = 9 * 166 * 154 * 4;
 
 // TODO(copy): every word on the page is a placeholder until the real copy arrives. They are all here,
 // except the scene names (src/scenes/), the form's (form.ts) and the count itself, "3 of 10 found" (caption.ts).
@@ -180,6 +182,18 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       get ready() { return ready; },
       get busy() { return busy; },
       caption: null as Caption | null,
+      /** What the page's decoded images and canvases take, in bytes, from their sizes. */
+      get memory() {
+        const parts: Record<string, number> = { sprites: SPRITE_BYTES, logo: logo?.bytes ?? 0, sheet: transition.sheetBytes };
+        for (const [id, scene] of scenesLoaded) {
+          const m = scene.memory;
+          parts[`${id}.frames`] = m.stills + m.clipFrames;
+          parts[`${id}.canvases`] = m.canvases;
+          parts[`${id}.room`] = m.room;
+          parts[`${id}.edge`] = m.edge;
+        }
+        return { total: Object.values(parts).reduce((a, b) => a + b, 0), parts };
+      },
       poses,
       jank,
       longTasks,
@@ -339,6 +353,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   };
 
   const loading = new Map<string, Promise<Scene>>();
+  const scenesLoaded = new Map<string, Scene>();
   /** A scene, loaded once. Its mushrooms report back here. */
   const sceneFor = (config: SceneConfig): Promise<Scene> => {
     let scene = loading.get(config.id);
@@ -386,6 +401,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       config.id === first.id,
     ).then((loaded) => {
       self = loaded;
+      scenesLoaded.set(config.id, loaded);
       return loaded;
     });
     loading.set(config.id, scene);
@@ -429,6 +445,10 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     // Her first frames, the first time the scene is opened: fetched and decoded from here on, off the
     // page's thread. (Usually they are on their way already: see the menu's pointer listeners.)
     next.preload();
+    // A scene out of sight holds no decoded picture: its room is decoded again here, from the browser's
+    // own copy of the file, before anything is put on the page.
+    await next.ready();
+    if (destroyed) return;
     const firstVisit = !stateOf(config.id).seen && flags.intro !== 'quick';
     const calm = reducedMotion() || flags.intro === 'off';
     const state = captionFor(config);
@@ -453,6 +473,10 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       caption.change(...state, arriving);
       showControls(true);
       await frame1();
+      // The scene just left is off the page: it gives its decoded images back now, before the new scene's
+      // arrive, so the two sets are never in memory together. (A frame of its own: not in the tap's.)
+      old.rest();
+      await frame1();
       await her(true);
       await steadyFrames();
       await transition.paint(next);
@@ -464,6 +488,11 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       place(next);
       caption.change(...state, arriving);
       if (!calm) showControls(true);
+      await frame1();
+      // The old picture is on the sheet now, as a copy: the scene itself gives its decoded images back
+      // before the new scene's arrive, so the two sets are never in memory together. (A frame of its own:
+      // not in the tap's.)
+      old.rest();
       await frame1();
       // Her frames are usually decoded by now. If the network is slow the brush does not wait for long:
       // she fades in when she arrives.
@@ -596,7 +625,9 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     ready = true;
     for (const other of scenes) {
       if (destroyed) return;
-      await sceneFor(other).catch((error) => console.warn(`[hjaas] ${other.id}: could not be loaded`, error));
+      const loaded = await sceneFor(other).catch((error) => void console.warn(`[hjaas] ${other.id}: could not be loaded`, error));
+      // Downloaded and checked, but not kept decoded while it is out of sight (unless it is on its way in).
+      if (loaded && loaded !== current && wanted.id !== other.id) loaded.rest();
     }
   })();
 

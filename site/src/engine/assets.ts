@@ -24,11 +24,23 @@ export async function loadImage(url: string): Promise<HTMLImageElement> {
 }
 
 const frameCache = new Map<string, Promise<Frame>>();
+/** Each frame's file as downloaded, kept so that a frame given back can be decoded again without the network. */
+const blobCache = new Map<string, Promise<Blob>>();
+
+function blobOf(url: string): Promise<Blob> {
+  let blob = blobCache.get(url);
+  if (!blob) {
+    blob = fetchBlob(url);
+    blobCache.set(url, blob);
+    blob.catch(() => blobCache.delete(url));
+  }
+  return blob;
+}
 
 /**
  * A decoded frame. An ImageBitmap made from the file's bytes is decoded in a worker and keeps its pixels in
  * memory, so loading never stalls an animation and the browser can't evict a pose mid-loop.
- * Each URL is fetched and decoded once; asking again returns the same frame.
+ * Each URL is fetched once and decoded once; asking again returns the same frame, until unloadFrame().
  */
 export function loadFrame(url: string): Promise<Frame> {
   let frame = frameCache.get(url);
@@ -40,9 +52,20 @@ export function loadFrame(url: string): Promise<Frame> {
   return frame;
 }
 
+/**
+ * Give a frame's pixels back (a scene out of sight keeps none). Its downloaded bytes stay, so loadFrame()
+ * brings it back by decoding alone. The frame must not be drawn again.
+ */
+export function unloadFrame(url: string): void {
+  const frame = frameCache.get(url);
+  if (!frame) return;
+  frameCache.delete(url);
+  void frame.then(releaseFrame, () => {});
+}
+
 async function decodeFrame(url: string): Promise<Frame> {
   try {
-    return await decodeBlob(await fetchBlob(url));
+    return await decodeBlob(await blobOf(url));
   } catch {
     // The file could not be fetched this way: let an <img> try.
     return loadImage(url);

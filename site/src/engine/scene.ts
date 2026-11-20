@@ -1,6 +1,6 @@
 // One scene, built from its config: the plate, the character on it, and the ten hidden mushrooms.
 // A scene knows nothing about the page around it; site.ts puts it in the window and takes it out again.
-import { PLATE, asset, decodeBlob, fetchBlob, idle, loadFrames, loadPlate } from './assets';
+import { PLATE, type Frame, asset, decodeBlob, fetchBlob, idle, loadFrame, loadPlate, releaseFrame, unloadFrame } from './assets';
 import { Character } from './character';
 import { edgeAlpha, edgeCanvas, type EdgeStyle } from './edge';
 import { checkClips, clipPose, clipReaction, clipSchedule, clipsInUse, type ClipFrames, type ClipRoutine } from './clips';
@@ -40,7 +40,7 @@ interface Cast {
   character: Character;
   routine: () => Schedule;
   /** The reaction, once it can be played in full. Until then `still` stands in, if there is one. */
-  reaction: () => Reaction | null;
+  reaction: () => Pick<Reaction, 'steps' | 'still'> | null;
   still: Reaction['still'];
   /**
    * Fetches what the first showing did not need (clips, reaction frames), one image at a time in quiet
@@ -49,9 +49,12 @@ interface Cast {
   more: (reactions: boolean) => Promise<void>;
   /** The poses that may be shown soon (see steps.ts). Only a character with a reel listens. */
   ahead?: (poses: readonly string[]) => void;
-  /** The scene is on show, or out of sight: a reel decodes its frames, or gives them back. */
-  wake?: () => void;
-  sleep?: () => void;
+  /**
+   * The scene is out of sight: give back every decoded frame but the one on her canvas. The downloaded
+   * files are kept, so wake() brings the frames back by decoding alone, while the brush is at work.
+   */
+  sleep: () => void;
+  wake: () => void;
   /** QA: decoded image memory, in bytes. */
   memory?: () => Record<string, number>;
 }
@@ -66,11 +69,10 @@ const webp = (file: string): string => file.replace(/\.png$/i, '.webp');
 
 /** A character whose every pose is one whole image (scene 1). */
 async function frameCast(config: SceneConfig, cast: FrameCast, host: SceneHost): Promise<Cast> {
-  const dir = config.assets + cast.dir;
   let names = [...cast.frames];
   let routine: () => Schedule;
   if (cast.routine.kind === 'manifest') {
-    const manifest = await json<RoutineManifest>(dir + cast.routine.file);
+    const manifest = await json<RoutineManifest>(config.assets + cast.dir + cast.routine.file);
     const problems = checkRoutine(manifest);
     if (problems.length) throw new Error(`${config.id}: ${cast.routine.file}: ${problems.join(' ')}`);
     names = [...new Set([...names, ...routineFrames(manifest)])];
@@ -79,22 +81,61 @@ async function frameCast(config: SceneConfig, cast: FrameCast, host: SceneHost):
     const { schedule } = cast.routine;
     routine = () => schedule(host.rnd);
   }
-  const character = new Character(await loadFrames(dir, names), cast);
+  // A narrow screen gets the lighter copy of the folder, if the scene has one.
+  const light = cast.small && host.shownWidth() < cast.small.below ? cast.small.dir : null;
+  const fetchAll = async (folder: string): Promise<{ folder: string; frames: Frame[] }> => ({
+    folder,
+    frames: await Promise.all(names.map((name) => loadFrame(asset(`${config.assets}${folder}${name}.webp`)))),
+  });
+  const loaded = await (light ? fetchAll(light).catch(() => fetchAll(cast.dir)) : fetchAll(cast.dir));
+  const dir = loaded.folder;
+  // Every pose's file, routine first: the order they are brought back in after a sleep.
+  const files = new Map(names.map((name) => [name, asset(`${config.assets}${dir}${name}.webp`)]));
+  const character = new Character(new Map(names.map((name, i) => [name, loaded.frames[i]])), cast);
   let reaction: Reaction | null = null;
   let loading: Promise<void> | null = null;
+  let awake = true;
   return {
     character,
     routine,
-    reaction: () => reaction,
+    // (Not while her frames are still coming back after a sleep: she would skip the ones not there yet.)
+    reaction: () => (reaction && reaction.steps.every((step) => character.has(step.pose)) ? reaction : null),
     still: [],
     more: (reactions) => {
       if (!cast.reaction || !reactions) return Promise.resolve();
-      loading ??= loadReaction(character, config.assets, cast.dir + cast.reaction).then(
-        (loaded) => void (reaction = loaded),
+      loading ??= loadReaction(character, config.assets, dir + cast.reaction).then(
+        (ready) => {
+          reaction = ready;
+          for (const [pose, url] of ready.files) files.set(pose, url);
+        },
         (error) => console.warn(`[hjaas] ${config.id}: reaction frames unavailable; finds still count`, error),
       );
       return loading;
     },
+    sleep: () => {
+      awake = false;
+      const keep = new Set(character.showing);
+      const kept = new Set([...keep].map((name) => files.get(name)));
+      for (const name of files.keys()) if (!keep.has(name)) character.drop(name);
+      // One file can stand for two poses (a reaction frame that is also a routine frame).
+      for (const url of new Set(files.values())) if (!kept.has(url)) unloadFrame(url);
+      character.sleep();
+    },
+    wake: () => {
+      if (awake) return;
+      awake = true;
+      void (async () => {
+        for (const [name, url] of files) {
+          if (!awake) return;
+          if (character.has(name)) continue;
+          const frame = await loadFrame(url).catch(() => null);
+          // She went out of sight again while this one was being decoded: sleep() has dealt with it.
+          if (!awake) return;
+          if (frame) character.add(name, frame);
+        }
+      })();
+    },
+    memory: () => ({ ...character.bytes, clipFrames: 0, clipFramesPeak: 0, canvasWidth: character.sourceWidth }),
   };
 }
 
@@ -116,9 +157,11 @@ async function clipCast(config: SceneConfig, cast: ClipCast, host: SceneHost): P
   if (problems.length) throw new Error(`${config.id}: ${problems.join(' ')}`);
   const load = (file: string): Promise<Blob> => fetchBlob(asset(art + webp(file)));
 
-  // The stills first: they are all she needs to start her routine, and they stay decoded.
+  // The stills first: they are all she needs to start her routine, and they stay decoded while the scene
+  // is on show. Their files are kept, so they can be decoded again after a sleep.
   const names = Object.keys(frames.stills);
-  const stills = await Promise.all(names.map((name) => load(frames.stills[name]).then(decodeBlob)));
+  const stillFiles = await Promise.all(names.map((name) => load(frames.stills[name])));
+  const stills = await Promise.all(stillFiles.map(decodeBlob));
   const c = frames.canvas;
   const character = new Character(new Map(names.map((name, i) => [name, stills[i]])), {
     rest: routine.reaction?.enter_from ?? names[0],
@@ -128,6 +171,8 @@ async function clipCast(config: SceneConfig, cast: ClipCast, host: SceneHost): P
   // Then the clips, when asked: the routine's own, then the reaction's. They are only downloaded here;
   // the reel decodes each frame shortly before it is shown.
   const reel = new Reel(character);
+  reel.wake();
+  let awake = true;
   const loaded = new Set<string>();
   const inUse = clipsInUse(routine);
   const fetching = new Map<string, Promise<void>>();
@@ -157,7 +202,10 @@ async function clipCast(config: SceneConfig, cast: ClipCast, host: SceneHost): P
     character,
     routine: () => clipSchedule(frames, routine, host.rnd, (name) => loaded.has(name)),
     // The full reaction needs every clip: its own, decoded, and the routine's for the way back from writing.
-    reaction: () => (full && [...inUse.routine, ...inUse.reaction].every((name) => loaded.has(name)) && reel.ready(reactionFrames) ? full : null),
+    reaction: () =>
+      full && [...inUse.routine, ...inUse.reaction].every((name) => loaded.has(name)) && reel.ready(reactionFrames) && names.every((name) => character.has(name))
+        ? full
+        : null,
     still: full?.still ?? [],
     more: async (reactions) => {
       for (const name of inUse.routine) await fetchClip(name).catch(() => {});
@@ -166,8 +214,37 @@ async function clipCast(config: SceneConfig, cast: ClipCast, host: SceneHost): P
       for (const name of inUse.reaction) await fetchClip(name).catch(() => {});
     },
     ahead: (poses) => reel.want(poses),
-    wake: () => reel.wake(),
-    sleep: () => reel.sleep(),
+    sleep: () => {
+      awake = false;
+      reel.sleep();
+      const keep = new Set(character.showing);
+      names.forEach((name, i) => {
+        if (keep.has(name) || !character.has(name)) return;
+        character.drop(name);
+        releaseFrame(stills[i]);
+      });
+      character.sleep();
+    },
+    wake: () => {
+      if (awake) return;
+      awake = true;
+      void (async () => {
+        for (let i = 0; i < names.length; i++) {
+          if (!awake) return;
+          if (character.has(names[i])) continue;
+          const frame = await decodeBlob(stillFiles[i]).catch(() => null);
+          if (!frame) continue;
+          // She went out of sight again while this one was being decoded.
+          if (!awake) {
+            releaseFrame(frame);
+            return;
+          }
+          stills[i] = frame;
+          character.add(names[i], frame);
+        }
+        if (awake) reel.wake();
+      })();
+    },
     memory: () => ({ ...character.bytes, clipFrames: reel.bytes, clipFramesPeak: reel.peak, canvasWidth: c.w }),
   };
 }
@@ -182,6 +259,9 @@ export class Scene {
   character: Character | null = null;
   player: Player | null = null;
   private readonly host: SceneHost;
+  /** The room's picture, and its address: a scene out of sight lets go of the decoded picture (see rest()). */
+  private readonly room: HTMLImageElement;
+  private readonly roomSrc: string;
   /** The painting's soft edge: always the plate's top layer. */
   private readonly edge: HTMLCanvasElement;
   private readonly layout: ResizeObserver;
@@ -194,10 +274,12 @@ export class Scene {
   private reacting: Promise<void> = Promise.resolve();
   private working = false;
 
-  private constructor(config: SceneConfig, host: SceneHost, plate: HTMLDivElement, hunt: Hunt) {
+  private constructor(config: SceneConfig, host: SceneHost, plate: HTMLDivElement, room: HTMLImageElement, hunt: Hunt) {
     this.config = config;
     this.host = host;
     this.plate = plate;
+    this.room = room;
+    this.roomSrc = room.src;
     this.hunt = hunt;
     // Bottom to top: the room, her shadow, the mushrooms, (a first-visit painting's sheet of paper,) the
     // character, and over them all the painting's soft edge.
@@ -247,7 +329,7 @@ export class Scene {
       onFind: host.onFind,
       onLand: host.onLand,
     });
-    const scene = new Scene(config, host, plate, hunt);
+    const scene = new Scene(config, host, plate, room, hunt);
     const ready = await cast;
     if (ready) scene.attach(ready);
     return scene;
@@ -279,8 +361,8 @@ export class Scene {
    * has); after that it resolves at once. `hidden` puts her there unseen, for a painting to bring her in.
    */
   enter(options: { hidden?: boolean } = {}): Promise<void> {
-    // A scene come back to: its clip frames are decoded again while the brush is still at work.
-    this.cast?.wake?.();
+    // A scene come back to: its frames are decoded again while the brush is still at work.
+    this.cast?.wake();
     if (this.character || !this.config.character) return Promise.resolve();
     this.preload();
     this.entering ??= this.casting!.then((cast) => {
@@ -327,18 +409,32 @@ export class Scene {
   /** Start, or carry on with, the idle routine. Nothing runs while the tab is hidden. */
   work(): void {
     this.working = true;
-    this.cast?.wake?.();
+    this.cast?.wake();
     if (!document.hidden) this.player?.start();
   }
 
-  /**
-   * Stop on the current pose (the visitor has left for another scene). work() carries on from it. Clip
-   * frames held in memory are given back until then.
-   */
+  /** Stop on the current pose (the visitor is leaving for another scene). work() carries on from it. */
   hold(): void {
     this.working = false;
     this.player?.stop();
-    this.cast?.sleep?.();
+  }
+
+  /**
+   * The scene is out of sight (off the page, or under a copy of itself that the brush is rubbing away):
+   * give back its decoded images. Only the visible scene keeps any: the two together are more than an
+   * older phone will give one page. What comes back, and when: the room's picture in ready(), her frames
+   * from enter() on, both from files already downloaded.
+   */
+  rest(): void {
+    this.cast?.sleep();
+    this.room.removeAttribute('src');
+  }
+
+  /** The scene is about to go on the page: resolves when its room's picture is decoded again. */
+  async ready(): Promise<void> {
+    if (this.room.getAttribute('src')) return;
+    this.room.src = this.roomSrc;
+    await this.room.decode().catch(() => {});
   }
 
   /**
@@ -356,9 +452,10 @@ export class Scene {
     this.cast?.ahead?.(poses);
   }
 
-  /** QA: what her decoded images take, in bytes. */
-  get memory(): Record<string, number> | null {
-    return this.cast?.memory?.() ?? null;
+  /** QA: what this scene's decoded images and canvases take, in bytes, from their sizes. */
+  get memory(): Record<string, number> {
+    const hers = this.cast?.memory?.() ?? { stills: 0, canvases: 0, clipFrames: 0, clipFramesPeak: 0, canvasWidth: 0 };
+    return { ...hers, room: this.room.getAttribute('src') ? PLATE.w * PLATE.h * 4 : 0, edge: this.edge.width * this.edge.height * 4 };
   }
 
   /** The tab was hidden or shown: she picks up on the same pose when it comes back. */
@@ -407,7 +504,7 @@ export class Scene {
    * leaves for another scene. `origin` is that canvas's place on the page; the context works in CSS px.
    */
   sketch(ctx: CanvasRenderingContext2D, origin: DOMRect): void {
-    const room = this.plate.querySelector<HTMLImageElement>('.hj-room')!;
+    const { room } = this;
     const r = this.plate.getBoundingClientRect();
     ctx.imageSmoothingQuality = 'high';
     ctx.drawImage(room, r.left - origin.left, r.top - origin.top, r.width, r.height);

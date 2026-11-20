@@ -63,6 +63,8 @@ export const build: SceneConfig = {
     placement: { kind: 'standing', left: 600, baseline: 868, height: 455, shadow: true },
     routine: { kind: 'code', schedule: hammerSchedule },
     reaction: 'reaction/',
+    // Under 900 px she is drawn from the 1.5x set: a little over half the memory.
+    small: { dir: 'rachel-1.5x/', below: 900 },
   },
   spots: SPOTS,
   strokes: STROKES,

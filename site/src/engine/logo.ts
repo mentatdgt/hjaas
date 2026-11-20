@@ -61,6 +61,11 @@ export class Logo {
     this.ctx.clearRect(0, 0, w, h);
   }
 
+  /** QA: what the logo's image and its glint canvas take, in bytes. */
+  get bytes(): number {
+    return this.image.naturalWidth * this.image.naturalHeight * 4 + this.canvas.width * this.canvas.height * 4;
+  }
+
   /** Start the idle glint, every nine seconds or so while the tab is visible. */
   startIdle(): void {
     window.clearInterval(this.timer);
