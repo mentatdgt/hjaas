@@ -1182,7 +1182,7 @@ beyond the colour is sketched in beside each brush stroke as the stroke gets the
 | ✅ | The same for the return-visit reveal | The finished picture is put up whole under a blank sheet of paper, and the sheet fades off it in 200 ms: colour and pencil are exactly as far along as each other in every screenshot (difference 0.001 at most), and nothing shows past the edge. It is 200 ms again, not 300. | `edge/pencil-reveal.json` |
 | ✅ | Recorded on desktop and the iPhone profile | A first visit, then to Grow (its own painting) and back, on desktop Chrome and on the iPhone profile in WebKit. | `edge/pencil-film-desktop.mp4`, `edge/pencil-film-iphone.mp4`, and their `-stills.jpg` |
 | ✅ | Three stills: early, middle, late | Build and Grow on desktop at 0.9, 2.3 and 3.7 s, and Build on the iPhone profile. | `edge/pencil-reveal-build-*.jpg`, `pencil-reveal-grow-*.jpg`, `pencil-reveal-iphone-*.jpg` |
-| ⚠️ | Keep the frame budget in WebKit | The extra work is small: about 0.06 ms of script per frame while the brush is at work (the longest single frame of brush work 1 to 4 ms, the same as before). But the Mac was very busy all evening (load 10 to 16), and on it **both** builds dropped frames, so I could not show the 50 ms figure of the last round for either. Measured in turn: see below. | `edge/pencil-3b-frames-webkit.txt` |
+| ✅ | Keep the frame budget in WebKit | Measured again later the same night, with the Mac calmer (load about 5): over 12 cold loads of the opening painting on the iPhone profile, the longest frame was 26 to 41 ms and none was over 50 ms. The build before this round, measured in turn with it: 27 to 40 ms, and one load with a single 73 ms frame. The extra work is about 0.06 ms of script per frame while the brush is at work. (The first measurement, on a very busy Mac, could not tell the two builds apart: see below.) | `edge/pencil-3b-frames-webkit.txt` |
 | ✅ | Under 80 MB | Unchanged at the peak: 77.5 MB with the lab open. A first-visit painting holds 0.4 MB more while it runs (Build as a new visitor 67.3 MB, was 66.9). | `edge/pencil-memory.json` |
 
 **How it works.** The pencil is part of the edge, which lies over the sheet of paper that the brush rubs
@@ -1193,8 +1193,9 @@ passes: one with the brush that only thins the veil, and one 0.18 s behind that 
 read back from the screen and nothing is filtered, so it costs a handful of extra line strokes on a small
 canvas per frame.
 
-**The frame budget, as far as this evening's Mac allows.** WebKit, iPhone profile, this build and the one
-before it measured in turn:
+**The frame budget.** WebKit, iPhone profile, this build and the one before it measured in turn. The first
+three readings below are from the evening, when the Mac was very busy (load 10 to 16); the last is from
+later that night (load about 5):
 
 - **Script per frame of the painting** (8 loads each, dev server): while the brush is at work, 34 to 88 ms
   of script in total over about 240 frames, against 26 to 74 ms before; the longest single frame's script 1
@@ -1210,6 +1211,10 @@ before it measured in turn:
 - **The short reveal** (production build, 18 reloads now, 18 before): every frame of the 200 ms reveal was
   17 to 18 ms now (17 to 61 ms before). Taking the blank sheet off again, 2.5 s later, cost nothing
   measurable.
+- **Frame times through the opening painting, on the calmer Mac** (production build, 12 cold loads each, in
+  turn): longest frame 26 to 41 ms now, with no frame over 50 ms in any load; 27 to 40 ms before, with one
+  73 ms frame in one load. In the 4 s after the painting, one load of each build had a single frame of
+  about 70 ms; the rest were 19 to 27 ms. The veil costs nothing that shows.
 
 **Decisions I made (round 3b)**
 
@@ -1234,7 +1239,6 @@ before it measured in turn:
 
 **Not done, or not verified**
 
-- **A quiet machine.** See the frame budget above. Everything else here does not depend on timing.
 - **A real phone.**
 - **The two slow frames at the wash and at Rachel's entrance** (over 12 ms of script in both builds).
 

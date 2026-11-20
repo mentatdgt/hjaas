@@ -68,3 +68,36 @@ Longest frame in the 3.2 s from the picture starting to show, per reload; and th
 THIS BUILD        longest [96,36,18,19,18] [37,18,20,19,189] [18,20,36,33,108,19,23,222]   in the reveal: 17 or 18 ms in all 18 reloads
 THE BUILD BEFORE  longest [31,21,20,547,31] [177,20,19,24,61] [18,18,22,19,19,83,26,20]    in the reveal: 17 to 61 ms
 The frames over 50 ms fell at no particular moment (325, 1391 and 2362 ms in the last sets), in both builds: the machine, not the page.
+
+4. THE OPENING PAINTING AGAIN, LATER THE SAME NIGHT, WITH THE MAC CALMER (load average about 5), iPhone 13 profile, production build,
+twelve cold loads each, in turn, three at a time: node qa/tools/intro-frames.mjs 3 iphone 0 <url>
+
+THIS BUILD (round 3b, commit 447901f)
+run 1: {"endGap":19,"endGapAt":4869,"fullGap":31,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":126,"roomDone":145,"brush":490,"introMs":4921}
+run 2: {"endGap":19,"endGapAt":4344,"fullGap":37,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":71,"roomDone":90,"brush":345,"introMs":4913}
+run 3: {"endGap":19,"endGapAt":4146,"fullGap":35,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":70,"roomDone":81,"brush":353,"introMs":4915}
+run 4: {"endGap":19,"endGapAt":5700,"fullGap":32,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":120,"roomDone":132,"brush":392,"introMs":4920}
+run 5: {"endGap":19,"endGapAt":4503,"fullGap":35,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":70,"roomDone":92,"brush":361,"introMs":4955}
+run 6: {"endGap":20,"endGapAt":4706,"fullGap":26,"over50":0,"slow":[],"loopGap":71,"loop50":2,"roomReq":60,"roomDone":71,"brush":343,"introMs":4922}
+run 7: {"endGap":19,"endGapAt":4148,"fullGap":37,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":103,"roomDone":119,"brush":425,"introMs":4950}
+run 8: {"endGap":20,"endGapAt":4534,"fullGap":35,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":62,"roomDone":77,"brush":356,"introMs":4914}
+run 9: {"endGap":41,"endGapAt":4234,"fullGap":41,"over50":0,"slow":[],"loopGap":20,"loop50":0,"roomReq":128,"roomDone":150,"brush":477,"introMs":4966}
+run 10: {"endGap":20,"endGapAt":4546,"fullGap":29,"over50":0,"slow":[],"loopGap":27,"loop50":0,"roomReq":99,"roomDone":114,"brush":396,"introMs":4928}
+run 11: {"endGap":19,"endGapAt":4733,"fullGap":38,"over50":0,"slow":[],"loopGap":20,"loop50":0,"roomReq":119,"roomDone":141,"brush":558,"introMs":4949}
+run 12: {"endGap":35,"endGapAt":4256,"fullGap":41,"over50":0,"slow":[],"loopGap":22,"loop50":0,"roomReq":140,"roomDone":159,"brush":479,"introMs":4976}
+fullGap [31, 37, 35, 32, 35, 26, 37, 35, 41, 29, 38, 41]  over50 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  loopGap [19, 19, 19, 19, 19, 71, 19, 19, 20, 27, 20, 22]
+
+THE BUILD BEFORE (commit b727976)
+run 1: {"endGap":20,"endGapAt":5309,"fullGap":28,"over50":0,"slow":[],"loopGap":70,"loop50":1,"roomReq":87,"roomDone":104,"brush":367,"introMs":5242}
+run 2: {"endGap":19,"endGapAt":5819,"fullGap":29,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":73,"roomDone":92,"brush":365,"introMs":5237}
+run 3: {"endGap":19,"endGapAt":4702,"fullGap":29,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":76,"roomDone":95,"brush":384,"introMs":5237}
+run 4: {"endGap":19,"endGapAt":4463,"fullGap":34,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":116,"roomDone":132,"brush":415,"introMs":5232}
+run 5: {"endGap":36,"endGapAt":5023,"fullGap":36,"over50":0,"slow":[],"loopGap":21,"loop50":0,"roomReq":107,"roomDone":129,"brush":408,"introMs":5249}
+run 6: {"endGap":19,"endGapAt":4927,"fullGap":31,"over50":0,"slow":[],"loopGap":21,"loop50":0,"roomReq":106,"roomDone":119,"brush":407,"introMs":5262}
+run 7: {"endGap":29,"endGapAt":5017,"fullGap":34,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":125,"roomDone":138,"brush":460,"introMs":5244}
+run 8: {"endGap":19,"endGapAt":4102,"fullGap":27,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":104,"roomDone":116,"brush":403,"introMs":5238}
+run 9: {"endGap":40,"endGapAt":4517,"fullGap":40,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":113,"roomDone":132,"brush":459,"introMs":5248}
+run 10: {"endGap":25,"endGapAt":4914,"fullGap":39,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":111,"roomDone":131,"brush":414,"introMs":5281}
+run 11: {"endGap":29,"endGapAt":5047,"fullGap":73,"over50":1,"slow":["73ms@1502"],"loopGap":21,"loop50":0,"roomReq":127,"roomDone":138,"brush":437,"introMs":5272}
+run 12: {"endGap":19,"endGapAt":5298,"fullGap":34,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":77,"roomDone":98,"brush":400,"introMs":5267}
+fullGap [28, 29, 29, 34, 36, 31, 34, 27, 40, 39, 73, 34]  over50 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]  loopGap [70, 19, 19, 19, 21, 21, 19, 19, 19, 19, 21, 19]
