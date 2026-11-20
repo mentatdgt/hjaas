@@ -117,3 +117,7 @@ Rachel and the barista drifted towards anime (eyeliner, lashes, glossy strand ha
 - **Barista:** `018_B_1`–`B_4` and `018_barista_green` (= B_1), with the same style rules: round white eyes with dot pupils, solid hair shapes, flat shading. She keeps her look: warm deep brown skin, long dark hair with curtain bangs, silver hoops, white ribbed top, dark apron.
 - Each is an **edit of the current file**: same canvas (2580×1432), same position, size, pose, outline silhouette and props, on flat `#00FF00`. Only the style of the face, hair and shading changes. Keep the poses' differences exactly as they are now (stroke, blink, sip, look, polishing, glance).
 - Deliver the 12 files plus a contact sheet that shows each composited over `018_scene.png`, then run the self-check (same rules as before, plus the M01 style table).
+
+**Round 4 also: a more natural reaction.** The user found the look to camera stiff and artificial. Three causes: a wide-eyed fixed stare, a frozen 1.3 s hold, and the same clip played backwards (blink included). Redraw `018_R_K1_look` in the new style as a **soft, friendly glance**: head lifted, very slight tilt, eyes on the viewer, small natural smile, relaxed brows. Add two new poses, both edits of the new K1:
+- `018_R_K2_smile`: the smile widens and her eyes soften into happy curves, as if pleased; her head tilts a touch more. Hands unchanged.
+- `018_R_K1_blink`: K1 with her eyes closed (a simple curved line).
