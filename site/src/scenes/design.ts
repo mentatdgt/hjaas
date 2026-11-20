@@ -86,7 +86,7 @@ export const design: SceneConfig = {
   keep: Object.values(cast.covers) as unknown as KeepBox[],
   // Of the edges the room could have, the first that fits the strips the edge is drawn in and leaves every
   // mushroom and tap box where it is (qa/tools/pencil.mjs pick).
-  edge: 6,
+  edge: 95,
   lines: 'pencil',
   strokes: STROKES,
   // A phone starts on Rachel at her table (about plate x 690-1070): centred on x 880 at either shape.

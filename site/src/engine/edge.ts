@@ -215,8 +215,8 @@ function washFrom(din: number, bottom: number, wander: number, swing: number, ou
  * - only around the boxes that need it: a box further in than the edge can reach changes nothing;
  * - the plate's outer rim stays bare paper all the way round: the 28 px rim fade applies to the lobe too, so
  *   from paper to the whole painting is never less than 28 px;
- * - no pencil band there: beside the box the pencil ends where the colour does, and comes back along the
- *   lobe's shoulders;
+ * - no pencil band there: beside a box with 80 px of room or less the pencil ends where the colour does,
+ *   and comes back along the lobe's shoulders (a box with 120 px or more keeps the ordinary pencil);
  * - everywhere else, the ordinary pencil edge.
  */
 export type KeepBox = readonly [number, number, number, number];
@@ -241,23 +241,25 @@ const HOLD = {
   least: 0.35,
   /** Toward a corner of the plate, where another side is the nearer one, the lobe draws back over this many px. */
   corner: 70,
+  /**
+   * With this little room or less, there is no pencil band beside the box: the pencil ends with the colour.
+   * With `roomy` or more, the pencil is left as it is (the box is barely within the edge's reach).
+   */
+  tight: 80,
+  roomy: 120,
 } as const;
 
 function holdsOf(keep: readonly KeepBox[] | undefined): Hold[] {
   const holds: Hold[] = [];
-  const radius = ORGANIC.radius * PLATE.w;
   for (const [left, top, right, bottom] of keep ?? []) {
-    const sides: Array<[Hold['side'], number, number, number, number, number, number]> = [
-      ['top', left, right, left, top, right, top],
-      ['bottom', left, right, left, bottom, right, bottom],
-      ['left', top, bottom, left, top, left, bottom],
-      ['right', top, bottom, right, top, right, bottom],
+    // Each side of the plate the box is within the edge's reach of.
+    const sides: Array<[Hold['side'], number, number, number]> = [
+      ['top', left, right, top],
+      ['bottom', left, right, PLATE.h - bottom],
+      ['left', top, bottom, left],
+      ['right', top, bottom, PLATE.w - right],
     ];
-    for (const [side, from, to, ax, ay, bx, by] of sides) {
-      // (Measured the way the edge measures: round the plate's corners.)
-      const room = Math.min(inside(ax, ay, radius), inside(bx, by, radius));
-      if (room < PENCIL_REACH) holds.push({ side, from, to, room });
-    }
+    for (const [side, from, to, room] of sides) if (room < PENCIL_REACH) holds.push({ side, from, to, room });
   }
   return holds;
 }
@@ -288,7 +290,7 @@ function lift(holds: readonly Hold[], x: number, y: number, din: number, wander:
     const paint = smooth((across - start) / width) * rim;
     if (paint > out.paint) out.paint = paint;
     // No pencil band beside the box: there the pencil ends with the colour. It comes back as the lobe draws back.
-    const beside = (1 - away) * mine;
+    const beside = (1 - away) * mine * smooth((HOLD.roomy - hold.room) / (HOLD.roomy - HOLD.tight));
     out.pencil = Math.max(out.paint, out.pencil - (out.pencil - out.paint) * beside);
   }
 }

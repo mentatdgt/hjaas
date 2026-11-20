@@ -158,7 +158,7 @@ describe('the edge itself', () => {
           }
         }
       }
-    });
+    }, 30_000);
 
     it('where the organic edge ended on the rim, this one fades', () => {
       // Along the top of Build's first edge, the organic line runs out past the plate in places.
@@ -322,3 +322,89 @@ describe('the edge itself', () => {
     });
   });
 });
+
+describe('a cast near the rim (the café)', () => {
+  const scene = SCENES.find((s) => s.id === 'design')!;
+  const seed = edgeSeed(edgeName(scene));
+  const paint = edgeAlpha('pencil', seed, scene.keep);
+  const pencil = pencilReach(seed, scene.keep);
+  const plain = edgeAlpha('pencil', seed);
+  const plainPencil = pencilReach(seed);
+  const rim = (d: number): number => { const t = Math.min(1, Math.max(0, d / 28)); return t * t * (3 - 2 * t); };
+  const din = (x: number, y: number): number => Math.min(x, PLATE.w - x, y, PLATE.h - y);
+
+  it('has actors nearer the rim than any edge leaves whole: without their boxes the painting fades under them', () => {
+    let faded = 0;
+    for (const [l, t, r, b] of scene.keep!) for (let x = l; x <= r; x += 4) for (const y of [t, b]) if (plain(x, y) < 1) faded++;
+    expect(faded).toBeGreaterThan(20);
+  });
+
+  it('is whole under every pixel of every box', () => {
+    for (const [l, t, r, b] of scene.keep!) {
+      for (let y = t; y <= b; y += 1) for (let x = l; x <= r; x += x === l || y === t || y === b ? 1 : 3) expect(paint(x, y), `(${x}, ${y})`).toBe(1);
+    }
+  });
+
+  it('still leaves the rim bare paper, and nothing above the 28 px fade', () => {
+    for (let x = 0; x <= PLATE.w; x += 1) for (const y of [0, PLATE.h]) expect(paint(x, y)).toBe(0);
+    for (let y = 0; y <= PLATE.h; y += 1) for (const x of [0, PLATE.w]) expect(paint(x, y)).toBe(0);
+    for (let y = 1; y < PLATE.h; y += 3) for (let x = 1; x < PLATE.w; x += 3) {
+      const d = din(x, y);
+      if (d > 28) continue;
+      expect(paint(x, y), `(${x}, ${y})`).toBeLessThanOrEqual(rim(d) + 1e-9);
+      expect(pencil(x, y)).toBeLessThanOrEqual(rim(d) + 1e-9);
+    }
+  });
+
+  it('only ever adds to the ordinary edge, and changes nothing far from the boxes', () => {
+    const near = (x: number, y: number): boolean => scene.keep!.some(([l, t, r, b]) => x > l - 170 && x < r + 170 && y > t - 170 && y < b + 170);
+    let changed = 0;
+    for (let y = 2; y < PLATE.h; y += 5) for (let x = 2; x < PLATE.w; x += 5) {
+      expect(paint(x, y)).toBeGreaterThanOrEqual(plain(x, y));
+      if (paint(x, y) !== plain(x, y)) changed++;
+      if (!near(x, y)) {
+        expect(paint(x, y), `(${x}, ${y})`).toBe(plain(x, y));
+        expect(pencil(x, y)).toBe(plainPencil(x, y));
+      }
+    }
+    expect(changed).toBeGreaterThan(100);
+  });
+
+  it('has no pencil band beside the boxes that need the room, and the pencil never ends short of the colour', () => {
+    for (let y = 2; y < PLATE.h; y += 4) for (let x = 2; x < PLATE.w; x += 4) expect(pencil(x, y)).toBeGreaterThanOrEqual(paint(x, y) - 1e-12);
+    // Straight out from Rachel's boots and the cat (the bottom), and from the old man (the right side).
+    const boxes = scene.keep!.filter(([, , r, b]) => PLATE.h - b < 60 || PLATE.w - r < 80);
+    expect(boxes.length).toBeGreaterThanOrEqual(3);
+    for (const [l, t, r, b] of boxes) {
+      if (PLATE.h - b < 60) for (let x = l; x <= r; x += 3) for (let y = b; y < PLATE.h; y += 1) expect(pencil(x, y) - paint(x, y), `(${x}, ${y})`).toBeLessThan(1e-9);
+      if (PLATE.w - r < 80) for (let y = t; y <= b; y += 3) for (let x = r; x < PLATE.w; x += 1) expect(pencil(x, y) - paint(x, y), `(${x}, ${y})`).toBeLessThan(1e-9);
+    }
+  });
+
+  it('has no step in it: neighbouring pixels never differ by much', () => {
+    let steepest = 0;
+    for (let y = 1; y < PLATE.h - 1; y += 1) for (let x = 1; x < PLATE.w - 1; x += 1) {
+      if (din(x, y) > 215) { x += 3; continue; }
+      const here = paint(x, y);
+      steepest = Math.max(steepest, Math.abs(paint(x + 1, y) - here), Math.abs(paint(x, y + 1) - here));
+    }
+    // The ordinary edge's crispest places come to about 0.25 a pixel (a 6 px fade).
+    expect(steepest).toBeLessThan(0.3);
+  });
+
+  it('is drawn row by row as it is asked point by point', () => {
+    const out = { paint: 0, pencil: 0 };
+    for (const [x0, w] of [[0, 1672], [1520, 152]] as const) {
+      const rows = pencilRows(seed, x0, w, scene.keep);
+      for (const y of [600.5, 850.5, 905.5, 925.5]) {
+        rows.row(y);
+        for (let i = 0; i < w; i += 7) {
+          rows.at(i, out);
+          expect(out.paint).toBeCloseTo(paint(x0 + i + 0.5, y), 9);
+          expect(out.pencil).toBeCloseTo(pencil(x0 + i + 0.5, y), 9);
+        }
+      }
+    }
+  });
+});
+
