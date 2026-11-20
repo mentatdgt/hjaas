@@ -26,7 +26,7 @@ What's decided. Everyone (Wren, Quinn, Fable, Foreman) follows this. If a task, 
 | 1 Build | Outfit 1: black tank, olive cargo pants, brown boots | Loose, wavy | Hammering a box, with taps and pauses | Looks up and beams, then thumbs-up (sometimes a wink) |
 | 2 Grow | Lab: white lab coat over a dark top, olive cargos, boots (`hjaas6.png`) | Low ponytail, dark tie | Mist → write on the clipboard → rotate the rack, unhurried | Looks up, thumbs-up (may change to a peace sign) |
 | 3 Design | Outfit 1 | Loose, wavy | Sketch on the iPad ↔ sip a hot coffee, two stages | Looks up at you with a warm smile, no gesture |
-| 4 Film | Outfit 2 top: black tank (cropped below the waist, seen from behind) | Bandana and bun | TBD: filming a presenter at night, Merlion and Marina Bay Sands behind (task 019) | Looks back over her shoulder at you and smiles |
+| 4 Film | Black tank, tan cargo shorts (seen from behind, cropped at the thighs) | Loose, wavy, no bandana | TBD: filming a presenter at night, Merlion and Marina Bay Sands behind (task 019) | Looks back over her shoulder at you and smiles |
 | 5 Travel | TBD | TBD | TBD | Look and a small wave |
 
 The reaction changes per scene so the thumbs-up doesn't repeat everywhere.

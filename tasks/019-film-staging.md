@@ -68,4 +68,10 @@ A night video shoot on the Merlion Park promenade in Singapore. The camera looks
 - [ ] No text anywhere.
 
 ## Revision notes
-_(Wren writes here after the user picks an option)_
+### Round 1, `frames/019-film-staging/incoming/019_r1.png` (2026-11-20)
+The user keeps this layout. **Hair changed: loose and wavy, no bandana, no bun** (this overrides the bun and bandana above). Rachel's current size and crop are fine. Edit this image (don't redraw it) and fix only these:
+1. Remove her glasses (the rim and arm at her temple).
+2. Loose, wavy dark-brown hair past the shoulders, no bandana (outfit 1 back view in `reference/hjaas1.png`).
+3. Move her a little left so her head and camera sit inside about 55–75% of the width, without covering the presenter or the Merlion's head. Same size and crop.
+4. Make the car a lower, longer fastback saloon, with the roof sloping to the tail. Same colours and position.
+5. Calm the leaves in the top-right corner a little.
