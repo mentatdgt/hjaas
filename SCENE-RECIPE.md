@@ -18,6 +18,8 @@ All at **the exact size of the approved scene** (no resizing; Wren normalises to
 4. **Poses:** edits of each anchor. Base pose, a small in-loop change, a blink, the second stage of the loop, the reaction. For the cast: 2–4 small loop poses each.
 5. A contact sheet and an honest self-check (max 3 attempts per image).
 
+**Rule (2026-11-21): a generated pose is never used whole.** Wren builds every pose as the approved base plus only the moving part, colour-matched (`tools/cafe_build5.py`). Ask Quinn for crops of one character through the Quinn loop (`QUINN-LOOP.md`).
+
 ## 3. QC (Wren)
 User drops the files into `wren-inbox` (or attaches a zip) and says **"QC NNN"**. Wren keys the green, overlays each piece on the scene to check registration, and checks identity, hands, outfit and style. Pass → `frames/NNN/approved/`; fail → numbered "Round N" notes in the task.
 
