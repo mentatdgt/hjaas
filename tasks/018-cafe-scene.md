@@ -238,3 +238,7 @@ The user's notes:
   - The barista's glance and polishing poses as edits of her master.
   - Then package v7 → audit → one preview to the user.
 - **Fan motion:** Quinn's drawn blades are rotated in perspective by `tools/cafe_fan.py`, slowly and with **no motion blur** (the blur made it look photographic).
+
+### Round 9, user notes at 03:44
+- **Child:** eyes alone looking down read wrong; his head must tilt down too. Job `008-cafe-child-head-down` (the whole head tilts 15–20° toward the paper; body unchanged). Wren pastes the whole head region.
+- **Fan:** the warped drawing moved non-physically (blades bending and stretching). Replaced by `tools/cafe_fan3.py`: a rigid three-blade model, its geometry fitted to Quinn's drawn fan (tip ellipse, blade width and root), rotating in its own plane at 6°/frame (24 rpm). It has a 12° blade pitch, correct front/back order, and is rendered in the drawn style (Quinn's colours, one shadow band, a constant 3 px outline). Quinn's hub, downrod and ceiling are used as drawn. Test: `round9/fan-spin-test-2.mp4`.
