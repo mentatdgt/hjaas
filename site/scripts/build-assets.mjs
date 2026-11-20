@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Copies the approved art into site/public/assets/ as WebP: scene1/ for scene 1's own art, shared/ for
 // the mushrooms and the logo, which every scene uses, scene2/ for the lab (Rachel's frames twice: as
-// delivered, and a lighter set for narrow screens).
+// delivered, and a lighter set for narrow screens). Each scene also gets the pencil lines of its edge.
 // The originals in frames/, scene/ and assets/ are only read, never changed.
 // Re-run with `npm run assets` whenever Wren swaps a file; nothing else needs editing.
 import { createHash } from 'node:crypto';
@@ -97,6 +97,31 @@ for (const [name, clip] of Object.entries(labFrames.clips)) {
   }
 }
 
+// The pencil lines of each scene's edge (scene/pencil/, made by tools/pencil_lines.py from the plates):
+// greyscale, the size of the plate, 255 a full pencil line. The edge is only drawn in four strips along the
+// plate's sides (src/engine/edge-band.json says how deep), so only those parts are shipped, as two pictures:
+// the top strip over the bottom one, and the left strip beside the right one. Lossless: they are used as
+// they are, grain and all.
+const band = JSON.parse(await readFile(join(site, 'src/engine/edge-band.json'), 'utf8'));
+const pencil = { lossless: true, effort: 6 };
+for (const [map, dir] of [['build-lines.png', 'scene1'], ['grow-lines.png', 'scene2']]) {
+  const lines = sharp(join(repo, 'scene/pencil', map)).greyscale().raw().toBuffer({ resolveWithObject: true });
+  const cut = async (pieces, width, height) => {
+    const { data, info } = await lines;
+    if (info.width !== 1672 || info.height !== 941 || info.channels !== 1) throw new Error(`scene/pencil/${map} is not a 1672 x 941 greyscale picture.`);
+    const picture = Buffer.alloc(width * height);
+    // Each piece: a rectangle of the map (x, y, w, h) and where it goes in the picture (left, top).
+    for (const [x, y, w, h, left, top] of pieces) {
+      for (let row = 0; row < h; row++) data.copy(picture, (top + row) * width + left, (y + row) * info.width + x, (y + row) * info.width + x + w);
+    }
+    return sharp(picture, { raw: { width, height, channels: 1 } });
+  };
+  const sideTop = band.top - band.lap;
+  const sideHeight = 941 - band.top - band.bottom + 2 * band.lap;
+  addMade(() => cut([[0, 0, 1672, band.top, 0, 0], [0, 941 - band.bottom, 1672, band.bottom, 0, band.top]], 1672, band.top + band.bottom), `${dir}/pencil-tb.webp`, pencil);
+  addMade(() => cut([[0, sideTop, band.side, sideHeight, 0, 0], [1672 - band.side, sideTop, band.side, sideHeight, band.side, 0]], 2 * band.side, sideHeight), `${dir}/pencil-lr.webp`, pencil);
+}
+
 const loop = 'frames/016-upscale/approved';
 const loopFrames = ['frame_01', 'frame_02', 'frame_03', 'frame_04', 'blink_half', 'blink_closed'];
 for (const f of loopFrames) {
@@ -146,8 +171,10 @@ for (const job of jobs.filter((j) => j.from && j.to.startsWith(join(out, 'rachel
 }
 
 // Several at a time: encoding is slow (a few seconds for one of Rachel's frames) and each uses one core.
+// (`npm run assets -- pencil` makes only the files with that word in their path: quicker, after one change.)
 let total = 0;
-const queue = [...jobs];
+const only = process.argv[2];
+const queue = jobs.filter((job) => !only || job.to.includes(only));
 const work = async () => {
   for (let job = queue.shift(); job; job = queue.shift()) {
     const { from, to, opts, resize, make } = job;

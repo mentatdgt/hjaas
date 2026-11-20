@@ -17,7 +17,8 @@ const ready = (page) => page.waitForFunction(() => window.__hj?.ready === true, 
 const arrived = (page, id) => page.waitForFunction((scene) => window.__hj?.scene?.config.id === scene && window.__hj.busy === false, id, { timeout: 40000 });
 const clean = (page) => page.evaluate(() => document.querySelectorAll('.hj-mushrooms').forEach((el) => el.classList.remove('is-debug')));
 const say = (label, value) => console.log(`${label}: ${typeof value === 'string' ? value : JSON.stringify(value)}`);
-const save = (name, data) => writeFile(`${out}${name}.json`, `${JSON.stringify(data, null, 1)}\n`);
+// (HJ_SAVE: write the result to this file instead, for a later round that must not overwrite review 05's record.)
+const save = (name, data) => writeFile(process.env.HJ_SAVE ?? `${out}${name}.json`, `${JSON.stringify(data, null, 1)}\n`);
 const MB = (bytes) => Math.round(bytes / 1e5) / 10;
 const label = (text, width, size = 15) => Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${size + 12}"><text x="4" y="${size + 2}" font-family="Helvetica, Arial, sans-serif" font-size="${size}" fill="#302e29">${text}</text></svg>`);
 

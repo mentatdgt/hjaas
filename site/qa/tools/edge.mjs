@@ -1,4 +1,8 @@
-// The painting's watercolour edge (reviews/scene-edge-feather.md): screenshots of every style, the check
+// The painting's watercolour edge, the rounds before the pencil (reviews/scene-edge-feather.md, scene-edge-organic.md).
+// The edge the site ships now is checked by qa/tools/pencil.mjs; `spots`, `rachel`, `pick` and `reveal` here read the
+// one-canvas edges of those rounds and are kept as their record.
+//
+// Screenshots of every style, the check
 // that no mushroom or tap box sits in the fade, and frame times while panning. Needs `npm run dev`.
 //
 //   node qa/tools/edge.mjs shots   a-round (the default), a, b and c, both scenes, three sizes; and compare.jpg

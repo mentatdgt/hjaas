@@ -45,8 +45,8 @@ Inside `src/engine/`:
 | `site.ts` | Builds the page (identity, scene menu, framed picture, caption, controls), keeps progress, and moves between scenes. |
 | `types.ts` | What a scene is, as data: `SceneConfig`. |
 | `scene.ts` | One scene built from its config: plate, character, mushrooms. |
-| `transition.ts`, `paint.ts` | How a picture arrives: the first-visit painting, the short brush between scenes, the 200 ms fades. |
-| `edge.ts` | The painting's edge: it melts into the paper like a drying wash, wandering in and out, crisp in places and wide in others, with rounded corners. Worked out once per scene from a seed. Also places each mushroom's tap box clear of it. |
+| `transition.ts`, `paint.ts` | How a picture arrives: the first-visit painting (the edge's pencil first, then the brush), the short brush between scenes, the short fades. |
+| `edge.ts` | The painting's edge: the colour fades into the paper along a wandering line, crisp in places and wide in others, and the room's lines carry on as pencil before trailing off. Rounded corners, and never a straight cut. Worked out per scene from a seed and drawn, at the plate's full size, in four strips along the plate's sides (`edge-band.json` says how deep). Also places each mushroom's tap box clear of it. |
 | `character.ts`, `player.ts`, `steps.ts` | A character's canvas (whole frames, or a patch over a still), her placement on the plate, and the player that shows her poses. |
 | `clips.ts` | Reads Wren's delivered format (`frames.json` + `routine.json`): stills, clips of patches, the routine, blinks, the reaction and its entry rule. |
 | `reel.ts` | Keeps a clip character's memory down: her patches stay as downloaded and are decoded only a few frames ahead of being shown, then given back. |
@@ -71,9 +71,14 @@ worked example), listed in `src/scenes/index.ts`. The menu shows whatever is lis
   none of their tap boxes, sits in the painting's soft edge, that each is at least 14 px tall and at least
   60% in view. A spot can be tucked behind something (`tuck`), seen through glass (`opacity`), or replaced
   by another without losing anyone's saved find (`replaced`);
-- optionally `edge`, a number that picks another of the room's possible edges. If the edge's wander
-  reaches a mushroom or the character, `node qa/tools/edge.mjs pick` lists, for each number, which mushrooms
-  would have to move and by how much; `node qa/tools/edge.mjs rachel` checks the character;
+- optionally `edge`, a number that picks another of the room's possible edges. The colour must be whole
+  under every pixel the character ever covers and under every mushroom: `node qa/tools/pencil.mjs pick`
+  tries 1500 edges and lists the ones that keep the character whole, with the mushrooms each would move
+  and by how much; `node qa/tools/pencil.mjs rachel` and `spots` check the result on the page;
+- `lines`, the pencil lines the edge trails off in. Put the scene's line map (greyscale, the plate's size,
+  made by `tools/pencil_lines.py`) in `scene/pencil/`, add it to the list in `scripts/build-assets.mjs` and
+  run `npm run assets`: it cuts the map to the edge's strips. Without it the colour fades the same way,
+  with no pencil;
 - the paint-in strokes;
 - what a phone shows first.
 
@@ -93,8 +98,10 @@ when someone opens its address directly.
 A scene's character is fetched when the scene is first opened: her stills first, then her clips.
 
 **Memory.** Only the scene on show keeps decoded images. When the visitor leaves a scene it gives back its
-room's picture and all of its character's frames but the one on her canvas (`Scene.rest()`); the downloaded
-files are kept, so coming back decodes them again while the brush is at work (`Scene.ready()`, `enter()`).
+room's picture, its edge and all of its character's frames but the one on her canvas (`Scene.rest()`); the
+downloaded files are kept, so coming back decodes them again while the brush is at work (`Scene.ready()`,
+`enter()`), and the edge is worked out again under the picture being left (`Scene.dress()`, a few
+milliseconds at a time).
 A clip character's clip frames are never all decoded even then (all of the lab's would be over 200 MB): each
 step of the routine names the frames that may follow it, `reel.ts` decodes those and gives the others back,
 and the reaction's frames stay decoded while the scene is on show. `npm run assets` also makes a lighter set
@@ -132,11 +139,11 @@ ignores them all, so nobody can skip the hunt with `?found=10`.
 | Add to the address | Effect |
 |---|---|
 | `?reset` | Forget saved progress first. |
-| `?intro=full`, `?intro=quick`, `?intro=off` | Choose the opening: `full` is the first-visit painting, `quick` the 200 ms reveal of a return visit, `off` none. |
+| `?intro=full`, `?intro=quick`, `?intro=off` | Choose the opening: `full` is the first-visit painting, `quick` the short reveal of a return visit, `off` none. |
 | `?found=9` | Start the opening scene with that many mushrooms found (not saved). `?found=10` shows the unlocked button. |
 | `?hint=5` | Seconds before the hint wiggle, instead of 60. |
 | `?seed=7` | Repeatable hammer rhythm and brush strokes. |
-| `?edge=a-round`, `?edge=a`, `?edge=b`, `?edge=c` | The earlier, even edges, for comparison. The site ships `organic`. |
+| `?edge=organic`, `?edge=a-round`, `?edge=a`, `?edge=b`, `?edge=c` | The earlier edges, for comparison: `organic` is the wash without the pencil (and with its straight cuts), the others the even feathers before it. The site ships `pencil`. |
 | `?slow=6` | Play the interface motion six times slower. |
 | `?debug` | Outline the mushroom hit areas and expose `window.__hj` (pose log, late-frame log). |
 

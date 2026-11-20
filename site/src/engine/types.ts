@@ -121,6 +121,12 @@ export interface SceneConfig {
    * Leave out for the first.
    */
   edge?: number;
+  /**
+   * The pencil lines the painting's edge trails off in: the name its two line maps start with, in `assets`
+   * (`pencil` for `pencil-tb.webp` and `pencil-lr.webp`; npm run assets cuts them from scene/pencil/).
+   * Leave out and the colour fades the same way, with no pencil.
+   */
+  lines?: string;
   /** The first-visit painting. The same strokes, played quickly, brush the scene in over another one. */
   strokes: readonly StrokePlan[];
   /**

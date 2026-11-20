@@ -207,14 +207,18 @@
   pointer-events: none;
 }
 
-/* The painting's edge: it fades into the paper along a wandering line (edge.ts). One canvas in the paper's
-   colour over the whole plate, above everything in it, so nothing ever shows past the edge. */
+/* The painting's edge: the colour fades into the paper along a wandering line, and the room's lines carry
+   on as pencil (edge.ts). A layer in the paper's colour above everything in the plate, so nothing ever
+   shows past the edge; its canvases are strips along the plate's sides, each placed by edge.ts. */
 .hj-edge {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
   pointer-events: none;
+}
+
+.hj-edge canvas {
+  position: absolute;
+  display: block;
 }
 
 /* Between scenes the sheet is a copy of the picture being left, and lies over the window itself. */
@@ -252,6 +256,7 @@
 .hj-scene.is-pre .hj-shadow,
 .hj-scene.is-pre .hj-rachel,
 .hj-scene.is-pre .hj-mushrooms,
+.hj-scene.is-pre .hj-edge,
 .hj-scene.is-pre .hj-caption-main {
   opacity: 0;
 }
@@ -260,13 +265,19 @@
   visibility: hidden;
 }
 
-/* A return visit, or reduced motion: no brushwork, everything shows together in 200 ms. */
+/* A return visit, or reduced motion: no brushwork. The pencil of the edge comes up first, in 120 ms, and
+   everything else together in 200 ms, starting as the pencil lands. (Not all at once: while the edge is
+   only part there, the picture under it would show right to the plate's rim.) */
+.hj-scene.is-revealing .hj-edge {
+  transition: opacity 120ms linear;
+}
+
 .hj-scene.is-revealing .hj-room,
 .hj-scene.is-revealing .hj-shadow,
 .hj-scene.is-revealing .hj-rachel,
 .hj-scene.is-revealing .hj-mushrooms,
 .hj-scene.is-revealing .hj-caption-main {
-  transition: opacity 200ms linear;
+  transition: opacity 200ms linear 100ms;
 }
 
 /* ---------- Mushrooms ---------- */

@@ -2,7 +2,8 @@
 // sit where the painting is at least 0.95 opaque. This samples the edge under every hiding spot of every scene.
 import { describe, expect, it } from 'vitest';
 import { SCENES } from '../scenes';
-import { DEFAULT_EDGE, EDGE_STYLES, SOLID, edgeAlpha, edgeName, edgeSeed, lowestAlpha, tapBox } from './edge';
+import BAND from './edge-band.json';
+import { DEFAULT_EDGE, EDGE_STYLES, SOLID, STRIPS, edgeAlpha, edgeName, edgeSeed, lowestAlpha, pencilReach, pencilRows, tapBox } from './edge';
 
 const PLATE = { w: 1672, h: 941 };
 // Width over height of the nine mushroom drawings (frames/003-mushrooms/approved, as built by npm run assets).
@@ -125,6 +126,136 @@ describe('the edge itself', () => {
     // And the turn is smooth: no step where the arc meets the straight edges.
     for (const y of [20, 40]) expect(Math.abs(alpha(r - 0.5, y) - alpha(r + 0.5, y))).toBeLessThan(0.05);
     for (const x of [20, 40]) expect(Math.abs(alpha(x, r - 0.5) - alpha(x, r + 0.5))).toBeLessThan(0.05);
+  });
+
+  // The pencil edge (reviews/scene-edge-pencil.md): the colour gives way to pencil, and nothing ends on a cut.
+  describe('the pencil edge', () => {
+    it('is the one the site ships', () => {
+      expect(DEFAULT_EDGE).toBe('pencil');
+    });
+
+    it('never ends on a straight cut: the plate\'s rim is paper all the way round, and the last 28 px always fade', () => {
+      for (const scene of SCENES) {
+        const paint = edgeAlpha('pencil', edgeSeed(edgeName(scene)));
+        const pencil = pencilReach(edgeSeed(edgeName(scene)));
+        for (let i = 0; i <= 2000; i++) {
+          const x = (PLATE.w * i) / 2000;
+          const y = (PLATE.h * i) / 2000;
+          for (const [px, py] of [[x, 0], [x, PLATE.h], [0, y], [PLATE.w, y]]) {
+            expect(paint(px, py)).toBe(0);
+            expect(pencil(px, py)).toBe(0);
+          }
+          // Just inside the rim there is next to nothing yet, and nowhere in the last 28 px is there more than
+          // that fade allows: 4% at 3 px, a half at 14 px.
+          for (const [px, py, dx, dy] of [[x, 0, 0, 1], [x, PLATE.h, 0, -1], [0, y, 1, 0], [PLATE.w, y, -1, 0]]) {
+            expect(paint(px + dx, py + dy)).toBeLessThan(0.005);
+            for (let d = 1; d <= 28; d++) {
+              const t = d / 28;
+              const most = t * t * (3 - 2 * t) + 1e-9;
+              expect(paint(px + d * dx, py + d * dy)).toBeLessThanOrEqual(most);
+              expect(pencil(px + d * dx, py + d * dy)).toBeLessThanOrEqual(most);
+            }
+          }
+        }
+      }
+    });
+
+    it('where the organic edge ended on the rim, this one fades', () => {
+      // Along the top of Build's first edge, the organic line runs out past the plate in places.
+      const organic = edgeAlpha('organic', edgeSeed('build'));
+      const paint = edgeAlpha('pencil', edgeSeed('build'));
+      const pencil = pencilReach(edgeSeed('build'));
+      let cuts = 0;
+      for (let x = 160; x < PLATE.w - 160; x += 3) {
+        if (organic(x, 1) > 0.5) cuts++;
+        expect(paint(x, 1)).toBeLessThan(0.005);
+        expect(pencil(x, 1)).toBeLessThan(0.005);
+      }
+      expect(cuts).toBeGreaterThan(10);
+    });
+
+    it('has the pencil reach further out than the colour, everywhere', () => {
+      const paint = edgeAlpha('pencil', edgeSeed('grow'));
+      const pencil = pencilReach(edgeSeed('grow'));
+      let ahead = 0;
+      for (let y = 2; y < PLATE.h; y += 7) {
+        for (let x = 2; x < PLATE.w; x += 7) {
+          expect(pencil(x, y)).toBeGreaterThanOrEqual(paint(x, y));
+          if (pencil(x, y) > 0.5 && paint(x, y) < 0.05) ahead++;
+        }
+      }
+      // A real band of pencil with no colour under it.
+      expect(ahead).toBeGreaterThan(1500);
+    });
+
+    it('pulls the colour in about 45 px from where the organic edge had it, less along the bottom', () => {
+      const organic = edgeAlpha('organic', edgeSeed('grow'));
+      const paint = edgeAlpha('pencil', edgeSeed('grow'));
+      /** Where the colour reaches a half, coming in from the top (or up from the bottom) at `x`. */
+      const half = (alpha: (x: number, y: number) => number, x: number, fromBottom: boolean): number => {
+        for (let d = 0; d < 300; d += 0.5) if (alpha(x, fromBottom ? PLATE.h - d : d) >= 0.5) return d;
+        return 300;
+      };
+      const shift = (fromBottom: boolean): number => {
+        const shifts: number[] = [];
+        for (let x = 200; x < PLATE.w - 200; x += 11) {
+          const before = half(organic, x, fromBottom);
+          // (Where the organic line was out past the rim, there is nothing to measure from.)
+          if (before > 2) shifts.push(half(paint, x, fromBottom) - before);
+        }
+        return shifts.sort((a, b) => a - b)[Math.floor(shifts.length / 2)];
+      };
+      expect(shift(false)).toBeGreaterThan(38);
+      expect(shift(false)).toBeLessThan(52);
+      expect(shift(true)).toBeGreaterThan(8);
+      expect(shift(true)).toBeLessThan(30);
+    });
+
+    it('is solid everywhere inside its four strips, for every scene: nothing is drawn there', () => {
+      // The strips are all the edge is drawn in (edge-band.json). Inside them, and under the laps where two
+      // of them meet, the painting must be whole, or it would be cut off along a straight line.
+      expect(STRIPS.left.y).toBe(BAND.top - BAND.lap);
+      for (const scene of SCENES) {
+        const paint = edgeAlpha('pencil', edgeSeed(edgeName(scene)));
+        for (let y = BAND.top - BAND.lap - 1; y <= PLATE.h - BAND.bottom + BAND.lap + 1; y += 1) {
+          for (let x = BAND.side - 1; x <= PLATE.w - BAND.side + 1; x += y < BAND.top + 2 || y > PLATE.h - BAND.bottom - 2 ? 1 : 3) {
+            if (paint(x, y) < 1) throw new Error(`${scene.id}: the painting is ${paint(x, y)} at ${x}, ${y}, inside the strips. Deepen edge-band.json (and run npm run assets) or choose another edge.`);
+          }
+        }
+        for (let y = BAND.top - BAND.lap - 1; y <= PLATE.h - BAND.bottom + BAND.lap + 1; y += 3) {
+          for (const x of [BAND.side - 1, BAND.side, PLATE.w - BAND.side, PLATE.w - BAND.side + 1]) expect(paint(x, y), `${scene.id} at ${x}, ${y}`).toBe(1);
+        }
+      }
+    });
+
+    it('is drawn row by row from tables of its noise, which give the answers the plain noise does', () => {
+      const seed = edgeSeed('grow:129');
+      const paint = edgeAlpha('pencil', seed);
+      const pencil = pencilReach(seed);
+      const out = { paint: 0, pencil: 0 };
+      for (const [x0, w] of [[0, PLATE.w], [0, 152], [PLATE.w - 152, 152], [700, 33]]) {
+        const rows = pencilRows(seed, x0, w);
+        for (let y = 0.5; y < PLATE.h; y += 13) {
+          rows.row(y);
+          for (let i = 0; i < w; i += 7) {
+            rows.at(i, out);
+            expect(Math.abs(out.paint - paint(x0 + i + 0.5, y))).toBeLessThan(1e-9);
+            expect(Math.abs(out.pencil - pencil(x0 + i + 0.5, y))).toBeLessThan(1e-9);
+          }
+        }
+      }
+    });
+
+    it('is solid well inside, whatever the seed', () => {
+      for (let n = 0; n < 40; n++) {
+        const paint = edgeAlpha('pencil', edgeSeed(`any:${n}`));
+        for (let i = 0; i <= 60; i++) {
+          const x = 211 + ((PLATE.w - 422) * i) / 60;
+          const y = 211 + ((PLATE.h - 422) * i) / 60;
+          for (const [px, py] of [[x, 211], [x, PLATE.h - 211], [211, y], [PLATE.w - 211, y]]) expect(paint(px, py)).toBe(1);
+        }
+      }
+    });
   });
 
   // The organic edge (reviews/scene-edge-organic.md): what makes it read as a drying wash and not a feather.

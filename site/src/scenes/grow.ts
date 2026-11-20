@@ -84,6 +84,10 @@ export const grow: SceneConfig = {
   character: { kind: 'clips', dir: 'rachel/', frames: 'frames.json', routine: 'routine.json', small: { dir: 'rachel-1.5x/', below: 900 } },
   spots: SPOTS,
   replaced: REPLACED,
+  // Of the edges this room could have, one that keeps the colour solid under every pixel Rachel ever covers
+  // (her feet are 63 px from the bottom) and leaves every mushroom where it is (qa/tools/pencil.mjs pick).
+  edge: 129,
+  lines: 'pencil',
   strokes: STROKES,
   // A phone starts on Rachel and the trolley (about plate x 680-1180): centred on x 930 at either shape.
   phoneStart: { wide: [554, 1306], tall: [616, 1244] },

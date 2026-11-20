@@ -3,17 +3,19 @@
 // 1. The first visit to a scene: its room is painted in over about five seconds, then the page goes quiet.
 //
 //   Element             Role        Starts    Lasts    Motion                      Relationship
-//   Brush strokes       Lead        0         4.32 s   paint, region by region     uneven and overlapping
-//   The wash            Support     4.06 s    0.42 s   the rest of the room fades up   overlaps the last strokes
+//   The edge's pencil   Support     0         0.32 s   fade                        the sketch, before any colour
+//   Brush strokes       Lead        0.32 s    4.32 s   paint, region by region     uneven and overlapping
+//   The wash            Support     4.38 s    0.42 s   the rest of the room fades up   overlaps the last strokes
 //   Mushrooms           Decoration  -         -        painted with the room       usable from the wash on
-//   Character + shadow  Lead        4.40 s    0.28 s   fade + 4 px settle          as the wash lands
-//   Caption             Support     4.56 s    0.20 s   fade + 4 px rise            just behind her (first showing only)
-//   Idle routine        -           4.74 s    -        first move at about 5.0 s   after a brief still moment
+//   Character + shadow  Lead        4.72 s    0.28 s   fade + 4 px settle          as the wash lands
+//   Caption             Support     4.88 s    0.20 s   fade + 4 px rise            just behind her (first showing only)
+//   Idle routine        -           5.06 s    -        first move at about 5.3 s   after a brief still moment
 //
 // 2. A switch to a scene already seen: the new picture is brushed in over the old one with the same
 //    strokes, played quickly: about 1.2 s of brush and a 0.25 s wash, 1.45 s in all.
 //
-// 3. A return visit, or reduced motion: no brushwork. Everything shows together in 200 ms.
+// 3. A return visit, or reduced motion: no brushwork. The edge's pencil in 120 ms, then everything else
+//    together in 200 ms: 300 ms in all.
 //
 // What stays still, and why: the page, the logo and the frame never move (the picture is the only event);
 // the mushrooms have no entrance of their own (they belong to the room, and the brush paints them with it).
@@ -37,6 +39,14 @@ export interface Stage {
 }
 
 const REVEAL_MS = 200;
+/** In a reveal, the edge's pencil has this long to itself before everything else starts (site.css). */
+const REVEAL_LEAD_MS = 100;
+/**
+ * A first-visit painting starts with the edge's pencil, alone: the sketch, then the colour. The brush waits
+ * for it, because the edge is also what stops the paint at the painting's shape, and must be all there
+ * before any paint is.
+ */
+const PENCIL_S = 0.32;
 /** How long the clear sheet stays on after the brush stops, before it is taken off the page. */
 const TIDY_MS = 2500;
 /** A switch between scenes: the brush, then the wash, in seconds. */
@@ -79,7 +89,7 @@ export class Transition {
     scene.work();
   }
 
-  /** A return visit, or reduced motion: everything together in 200 ms. */
+  /** A return visit, or reduced motion: the edge's pencil, then everything else together in 200 ms. */
   reveal(scene: Scene): Promise<void> {
     const { root } = this.stage;
     // One opacity transition on every part (site.css), run by the compositor.
@@ -91,7 +101,7 @@ export class Transition {
         root.classList.remove('is-revealing');
         scene.work();
         resolve();
-      }, REVEAL_MS + 20);
+      }, REVEAL_LEAD_MS + REVEAL_MS + 20);
     });
   }
 
@@ -123,6 +133,9 @@ export class Transition {
     plate.insertBefore(this.painter.canvas, character?.el ?? plate.querySelector('.hj-edge'));
     // The caption arrives with the picture the first time; afterwards it is already there and stays.
     const hidden: HTMLElement[] = [];
+    // The edge's pencil comes up first, in paint(). (Unseen, the edge hides nothing: the sheet does that.)
+    const edge = plate.querySelector<HTMLElement>('.hj-edge');
+    if (edge) hidden.push(edge);
     if (character) hidden.push(character.el);
     if (character?.shadow) hidden.push(character.shadow);
     if (first) hidden.push(caption);
@@ -138,16 +151,20 @@ export class Transition {
     const { character, hunt } = scene;
     if (!this.painter?.fresh) this.prepare(scene);
     const painter = this.painter!;
+    const edge = scene.plate.querySelector<HTMLElement>('.hj-edge');
 
     return new Promise((resolve) => {
       const clock = { t: 0 };
-      const wash = painter.seconds - 0.26;
+      const wash = PENCIL_S + painter.seconds - 0.26;
       const characterAt = wash + 0.34;
       const captionAt = wash + 0.5;
       const timeline = this.clock(painter, resolve);
 
+      // The pencil of the edge, on bare paper.
+      if (edge) timeline.fromTo(edge, { opacity: 0 }, { opacity: 1, duration: PENCIL_S, ease: 'power1.out' }, 0);
+
       // The strokes. GSAP's ticker is the clock, so the paint, the wash and the entrances cannot drift apart.
-      timeline.to(clock, { t: painter.seconds, duration: painter.seconds, ease: 'none', onUpdate: () => void painter.paintTo(clock.t) }, 0);
+      timeline.to(clock, { t: painter.seconds, duration: painter.seconds, ease: 'none', onUpdate: () => void painter.paintTo(clock.t) }, PENCIL_S);
 
       // The wash: whatever the brush missed comes up evenly. From here the mushrooms can be found.
       const washed = { amount: 0 };

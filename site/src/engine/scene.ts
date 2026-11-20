@@ -2,7 +2,7 @@
 // A scene knows nothing about the page around it; site.ts puts it in the window and takes it out again.
 import { PLATE, type Frame, asset, decodeBlob, fetchBlob, idle, loadFrame, loadPlate, releaseFrame, unloadFrame } from './assets';
 import { Character } from './character';
-import { edgeAlpha, edgeCanvas, edgeName, type EdgeStyle } from './edge';
+import { edgeAlpha, edgeName, makeEdge, type Edge, type EdgeStyle } from './edge';
 import { checkClips, clipPose, clipReaction, clipSchedule, clipsInUse, type ClipFrames, type ClipRoutine } from './clips';
 import { Hunt } from './mushrooms';
 import { Player, type Schedule } from './player';
@@ -262,10 +262,8 @@ export class Scene {
   /** The room's picture, and its address: a scene out of sight lets go of the decoded picture (see rest()). */
   private readonly room: HTMLImageElement;
   private readonly roomSrc: string;
-  /** The painting's soft edge: always the plate's top layer. */
-  private readonly edge: HTMLCanvasElement;
-  /** Resolves when the edge has been worked out. */
-  private readonly edgeDone: Promise<void>;
+  /** The painting's edge: always the plate's top layer. Drawn while the scene is on show (see dress()). */
+  private readonly edge: Edge;
   private readonly layout: ResizeObserver;
   private cast: Cast | null = null;
   /** Her first frames being fetched and decoded. */
@@ -276,7 +274,7 @@ export class Scene {
   private reacting: Promise<void> = Promise.resolve();
   private working = false;
 
-  private constructor(config: SceneConfig, host: SceneHost, plate: HTMLDivElement, room: HTMLImageElement, hunt: Hunt, spreadEdge: boolean) {
+  private constructor(config: SceneConfig, host: SceneHost, plate: HTMLDivElement, room: HTMLImageElement, hunt: Hunt) {
     this.config = config;
     this.host = host;
     this.plate = plate;
@@ -284,11 +282,9 @@ export class Scene {
     this.roomSrc = room.src;
     this.hunt = hunt;
     // Bottom to top: the room, her shadow, the mushrooms, (a first-visit painting's sheet of paper,) the
-    // character, and over them all the painting's soft edge.
-    const edge = edgeCanvas(host.edge.style, host.edge.seed(edgeName(config)), host.edge.paper, spreadEdge);
-    this.edge = edge.canvas;
-    this.edgeDone = edge.done;
-    plate.append(hunt.el, this.edge);
+    // character, and over them all the painting's edge.
+    this.edge = makeEdge(host.edge.style, host.edge.seed(edgeName(config)), host.edge.paper, config.lines && config.assets + config.lines);
+    plate.append(hunt.el, this.edge.el);
 
     this.layout = new ResizeObserver(() => {
       if (!plate.clientWidth) return;
@@ -333,9 +329,9 @@ export class Scene {
       onFind: host.onFind,
       onLand: host.onLand,
     });
-    // The opening scene's edge is needed at once; any other is worked out a slice at a time.
-    const scene = new Scene(config, host, plate, room, hunt, !withCharacter);
-    const ready = await cast;
+    const scene = new Scene(config, host, plate, room, hunt);
+    // The opening scene's edge is needed at once; any other scene's is made when it is opened (see dress()).
+    const [ready] = await Promise.all([cast, withCharacter ? scene.dress() : null]);
     if (ready) scene.attach(ready);
     return scene;
   }
@@ -397,7 +393,7 @@ export class Scene {
       if (character.shadow) character.shadow.style.opacity = '0';
     }
     if (character.shadow) this.plate.insertBefore(character.shadow, this.hunt.el);
-    this.plate.insertBefore(character.el, this.edge);
+    this.plate.insertBefore(character.el, this.edge.el);
     this.player = new Player(character, this.rhythm());
     this.player.onStep = (step) => cast.ahead?.(step.soon ?? []);
     if (this.host.onPose) this.player.onPose = this.host.onPose;
@@ -427,25 +423,30 @@ export class Scene {
   /**
    * The scene is out of sight (off the page, or under a copy of itself that the brush is rubbing away):
    * give back its decoded images. Only the visible scene keeps any: the two together are more than an
-   * older phone will give one page. What comes back, and when: the room's picture in ready(), her frames
-   * from enter() on, both from files already downloaded. (The edge stays: it is small, and making it a
-   * file to bring back later costs more of the page's time than it saves in memory.)
+   * older phone will give one page. What comes back, and when: the room's picture in ready(), the edge in
+   * dress(), her frames from enter() on. All from files already downloaded.
    */
   rest(): void {
     this.cast?.sleep();
     this.room.removeAttribute('src');
+    this.edge.release();
+  }
+
+  /** The scene is about to go on the page: resolves when its room's picture is decoded again. */
+  async ready(): Promise<void> {
+    if (this.room.getAttribute('src')) return;
+    this.room.src = this.roomSrc;
+    await this.room.decode().catch(() => {});
   }
 
   /**
-   * The scene is about to go on the page: resolves when its room's picture is decoded again and its edge
-   * has been worked out.
+   * Draw the painting's edge: resolves when it is complete (at once if it already is). It is worked out
+   * afresh each time the scene comes back, a few milliseconds at a time, which takes less of the page's
+   * time than keeping it would take of its memory. Call it once the scene being left has rested, and
+   * before anything of this one can be seen: until its edge is drawn, a plate shows right to its rim.
    */
-  async ready(): Promise<void> {
-    const room = this.room.getAttribute('src')
-      ? Promise.resolve()
-      : ((this.room.src = this.roomSrc), this.room.decode().catch(() => {}));
-    await this.edgeDone;
-    await room;
+  dress(): Promise<void> {
+    return this.edge.make();
   }
 
   /**
@@ -466,7 +467,7 @@ export class Scene {
   /** QA: what this scene's decoded images and canvases take, in bytes, from their sizes. */
   get memory(): Record<string, number> {
     const hers = this.cast?.memory?.() ?? { stills: 0, canvases: 0, clipFrames: 0, clipFramesPeak: 0, canvasWidth: 0 };
-    return { ...hers, room: this.room.getAttribute('src') ? PLATE.w * PLATE.h * 4 : 0, edge: this.edge.width * this.edge.height * 4 };
+    return { ...hers, room: this.room.getAttribute('src') ? PLATE.w * PLATE.h * 4 : 0, edge: this.edge.bytes };
   }
 
   /** The tab was hidden or shown: she picks up on the same pose when it comes back. */
@@ -522,7 +523,7 @@ export class Scene {
     this.hunt.sketch(ctx, origin);
     this.character?.sketch(ctx, origin);
     // A pixel wider all round, so no sliver of the room shows where the two drawings' rims meet.
-    ctx.drawImage(this.edge, r.left - origin.left - 1, r.top - origin.top - 1, r.width + 2, r.height + 2);
+    this.edge.draw(ctx, r.left - origin.left - 1, r.top - origin.top - 1, r.width + 2, r.height + 2);
   }
 
   destroy(): void {

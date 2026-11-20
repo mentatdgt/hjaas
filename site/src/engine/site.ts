@@ -156,7 +156,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   const jank: Array<[number, number]> = [];
   const longTasks: Array<[number, number]> = [];
   const poses: Array<[string, number]> = [];
-  const marks: Record<string, number> = { introStart: 0, introEnd: 0, switchStart: 0, switchEnd: 0 };
+  const marks: Record<string, number> = { introStart: 0, introEnd: 0, switchStart: 0, switchEnd: 0, dressMs: 0 };
   let ready = false;
   if (flags.debug) {
     try {
@@ -290,7 +290,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   );
 
   // How the opening scene arrives. A first visit gets the painting. A return visit, or reduced motion,
-  // gets everything together in 200 ms.
+  // gets the edge's pencil and then everything else together, in 300 ms.
   const opening: 'paint' | 'reveal' | 'off' =
     flags.intro === 'off'
       ? 'off'
@@ -457,6 +457,11 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     // The new scene's parts are drawn for the first time one frame after another, under the old picture
     // (or the blank sheet), not all in the frame of the tap: the room first, then her.
     const her = (hidden: boolean): Promise<void> => next.enter({ hidden }).catch(warn(config));
+    /** The new scene's edge, drawn. (QA: how long that took.) */
+    const dress = (): Promise<void> => {
+      const from = performance.now();
+      return next.dress().then(() => void (marks.dressMs = Math.round(performance.now() - from)));
+    };
 
     if (firstVisit && !calm) {
       // A scene never seen before gets its full painting, from a blank sheet. The painting brings her in,
@@ -477,7 +482,8 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       // arrive, so the two sets are never in memory together. (A frame of its own: not in the tap's.)
       old.rest();
       await frame1();
-      await her(true);
+      // Its own edge is drawn now that the other scene's has been given back, under the blank sheet.
+      await Promise.all([her(true), dress()]);
       await steadyFrames();
       await transition.paint(next);
     } else {
@@ -496,8 +502,12 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       await frame1();
       // Her frames are usually decoded by now. If the network is slow the brush does not wait for long:
       // she fades in when she arrives.
+      // The new scene's edge is drawn meanwhile, now that the old one's has been given back: nothing of the
+      // new picture shows until it is complete.
+      const dressed = dress();
       const inTime = await Promise.race([her(false).then(() => true), new Promise<boolean>((resolve) => window.setTimeout(() => resolve(false), WAIT_FOR_HER_MS))]);
       if (!inTime) next.arriveSoftly();
+      await dressed;
       if (destroyed) return;
       if (calm) {
         // No brushwork: the old picture fades off the new one in 200 ms.
