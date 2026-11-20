@@ -85,3 +85,10 @@ The layout, light, Rachel's position and the cat are approved. Edit this image (
 6. **Gaze balance:** the mum can keep watching her child. The child looks toward Rachel and the old man looks at his paper, so not everyone looks to the left.
 
 Deliver `018_scene.png` (1672×941) and **stop for approval** before steps 2–4.
+
+### Round 2, `frames/018-cafe-scene/incoming/018_scene_r2.png`. Layout APPROVED
+All Round 1 fixes landed. The user approves this layout, including the cat's new spot at the lower right beside Rachel's chair (it replaces the lower-left position in step 1). Two small edits before steps 2–4; nothing else moves:
+1. **Remove Rachel's glasses completely.** No frames, bridge or arms. Her eyes are drawn like the scene-1 and lab Rachel without glasses. Same face, smile, gaze down at the iPad. (Rule: Rachel never wears glasses, `BIBLE.md`.) The old man keeps his glasses.
+2. **The barista's cup is empty** (no coffee inside), since she's polishing it.
+
+Save the result as `018_scene.png`, then continue straight on to steps 2, 3 and 4 using it as the base. For step 2 the cat is removed from its new spot. For step 3, `018_cat_green` uses the cat's new spot.

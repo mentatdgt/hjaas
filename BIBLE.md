@@ -37,7 +37,7 @@ All original characters, described in words. Never based on a real person's phot
 - **Mum:** sits on the sunlit window seat, watching her child. She stays still (part of the plate).
 - **Child:** a boy at the left table on the middle chair, facing Rachel, colouring with crayons.
 - **Old man:** sits on one chair at the right table, reading a newspaper, with a kopi.
-- **Cat:** a ginger tabby asleep at the lower left near the chair.
+- **Cat:** a ginger tabby asleep on the floor at the lower right, beside Rachel's chair.
 - **Composition:** Rachel in the centre and in focus, with slight background softness. Gazes balanced, not everyone looking left. Corners kept open (the edge feathers them).
 
 ## 5. Working rules
