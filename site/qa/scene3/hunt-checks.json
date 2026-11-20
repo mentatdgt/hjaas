@@ -1,0 +1,251 @@
+{
+ "desktop": [
+  {
+   "id": "floor",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    18,
+    19
+   ]
+  },
+  {
+   "id": "bench",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    11,
+    11
+   ]
+  },
+  {
+   "id": "chair",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    15,
+    14
+   ]
+  },
+  {
+   "id": "sunlight",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    13,
+    12
+   ]
+  },
+  {
+   "id": "window-seat",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    14,
+    15
+   ]
+  },
+  {
+   "id": "cups",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    12,
+    11
+   ]
+  },
+  {
+   "id": "counter",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    16,
+    15
+   ]
+  },
+  {
+   "id": "niche",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    12,
+    11
+   ]
+  },
+  {
+   "id": "cat",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    14,
+    14
+   ]
+  },
+  {
+   "id": "corner",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    13,
+    17
+   ]
+  }
+ ],
+ "phone": [
+  {
+   "id": "floor",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    16.7,
+    16.9
+   ]
+  },
+  {
+   "id": "bench",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    10.4,
+    10.1
+   ]
+  },
+  {
+   "id": "chair",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    13.2,
+    12.4
+   ]
+  },
+  {
+   "id": "sunlight",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    12.2,
+    11.3
+   ]
+  },
+  {
+   "id": "window-seat",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    13.1,
+    13.5
+   ]
+  },
+  {
+   "id": "cups",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    10.8,
+    10.1
+   ]
+  },
+  {
+   "id": "counter",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    14.3,
+    13.5
+   ]
+  },
+  {
+   "id": "niche",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    10.9,
+    10.1
+   ]
+  },
+  {
+   "id": "cat",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    12.7,
+    12.4
+   ]
+  },
+  {
+   "id": "corner",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    12,
+    15.8
+   ]
+  }
+ ],
+ "tabOrder": [
+  "floor",
+  "bench",
+  "chair",
+  "sunlight",
+  "window-seat",
+  "cups",
+  "counter",
+  "niche",
+  "cat",
+  "corner"
+ ],
+ "overlapsOnThePhone": [],
+ "levels": {
+  "floor": "easy",
+  "window-seat": "easy",
+  "corner": "easy",
+  "bench": "medium",
+  "chair": "medium",
+  "niche": "medium",
+  "cat": "medium",
+  "sunlight": "hard",
+  "cups": "hard",
+  "counter": "hard"
+ }
+}

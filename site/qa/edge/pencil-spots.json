@@ -35,6 +35,25 @@
  },
  {
   "engine": "chrome",
+  "size": "1440x900",
+  "scene": "design",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 1,
+  "strongestPencilOverADrawing": 0,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [
+   "floor 0,-7px",
+   "sunlight 0,-10px",
+   "cat 0,-14px",
+   "corner -10,0px"
+  ],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "chrome",
   "size": "2560x1440",
   "scene": "build",
   "spots": 10,
@@ -60,6 +79,22 @@
   "smallestBox": 44,
   "everyBoxCoversItsDrawing": true,
   "boxesMovedInward": [],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "chrome",
+  "size": "2560x1440",
+  "scene": "design",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 1,
+  "strongestPencilOverADrawing": 0,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [
+   "cat 0,-7px"
+  ],
   "overlaps": [],
   "ok": true
  },
@@ -94,6 +129,25 @@
   "everyBoxCoversItsDrawing": true,
   "boxesMovedInward": [
    "floor 0,-4px"
+  ],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "webkit",
+  "size": "390x844",
+  "scene": "design",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 1,
+  "strongestPencilOverADrawing": 0,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [
+   "floor 0,-8px",
+   "sunlight 0,-11px",
+   "cat 0,-14px",
+   "corner -11,-1px"
   ],
   "overlaps": [],
   "ok": true
@@ -136,6 +190,25 @@
  },
  {
   "engine": "webkit",
+  "size": "360x740",
+  "scene": "design",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 1,
+  "strongestPencilOverADrawing": 0,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [
+   "floor 0,-10px",
+   "sunlight 0,-12px",
+   "cat -1,-15px",
+   "corner -13,0px"
+  ],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "webkit",
   "size": "320x640",
   "scene": "build",
   "spots": 10,
@@ -167,6 +240,25 @@
    "door 3,0px",
    "floor 0,-9px",
    "pipe -3,18px"
+  ],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "webkit",
+  "size": "320x640",
+  "scene": "design",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 1,
+  "strongestPencilOverADrawing": 0,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [
+   "floor 0,-12px",
+   "sunlight 1,-14px",
+   "cat 0,-17px",
+   "corner -14,-1px"
   ],
   "overlaps": [],
   "ok": true

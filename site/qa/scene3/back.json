@@ -1,0 +1,106 @@
+[
+ {
+  "browser": "chrome, 1440 × 900",
+  "laps": [
+   {
+    "awayIn": "build",
+    "cafeHeldWhileAwayMB": 0,
+    "msFromTheTapUntilEachActorIsDrawnAgain": {
+     "cat": 193,
+     "child": 193,
+     "oldman": 193,
+     "barista": 193,
+     "rachel": 193
+    },
+    "msFromTheTapUntilTheBrushStarts": 402,
+    "everyoneDrawnBeforeTheBrush": true,
+    "sheStartsFromHerRestPose": "R_A1_sketch",
+    "posesSheMissed": 0
+   },
+   {
+    "awayIn": "grow",
+    "cafeHeldWhileAwayMB": 0,
+    "msFromTheTapUntilEachActorIsDrawnAgain": {
+     "cat": 138,
+     "child": 138,
+     "oldman": 138,
+     "barista": 138,
+     "rachel": 138
+    },
+    "msFromTheTapUntilTheBrushStarts": 346,
+    "everyoneDrawnBeforeTheBrush": true,
+    "sheStartsFromHerRestPose": "R_A1_sketch",
+    "posesSheMissed": 0
+   },
+   {
+    "awayIn": "build",
+    "cafeHeldWhileAwayMB": 0,
+    "msFromTheTapUntilEachActorIsDrawnAgain": {
+     "cat": 132,
+     "child": 132,
+     "oldman": 132,
+     "barista": 132,
+     "rachel": 155
+    },
+    "msFromTheTapUntilTheBrushStarts": 344,
+    "everyoneDrawnBeforeTheBrush": true,
+    "sheStartsFromHerRestPose": "R_A1_sketch",
+    "posesSheMissed": 0
+   }
+  ],
+  "errors": [],
+  "ok": true
+ },
+ {
+  "browser": "webkit, iPhone 14 profile",
+  "laps": [
+   {
+    "awayIn": "build",
+    "cafeHeldWhileAwayMB": 0,
+    "msFromTheTapUntilEachActorIsDrawnAgain": {
+     "cat": 76,
+     "child": 76,
+     "oldman": 91,
+     "barista": 91,
+     "rachel": 91
+    },
+    "msFromTheTapUntilTheBrushStarts": 393,
+    "everyoneDrawnBeforeTheBrush": true,
+    "sheStartsFromHerRestPose": "R_A1_sketch",
+    "posesSheMissed": 0
+   },
+   {
+    "awayIn": "grow",
+    "cafeHeldWhileAwayMB": 0,
+    "msFromTheTapUntilEachActorIsDrawnAgain": {
+     "cat": 178,
+     "child": 178,
+     "oldman": 190,
+     "barista": 190,
+     "rachel": 211
+    },
+    "msFromTheTapUntilTheBrushStarts": 457,
+    "everyoneDrawnBeforeTheBrush": true,
+    "sheStartsFromHerRestPose": "R_A1_sketch",
+    "posesSheMissed": 0
+   },
+   {
+    "awayIn": "build",
+    "cafeHeldWhileAwayMB": 0,
+    "msFromTheTapUntilEachActorIsDrawnAgain": {
+     "cat": 78,
+     "child": 78,
+     "oldman": 78,
+     "barista": 78,
+     "rachel": 97
+    },
+    "msFromTheTapUntilTheBrushStarts": 345,
+    "everyoneDrawnBeforeTheBrush": true,
+    "sheStartsFromHerRestPose": "R_A1_sketch",
+    "posesSheMissed": 0
+   }
+  ],
+  "errors": [],
+  "ok": true
+ }
+]

@@ -23,7 +23,7 @@ const SHELF = 'brightness(0.95) saturate(0.88) sepia(0.1)';
 //           chanterelle against the counter's orange wood.
 //
 // None is on, behind or inside the box of any actor (design-cast.json: the test holds them to it), so a new
-// set of drawings with the same silhouettes moves nothing here. Every one is at least 16 px tall and in full
+// set of drawings with the same silhouettes moves nothing here. Every one is at least 18 px tall and in full
 // view.
 const SPOTS: Spot[] = [
   { id: 'floor', art: 1, x: 150, y: 868, h: 30, tint: LIT, grounded: true },

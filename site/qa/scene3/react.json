@@ -1,0 +1,165 @@
+[
+ {
+  "browser": "chrome, 1440 × 900",
+  "fromTheFind": [
+   "-3 ms: R_A2_stroke, 697 ms, dissolved in over 120",
+   "695 ms: R_A1_blink, 70 ms",
+   "762 ms: R_K1_blink, 70 ms",
+   "830 ms: R_K1_look, 434 ms",
+   "1263 ms: R_K2_smile, 1278 ms, dissolved in over 150",
+   "2546 ms: R_K1_look, 250 ms, dissolved in over 150",
+   "2796 ms: R_K1_blink, 70 ms",
+   "2862 ms: R_A1_blink, 80 ms",
+   "2946 ms: R_A1_sketch, 400 ms",
+   "3346 ms: R_A1_sketch, 397 ms",
+   "3745 ms: R_A1_sketch, 1284 ms, dissolved in over 120"
+  ],
+  "msFromTheFindToHerFirstMove": 695,
+  "msFromTheFindToTheSmile": 1263,
+  "posesSheMissed": 0,
+  "countAfter": 9,
+  "errors": [],
+  "theDissolve": {
+   "cat": {
+    "canvasPx": [
+     101,
+     58
+    ],
+    "furthestFromTheWeightedSumOutOf255": 2,
+    "atTheEndItIsTheNewPoseExactly": true
+   },
+   "child": {
+    "canvasPx": [
+     74,
+     153
+    ],
+    "furthestFromTheWeightedSumOutOf255": 2.5,
+    "atTheEndItIsTheNewPoseExactly": true
+   },
+   "oldman": {
+    "canvasPx": [
+     116,
+     230
+    ],
+    "furthestFromTheWeightedSumOutOf255": 2.6,
+    "atTheEndItIsTheNewPoseExactly": true
+   },
+   "barista": {
+    "canvasPx": [
+     79,
+     114
+    ],
+    "furthestFromTheWeightedSumOutOf255": 2.2,
+    "atTheEndItIsTheNewPoseExactly": true
+   },
+   "rachel": {
+    "canvasPx": [
+     241,
+     328
+    ],
+    "furthestFromTheWeightedSumOutOf255": 2.6,
+    "atTheEndItIsTheNewPoseExactly": true
+   },
+   "mum": {
+    "canvasPx": [
+     35,
+     26
+    ],
+    "furthestFromTheWeightedSumOutOf255": 2.3,
+    "atTheEndItIsTheNewPoseExactly": true
+   }
+  }
+ },
+ {
+  "browser": "webkit, iPhone 14 profile",
+  "fromTheFind": [
+   "-3 ms: R_A2_stroke, 697 ms, dissolved in over 120",
+   "683 ms: R_A1_blink, 70 ms",
+   "765 ms: R_K1_blink, 70 ms",
+   "832 ms: R_K1_look, 434 ms",
+   "1266 ms: R_K2_smile, 1278 ms, dissolved in over 150",
+   "2549 ms: R_K1_look, 250 ms, dissolved in over 150",
+   "2799 ms: R_K1_blink, 70 ms",
+   "2865 ms: R_A1_blink, 80 ms",
+   "2933 ms: R_A1_sketch, 400 ms",
+   "3347 ms: R_A1_sketch, 439 ms",
+   "3782 ms: R_A1_sketch, 1284 ms, dissolved in over 120"
+  ],
+  "msFromTheFindToHerFirstMove": 683,
+  "msFromTheFindToTheSmile": 1266,
+  "posesSheMissed": 0,
+  "countAfter": 9,
+  "errors": [],
+  "theDissolve": {
+   "cat": {
+    "canvasPx": [
+     246,
+     141
+    ],
+    "furthestFromTheWeightedSumOutOf255": 2,
+    "atTheEndItIsTheNewPoseExactly": true
+   },
+   "child": {
+    "canvasPx": [
+     180,
+     372
+    ],
+    "furthestFromTheWeightedSumOutOf255": 2,
+    "atTheEndItIsTheNewPoseExactly": true
+   },
+   "oldman": {
+    "canvasPx": [
+     283,
+     562
+    ],
+    "furthestFromTheWeightedSumOutOf255": 2,
+    "atTheEndItIsTheNewPoseExactly": true
+   },
+   "barista": {
+    "canvasPx": [
+     194,
+     280
+    ],
+    "furthestFromTheWeightedSumOutOf255": 2,
+    "atTheEndItIsTheNewPoseExactly": true
+   },
+   "rachel": {
+    "canvasPx": [
+     590,
+     804
+    ],
+    "furthestFromTheWeightedSumOutOf255": 2,
+    "atTheEndItIsTheNewPoseExactly": true
+   },
+   "mum": {
+    "canvasPx": [
+     86,
+     65
+    ],
+    "furthestFromTheWeightedSumOutOf255": 2,
+    "atTheEndItIsTheNewPoseExactly": true
+   }
+  }
+ },
+ {
+  "browser": "chrome, reduced motion",
+  "fromTheFind": [
+   "-713 ms: R_A1_sketch, 200 ms",
+   "-512 ms: R_A1_sketch, 200 ms",
+   "-312 ms: R_A1_sketch, 200 ms",
+   "-113 ms: R_A1_sketch, 200 ms",
+   "2 ms: R_K2_smile, 1250 ms",
+   "1253 ms: R_A1_sketch, 350 ms",
+   "1605 ms: R_A1_sketch, 200 ms",
+   "1804 ms: R_A1_sketch, 200 ms",
+   "2005 ms: R_A1_sketch, 200 ms",
+   "2205 ms: R_A1_sketch, 200 ms",
+   "2403 ms: R_A1_sketch, 200 ms"
+  ],
+  "msFromTheFindToHerFirstMove": 2,
+  "msFromTheFindToTheSmile": 2,
+  "posesSheMissed": 0,
+  "countAfter": 9,
+  "errors": []
+ }
+]

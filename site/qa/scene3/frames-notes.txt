@@ -1,0 +1,18 @@
+The café's opening painting: frame times in WebKit, iPhone 13 profile, production build, six cold loads.
+node qa/tools/intro-frames.mjs 6 iphone 0 http://localhost:4173/#design   (2026-11-20, about 23:40; load average about 5 to 7)
+fullGap: the longest frame from the sheet going in to 1 s after the intro ends; loopGap: the 4 s after; introMs: how long the painting took.
+
+run 1: {"endGap":24,"endGapAt":4969,"fullGap":30,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":297,"roomDone":313,"brush":751,"introMs":4920}
+run 2: {"endGap":20,"endGapAt":4592,"fullGap":34,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":134,"roomDone":149,"brush":517,"introMs":4958}
+run 3: {"endGap":19,"endGapAt":4026,"fullGap":41,"over50":0,"slow":[],"loopGap":40,"loop50":0,"roomReq":68,"roomDone":80,"brush":414,"introMs":4961}
+run 4: {"endGap":19,"endGapAt":4403,"fullGap":28,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":128,"roomDone":140,"brush":481,"introMs":4922}
+run 5: {"endGap":36,"endGapAt":4696,"fullGap":36,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":79,"roomDone":97,"brush":393,"introMs":4929}
+run 6: {"endGap":18,"endGapAt":4061,"fullGap":28,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":101,"roomDone":121,"brush":460,"introMs":4928}
+fullGap [30, 34, 41, 28, 36, 28]  over50 [0, 0, 0, 0, 0, 0]  loopGap [19, 19, 40, 19, 19, 19]
+
+Switching, with the processor slowed four times in Chrome: every short-brush switch has one frame of about 100 ms at the tap, to any scene.
+The build before this work does the same between Build and Grow (commit b727976, same night, two runs: 133, 83, 117, 100 ms; this build: 117, 83, 117, 83 ms).
+
+An earlier run of 'node qa/tools/scene3.mjs frames 3' the same night (its second lap began with a tap on the tab already open, since corrected), WebKit:
+  the café painted: 32, 19, 19 ms; the café at work: 19, 19, 19 ms; to Build and Grow for the first time: 21 to 44 ms; the short brush: 19 to 49 ms, and one 59 ms frame (to Design, run 3).
+The run kept in frames.json came after it; its third WebKit run met a busy moment on the Mac (a 298 ms frame during Build's first painting).

@@ -5,8 +5,8 @@
 //   node qa/tools/pencil.mjs compare   mock-up B beside the build at 1440×900, and 2× close-ups: pencil-compare.jpg
 //   node qa/tools/pencil.mjs rim       no straight cut: the drawn edge read back along the plate's rim, and the four corners close up
 //   node qa/tools/pencil.mjs spots     the drawn edge under every mushroom and tap box, at five sizes
-//   node qa/tools/pencil.mjs find      all 20 mushrooms clicked or tapped on the drawing itself, desktop and two phones
-//   node qa/tools/pencil.mjs rachel    the drawn edge under every pixel Rachel ever covers, both scenes
+//   node qa/tools/pencil.mjs find      all 30 mushrooms clicked or tapped on the drawing itself, desktop and two phones
+//   node qa/tools/pencil.mjs rachel    the drawn edge under every pixel Rachel (and in the café, every actor) ever covers
 //   node qa/tools/pencil.mjs reveal    a first-visit painting and the short reveal: the pencil with the colour, never before it
 //   node qa/tools/pencil.mjs quick [n] WebKit, phone, production build: frame times through the short reveal of a return visit
 //   node qa/tools/pencil.mjs switch    moving between scenes: the edge is drawn again before anything of the new scene shows
@@ -259,7 +259,7 @@ run.rim = async () => {
   const report = [];
   const browser = await chromium.launch({ channel: 'chrome' });
   const corners = [];
-  for (const scene of ['build', 'grow']) {
+  for (const scene of ['build', 'grow', 'design']) {
     const page = await (await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 2 })).newPage();
     await page.goto(`${base}?debug&reset&intro=off&seed=7#${scene}`);
     await ready(page);
@@ -317,9 +317,9 @@ run.rim = async () => {
     await page.close();
   }
   await browser.close();
-  await sheetOf(['build', 'grow'].map((scene) => [`${scene === 'build' ? 'Build' : 'Grow'}: the four corners at 1440 × 900, at twice the size (top left, top right, bottom left, bottom right), each with the paper beyond the plate's rim`, corners.filter((corner) => corner.scene === scene).map((corner) => corner.image)]), `${out}pencil-corners.jpg`);
+  await sheetOf(['build', 'grow', 'design'].map((scene) => [`${scene[0].toUpperCase() + scene.slice(1)}: the four corners at 1440 × 900, at twice the size (top left, top right, bottom left, bottom right), each with the paper beyond the plate's rim`, corners.filter((corner) => corner.scene === scene).map((corner) => corner.image)]), `${out}pencil-corners.jpg`);
   await save('pencil-rim.json', report);
-  console.log(report.every((r) => r.ok) ? 'NO STRAIGHT CUT: the rim is paper all the way round, in both scenes' : 'THE RIM IS NOT ALL PAPER');
+  console.log(report.every((r) => r.ok) ? 'NO STRAIGHT CUT: the rim is paper all the way round, in every scene' : 'THE RIM IS NOT ALL PAPER');
 };
 
 // The edge as it is actually drawn on the page, read back under every mushroom and every tap box.
@@ -330,7 +330,7 @@ run.spots = async () => {
     const browser = engine === 'webkit' ? await webkit.launch() : await chromium.launch({ channel: 'chrome' });
     const context = await browser.newContext(phone ? { ...devices['iPhone 14'], viewport: { width, height } } : { viewport: { width, height } });
     const page = await context.newPage();
-    for (const scene of ['build', 'grow']) {
+    for (const scene of ['build', 'grow', 'design']) {
       await page.goto(`${base}?debug&reset&intro=off&seed=7#${scene}`);
       await page.reload();
       await ready(page);
@@ -372,7 +372,7 @@ run.rachel = async () => {
   const browser = await chromium.launch({ channel: 'chrome' });
   const page = await (await browser.newContext({ viewport: { width: 1440, height: 900 } })).newPage();
   let buildBox = null;
-  for (const id of ['build', 'grow']) {
+  for (const id of ['build', 'grow', 'design']) {
     await page.goto(`${base}?debug&reset&intro=off&seed=7#${id}`);
     await page.reload();
     await ready(page);
@@ -489,7 +489,7 @@ run.reveal = async () => {
   const report = [];
   const chrome = await chromium.launch({ channel: 'chrome' });
   const safari = await webkit.launch();
-  for (const id of ['build', 'grow']) {
+  for (const id of (process.env.HJ_SCENES ?? 'build,grow').split(',')) {
     const errors = [];
     // 1. The sheet and the veil, frame by frame, at a quarter speed. Desktop Chrome and the iPhone profile.
     const watched = [];
@@ -578,7 +578,7 @@ run.reveal = async () => {
       await page.close();
     }
     // The same three moments on the phone (Build only: the stills are for looking at).
-    if (id === 'build') {
+    if (id === 'build' || id === 'design') {
       const context = await safari.newContext({ ...devices['iPhone 14'] });
       const page = await context.newPage();
       errors.push(...errorsOf(page));
@@ -587,7 +587,7 @@ run.reveal = async () => {
       await clean(page);
       for (const [name, at] of Object.entries(STILLS)) {
         await page.waitForFunction((t) => performance.now() - window.__hj.marks.introStart >= t, at, { polling: 'raf' });
-        await sharp(await page.screenshot()).jpeg({ quality: 90 }).toFile(`${out}pencil-reveal-iphone-${name}.jpg`);
+        await sharp(await page.screenshot()).jpeg({ quality: 90 }).toFile(`${out}pencil-reveal-${id === 'build' ? '' : `${id}-`}iphone-${name}.jpg`);
       }
       await context.close();
     }
@@ -632,7 +632,8 @@ run.reveal = async () => {
   }
   await chrome.close();
   await safari.close();
-  await save('pencil-reveal.json', report);
+  // (HJ_SCENES=design: the café's painting, kept beside the record of round 3b.)
+  await save(process.env.HJ_SCENES ? `pencil-reveal-${process.env.HJ_SCENES.replace(/,/g, '-')}.json` : 'pencil-reveal.json', report);
 };
 
 // The short reveal of a return visit, in WebKit on the iPhone profile, against the production build
@@ -946,7 +947,7 @@ run.find = async () => {
     const browser = await engine.launch(engine === chromium ? { channel: 'chrome' } : {});
     const errors = [];
     const row = { browser: name };
-    for (const scene of ['build', 'grow']) {
+    for (const scene of ['build', 'grow', 'design']) {
       // A page of its own for each scene: leaving a page mid-download logs errors that are not the site's.
       const page = await (await browser.newContext(options)).newPage();
       const seen = errorsOf(page);
@@ -971,13 +972,13 @@ run.find = async () => {
       errors.push(...seen);
     }
     row.errors = errors;
-    row.ok = ['build', 'grow'].every((scene) => row[scene].mushrooms === 10 && row[scene].found === 10 && row[scene].leftOnThePage === 0) && errors.length === 0;
+    row.ok = ['build', 'grow', 'design'].every((scene) => row[scene].mushrooms === 10 && row[scene].found === 10 && row[scene].leftOnThePage === 0) && errors.length === 0;
     report.push(row);
     say(name, row);
     await browser.close();
   }
   await save('pencil-find.json', report);
-  console.log(report.every((r) => r.ok) ? 'ALL 20 FOUND at every size' : 'SOME MUSHROOMS COULD NOT BE FOUND');
+  console.log(report.every((r) => r.ok) ? 'ALL 30 FOUND at every size' : 'SOME MUSHROOMS COULD NOT BE FOUND');
 };
 
 const command = process.argv[2];
