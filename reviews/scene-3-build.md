@@ -105,3 +105,6 @@ The user's notes on v6: the child's eyes, a photographic fan, Rachel and the bar
 
 ## Update 2026-11-21 07:40 (Wren): package v7.2 = v7.1 with the fan fixed
 User: the blades didn't attach to the fan's hub. Now the blades nearer the viewer pass in front of the motor and under the lower cap, the far ones go behind it, and the hub is Quinn's clean drawing with no frozen blade stub on it. Only `fan/fan_*.png` and `plate.png` changed. File swap.
+
+## Update 2026-11-21 08:00 (Wren): package v7.3 replaces v7.2 (fan only)
+User: the blades must pass in front of the motor casing (physics); only the round lower cap may stay in front of them. Done. Draw order is the casing, then all blades, then the cap. The hub is now Quinn's drawn hub with the blades removed (job 010), so no glossy or "AI" hub. Only `fan/fan_*.png` and `plate.png` changed.

@@ -107,16 +107,34 @@ body = hub.copy(); body[split:] = False; cap = hub.copy(); cap[:split] = False
 hubsrc = nofan.copy()                      # Quinn's clean hub (no blade roots on it), matched to the drawn hub's warmer tone
 sel = hub & ~ndi.binary_dilation(masks[0] | masks[1] | masks[2], iterations=8) & (drawn.mean(-1) > 60) & (nofan.mean(-1) > 40)
 gain = np.clip(np.median(drawn[sel], 0) / np.maximum(np.median(nofan[sel], 0), 1), 1.0, 1.3)   # gain only: keeps the outlines dark
-hubsrc = np.clip(nofan * gain, 0, 255)
+clean = np.clip(nofan * gain, 0, 255)
+# the drawn hub (matches the drawn blades), with the bits of blade roots that sat on it replaced by Quinn's clean hub
+bladecol = (np.abs(drawn - BASE).max(-1) < 30) | (np.abs(drawn - SHADE).max(-1) < 26)
+lab_, n_ = ndi.label(bladecol & hub); keepc = [i + 1 for i, z in enumerate(ndi.sum(bladecol & hub, lab_, range(1, n_ + 1))) if z > 40]
+roots = ndi.binary_dilation((masks[0] | masks[1] | masks[2]) | np.isin(lab_, keepc), iterations=5) & hub
+print('root px replaced on hub', int(roots.sum()))
+rw = ndi.gaussian_filter(roots.astype(np.float32), 1.5)[..., None]
+hubsrc = drawn * (1 - rw) + clean * rw
 print('hub gain', gain.round(3))
-def rgba(m): return np.dstack([hubsrc, ndi.gaussian_filter(m.astype(np.float32), 0.6) * 255])
+if len(sys.argv) > 8:                       # Quinn's drawn hub with the blades removed (job 010): the proper source
+    hg = L(sys.argv[8]); ha = 1 - np.clip((hg[..., 1] - np.maximum(hg[..., 0], hg[..., 2]) - 40) / 120, 0, 1)
+    ha = ndi.gaussian_filter(ha, 0.7); hub = (ha > 0.5); hubsrc = hg.copy()
+    edge = ndi.binary_dilation(ha < 0.99, iterations=3); cap_g = np.maximum(hg[..., 0], hg[..., 2]) * 1.0
+    hubsrc[..., 1] = np.where(edge & (hg[..., 1] > cap_g), cap_g, hg[..., 1])            # no green fringe
+    # also erase the old (glossy) hub from the background so none of it can peek out round the new one
+    old = ndi.binary_dilation(fanm & ~(masks[0] | masks[1] | masks[2]), iterations=4) & ~ndi.binary_erosion(hub, iterations=2)
+    nofan = _fill_from_ring(nofan, old) if '_fill_from_ring' in dir() else nofan
+    body = hub.copy(); body[split:] = False; cap = hub.copy(); cap[:split] = False
+def rgba(m):
+    a_ = ha if len(sys.argv) > 8 else ndi.gaussian_filter(m.astype(np.float32), 0.6)
+    return np.dstack([hubsrc, a_ * m.astype(np.float32) * 255 if len(sys.argv) > 8 else a_ * 255])
 body_rgba, cap_rgba = rgba(body), rgba(cap)
 def over(acc, x): return acc * (1 - x[..., 3:] / 255) + x[..., :3] * (x[..., 3:] / 255)
 n = int(round(120 / STEP)); frames = []; sweep = np.zeros((H, W), bool)
 for f in range(n):
     far, near = render(np.radians(f * STEP), 'far'), render(np.radians(f * STEP), 'near')
     sweep |= (far[..., 3] > 6) | (near[..., 3] > 6)
-    acc = over(over(over(over(nofan, far), body_rgba), near), cap_rgba)   # far blades, motor, near blades, cap
+    acc = over(over(over(over(nofan, body_rgba), far), near), cap_rgba)   # motor casing (above the blade plane), blades, lower cap (below it)
     frames.append(acc)
 sw = ndi.binary_dilation(sweep | fanm, iterations=8)
 yy, xx = np.where(sw); bx0, by0, bx1, by1 = xx.min(), yy.min(), xx.max() + 1, yy.max() + 1
