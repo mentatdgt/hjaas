@@ -1,6 +1,6 @@
 ---
 id: 020-film-scene
-status: approved                     # draft | open | delivered | changes-requested | approved
+status: changes-requested            # draft | open | delivered | changes-requested | approved
 frames: many              # see the lists below
 grid: separate images     # one image per file, ALL the same size as 020_scene.png and registered to it
 references:
@@ -97,3 +97,15 @@ Redo `020_R_K1_look.png` only, as an edit of `020_rachel_green.png`: the same lo
 
 ### QC round 2 (2026-11-20, Wren): APPROVED
 `020_R_K1_look` has no glasses, a warm smile and bare eyes, and the waist and shorts match the anchor exactly. All 14 pieces are in `approved/`. Next: Higgsfield in-betweens (quote first).
+
+### Round 3 (Quinn): restyle Rachel to the new master look
+While 020 was in progress, the café chat approved Rachel's master look, `reference/rachel/M01_rachel_model.png`. BIBLE §2 now requires it for every scene. Scene 4's Rachel was drawn from the old sheets, so her four files need the same restyle the café got. **The presenter, water, plate and scene stay as they are.**
+
+Files, each an EDIT of the current approved file, 1672×941, flat `#00FF00`: `020_rachel_green`, `020_R_A1_film`, `020_R_B1_glance`, `020_R_K1_look`.
+- **Hair:** M01's hair: big, soft waves with volume, M01's brown, drawn as a few solid shapes with **one** hard shadow tone. No gradients, no gloss. It may grow a little up and out to the right, but **never further left than now** (it must stay clear of the presenter's hands).
+- **Skin:** M01's warm tan, flat plus one hard shadow tone.
+- **K1 face (eye rule):** big round white eyes, each about ¼ of the face's width, almost touching; the small curved "C" nose overlaps their inner edges; dot pupils, no lashes. A warm smile like M01's. **No glasses.**
+- **Unchanged pixels:** camera, hands, arms' position, tank top, shorts, and the bottom crop. B1 stays a head tip toward the camera; K1 stays a look back over her shoulder at the viewer.
+- Outline weight: the same as the presenter's.
+
+Self-check: all four files keep the same pose differences; the hair never extends further left than before; there are no glasses; and the A1 and K1 hair and skin colours match M01. Deliver the four files plus one image of A1 and K1 next to the M01 face.
