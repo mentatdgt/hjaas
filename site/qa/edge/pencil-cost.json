@@ -1,0 +1,98 @@
+{
+ "chrome": {
+  "wholeMs": [
+   76,
+   83,
+   67,
+   76,
+   76
+  ],
+  "busyMs": [
+   69,
+   78,
+   60,
+   71,
+   67
+  ],
+  "longestHoldMs": [
+   7.5,
+   8.6,
+   7.6,
+   8.5,
+   8.2
+  ],
+  "megabytes": 2.6
+ },
+ "chrome, processor slowed 4x": {
+  "wholeMs": [
+   215,
+   186,
+   186,
+   197,
+   188
+  ],
+  "busyMs": [
+   211,
+   184,
+   184,
+   194,
+   186
+  ],
+  "longestHoldMs": [
+   14.1,
+   8.9,
+   9.3,
+   13.5,
+   9.3
+  ],
+  "megabytes": 2.6
+ },
+ "chrome, processor slowed 6x": {
+  "wholeMs": [
+   322,
+   306,
+   280,
+   276,
+   283
+  ],
+  "busyMs": [
+   320,
+   306,
+   280,
+   275,
+   282
+  ],
+  "longestHoldMs": [
+   19.4,
+   16,
+   10.3,
+   9.5,
+   12.9
+  ],
+  "megabytes": 2.6
+ },
+ "webkit, iPhone 14 profile": {
+  "wholeMs": [
+   96,
+   79,
+   49,
+   61,
+   73
+  ],
+  "busyMs": [
+   85,
+   67,
+   41,
+   47,
+   63
+  ],
+  "longestHoldMs": [
+   8,
+   7,
+   8,
+   7,
+   8
+  ],
+  "megabytes": 2.6
+ }
+}

@@ -1,0 +1,38 @@
+[
+ {
+  "build": {
+   "frames": 227,
+   "longestMs": 19,
+   "over50": 0
+  },
+  "grow": {
+   "frames": 228,
+   "longestMs": 27,
+   "over50": 0
+  }
+ },
+ {
+  "build": {
+   "frames": 227,
+   "longestMs": 21,
+   "over50": 0
+  },
+  "grow": {
+   "frames": 227,
+   "longestMs": 26,
+   "over50": 0
+  }
+ },
+ {
+  "build": {
+   "frames": 227,
+   "longestMs": 19,
+   "over50": 0
+  },
+  "grow": {
+   "frames": 227,
+   "longestMs": 32,
+   "over50": 0
+  }
+ }
+]

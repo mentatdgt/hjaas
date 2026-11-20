@@ -1,0 +1,226 @@
+{
+ "build": {
+  "rachelCovers": [
+   610,
+   400,
+   1198,
+   868
+  ],
+  "tried": 1500,
+  "solidUnderRachel": 439,
+  "usable": 50,
+  "inUse": 243,
+  "inUseRow": {
+   "n": 243,
+   "plateRxMoved": 0,
+   "moves": []
+  },
+  "best": [
+   {
+    "n": 243,
+    "plateRxMoved": 0,
+    "moves": []
+   },
+   {
+    "n": 518,
+    "plateRxMoved": 33,
+    "moves": [
+     "screed y-15",
+     "tiles y-17",
+     "toolbox y-1"
+    ]
+   },
+   {
+    "n": 908,
+    "plateRxMoved": 44,
+    "moves": [
+     "screed y-23",
+     "tiles y-16",
+     "toolbox y-5"
+    ]
+   },
+   {
+    "n": 165,
+    "plateRxMoved": 50,
+    "moves": [
+     "screed y-15",
+     "tiles y-34",
+     "toolbox y-1"
+    ]
+   },
+   {
+    "n": 201,
+    "plateRxMoved": 50,
+    "moves": [
+     "screed y-12",
+     "tiles y-28",
+     "ladder-foot y-7",
+     "toolbox y-3"
+    ]
+   },
+   {
+    "n": 624,
+    "plateRxMoved": 51,
+    "moves": [
+     "screed y-25",
+     "tiles y-26"
+    ]
+   },
+   {
+    "n": 595,
+    "plateRxMoved": 53,
+    "moves": [
+     "screed y-18",
+     "tiles y-18",
+     "toolbox y-17"
+    ]
+   },
+   {
+    "n": 1170,
+    "plateRxMoved": 53,
+    "moves": [
+     "screed y-17",
+     "tiles y-17",
+     "toolbox y-19"
+    ]
+   },
+   {
+    "n": 982,
+    "plateRxMoved": 54,
+    "moves": [
+     "screed y-22",
+     "tiles y-31",
+     "toolbox y-1"
+    ]
+   },
+   {
+    "n": 556,
+    "plateRxMoved": 55,
+    "moves": [
+     "screed y-16",
+     "tiles y-21",
+     "toolbox y-18"
+    ]
+   },
+   {
+    "n": 392,
+    "plateRxMoved": 56,
+    "moves": [
+     "screed y-17",
+     "tiles y-31",
+     "toolbox y-8"
+    ]
+   },
+   {
+    "n": 337,
+    "plateRxMoved": 57,
+    "moves": [
+     "screed y-11",
+     "tiles y-33",
+     "toolbox y-13"
+    ]
+   }
+  ]
+ },
+ "grow": {
+  "rachelCovers": [
+   700,
+   230,
+   1144,
+   878
+  ],
+  "tried": 1500,
+  "solidUnderRachel": 487,
+  "usable": 14,
+  "inUse": 129,
+  "inUseRow": {
+   "n": 129,
+   "plateRxMoved": 0,
+   "moves": []
+  },
+  "best": [
+   {
+    "n": 129,
+    "plateRxMoved": 0,
+    "moves": []
+   },
+   {
+    "n": 1104,
+    "plateRxMoved": 8,
+    "moves": [
+     "pipe y+8"
+    ]
+   },
+   {
+    "n": 447,
+    "plateRxMoved": 9,
+    "moves": [
+     "pipe y+9"
+    ]
+   },
+   {
+    "n": 775,
+    "plateRxMoved": 10,
+    "moves": [
+     "pipe y+10"
+    ]
+   },
+   {
+    "n": 877,
+    "plateRxMoved": 14,
+    "moves": [
+     "pipe y+14"
+    ]
+   },
+   {
+    "n": 717,
+    "plateRxMoved": 15,
+    "moves": [
+     "pipe y+15"
+    ]
+   },
+   {
+    "n": 1178,
+    "plateRxMoved": 20,
+    "moves": [
+     "pipe y+20"
+    ]
+   },
+   {
+    "n": 622,
+    "plateRxMoved": 26,
+    "moves": [
+     "pipe y+26"
+    ]
+   },
+   {
+    "n": 868,
+    "plateRxMoved": 26,
+    "moves": [
+     "pipe y+26"
+    ]
+   },
+   {
+    "n": 518,
+    "plateRxMoved": 27,
+    "moves": [
+     "pipe y+27"
+    ]
+   },
+   {
+    "n": 781,
+    "plateRxMoved": 36,
+    "moves": [
+     "pipe y+36"
+    ]
+   },
+   {
+    "n": 27,
+    "plateRxMoved": 40,
+    "moves": [
+     "pipe y+40"
+    ]
+   }
+  ]
+ }
+}

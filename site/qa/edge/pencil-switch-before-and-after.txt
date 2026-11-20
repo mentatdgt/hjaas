@@ -1,0 +1,10 @@
+Frame times over four switches, WebKit, iPhone 13 profile, production build, cold loads (a visitor who has seen both scenes).
+node qa/tools/review05.mjs switches 6 iphone   (HJ_URL for the build before this round, served from a scratch copy of commit b32ba30)
+Alternated: before, pencil, before, pencil; six cold loads each time. Longest frame of each switch, in ms.
+(A first batch of the pencil edge alone, with desktop, is in pencil-switch-frames-webkit-cold.json: iPhone first opening 54 65 36 39 32 58, the rest 23 to 32; desktop 27 to 44.)
+The Mac was not idle: iCloud's sync process was using about two thirds of one core throughout.
+
+before  to Grow (its first opening) 72 54 35 27 27 32   to Build 24 28 22 27 23 27   to Grow again 24 20 19 23 24 20   to Build again 21 23 23 21 23 45
+pencil  to Grow (its first opening) 42 35 32 32 59 31   to Build 28 30 30 33 31 25   to Grow again 23 24 24 29 39 30   to Build again 24 30 28 24 25 27
+before  to Grow (its first opening) 59 36 35 31 39 34   to Build 24 35 23 25 28 29   to Grow again 25 23 21 24 19 24   to Build again 22 26 23 24 20 46
+pencil  to Grow (its first opening) 53 34 29 32 32 35   to Build 27 29 26 24 30 32   to Grow again 25 24 28 28 26 29   to Build again 23 29 27 25 24 27

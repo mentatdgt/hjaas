@@ -1,0 +1,140 @@
+[
+ {
+  "scene": "build",
+  "moments": [
+   {
+    "speed": "a quarter (the pencil has 1280 ms to itself)",
+    "atMs": 672,
+    "pointsThatMustBeBarePaper": 622,
+    "notPaper": 0,
+    "pointsPastTheColoursEdge": 5776,
+    "paintThere": 0,
+    "pencilThere": 553,
+    "pointsInsideThePainting": 47495,
+    "painted": 0
+   },
+   {
+    "speed": "a quarter (the pencil has 1280 ms to itself)",
+    "atMs": 1155,
+    "pointsThatMustBeBarePaper": 622,
+    "notPaper": 0,
+    "pointsPastTheColoursEdge": 5776,
+    "paintThere": 0,
+    "pencilThere": 563,
+    "pointsInsideThePainting": 47495,
+    "painted": 0
+   },
+   {
+    "speed": "full (the pencil has 320 ms to itself)",
+    "atMs": 1221,
+    "pointsThatMustBeBarePaper": 622,
+    "notPaper": 0,
+    "pointsPastTheColoursEdge": 5776,
+    "paintThere": 0,
+    "pencilThere": 563,
+    "pointsInsideThePainting": 47495,
+    "painted": 16022
+   },
+   {
+    "speed": "full (the pencil has 320 ms to itself)",
+    "atMs": 2420,
+    "pointsThatMustBeBarePaper": 622,
+    "notPaper": 0,
+    "pointsPastTheColoursEdge": 5776,
+    "paintThere": 0,
+    "pencilThere": 563,
+    "pointsInsideThePainting": 47495,
+    "painted": 31899
+   },
+   {
+    "speed": "full (the pencil has 320 ms to itself)",
+    "atMs": 3604,
+    "pointsThatMustBeBarePaper": 622,
+    "notPaper": 0,
+    "pointsPastTheColoursEdge": 5776,
+    "paintThere": 0,
+    "pencilThere": 563,
+    "pointsInsideThePainting": 47495,
+    "painted": 39240
+   }
+  ],
+  "pencilFirst": true,
+  "theShortRevealWithReducedMotion": {
+   "screenshots": 19,
+   "pointChecks": 121562,
+   "barePaperPointsNotPaper": 0,
+   "pointsPastTheColourWithPaint": 0
+  },
+  "ok": true,
+  "errors": []
+ },
+ {
+  "scene": "grow",
+  "moments": [
+   {
+    "speed": "a quarter (the pencil has 1280 ms to itself)",
+    "atMs": 599,
+    "pointsThatMustBeBarePaper": 640,
+    "notPaper": 0,
+    "pointsPastTheColoursEdge": 5871,
+    "paintThere": 0,
+    "pencilThere": 570,
+    "pointsInsideThePainting": 46511,
+    "painted": 0
+   },
+   {
+    "speed": "a quarter (the pencil has 1280 ms to itself)",
+    "atMs": 1170,
+    "pointsThatMustBeBarePaper": 640,
+    "notPaper": 0,
+    "pointsPastTheColoursEdge": 5871,
+    "paintThere": 0,
+    "pencilThere": 602,
+    "pointsInsideThePainting": 46511,
+    "painted": 0
+   },
+   {
+    "speed": "full (the pencil has 320 ms to itself)",
+    "atMs": 1208,
+    "pointsThatMustBeBarePaper": 640,
+    "notPaper": 0,
+    "pointsPastTheColoursEdge": 5871,
+    "paintThere": 0,
+    "pencilThere": 602,
+    "pointsInsideThePainting": 46511,
+    "painted": 11410
+   },
+   {
+    "speed": "full (the pencil has 320 ms to itself)",
+    "atMs": 2408,
+    "pointsThatMustBeBarePaper": 640,
+    "notPaper": 0,
+    "pointsPastTheColoursEdge": 5871,
+    "paintThere": 0,
+    "pencilThere": 602,
+    "pointsInsideThePainting": 46511,
+    "painted": 30092
+   },
+   {
+    "speed": "full (the pencil has 320 ms to itself)",
+    "atMs": 3606,
+    "pointsThatMustBeBarePaper": 640,
+    "notPaper": 0,
+    "pointsPastTheColoursEdge": 5871,
+    "paintThere": 0,
+    "pencilThere": 602,
+    "pointsInsideThePainting": 46511,
+    "painted": 42096
+   }
+  ],
+  "pencilFirst": true,
+  "theShortRevealWithReducedMotion": {
+   "screenshots": 20,
+   "pointChecks": 130220,
+   "barePaperPointsNotPaper": 0,
+   "pointsPastTheColourWithPaint": 0
+  },
+  "ok": true,
+  "errors": []
+ }
+]

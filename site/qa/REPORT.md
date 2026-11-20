@@ -1011,3 +1011,136 @@ than 165 px.
   frame of each switch, in ms, for the iPhone profile and for desktop.
 - **A real phone.**
 - **The match with the mock-up is by eye.** The shapes cannot be the same: the mock-up's seed is its own.
+
+## Edge (pencil)
+
+`reviews/scene-edge-pencil.md`, on `site/scene-2`. `main` was pulled first (as a merge); nothing was merged
+into any other branch and no push failed.
+
+Both parts are built and are the default: **the painting never ends on a straight cut**, and **the colour
+gives way to pencil** (option B). Every check in the brief passes. One thing is done differently from the
+brief, on purpose: the edge is not drawn once and kept, it is drawn each time its scene goes on show
+(decision 1). That is what keeps the page under 80 MB.
+
+| | Asked for | What was done, and what was measured | Evidence |
+|---|---|---|---|
+| ✅ | No hard cuts (item 1) | The review's fix, as written: the plate's outer 28 px always fade to paper. Three readings, all the way round both plates: the formula on the rim is 0 at all 10,456 points; the edge as drawn on the page lets none of the painting through on the rim, or 1 and 2 px inside it, and never more than the 28 px fade allows; on the screen at 1440 × 900 every pixel along the plate's outline is paper (off by 1 of 255 at most). On the organic edge as it shipped, the painting was over half strength 1 px from the rim along 7.2% of Build's rim and 5.1% of Grow's. | `edge/pencil-rim.json`, `edge/pencil-corners.jpg` |
+| ✅ | Two edges from the same noise (item 2) | The colour ends 45 px further in than before (less along the bottom); the pencil reaches 10 px further out than the colour used to. Same seed and noise, so the pencil band follows the colour's wandering edge. | `src/engine/edge.ts`, `edge.test.ts` |
+| ✅ | The pencil lines, as made (item 3) | `scene/pencil/build-lines.png` and `grow-lines.png` are used as they are, lossless. The strokes break up toward the outside with the review's formula. | `scripts/build-assets.mjs`, `public/assets/scene1/pencil-*.webp`, `scene2/pencil-*.webp` |
+| ✅ | Drawn at the plate's full resolution, as strips (item 4) | Four strips along the plate's sides, at the plate's own pixels, scaled to the screen like the plate: 152 px deep at the top and sides, 112 px at the bottom. The overlay is `1 − aPaint` in the paper's colour, mixed toward graphite by `0.85 × pen`. | `src/engine/edge.ts`, `edge-band.json` |
+| ✅ | The mock-up beside the build, with close-ups | To my eye the character matches B: solid painting, the colour melting off, the room's lines carrying on in pencil and breaking up. | `edge/pencil-compare.jpg` |
+| ✅ | Screenshots at 1440 × 900, 390 × 844 and 360 × 740 | Both scenes; both phone sizes also panned fully left and right. | `edge/pencil-build-*.jpg`, `edge/pencil-grow-*.jpg` |
+| ✅ | Every mushroom and tap area at 0.95 or more, no pencil over a mushroom | Read back from the edge as drawn on the page, in Chrome at 1440 × 900 and 2560 × 1440 and in WebKit at 390 × 844, 360 × 740 and 320 × 640: **every drawing at 1.00, every tap box at 0.969 or more, no pencil over any drawing.** Every box is 44 px, covers its drawing and overlaps no other. | `edge/pencil-spots.json`, `edge.test.ts` |
+| ✅ | All 20 still findable | Every mushroom of both scenes clicked or tapped on the drawing itself, on desktop, the iPhone profile and a 320 × 640 phone: 20 of 20 each time. Grow's hunt rules (sizes, how much shows, Tab order, saved progress) still hold. | `edge/pencil-find.json`, `edge/pencil-hunt-checks.json` |
+| ✅ | Nudge minimally or choose a seed | Both. Build has a new edge (the 243rd of 1500 tried) and three floor mushrooms moved up: `screed` 7 px, `tiles` 7 px, `toolbox` 13 px. Grow has a new edge (the 129th) and nothing moved. | `src/scenes/build.ts`, `grow.ts`, `edge/pencil-pick.json` |
+| ✅ | Rachel fully opaque in every pose | Under every pixel any of her frames ever covers, in both scenes, by the formula and on the edge as drawn: **1.00 everywhere, and no pencil over her.** The fade comes no nearer to her than 6 px in Build (under her boots) and 10 px in Grow. | `edge/pencil-rachel.json` |
+| ✅ | The paint-in: the pencil first, then the colour | Done as asked, not the simpler way: the pencil fades up alone for 0.32 s, then the brush starts. Checked at a quarter of the speed: while the pencil is alone, none of the 47,495 points inside Build's painting (46,511 in Grow's) has any colour. Then at 1.2, 2.4 and 3.6 s: no bare-paper point shows anything, and none of the 5,776 points past the colour's edge (5,871 in Grow) shows paint, only paper or pencil. Recorded on desktop and the iPhone profile. | `edge/pencil-reveal.json`, `pencil-*-painting-*.jpg`, `pencil-film-*.mp4`, `pencil-film-*-stills.jpg` |
+| ✅ | Production gets only this edge | `pencil` is the default. `organic` and the older ones remain for `?edge=` in development. | `src/engine/edge.ts` |
+| ✅ | Memory under 80 MB on the phone profile | Build only **62.5 MB**; Build, then Grow **77.5 MB**; Grow, then Build **70.3 MB**. A new visitor: 66.9, 77.5 and 71.6 MB. (Last round: 63.0, 78.0, 70.8.) She never had to skip a frame. | `edge/pencil-memory.json` |
+| ✅ | Compute in slices, nothing over about 12 ms in WebKit | Drawing an edge is 50 to 95 ms of work in WebKit, in slices: the page was never held for more than 8 ms (9 ms in Chrome; 9 to 19 ms with the processor slowed 4× and 6×). | `edge/pencil-cost.json` |
+| ✅ | Panning stays smooth (WebKit) | 12 pans with the pencil edge, 12 with the organic one, alternated: longest frame 19 to 28 ms and 19 to 32 ms. None over 50 ms. | `edge/pencil-pan-before-and-after.txt` |
+| ✅ | Switching stays smooth (WebKit) | Measured this time (the Mac was calmer). Coming back to a scene, 54 switches on the iPhone profile: longest frame **23 to 39 ms**; the build before, alternated with it: 19 to 46 ms. Desktop: 27 to 44 ms. From the tap to the end of the brush a switch takes 1.57 to 1.60 s; with the organic edge 1.51 to 1.60 s. | `edge/pencil-switch-before-and-after.txt`, `pencil-switch-frames-webkit-cold.json`, `pencil-switch.json` |
+| ⚠️ | (not this round's) The lab's first opening | One frame of 53 to 65 ms in 5 of 18 cold loads on the iPhone profile. The build before this round does the same (54 to 72 ms in 3 of 12), so the edge is not the cause. See "Not done". | `edge/pencil-switch-before-and-after.txt` |
+
+`npm test`: 66 of 66 pass. Eight new tests hold the pencil edge: paper on the whole rim and nothing above
+the 28 px fade, a fade where the organic edge was cut, the pencil always reaching further than the colour,
+the colour about 45 px further in (less along the bottom), the painting whole inside the four strips for
+every scene, and the quick way of drawing it agreeing with the formula.
+
+### What the user will see
+
+- **The edge:** as in mock-up B. The amount of pencil depends on what the room has near its sides: Grow has
+  a lot (shelving, the door, the window), Build less along the top and bottom.
+- **A first visit:** a faint pencil sketch of the room's outer lines comes up on the bare page, and a third
+  of a second later the brush starts. The whole painting is about 5.25 s instead of 4.95.
+- **A return visit, or reduced motion:** the pencil comes up in 120 ms, everything else in 200 ms just
+  behind it: 300 ms in all instead of 200.
+
+### What changed in memory and loading
+
+- **The edge is 2.6 MB per scene** at full size in strips (the organic one was 1.6 MB at half size; a
+  full-plate canvas at full size would be 6.3 MB).
+- **Only the scene on show has an edge now.** Last round both scenes kept theirs (3.2 MB together). Now a
+  scene gives its edge back when it leaves and draws it again when it returns. That is why the peak went
+  down by 0.5 MB although the edge grew.
+- **Nothing else was freed.** The lab still keeps four frames decoded ahead.
+- **Page weight:** two small line pictures per scene, 118 KB for Build and 115 KB for Grow.
+- **The opening appears about 0.1 to 0.2 s later** on a cold load (the brush's sheet goes in 309 to 621 ms
+  after the page starts, against 224 to 349 ms), because the edge is drawn first. In exchange the opening
+  is smoother: see the next section.
+
+### The opening painting in WebKit (the open item from review 05)
+
+Ten cold loads of the production build on the iPhone profile, this build and the one before it:
+
+| | Longest frame through the whole painting | Runs with a frame over 50 ms |
+|---|---|---|
+| Pencil edge | 25 to 50 ms | 0 of 10 |
+| Before this round | 25 to 297 ms | 4 of 10 (78, 105, 246 and 297 ms, just before the brush starts) |
+
+The organic edge was worked out in one go as the scene was set up. The pencil edge is worked out in slices,
+which removes that stall. Her loop afterwards: 19 to 23 ms, no frame over 50. The Mac was not idle (iCloud's
+sync was still using about two thirds of one core), so this is not the "quiet Mac" run review 05 asked for,
+but the numbers are clean. (`edge/pencil-intro-frames-webkit.txt`)
+
+### Decisions I made
+
+1. **The edge is drawn each time a scene goes on show, not once.** The brief says "drawn once, so panning
+   and switching stay smooth", and also to free something if memory needs it. Keeping two full-size edges
+   would have put the lab at 80.1 MB. So the scene out of sight gives its edge back, like its other
+   pictures, and the edge is drawn again under the picture being left, before anything of the new scene
+   can show. Cost: 50 to 95 ms of work per switch, in slices of 7 ms, which adds 10 to 60 ms to a 1.5 s
+   switch. Nothing is drawn while panning, painting or looking. The other way to get under 80 MB was to
+   keep both edges and drop the one frame of Rachel a hidden scene keeps (77.7 MB); I can switch to that
+   if Wren prefers "once" to the letter.
+2. **Through every switch the edge is there first.** Checked in screenshots taken as fast as they come, in
+   Chrome and WebKit: no point past the colour's edge ever showed paint.
+3. **The strips are 152 px deep (112 at the bottom), not about 140.** The colour reaches up to 147 px in
+   with these two edges. A strip too shallow would cut the painting along a straight line, which is the
+   very fault this round removes. A test holds every scene to it.
+4. **Where two strips meet they overlap by 4 px,** each fading out as the other fades in, so that the two
+   together are exactly the edge. Canvases that simply touch can show a hairline at some zoom levels.
+5. **New edges for both scenes, chosen from 1500.** The colour now fades about 45 px further in, and
+   Rachel's feet are 73 px (Build) and 63 px (Grow) from the bottom. With last round's edges the fade
+   crossed her feet. About a third of all edges keep her whole; of those I took the one that moves the
+   mushrooms least. No edge leaves Build's three floor mushrooms where they were.
+6. **Build's three floor mushrooms are now 25, 29 and 17 px above where they were first placed** (small
+   moves over the edge rounds). They still stand on the floor and read correctly to my eye.
+7. **The pencil gets 0.32 s to itself before the brush.** The edge is also what stops the paint at the
+   painting's shape, so it has to be fully there before any paint is. Fading it in while the brush was
+   already at work would have shown the first strokes right to the plate's rim.
+8. **The short reveal is staggered for the same reason** (the pencil 120 ms, then the rest). With reduced
+   motion on, in about 20 screenshots through it per scene, no paint showed past the edge.
+9. **`?edge=organic` now shows the organic edge on the new seeds,** so it compares like with like. Some
+   mushrooms sit in its fade; it is for comparison only.
+10. **The overlay's colour follows the brief's formula.** The mock-up's script applies the pencil in a
+    slightly different order; the difference is under 1% and only where paint and pencil overlap.
+
+### For Wren
+
+- **Build's toolbox becomes a dark graphite patch at the right edge,** because its line map is nearly solid
+  there. Mock-up B shows the same. If it should be lighter, thin the line map there; nothing in the code
+  needs to change (`npm run assets` after replacing the file).
+- **The café:** put its line map in `scene/pencil/`, add one line to the list in
+  `scripts/build-assets.mjs`, set `lines: 'pencil'` in its config, and run `node qa/tools/pencil.mjs pick`.
+  The tool takes everything the scene's character ever covers and lists the edges that keep the colour
+  whole under it. It reads one character per scene: the café's cast and the mum will need their frames
+  added to that check.
+- **Few edges fit:** of 1500, 50 suit Build and 14 suit Grow (Rachel whole, inside the strips, no tap
+  boxes overlapping). If the café finds none, deepen the strips in `edge-band.json` (about 0.2 MB per
+  10 px) and run `npm run assets`.
+- **On a phone, the window's own left and right sides are a straight 12 px fade** where the room carries
+  on beyond the window. That is not the painting's edge and I did not touch it, but it is straight. The
+  plate's real edge shows when the visitor pans to either end.
+
+### Not done, or not verified
+
+- **A real phone.** Everything above is Playwright's WebKit and Chrome on this Mac.
+- **A fully quiet Mac.** The timings were clean this time, but iCloud's sync was running throughout.
+- **The lab's first opening** still has one frame of 53 to 72 ms in about a quarter of cold loads on the
+  iPhone profile, in this build and the one before. It falls about 40 to 55 ms after the tap. I did not
+  trace it this round.
+- **Memory is counted from picture and canvas sizes,** as before. While an edge is being drawn the page
+  also holds one strip's pixels as numbers (1 MB at most) for a few tens of milliseconds; that is not in
+  the figures, and it is never at the lab's peak.
+- **The match with the mock-up is by eye.** The shapes cannot be the same: the mock-up's seed is its own.

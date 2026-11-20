@@ -1,0 +1,168 @@
+[
+ {
+  "scene": "build",
+  "edge": 243,
+  "strips": [
+   [
+    0,
+    0,
+    1672,
+    152
+   ],
+   [
+    0,
+    829,
+    1672,
+    112
+   ],
+   [
+    0,
+    148,
+    152,
+    685
+   ],
+   [
+    1520,
+    148,
+    152,
+    685
+   ]
+  ],
+  "mostOfThePaintingShowingOnTheDrawnEdge": {
+   "0px": 0,
+   "1px": 0,
+   "2px": 0,
+   "4px": 0.008,
+   "8px": 0.086,
+   "14px": 0.345,
+   "20px": 0.824,
+   "27px": 1
+  },
+  "strongestPencilOnTheDrawnEdge": {
+   "0px": 0,
+   "1px": 0.006,
+   "2px": 0.012,
+   "4px": 0.048,
+   "8px": 0.161,
+   "14px": 0.375,
+   "20px": 0.625,
+   "27px": 0.815
+  },
+  "theMostTheRimFadeAllowsThere": {
+   "0px": 0.001,
+   "1px": 0.008,
+   "2px": 0.022,
+   "4px": 0.069,
+   "8px": 0.221,
+   "14px": 0.527,
+   "20px": 0.823,
+   "27px": 0.999
+  },
+  "formulaOnTheRim": {
+   "points": 10456,
+   "mostPaint": 0,
+   "mostPencil": 0
+  },
+  "theOrganicEdgeAsItShipped": {
+   "shareOfTheRimWhereThePaintingWasOverHalf1pxIn": "7.2%"
+  },
+  "onTheScreenAt1440x900": {
+   "alongThePlatesOutline": {
+    "screenPixels": 6498,
+    "furthestFromPaperOutOf255": 1
+   },
+   "1 CSS px inside it": {
+    "screenPixels": 6482,
+    "furthestFromPaperOutOf255": 3
+   },
+   "2 CSS px inside it": {
+    "screenPixels": 6466,
+    "furthestFromPaperOutOf255": 9
+   }
+  },
+  "ok": true
+ },
+ {
+  "scene": "grow",
+  "edge": 129,
+  "strips": [
+   [
+    0,
+    0,
+    1672,
+    152
+   ],
+   [
+    0,
+    829,
+    1672,
+    112
+   ],
+   [
+    0,
+    148,
+    152,
+    685
+   ],
+   [
+    1520,
+    148,
+    152,
+    685
+   ]
+  ],
+  "mostOfThePaintingShowingOnTheDrawnEdge": {
+   "0px": 0,
+   "1px": 0,
+   "2px": 0,
+   "4px": 0.008,
+   "8px": 0.055,
+   "14px": 0.341,
+   "20px": 0.816,
+   "27px": 1
+  },
+  "strongestPencilOnTheDrawnEdge": {
+   "0px": 0,
+   "1px": 0,
+   "2px": 0,
+   "4px": 0.006,
+   "8px": 0.071,
+   "14px": 0.417,
+   "20px": 0.446,
+   "27px": 0.845
+  },
+  "theMostTheRimFadeAllowsThere": {
+   "0px": 0.001,
+   "1px": 0.008,
+   "2px": 0.022,
+   "4px": 0.069,
+   "8px": 0.221,
+   "14px": 0.527,
+   "20px": 0.823,
+   "27px": 0.999
+  },
+  "formulaOnTheRim": {
+   "points": 10456,
+   "mostPaint": 0,
+   "mostPencil": 0
+  },
+  "theOrganicEdgeAsItShipped": {
+   "shareOfTheRimWhereThePaintingWasOverHalf1pxIn": "5.1%"
+  },
+  "onTheScreenAt1440x900": {
+   "alongThePlatesOutline": {
+    "screenPixels": 6498,
+    "furthestFromPaperOutOf255": 0
+   },
+   "1 CSS px inside it": {
+    "screenPixels": 6482,
+    "furthestFromPaperOutOf255": 0
+   },
+   "2 CSS px inside it": {
+    "screenPixels": 6466,
+    "furthestFromPaperOutOf255": 0
+   }
+  },
+  "ok": true
+ }
+]

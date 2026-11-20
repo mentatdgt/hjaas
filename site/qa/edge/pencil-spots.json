@@ -1,0 +1,174 @@
+[
+ {
+  "engine": "chrome",
+  "size": "1440x900",
+  "scene": "build",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 0.969,
+  "strongestPencilOverADrawing": 0,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [
+   "screed 0,-8px",
+   "tiles 0,-8px",
+   "toolbox 0,-3px"
+  ],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "chrome",
+  "size": "1440x900",
+  "scene": "grow",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 0.988,
+  "strongestPencilOverADrawing": 0,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [
+   "floor 0,-1px"
+  ],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "chrome",
+  "size": "2560x1440",
+  "scene": "build",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 0.992,
+  "strongestPencilOverADrawing": 0,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [
+   "screed 0,-4px"
+  ],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "chrome",
+  "size": "2560x1440",
+  "scene": "grow",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 1,
+  "strongestPencilOverADrawing": 0,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "webkit",
+  "size": "390x844",
+  "scene": "build",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 0.973,
+  "strongestPencilOverADrawing": 0,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [
+   "screed 0,-9px",
+   "tiles 0,-9px",
+   "ladder-foot 0,-1px",
+   "toolbox 0,-7px"
+  ],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "webkit",
+  "size": "390x844",
+  "scene": "grow",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 1,
+  "strongestPencilOverADrawing": 0,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [
+   "floor 0,-4px"
+  ],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "webkit",
+  "size": "360x740",
+  "scene": "build",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 0.984,
+  "strongestPencilOverADrawing": 0,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [
+   "screed 1,-11px",
+   "tiles 0,-10px",
+   "ladder-foot 0,-3px",
+   "toolbox 0,-9px"
+  ],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "webkit",
+  "size": "360x740",
+  "scene": "grow",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 1,
+  "strongestPencilOverADrawing": 0,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [
+   "floor 0,-7px",
+   "pipe 0,4px"
+  ],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "webkit",
+  "size": "320x640",
+  "scene": "build",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 0.969,
+  "strongestPencilOverADrawing": 0,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [
+   "screed 0,-13px",
+   "tiles 0,-13px",
+   "ladder-foot -1,-7px",
+   "toolbox 0,-12px"
+  ],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "webkit",
+  "size": "320x640",
+  "scene": "grow",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 0.984,
+  "strongestPencilOverADrawing": 0,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [
+   "door 3,0px",
+   "floor 0,-9px",
+   "pipe -3,18px"
+  ],
+  "overlaps": [],
+  "ok": true
+ }
+]
