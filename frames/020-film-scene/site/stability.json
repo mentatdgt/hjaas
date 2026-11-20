@@ -1,0 +1,54 @@
+{
+ "W_2": {
+  "changed_px": 13605,
+  "changed_pct_of_actor": 73.2
+ },
+ "W_3": {
+  "changed_px": 13358,
+  "changed_pct_of_actor": 71.9
+ },
+ "M_1_mid": {
+  "changed_px": 861,
+  "changed_pct_of_actor": 1.0
+ },
+ "M_1_closed": {
+  "changed_px": 1063,
+  "changed_pct_of_actor": 1.2
+ },
+ "M_1_blink": {
+  "changed_px": 598,
+  "changed_pct_of_actor": 0.7
+ },
+ "M_12": {
+  "changed_px": 12395,
+  "changed_pct_of_actor": 14.1
+ },
+ "M_2": {
+  "changed_px": 23319,
+  "changed_pct_of_actor": 26.5
+ },
+ "M_2_closed": {
+  "changed_px": 24382,
+  "changed_pct_of_actor": 27.7
+ },
+ "M_13": {
+  "changed_px": 15022,
+  "changed_pct_of_actor": 17.0
+ },
+ "M_3": {
+  "changed_px": 20213,
+  "changed_pct_of_actor": 22.9
+ },
+ "M_3_closed": {
+  "changed_px": 21276,
+  "changed_pct_of_actor": 24.1
+ },
+ "R_K0_turn": {
+  "changed_px": 42798,
+  "changed_pct_of_actor": 29.5
+ },
+ "R_K1_look": {
+  "changed_px": 82260,
+  "changed_pct_of_actor": 56.7
+ }
+}

@@ -4,16 +4,16 @@
   "h": 1432,
   "trim_x": 18,
   "to_plate_scale": 0.6572327044025157,
-  "note": "Caf\u00e9 canvas 2544x1432. Plate space = canvas px x 1672/2544. Draw the layers in order over plate.png; each still is drawn at its layer x,y. Within a layer, every still is pixel-identical to the first one outside the part that moves."
+  "note": "Caf\u00e9 canvas 2544x1432. Draw layers in order over plate.png; each still at its layer x,y. Within a layer every still is pixel-identical to the first outside the part that moves."
  },
  "plate": "plate.png",
  "layers": [
   {
    "actor": "fan",
-   "x": 634,
+   "x": 652,
    "y": 0,
-   "w": 747,
-   "h": 240,
+   "w": 708,
+   "h": 223,
    "stills": [
     "fan_00",
     "fan_01",
@@ -34,11 +34,7 @@
     "fan_16",
     "fan_17",
     "fan_18",
-    "fan_19",
-    "fan_20",
-    "fan_21",
-    "fan_22",
-    "fan_23"
+    "fan_19"
    ]
   },
   {
@@ -55,10 +51,10 @@
   },
   {
    "actor": "child",
-   "x": 291,
-   "y": 655,
-   "w": 180,
-   "h": 372,
+   "x": 295,
+   "y": 656,
+   "w": 179,
+   "h": 371,
    "stills": [
     "C_1",
     "C_2",
@@ -69,7 +65,7 @@
    "actor": "oldman",
    "x": 2176,
    "y": 613,
-   "w": 283,
+   "w": 282,
    "h": 562,
    "stills": [
     "O_1",
@@ -81,25 +77,30 @@
    "actor": "barista",
    "x": 1640,
    "y": 466,
-   "w": 194,
+   "w": 193,
    "h": 280,
    "stills": [
     "B_1",
-    "B_4"
+    "B_2_polish",
+    "B_3_polish",
+    "B_4_glance"
    ]
   },
   {
    "actor": "rachel",
-   "x": 1036,
-   "y": 586,
-   "w": 590,
-   "h": 803,
+   "x": 1037,
+   "y": 587,
+   "w": 588,
+   "h": 801,
    "stills": [
     "R_A1_sketch",
     "R_A2_stroke",
     "R_A1_blink",
-    "R_K1_blink",
+    "R_S1_reach",
+    "R_S2_lift",
+    "R_B1_sip",
     "R_K1_look",
+    "R_K1_blink",
     "R_K2_smile"
    ]
   },
@@ -136,10 +137,6 @@
   "fan_17": "fan/fan_17.png",
   "fan_18": "fan/fan_18.png",
   "fan_19": "fan/fan_19.png",
-  "fan_20": "fan/fan_20.png",
-  "fan_21": "fan/fan_21.png",
-  "fan_22": "fan/fan_22.png",
-  "fan_23": "fan/fan_23.png",
   "cat_1": "cat/cat_1.png",
   "cat_2": "cat/cat_2.png",
   "cat_3": "cat/cat_3.png",
@@ -150,12 +147,17 @@
   "O_2": "oldman/O_2.png",
   "O_3": "oldman/O_3.png",
   "B_1": "barista/B_1.png",
-  "B_4": "barista/B_4.png",
+  "B_2_polish": "barista/B_2_polish.png",
+  "B_3_polish": "barista/B_3_polish.png",
+  "B_4_glance": "barista/B_4_glance.png",
   "R_A1_sketch": "rachel/R_A1_sketch.png",
   "R_A2_stroke": "rachel/R_A2_stroke.png",
   "R_A1_blink": "rachel/R_A1_blink.png",
-  "R_K1_blink": "rachel/R_K1_blink.png",
+  "R_S1_reach": "rachel/R_S1_reach.png",
+  "R_S2_lift": "rachel/R_S2_lift.png",
+  "R_B1_sip": "rachel/R_B1_sip.png",
   "R_K1_look": "rachel/R_K1_look.png",
+  "R_K1_blink": "rachel/R_K1_blink.png",
   "R_K2_smile": "rachel/R_K2_smile.png",
   "M_blink_half": "mum/M_blink_half.png",
   "M_blink_closed": "mum/M_blink_closed.png"

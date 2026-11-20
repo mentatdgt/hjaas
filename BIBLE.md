@@ -26,7 +26,7 @@ What's decided. Everyone (Wren, Quinn, Fable, Foreman) follows this. If a task, 
 | 1 Build | Outfit 1: black tank, olive cargo pants, brown boots | Loose, wavy | Hammering a box, with taps and pauses | Looks up and beams, then thumbs-up (sometimes a wink) |
 | 2 Grow | Lab: white lab coat over a dark top, olive cargos, boots (`hjaas6.png`) | Low ponytail, dark tie | Mist → write on the clipboard → rotate the rack, unhurried | Looks up, thumbs-up (may change to a peace sign) |
 | 3 Design | Outfit 1 | Loose, wavy | Sketch on the iPad ↔ sip a hot coffee, two stages | Looks up at you with a warm smile, no gesture |
-| 4 Film | Black tank, tan cargo shorts (seen from behind, cropped at the thighs) | Loose, wavy, no bandana | Filming the presenter with a DSLR (red REC dot blinks) ↔ an occasional glance down at the camera screen (task 020) | Looks back over her shoulder at you and smiles |
+| 4 Film | Black tank, tan cargo shorts (seen from behind, cropped at the thighs) | Loose, wavy, no bandana | Holds still, filming the presenter with a DSLR; the screen shows him live and the red REC dot blinks (no head movement) | Looks back over her shoulder at you and smiles |
 | 5 Travel | TBD | TBD | TBD | Look and a small wave |
 
 The reaction changes per scene so the thumbs-up doesn't repeat everywhere.
@@ -38,7 +38,8 @@ All original characters, described in words. Never based on a real person's phot
 - **Child:** a boy at the left table on the middle chair, colouring with crayons. He looks down at his drawing with his mouth closed, and now and then looks up at his mum and grins.
 - **Old man:** sits on one chair at the right table, reading a newspaper, with a kopi.
 - **Cat:** a ginger tabby asleep on the floor at the lower right, beside Rachel's chair.
-- **Ceiling fan:** turns slowly (rendered from the plate by `tools/cafe_fan.py`).
+- **Rendering in the café (user, 2026-11-21):** everyone is painted like the café's own characters (child, mum): warm brown outlines, soft painted shading, the warm window light. Rachel and the barista keep their model-sheet *drawing* (faces, round eyes, hair shapes) but get this rendering. Black outlines and flat fills look pasted in here.
+- **Ceiling fan:** turns slowly, hand-drawn blades, no motion blur (rendered from the plate by `tools/cafe_fan.py`).
 - **Composition:** Rachel in the centre and in focus, with slight background softness. Gazes balanced, not everyone looking left. Corners kept open (the edge feathers them).
 
 ## 4b. Supporting cast (film)

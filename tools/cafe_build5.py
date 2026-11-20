@@ -65,6 +65,12 @@ lab, n = ndi.label(white); sz = ndi.sum(white, lab, range(1, n + 1)); white = np
 ex0, ey0, ex1, ey1 = bbox_of(white, 14)
 z = np.zeros_like(white); z[ey0:ey1, ex0:ex1] = True
 bl = K('R_A1_blink'); poses['R_A1_blink'] = paste(A1, fit(bl, A1, z), z, 3.0); zones['R_A1_blink'] = z
+# sip: three drawn poses. Arms, cup and stylus move; the head only moves at the sip itself.
+below = np.zeros(A1.shape[:2], bool); below[770:, :] = True
+s1 = K('R_S1_reach'); z = zone(A1, s1, minsize=60) & below; S1 = paste(A1, s1, z); poses['R_S1_reach'] = S1; zones['R_S1_reach'] = z
+s2 = K('R_S2_lift'); z2 = zone(A1, s2, minsize=60) & below; S2 = paste(A1, s2, z2)
+ez = zones['R_A1_blink']; S2 = paste(S2, fit(s2, A1, ez), ez, 3.0); poses['R_S2_lift'] = S2; zones['R_S2_lift'] = z2 | ez
+b1 = K('R_B1_sip'); zb = zone(S2, b1, thr=14, minsize=400, grow=8); poses['R_B1_sip'] = paste(S2, b1, zb); zones['R_B1_sip'] = zb | zones['R_S2_lift']
 K2 = K('R_K2_smile'); hz = zone(A1, K2, thr=14, minsize=1500, grow=8)
 baseK = paste(A1, K2, hz); poses['R_K2_smile'] = baseK; zones['R_K2_smile'] = hz
 k1b = K('R_K1_blink'); fz = zone(K2, k1b, thr=14, minsize=40) & hz
@@ -99,7 +105,7 @@ plate = np.asarray(Image.open(f'{A}/018_plate.png').convert('RGB')).astype(np.fl
 os.makedirs(OUT, exist_ok=True)
 Image.fromarray(plate[:, TRIM:TRIM + CW].astype(np.uint8)).save(f'{OUT}/plate.png')
 actors = {'cat': ['cat_1', 'cat_2', 'cat_3'], 'child': ['C_1', 'C_2', 'C_3'], 'oldman': ['O_1', 'O_2', 'O_3'],
-          'barista': ['B_1', 'B_4'], 'rachel': ['R_A1_sketch', 'R_A2_stroke', 'R_A1_blink', 'R_K1_blink', 'R_K1_look', 'R_K2_smile']}
+          'barista': ['B_1', 'B_4'], 'rachel': ['R_A1_sketch', 'R_A2_stroke', 'R_A1_blink', 'R_S1_reach', 'R_S2_lift', 'R_B1_sip', 'R_K1_blink', 'R_K1_look', 'R_K2_smile']}
 man = {'canvas': {'w': CW, 'h': CH, 'trim_x': TRIM, 'to_plate_scale': 1672 / CW,
         'note': 'Café canvas 2544x1432. Plate space = canvas px x 1672/2544. Draw the layers in order over plate.png; each still is drawn at its layer x,y. Within a layer, every still is pixel-identical to the first one outside the part that moves.'},
        'plate': 'plate.png', 'layers': [], 'stills': {}, 'clips': {}}

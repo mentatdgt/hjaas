@@ -130,3 +130,34 @@ Higgsfield prompts will say "talking animatedly". If a clip's mouth looks wrong,
 - `approved/` is updated; the old Rachel files are in `pre-round3/`. `approved/020_scene.png` is rebuilt (plate + W_1 + M_1 + R_A1).
 - **Talking:** cycle M_x ↔ M_x_closed (+ M_1_mid in M_1) at about 4–7 swaps a second, with pauses; random blinks in M_1.
 - Next: Higgsfield, clip 1 first (M_1 → M_2, 4.5 credits), after the user's OK.
+
+### Round 4 (2026-11-21, Wren): no AI video; drawn in-betweens through the Quinn loop
+The café showed that Kling redraws flat-style faces (BIBLE §5: no AI video for flat-style faces), so **scene 4 buys no Higgsfield clips** (that saves the 18 credits quoted).
+- **No-flicker check:** the presenter's poses already change only his arms or mouth. In K1, Quinn had redrawn her shorts by a pixel or two, so Wren locked everything below the tank hem (y ≥ 765) to A1. The original is kept as `incoming/round3b/020_R_K1_look_unlocked.png`.
+- **Loop jobs** (in `~/hjaas/wren-inbox/quinn/jobs/`; copies in `jobs/`): `020a-film-presenter` → M_12 and M_13 (arms halfway to the pointing pose and to hands together); `020b-film-rachel-turn` → R_K0 (head in profile, halfway through the turn). Crops: presenter x440–1080, y240–880; Rachel x840–1540, y241–941; both scaled to 1024. Wren pastes back only the arms (presenter) or the head and shoulders (Rachel).
+- **Routine plan for Fable:**
+  - Presenter: talks in M_1 (lip-flap M_1 / M_1_mid / M_1_closed, random blinks); every 6–10 s, M_1 → M_12 → M_2 (100 ms per step), holds 2–3 s talking (M_2 / M_2_closed), then back the same way; the same for M_3 via M_13.
+  - Rachel: holds A1 with the REC dot blinking; every 8–14 s, a soft 150 ms dissolve to B1 (glance), holds 1–1.5 s, and dissolves back.
+  - Reaction (on a find): cut A1 → K0 (90 ms) → K1, holds 1.8 s, then K1 → K0 → A1.
+  - Water: W_1–3 at 8–10 fps.
+
+### Loop job 020a (2026-11-21, 03:39 JST): APPROVED
+Quinn delivered M_12 and M_13 in about 5 minutes. Wren pasted back only the changed arms (scaled 1024 → 640 and pasted at x440, y240 onto M_1), so the head, face, legs and shoes are M_1's own pixels. Steps: `incoming/wren_presenter_steps.png`.
+
+### Loop job 020b (2026-11-21, 03:44 JST): APPROVED
+R_K0 is a side profile with one eye, the start of a smile and her hair mid-swing. Wren pasted back only the head and shoulders (scaled 1024 → 700, at x840, y241; everything below y 765 is locked to A1) and removed a green fringe from the hair edge (also on M_12 and M_13). All in-betweens are done. Next: preview, package, Fable brief.
+
+### Round 5 (2026-11-21, the user's preview notes): fixed
+1. **Cheek:** in A1, the pointed cheek beside her hair is now a thin, flat sliver (loop job 020c). K0's profile cheek is slightly flatter. Only the cheek area was pasted back.
+2. **"Pixelated" head:** the stair-stepped edges come from the hard green cut-outs and from Quinn's flat fills. All character frames now get the same smoothing pass (4× nearest → median 7 → box down: `tools/aa_art.py`), keep the original silhouette, have green bleed removed at the edge, and composite with a soft 1-px alpha (`tools/softedge.py`). Results are in `final/`; build with `tools/film_build_final.py`.
+3. **Glance dropped (the user's call):** the A1 ↔ B1 dissolve looked choppy, so Rachel holds still while filming. B1 is kept but not used.
+4. **Watch:** with the palms out (the M_1 family), the watch face shouldn't show. It's now a plain red strap in M_1, M_1_mid, M_1_closed and M_1_blink.
+5. **Camera screen during the look-back:** the screen rectangle depends on the pose: A1 and K0 x1072–1116, y507–547; K1 x1053–1096, y550–589. The live mirror and REC dot follow it.
+Preview: `film-preview.mp4` (v2).
+
+### Package (2026-11-21, Wren)
+`frames/020-film-scene/site/` holds `plate.png`, three RGBA layers (water, presenter, rachel; 16 stills, soft 1 px edges), `frames.json` (with `camera_screen`), `routine.json` and `stability.json`, built by `tools/film_package.py`. Rebuilt from the package, the base frame matches the approved scene except the intended fixes. Pencil line map: `scene/pencil/film-lines.png`. Fable brief: `reviews/scene-4-build.md`.
+
+### Round 6 (2026-11-21, user): presenter's glasses
+A grey wedge hung under the arm of his glasses, beside the ear. Wren removed it (inpainted with skin) and redrew the arm as a clean line from the lens to the ear, then applied the same patch to all 10 presenter stills (pixel-identical faces; M_1_blink keeps its 12 eyelid pixels). Approved, final/ and site/ were rebuilt; preview v3.
+- Round 6b (user): the ear looked detached, because the wedge's left edge had also been the line where his ear meets his face. Wren redrew it as a tapered curve from the top of the ear down to the cheek, in all 10 stills; package and preview rebuilt.

@@ -212,3 +212,41 @@ The user's review of preview v4: jitter, Rachel's hair and colours changing, the
 - **Cause:** each pose was a separately generated full image. A blink changed 25–29% of Rachel's pixels (hair, top, legs).
 - **Fix:** `tools/cafe_build5.py` builds every pose as base + moving part only. A blink now changes 4% (the eyes). The reaction uses the round-4 head family (consistent hair). The barista's B_2/B_3 are dropped. The child's eyes and mouth were edited directly (`tools/cafe_child_gaze.py`). The fan is rendered from the plate (`tools/cafe_fan.py`).
 - **Rounds 6 and 7 are cancelled** (colour pass, Quinn's child gaze). Rachel's sip continues as Quinn-loop job 001.
+
+### QC of Quinn's rounds 6–7 zip (Wren, 2026-11-21 03:00)
+- **Accepted: `018_R_S1_reach`, `018_R_S2_lift`.** Head and legs identical to A1 (0.6% and 1.5% of the head changed, the eyes). Used arms-only in package v6, with the round-4 `R_B1_sip` for the sip itself.
+- **Rejected: the colour pass on the child, mum and old man** (kept in `approved/round6-rejected/`). The child's hair became a flat blob with no outline, the mum's shadows turned blotchy, and the old man lost his hair and face detail. The originals stay. The child's gaze in these files also still looked sideways; Wren's direct edit stays.
+- Quinn-loop job 001 (sip poses) is cancelled: no longer needed.
+
+### Round 9: proper fixes through the Quinn loop (user review of preview 6, 2026-11-21 03:02)
+The user's notes:
+1. The child's downward eyes (Wren's direct edit) look wrong and must be redrawn.
+2. The fan looks photographic.
+3. Rachel's and the barista's colours don't match the painted café.
+4. Rachel's face morphs during the sip.
+
+**Plan: two phases, every step QC'd by Wren before the user sees it.** The jobs are in `frames/018-cafe-scene/quinn-jobs/`; `crops.json` holds the crop boxes on the 2580×1432 canvas.
+- **Phase 1 (queued):**
+  - `002` Rachel master: re-rendered in the café's painted style and light, with the model-sheet drawing kept; two strengths.
+  - `003` Barista master: the same.
+  - `004` The child looks down, mouth closed (eyes and mouth only).
+  - `005` The fan redrawn in the café's style, plus the ceiling without blades.
+  
+  The user picks the masters from one sheet.
+- **Phase 2:**
+  - Every Rachel pose (stroke, blink, S1, S2, sip, K1, K1 blink, K2) as an edit of the chosen master. The sip has her head NOT tilting; only the arms, cup, eyes and mouth change. Wren pastes only those parts onto the master, so her face can't morph.
+  - The barista's glance and polishing poses as edits of her master.
+  - Then package v7 → audit → one preview to the user.
+- **Fan motion:** Quinn's drawn blades are rotated in perspective by `tools/cafe_fan.py`, slowly and with **no motion blur** (the blur made it look photographic).
+
+### Round 9, user notes at 03:44
+- **Child:** eyes alone looking down read wrong; his head must tilt down too. Job `008-cafe-child-head-down` (the whole head tilts 15–20° toward the paper; body unchanged). Wren pastes the whole head region.
+- **Fan:** the warped drawing moved non-physically (blades bending and stretching). Replaced by `tools/cafe_fan3.py`: a rigid three-blade model, its geometry fitted to Quinn's drawn fan (tip ellipse, blade width and root), rotating in its own plane at 6°/frame (24 rpm). It has a 12° blade pitch, correct front/back order, and is rendered in the drawn style (Quinn's colours, one shadow band, a constant 3 px outline). Quinn's hub, downrod and ceiling are used as drawn. Test: `round9/fan-spin-test-2.mp4`.
+
+### Round 9 result: package v7 (2026-11-21 04:30)
+- Quinn-loop jobs 002–008 accepted: Rachel master A with 8 poses, barista master A with 3 poses, child head-down **b** (a: the cheek went rounder), fan drawing.
+- Built by `tools/cafe_build7.py`. Every pose = master + moving part; Rachel's arm poses exclude her hair (hair-coloured pixels unchanged in both images are kept from the master).
+- Fan: `tools/cafe_fan3.py`, a rigid model fitted to Quinn's drawing, with a soft gradation added (user, 03:52: everything in the café gets subtle gradation).
+- Pending: job 009, the child looks up at his mum (`C_3`) to match the new head. It goes in when it passes QC.
+
+- 04:45: job 009 accepted (`approved/round9/C_3_LOOK_UP.png`), package v7.1. Fixed in `tools/quinn_register.py`: a wrapped edge strip after the alignment shift.

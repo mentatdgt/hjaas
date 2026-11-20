@@ -1,6 +1,6 @@
 # HJaaS: status
 
-Where everything stands. Update this whenever a scene changes state. **Last updated: 2026-11-21 00:45 (Wren, café chat).**
+Where everything stands. Update this whenever a scene changes state. **Last updated: 2026-11-21 morning (Wren, café chat).**
 
 New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a scene gets made) and the handover for your scene: `HANDOVER-scene-3.md` (café, finishing in the original Wren chat) or `HANDOVER-next-scene.md` (scene 4, new chat).
 
@@ -10,16 +10,15 @@ New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a
 |---|---|---|---|---|---|
 | 1 | Build | Contracting: Rachel hammers a box in an unfinished room | ✅ Approved, but **needs glasses removed and a restyle to the model sheet** | ✅ Built (elegant version) | ❌ Waiting to merge |
 | 2 | Grow | Mushroom lab: misting, writing, rotating the rack | ✅ Approved (task 017); later, a light restyle to the model sheet | ✅ Pencil edge done; Round 3b (pencil arrives with the colour) overnight | ❌ Waiting for your phone check, then merge |
-| 3 | Design | Café: Rachel sketches and reacts; barista, mum, child, old man, cat, ceiling fan | ✅ Package v5, stabilised (no flicker by construction). 🔧 Still to add: Rachel's coffee sip, the barista polishing | 🔧 Fable building on `site/scene-3`; v5 is a file swap (`reviews/scene-3-build.md`) | — |
-| 4 | Film | Merlion at night: Rachel (from behind) films a presenter by a silver car | ✅ Art approved (task 020). 🔧 Round 3: Rachel restyled to M01 (4 files). Then Higgsfield clips (quote: 4 × 4.5 = 18 credits) → package | ⏳ Waits for the café merge | — |
+| 3 | Design | Café: Rachel sketches, sips coffee and reacts; barista, mum, child, old man, cat, ceiling fan | ✅ Art final: package v7.3 (user OK 2026-11-21) | 🔧 Fable: swap in v7.3 on `site/scene-3`, re-run QA | — |
+| 4 | Film | Merlion at night: Rachel (from behind) films a presenter by a silver car | ✅ Art done, preview v2 approved by you. ✅ Package `frames/020-film-scene/site/` + pencil map + Fable brief (`reviews/scene-4-build.md`). No AI video, 0 credits | ⏳ Fable builds on `site/scene-4` once the café is merged into `main` | — |
 | 5 | Travel | Lookout | ⏳ Backdrop only (`scene/travel-lookout.png`); location to confirm | ⏳ | — |
 
 ## Now
-- **You:** watch `frames/018-cafe-scene/cafe-preview.mp4` (v5). Start the Quinn loop with one Terminal command (`QUINN-LOOP.md`). Phone-check scene 2, then say "merge".
-- **Quinn loop:** smoke test, then job 001 (Rachel's sip poses).
-- **Fable:** café build on `site/scene-3`; swap in package v5.
-- **Wren (café chat):** run the Quinn loop, add the sip and the barista's polishing, final preview.
-- **Film chat:** task 020. **Read first, Film chat:** the café's AI video clips of the flat-style Rachel failed (face and hair redrawn, pops at both ends; 9 credits lost). Before buying the 4 clips, read `BIBLE.md` §5 and `SCENE-RECIPE.md` §4: buy ONE clip as a test, composite only the moving part onto the approved base, and build every pose as base + moving part. Read the new rules in `BIBLE.md` §5 and `SCENE-RECIPE.md` before making poses or clips.
+- **Fable:** swap café package v7.3 into `site/scene-3`, re-run the café QA, report.
+- **You:** phone-check scene 2, then say "merge". Then check scene 3 on the phone once Fable reports.
+- **Quinn loop:** idle for the café (the Film chat may use it).
+- **Film chat:** scene 4 is packaged; it waits for the café merge.
 
 ## Next
 1. Approve scene 2 on a phone → merge `site/scene-2` into `main` (it includes scene 1).

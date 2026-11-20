@@ -88,3 +88,23 @@ Root cause of the flicker the user saw: each pose was a separately generated ful
 - **Stills now:** Rachel `R_A1_sketch, R_A2_stroke, R_A1_blink, R_K1_blink, R_K1_look, R_K2_smile`; barista `B_1, B_4` (no B_2/B_3); child `C_1` (now looking down at his drawing), `C_2, C_3`; old man, cat and mum as before.
 - `cafe-preview.mp4` is the reference. Audit: in the 28 s preview no pixel changes outside the actors' boxes, and Rachel's legs, table and chair never change.
 - Likely later additions, same format: Rachel's sip, the barista polishing.
+
+## Update 2026-11-21 03:15 (Wren): package v6 = v5 + Rachel's coffee sip
+Same format, a file swap. Three new Rachel stills (`R_S1_reach`, `R_S2_lift`, `R_B1_sip`) and a longer Rachel routine in `routine.json`: sketch loop → S1 → S2 → B1 (sip) → S2 → S1 → sketch, all cuts. **New rule:** no blink during S1/S2/B1, and if a mushroom is found mid-sip, finish the sip first (B1 300 ms → S2 → S1 → A1), then play the reaction. `cafe-preview.mp4` shows it (sip at about 13 s, reaction at about 19 s).
+
+## Update 2026-11-21 04:30 (Wren): package v7 replaces every earlier café package
+The user's notes on v6: the child's eyes, a photographic fan, Rachel and the barista not matching the painted café, and Rachel's face changing during the sip. **All fixed in the art. The format is the same, so this is a file swap.**
+- **Rachel and the barista** were redrawn by Quinn in the café's painted style (warm outlines, soft shading, window light). Every pose is the master plus only the part that moves. Rachel's head and hair are identical through the whole sip (verified frame by frame), and change only during the reaction, behind a blink.
+- **Barista:** polishing is back (`B_1`, `B_2_polish`, `B_3_polish`, cuts only), plus `B_4_glance`.
+- **Child:** his whole head tilts down to his drawing (`C_1`, `C_2`). No look-up yet: `C_3` is being redrawn to match the new head and will come as a drop-in.
+- **Fan:** 20 frames, a rigid three-blade model in the drawn style, 6° per frame at 42 ms (24 rpm), an exact loop. `plate.png` has the blades removed.
+- **Still names changed:** see `frames.json`. `cafe-preview.mp4` is the reference. Audit: nothing changes outside the actors; Rachel's legs, table and chair never change; her hair changes only during the reaction.
+
+## Update 2026-11-21 04:45 (Wren): package v7.1 = v7 + the child's look-up
+`C_3` added: he looks up at his mum and grins, matching his new head. The child's routine in `routine.json` now ends each colouring stretch with `C_1` → `C_3` (1.5–2 s) → `C_1`, as cuts. Nothing else changed. File swap; `cafe-preview.mp4` updated.
+
+## Update 2026-11-21 07:40 (Wren): package v7.2 = v7.1 with the fan fixed
+User: the blades didn't attach to the fan's hub. Now the blades nearer the viewer pass in front of the motor and under the lower cap, the far ones go behind it, and the hub is Quinn's clean drawing with no frozen blade stub on it. Only `fan/fan_*.png` and `plate.png` changed. File swap.
+
+## Update 2026-11-21 08:00 (Wren): package v7.3 replaces v7.2 (fan only)
+User: the blades must pass in front of the motor casing (physics); only the round lower cap may stay in front of them. Done. Draw order is the casing, then all blades, then the cap. The hub is now Quinn's drawn hub with the blades removed (job 010), so no glossy or "AI" hub. Only `fan/fan_*.png` and `plate.png` changed.
