@@ -34,7 +34,7 @@ The reaction changes per scene so the thumbs-up doesn't repeat everywhere.
 ## 4. Supporting cast (café)
 All original characters, described in words. Never based on a real person's photo.
 - **Barista:** a young Gen-Z Indian woman with a warm deep brown complexion, long dark layered hair with curtain bangs, silver hoops, a white ribbed top and a dark apron. She stands behind the counter between the espresso machine and the grinder, polishing a cup.
-- **Mum:** sits on the sunlit window seat, watching her child. She stays still (part of the plate).
+- **Mum:** sits on the sunlit window seat, watching her child. She stays still apart from a blink (part of the plate).
 - **Child:** a boy at the left table on the middle chair, facing Rachel, colouring with crayons.
 - **Old man:** sits on one chair at the right table, reading a newspaper, with a kopi.
 - **Cat:** a ginger tabby asleep on the floor at the lower right, beside Rachel's chair.
@@ -45,5 +45,5 @@ All original characters, described in words. Never based on a real person's phot
 - **Money:** a cost quote and the user's approval before every paid Higgsfield job.
 - **Merging:** nothing merges into `main` without Wren's review and the user's OK.
 - **Prompts for the user:** one short paste-ready prompt per step. Details live in the repo, not the paste.
-- **Art edits:** every pose is an edit of a green anchor at full scene size (1672×941), never a redraw. Get the scene approved before drawing poses.
+- **Art edits:** every pose is an edit of a green anchor at the approved scene's exact size, never a redraw. Get the scene approved before drawing poses.
 - **Never commit:** secrets, cookies or real people's photos used as character references.
