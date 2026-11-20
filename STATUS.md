@@ -11,7 +11,7 @@ New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a
 | 1 | Build | Contracting: Rachel hammers a box in an unfinished room | ✅ Approved, but **needs glasses removed** | ✅ Built (elegant version) | ❌ Waiting to merge |
 | 2 | Grow | Mushroom lab: misting, writing, rotating the rack | ✅ Approved (task 017) | 🔧 Fable is on review 05 (memory) and the organic edge | ❌ Waiting to merge |
 | 3 | Design | Café: Rachel sketches on an iPad, then sips coffee; barista, mum, child, old man, cat | 🔧 Task 018, round 1: fixes to `018_scene` | ⏳ Not started | — |
-| 4 | Film | Merlion: video production | ⏳ Backdrop only (`scene/merlion.png`) | ⏳ | — |
+| 4 | Film | Merlion at night: Rachel (from behind) films a presenter by a silver car | 🔧 Task 019: Quinn draws 5 staging options (separate ChatGPT chat) | ⏳ | — |
 | 5 | Travel | Lookout | ⏳ Backdrop only (`scene/travel-lookout.png`); location to confirm | ⏳ | — |
 
 ## Now
@@ -22,7 +22,7 @@ New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a
 ## Next
 1. Approve scene 2 on a phone → merge `site/scene-2` into `main` (it includes scene 1).
 2. Finish the café art → cut `site/scene-3` from `main` → Fable builds the Design tab.
-3. Scene 4 is starting in a new Wren chat (`HANDOVER-next-scene.md`). Travel is recommended unless Sean has agreed to Film.
+3. Scene 4 is **Film** (chosen 2026-11-20), run by the scene-4 Wren chat: task 019 staging → pick → task 020 pieces. Travel moves to scene 5.
 
 ## Branches
 | Branch | Holds |
