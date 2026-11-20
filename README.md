@@ -1,5 +1,7 @@
 # HJaaS — Hui Jie As a Service
 
+> **Start here:** `STATUS.md` (where things stand), `BIBLE.md` (what's decided; it wins over older notes), `SCENE-RECIPE.md` (how a scene is made).
+
 Asset pipeline for the HJaaS website animations.
 
 ## Who does what

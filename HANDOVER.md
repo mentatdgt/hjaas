@@ -1,5 +1,7 @@
 # HANDOVER — build the HJaaS website, scene 1 (MVP)
 
+> **Start here:** `STATUS.md` (where things stand), `BIBLE.md` (what's decided; it wins over older notes), `SCENE-RECIPE.md` (how a scene is made).
+
 For: **Fable** (Claude Fable 5.2 in Claude Code, local session on the user's Mac).
 From: **Wren** (art director / QC). Date: 2026-11-17.
 

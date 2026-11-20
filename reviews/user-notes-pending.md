@@ -17,7 +17,14 @@ Future pose tasks follow this.
 
 ## Scene 3 "Design" (the café): user decisions, 2026-11-20
 - **Next scene:** Design (café), backdrop `scene/cafe.png`.
-- **Look:** outfit 1 from `reference/hjaas1.png` (black tank, olive cargo pants, brown boots), **loose wavy hair**, round glasses (a locked trait), gold pendant.
+- **Look:** outfit 1 from `reference/hjaas1.png` (black tank, olive cargo pants, brown boots), **loose wavy hair**, **no glasses** (superseded: no glasses anywhere, see BIBLE.md), gold pendant.
 - **Loop, two stages like the lab:** sketching on an iPad with a stylus, then sipping a hot coffee, then back.
 - **Reaction:** a warm look into the camera and a smile, no hand gesture (variety plan).
 - **Process, as for the lab:** 3 staging mock-ups from Quinn → user picks → key poses as edits of the green anchor → Higgsfield clips → Wren packages → Fable drops them in.
+
+## Café staging feedback (user, 2026-11-20 afternoon)
+1. Move the corner tables and chairs inwards; the frame corners feel cramped (and the organic edge fades the corners).
+2. The mum and child are too small. The child stays seated on the chair at the left table. The mum sits on the window ledge seat, lit by the sunlight.
+3. Slight depth of field: the background softly out of focus, Rachel sharp.
+4. The barista becomes a young Indian woman with a darker complexion (Gen-Z style). Describe her in words; don't base her on a real person's photo.
+5. Fix the iPad direction: the screen faces Rachel.

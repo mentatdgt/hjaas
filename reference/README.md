@@ -13,7 +13,7 @@ Source of truth for how the character looks. Quinn matches these; Wren checks de
 | `hjaas7.png` | 12 expressions with the **lab ponytail** and lab coat (neutral, warm smile, delighted, LOL, curious, thinking, skeptical, determined, surprised, worried, sad, soft focus). |
 
 ## Locked character traits (every frame must match)
-- Round white-lens glasses with large pupils, thick dark outline, flat cartoon colouring (no gradients or shading)
+- **No glasses** (decided 2026-11-20). The sheets show round glasses; leave them off. Thick dark outline, flat cartoon colouring (no gradients or shading)
 - Dark brown hair: either loose and wavy past the shoulders, or a high messy bun with a grey zig-zag-pattern bandana and loose curly strands
 - Warm tan skin, gold round pendant necklace on a thin cord, black tank top
 - Hand-drawn, slightly stylised proportions (large head, small hands)
