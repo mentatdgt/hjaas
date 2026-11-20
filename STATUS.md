@@ -11,7 +11,7 @@ New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a
 | 1 | Build | Contracting: Rachel hammers a box in an unfinished room | ✅ Approved, but **needs glasses removed and a restyle to the model sheet** | ✅ Built (elegant version) | ❌ Waiting to merge |
 | 2 | Grow | Mushroom lab: misting, writing, rotating the rack | ✅ Approved (task 017); later, a light restyle to the model sheet | ✅ Pencil edge done; Round 3b (pencil arrives with the colour) overnight | ❌ Waiting for your phone check, then merge |
 | 3 | Design | Café: Rachel sketches and reacts; barista, mum, child, old man, cat, ceiling fan | ✅ Package v5, stabilised (no flicker by construction). 🔧 Still to add: Rachel's coffee sip, the barista polishing | 🔧 Fable building on `site/scene-3`; v5 is a file swap (`reviews/scene-3-build.md`) | — |
-| 4 | Film | Merlion at night: Rachel (from behind) films a presenter by a silver car | ✅ Art approved (task 020, Rachel restyled to M01). 🔧 3 drawn in-betweens queued in the Quinn loop (020a, 020b). No AI video, 0 credits | ⏳ Waits for the café merge | — |
+| 4 | Film | Merlion at night: Rachel (from behind) films a presenter by a silver car | ✅ All art approved, including the drawn in-betweens (loop jobs 020a, 020b). Preview: `frames/020-film-scene/film-preview.mp4`. No AI video, 0 credits | ⏳ Package + Fable brief after the café merge | — |
 | 5 | Travel | Lookout | ⏳ Backdrop only (`scene/travel-lookout.png`); location to confirm | ⏳ | — |
 
 ## Now
@@ -19,7 +19,7 @@ New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a
 - **Quinn loop:** smoke test, then job 001 (Rachel's sip poses).
 - **Fable:** café build on `site/scene-3`; swap in package v5.
 - **Wren (café chat):** run the Quinn loop, add the sip and the barista's polishing, final preview.
-- **Film chat:** in-between jobs `020a-film-presenter` and `020b-film-rachel-turn` are queued in the Quinn loop (they run after 000 and 001). Then Wren pastes, packages and writes the Fable brief. No Higgsfield clips for scene 4.
+- **Film chat:** scene 4 art done; you check `frames/020-film-scene/film-preview.mp4`. Then Wren packages it and writes the Fable brief (Fable builds on `site/scene-4` after the café merges).
 
 ## Next
 1. Approve scene 2 on a phone → merge `site/scene-2` into `main` (it includes scene 1).
