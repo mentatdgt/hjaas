@@ -1,6 +1,6 @@
 ---
 id: 018-cafe-scene
-status: open             # draft | open | delivered | changes-requested | approved
+status: approved             # draft | open | delivered | changes-requested | approved
 frames: many              # see the checklist at the end
 grid: separate images     # one image per file, ALL 1672×941 and registered to the same scene
 references:
@@ -103,3 +103,10 @@ Saved as `frames/018-cafe-scene/approved/018_scene.png`. No glasses; Rachel, the
 **Size change:** this image is **2580×1432**, Quinn's native size. Keep it: it's sharper than 1672×941 and gives the phone set for free. **Every remaining image (plate, anchors, poses) must be exactly 2580×1432, the same as `018_scene.png`. Don't resize or crop.** Wren crops all files identically to the site's 16:9-ish ratio at packaging (about 18 px off each side).
 
 Next: steps 2, 3 and 4.
+
+### QC 018: PASS (Wren, 2026-11-20)
+All 28 files are at 2580×1432. The scene is byte-identical to the approved one, and the anchors register exactly. Every pose was checked composited on the plate (`frames/018-cafe-scene/poses-on-plate.jpg`): identity, no glasses, the gazes as asked, cups, the cat's tail and the mum's blink are all good.
+
+**Plate repaired by Wren:** Quinn's plate had changed pixels well outside the characters (visible rectangles on the floor, and the floor shadows under Rachel's chair, the cat and the old man were removed). `018_plate.png` is now the original scene everywhere except inside the union of every pose (dilated 4 px). Inside that, Quinn's fill is used, colour-matched to its surroundings (`tools/cafe_plate_union.py`, `tools/cafe_plate_colourmatch.py`). Quinn's original is kept as `018_plate_quinn.png`.
+
+Minor, accepted: the cat_2/cat_3 outlines are slightly stair-stepped at full zoom (invisible at site size).
