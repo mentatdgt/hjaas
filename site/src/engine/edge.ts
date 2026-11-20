@@ -1,5 +1,7 @@
-// The painting's edge: it fades into the paper along a line that wanders a little, like the edge of a
-// watercolour wash, with softly rounded corners. No frame, no mat.
+// The painting's edge: it melts into the paper the way a wash dries. The line wanders in and out, and its
+// softness changes along its length: crisp in places, a wide melt in others. The corners are rounded. No
+// frame, no mat. (`organic`, the one the site ships; reviews/scene-edge-organic.md. The older, even
+// feathers are kept for comparison.)
 //
 // The edge is worked out once per scene from a seed (so it is the same on every visit) and drawn as one
 // small canvas in the paper's colour, opaque outside the painting and clear inside. That canvas lies over
@@ -9,12 +11,12 @@
 //
 // The same function that draws the edge also answers "how much of the painting shows here?", which is what
 // keeps the hunt fair: every mushroom and its tap box must sit where the answer is at least 0.95 (edge.test.ts).
-import { PLATE } from './assets';
+import { PLATE, idle } from './assets';
 
-/** `a-round` is the one the site ships. The others are kept for comparison (`?edge=`, dev only). */
-export type EdgeStyle = 'a' | 'b' | 'c' | 'a-round';
-export const EDGE_STYLES: readonly EdgeStyle[] = ['a-round', 'a', 'b', 'c'];
-export const DEFAULT_EDGE: EdgeStyle = 'a-round';
+/** `organic` is the one the site ships. The others are kept for comparison (`?edge=`, dev only). */
+export type EdgeStyle = 'organic' | 'a' | 'b' | 'c' | 'a-round';
+export const EDGE_STYLES: readonly EdgeStyle[] = ['organic', 'a-round', 'a', 'b', 'c'];
+export const DEFAULT_EDGE: EdgeStyle = 'organic';
 
 interface Profile {
   /** How far the fade reaches in from each side, as a fraction of the plate's width (sides) or height (top, bottom). */
@@ -38,7 +40,7 @@ interface Profile {
   corner?: { power: number; reach: number; soft: number };
 }
 
-const PROFILES: Record<EdgeStyle, Profile> = {
+const PROFILES: Record<Exclude<EdgeStyle, 'organic'>, Profile> = {
   // A, light: a thin soft edge. The bottom is thinnest: the floor, feet and low mushrooms are down there.
   a: { side: 0.04, top: 0.06, bottom: 0.025, wander: 0.28 },
   // B, medium: a little wider, and it wanders more.
@@ -73,6 +75,9 @@ function noise(x: number, y: number, cell: number, seed: number): number {
   return top + (bottom - top) * sy;
 }
 
+/** The name a scene's edge is seeded from: the scene's own, or one of its alternatives (types.ts, `edge`). */
+export const edgeName = (scene: { id: string; edge?: number }): string => (scene.edge ? `${scene.id}:${scene.edge}` : scene.id);
+
 /** A number for a scene's name, so each scene's edge is its own and never changes. */
 export function edgeSeed(name: string): number {
   let h = 2166136261;
@@ -80,11 +85,64 @@ export function edgeSeed(name: string): number {
   return h >>> 0;
 }
 
+// The organic edge, in plate px, as the chosen mock-up was made (reference/mockups/edge-organic-123.jpg,
+// option 2). `din` is how far a point is inside a rounded rectangle the size of the plate.
+const ORGANIC = {
+  /** The corners' radius, as a fraction of the plate's width. */
+  radius: 0.06,
+  /** How far the line wanders in or out at most, and the melt's width where it is neither wide nor crisp. */
+  wander: 60,
+  width: 60,
+  /** How much the melt's width changes along the edge (0.75: from a quarter of `width` to one and three quarters). */
+  widthSwing: 0.75,
+  minWidth: 6,
+  /** The wander's noise: cell sizes in px, and how much each counts. Large shapes first, then finer ones. */
+  cells: [110, 45, 18, 7],
+  weights: [1, 0.55, 0.3, 0.15],
+  /** The width's noise: the large shapes only. */
+  widthCells: [140, 60],
+  widthWeights: [1, 0.55],
+  /** The bottom fifth of the plate: the floor, feet and low mushrooms are there, so the edge is calmer and thinner. */
+  bottomFrom: 0.8,
+  bottomWidth: 0.55,
+  bottomWander: 0.6,
+} as const;
+/** Further inside than this the painting is always solid: the most the line can wander plus the widest melt. */
+const ORGANIC_REACH = ORGANIC.wander + ORGANIC.width * (1 + ORGANIC.widthSwing);
+
+function organicAlpha(seed: number): (x: number, y: number) => number {
+  const o = ORGANIC;
+  const radius = o.radius * PLATE.w;
+  /** Layered value noise, from about -1 to 1. */
+  const layered = (x: number, y: number, cells: readonly number[], weights: readonly number[], salt: number): number => {
+    let sum = 0;
+    let total = 0;
+    for (let i = 0; i < cells.length; i++) {
+      sum += (2 * noise(x, y, cells[i], seed + salt + i) - 1) * weights[i];
+      total += weights[i];
+    }
+    return sum / total;
+  };
+  return (x, y) => {
+    const dx = Math.min(x, PLATE.w - x);
+    const dy = Math.min(y, PLATE.h - y);
+    // Inside a corner's square the edge is the corner's arc.
+    const din = dx < radius && dy < radius ? radius - Math.hypot(radius - dx, radius - dy) : Math.min(dx, dy);
+    if (din <= 0) return 0;
+    if (din >= ORGANIC_REACH) return 1;
+    const bottom = Math.min(1, Math.max(0, (y / PLATE.h - o.bottomFrom) / (1 - o.bottomFrom)));
+    const width = Math.max(o.minWidth, o.width * (1 + o.widthSwing * layered(x, y, o.widthCells, o.widthWeights, 100)) * (1 - o.bottomWidth * bottom));
+    const t = Math.min(1, Math.max(0, (din + o.wander * layered(x, y, o.cells, o.weights, 0) * (1 - o.bottomWander * bottom)) / width));
+    return t * t * (3 - 2 * t);
+  };
+}
+
 /**
  * How much of the painting shows at a point of the plate (plate px): 0 on the paper, 1 well inside.
  * In between, a smoothstep.
  */
 export function edgeAlpha(style: EdgeStyle, seed: number): (x: number, y: number) => number {
+  if (style === 'organic') return organicAlpha(seed);
   const p = PROFILES[style];
   const side = p.side * PLATE.w;
   const top = p.top * PLATE.h;
@@ -162,31 +220,55 @@ export function tapBox(
 
 /**
  * The edge as a canvas in the paper's colour: opaque where the painting does not show, clear where it does.
- * A quarter of the plate's size is plenty for something this soft, and quick to work out (a scene loaded
- * in the background makes its edge while another scene is animating); the browser stretches it over the plate.
+ * It is drawn at a fraction of the plate's size and the browser stretches it over the plate: a quarter for
+ * the even feathers, half for the organic edge, whose crisp places and fine wander need the detail.
+ *
+ * `spread: true` works it out a slice at a time in quiet moments (a scene loaded in the background makes
+ * its edge while another scene is animating). The promise resolves when the canvas is complete.
  */
-export function edgeCanvas(style: EdgeStyle, seed: number, paper: [number, number, number]): HTMLCanvasElement {
+export function edgeCanvas(style: EdgeStyle, seed: number, paper: [number, number, number], spread = false): { canvas: HTMLCanvasElement; done: Promise<void> } {
   const canvas = document.createElement('canvas');
   canvas.className = 'hj-edge';
   canvas.setAttribute('aria-hidden', 'true');
-  const w = (canvas.width = PLATE.w / 4);
-  const h = (canvas.height = Math.round(PLATE.h / 4));
+  const shrink = style === 'organic' ? 2 : 4;
+  const w = (canvas.width = PLATE.w / shrink);
+  const h = (canvas.height = Math.round(PLATE.h / shrink));
   const ctx = canvas.getContext('2d')!;
-  const image = ctx.createImageData(w, h);
   const alpha = edgeAlpha(style, seed);
   const sx = PLATE.w / w;
   const sy = PLATE.h / h;
-  for (let y = 0; y < h; y++) {
-    for (let x = 0; x < w; x++) {
-      const cover = 1 - alpha((x + 0.5) * sx, (y + 0.5) * sy);
-      if (cover <= 0) continue;
-      const i = (y * w + x) * 4;
-      image.data[i] = paper[0];
-      image.data[i + 1] = paper[1];
-      image.data[i + 2] = paper[2];
-      image.data[i + 3] = Math.round(cover * 255);
+  /** Rows `from` up to `to`, worked out and put on the canvas. */
+  const rows = (from: number, to: number): void => {
+    const image = ctx.createImageData(w, to - from);
+    for (let y = from; y < to; y++) {
+      for (let x = 0; x < w; x++) {
+        const cover = 1 - alpha((x + 0.5) * sx, (y + 0.5) * sy);
+        if (cover <= 0) continue;
+        const i = ((y - from) * w + x) * 4;
+        image.data[i] = paper[0];
+        image.data[i + 1] = paper[1];
+        image.data[i + 2] = paper[2];
+        image.data[i + 3] = Math.round(cover * 255);
+      }
     }
+    ctx.putImageData(image, 0, from);
+  };
+  if (!spread) {
+    rows(0, h);
+    return { canvas, done: Promise.resolve() };
   }
-  ctx.putImageData(image, 0, 0);
-  return canvas;
+  const done = (async () => {
+    // A few milliseconds at a time, so whatever is animating keeps its frames.
+    let y = 0;
+    while (y < h) {
+      await idle();
+      const until = performance.now() + 4;
+      while (y < h && performance.now() < until) {
+        const to = Math.min(h, y + 8);
+        rows(y, to);
+        y = to;
+      }
+    }
+  })();
+  return { canvas, done };
 }

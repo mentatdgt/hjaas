@@ -2,7 +2,7 @@
 // sit where the painting is at least 0.95 opaque. This samples the edge under every hiding spot of every scene.
 import { describe, expect, it } from 'vitest';
 import { SCENES } from '../scenes';
-import { DEFAULT_EDGE, EDGE_STYLES, SOLID, edgeAlpha, edgeSeed, lowestAlpha, tapBox } from './edge';
+import { DEFAULT_EDGE, EDGE_STYLES, SOLID, edgeAlpha, edgeName, edgeSeed, lowestAlpha, tapBox } from './edge';
 
 const PLATE = { w: 1672, h: 941 };
 // Width over height of the nine mushroom drawings (frames/003-mushrooms/approved, as built by npm run assets).
@@ -20,7 +20,7 @@ const SCALES = {
 
 describe('the painting behind every mushroom', () => {
   for (const scene of SCENES) {
-    const alpha = edgeAlpha(DEFAULT_EDGE, edgeSeed(scene.id));
+    const alpha = edgeAlpha(DEFAULT_EDGE, edgeSeed(edgeName(scene)));
 
     it(`${scene.label}: every drawing sits where the painting is at least 0.95 opaque`, () => {
       for (const spot of scene.spots) {

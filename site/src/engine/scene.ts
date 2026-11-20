@@ -2,7 +2,7 @@
 // A scene knows nothing about the page around it; site.ts puts it in the window and takes it out again.
 import { PLATE, type Frame, asset, decodeBlob, fetchBlob, idle, loadFrame, loadPlate, releaseFrame, unloadFrame } from './assets';
 import { Character } from './character';
-import { edgeAlpha, edgeCanvas, type EdgeStyle } from './edge';
+import { edgeAlpha, edgeCanvas, edgeName, type EdgeStyle } from './edge';
 import { checkClips, clipPose, clipReaction, clipSchedule, clipsInUse, type ClipFrames, type ClipRoutine } from './clips';
 import { Hunt } from './mushrooms';
 import { Player, type Schedule } from './player';
@@ -264,6 +264,12 @@ export class Scene {
   private readonly roomSrc: string;
   /** The painting's soft edge: always the plate's top layer. */
   private readonly edge: HTMLCanvasElement;
+  /** Resolves when the edge has been worked out. */
+  private readonly edgeDone: Promise<void>;
+  private readonly edgeSize: [number, number];
+  /** The edge as a small file, made the first time the scene rests: its canvas is given back meanwhile. */
+  private edgeFile: Promise<Blob | null> | null = null;
+  private resting = false;
   private readonly layout: ResizeObserver;
   private cast: Cast | null = null;
   /** Her first frames being fetched and decoded. */
@@ -274,7 +280,7 @@ export class Scene {
   private reacting: Promise<void> = Promise.resolve();
   private working = false;
 
-  private constructor(config: SceneConfig, host: SceneHost, plate: HTMLDivElement, room: HTMLImageElement, hunt: Hunt) {
+  private constructor(config: SceneConfig, host: SceneHost, plate: HTMLDivElement, room: HTMLImageElement, hunt: Hunt, spreadEdge: boolean) {
     this.config = config;
     this.host = host;
     this.plate = plate;
@@ -283,7 +289,10 @@ export class Scene {
     this.hunt = hunt;
     // Bottom to top: the room, her shadow, the mushrooms, (a first-visit painting's sheet of paper,) the
     // character, and over them all the painting's soft edge.
-    this.edge = edgeCanvas(host.edge.style, host.edge.seed(config.id), host.edge.paper);
+    const edge = edgeCanvas(host.edge.style, host.edge.seed(edgeName(config)), host.edge.paper, spreadEdge);
+    this.edge = edge.canvas;
+    this.edgeDone = edge.done;
+    this.edgeSize = [edge.canvas.width, edge.canvas.height];
     plate.append(hunt.el, this.edge);
 
     this.layout = new ResizeObserver(() => {
@@ -321,7 +330,7 @@ export class Scene {
 
     const hunt = await Hunt.create({
       spots: config.spots,
-      edge: edgeAlpha(host.edge.style, host.edge.seed(config.id)),
+      edge: edgeAlpha(host.edge.style, host.edge.seed(edgeName(config))),
       plate,
       flyLayer: host.flyLayer,
       found: host.found,
@@ -329,7 +338,8 @@ export class Scene {
       onFind: host.onFind,
       onLand: host.onLand,
     });
-    const scene = new Scene(config, host, plate, room, hunt);
+    // The opening scene's edge is needed at once; any other is worked out a slice at a time.
+    const scene = new Scene(config, host, plate, room, hunt, !withCharacter);
     const ready = await cast;
     if (ready) scene.attach(ready);
     return scene;
@@ -426,15 +436,39 @@ export class Scene {
    * from enter() on, both from files already downloaded.
    */
   rest(): void {
+    this.resting = true;
     this.cast?.sleep();
     this.room.removeAttribute('src');
+    // The edge too: it is kept as a small PNG and its canvas is given back.
+    this.edgeFile ??= this.edgeDone.then(() => new Promise<Blob | null>((resolve) => this.edge.toBlob(resolve, 'image/png')));
+    void this.edgeFile.then((file) => {
+      if (!file || !this.resting) return;
+      this.edge.width = 0;
+      this.edge.height = 0;
+    });
   }
 
-  /** The scene is about to go on the page: resolves when its room's picture is decoded again. */
+  /**
+   * The scene is about to go on the page: resolves when its room's picture is decoded again and its edge
+   * is back on its canvas.
+   */
   async ready(): Promise<void> {
-    if (this.room.getAttribute('src')) return;
-    this.room.src = this.roomSrc;
-    await this.room.decode().catch(() => {});
+    this.resting = false;
+    const room = this.room.getAttribute('src')
+      ? Promise.resolve()
+      : ((this.room.src = this.roomSrc), this.room.decode().catch(() => {}));
+    await this.edgeDone;
+    if (this.edge.width === 0) {
+      const file = await this.edgeFile;
+      const picture = file ? await decodeBlob(file).catch(() => null) : null;
+      // (rest() may have been called again in the meantime: then the canvas stays as it is.)
+      if (picture && !this.resting && this.edge.width === 0) {
+        [this.edge.width, this.edge.height] = this.edgeSize;
+        this.edge.getContext('2d')!.drawImage(picture, 0, 0);
+      }
+      if (picture) releaseFrame(picture);
+    }
+    await room;
   }
 
   /**

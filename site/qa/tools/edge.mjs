@@ -4,6 +4,9 @@
 //   node qa/tools/edge.mjs shots   a-round (the default), a, b and c, both scenes, three sizes; and compare.jpg
 //   node qa/tools/edge.mjs spots   reads the edge as drawn on the page under every mushroom and tap box
 //   node qa/tools/edge.mjs pan     WebKit, phone: frame times while the room is panned end to end
+//   node qa/tools/edge.mjs pick    which of each scene's possible organic edges keeps clear of the mushrooms and of Rachel
+//   node qa/tools/edge.mjs rachel  the drawn edge under every pixel Rachel ever covers, both scenes
+//   node qa/tools/edge.mjs organic the chosen mock-up beside the build at 1440×900: organic-compare.jpg
 import { chromium, webkit, devices } from 'playwright';
 import { mkdir, writeFile } from 'node:fs/promises';
 import sharp from 'sharp';
@@ -11,12 +14,40 @@ import sharp from 'sharp';
 const base = process.env.HJ_URL ?? 'http://localhost:5173/';
 const out = new URL('../edge/', import.meta.url).pathname;
 await mkdir(out, { recursive: true });
-const STYLES = ['a-round', 'a', 'b', 'c'];
-const NAMES = { 'a-round': 'A with rounded corners (chosen, the default)', a: 'A, light', b: 'B, medium', c: 'C, corners' };
+const STYLES = ['organic', 'a-round', 'a', 'b', 'c'];
+const NAMES = { organic: 'Organic (chosen, the default)', 'a-round': 'A with rounded corners (the one before)', a: 'A, light', b: 'B, medium', c: 'C, corners' };
 const SIZES = [[1440, 900], [390, 844], [360, 740]];
 const ready = (page) => page.waitForFunction(() => window.__hj?.ready === true, null, { timeout: 30000 });
 const clean = (page) => page.evaluate(() => document.querySelectorAll('.hj-mushrooms').forEach((el) => el.classList.remove('is-debug')));
 const say = (label, value) => console.log(`${label}: ${typeof value === 'string' ? value : JSON.stringify(value)}`);
+
+// Everything Rachel ever covers, on the plate: all her frames drawn where the page draws them.
+const unionOf = async (scene) => {
+  const W = 1672; const H = 941;
+  const bitmap = async (url) => createImageBitmap(await (await fetch(url)).blob());
+  const canvas = new OffscreenCanvas(W, H);
+  const ctx = canvas.getContext('2d', { willReadFrequently: true });
+  if (scene.character.kind === 'clips') {
+    const dir = `./assets/${scene.assets}${scene.character.dir}`;
+    const frames = await (await fetch(dir + scene.character.frames)).json();
+    const c = frames.canvas; const k = c.plate_w / c.w;
+    for (const file of Object.values(frames.stills)) ctx.drawImage(await bitmap(dir + file.replace('.png', '.webp')), c.plate_x, c.plate_y, c.plate_w, c.plate_h);
+    for (const clip of Object.values(frames.clips)) for (const file of clip.frames) { const b = await bitmap(dir + file.replace('.png', '.webp')); ctx.drawImage(b, c.plate_x + clip.x * k, c.plate_y + clip.y * k, b.width * k, b.height * k); }
+  } else {
+    // Scene 1: her place on the plate comes from the page itself.
+    const dir = `./assets/${scene.assets}${scene.character.dir}`;
+    const box = window.__buildBox ?? window.__hj.rachel.placement;
+    const reaction = await (await fetch(`${dir}${scene.character.reaction}reaction.json`)).json();
+    const shared = await (await fetch(`${dir}${scene.character.reaction}shared.json`)).json();
+    const files = [...scene.character.frames.map((name) => `${dir}${name}.webp`), ...reaction.frames.map((f) => (f.file in shared ? `./assets/${scene.assets}${shared[f.file]}` : `${dir}${scene.character.reaction}${f.file.replace('.png', '.webp')}`))];
+    for (const url of new Set(files)) ctx.drawImage(await bitmap(url), box.left, box.top, box.width, box.height);
+  }
+  const data = ctx.getImageData(0, 0, W, H).data;
+  const points = [];
+  let top = H; let bottom = 0; let left = W; let right = 0;
+  for (let y = 0; y < H; y += 2) for (let x = 0; x < W; x += 2) if (data[(y * W + x) * 4 + 3] > 128) { points.push([x, y]); top = Math.min(top, y); bottom = Math.max(bottom, y); left = Math.min(left, x); right = Math.max(right, x); }
+  return { points, box: [left, top, right, bottom] };
+};
 
 const run = {
   async shots() {
@@ -176,6 +207,178 @@ const run = {
     }
     await writeFile(`${out}pan-webkit.json`, `${JSON.stringify(results, null, 1)}\n`);
   },
+};
+
+// Which of a scene's possible edges to use: the first whose wander stays clear of every mushroom, every tap
+// box (at six screen sizes) and every pixel Rachel ever covers. Prints the number for the scene's config.
+run.pick = async () => {
+  const browser = await chromium.launch({ channel: 'chrome' });
+  const page = await (await browser.newContext({ viewport: { width: 1440, height: 900 } })).newPage();
+  page.on('console', (m) => m.type() === 'error' && console.log('[page]', m.text()));
+  await page.goto(`${base}?debug&reset&intro=off&seed=7`);
+  await ready(page);
+  await page.evaluate(`window.__unionOf = ${unionOf.toString()}`);
+  const result = await page.evaluate(async (tries) => {
+    const { edgeAlpha, edgeSeed, tapBox, lowestAlpha, SOLID } = await import('/src/engine/edge.ts');
+    const { SCENES } = await import('/src/scenes/index.ts');
+    const H = 941;
+    const ASPECT = [152, 117, 149, 164, 45, 166, 158, 163, 166].map((w) => w / 154);
+    const SCALES = [1799 / 1672, 1040 / 1672, 820 / 1672, 531 / 941, 486 / 941, 355 / 941];
+    const unionOf = window.__unionOf;
+    const out = {};
+    for (const scene of SCENES) {
+      // (The page was opened on the first scene, where scene 1's placement is known.)
+      const hers = await unionOf(scene);
+      const rows = [];
+      for (let n = 0; n < tries; n++) {
+        const alpha = edgeAlpha('organic', edgeSeed(n ? `${scene.id}:${n}` : scene.id));
+        const clear = (spot) => {
+          const w = spot.h * ASPECT[spot.art - 1];
+          if (lowestAlpha(alpha, spot.x, spot.y - spot.h / 2, w, spot.h) < SOLID) return false;
+          for (const u of SCALES) {
+            const box = tapBox(alpha, { cx: spot.x, cy: spot.y - spot.h / 2, w, h: spot.h }, u);
+            if (lowestAlpha(alpha, box.cx, box.cy, box.w, box.h) < SOLID) return false;
+            if (spot.x - w / 2 < box.cx - box.w / 2 - 0.5 || spot.x + w / 2 > box.cx + box.w / 2 + 0.5 || spot.y - spot.h < box.cy - box.h / 2 - 0.5 || spot.y > box.cy + box.h / 2 + 0.5) return false;
+          }
+          return true;
+        };
+        // A mushroom the wander reaches: the smallest move, towards the middle of the plate, that clears it.
+        // (Straight up or down first; if that is not enough within 60 px, sideways as well.)
+        const failed = [];
+        const placed = scene.spots.map((spot) => {
+          if (clear(spot)) return spot;
+          const dy = spot.y > H / 2 ? -1 : 1;
+          for (let move = 1; move <= 60; move++) {
+            const moved = { ...spot, y: spot.y + dy * move };
+            if (clear(moved)) { failed.push(`${spot.id} ${dy * move}`); return moved; }
+          }
+          failed.push(`${spot.id} (more than 60)`);
+          return spot;
+        });
+        // Tap boxes must not come to overlap once the edge has pushed them inward.
+        let overlap = false;
+        for (const u of SCALES) {
+          const boxes = placed.map((spot) => tapBox(alpha, { cx: spot.x, cy: spot.y - spot.h / 2, w: spot.h * ASPECT[spot.art - 1], h: spot.h }, u));
+          for (let i = 0; i < boxes.length; i++) for (let j = i + 1; j < boxes.length; j++) if (Math.abs(boxes[i].cx - boxes[j].cx) < (boxes[i].w + boxes[j].w) / 2 && Math.abs(boxes[i].cy - boxes[j].cy) < (boxes[i].h + boxes[j].h) / 2) overlap = `${placed[i].id}/${placed[j].id}`;
+        }
+        let lowest = 1;
+        for (const [x, y] of hers.points) { const a = alpha(x, y); if (a < lowest) lowest = a; }
+        rows.push({ n, failed, overlap, rachelLowest: Math.round(lowest * 1000) / 1000 });
+      }
+      out[scene.id] = { rachelCovers: hers.box, firstClean: rows.find((r) => r.failed.length === 0 && !r.overlap && r.rachelLowest >= 0.999)?.n ?? null, rows };
+    }
+    return out;
+  }, Number(process.argv[3] ?? 48));
+  for (const [id, r] of Object.entries(result)) {
+    say(`${id}: Rachel covers plate x ${r.rachelCovers[0]}-${r.rachelCovers[2]}, y ${r.rachelCovers[1]}-${r.rachelCovers[3]}; first clean edge`, String(r.firstClean));
+    for (const row of r.rows) console.log(`   ${String(row.n).padStart(2)}  rachel ${row.rachelLowest}  ${row.overlap ? `OVERLAP ${row.overlap}  ` : ''}${row.failed.length ? `to move (plate px): ${row.failed.join(', ')}` : 'all mushrooms clear'}`);
+  }
+  await browser.close();
+  await writeFile(`${out}organic-pick.json`, `${JSON.stringify(result, null, 1)}\n`);
+};
+
+// Rachel must be fully opaque in every pose: the edge as drawn on the page, read under every pixel any of her
+// frames ever covers, in both scenes.
+run.rachel = async () => {
+  const report = [];
+  const browser = await chromium.launch({ channel: 'chrome' });
+  const page = await (await browser.newContext({ viewport: { width: 1440, height: 900 } })).newPage();
+  let buildBox = null;
+  for (const id of ['build', 'grow']) {
+    await page.goto(`${base}?debug&reset&intro=off&seed=7#${id}`);
+    await page.reload();
+    await ready(page);
+    await page.evaluate(`window.__unionOf = ${unionOf.toString()}`);
+    if (id === 'build') buildBox = await page.evaluate(() => { const p = window.__hj.rachel.placement; return { left: p.left, top: p.top, width: p.width, height: p.height }; });
+    const row = await page.evaluate(async ({ id, buildBox }) => {
+      const { edgeAlpha, edgeSeed, edgeName } = await import('/src/engine/edge.ts');
+      const { SCENES } = await import('/src/scenes/index.ts');
+      window.__buildBox = buildBox;
+      const scene = SCENES.find((s) => s.id === id);
+      const hers = await window.__unionOf(scene);
+      const alpha = edgeAlpha('organic', edgeSeed(edgeName(scene)));
+      const edge = document.querySelector('.hj-plate .hj-edge');
+      const data = edge.getContext('2d').getImageData(0, 0, edge.width, edge.height).data;
+      let formula = 1; let drawn = 1; let worst = null;
+      for (const [x, y] of hers.points) {
+        const a = alpha(x, y);
+        if (a < formula) { formula = a; worst = [x, y]; }
+        const ex = Math.min(edge.width - 1, Math.floor((x / 1672) * edge.width));
+        const ey = Math.min(edge.height - 1, Math.floor((y / 941) * edge.height));
+        drawn = Math.min(drawn, 1 - data[(ey * edge.width + ex) * 4 + 3] / 255);
+      }
+      // How close the fade comes: the nearest point of the plate, to her, where the painting is under 0.999.
+      let nearest = Infinity;
+      for (const [x, y] of hers.points) {
+        if (y < hers.box[3] - 40 && x > hers.box[0] + 40 && x < hers.box[2] - 40) continue;
+        for (let d = 2; d < nearest; d += 2) { if (alpha(x, y + d) < 0.999 || alpha(x - d, y) < 0.999 || alpha(x + d, y) < 0.999) { nearest = d; break; } if (d > 120) break; }
+      }
+      return { scene: id, edge: scene.edge ?? 0, herFramesCoverPlate: { x: [hers.box[0], hers.box[2]], y: [hers.box[1], hers.box[3]] }, pixelsChecked: hers.points.length, lowestByTheFormula: formula, lowestOnTheDrawnEdge: Math.round(drawn * 1000) / 1000, worstPoint: worst, fadeComesNoNearerThanPx: nearest };
+    }, { id, buildBox });
+    row.ok = row.lowestByTheFormula >= 0.999 && row.lowestOnTheDrawnEdge >= 0.995;
+    report.push(row);
+    say(id, row);
+  }
+  await browser.close();
+  await writeFile(`${out}organic-rachel.json`, `${JSON.stringify(report, null, 1)}\n`);
+};
+
+// The chosen mock-up (option 2 of edge-organic-123.jpg) beside the build at 1440×900, and stretches of the
+// edge of each, enlarged.
+run.organic = async () => {
+  const mock = new URL('../../../reference/mockups/edge-organic-123.jpg', import.meta.url).pathname;
+  // Option 2 in the sheet, and where its painting sits in that crop: measured from the image.
+  const sheet = { left: 0, top: 740, width: 1100, height: 640 };
+  const M = { left: 42, top: 36, width: 1015, height: 571 };
+  const browser = await chromium.launch({ channel: 'chrome' });
+  const shots = {};
+  for (const scene of ['build', 'grow']) {
+    const page = await (await browser.newContext({ viewport: { width: 1440, height: 900 } })).newPage();
+    await page.goto(`${base}?debug&reset&intro=off&seed=7#${scene}`);
+    await page.reload();
+    await ready(page);
+    await clean(page);
+    await page.getByRole('button', { name: 'Pause animation' }).click();
+    await page.evaluate(() => { document.querySelector('.hj-masthead').style.visibility = 'hidden'; document.querySelector('.hj-caption').style.visibility = 'hidden'; });
+    await page.waitForTimeout(700);
+    const box = await page.locator('.hj-window').boundingBox();
+    // The same share of paper around the painting as the mock-up has.
+    const k = box.width / M.width;
+    shots[scene] = await page.screenshot({ clip: { x: Math.round(box.x - M.left * k), y: Math.round(box.y - M.top * k), width: Math.round(sheet.width * k), height: Math.round(sheet.height * k) } });
+    await page.close();
+  }
+  await browser.close();
+  const meta = await sharp(shots.build).metadata();
+  const W = meta.width;
+  const H = meta.height;
+  const mockup = await sharp(mock).extract(sheet).resize(W, H, { fit: 'fill' }).toBuffer();
+  const gap = 16;
+  const head = 34;
+  const text = (t, width) => Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="30"><text x="4" y="20" font-family="Helvetica, Arial, sans-serif" font-size="17" fill="#302e29">${t}</text></svg>`);
+  // A stretch of the edge, twice the size: fx, fy are where it starts, as shares of the picture.
+  const c = Math.round(W * 0.235);
+  const detail = (image, fx, fy) => sharp(image).extract({ left: Math.min(W - c, Math.round(W * fx)), top: Math.min(H - c, Math.round(H * fy)), width: c, height: c }).resize(c * 2, c * 2).toBuffer();
+  const tiles = [];
+  let y = gap;
+  const row = async (title, items) => {
+    if (title) { tiles.push({ input: text(title, 2 * W + gap), left: gap, top: y }); y += head; }
+    let x = gap;
+    let tallest = 0;
+    for (const item of items) {
+      const m = await sharp(item).metadata();
+      tiles.push({ input: item, left: x, top: y });
+      x += m.width + gap;
+      tallest = Math.max(tallest, m.height);
+    }
+    y += tallest + gap;
+  };
+  await row('The chosen mock-up, option 2 (left) and the build at 1440 × 900 (right), at the same size. The wander is seeded per scene, so the shapes differ; the character of the edge is what should match.', [mockup, shots.build]);
+  await row('Stretches of the edge, twice the size: top left, mock-up then build; right side, mock-up then build', [await detail(mockup, 0, 0), await detail(shots.build, 0, 0), await detail(mockup, 0.77, 0.3), await detail(shots.build, 0.77, 0.3)]);
+  await row('Bottom left, mock-up then build; bottom right, mock-up then build', [await detail(mockup, 0, 0.6), await detail(shots.build, 0, 0.6), await detail(mockup, 0.77, 0.6), await detail(shots.build, 0.77, 0.6)]);
+  await row('The lab (Grow) at 1440 × 900', [shots.grow]);
+  const file = `${out}organic-compare.jpg`;
+  await sharp({ create: { width: 2 * W + 3 * gap, height: y, channels: 3, background: '#d9d6cf' } }).composite(tiles).jpeg({ quality: 90 }).toFile(file);
+  say('organic-compare', file);
 };
 
 const command = process.argv[2];

@@ -5,7 +5,7 @@
 //   ?found=9       start with this many mushrooms already found (not saved)
 //   ?hint=5        seconds before the hint wiggle (default 60)
 //   ?slow=5        play the UI motion (GSAP) this many times slower, for frame-by-frame review
-//   ?edge=b        the painting's edge: a-round (the one that ships) | a | b | c, for comparison
+//   ?edge=b        the painting's edge: organic (the one that ships) | a-round | a | b | c, for comparison
 //   ?debug         outline mushroom hit areas and expose window.__hj
 // Production builds ignore them all: `?found=10` would otherwise skip the hunt and open the form.
 

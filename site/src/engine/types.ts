@@ -115,6 +115,12 @@ export interface SceneConfig {
    * had found the old one keeps the find.
    */
   replaced?: Readonly<Record<string, string>>;
+  /**
+   * Which of its possible edges the painting has. Each number gives the scene a different wandering edge;
+   * the one chosen keeps the wander clear of the mushrooms and of the character (qa/tools/edge.mjs pick).
+   * Leave out for the first.
+   */
+  edge?: number;
   /** The first-visit painting. The same strokes, played quickly, brush the scene in over another one. */
   strokes: readonly StrokePlan[];
   /**

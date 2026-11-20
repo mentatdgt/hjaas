@@ -1,0 +1,42 @@
+[
+ {
+  "scene": "build",
+  "edge": 22,
+  "herFramesCoverPlate": {
+   "x": [
+    610,
+    1198
+   ],
+   "y": [
+    400,
+    868
+   ]
+  },
+  "pixelsChecked": 31445,
+  "lowestByTheFormula": 1,
+  "lowestOnTheDrawnEdge": 1,
+  "worstPoint": null,
+  "fadeComesNoNearerThanPx": 46,
+  "ok": true
+ },
+ {
+  "scene": "grow",
+  "edge": 0,
+  "herFramesCoverPlate": {
+   "x": [
+    700,
+    1144
+   ],
+   "y": [
+    230,
+    878
+   ]
+  },
+  "pixelsChecked": 40322,
+  "lowestByTheFormula": 1,
+  "lowestOnTheDrawnEdge": 1,
+  "worstPoint": null,
+  "fadeComesNoNearerThanPx": 10,
+  "ok": true
+ }
+]
