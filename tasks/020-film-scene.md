@@ -1,6 +1,6 @@
 ---
 id: 020-film-scene
-status: changes-requested            # draft | open | delivered | changes-requested | approved
+status: approved                     # draft | open | delivered | changes-requested | approved
 frames: many              # see the lists below
 grid: separate images     # one image per file, ALL the same size as 020_scene.png and registered to it
 references:
@@ -123,3 +123,10 @@ Lip-flap is done in code by swapping mouth frames, so every held pose needs a cl
 - `020_M_3_closed.png`: M_3 with his mouth closed in a smile.
 - `020_M_1_mid.png`: M_1 with his mouth half open (a third mouth shape for lip-sync).
 Higgsfield prompts will say "talking animatedly". If a clip's mouth looks wrong, Wren overlays the drawn mouth frames instead.
+
+### QC round 3b (2026-11-20, Wren): APPROVED
+- **Rachel (4 files):** the silhouettes are identical to round 3 (0 px mask difference). The hair shadow is now narrow strands, all her skin is M01's warm tan, and K1's eyes are outlined, almost touching, with the C nose overlapping. No glasses.
+- **Presenter:** M_1_mid, M_2_closed and M_3_closed change only the mouth (about 40×30 px), so all three poses now lip-flap.
+- `approved/` is updated; the old Rachel files are in `pre-round3/`. `approved/020_scene.png` is rebuilt (plate + W_1 + M_1 + R_A1).
+- **Talking:** cycle M_x ↔ M_x_closed (+ M_1_mid in M_1) at about 4–7 swaps a second, with pauses; random blinks in M_1.
+- Next: Higgsfield, clip 1 first (M_1 → M_2, 4.5 credits), after the user's OK.

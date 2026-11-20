@@ -35,9 +35,10 @@ The reaction changes per scene so the thumbs-up doesn't repeat everywhere.
 All original characters, described in words. Never based on a real person's photo.
 - **Barista:** a young Gen-Z Indian woman with a warm deep brown complexion, long dark layered hair with curtain bangs, silver hoops, a white ribbed top and a dark apron. She stands behind the counter between the espresso machine and the grinder, polishing a cup.
 - **Mum:** sits on the sunlit window seat, watching her child. She stays still apart from a blink (part of the plate).
-- **Child:** a boy at the left table on the middle chair, facing Rachel, colouring with crayons.
+- **Child:** a boy at the left table on the middle chair, colouring with crayons. He looks down at his drawing with his mouth closed, and now and then looks up at his mum and grins.
 - **Old man:** sits on one chair at the right table, reading a newspaper, with a kopi.
 - **Cat:** a ginger tabby asleep on the floor at the lower right, beside Rachel's chair.
+- **Ceiling fan:** turns slowly (rendered from the plate by `tools/cafe_fan.py`).
 - **Composition:** Rachel in the centre and in focus, with slight background softness. Gazes balanced, not everyone looking left. Corners kept open (the edge feathers them).
 
 ## 4b. Supporting cast (film)
@@ -50,4 +51,6 @@ All original characters, described in words. Never based on a real person's phot
 - **Merging:** nothing merges into `main` without Wren's review and the user's OK.
 - **Prompts for the user:** one short paste-ready prompt per step. Details live in the repo, not the paste.
 - **Art edits:** every pose is an edit of a green anchor at the approved scene's exact size, never a redraw. Get the scene approved before drawing poses.
+- **No flicker, by construction (2026-11-21):** every animation pose is the actor's approved base image plus ONLY the part that moves, pasted and colour-matched by Wren. A generated pose is never used whole. Head turns and expressions are cuts hidden by blinks; soft fades only inside small loops. No AI video for flat-style faces.
+- **The Quinn loop:** Wren sends Quinn jobs and collects results directly (`QUINN-LOOP.md`). The user sees finished previews, not intermediate files.
 - **Never commit:** secrets, cookies or real people's photos used as character references.

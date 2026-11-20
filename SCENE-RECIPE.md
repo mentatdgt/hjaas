@@ -18,6 +18,8 @@ All at **the exact size of the approved scene** (no resizing; Wren normalises to
 4. **Poses:** edits of each anchor. Base pose, a small in-loop change, a blink, the second stage of the loop, the reaction. For the cast: 2–4 small loop poses each.
 5. A contact sheet and an honest self-check (max 3 attempts per image).
 
+**Rule (2026-11-21): a generated pose is never used whole.** Wren builds every pose as the approved base plus only the moving part, colour-matched (`tools/cafe_build5.py`). Ask Quinn for crops of one character through the Quinn loop (`QUINN-LOOP.md`).
+
 ## 3. QC (Wren)
 User drops the files into `wren-inbox` (or attaches a zip) and says **"QC NNN"**. Wren keys the green, overlays each piece on the scene to check registration, and checks identity, hands, outfit and style. Pass → `frames/NNN/approved/`; fail → numbered "Round N" notes in the task.
 
@@ -25,6 +27,8 @@ User drops the files into `wren-inbox` (or attaches a zip) and says **"QC NNN"**
 - Kling 3.0 std, 3 s, **4.5 credits** per clip, between key poses (e.g. base → stage 2, base → reaction). Upscale is 2 credits if needed.
 - Inputs are imported from `raw.githubusercontent.com` (repo is public). The user downloads the results into `wren-inbox` (the proxy blocks the download domain).
 - Processing: key out, register on a stable region, colour-fit **once per clip** on pixels with diff < 25, keep only clean frames (drop smears), composite only the moving zones.
+
+**Lesson from the café (2026-11-20): AI video only suits the softer, painterly characters (it worked for the lab).** For flat model-sheet characters, Kling redraws the face and hair its own way: the clip pops at both ends and the face morphs. Use drawn poses with timed holds instead: cuts for head turns and expressions (hide them behind a blink), short dissolves only between near-identical poses. If you do try a clip, buy ONE first and check every frame before buying more.
 
 ## 5. Package (Wren)
 - Base stills plus **cropped patches** per clip; `frames.json` lists positions; `routine.json` describes the loop and timings (data-driven, so Fable's engine plays it).

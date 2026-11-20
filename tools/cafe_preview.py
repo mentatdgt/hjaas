@@ -14,16 +14,16 @@ def img(p):
     if p not in cache: cache[p] = Image.open(f'{P}/{p}').convert('RGBA')
     return cache[p]
 layers = {l['actor']: l for l in man['layers']}
-def expand(steps):
+def expand(steps, tag=None):
     out = []
     for s in steps:
         if 'loop' in s:
-            for _ in range(R(s['repeat'])): out += expand(s['steps'])
+            for _ in range(R(s['repeat'])): out += expand(s['steps'], s['loop'])
         elif 'clip' in s:
             c = man['clips'][s['clip']]; fr = c['frames'][::-1] if s.get('reverse') else c['frames']
             out += [(('clip', s['clip'], f), s['ms']) for f in fr]
         else:
-            out.append((('still', s['still'], s.get('fade_ms', 0)), R(s['ms'])))
+            out.append((('still', s['still'], (s.get('fade_ms', 0), tag)), R(s['ms'])))
     return out
 def timeline(actor, total_ms, react_ms=None):
     a = rt['actors'][actor]; tl = []; t = 0
@@ -62,8 +62,9 @@ for fi in range(int(SECS * FPS)):
         if kind == 'still':
             if name is None: continue
             if actor == 'rachel' and name == 'R_A1_sketch' and any(b <= ms < b + 90 for b in blinks): name = 'R_A1_blink'
-            fade = f or 0
-            if fade and pev and pev[0] == 'still' and pev[1] and since < fade and pev[1] != name:
+            fade, tag = f if isinstance(f, tuple) else (0, None)
+            same = tag is not None and pev and pev[0] == 'still' and isinstance(pev[2], tuple) and pev[2][1] == tag
+            if fade and same and pev[1] and since < fade and pev[1] != name:
                 box = (L['x'], L['y'], L['x'] + L['w'], L['y'] + L['h'])
                 a = fr.crop(box); b = fr.crop(box)
                 a.alpha_composite(img(man['stills'][pev[1]])); b.alpha_composite(img(man['stills'][name]))
@@ -78,5 +79,5 @@ for fi in range(int(SECS * FPS)):
             if y < 0 or x < 0: p = p.crop((max(0, -x), max(0, -y), p.width, p.height)); x, y = max(x, 0), max(y, 0)
             fr.alpha_composite(p, (x, y))
     fr.convert('RGB').resize((ow, oh), Image.LANCZOS).save(f'{tmp}/{fi:05d}.png')
-subprocess.run(['ffmpeg', '-v', 'error', '-y', '-framerate', str(FPS), '-i', f'{tmp}/%05d.png', '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '20', '-pix_fmt', 'yuv420p', OUTF], check=True)
+subprocess.run(['ffmpeg', '-v', 'error', '-y', '-framerate', str(FPS), '-i', f'{tmp}/%05d.png', '-c:v', 'libx264', '-preset', 'slow', '-tune', 'animation', '-g', '12', '-crf', '13', '-pix_fmt', 'yuv420p', OUTF], check=True)
 print('wrote', OUTF)

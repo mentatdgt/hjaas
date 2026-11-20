@@ -1,6 +1,6 @@
 # HJaaS: status
 
-Where everything stands. Update this whenever a scene changes state. **Last updated: 2026-11-20 night (Wren, café chat).**
+Where everything stands. Update this whenever a scene changes state. **Last updated: 2026-11-21 00:45 (Wren, café chat).**
 
 New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a scene gets made) and the handover for your scene: `HANDOVER-scene-3.md` (café, finishing in the original Wren chat) or `HANDOVER-next-scene.md` (scene 4, new chat).
 
@@ -10,16 +10,16 @@ New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a
 |---|---|---|---|---|---|
 | 1 | Build | Contracting: Rachel hammers a box in an unfinished room | ✅ Approved, but **needs glasses removed and a restyle to the model sheet** | ✅ Built (elegant version) | ❌ Waiting to merge |
 | 2 | Grow | Mushroom lab: misting, writing, rotating the rack | ✅ Approved (task 017); later, a light restyle to the model sheet | ✅ Pencil edge done; Round 3b (pencil arrives with the colour) overnight | ❌ Waiting for your phone check, then merge |
-| 3 | Design | Café: Rachel sketches on an iPad, then sips coffee; barista, mum, child, old man, cat | 🔧 Package built (018). Quinn restyling Rachel and the barista to the model sheet (round 4) | 🔧 Fable building on `site/scene-3` overnight (`reviews/scene-3-build.md`) | — |
+| 3 | Design | Café: Rachel sketches and reacts; barista, mum, child, old man, cat, ceiling fan | ✅ Package v5, stabilised (no flicker by construction). 🔧 Still to add: Rachel's coffee sip, the barista polishing | 🔧 Fable building on `site/scene-3`; v5 is a file swap (`reviews/scene-3-build.md`) | — |
 | 4 | Film | Merlion at night: Rachel (from behind) films a presenter by a silver car | ✅ Art approved (task 020). 🔧 Round 3: Rachel restyled to M01 (4 files). Then Higgsfield clips (quote: 4 × 4.5 = 18 credits) → package | ⏳ Waits for the café merge | — |
 | 5 | Travel | Lookout | ⏳ Backdrop only (`scene/travel-lookout.png`); location to confirm | ⏳ | — |
 
 ## Now
-- **Quinn (café chat):** task 018 round 4: Rachel and the barista restyled to `reference/rachel/M01_rachel_model.png`, plus the softer reaction poses.
-- **Fable (overnight):** edge Round 3b on `site/scene-2`, then the café on `site/scene-3`.
-- **Wren (café chat):** QC round 4 → re-cut the 2 Rachel clips (quote first, about 9 credits) → update the café package → Fable drops it in.
-- **You (morning):** check `site/scene-2` on your phone → say "merge".
-- **Film chat:** task 020 round 3 (Rachel → M01), then 4 clips (18 credits, after your OK).
+- **You:** watch `frames/018-cafe-scene/cafe-preview.mp4` (v5). Start the Quinn loop with one Terminal command (`QUINN-LOOP.md`). Phone-check scene 2, then say "merge".
+- **Quinn loop:** smoke test, then job 001 (Rachel's sip poses).
+- **Fable:** café build on `site/scene-3`; swap in package v5.
+- **Wren (café chat):** run the Quinn loop, add the sip and the barista's polishing, final preview.
+- **Film chat:** task 020. **Read first, Film chat:** the café's AI video clips of the flat-style Rachel failed (face and hair redrawn, pops at both ends; 9 credits lost). Before buying the 4 clips, read `BIBLE.md` §5 and `SCENE-RECIPE.md` §4: buy ONE clip as a test, composite only the moving part onto the approved base, and build every pose as base + moving part. Read the new rules in `BIBLE.md` §5 and `SCENE-RECIPE.md` before making poses or clips.
 
 ## Next
 1. Approve scene 2 on a phone → merge `site/scene-2` into `main` (it includes scene 1).
@@ -47,4 +47,4 @@ New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a
 - [ ] Your design notes from 2026-11-19 (too cartoonish, paint-in too fast, full-bleed): partly addressed by the elegant version and the edge. Re-check once scene 2 merges.
 
 ## Credits
-Higgsfield: **139.5 credits after the café clips** (the Film chat may have spent since; check) (Starter plan: 4 jobs at a time; std mode only). Kling 3.0 std 3 s = 4.5 credits; upscale = 2.
+Higgsfield: **126 credits** on 2026-11-20 night (the Film chat may have spent since; check). Starter plan: 4 jobs at a time; std mode only.

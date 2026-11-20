@@ -206,3 +206,9 @@ The user found that the preview jitters when the sip starts, and that Rachel's f
 **The child's gaze (with Round 6's colour pass):**
 - `018_child_green`, `018_C_1` and `018_C_2`: he looks DOWN at his drawing, focused, mouth closed (a small content line). The crayon stays where it is in each pose.
 - `018_C_3`: unchanged in pose. He looks up at his mum with a grin.
+
+### Round 8 (Wren, 2026-11-21): the café rebuilt from the poses in hand, no new generations
+The user's review of preview v4: jitter, Rachel's hair and colours changing, the barista's cup jumping, the child looking away while colouring, and no moving fan.
+- **Cause:** each pose was a separately generated full image. A blink changed 25–29% of Rachel's pixels (hair, top, legs).
+- **Fix:** `tools/cafe_build5.py` builds every pose as base + moving part only. A blink now changes 4% (the eyes). The reaction uses the round-4 head family (consistent hair). The barista's B_2/B_3 are dropped. The child's eyes and mouth were edited directly (`tools/cafe_child_gaze.py`). The fan is rendered from the plate (`tools/cafe_fan.py`).
+- **Rounds 6 and 7 are cancelled** (colour pass, Quinn's child gaze). Rachel's sip continues as Quinn-loop job 001.
