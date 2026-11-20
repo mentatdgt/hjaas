@@ -109,3 +109,10 @@ Files, each an EDIT of the current approved file, 1672×941, flat `#00FF00`: `02
 - Outline weight: the same as the presenter's.
 
 Self-check: all four files keep the same pose differences; the hair never extends further left than before; there are no glasses; and the A1 and K1 hair and skin colours match M01. Deliver the four files plus one image of A1 and K1 next to the M01 face.
+
+### QC round 3 (2026-11-20, Wren): close; three fixes
+Registration is perfect: the camera, hands, tank, shorts and bottom crop are pixel-identical; the hair never goes further left than x 1017 (999 in K1); the green is pure. The hair now has M01's volume and colour. See `incoming/round3/wren_r3_on_plate.png`.
+1. **K1 eyes:** the whites have no outline and are a touch small. Use M01's eyes: round whites with the **same thick dark outline** as the rest of her, each about ¼ of the face's width, almost touching, with the "C" nose overlapping their inner edges.
+2. **A1, B1 (and rachel_green) hair shadow:** the one big dark blob in the middle of the back of her hair reads as a hole. Replace it with **2–3 narrow dark strands following the waves**, like the inner layers on M01. Same silhouette.
+3. **Skin:** her arms, shoulders and hands are still the old pale peach, so in K1 they don't match her new orange-tan face. Recolour all her visible skin (all four files) to M01's warm tan, with one hard shadow tone. Shapes and pixels' positions stay identical.
+Everything else stays.
