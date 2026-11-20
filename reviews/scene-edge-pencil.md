@@ -58,3 +58,13 @@ Inside the painting the overlay is clear, so there's no pencil over the paint. O
 - All checks pass. The hard cuts are gone, and the pencil matches mock-up B.
 - **Decision:** keep "redraw the edge when a scene returns" (+10–60 ms on a 1.5 s switch is invisible). Don't rework Rachel's return frame.
 - **Toolbox patch fixed at the source:** `tools/pencil_lines.py` no longer turns big dark fills (the toolbox, the drop cloth's shadows) into graphite. Only outlines remain. Both `scene/pencil/*-lines.png` are regenerated on `main`. Pull, rebuild the assets, re-check the mushrooms (≥ 0.95) and Rachel, re-shoot `pencil-compare.jpg` and `pencil-corners.jpg`, then commit and push. No code changes expected.
+
+## Round 3b: the pencil arrives with the colour, not before (user, 2026-11-20)
+**User:** during the paint-in the line drawings are already there when the colour comes in, which looks strange. They should appear at about the same time as the colour reaches the edge nearby.
+
+**Fix:**
+1. Drop the pencil-only fade-up before the brush starts.
+2. Drive the pencil with the **same paint-in reveal** as the colour, spread outward to the paper. Pencil alpha at a pixel = `pen × revealNear(x, y, t)`. `revealNear` is the colour reveal mask at time `t`, grown outward by about 70 px at plate scale with a soft falloff, e.g. a max-filter plus a blur on a small copy of the reveal mask, updated each frame.
+3. The effect: as a brush stroke reaches the painting's edge, the pencil lines just beyond it sketch in alongside it, over about 150–250 ms. Pencil never shows in a region the colour hasn't reached yet.
+
+Same for the return-visit reveal. Record the paint-in on desktop and on the iPhone profile, and include 3 stills (early, middle, late) in `site/qa/edge/pencil-reveal-*.jpg`. Keep the frame budget (no long tasks over about 12 ms in WebKit). Everything else is unchanged.

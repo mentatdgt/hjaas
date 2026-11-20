@@ -26,7 +26,7 @@ What's decided. Everyone (Wren, Quinn, Fable, Foreman) follows this. If a task, 
 | 1 Build | Outfit 1: black tank, olive cargo pants, brown boots | Loose, wavy | Hammering a box, with taps and pauses | Looks up and beams, then thumbs-up (sometimes a wink) |
 | 2 Grow | Lab: white lab coat over a dark top, olive cargos, boots (`hjaas6.png`) | Low ponytail, dark tie | Mist → write on the clipboard → rotate the rack, unhurried | Looks up, thumbs-up (may change to a peace sign) |
 | 3 Design | Outfit 1 | Loose, wavy | Sketch on the iPad ↔ sip a hot coffee, two stages | Looks up at you with a warm smile, no gesture |
-| 4 Film | Black tank, tan cargo shorts (seen from behind, cropped at the thighs) | Loose, wavy, no bandana | TBD: filming a presenter at night, Merlion and Marina Bay Sands behind (task 019) | Looks back over her shoulder at you and smiles |
+| 4 Film | Black tank, tan cargo shorts (seen from behind, cropped at the thighs) | Loose, wavy, no bandana | Filming the presenter with a DSLR (red REC dot blinks) ↔ an occasional glance down at the camera screen (task 020) | Looks back over her shoulder at you and smiles |
 | 5 Travel | TBD | TBD | TBD | Look and a small wave |
 
 The reaction changes per scene so the thumbs-up doesn't repeat everywhere.
@@ -39,6 +39,10 @@ All original characters, described in words. Never based on a real person's phot
 - **Old man:** sits on one chair at the right table, reading a newspaper, with a kopi.
 - **Cat:** a ginger tabby asleep on the floor at the lower right, beside Rachel's chair.
 - **Composition:** Rachel in the centre and in focus, with slight background softness. Gazes balanced, not everyone looking left. Corners kept open (the edge feathers them).
+
+## 4b. Supporting cast (film)
+- **Presenter:** an original character, described in words only: a friendly young East Asian man with short black hair and thin glasses, a black short-sleeved shirt with a clip-on mic, a watch, light-grey jeans and white sneakers. He stands in front of a silver fastback car (no badges), talking to camera with lively gestures and blinks. His gestures always stay clear of Rachel's camera.
+- **Merlion water:** flows constantly (a hand-drawn loop).
 
 ## 5. Working rules
 - **Roles:** Wren (Claude) does art direction, QC, tasks, Higgsfield jobs and commits. Quinn (ChatGPT) draws, with read-only GitHub access. Fable (Claude Fable 5.2 in Claude Code on the Mac) builds the site. Foreman (Grok) dispatches Cursor agents for PRs into site branches. The user carries files and makes the calls.

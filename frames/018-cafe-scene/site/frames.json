@@ -1,0 +1,189 @@
+{
+ "canvas": {
+  "w": 2544,
+  "h": 1432,
+  "trim_x": 18,
+  "to_plate_scale": 0.6572327044025157,
+  "note": "Caf\u00e9 canvas 2544x1432 (approved scene minus 18 px each side). Plate space = canvas px x 1672/2544. Draw layers in the order of \"layers\" over plate.png. Each still is drawn at its layer x,y. Clip frames are patches drawn over the layer's base still at the clip x,y (layer-local)."
+ },
+ "plate": "plate.png",
+ "layers": [
+  {
+   "actor": "cat",
+   "x": 1846,
+   "y": 1235,
+   "w": 244,
+   "h": 139,
+   "stills": [
+    "cat_1",
+    "cat_2",
+    "cat_3"
+   ]
+  },
+  {
+   "actor": "child",
+   "x": 292,
+   "y": 656,
+   "w": 178,
+   "h": 370,
+   "stills": [
+    "C_1",
+    "C_2",
+    "C_3"
+   ]
+  },
+  {
+   "actor": "oldman",
+   "x": 2177,
+   "y": 614,
+   "w": 281,
+   "h": 560,
+   "stills": [
+    "O_1",
+    "O_2",
+    "O_3"
+   ]
+  },
+  {
+   "actor": "barista",
+   "x": 1641,
+   "y": 467,
+   "w": 192,
+   "h": 278,
+   "stills": [
+    "B_1",
+    "B_2",
+    "B_3",
+    "B_4"
+   ]
+  },
+  {
+   "actor": "rachel",
+   "x": 1037,
+   "y": 586,
+   "w": 588,
+   "h": 802,
+   "stills": [
+    "R_A1_sketch",
+    "R_A2_stroke",
+    "R_A1_blink",
+    "R_B1_sip",
+    "R_K1_look"
+   ]
+  },
+  {
+   "actor": "mum",
+   "x": 674,
+   "y": 593,
+   "w": 86,
+   "h": 65,
+   "stills": [
+    "M_blink_half",
+    "M_blink_closed"
+   ]
+  }
+ ],
+ "stills": {
+  "cat_1": "cat/cat_1.png",
+  "cat_2": "cat/cat_2.png",
+  "cat_3": "cat/cat_3.png",
+  "C_1": "child/C_1.png",
+  "C_2": "child/C_2.png",
+  "C_3": "child/C_3.png",
+  "O_1": "oldman/O_1.png",
+  "O_2": "oldman/O_2.png",
+  "O_3": "oldman/O_3.png",
+  "B_1": "barista/B_1.png",
+  "B_2": "barista/B_2.png",
+  "B_3": "barista/B_3.png",
+  "B_4": "barista/B_4.png",
+  "R_A1_sketch": "rachel/R_A1_sketch.png",
+  "R_A2_stroke": "rachel/R_A2_stroke.png",
+  "R_A1_blink": "rachel/R_A1_blink.png",
+  "R_B1_sip": "rachel/R_B1_sip.png",
+  "R_K1_look": "rachel/R_K1_look.png",
+  "M_blink_half": "mum/M_blink_half.png",
+  "M_blink_closed": "mum/M_blink_closed.png"
+ },
+ "clips": {
+  "sip": {
+   "layer": "rachel",
+   "base": "R_A1_sketch",
+   "x": 143,
+   "y": -13,
+   "frames": [
+    "rachel/sip/sip_001.png",
+    "rachel/sip/sip_003.png",
+    "rachel/sip/sip_005.png",
+    "rachel/sip/sip_007.png",
+    "rachel/sip/sip_009.png",
+    "rachel/sip/sip_011.png",
+    "rachel/sip/sip_013.png",
+    "rachel/sip/sip_015.png",
+    "rachel/sip/sip_017.png",
+    "rachel/sip/sip_019.png",
+    "rachel/sip/sip_021.png",
+    "rachel/sip/sip_023.png",
+    "rachel/sip/sip_025.png",
+    "rachel/sip/sip_027.png",
+    "rachel/sip/sip_029.png",
+    "rachel/sip/sip_031.png",
+    "rachel/sip/sip_033.png",
+    "rachel/sip/sip_035.png",
+    "rachel/sip/sip_037.png",
+    "rachel/sip/sip_039.png",
+    "rachel/sip/sip_041.png",
+    "rachel/sip/sip_043.png",
+    "rachel/sip/sip_045.png",
+    "rachel/sip/sip_047.png",
+    "rachel/sip/sip_049.png",
+    "rachel/sip/sip_051.png",
+    "rachel/sip/sip_053.png",
+    "rachel/sip/sip_055.png",
+    "rachel/sip/sip_057.png",
+    "rachel/sip/sip_059.png",
+    "rachel/sip/sip_061.png",
+    "rachel/sip/sip_063.png",
+    "rachel/sip/sip_065.png",
+    "rachel/sip/sip_067.png",
+    "rachel/sip/sip_069.png",
+    "rachel/sip/sip_071.png",
+    "rachel/sip/sip_073.png",
+    "rachel/sip/sip_073.png"
+   ]
+  },
+  "look_up": {
+   "layer": "rachel",
+   "base": "R_A1_sketch",
+   "x": 153,
+   "y": 27,
+   "frames": [
+    "rachel/look_up/look_up_001.png",
+    "rachel/look_up/look_up_003.png",
+    "rachel/look_up/look_up_005.png",
+    "rachel/look_up/look_up_007.png",
+    "rachel/look_up/look_up_009.png",
+    "rachel/look_up/look_up_011.png",
+    "rachel/look_up/look_up_013.png",
+    "rachel/look_up/look_up_015.png",
+    "rachel/look_up/look_up_017.png",
+    "rachel/look_up/look_up_019.png",
+    "rachel/look_up/look_up_021.png",
+    "rachel/look_up/look_up_023.png",
+    "rachel/look_up/look_up_025.png",
+    "rachel/look_up/look_up_027.png",
+    "rachel/look_up/look_up_029.png",
+    "rachel/look_up/look_up_031.png",
+    "rachel/look_up/look_up_033.png",
+    "rachel/look_up/look_up_035.png",
+    "rachel/look_up/look_up_037.png",
+    "rachel/look_up/look_up_039.png",
+    "rachel/look_up/look_up_041.png",
+    "rachel/look_up/look_up_043.png",
+    "rachel/look_up/look_up_045.png",
+    "rachel/look_up/look_up_047.png",
+    "rachel/look_up/look_up_049.png"
+   ]
+  }
+ }
+}
