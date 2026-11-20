@@ -11,7 +11,7 @@ New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a
 | 1 | Build | Contracting: Rachel hammers a box in an unfinished room | ✅ Approved, but **needs glasses removed and a restyle to the model sheet** | ✅ Built (elegant version) | ❌ Waiting to merge |
 | 2 | Grow | Mushroom lab: misting, writing, rotating the rack | ✅ Approved (task 017); later, a light restyle to the model sheet | ✅ Pencil edge done; Round 3b (pencil arrives with the colour) overnight | ❌ Waiting for your phone check, then merge |
 | 3 | Design | Café: Rachel sketches on an iPad, then sips coffee; barista, mum, child, old man, cat | 🔧 Package built (018). Quinn restyling Rachel and the barista to the model sheet (round 4) | 🔧 Fable building on `site/scene-3` overnight (`reviews/scene-3-build.md`) | — |
-| 4 | Film | Merlion at night: Rachel (from behind) films a presenter by a silver car | ✅ Staging approved (`019_r2`). 🔧 Task 020: final scene, then plate, anchors and poses (Quinn stops after step 1) | ⏳ | — |
+| 4 | Film | Merlion at night: Rachel (from behind) films a presenter by a silver car | ✅ Art approved (task 020, 14 pieces). Next: Higgsfield in-betweens (quote first) → package | ⏳ Waits for the café merge | — |
 | 5 | Travel | Lookout | ⏳ Backdrop only (`scene/travel-lookout.png`); location to confirm | ⏳ | — |
 
 ## Now

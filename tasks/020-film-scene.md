@@ -1,6 +1,6 @@
 ---
 id: 020-film-scene
-status: changes-requested            # draft | open | delivered | changes-requested | approved
+status: approved                     # draft | open | delivered | changes-requested | approved
 frames: many              # see the lists below
 grid: separate images     # one image per file, ALL the same size as 020_scene.png and registered to it
 references:
@@ -94,3 +94,6 @@ All 16 files are 1672×941, with pure `#00FF00` backgrounds. Every anchor matche
 
 ### Round 2 (Quinn)
 Redo `020_R_K1_look.png` only, as an edit of `020_rachel_green.png`: the same look back over her shoulder with a warm smile, the same hair, tank, camera and hands, **with no glasses at all**. Draw the bare eyes as in `reference/hjaas3.png` "warm smile", without the frames. Keep her waist and shorts at exactly the same pixels. 1672×941, green background.
+
+### QC round 2 (2026-11-20, Wren): APPROVED
+`020_R_K1_look` has no glasses, a warm smile and bare eyes, and the waist and shorts match the anchor exactly. All 14 pieces are in `approved/`. Next: Higgsfield in-betweens (quote first).
