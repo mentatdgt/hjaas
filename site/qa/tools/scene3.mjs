@@ -7,6 +7,7 @@
 //   node qa/tools/scene3.mjs back      coming back to the café: the cast is on the plate again before the brush shows it
 //   node qa/tools/scene3.mjs react     a find: what she does, desktop and phone, and with reduced motion; and the cross-dissolve itself, measured
 //   node qa/tools/scene3.mjs film      30 s of the café with one find, desktop and iPhone profile, and its first-visit painting
+//   node qa/tools/scene3.mjs preview   the page against the package's own picture (plate + stills, as tools/cafe_preview.py draws frames/018-cafe-scene/cafe-preview.mp4)
 //   node qa/tools/scene3.mjs frames    frame times in WebKit (phone) and throttled Chrome: the café's painting, and Build → Grow → Design → Build
 import { chromium, webkit, devices } from 'playwright';
 import { mkdir, writeFile, readFile } from 'node:fs/promises';
@@ -326,6 +327,48 @@ run.react = async () => {
     const answer = steps.filter(([, , , at]) => at >= t0);
     const row = { browser: name, fromTheFind: steps.map(([p, ms, fade, at]) => `${at - t0} ms: ${p}, ${ms} ms${fade ? `, dissolved in over ${fade}` : ''}`), msFromTheFindToHerFirstMove: answer.length ? answer[0][3] - t0 : null, msFromTheFindToTheSmile: (answer.find(([p]) => p === 'R_K2_smile')?.[3] ?? NaN) - t0, posesSheMissed: await page.evaluate(() => window.__hj.rachel.missed), countAfter: await page.evaluate(() => window.__hj.hunt.remaining), errors };
     if (!options.reducedMotion) {
+      // A find during the coffee sip: she finishes the sip (the cup at her lips for 300 ms at least, then the
+      // lift and the reach back down) and only then answers. Once as she reaches for the cup, once mid-sip.
+      row.duringTheSip = {};
+      for (const [label, pose, spot, into] of [['as she reaches for the cup', 'R_S1_reach', 'floor', 60], ['with the cup at her lips', 'R_B1_sip', 'corner', 100]]) {
+        await page.evaluate(() => { window.__steps.length = 0; });
+        // (The reach on the way up: the pose before it is the sketch, not the lift.)
+        await page.waitForFunction((p) => window.__steps.at(-1)?.[0] === p && window.__steps.at(-2)?.[0] !== (p === 'R_S1_reach' ? 'R_S2_lift' : ''), pose, { timeout: 120000 });
+        await page.waitForTimeout(into);
+        const at = await page.evaluate((id) => { const now = Math.round(performance.now()); document.querySelector(`.hj-plate [data-spot="${id}"]`).click(); return now; }, spot);
+        await page.waitForFunction(() => !window.__hj.player.reacting && window.__steps.some(([p]) => p === 'R_K2_smile'), null, { timeout: 20000 });
+        await page.waitForTimeout(600);
+        const all = await page.evaluate(() => window.__steps);
+        const from = all.findLastIndex(([, , , t]) => t <= at);
+        const seen = all.slice(from);
+        const first = seen.findIndex(([p]) => p === 'R_A1_blink');
+        const sip = seen.slice(0, first);
+        const lips = sip.findIndex(([p]) => p === 'R_B1_sip');
+        row.duringTheSip[label] = {
+          found: `${at - seen[0][3]} ms into ${seen[0][0]}`,
+          thenShe: seen.slice(0, first + 4).map(([p, , , t], i) => `${t - at} ms: ${p}${seen[i + 1] ? `, shown ${seen[i + 1][3] - t} ms` : ''}`),
+          finishedTheSipFirst: sip.map(([p]) => p).join(' > ') === (pose === 'R_S1_reach' ? 'R_S1_reach > R_S2_lift > R_B1_sip > R_S2_lift > R_S1_reach' : 'R_B1_sip > R_S2_lift > R_S1_reach'),
+          cupAtHerLipsMs: seen[lips + 1][3] - seen[lips][3],
+          msFromTheFindToHerAnswer: seen[first][3] - at,
+          anyDissolveOrBlinkOnTheWay: sip.some(([p, , fade]) => fade > 0 || p === 'R_A1_blink'),
+          smiled: seen.some(([p]) => p === 'R_K2_smile'),
+        };
+      }
+      // Everyone, for a while: who dissolves, and from what into what (only ever two stills of one loop).
+      row.dissolvesSeenIn40s = await page.evaluate(async () => {
+        const seen = {};
+        for (const cast of window.__hj.scene.casts) {
+          const name = cast.character.el.dataset.actor; let before = cast.character.current; seen[name] = {};
+          const player = window.__hj.scene.players.get(cast);
+          const old = player.onStep;
+          player.onStep = (step) => { if (step.fade) { const key = `${before} > ${step.pose} (${step.fade} ms)`; seen[name][key] = (seen[name][key] ?? 0) + 1; } before = step.pose; old?.(step); };
+        }
+        await new Promise((r) => setTimeout(r, 40000));
+        return Object.fromEntries(Object.entries(seen).filter(([, v]) => Object.keys(v).length));
+      });
+    }
+    // (Last: it stops everyone where they are.)
+    if (!options.reducedMotion) {
       row.theDissolve = await page.evaluate(() => {
         const scene = window.__hj.scene; scene.hold();
         const out = {};
@@ -375,17 +418,22 @@ run.film = async () => {
     const introAt = (Date.now() - started) / 1000;
     await clean(page);
     await ready(page);
-    await page.waitForTimeout(14000);
+    const readyAt = (Date.now() - started) / 1000;
+    // Her coffee sip, whenever it comes round (9 to 17 s into her routine), then a find a few seconds after it.
+    await page.waitForFunction(() => window.__hj.poses.some(([p]) => p === 'R_B1_sip'), null, { timeout: 60000 });
+    const sipAt = (Date.now() - started) / 1000;
+    await page.waitForTimeout(5500);
     const findAt = (Date.now() - started) / 1000;
     const spot = page.locator('.hj-plate [data-spot="window-seat"]');
     if (name === 'iphone') await spot.tap({ force: true }); else await spot.click({ force: true });
-    await page.waitForTimeout(16000);
+    // (At least 30 s of the café at work, and her whole answer.)
+    await page.waitForTimeout(Math.max(6000, (readyAt + 31 - findAt) * 1000));
     await context.close();
     await browser.close();
     const [webm] = (await readdir(dir)).filter((f) => f.endsWith('.webm'));
     const mp4 = `${out}design-film-${name}.mp4`;
     execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', `${dir}${webm}`, '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '24', '-movflags', '+faststart', mp4]);
-    const moments = [introAt + 0.9, introAt + 2.3, introAt + 3.7, introAt + 5.6, findAt - 3, findAt + 0.6, findAt + 1.6, findAt + 2.2, findAt + 4.5];
+    const moments = [introAt + 0.9, introAt + 2.3, introAt + 3.7, introAt + 5.6, findAt - 3, findAt + 0.6, findAt + 1.6, findAt + 2.2, findAt + 4.5, sipAt - 0.6, sipAt - 0.1, sipAt + 0.8, sipAt + 3.2];
     const stills = [];
     for (const [i, at] of moments.entries()) {
       const file = `${dir}still-${i}.png`;
@@ -393,10 +441,121 @@ run.film = async () => {
       stills.push(await sharp(file).resize({ height: 420 }).toBuffer());
     }
     await row(`${name}: the café painted for a new visitor, at about 0.9, 2.3, 3.7 and 5.6 s`, stills.slice(0, 4), `${out}design-film-${name}-stills-painting.jpg`);
-    await row(`${name}: at work, and a find: 0.6, 1.6, 2.2 and 4.5 s after it`, stills.slice(4), `${out}design-film-${name}-stills-find.jpg`);
+    await row(`${name}: at work, and a find: 0.6, 1.6, 2.2 and 4.5 s after it`, stills.slice(4, 9), `${out}design-film-${name}-stills-find.jpg`);
+    await row(`${name}: the coffee sip, from 0.6 s before the cup reaches her lips to 3.2 s after`, stills.slice(9), `${out}design-film-${name}-stills-sip.jpg`);
+    say(`${name} times in the film, s`, { paintingStarts: Math.round(introAt * 10) / 10, atWorkFrom: Math.round(readyAt * 10) / 10, sip: Math.round(sipAt * 10) / 10, find: Math.round(findAt * 10) / 10 });
     await rm(dir, { recursive: true, force: true });
     say(name, mp4);
   }
+};
+
+// The page against the package. cafe-preview.mp4 is the plate with each actor's still drawn over it at its
+// layer's place (tools/cafe_preview.py). Here the same picture is made from the package for a few sets of
+// poses, the page is put on the same poses, and the two are compared inside the painting's edge: how far
+// apart they are, and whether shifting one against the other by a pixel would bring them closer (it must
+// not: every actor is where the package puts it). Also a frame of the preview itself beside the page.
+run.preview = async () => {
+  const { execFileSync } = await import('node:child_process');
+  const pkg = new URL('../../../frames/018-cafe-scene/', import.meta.url).pathname;
+  const frames = JSON.parse(await readFile(`${pkg}site/frames.json`, 'utf8'));
+  const SETS = {
+    'at rest': {},
+    'the sip': { rachel: 'R_B1_sip', barista: 'B_2_polish', child: 'C_3', oldman: 'O_3', cat: 'cat_2', mum: 'M_blink_closed', fan: 'fan_07' },
+    'the smile': { rachel: 'R_K2_smile', barista: 'B_4_glance', child: 'C_2', oldman: 'O_2', cat: 'cat_3', fan: 'fan_13' },
+    'reaching': { rachel: 'R_S2_lift', barista: 'B_3_polish', fan: 'fan_19' },
+  };
+  const browser = await chromium.launch({ channel: 'chrome' });
+  const page = await (await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1.6 })).newPage();
+  const errors = errorsOf(page);
+  await page.goto(`${base}?debug&reset&intro=off&seed=7#design`);
+  await ready(page);
+  await SCENE.design.loaded(page);
+  await page.waitForFunction(() => window.__hj.scene.casts.every((cast) => [...cast.character.frames.keys()].length > 0), null, { timeout: 30000 });
+  await page.evaluate(() => { window.__hj.scene.hold(); document.querySelectorAll('.hj-mushrooms').forEach((el) => { el.style.visibility = 'hidden'; }); });
+  const report = {};
+  let shown = null;
+  for (const [label, poses] of Object.entries(SETS)) {
+    const used = Object.fromEntries(frames.layers.map((layer) => [layer.actor, poses[layer.actor] ?? layer.stills[0]]));
+    // (The mum is part of the plate: her layer is only her blink.)
+    if (!poses.mum) delete used.mum;
+    await page.evaluate((to) => { for (const cast of window.__hj.scene.casts) { const name = cast.character.el.dataset.actor; cast.character.show(to[name] ?? ''); } }, used);
+    await page.waitForTimeout(150);
+    const box = await page.locator('.hj-plate').boundingBox();
+    const shot = sharp(await page.screenshot({ clip: box }));
+    const { width, height } = await shot.metadata();
+    const mine = await shot.removeAlpha().raw().toBuffer();
+    const layers = frames.layers.filter((layer) => used[layer.actor]).map((layer) => ({ input: `${pkg}site/${frames.stills[used[layer.actor]]}`, left: layer.x, top: layer.y }));
+    const whole = await sharp(`${pkg}site/${frames.plate}`).composite(layers).png().toBuffer();
+    const theirs = await sharp(whole).resize(width, height, { fit: 'fill', kernel: 'lanczos3' }).removeAlpha().raw().toBuffer();
+    // Inside the edge: a sixth in from each side is clear of it everywhere. The screenshot's own corner may
+    // fall a fraction of a pixel from the plate's, so the whole picture is first lined up on the room (the
+    // shift, of at most 2 px, that brings the two closest), and then each actor's own box is asked the same
+    // question: an actor out of place against the room would be closest at a different shift.
+    const k = width / frames.canvas.w;
+    const inside = [Math.round(width / 6), Math.round(height / 5), width - Math.round(width / 6), height - Math.round(height / 5)];
+    const apart = ([l, t, r, b], dx, dy, only) => {
+      let sum = 0; let n = 0;
+      for (let y = Math.max(t, 3); y < Math.min(b, height - 3); y++) {
+        for (let x = Math.max(l, 3); x < Math.min(r, width - 3); x++) {
+          if (only && !only(x, y)) continue;
+          const a = (y * width + x) * 3; const o = ((y + dy) * width + x + dx) * 3;
+          sum += (Math.abs(mine[a] - theirs[o]) + Math.abs(mine[a + 1] - theirs[o + 1]) + Math.abs(mine[a + 2] - theirs[o + 2])) / 3; n++;
+        }
+      }
+      return n ? sum / n : 0;
+    };
+    // Where the two are closest, to a tenth of a screen pixel: the lowest of the whole-pixel shifts, refined
+    // by the curve through it and its two neighbours on each axis.
+    const closest = (area, only) => {
+      let best = null;
+      for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) { const mean = apart(area, dx, dy, only); if (!best || mean < best.mean) best = { shift: [dx, dy], mean }; }
+      const fine = (axis) => {
+        const at = (d) => apart(area, best.shift[0] + (axis === 0 ? d : 0), best.shift[1] + (axis === 1 ? d : 0), only);
+        if (Math.abs(best.shift[axis]) === 2) return best.shift[axis];
+        const a = at(-1); const c = at(1); const bend = a - 2 * best.mean + c;
+        return best.shift[axis] + (bend > 0 ? (0.5 * (a - c)) / bend : 0);
+      };
+      return { shift: [Math.round(fine(0) * 10) / 10, Math.round(fine(1) * 10) / 10], mean: Math.round(best.mean * 100) / 100 };
+    };
+    const room = closest(inside);
+    const actors = {};
+    for (const layer of frames.layers) {
+      if (!used[layer.actor]) continue;
+      // An actor is compared where its drawing is solid: the edge leaves the painting whole under every such
+      // pixel, wherever on the plate the actor is. (Not the fan: it is faded with the room.)
+      const solid = await sharp(`${pkg}site/${frames.stills[used[layer.actor]]}`).ensureAlpha().extractChannel(3).raw().toBuffer({ resolveWithObject: true });
+      if (solid.data.every((a) => a === 255)) { actors[layer.actor] = 'a piece of the room, faded with it at the edge: not compared'; continue; }
+      const area = [Math.floor(layer.x * k), Math.floor(layer.y * k), Math.ceil((layer.x + layer.w) * k), Math.ceil((layer.y + layer.h) * k)];
+      const at = closest(area, (x, y) => {
+        const sx = Math.round(x / k - layer.x); const sy = Math.round(y / k - layer.y);
+        // (Well inside the drawing: 3 px of its own from any clear pixel.)
+        for (const [ox, oy] of [[0, 0], [-3, 0], [3, 0], [0, -3], [0, 3]]) {
+          const px = sx + ox; const py = sy + oy;
+          if (px < 0 || py < 0 || px >= solid.info.width || py >= solid.info.height || solid.data[py * solid.info.width + px] < 255) return false;
+        }
+        return true;
+      });
+      // (A patch the size of the mum's eyes is too little to place this way: it reads the same a pixel either side.)
+      if (layer.w * k * layer.h * k < 5000) { actors[layer.actor] = { meanDifferenceOutOf255: at.mean, note: 'too small to place by this measure' }; continue; }
+      const off = [Math.round((at.shift[0] - room.shift[0]) * 10) / 10, Math.round((at.shift[1] - room.shift[1]) * 10) / 10];
+      // Each actor's canvas is set on whole screen pixels, so half a pixel either way is expected, and the
+      // estimate itself moves by about half a pixel from pose to pose on the smaller actors.
+      actors[layer.actor] = { screenPxFromWhereThePackagePutsIt: off, meanDifferenceOutOf255: at.mean, inPlace: Math.abs(off[0]) < 1.5 && Math.abs(off[1]) < 1.5 };
+    }
+    report[label] = { poses: used, platePxOnTheScreen: [width, height], theRoom: { screenshotOffsetPx: room.shift, meanDifferenceOutOf255: room.mean }, actors, everyActorIsInPlace: Object.values(actors).every((a) => typeof a === 'string' || a.inPlace !== false) };
+    say(label, report[label]);
+    if (label === 'the sip') shown = { mine: await sharp(mine, { raw: { width, height, channels: 3 } }).resize({ width: 900 }).png().toBuffer(), theirs: await sharp(theirs, { raw: { width, height, channels: 3 } }).resize({ width: 900 }).png().toBuffer() };
+  }
+  await browser.close();
+  // A frame of the preview itself with the cup at her lips (found by looking: the sip is at about 13 to 15 s).
+  const frame = `${out}preview-frame.png`;
+  execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-ss', '14.2', '-i', `${pkg}cafe-preview.mp4`, '-frames:v', '1', frame]);
+  const theirFrame = await sharp(frame).resize({ width: 900 }).png().toBuffer();
+  const { rm } = await import('node:fs/promises');
+  await rm(frame, { force: true });
+  await row('the sip: cafe-preview.mp4 at 14.2 s  |  the package drawn as the preview draws it  |  the page on the same poses (its edge is the site\'s own)', [theirFrame, shown.theirs, shown.mine], `${out}preview-compare.jpg`);
+  report.errors = errors;
+  await save('preview.json', report);
 };
 
 // Frame times. WebKit on the iPhone profile and Chrome with the processor slowed four times, against the

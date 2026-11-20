@@ -2,30 +2,82 @@
  {
   "browser": "chrome, 1440 × 900",
   "fromTheFind": [
-   "-2 ms: R_A2_stroke, 622 ms, dissolved in over 120",
-   "615 ms: R_A1_blink, 70 ms",
-   "681 ms: R_K1_blink, 70 ms",
-   "750 ms: R_K1_look, 412 ms",
-   "1166 ms: R_K2_smile, 1376 ms",
-   "2550 ms: R_K1_look, 250 ms",
-   "2798 ms: R_K1_blink, 70 ms",
-   "2864 ms: R_A1_blink, 80 ms",
-   "2949 ms: R_A1_sketch, 400 ms",
-   "3349 ms: R_A1_sketch, 425 ms",
-   "3766 ms: R_A1_sketch, 166 ms, dissolved in over 120",
-   "3932 ms: R_A1_blink, 90 ms",
-   "4032 ms: R_A1_sketch, 554 ms"
+   "-4 ms: R_A2_stroke, 890 ms, dissolved in over 120",
+   "296 ms: R_A1_blink, 70 ms",
+   "362 ms: R_K1_blink, 70 ms",
+   "428 ms: R_K1_look, 352 ms",
+   "779 ms: R_K2_smile, 1126 ms",
+   "1911 ms: R_K1_look, 250 ms",
+   "2162 ms: R_K1_blink, 70 ms",
+   "2228 ms: R_A1_blink, 80 ms",
+   "2311 ms: R_A1_sketch, 400 ms",
+   "2711 ms: R_A1_sketch, 450 ms",
+   "3162 ms: R_A1_sketch, 163 ms",
+   "3312 ms: R_A1_blink, 90 ms",
+   "3411 ms: R_A1_sketch, 617 ms"
   ],
-  "msFromTheFindToHerFirstMove": 615,
-  "msFromTheFindToTheSmile": 1166,
+  "msFromTheFindToHerFirstMove": 296,
+  "msFromTheFindToTheSmile": 779,
   "posesSheMissed": 0,
   "countAfter": 9,
   "errors": [],
+  "duringTheSip": {
+   "as she reaches for the cup": {
+    "found": "79 ms into R_S1_reach",
+    "thenShe": [
+     "-79 ms: R_S1_reach, shown 200 ms",
+     "121 ms: R_S2_lift, shown 184 ms",
+     "305 ms: R_B1_sip, shown 299 ms",
+     "604 ms: R_S2_lift, shown 217 ms",
+     "821 ms: R_S1_reach, shown 234 ms",
+     "1055 ms: R_A1_blink, shown 66 ms",
+     "1121 ms: R_K1_blink, shown 67 ms",
+     "1188 ms: R_K1_look, shown 417 ms",
+     "1605 ms: R_K2_smile, shown 1349 ms"
+    ],
+    "finishedTheSipFirst": true,
+    "cupAtHerLipsMs": 299,
+    "msFromTheFindToHerAnswer": 1055,
+    "anyDissolveOrBlinkOnTheWay": false,
+    "smiled": true
+   },
+   "with the cup at her lips": {
+    "found": "115 ms into R_B1_sip",
+    "thenShe": [
+     "-115 ms: R_B1_sip, shown 300 ms",
+     "185 ms: R_S2_lift, shown 200 ms",
+     "385 ms: R_S1_reach, shown 234 ms",
+     "619 ms: R_A1_blink, shown 66 ms",
+     "685 ms: R_K1_blink, shown 67 ms",
+     "752 ms: R_K1_look, shown 450 ms",
+     "1202 ms: R_K2_smile, shown 1350 ms"
+    ],
+    "finishedTheSipFirst": true,
+    "cupAtHerLipsMs": 300,
+    "msFromTheFindToHerAnswer": 619,
+    "anyDissolveOrBlinkOnTheWay": false,
+    "smiled": true
+   }
+  },
+  "dissolvesSeenIn40s": {
+   "cat": {
+    "cat_2 > cat_1 (1000 ms)": 10,
+    "cat_1 > cat_2 (1000 ms)": 12
+   },
+   "child": {
+    "C_1 > C_2 (150 ms)": 19,
+    "C_2 > C_1 (150 ms)": 17
+   },
+   "rachel": {
+    "R_A1_sketch > R_A2_stroke (120 ms)": 17,
+    "R_A2_stroke > R_A1_sketch (120 ms)": 15
+   }
+  },
   "theDissolve": {
    "fan": {
     "canvasPx": [
-     305,
-     98
+     289,
+     91
     ],
     "furthestFromTheWeightedSumOutOf255": 2,
     "atTheEndItIsTheNewPoseExactly": true
@@ -40,34 +92,34 @@
    },
    "child": {
     "canvasPx": [
-     74,
-     153
+     73,
+     151
     ],
-    "furthestFromTheWeightedSumOutOf255": 2.8,
+    "furthestFromTheWeightedSumOutOf255": 2.7,
     "atTheEndItIsTheNewPoseExactly": true
    },
    "oldman": {
     "canvasPx": [
-     116,
-     230
+     115,
+     229
     ],
-    "furthestFromTheWeightedSumOutOf255": 2.7,
+    "furthestFromTheWeightedSumOutOf255": 2.4,
     "atTheEndItIsTheNewPoseExactly": true
    },
    "barista": {
     "canvasPx": [
      79,
-     114
+     115
     ],
-    "furthestFromTheWeightedSumOutOf255": 2,
+    "furthestFromTheWeightedSumOutOf255": 2.8,
     "atTheEndItIsTheNewPoseExactly": true
    },
    "rachel": {
     "canvasPx": [
-     241,
-     328
+     240,
+     327
     ],
-    "furthestFromTheWeightedSumOutOf255": 2.7,
+    "furthestFromTheWeightedSumOutOf255": 2.8,
     "atTheEndItIsTheNewPoseExactly": true
    },
    "mum": {
@@ -83,31 +135,82 @@
  {
   "browser": "webkit, iPhone 14 profile",
   "fromTheFind": [
-   "-6 ms: R_A2_stroke, 622 ms, dissolved in over 120",
-   "628 ms: R_A1_blink, 70 ms",
-   "694 ms: R_K1_blink, 70 ms",
-   "761 ms: R_K1_look, 412 ms",
-   "1178 ms: R_K2_smile, 1376 ms",
-   "2544 ms: R_K1_look, 250 ms",
-   "2794 ms: R_K1_blink, 70 ms",
-   "2878 ms: R_A1_blink, 80 ms",
-   "2945 ms: R_A1_sketch, 400 ms",
-   "3344 ms: R_A1_sketch, 373 ms",
-   "3727 ms: R_A1_sketch, 166 ms, dissolved in over 120",
-   "3893 ms: R_A1_blink, 90 ms",
-   "3977 ms: R_A1_sketch, 554 ms",
-   "4526 ms: R_A2_stroke, 711 ms, dissolved in over 120"
+   "-4 ms: R_A2_stroke, 890 ms, dissolved in over 120",
+   "295 ms: R_A1_blink, 70 ms",
+   "362 ms: R_K1_blink, 70 ms",
+   "445 ms: R_K1_look, 352 ms",
+   "795 ms: R_K2_smile, 1126 ms",
+   "1912 ms: R_K1_look, 250 ms",
+   "2162 ms: R_K1_blink, 70 ms",
+   "2246 ms: R_A1_blink, 80 ms",
+   "2312 ms: R_A1_sketch, 400 ms",
+   "2712 ms: R_A1_sketch, 432 ms",
+   "3146 ms: R_A1_sketch, 163 ms",
+   "3312 ms: R_A1_blink, 90 ms",
+   "3395 ms: R_A1_sketch, 617 ms"
   ],
-  "msFromTheFindToHerFirstMove": 628,
-  "msFromTheFindToTheSmile": 1178,
+  "msFromTheFindToHerFirstMove": 295,
+  "msFromTheFindToTheSmile": 795,
   "posesSheMissed": 0,
   "countAfter": 9,
   "errors": [],
+  "duringTheSip": {
+   "as she reaches for the cup": {
+    "found": "113 ms into R_S1_reach",
+    "thenShe": [
+     "-113 ms: R_S1_reach, shown 189 ms",
+     "76 ms: R_S2_lift, shown 194 ms",
+     "270 ms: R_B1_sip, shown 300 ms",
+     "570 ms: R_S2_lift, shown 200 ms",
+     "770 ms: R_S1_reach, shown 234 ms",
+     "1004 ms: R_A1_blink, shown 66 ms",
+     "1070 ms: R_K1_blink, shown 84 ms",
+     "1154 ms: R_K1_look, shown 399 ms",
+     "1553 ms: R_K2_smile, shown 1350 ms"
+    ],
+    "finishedTheSipFirst": true,
+    "cupAtHerLipsMs": 300,
+    "msFromTheFindToHerAnswer": 1004,
+    "anyDissolveOrBlinkOnTheWay": false,
+    "smiled": true
+   },
+   "with the cup at her lips": {
+    "found": "144 ms into R_B1_sip",
+    "thenShe": [
+     "-144 ms: R_B1_sip, shown 300 ms",
+     "156 ms: R_S2_lift, shown 217 ms",
+     "373 ms: R_S1_reach, shown 233 ms",
+     "606 ms: R_A1_blink, shown 67 ms",
+     "673 ms: R_K1_blink, shown 67 ms",
+     "740 ms: R_K1_look, shown 433 ms",
+     "1173 ms: R_K2_smile, shown 1383 ms"
+    ],
+    "finishedTheSipFirst": true,
+    "cupAtHerLipsMs": 300,
+    "msFromTheFindToHerAnswer": 606,
+    "anyDissolveOrBlinkOnTheWay": false,
+    "smiled": true
+   }
+  },
+  "dissolvesSeenIn40s": {
+   "cat": {
+    "cat_1 > cat_2 (1000 ms)": 13,
+    "cat_2 > cat_1 (1000 ms)": 10
+   },
+   "child": {
+    "C_1 > C_2 (150 ms)": 19,
+    "C_2 > C_1 (150 ms)": 17
+   },
+   "rachel": {
+    "R_A1_sketch > R_A2_stroke (120 ms)": 18,
+    "R_A2_stroke > R_A1_sketch (120 ms)": 15
+   }
+  },
   "theDissolve": {
    "fan": {
     "canvasPx": [
-     747,
-     240
+     708,
+     223
     ],
     "furthestFromTheWeightedSumOutOf255": 1,
     "atTheEndItIsTheNewPoseExactly": true
@@ -122,15 +225,15 @@
    },
    "child": {
     "canvasPx": [
-     180,
-     372
+     179,
+     371
     ],
     "furthestFromTheWeightedSumOutOf255": 2,
     "atTheEndItIsTheNewPoseExactly": true
    },
    "oldman": {
     "canvasPx": [
-     283,
+     282,
      562
     ],
     "furthestFromTheWeightedSumOutOf255": 2,
@@ -138,7 +241,7 @@
    },
    "barista": {
     "canvasPx": [
-     194,
+     193,
      280
     ],
     "furthestFromTheWeightedSumOutOf255": 2,
@@ -146,8 +249,8 @@
    },
    "rachel": {
     "canvasPx": [
-     590,
-     803
+     588,
+     801
     ],
     "furthestFromTheWeightedSumOutOf255": 2,
     "atTheEndItIsTheNewPoseExactly": true
@@ -165,20 +268,20 @@
  {
   "browser": "chrome, reduced motion",
   "fromTheFind": [
-   "-708 ms: R_A1_sketch, 200 ms",
-   "-509 ms: R_A1_sketch, 200 ms",
-   "-308 ms: R_A1_sketch, 200 ms",
-   "-108 ms: R_A1_sketch, 200 ms",
-   "3 ms: R_K2_smile, 1250 ms",
-   "1258 ms: R_A1_sketch, 336 ms",
-   "1592 ms: R_A1_sketch, 200 ms",
-   "1792 ms: R_A1_sketch, 200 ms",
-   "1992 ms: R_A1_sketch, 200 ms",
-   "2192 ms: R_A1_sketch, 200 ms",
-   "2392 ms: R_A1_sketch, 200 ms"
+   "-724 ms: R_A1_sketch, 200 ms",
+   "-523 ms: R_A1_sketch, 200 ms",
+   "-323 ms: R_A1_sketch, 200 ms",
+   "-124 ms: R_A1_sketch, 200 ms",
+   "4 ms: R_K2_smile, 1250 ms",
+   "1260 ms: R_A1_sketch, 413 ms",
+   "1660 ms: R_A1_sketch, 200 ms",
+   "1860 ms: R_A1_sketch, 200 ms",
+   "2060 ms: R_A1_sketch, 200 ms",
+   "2260 ms: R_A1_sketch, 200 ms",
+   "2460 ms: R_A1_sketch, 200 ms"
   ],
-  "msFromTheFindToHerFirstMove": 3,
-  "msFromTheFindToTheSmile": 3,
+  "msFromTheFindToHerFirstMove": 4,
+  "msFromTheFindToTheSmile": 4,
   "posesSheMissed": 0,
   "countAfter": 9,
   "errors": []

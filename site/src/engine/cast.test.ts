@@ -114,11 +114,14 @@ describe('Rachel in the café', () => {
     expect(restOf(own, routine)).toBe(REST);
   });
 
-  it('sketching: a find is answered from the next rest frame', () => {
+  it('sketching: a find is answered from the next rest frame, and the stroke she is on may end at 300 ms', () => {
     const schedule = clipSchedule(own, routine, seeded(5));
     let step = schedule.next().value;
     while (step.pose !== 'R_A2_stroke') step = schedule.next().value;
+    expect(step.brief).toBe(300);
     expect(schedule.next('react').value.pose).toBe(REST);
+    // (Only for her: nobody else is waited for, so nobody else's holds are marked.)
+    for (const a of actors) if (!a.reacts) for (const other of take(a.name, 100)) expect(other.brief).toBeUndefined();
   });
 
   // The coffee sip (package v6 on): reach, lift, sip, lift, reach, as cuts between drawn poses.

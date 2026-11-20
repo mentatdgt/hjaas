@@ -22,6 +22,8 @@
 //   - `"still": null` holds on nothing at all: an actor who is part of the plate and is only drawn for a
 //     moment (a blink patch).
 //   - `reaction.enter_from` may be left out: it is then the base still of the reaction's first clip.
+//   - A hold on another still of the rest still's own loop (the stroke of her sketching) is cut to 300 ms
+//     when a reaction is waiting, and she reacts from there.
 //   - Away from the rest still on poses the routine passes through one after another (reach, lift, sip, lift,
 //     reach, and back to the sketch), a waiting reaction does not interrupt: she finishes what she is doing,
 //     with any long hold on the way cut short, and reacts once she is home.
@@ -297,10 +299,13 @@ export function* clipSchedule(
       if ('steps' in item) {
         // A dissolve is for a still that follows another of this loop: she comes into the loop on a cut.
         let inside = false;
+        // In the rest still's own loop the other stills are a step away from it (the stylus an inch along):
+        // a waiting reaction need not sit such a hold out, and there is nothing to play on the way home.
+        const beside = rest !== '' && item.steps.some((step) => step.still === rest);
         for (let n = Math.max(1, count(item.repeat)); n > 0; n--) {
           // Blinks are for the marked holds, in a loop as anywhere.
           for (const step of item.steps) {
-            yield* hold(step.still, roll(step.ms), step.blink_ok === true, null, inside ? step.fade_ms : undefined);
+            yield* hold(step.still, roll(step.ms), step.blink_ok === true, beside && step.still !== rest ? [] : null, inside ? step.fade_ms : undefined);
             inside = true;
           }
         }
