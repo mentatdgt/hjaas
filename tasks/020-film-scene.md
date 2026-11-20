@@ -154,3 +154,6 @@ R_K0 is a side profile with one eye, the start of a smile and her hair mid-swing
 4. **Watch:** with the palms out (the M_1 family), the watch face shouldn't show. It's now a plain red strap in M_1, M_1_mid, M_1_closed and M_1_blink.
 5. **Camera screen during the look-back:** the screen rectangle depends on the pose: A1 and K0 x1072–1116, y507–547; K1 x1053–1096, y550–589. The live mirror and REC dot follow it.
 Preview: `film-preview.mp4` (v2).
+
+### Package (2026-11-21, Wren)
+`frames/020-film-scene/site/` holds `plate.png`, three RGBA layers (water, presenter, rachel; 16 stills, soft 1 px edges), `frames.json` (with `camera_screen`), `routine.json` and `stability.json`, built by `tools/film_package.py`. Rebuilt from the package, the base frame matches the approved scene except the intended fixes. Pencil line map: `scene/pencil/film-lines.png`. Fable brief: `reviews/scene-4-build.md`.

@@ -1,0 +1,101 @@
+{
+ "canvas": {
+  "w": 1672,
+  "h": 941,
+  "note": "Scene 4 canvas 1672x941 (= plate space; this is the 1x set, there is no larger master, so do not upscale for phones). Draw layers in order over plate.png; each still at its layer x,y. Stills are RGBA with a soft 1 px edge. Within a layer every still is pixel-identical to the first outside the part that moves."
+ },
+ "plate": "plate.png",
+ "layers": [
+  {
+   "actor": "water",
+   "x": 402,
+   "y": 111,
+   "w": 530,
+   "h": 336,
+   "stills": [
+    "W_1",
+    "W_2",
+    "W_3"
+   ]
+  },
+  {
+   "actor": "presenter",
+   "x": 601,
+   "y": 254,
+   "w": 320,
+   "h": 608,
+   "stills": [
+    "M_1",
+    "M_1_mid",
+    "M_1_closed",
+    "M_1_blink",
+    "M_12",
+    "M_2",
+    "M_2_closed",
+    "M_13",
+    "M_3",
+    "M_3_closed"
+   ]
+  },
+  {
+   "actor": "rachel",
+   "x": 997,
+   "y": 258,
+   "w": 357,
+   "h": 683,
+   "stills": [
+    "R_A1_film",
+    "R_K0_turn",
+    "R_K1_look"
+   ]
+  }
+ ],
+ "stills": {
+  "W_1": "water/W_1.png",
+  "W_2": "water/W_2.png",
+  "W_3": "water/W_3.png",
+  "M_1": "presenter/M_1.png",
+  "M_1_mid": "presenter/M_1_mid.png",
+  "M_1_closed": "presenter/M_1_closed.png",
+  "M_1_blink": "presenter/M_1_blink.png",
+  "M_12": "presenter/M_12.png",
+  "M_2": "presenter/M_2.png",
+  "M_2_closed": "presenter/M_2_closed.png",
+  "M_13": "presenter/M_13.png",
+  "M_3": "presenter/M_3.png",
+  "M_3_closed": "presenter/M_3_closed.png",
+  "R_A1_film": "rachel/R_A1_film.png",
+  "R_K0_turn": "rachel/R_K0_turn.png",
+  "R_K1_look": "rachel/R_K1_look.png"
+ },
+ "clips": {},
+ "camera_screen": {
+  "note": "Rachel's DSLR screen, in canvas px. Draw a live, scaled copy of the canvas region 'source' into 'rect' (inset 2 px) every frame, then the REC dot (red #EB1E1E, 6 px circle, 2 px from the top-left of the rect, 500 ms on / 500 ms off). The rect depends on Rachel's current still.",
+  "source": {
+   "x": 600,
+   "y": 250,
+   "w": 320,
+   "h": 290
+  },
+  "rect_by_still": {
+   "R_A1_film": {
+    "x": 1072,
+    "y": 507,
+    "w": 44,
+    "h": 40
+   },
+   "R_K0_turn": {
+    "x": 1072,
+    "y": 507,
+    "w": 44,
+    "h": 40
+   },
+   "R_K1_look": {
+    "x": 1053,
+    "y": 550,
+    "w": 43,
+    "h": 39
+   }
+  }
+ }
+}
