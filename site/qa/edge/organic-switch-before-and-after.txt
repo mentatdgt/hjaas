@@ -1,0 +1,23 @@
+Scene switches in WebKit, cold load, production build, iPhone 13 profile (qa/tools/review05.mjs switches).
+Longest frame in ms in the 4 s from each tap: to Grow (first open), back to Build, to Grow again, back to Build.
+"before" is the build before the organic edge (commit 14eb863, the even edge); "after" has the organic edge.
+Six runs each, alternating.
+
+The Mac was heavily loaded while this ran: iCloud sync (the "bird" process) at 60 to 70% of a core, the
+window server at about 40%, and Firefox and another app at work. Both builds stall, about as often and
+about as badly. This comparison cannot show whether the organic edge costs anything; it shows only that
+the old edge does no better under the same load. It needs repeating on a quiet Mac.
+
+before  toGrow [27, 32, 36, 351, 235, 45]    toBuild [23, 24, 25, 98, 89, 26]    toGrowAgain [63, 29, 25, 48, 22, 27]     toBuildAgain [43, 66, 25, 130, 26, 21]
+after   toGrow [38, 36, 269, 101, 55, 108]   toBuild [26, 29, 70, 31, 99, 31]    toGrowAgain [21, 21, 22, 23, 70, 25]     toBuildAgain [30, 26, 24, 24, 23, 21]
+before  toGrow [30, 69, 75, 47, 110, 49]     toBuild [23, 24, 33, 27, 57, 27]    toGrowAgain [22, 32, 22, 69, 24, 23]     toBuildAgain [21, 71, 19, 105, 23, 36]
+after   toGrow [135, 27, 84, 59, 42, 72]     toBuild [81, 35, 70, 84, 29, 29]    toGrowAgain [36, 34, 21, 102, 37, 24]    toBuildAgain [172, 22, 24, 97, 46, 76]
+before  toGrow [62, 105, 71, 133, 88, 68]    toBuild [36, 86, 26, 130, 70, 26]   toGrowAgain [20, 234, 397, 100, 23, 23]  toBuildAgain [23, 66, 101, 134, 20, 56]
+after   toGrow [117, 43, 55, 57, 84, 76]     toBuild [33, 54, 37, 26, 98, 82]    toGrowAgain [21, 73, 20, 33, 19, 104]    toBuildAgain [41, 22, 22, 101, 23, 112]
+
+Share of the 24 switches in each batch with a frame over 50 ms:
+before  7 of 24, 7 of 24, 16 of 24      (30 of 72)
+after   7 of 24, 11 of 24, 12 of 24     (30 of 72)
+
+To repeat on a quiet Mac:  cd site && npm run build && npm run preview   (leave it running), then in
+another tab:  cd site && node qa/tools/review05.mjs switches 12

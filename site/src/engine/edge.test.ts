@@ -126,4 +126,68 @@ describe('the edge itself', () => {
     for (const y of [20, 40]) expect(Math.abs(alpha(r - 0.5, y) - alpha(r + 0.5, y))).toBeLessThan(0.05);
     for (const x of [20, 40]) expect(Math.abs(alpha(x, r - 0.5) - alpha(x, r + 0.5))).toBeLessThan(0.05);
   });
+
+  // The organic edge (reviews/scene-edge-organic.md): what makes it read as a drying wash and not a feather.
+  describe('the organic edge', () => {
+    const alpha = edgeAlpha('organic', edgeSeed('build'));
+    /** Along the top edge at `x`: where the painting reaches a tenth, a half and nine tenths, in px from the rim. */
+    const crossing = (x: number): { thin: number; half: number; solid: number } => {
+      const at = (level: number): number => {
+        for (let y = 0; y < 400; y += 0.5) if (alpha(x, y) >= level) return y;
+        return 400;
+      };
+      return { thin: at(0.1), half: at(0.5), solid: at(0.9) };
+    };
+    // Clear of the corners, every 9 px along the top.
+    const along = Array.from({ length: 150 }, (_, i) => crossing(160 + i * 9));
+
+    it('is solid well inside, and paper outside its rounded corners', () => {
+      for (const [x, y] of [[170, 170], [PLATE.w - 170, 170], [170, PLATE.h - 170], [PLATE.w - 170, PLATE.h - 170], [836, 470]]) expect(alpha(x, y)).toBe(1);
+      for (const [x, y] of [[20, 20], [PLATE.w - 20, 20], [20, PLATE.h - 20], [PLATE.w - 20, PLATE.h - 20]]) expect(alpha(x, y)).toBe(0);
+    });
+
+    it('wanders in and out: the line is not at one depth', () => {
+      const depths = along.map((c) => c.half);
+      expect(Math.max(...depths) - Math.min(...depths)).toBeGreaterThan(35);
+      // In places it runs out past the plate: there the picture ends on its own rim.
+      expect(depths.some((depth) => depth <= 1)).toBe(true);
+      expect(depths.some((depth) => depth > 30)).toBe(true);
+    });
+
+    it('is crisp in places and a wide melt in others', () => {
+      // Where the line is inside the plate, the distance over which the painting comes up.
+      const melts = along.filter((c) => c.thin > 1).map((c) => c.solid - c.thin);
+      expect(melts.length).toBeGreaterThan(40);
+      expect(Math.min(...melts)).toBeLessThan(16);
+      expect(Math.max(...melts)).toBeGreaterThan(48);
+    });
+
+    it('is calmer and thinner along the bottom, where the floor, the feet and the low mushrooms are', () => {
+      const reach = (fromBottom: boolean): number => {
+        let deepest = 0;
+        for (let x = 160; x < PLATE.w - 160; x += 7) {
+          let d = 0;
+          while (d < 300 && alpha(x, fromBottom ? PLATE.h - d : d) < 1) d++;
+          deepest = Math.max(deepest, d);
+        }
+        return deepest;
+      };
+      expect(reach(true)).toBeLessThan(reach(false) * 0.75);
+      expect(reach(true)).toBeLessThanOrEqual(80);
+    });
+
+    it('never reaches further in than 165 px, on any side, for any scene', () => {
+      for (const scene of SCENES) {
+        const a = edgeAlpha('organic', edgeSeed(edgeName(scene)));
+        for (let i = 0; i <= 200; i++) {
+          const x = 166 + ((PLATE.w - 332) * i) / 200;
+          const y = 166 + ((PLATE.h - 332) * i) / 200;
+          expect(a(x, 166)).toBe(1);
+          expect(a(x, PLATE.h - 166)).toBe(1);
+          expect(a(166, y)).toBe(1);
+          expect(a(PLATE.w - 166, y)).toBe(1);
+        }
+      }
+    });
+  });
 });

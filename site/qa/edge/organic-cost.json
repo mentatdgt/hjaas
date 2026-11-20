@@ -1,0 +1,26 @@
+{
+ "chrome": {
+  "organicAtOnceMs": 28,
+  "evenEdgeAtOnceMs": 3,
+  "organicInSlices": {
+   "wholeMs": 363,
+   "longestBusyStretchMs": 9
+  }
+ },
+ "chrome, processor slowed 4x": {
+  "organicAtOnceMs": 168,
+  "evenEdgeAtOnceMs": 15,
+  "organicInSlices": {
+   "wholeMs": 1326,
+   "longestBusyStretchMs": 12
+  }
+ },
+ "webkit": {
+  "organicAtOnceMs": 17,
+  "evenEdgeAtOnceMs": 3,
+  "organicInSlices": {
+   "wholeMs": 702,
+   "longestBusyStretchMs": 12
+  }
+ }
+}

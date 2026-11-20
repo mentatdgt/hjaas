@@ -1,0 +1,50 @@
+[
+ {
+  "scene": "build",
+  "moments": [
+   {
+    "atMs": 1200,
+    "pointsThatMustBePaper": 678,
+    "notPaper": 0,
+    "shareOfTheInsidePainted": "45%"
+   },
+   {
+    "atMs": 2400,
+    "pointsThatMustBePaper": 678,
+    "notPaper": 0,
+    "shareOfTheInsidePainted": "68%"
+   },
+   {
+    "atMs": 3600,
+    "pointsThatMustBePaper": 678,
+    "notPaper": 0,
+    "shareOfTheInsidePainted": "92%"
+   }
+  ],
+  "ok": true
+ },
+ {
+  "scene": "grow",
+  "moments": [
+   {
+    "atMs": 1200,
+    "pointsThatMustBePaper": 418,
+    "notPaper": 0,
+    "shareOfTheInsidePainted": "39%"
+   },
+   {
+    "atMs": 2400,
+    "pointsThatMustBePaper": 418,
+    "notPaper": 0,
+    "shareOfTheInsidePainted": "71%"
+   },
+   {
+    "atMs": 3600,
+    "pointsThatMustBePaper": 418,
+    "notPaper": 0,
+    "shareOfTheInsidePainted": "95%"
+   }
+  ],
+  "ok": true
+ }
+]

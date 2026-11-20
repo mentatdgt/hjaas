@@ -266,10 +266,6 @@ export class Scene {
   private readonly edge: HTMLCanvasElement;
   /** Resolves when the edge has been worked out. */
   private readonly edgeDone: Promise<void>;
-  private readonly edgeSize: [number, number];
-  /** The edge as a small file, made the first time the scene rests: its canvas is given back meanwhile. */
-  private edgeFile: Promise<Blob | null> | null = null;
-  private resting = false;
   private readonly layout: ResizeObserver;
   private cast: Cast | null = null;
   /** Her first frames being fetched and decoded. */
@@ -292,7 +288,6 @@ export class Scene {
     const edge = edgeCanvas(host.edge.style, host.edge.seed(edgeName(config)), host.edge.paper, spreadEdge);
     this.edge = edge.canvas;
     this.edgeDone = edge.done;
-    this.edgeSize = [edge.canvas.width, edge.canvas.height];
     plate.append(hunt.el, this.edge);
 
     this.layout = new ResizeObserver(() => {
@@ -433,41 +428,23 @@ export class Scene {
    * The scene is out of sight (off the page, or under a copy of itself that the brush is rubbing away):
    * give back its decoded images. Only the visible scene keeps any: the two together are more than an
    * older phone will give one page. What comes back, and when: the room's picture in ready(), her frames
-   * from enter() on, both from files already downloaded.
+   * from enter() on, both from files already downloaded. (The edge stays: it is small, and making it a
+   * file to bring back later costs more of the page's time than it saves in memory.)
    */
   rest(): void {
-    this.resting = true;
     this.cast?.sleep();
     this.room.removeAttribute('src');
-    // The edge too: it is kept as a small PNG and its canvas is given back.
-    this.edgeFile ??= this.edgeDone.then(() => new Promise<Blob | null>((resolve) => this.edge.toBlob(resolve, 'image/png')));
-    void this.edgeFile.then((file) => {
-      if (!file || !this.resting) return;
-      this.edge.width = 0;
-      this.edge.height = 0;
-    });
   }
 
   /**
    * The scene is about to go on the page: resolves when its room's picture is decoded again and its edge
-   * is back on its canvas.
+   * has been worked out.
    */
   async ready(): Promise<void> {
-    this.resting = false;
     const room = this.room.getAttribute('src')
       ? Promise.resolve()
       : ((this.room.src = this.roomSrc), this.room.decode().catch(() => {}));
     await this.edgeDone;
-    if (this.edge.width === 0) {
-      const file = await this.edgeFile;
-      const picture = file ? await decodeBlob(file).catch(() => null) : null;
-      // (rest() may have been called again in the meantime: then the canvas stays as it is.)
-      if (picture && !this.resting && this.edge.width === 0) {
-        [this.edge.width, this.edge.height] = this.edgeSize;
-        this.edge.getContext('2d')!.drawImage(picture, 0, 0);
-      }
-      if (picture) releaseFrame(picture);
-    }
     await room;
   }
 

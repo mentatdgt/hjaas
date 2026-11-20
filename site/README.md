@@ -46,7 +46,7 @@ Inside `src/engine/`:
 | `types.ts` | What a scene is, as data: `SceneConfig`. |
 | `scene.ts` | One scene built from its config: plate, character, mushrooms. |
 | `transition.ts`, `paint.ts` | How a picture arrives: the first-visit painting, the short brush between scenes, the 200 ms fades. |
-| `edge.ts` | The painting's watercolour edge: it fades into the paper along a wandering line, with rounded corners. Also places each mushroom's tap box clear of the fade. |
+| `edge.ts` | The painting's edge: it melts into the paper like a drying wash, wandering in and out, crisp in places and wide in others, with rounded corners. Worked out once per scene from a seed. Also places each mushroom's tap box clear of it. |
 | `character.ts`, `player.ts`, `steps.ts` | A character's canvas (whole frames, or a patch over a still), her placement on the plate, and the player that shows her poses. |
 | `clips.ts` | Reads Wren's delivered format (`frames.json` + `routine.json`): stills, clips of patches, the routine, blinks, the reaction and its entry rule. |
 | `reel.ts` | Keeps a clip character's memory down: her patches stay as downloaded and are decoded only a few frames ahead of being shown, then given back. |
@@ -71,6 +71,9 @@ worked example), listed in `src/scenes/index.ts`. The menu shows whatever is lis
   none of their tap boxes, sits in the painting's soft edge, that each is at least 14 px tall and at least
   60% in view. A spot can be tucked behind something (`tuck`), seen through glass (`opacity`), or replaced
   by another without losing anyone's saved find (`replaced`);
+- optionally `edge`, a number that picks another of the room's possible edges. If the edge's wander
+  reaches a mushroom or the character, `node qa/tools/edge.mjs pick` lists, for each number, which mushrooms
+  would have to move and by how much; `node qa/tools/edge.mjs rachel` checks the character;
 - the paint-in strokes;
 - what a phone shows first.
 
@@ -133,7 +136,7 @@ ignores them all, so nobody can skip the hunt with `?found=10`.
 | `?found=9` | Start the opening scene with that many mushrooms found (not saved). `?found=10` shows the unlocked button. |
 | `?hint=5` | Seconds before the hint wiggle, instead of 60. |
 | `?seed=7` | Repeatable hammer rhythm and brush strokes. |
-| `?edge=a`, `?edge=b`, `?edge=c` | The other edge styles that were considered, for comparison. The site ships `a-round`. |
+| `?edge=a-round`, `?edge=a`, `?edge=b`, `?edge=c` | The earlier, even edges, for comparison. The site ships `organic`. |
 | `?slow=6` | Play the interface motion six times slower. |
 | `?debug` | Outline the mushroom hit areas and expose `window.__hj` (pose log, late-frame log). |
 

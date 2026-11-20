@@ -1,0 +1,10 @@
+Panning the room end to end in WebKit, iPhone profile (qa/tools/edge.mjs pan): longest frame in ms, and
+frames over 50 ms, three runs per batch, Build then Grow. The edge before (a-round, drawn at a quarter of
+the plate's size) and the organic edge (drawn at half), alternating. The Mac was busy with other work
+(iCloud sync and other apps at 30 to 60% of a core).
+
+organic   build 64 (3 over 50), 21, 19    grow 25, 45, 28
+a-round   build 28, 19, 21                grow 20, 20, 27
+organic   build 22, 21, 18                grow 30, 26, 22
+a-round   build 22, 36, 19                grow 101 (1 over 50), 29, 19
+organic   build 19, 20, 22                grow 33, 74 (1 over 50), 36

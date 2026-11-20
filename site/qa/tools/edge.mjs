@@ -7,6 +7,7 @@
 //   node qa/tools/edge.mjs pick    which of each scene's possible organic edges keeps clear of the mushrooms and of Rachel
 //   node qa/tools/edge.mjs rachel  the drawn edge under every pixel Rachel ever covers, both scenes
 //   node qa/tools/edge.mjs organic the chosen mock-up beside the build at 1440×900: organic-compare.jpg
+//   node qa/tools/edge.mjs reveal  mid-painting: nothing shows where the edge leaves paper
 import { chromium, webkit, devices } from 'playwright';
 import { mkdir, writeFile } from 'node:fs/promises';
 import sharp from 'sharp';
@@ -89,7 +90,7 @@ const run = {
     const PH = Math.round((PW * 844) / 390);
     const gap = 16;
     const head = 44;
-    const width = gap + 4 * (W / 2 + gap);
+    const width = gap + STYLES.length * (W / 2 + gap);
     const tiles = [];
     const labels = [];
     const label = (text, x, y, size = 20) => labels.push(`<text x="${x}" y="${y}" font-family="Helvetica, Arial, sans-serif" font-size="${size}" fill="#302e29">${text}</text>`);
@@ -106,9 +107,9 @@ const run = {
     label('The chosen edge, large', gap, y + 30);
     const bigW = width - 2 * gap;
     const bigH = Math.round((bigW * 900) / 1440);
-    tiles.push({ input: await sharp(shots['a-round-build-1440x900']).resize(bigW, bigH).toBuffer(), left: gap, top: y + head });
+    tiles.push({ input: await sharp(shots['organic-build-1440x900']).resize(bigW, bigH).toBuffer(), left: gap, top: y + head });
     y += head + bigH + gap;
-    label('On a phone (390 × 844): opening view, panned fully left, panned fully right. The chosen edge, then A', gap, y + 30);
+    label('On a phone (390 × 844): opening view, panned fully left, panned fully right. The chosen edge, then the one before, then A', gap, y + 30);
     y += head;
     let x = gap;
     for (const style of STYLES) {
@@ -186,7 +187,7 @@ const run = {
       const page = await context.newPage();
       const row = {};
       for (const scene of ['build', 'grow']) {
-        await page.goto(`${base}?debug&reset&intro=off&seed=7#${scene}`);
+        await page.goto(`${base}?debug&reset&intro=off&seed=7${process.env.HJ_EDGE ? `&edge=${process.env.HJ_EDGE}` : ''}#${scene}`);
         await page.reload();
         await ready(page);
         await page.waitForTimeout(1500);
@@ -205,7 +206,8 @@ const run = {
       say(`pan run ${i + 1}`, row);
       await browser.close();
     }
-    await writeFile(`${out}pan-webkit.json`, `${JSON.stringify(results, null, 1)}\n`);
+    // (HJ_EDGE=a-round measures an older edge, for comparison, and does not overwrite the record.)
+    if (!process.env.HJ_EDGE) await writeFile(`${out}pan-webkit.json`, `${JSON.stringify(results, null, 1)}\n`);
   },
 };
 
@@ -379,6 +381,49 @@ run.organic = async () => {
   const file = `${out}organic-compare.jpg`;
   await sharp({ create: { width: 2 * W + 3 * gap, height: y, channels: 3, background: '#d9d6cf' } }).composite(tiles).jpeg({ quality: 90 }).toFile(file);
   say('organic-compare', file);
+};
+
+// The paint-in must reveal into the edge's shape: at several moments of a first-visit painting, every point
+// the edge leaves as paper is still paper on the screen, while the brush is at work inside.
+run.reveal = async () => {
+  const report = [];
+  const browser = await chromium.launch({ channel: 'chrome' });
+  for (const id of ['build', 'grow']) {
+    const page = await (await browser.newContext({ viewport: { width: 1440, height: 900 } })).newPage();
+    await page.goto(`${base}?debug&reset&seed=7#${id}`);
+    await page.waitForFunction(() => window.__hj?.marks.introStart > 0, null, { timeout: 30000 });
+    await clean(page);
+    const plate = await page.locator('.hj-plate').boundingBox();
+    const points = await page.evaluate(async (id) => {
+      const { edgeAlpha, edgeSeed, edgeName } = await import('/src/engine/edge.ts');
+      const { SCENES } = await import('/src/scenes/index.ts');
+      const alpha = edgeAlpha('organic', edgeSeed(edgeName(SCENES.find((s) => s.id === id))));
+      const paper = []; const inside = [];
+      // "Paper" means paper there and for 6 px around: the edge is drawn at half size and stretched, so right
+      // beside a crisp stretch of it a point can carry a trace of its neighbour.
+      const around = [[0, 0], [6, 0], [-6, 0], [0, 6], [0, -6], [4, 4], [-4, 4], [4, -4], [-4, -4]];
+      for (let y = 3; y < 941; y += 6) for (let x = 3; x < 1672; x += 6) { const a = alpha(x, y); if (around.every(([dx, dy]) => alpha(x + dx, y + dy) <= 0.001)) paper.push([x, y]); else if (a >= 0.999) inside.push([x, y]); }
+      return { paper, inside };
+    }, id);
+    const rows = [];
+    for (const at of [1200, 2400, 3600]) {
+      await page.waitForFunction((t) => performance.now() - window.__hj.marks.introStart >= t, at, { polling: 'raf' });
+      const shot = await sharp(await page.screenshot({ clip: plate })).raw().toBuffer({ resolveWithObject: true });
+      const k = shot.info.width / 1672;
+      const c = shot.info.channels;
+      const px = ([x, y]) => { const i = (Math.min(shot.info.height - 1, Math.round(y * k)) * shot.info.width + Math.min(shot.info.width - 1, Math.round(x * k))) * c; return [shot.data[i], shot.data[i + 1], shot.data[i + 2]]; };
+      const isPaper = (p) => Math.abs(p[0] - 246) <= 4 && Math.abs(p[1] - 243) <= 4 && Math.abs(p[2] - 236) <= 4;
+      const stray = points.paper.filter((p) => !isPaper(px(p))).length;
+      const painted = points.inside.filter((p) => !isPaper(px(p))).length;
+      rows.push({ atMs: at, pointsThatMustBePaper: points.paper.length, notPaper: stray, shareOfTheInsidePainted: `${Math.round((painted / points.inside.length) * 100)}%` });
+      if (at === 2400) await sharp(await page.screenshot()).jpeg({ quality: 88 }).toFile(`${out}organic-${id}-mid-painting.jpg`);
+    }
+    report.push({ scene: id, moments: rows, ok: rows.every((r) => r.notPaper === 0) });
+    say(id, report.at(-1));
+    await page.close();
+  }
+  await browser.close();
+  await writeFile(`${out}organic-reveal.json`, `${JSON.stringify(report, null, 1)}\n`);
 };
 
 const command = process.argv[2];

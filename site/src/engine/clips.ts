@@ -61,9 +61,11 @@ const BLINK_MARGIN_MS = 80;
 
 /**
  * How many steps ahead clip frames are asked for. A clip always follows a hold or another clip, so the first
- * frames have at least a hold's length to be decoded in, and the rest at least AHEAD frame times each.
+ * frames have at least a hold's length to be decoded in, and the rest at least AHEAD frame times each
+ * (a third of a second at the fastest clip's 83 ms a frame; a frame takes a few hundredths to decode).
+ * Each one more is another frame held in memory, and the lab has little to spare on a phone.
  */
-export const AHEAD = 5;
+export const AHEAD = 4;
 /** How many frames of the way home are kept ready, in case a reaction is asked for at the next step. */
 export const HOME_READY = 3;
 
