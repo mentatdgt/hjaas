@@ -944,36 +944,43 @@ The last line it prints has the ten runs: `endGap` is the end of the intro, `ful
 
 ## Edge (organic)
 
-`reviews/scene-edge-organic.md`, on `site/scene-2`. **Paused part-way, at the user's request (2026-11-20).**
-The new edge is built and is the default, and it is committed. Most of the checks the review asks for had
-not been run yet: see "Half-done" below. `main` was pulled first (as a merge); nothing was merged into any
-other branch.
+`reviews/scene-edge-organic.md`, on `site/scene-2`. `main` was pulled first (as a merge); nothing was merged
+into any other branch and no push failed. (The work was paused once at the user's request and finished
+afterwards.)
 
-| | Asked for | Where it stands | Evidence |
+The new edge is built, is the default, and passes every check except the one I could not make cleanly:
+**smoothness in WebKit could not be measured**, because the Mac was heavily loaded by other work the whole
+time. Under that load the old edge stalls exactly as often as the new one, which is all I can say.
+
+| | Asked for | What was done, and what was measured | Evidence |
 |---|---|---|---|
-| ✅ | The organic edge, as the mock-up was made | Built from the review's recipe, in plate pixels: the rounded rectangle (radius 6% of the width), four scales of noise for the wander (up to 60 px in or out), a melt whose width changes along the edge (from 15 to 105 px, down to 6), and a calmer, thinner bottom fifth. Seeded per scene. | `src/engine/edge.ts` |
-| ✅ | The mock-up beside the build at 1440 × 900 | Made. To my eye the character matches option 2: the line wanders, the softness changes, and where the wander runs out past the plate the picture ends on a crisp straight line, as in the mock-up. | `edge/organic-compare.jpg` |
-| ✅ | Production gets only this edge | `organic` is the default. `a-round`, `a`, `b` and `c` remain for `?edge=` in development. | `src/engine/edge.ts` |
-| ✅ | Rachel fully opaque in every pose | Every pixel any of her frames ever covers, in both scenes, read from the formula and from the edge as drawn on the page: **1.00 everywhere.** The fade comes no nearer to her than 46 px in Build and 10 px in Grow (under the trolley's wheels). | `edge/organic-rachel.json` |
-| ⚠️ | Every mushroom and tap area at 0.95 or more | By the formula, yes: `npm test` checks all 20 drawings and their tap boxes at six screen sizes, and passes. **Not yet read back from the page** as the review asks. | `src/engine/edge.test.ts` |
-| ✅ | Nudge a spot minimally, don't weaken the edge | Three of Build's mushrooms along the bottom moved up: `screed` 13 px, `tiles` 7 px, `toolbox` 4 px. Nothing in Grow moved. | `src/scenes/build.ts`, `edge/organic-pick.json` |
-| ❌ | Screenshots of Build and Grow at 1440 × 900, 390 × 844 and 360 × 740 | Not taken. | – |
-| ❌ | The paint-in still reveals into this shape | Not checked. Nothing about how the brush works changed, but I have not watched it. | – |
-| ❌ | Panning and switching stay smooth (WebKit) | Not re-checked. The edge is still drawn once per scene. | – |
+| ✅ | The organic edge, as the mock-up was made | Built from the review's recipe, in plate pixels: the rounded rectangle (radius 6% of the width), four scales of noise for the wander (up to 60 px in or out), a melt whose width changes along the edge (15 to 105 px, down to 6 at the least), and a calmer, thinner bottom fifth. Seeded per scene. It scales with the plate, so it is the same picture on every screen. | `src/engine/edge.ts` |
+| ✅ | The mock-up beside the build at 1440 × 900 | To my eye the character matches option 2: the line wanders, the softness changes, and where the wander runs out past the plate the picture ends on a crisp straight line, as in the mock-up. | `edge/organic-compare.jpg` |
+| ✅ | Production gets only this edge | `organic` is the default. `a-round`, `a`, `b` and `c` remain for `?edge=` in development. | `src/engine/edge.ts`, `edge/compare.jpg` |
+| ✅ | Screenshots at 1440 × 900, 390 × 844 and 360 × 740 | Both scenes, with the phone also panned fully left and right. On phones the window shows the plate's own edge at top and bottom, and at the far left and right when panned there. | `edge/organic-build-*.jpg`, `edge/organic-grow-*.jpg` |
+| ✅ | Every mushroom and tap area at 0.95 or more | Read back from the edge as drawn on the page: **every drawing at 0.988 or more, every tap box at 0.973 or more**, in Chrome at 1440 × 900 and 2560 × 1440 and in WebKit at 390 × 844, 360 × 740 and 320 × 640. Every box is 44 px, covers its drawing and overlaps no other. `npm test` checks the same from the formula at six sizes. | `edge/spots.json`, `src/engine/edge.test.ts` |
+| ✅ | Nudge a spot minimally, don't weaken the edge | Three of Build's mushrooms along the bottom moved up: `screed` 13 px, `tiles` 7 px, `toolbox` 4 px. Nothing in Grow moved. All 20 can still be found and counted. | `src/scenes/build.ts`, `edge/organic-pick.json`, `edge/organic-hunt-checks.json` |
+| ✅ | Rachel fully opaque in every pose | Every pixel any of her frames ever covers, in both scenes (20 frames in Build, 7 stills and 84 clip frames in Grow), read from the formula and from the edge as drawn: **1.00 everywhere.** The fade comes no nearer to her than 46 px in Build and 10 px in Grow (under the trolley's wheels). | `edge/organic-rachel.json` |
+| ✅ | The paint-in still reveals into this shape | At 1.2, 2.4 and 3.6 s of a first-visit painting, in both scenes: of 678 and 418 points the edge leaves as paper, none showed paint, while 39% to 95% of the inside was painted. Recorded on desktop and the iPhone profile. | `edge/organic-reveal.json`, `organic-*-mid-painting.jpg`, `organic-intro-first-visit-*.mp4` |
+| ✅ | The edge is drawn once | Once per scene, when the scene loads. It is one canvas over the plate, as before; nothing is worked out while panning, painting or switching. | `src/engine/edge.ts`, `scene.ts` |
+| ⚠️ | Panning stays smooth (WebKit) | Longest frame 18 to 45 ms in 16 of 18 pans; two had a stray frame (64 and 74 ms). The old edge, alternated with it, has the same (one of 101 ms in 12 pans). The Mac was busy. | `edge/organic-pan-before-and-after.txt`, `pan-webkit.json` |
+| ❌ | Switching scenes stays smooth (WebKit) | **Could not be measured.** With the Mac loaded as it was, 30 of 72 switches had a frame over 50 ms with the organic edge, and 30 of 72 with the old edge, alternated with it. | `edge/organic-switch-before-and-after.txt` |
+| ✅ | Memory still under 80 MB on the phone profile | Build only 63.0 MB; Build, then Grow **78.0 MB**; Grow, then Build 70.8 MB. A new visitor: 67.4, 78.0 and 72.2 MB. | `edge/organic-memory.json` |
 
-`npm test`: 53 of 53 pass. There are no tests yet for the organic edge's own character (that it wanders,
-that its softness varies).
+`npm test`: 58 of 58 pass. Five new tests hold the edge's character: that it wanders, that it is crisp in
+places and a wide melt in others, that it is calmer along the bottom, and that it never reaches further in
+than 165 px.
 
-### Half-done
+### What the edge costs
 
-- **The checks marked ❌ and ⚠️ above.**
-- **Memory was not re-measured.** The organic edge is drawn at half the plate's size, not a quarter, because
-  its crisp places and fine wander need the detail: 1.6 MB per scene against 0.4. To pay for that, a scene
-  out of sight now gives its edge back too (it is kept as a small PNG). By my arithmetic the lab's peak goes
-  from 77.4 to about 78.2 MB on the phone profile, still under 80, but that is not measured.
-- **The edge of a scene loaded in the background is now worked out a slice at a time.** Not checked on a
-  slow phone profile.
-- **The README** still describes the old edge.
+- **Memory:** it is drawn at half the plate's size, not a quarter, because its crisp places and its finest
+  wander need the detail. That is 1.6 MB per scene against 0.4. To stay under 80 MB with the lab open, the
+  lab now keeps one frame fewer decoded ahead of the one on screen (four, not five). With the processor
+  slowed 4× and 6× she still never had to skip a frame.
+- **Time to work out:** 17 ms in WebKit and 28 ms in Chrome on this Mac (the old edge: 3 ms); 168 ms with
+  the processor slowed 4×. The opening scene's edge is worked out before the page shows. The other
+  scene's is worked out a slice at a time in the background: the page is never kept busy for more than
+  12 ms, also at 4×. (`edge/organic-cost.json`)
 
 ### Decisions I made
 
@@ -984,11 +991,23 @@ that its softness varies).
    seed the three mushrooms at the front of the floor would have had to move 10, 13 and 24 px, and two tap
    boxes would have overlapped on the smallest phone. I tried 64 seeds and took the one that asks least of
    them (13, 7 and 4 px). The edge is no weaker for it: it is the same recipe with a different throw of the
-   dice. Grow keeps its own first seed, which needs nothing moved.
-3. **No seed clears Build's floor mushrooms without moving them:** they stand 25 to 32 px from the bottom.
-4. **Half the plate's size for the edge's canvas,** as above.
+   dice. Grow keeps its own first seed, which needs nothing moved and leaves Rachel clear.
+3. **No seed clears Build's floor mushrooms without moving them:** they stood 25 to 32 px from the bottom.
+4. **Half the plate's size for the edge's canvas,** and one frame fewer ahead in the lab to pay for it, as
+   above.
+5. **A scene out of sight keeps its edge.** I first had it give the edge back and keep it as a small file.
+   Making that file blocks the page for about 15 ms in WebKit on this Mac, which would be far more on a
+   phone, so I took it out again.
+6. **"Paper" in the paint-in check means paper there and for 6 px around.** Right beside a crisp stretch
+   the stretched half-size edge leaves a trace of its neighbour a pixel or two wide.
+7. **The numbers are the review's own:** no gain was added to the noise to make the wander larger or
+   smaller than the recipe gives.
 
 ### Not done, or not verified
 
-- Everything under "Half-done".
+- **Smoothness of switching in WebKit with this edge,** as above. To measure it on a quiet Mac (iCloud
+  sync paused, other apps closed): `cd ~/hjaas/site && npm run build && npm run preview`, then in a second
+  tab `cd ~/hjaas/site && node qa/tools/review05.mjs switches 12`. The last line it prints has the longest
+  frame of each switch, in ms, for the iPhone profile and for desktop.
 - **A real phone.**
+- **The match with the mock-up is by eye.** The shapes cannot be the same: the mock-up's seed is its own.
