@@ -81,3 +81,6 @@ Same canvas, green background, piece in exactly the same place. Change only what
 ### Step 1 (2026-11-20, Wren): APPROVED from a screenshot preview
 Rachel has moved right: her lens is now about 11% of the width clear of the presenter's hand. The camera screen is a plain dark rectangle, and nothing else has changed. Quinn continues with steps 2–4. The original is in `frames/020-film-scene/incoming/020_scene.png`, at **1672×941** (Quinn's output, the same size as scenes 1 and 2). Every step 2–4 file must be exactly 1672×941. Upscale the Higgsfield clips if phones need it.
 Phone window note for Fable: her head now sits at about 72–85% of the width, so shift the window to about 37–85%.
+
+### Round 1 (plate only, 2026-11-20): the car is too long
+Seen in the plate, the car reads as a stretched limo: two rear doors and three side windows, with the wheels about 3.4 car-heights apart. In `020_plate`, shorten it to a normal fastback saloon: one front door and one rear door, two side windows, the wheels about 2 car-heights apart. Keep the nose, the front wheel and the colours where they are; move the rear wheel and the tail right. Fill in the promenade, railing and bollard behind. Also remove the faint ghost of the water jet in the sky. The anchors and poses are unaffected. Wren rebuilds `020_scene` as the plate plus the anchors once the new plate is in.
