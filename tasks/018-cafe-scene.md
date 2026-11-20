@@ -180,3 +180,17 @@ Rachel and the barista were restyled, but they still don't match each other or t
 
 ### User decision (2026-11-20 22:04): keep the original child, mum and old man
 The user prefers the previous child, mum and old man. They are restored from `pre-round5/`, including the plate with the original mum. The round-5 versions are kept in `round5-rejected/`. **Final café set:** Rachel (round 4, plus round 5's A1_blink and K1_look) and the barista (**round 4**: round 5's enlarged eyes squashed her face). Her B_4 glances across the café rather than at Rachel; accepted. The child, mum, old man and **cat** are the originals: the user found the restyled cat's outline cheap-looking.
+
+### Round 6: colour-only pass on the child, mum and old man (user, 2026-11-20 22:11)
+The user likes these three as originally drawn, but their colours use soft gradients, while Rachel and the barista have flat fills. **Keep the drawing exactly. Change only the colouring.** (Round 5 failed because it redrew faces, eyes and lines.)
+- **Don't change:** any line, outline, eye, face, mouth, hair shape, hand, prop, pose or silhouette. If a pixel is part of a line, it stays identical.
+- **Change only the fills:** each area becomes **one flat base colour plus at most one hard-edged shadow shape**, where the shadow already is. Remove soft gradients, airbrushed shading, glossy hair highlights and blush. Saturation and brightness should sit with Rachel and the barista (warm, clean, slightly muted). Keep each character's existing colours: the child's yellow shirt and denim shorts, the mum's rust top and taupe trousers, the old man's sage shirt and grey trousers.
+- The sunlight stripes from the window across the mum: keep them as a few clean flat light shapes, not blurry.
+- **Files:** each an edit at 2580×1432 with an identical silhouette:
+  - `018_child_green`, `018_C_1`–`C_3`
+  - `018_mum_green`, `018_M_blink_half`, `018_M_blink_closed`
+  - `018_oldman_green`, `018_O_1`–`O_3`
+  
+  Same palette across one character's poses, so nothing flickers.
+- **Do the child's `018_child_green` first and STOP for approval**, then the rest.
+- Wren will check automatically that every line pixel is unchanged.
