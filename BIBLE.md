@@ -38,7 +38,8 @@ All original characters, described in words. Never based on a real person's phot
 - **Child:** a boy at the left table on the middle chair, colouring with crayons. He looks down at his drawing with his mouth closed, and now and then looks up at his mum and grins.
 - **Old man:** sits on one chair at the right table, reading a newspaper, with a kopi.
 - **Cat:** a ginger tabby asleep on the floor at the lower right, beside Rachel's chair.
-- **Ceiling fan:** turns slowly (rendered from the plate by `tools/cafe_fan.py`).
+- **Rendering in the café (user, 2026-11-21):** everyone is painted like the café's own characters (child, mum): warm brown outlines, soft painted shading, the warm window light. Rachel and the barista keep their model-sheet *drawing* (faces, round eyes, hair shapes) but get this rendering. Black outlines and flat fills look pasted in here.
+- **Ceiling fan:** turns slowly, hand-drawn blades, no motion blur (rendered from the plate by `tools/cafe_fan.py`).
 - **Composition:** Rachel in the centre and in focus, with slight background softness. Gazes balanced, not everyone looking left. Corners kept open (the edge feathers them).
 
 ## 4b. Supporting cast (film)

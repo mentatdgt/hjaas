@@ -217,3 +217,24 @@ The user's review of preview v4: jitter, Rachel's hair and colours changing, the
 - **Accepted: `018_R_S1_reach`, `018_R_S2_lift`.** Head and legs identical to A1 (0.6% and 1.5% of the head changed, the eyes). Used arms-only in package v6, with the round-4 `R_B1_sip` for the sip itself.
 - **Rejected: the colour pass on the child, mum and old man** (kept in `approved/round6-rejected/`). The child's hair became a flat blob with no outline, the mum's shadows turned blotchy, and the old man lost his hair and face detail. The originals stay. The child's gaze in these files also still looked sideways; Wren's direct edit stays.
 - Quinn-loop job 001 (sip poses) is cancelled: no longer needed.
+
+### Round 9: proper fixes through the Quinn loop (user review of preview 6, 2026-11-21 03:02)
+The user's notes:
+1. The child's downward eyes (Wren's direct edit) look wrong and must be redrawn.
+2. The fan looks photographic.
+3. Rachel's and the barista's colours don't match the painted café.
+4. Rachel's face morphs during the sip.
+
+**Plan: two phases, every step QC'd by Wren before the user sees it.** The jobs are in `frames/018-cafe-scene/quinn-jobs/`; `crops.json` holds the crop boxes on the 2580×1432 canvas.
+- **Phase 1 (queued):**
+  - `002` Rachel master: re-rendered in the café's painted style and light, with the model-sheet drawing kept; two strengths.
+  - `003` Barista master: the same.
+  - `004` The child looks down, mouth closed (eyes and mouth only).
+  - `005` The fan redrawn in the café's style, plus the ceiling without blades.
+  
+  The user picks the masters from one sheet.
+- **Phase 2:**
+  - Every Rachel pose (stroke, blink, S1, S2, sip, K1, K1 blink, K2) as an edit of the chosen master. The sip has her head NOT tilting; only the arms, cup, eyes and mouth change. Wren pastes only those parts onto the master, so her face can't morph.
+  - The barista's glance and polishing poses as edits of her master.
+  - Then package v7 → audit → one preview to the user.
+- **Fan motion:** Quinn's drawn blades are rotated in perspective by `tools/cafe_fan.py`, slowly and with **no motion blur** (the blur made it look photographic).
