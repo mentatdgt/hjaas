@@ -1,5 +1,7 @@
 # HJaaS — notes for Claude (Wren)
 
+> **Start here:** `STATUS.md` (where things stand), `BIBLE.md` (what's decided; it wins over older notes), `SCENE-RECIPE.md` (how a scene is made).
+
 Pipeline and roles: see README.md. Quinn = ChatGPT (read-only GitHub access; the user uploads its images).
 
 ## Building the website

@@ -17,7 +17,7 @@ Future pose tasks follow this.
 
 ## Scene 3 "Design" (the café): user decisions, 2026-11-20
 - **Next scene:** Design (café), backdrop `scene/cafe.png`.
-- **Look:** outfit 1 from `reference/hjaas1.png` (black tank, olive cargo pants, brown boots), **loose wavy hair**, round glasses (a locked trait), gold pendant.
+- **Look:** outfit 1 from `reference/hjaas1.png` (black tank, olive cargo pants, brown boots), **loose wavy hair**, **no glasses** (superseded: no glasses anywhere, see BIBLE.md), gold pendant.
 - **Loop, two stages like the lab:** sketching on an iPad with a stylus, then sipping a hot coffee, then back.
 - **Reaction:** a warm look into the camera and a smile, no hand gesture (variety plan).
 - **Process, as for the lab:** 3 staging mock-ups from Quinn → user picks → key poses as edits of the green anchor → Higgsfield clips → Wren packages → Fable drops them in.
