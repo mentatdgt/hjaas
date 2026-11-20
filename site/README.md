@@ -68,7 +68,9 @@ worked example), listed in `src/scenes/index.ts`. The menu shows whatever is lis
 - the plate image and the scene's assets folder;
 - the character: her frames, how they sit on the plate, her idle routine and her reaction folder;
 - the ten hiding spots (`SPOTS`), with a tint for that room's light. `npm test` checks that none of them, and
-  none of their tap boxes, sits in the painting's soft edge;
+  none of their tap boxes, sits in the painting's soft edge, that each is at least 14 px tall and at least
+  60% in view. A spot can be tucked behind something (`tuck`), seen through glass (`opacity`), or replaced
+  by another without losing anyone's saved find (`replaced`);
 - the paint-in strokes;
 - what a phone shows first.
 

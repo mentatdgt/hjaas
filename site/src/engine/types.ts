@@ -32,6 +32,8 @@ export interface Spot {
   tuck?: string;
   /** Draw a small contact shadow (for mushrooms standing on a surface). */
   grounded?: boolean;
+  /** Less than 1 for a mushroom seen through glass. Static, never animated. */
+  opacity?: number;
 }
 
 /** How a character's frames sit on the plate. */
@@ -103,6 +105,11 @@ export interface SceneConfig {
   character?: CharacterConfig;
   /** The ten hiding spots, left to right (which is also the Tab order). */
   spots: readonly Spot[];
+  /**
+   * Hiding spots that were replaced: the old id, and the id of the spot that took its place. A visitor who
+   * had found the old one keeps the find.
+   */
+  replaced?: Readonly<Record<string, string>>;
   /** The first-visit painting. The same strokes, played quickly, brush the scene in over another one. */
   strokes: readonly StrokePlan[];
   /**

@@ -61,6 +61,8 @@ export class Hunt {
       img.alt = '';
       img.draggable = false;
       if (spot.flip) img.classList.add('is-flipped');
+      // On the image, not the drawing's box: the hint's wiggle and dip belong to the box.
+      if (spot.opacity !== undefined) img.style.opacity = String(spot.opacity);
       art.append(img);
       button.append(art);
 
@@ -132,6 +134,7 @@ export class Hunt {
       }
       // Its light. (Safari's canvas has no filters; there the copy is untinted for the second it is on screen.)
       if (tints && art.style.filter) ctx.filter = art.style.filter;
+      if (img.style.opacity) ctx.globalAlpha = Number(img.style.opacity);
       if (img.classList.contains('is-flipped')) {
         ctx.translate(x + r.width, y);
         ctx.scale(-1, 1);
@@ -183,7 +186,10 @@ export class Hunt {
     const flyer = document.createElement('span');
     flyer.className = 'hj-flyer';
     // The drawing's own image is moved, not copied: it is already decoded and drawn at this size.
-    flyer.append(art.querySelector('img')!);
+    // Out of its hiding place it is no longer behind glass.
+    const img = art.querySelector('img')!;
+    img.style.opacity = '';
+    flyer.append(img);
     Object.assign(flyer.style, {
       left: `${from.left - layer.left}px`,
       top: `${from.top - layer.top}px`,

@@ -133,7 +133,9 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   const first = sceneInAddress();
   for (const scene of scenes) {
     const state = stateOf(scene.id);
-    state.found = state.found.filter((id) => scene.spots.some((spot) => spot.id === id));
+    // A find of a hiding spot that has since been replaced counts for the spot that took its place.
+    const now = state.found.map((id) => scene.replaced?.[id] ?? id);
+    state.found = [...new Set(now)].filter((id) => scene.spots.some((spot) => spot.id === id));
   }
   if (flags.found !== undefined) {
     // A QA preset: the opening scene starts with this many found.

@@ -379,7 +379,7 @@ const run = {
         ['pipe', () => window.__hj.rachel.current === 'A1_mist_aim'],
         ['switch-box', () => window.__hj.rachel.current === 'A2_mist_squeeze'],
         ['door', () => window.__hj.rachel.current === 'mist_to_write#12' && window.__hj.poses.at(-2)?.[0] === 'mist_to_write#11'],
-        ['rack', () => window.__hj.rachel.current === 'write_loop#6'],
+        ['crop-rack', () => window.__hj.rachel.current === 'write_loop#6'],
         ['drain', () => window.__hj.rachel.current === 'mist_to_write#20' && window.__hj.poses.at(-2)?.[0] === 'mist_to_write#21'],
       ];
       const finds = [];

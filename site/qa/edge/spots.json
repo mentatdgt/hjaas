@@ -25,9 +25,7 @@
   "lowestUnderATapBox": 1,
   "smallestBox": 44,
   "everyBoxCoversItsDrawing": true,
-  "boxesMovedInward": [
-   "floor 0,-2px"
-  ],
+  "boxesMovedInward": [],
   "overlaps": [],
   "ok": true
  },
@@ -86,9 +84,7 @@
   "lowestUnderATapBox": 1,
   "smallestBox": 44,
   "everyBoxCoversItsDrawing": true,
-  "boxesMovedInward": [
-   "floor 0,-4px"
-  ],
+  "boxesMovedInward": [],
   "overlaps": [],
   "ok": true
  },
@@ -118,9 +114,7 @@
   "lowestUnderATapBox": 1,
   "smallestBox": 44,
   "everyBoxCoversItsDrawing": true,
-  "boxesMovedInward": [
-   "floor 0,-6px"
-  ],
+  "boxesMovedInward": [],
   "overlaps": [],
   "ok": true
  },
@@ -150,9 +144,7 @@
   "lowestUnderATapBox": 1,
   "smallestBox": 44,
   "everyBoxCoversItsDrawing": true,
-  "boxesMovedInward": [
-   "floor 0,-10px"
-  ],
+  "boxesMovedInward": [],
   "overlaps": [],
   "ok": true
  }

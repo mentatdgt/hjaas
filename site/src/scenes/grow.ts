@@ -7,24 +7,46 @@ import type { SceneConfig, Spot, StrokePlan } from '../engine/types';
 const LIT = 'brightness(1.04) saturate(0.86) hue-rotate(-6deg)';
 // Under a shelf or a bench: dimmer and greyer.
 const SHADE = 'brightness(0.84) saturate(0.74) hue-rotate(-8deg)';
+// Deep under the shelves, where the floor is in full shadow.
+const DEEP = 'brightness(0.68) saturate(0.6) hue-rotate(-10deg)';
+// Among the crop on a shelf: the shelves' soft light, with most of the warmth taken out, so a cream
+// toadstool sits in the same greys and creams as the oyster mushrooms around it.
+const SHELF = 'brightness(0.97) saturate(0.7) hue-rotate(-8deg)';
 
-// Left to right, which is also the Tab order. Sizes follow depth, as in scene 1: about 18 px on the back
-// wall, about 40 px at the front of the floor. White drawings are used twice only (the lab is white), and
-// both stand where their outline shows: on the sunlit floor and beside the humidifier's base.
-// None is on the trolley or behind Rachel: her frames cover that part of the plate (x 680-1170, y 210-900).
+// The hunt has a curve: three easy finds, four that take a second look, and three that take a proper one
+// (reviews/scene-2-hunt-difficulty.md). Left to right, which is also the Tab order.
+//
+//   easy    door, bench, switch-box: colour on white, where the eye goes first.
+//   medium  under-shelf, floor, pipe, drain: small, in shade, or the colour of what they stand beside.
+//   hard    crop-hood, crop-shelf, crop-rack: imposters among Rachel's own oyster mushrooms. They are
+//           cream toadstools (a round cap on a stem), never fan-shaped, so a close look tells them apart.
+//
+// Every one is at least 14 px tall and at least 60% in view; none is ever behind Rachel (her arms and head
+// move over plate x 690-1140, y 215-650; below that only the trolley is drawn, and it never moves).
 const SPOTS: Spot[] = [
   { id: 'door', art: 3, x: 128, y: 806, h: 28, tint: LIT, grounded: true },
   // 34 px further right than first placed, so that on the smallest phones its tap box clears the door's.
   { id: 'bench', art: 8, x: 270, y: 791, h: 22, tint: SHADE, grounded: true },
-  { id: 'floor', art: 6, x: 470, y: 905, h: 40, tint: LIT, grounded: true },
-  { id: 'bench-corner', art: 1, x: 506, y: 524, h: 18, tint: LIT },
-  { id: 'under-shelf', art: 7, x: 652, y: 656, h: 18, tint: SHADE, grounded: true },
-  { id: 'pipe', art: 2, x: 985, y: 115, h: 18, tint: LIT },
+  // Hard. Inside the fume hood, between the two jars of oyster mushrooms: seen through the glass.
+  { id: 'crop-hood', art: 4, x: 418, y: 527, h: 18, tint: SHELF, opacity: 0.85 },
+  // Medium. In the dark under the shelves.
+  { id: 'under-shelf', art: 7, x: 652, y: 656, h: 16, tint: DEEP, grounded: true },
+  // Hard. On the middle shelf, between the first two grow bags; its foot is behind the shelf's lip.
+  { id: 'crop-shelf', art: 6, x: 694, y: 474, h: 20, tint: SHELF, tuck: 'polygon(0 0, 100% 0, 100% 85%, 0 85%)' },
+  // Medium. Under the trolley's bottom shelf, half behind its back wheel. (The wheel is part of Rachel's
+  // frames, which are drawn over the mushrooms, so it covers the mushroom by itself.)
+  { id: 'floor', art: 6, x: 802, y: 830, h: 24, tint: SHADE, grounded: true },
+  // Medium. Yellow, on the pipe beside its coupling: it reads as a fitting until looked at.
+  { id: 'pipe', art: 7, x: 990, y: 117, h: 16, tint: LIT },
   { id: 'switch-box', art: 9, x: 1293, y: 314, h: 18, tint: LIT },
-  { id: 'humidifier', art: 4, x: 1352, y: 660, h: 22, tint: SHADE, grounded: true },
-  { id: 'drain', art: 1, x: 1372, y: 850, h: 34, flip: true, tint: LIT, grounded: true },
-  { id: 'rack', art: 9, x: 1528, y: 770, h: 28, flip: true, tint: SHADE, grounded: true },
+  // Medium. Cream on the pale floor, in the lee of the drain's grate.
+  { id: 'drain', art: 4, x: 1388, y: 846, h: 21, tint: SHADE, grounded: true },
+  // Hard. On the right-hand rack's middle shelf, against the foot of the pink oysters' bag.
+  { id: 'crop-rack', art: 4, x: 1415, y: 493, h: 18, tint: SHELF },
 ];
+
+// Spots of the first hunt that the harder one replaced. A visitor who had found one keeps the find.
+const REPLACED = { 'bench-corner': 'crop-hood', humidifier: 'crop-shelf', rack: 'crop-rack' };
 
 // Back wall and ceiling -> the shelves in the middle -> window, door and bench -> floor -> the rack on the right.
 // The same unhurried pace as scene 1: each stroke takes 0.5 to 1.28 s, and the painting runs 4.32 s.
@@ -61,6 +83,7 @@ export const grow: SceneConfig = {
   // phone shows her.
   character: { kind: 'clips', dir: 'rachel/', frames: 'frames.json', routine: 'routine.json', small: { dir: 'rachel-1.5x/', below: 900 } },
   spots: SPOTS,
+  replaced: REPLACED,
   strokes: STROKES,
   // A phone starts on Rachel and the trolley (about plate x 680-1180): centred on x 930 at either shape.
   phoneStart: { wide: [554, 1306], tall: [616, 1244] },

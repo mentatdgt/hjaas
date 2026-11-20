@@ -18,7 +18,7 @@ const out = process.env.HJ_OUT ? new URL(`../../${process.env.HJ_OUT.replace(/\/
 await mkdir(out, { recursive: true });
 const SPOTS = {
   build: ['sill', 'drape', 'skirting', 'screed', 'tiles', 'conduit', 'socket', 'ladder-foot', 'ladder-step', 'toolbox'],
-  grow: ['door', 'bench', 'floor', 'bench-corner', 'under-shelf', 'pipe', 'switch-box', 'humidifier', 'drain', 'rack'],
+  grow: ['door', 'bench', 'crop-hood', 'under-shelf', 'crop-shelf', 'floor', 'pipe', 'switch-box', 'drain', 'crop-rack'],
 };
 const chrome = (headless = true) => chromium.launch({ channel: 'chrome', headless });
 const jpg = (page, name, options = {}) => page.screenshot({ path: `${out}${name}.jpg`, type: 'jpeg', quality: 88, ...options });
