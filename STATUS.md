@@ -2,7 +2,7 @@
 
 Where everything stands. Update this whenever a scene changes state. **Last updated: 2026-11-20 (Wren).**
 
-New session? Read this, then `BIBLE.md` (what's fixed) and `SCENE-RECIPE.md` (how a scene gets made).
+New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a scene gets made) and the current handover: `HANDOVER-scene-3.md`.
 
 ## Scenes
 
