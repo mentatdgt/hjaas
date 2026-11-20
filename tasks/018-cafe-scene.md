@@ -177,3 +177,6 @@ Rachel and the barista were restyled, but they still don't match each other or t
 - The restyled mum is now in `018_plate.png`, anti-aliased. The previous plate is in `pre-round5/`.
 - Known, minor: the hair edges of the mum and child are slightly blocky at full zoom (Quinn's editor resolution). At site sizes the downscale hides it, and Wren anti-aliases every key edge at packaging.
 - Next: re-cut Rachel's clips from the new A1/B1/K1/K2 (needs the user's OK on credits), then rebuild the package (`tools/cafe_build.py`, with alpha smoothing added).
+
+### User decision (2026-11-20 22:04): keep the original child, mum and old man
+The user prefers the previous child, mum and old man. They are restored from `pre-round5/`, including the plate with the original mum. The round-5 versions are kept in `round5-rejected/`. **Final café set:** Rachel (round 4, plus round 5's A1_blink and K1_look), the barista (round 5), the cat (round 5), and the child, mum and old man (original).
