@@ -830,3 +830,114 @@ px tall, about the size of the back-wall mushrooms that were already there.
 - **Nobody who does not know the answers has tried it.** That is the real test of "fair and fun".
 - **A real phone.**
 - **Timing:** how long each takes to find was not measured; "easy, medium, hard" is by design, not by test.
+
+## Review 05
+
+`reviews/scene-2-review-05.md`, on `site/scene-2`. `main` was pulled first (as a merge); nothing was merged
+into any other branch and no push failed.
+
+Item 1 is built and meets its memory target. **Item 2 could not be done as asked:** the Mac was not quiet.
+iCloud sync was using 30 to 60% of a processor core the whole time and I cannot pause it from here. The
+numbers are reported with that caveat, and with a side-by-side against the previous build to tell the Mac's
+noise from a change in the site.
+
+| | Item | What was done, and what was measured | Evidence |
+|---|---|---|---|
+| ✅ | 1. Only the visible scene keeps decoded frames | A scene that goes out of sight gives back its room's picture and every frame of its character except the one on her canvas. The downloaded files are kept; coming back decodes them again while the brush is at work. | `src/engine/scene.ts` (`rest`, `ready`), `site.ts` |
+| ✅ | 1. A 1.5× set of Rachel's Build frames for phones | `npm run assets` makes `scene1/rachel-1.5x/` (860 × 687 against 1146 × 916). Used when the picture is shown under 900 CSS px wide. | `scripts/build-assets.mjs`, `src/scenes/build.ts` |
+| ✅ | 1. Build's reaction frames decoded only while Build is visible | They are given back with the rest when the visitor leaves, and decoded again on return, after the routine's own frames. Until they are back a find gets no reaction (it still counts). | `src/engine/scene.ts` |
+| ✅ | 1. Peak decoded memory, phone profile, under 80 MB in each case | **Build only: 60.7 MB. Build, then Grow: 77.4 MB (it was about 165). Grow, then Build: 68.4 MB.** A new visitor, who gets the full paintings, adds the painting's sheet: 65.1, 77.4 and 69.8 MB. | `review-05/memory.json` |
+| ✅ | 1. No visible wait when switching back | After each switch her full reaction played at the next find, and she never had to skip a frame of her routine. | `review-05/memory.json` |
+| ⚠️ | 1. Switching both ways, no frame over about 50 ms (WebKit) | 12 cold runs per profile, four switches each (to Grow, back, to Grow again, back). **94 of 96 switches had no frame over 50 ms: iPhone profile 19 to 35 ms, desktop 23 to 39 ms.** Two had one: 59 ms (iPhone, back to Build) and 72 ms (desktop). The previous build, measured alternately on the same busy Mac, shows the same kind of stray frame at the same rate. | `review-05/switch-frames-webkit-cold.json`, `switch-frames-before-and-after.txt` |
+| ⚠️ | 1. Sharpness of the 1.5× Build set on a phone | At 390 × 844 @3× her canvas is 860 px where the screen would use 1032, a stretch of 1.2×. Side by side I cannot tell the two apart at the size a phone shows them; at single screen pixels her outlines are a little softer. | `review-05/build-sharpness-390x844@3x.jpg` |
+| ❌ | 2. The opening painting on a quiet Mac | **Not on a quiet Mac.** Ten cold loads, iPhone profile: longest frame at the end of the intro **21 to 45 ms in 8 runs, 60 and 111 ms in 2.** In the 4 s after it: 20 to 28 ms in 6 runs, 74 to 144 ms in 4. The previous build stalls the same way under the same conditions (see below). | `review-05/intro-webkit-cold.txt` |
+| ✅ | Nothing else broke | All 20 mushrooms can be found and counted at three sizes; menu, skip, back button, reduced motion and keyboard pass; the lab's routine has no frame over 21 ms in WebKit without a window. | `review-05/hunt-checks.json`, `nav-checks.json` |
+
+`npm test`: 53 of 53 pass.
+
+### Item 1 in numbers
+
+Decoded images and canvases on the whole page, from their sizes, sampled every frame. iPhone profile
+(390 × 844), WebKit. "Peak" is the highest moment, including during the switch.
+
+| Case | Peak | What it is made of at that moment |
+|---|---|---|
+| Build only | **60.7 MB** | Her 20 Build frames 47.3, her canvases 4.7, the room 6.3, the rest 2.4 |
+| Build, then Grow | **77.4 MB** | The lab's stills and clip frames 63.3, her canvas 3.0, the lab's room 6.3, one Build frame kept 2.4, the rest 2.4 |
+| Grow, then Build | **68.4 MB** | Her Build frames 47.3, canvases 4.7, Build's room 6.3, the switch's sheet 3.0, one lab still kept 3.0, the rest 2.4 |
+| Grow only (for reference) | 75.1 MB | As "Build, then Grow" without the kept Build frame |
+| Grow, then Build, then Grow again | 77.4 MB | The same as "Build, then Grow" |
+| New visitor, Build only (opening painting) | 65.1 MB | Build only, plus the painting's sheet 4.4 |
+| New visitor, Build, then Grow (full painting of the lab) | 77.4 MB | The peak comes later, in her routine, when the sheet is gone |
+| New visitor, Grow, then Build | 69.8 MB | As above, plus the painting's sheet 4.4 |
+
+"The rest" is the nine mushroom drawings, the logo and the two edges. Before this review, Build then Grow
+was about 165 MB.
+
+**The lab is the tight one, at 75 to 77 MB.** Of that, 42 MB is clip frames: 26 MB for the two reaction
+clips the earlier review asked to keep decoded, and up to 16 MB for the nine routine frames around the one
+on screen.
+
+**Desktop is unchanged in kind:** it keeps the 2× sets (her Build frames are 84 MB there, the lab's peak
+about 115 MB), but it too now holds only the scene on show.
+
+### Item 2: why the numbers are not clean
+
+The same test, run alternately on the previous build (before review 05) and this one, six cold loads
+each, straight after the ten above:
+
+| Build | End of intro, longest frame (ms) | The 4 s after, longest frame (ms) |
+|---|---|---|
+| Previous | 41, 36, 28, **88**, 28, 36 | 22, 21, 24, 18, 19, 20 |
+| Review 05 | 18, 35, 20, 33, 19, 20 | 19, 22, 23, 20, 38, 20 |
+| Previous | 18, 19, 18, 35, 18, 18 | 18, 18, 20, 21, 18, 19 |
+| Review 05 | 33, 30, **63**, 22, 38, 19 | 21, **174**, 19, 20, 18, 21 |
+
+Both builds have quiet batches (18 to 38 ms) and batches with a stray long frame. I read that as the Mac,
+not the site, but it is not proof.
+
+**To get the clean numbers:** pause iCloud sync and close other apps, then
+
+```
+cd ~/hjaas/site && npm run build && npm run preview
+```
+
+and, in a second tab,
+
+```
+cd ~/hjaas/site && node qa/tools/intro-frames.mjs 10 iphone
+```
+
+The last line it prints has the ten runs: `endGap` is the end of the intro, `fullGap` the whole painting.
+
+### Decisions I made
+
+1. **The old scene's images are given back at the start of the switch, not at the end.** The review says
+   "once the incoming scene is fully shown". But the old picture is only a copy on a sheet from the first
+   frame of the switch, and holding its frames until the end would put both scenes' frames in memory during
+   the brush: about 120 MB. So they go one frame after the tap, before the new scene's frames arrive.
+2. **The room's picture is given back too,** not only her frames. Without that, Build then Grow is 83.7 MB.
+   Coming back decodes it again before anything is put on the page (the file is already downloaded).
+3. **One frame is kept: the one on her canvas.** If the window is resized while she is away, or the moment
+   she comes back, her canvas can be drawn at once. That is 2.4 or 3.0 MB.
+4. **Her canvas and its rehearsal canvas are given back as well** while she is out of sight, and the
+   rehearsal canvas 1.5 s after any frames stop arriving.
+5. **What counts as "decoded image memory":** every decoded image and every canvas the page holds: her
+   frames, both rooms, the mushrooms, the logo, the edges, her canvases, and the painting's or the switch's
+   sheet. The page keeps this account itself (`__hj.memory`, with `?debug`).
+6. **The other scene's room is still downloaded in the background** after the opening, so a first switch
+   does not wait for the network. It is no longer kept decoded.
+7. **Releasing the old scene has a frame of its own,** the one after the tap's. In the tap's own frame it
+   made the switch's first frame 5 to 15 ms longer.
+8. **If the 1.5× set cannot be fetched, the 2× set is used.** A phone on a failing connection could
+   therefore end up with the heavier set.
+9. **I did not shrink the lab further.** It could lose 2 to 4 MB by keeping fewer frames decoded around the
+   one on screen, at the cost of less slack on a slow phone.
+
+### Not done, or not verified
+
+- **Item 2 on a quiet Mac,** as above.
+- **A real phone.** The memory figures are sums of image and canvas sizes, not what a phone reports. The
+  browser may hold more (for example copies on the graphics card), or less.
+- **Whether the browser really frees a room's picture** when the page lets go of it. The page drops it; what
+  WebKit then does with the decoded copy is its own business.
