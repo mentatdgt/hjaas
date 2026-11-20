@@ -743,3 +743,90 @@ on the mushrooms turned out not to matter (tested).
 - **A real phone,** and Safari itself. The memory figures are sums of bitmap sizes, not what a phone reports.
 - **The corners against the mock-up by eye only.** The mock-up's edge is also rougher than style A's, which
   was not part of this review and was not changed.
+
+## Hunt difficulty (Grow)
+
+`reviews/scene-2-hunt-difficulty.md`, on `site/scene-2`. `main` was pulled first (as a merge); nothing was
+merged into any other branch.
+
+The lab's hunt now has a curve: three easy finds, four that take a second look, and three hidden among
+Rachel's own oyster mushrooms. The total is still 10.
+
+**Screenshots** (`site/qa/hunt/`): `grow-desktop.jpg`, `grow-phone-left.jpg`, `grow-phone-centre.jpg` and
+`grow-phone-right.jpg` have no markers. The same four with `-circled` have the ten spots circled and
+labelled easy, medium or hard. `grow-phone-hard-*-at-phone-size.jpg` show each hard one as a 390 × 844
+phone shows it, with no zoom.
+
+### The ten
+
+| Spot | Level | What changed | Size (plate px) |
+|---|---|---|---|
+| `door` | easy | Nothing: red, by the door. | 28 |
+| `bench` | easy | Nothing: yellow, under the bench. | 22 |
+| `switch-box` | easy | Nothing: yellow, on the switch box. | 18 |
+| `under-shelf` | medium | Smaller (it was 18) and darker, in the shadow under the shelves. | 16 |
+| `floor` | medium | Was 40 px on the sunlit floor. Now under the trolley's bottom shelf, partly behind its back wheel. | 24 |
+| `pipe` | medium | Was red. Now yellow and smaller, on the pipe beside its coupling. | 16 |
+| `drain` | medium | Was red and 34 px. Now a cream one in shade, right beside the drain's grate. | 21 |
+| `crop-hood` | hard | New. Inside the glass fume hood, between the two jars of oyster mushrooms, at 85% opacity. | 18 |
+| `crop-shelf` | hard | New. On the middle shelf, between the first two grow bags; its foot is behind the shelf's lip. | 20 |
+| `crop-rack` | hard | New. On the right-hand rack's middle shelf, against the foot of the pink oysters' bag. | 18 |
+
+`bench-corner`, `humidifier` and `rack` are gone. A visitor who had found one of them keeps the find: it
+counts for `crop-hood`, `crop-shelf` and `crop-rack` in that order.
+
+### Fairness rules
+
+| | Rule | What was measured | Evidence |
+|---|---|---|---|
+| ✅ | Three easy, four medium, three hard; ten in all | As in the table above. | `hunt/checks.json` |
+| ⚠️ | Every one is a toadstool: a rounded cap on a stem, never an oyster shape | Nine of the ten are. **`bench` is the chanterelle drawing** (a funnel on a stem), as it was before; the review says to keep it. It is bright yellow, on the floor, nowhere near the crop. The three among the crop are the plain cream toadstools (drawings 4 and 6), never drawing 5. | `hunt/grow-desktop-circled.jpg` |
+| ✅ | At least 60% visible | The least visible are `floor` (89%, behind the wheel) and `crop-shelf` (91%, behind the shelf lip), measured on the page with Rachel on each of her seven stills. None is ever behind her arms or head. | `hunt/checks.json` |
+| ✅ | At least 14 px tall | The smallest are 16 px (`under-shelf`, `pipe`). | `hunt/checks.json`, `npm test` |
+| ✅ | Never fully the colour of its surroundings | The mushroom's pixels differ from what is behind them by 61 levels of 255 on average at the least (`crop-hood`); the others by 63 to 151. | `hunt/checks.json` |
+| ✅ | Tap areas at least 44 × 44 CSS px, not overlapping, where the edge is at least 0.95 | All ten read 1.00 under the drawing and under the tap box, the smallest box is 44 px and none overlap, at 1440 × 900, 2560 × 1440, 390 × 844, 360 × 740 and 320 × 640. Clipping a drawing does not clip its tap area. | `edge/spots.json`, `npm test` |
+| ✅ | Tab reaches all ten in a sensible order | Left to right: door, bench, crop-hood, under-shelf, crop-shelf, floor, pipe, switch-box, drain, crop-rack. | `hunt/checks.json` |
+| ✅ | The hint wiggle stays as it is | Not changed. Checked once with a short delay: a mushroom wiggled. | – |
+| ✅ | Saved progress still counts | A visitor saved with door, bench-corner, humidifier and rack found opens Grow on "4 of 10 found", with six left to find. | `hunt/checks.json`, `npm test` |
+| ✅ | All 20 mushrooms can still be found and counted | Both scenes, at 390 × 844, 360 × 740 and 1440 × 900, including the unlock and a reload. | Run of `qa/tools/scene2.mjs hunt` |
+| ⚠️ | Each hard one spottable on a 390 × 844 phone | See below: honest answer, not a clean yes. | `hunt/grow-phone-hard-*-at-phone-size.jpg` |
+
+`npm test`: 53 of 53 pass (7 new tests for these rules, for both scenes).
+
+### Can I find the hard ones on a phone?
+
+On a 390 × 844 phone the room is shown at a little over half its size, so the hard ones are 10 to 11 CSS
+px tall, about the size of the back-wall mushrooms that were already there.
+
+- **Looking at the phone-size screenshots without the markers, knowing they are among the crop:** I found
+  `crop-shelf` and `crop-rack` after a careful look along the shelves. I could only confirm `crop-hood` by
+  comparing with the circled version; between two jars of white substrate, behind glass, it is the hardest.
+- **At the phone's own pixel density** (what the eye gets with the phone held close) all three are plainly
+  small toadstools: a round cap on a stem, a shade darker and browner than the oysters around them.
+- **My judgement:** they are fair but demanding on a phone, and `crop-hood` is at the edge of fair. I made
+  the three as large as the review allows (18, 20 and 18 px) for this reason. If it should be kinder,
+  `crop-hood` could go to full opacity; that is one number in `src/scenes/grow.ts`.
+- I am an unusual judge here: I knew where they were. A person who has not seen the answers should try it.
+
+### Decisions I made
+
+1. **Which old spot hands its find to which new one:** bench-corner to crop-hood, humidifier to crop-shelf,
+   rack to crop-rack. Each pair is in the same part of the room.
+2. **`floor` is covered by the wheel itself, not by a clip.** Rachel's frames include the trolley and are
+   drawn over the mushrooms, so the wheel hides part of the mushroom without any new art. I checked that
+   nothing of hers ever covers that spot except the wheel.
+3. **There is no painted shadow under the trolley,** so `floor` gets its shade from its tint and a small
+   contact shadow of its own.
+4. **`crop-shelf`'s clip is in percent of the drawing, not plate coordinates.** That is the form the site
+   already had for tucked mushrooms. It is the straight line of the shelf's lip.
+5. **`pipe` and `under-shelf` use the same yellow drawing** (7, the single cap), at different shades.
+6. **A fourth tint, for the crop:** most of the warmth taken out, so a cream toadstool sits in the same
+   greys and creams as the oysters.
+7. **`bench` keeps its chanterelle,** as the review says to keep the easy three. See the ⚠️ above.
+8. **The hard ones are at the top of their allowed sizes,** for phones.
+
+### Not done, or not verified
+
+- **Nobody who does not know the answers has tried it.** That is the real test of "fair and fun".
+- **A real phone.**
+- **Timing:** how long each takes to find was not measured; "easy, medium, hard" is by design, not by test.
