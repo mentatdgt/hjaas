@@ -1,0 +1,23 @@
+The opening painting in WebKit, cold load, production build, iPhone 13 profile (qa/tools/intro-frames.mjs).
+Longest frame in ms. "end" = from the wash to 1 s after the intro; "full" = the whole painting;
+"loop" = the 4 s after it, while Rachel hammers and the rest loads.
+
+While these were measured the Mac was busy with an iCloud sync (the "bird" process, 40 to 65% of a core),
+and both the old and the new build showed occasional stalls at random moments. They should be measured
+again on a quiet machine.
+
+A. Old build (item 3, commit f01c5bb) and new build (item 4), six runs each, alternating:
+
+before  end [18, 18, 18, 18, 19, 18]  full [28, 32, 26, 36, 36, 32]   loop [23, 21, 21, 20, 18, 18]
+after   end [18, 18, 46, 58, 22, 20]  full [24, 25, 46, 58, 31, 26]   loop [18, 18, 34, 19, 21, 23]
+before  end [19, 34, 18, 18, 29, 19]  full [25, 364, 33, 26, 37, 37]  loop [18, 36, 18, 18, 18, 20]
+after   end [23, 18, 18, 18, 18, 20]  full [28, 25, 31, 27, 30, 28]   loop [18, 19, 18, 18, 18, 22]
+
+B. New build only, earlier batches, in the order they were run:
+
+iphone   5 runs  end [19, 19, 19, 19, 19]                      full [29, 35, 32, 25, 22]                        loop [19, 19, 19, 19, 19]
+desktop  5 runs  end [19, 22, 18, 31, 18]                      full [36, 33, 52, 32, 33]                        loop [19, 19, 19, 24, 18]
+desktop  8 runs  end [24, 24, 18, 19, 18, 18, 18, 18]          full [31, 35, 26, 26, 27, 33, 27, 30]            loop [18, 18, 24, 19, 19, 18, 19, 18]
+iphone   5 runs  end [18, 24, 31, 18, 20]                      full [31, 25, 31, 27, 39]                        loop [18, 22, 18, 525, 207]
+iphone  10 runs  end [21, 18, 18, 202, 47, 18, 18, 18, 117, 18] full [30, 25, 35, 202, 140, 29, 28, 35, 252, 38] loop [18, 18, 242, 23, 20, 18, 18, 20, 20, 18]
+iphone  10 runs  end [32, 35, 44, 18, 18, 22, 45, 24, 30, 28]  full [38, 35, 98, 32, 31, 37, 45, 29, 45, 33]    loop [26, 23, 32, 18, 20, 18, 19, 23, 18, 18]

@@ -1,0 +1,608 @@
+{
+ "url": "http://localhost:4173/",
+ "summary": {
+  "iphone": {
+   "toGrow": [
+    35,
+    29,
+    29,
+    27,
+    29,
+    32,
+    30,
+    26,
+    29,
+    31,
+    24,
+    25
+   ],
+   "toBuild": [
+    26,
+    30,
+    21,
+    25,
+    19,
+    24,
+    59,
+    23,
+    24,
+    22,
+    27,
+    25
+   ],
+   "toGrowAgain": [
+    20,
+    23,
+    21,
+    31,
+    21,
+    21,
+    22,
+    23,
+    19,
+    21,
+    22,
+    21
+   ],
+   "toBuildAgain": [
+    23,
+    22,
+    19,
+    20,
+    22,
+    20,
+    26,
+    20,
+    21,
+    22,
+    21,
+    21
+   ]
+  },
+  "desktop": {
+   "toGrow": [
+    38,
+    31,
+    32,
+    30,
+    29,
+    34,
+    39,
+    33,
+    31,
+    37,
+    33,
+    33
+   ],
+   "toBuild": [
+    29,
+    33,
+    30,
+    28,
+    31,
+    33,
+    32,
+    30,
+    37,
+    31,
+    25,
+    32
+   ],
+   "toGrowAgain": [
+    23,
+    30,
+    26,
+    31,
+    26,
+    30,
+    31,
+    72,
+    31,
+    27,
+    28,
+    32
+   ],
+   "toBuildAgain": [
+    25,
+    29,
+    29,
+    28,
+    30,
+    25,
+    28,
+    26,
+    33,
+    27,
+    27,
+    31
+   ]
+  }
+ },
+ "results": [
+  {
+   "profile": "iphone",
+   "run": 1,
+   "toGrow": {
+    "longest": 35,
+    "over50": []
+   },
+   "toBuild": {
+    "longest": 26,
+    "over50": []
+   },
+   "toGrowAgain": {
+    "longest": 20,
+    "over50": []
+   },
+   "toBuildAgain": {
+    "longest": 23,
+    "over50": []
+   }
+  },
+  {
+   "profile": "iphone",
+   "run": 2,
+   "toGrow": {
+    "longest": 29,
+    "over50": []
+   },
+   "toBuild": {
+    "longest": 30,
+    "over50": []
+   },
+   "toGrowAgain": {
+    "longest": 23,
+    "over50": []
+   },
+   "toBuildAgain": {
+    "longest": 22,
+    "over50": []
+   }
+  },
+  {
+   "profile": "iphone",
+   "run": 3,
+   "toGrow": {
+    "longest": 29,
+    "over50": []
+   },
+   "toBuild": {
+    "longest": 21,
+    "over50": []
+   },
+   "toGrowAgain": {
+    "longest": 21,
+    "over50": []
+   },
+   "toBuildAgain": {
+    "longest": 19,
+    "over50": []
+   }
+  },
+  {
+   "profile": "iphone",
+   "run": 4,
+   "toGrow": {
+    "longest": 27,
+    "over50": []
+   },
+   "toBuild": {
+    "longest": 25,
+    "over50": []
+   },
+   "toGrowAgain": {
+    "longest": 31,
+    "over50": []
+   },
+   "toBuildAgain": {
+    "longest": 20,
+    "over50": []
+   }
+  },
+  {
+   "profile": "iphone",
+   "run": 5,
+   "toGrow": {
+    "longest": 29,
+    "over50": []
+   },
+   "toBuild": {
+    "longest": 19,
+    "over50": []
+   },
+   "toGrowAgain": {
+    "longest": 21,
+    "over50": []
+   },
+   "toBuildAgain": {
+    "longest": 22,
+    "over50": []
+   }
+  },
+  {
+   "profile": "iphone",
+   "run": 6,
+   "toGrow": {
+    "longest": 32,
+    "over50": []
+   },
+   "toBuild": {
+    "longest": 24,
+    "over50": []
+   },
+   "toGrowAgain": {
+    "longest": 21,
+    "over50": []
+   },
+   "toBuildAgain": {
+    "longest": 20,
+    "over50": []
+   }
+  },
+  {
+   "profile": "iphone",
+   "run": 7,
+   "toGrow": {
+    "longest": 30,
+    "over50": []
+   },
+   "toBuild": {
+    "longest": 59,
+    "over50": [
+     "59ms@1711"
+    ]
+   },
+   "toGrowAgain": {
+    "longest": 22,
+    "over50": []
+   },
+   "toBuildAgain": {
+    "longest": 26,
+    "over50": []
+   }
+  },
+  {
+   "profile": "iphone",
+   "run": 8,
+   "toGrow": {
+    "longest": 26,
+    "over50": []
+   },
+   "toBuild": {
+    "longest": 23,
+    "over50": []
+   },
+   "toGrowAgain": {
+    "longest": 23,
+    "over50": []
+   },
+   "toBuildAgain": {
+    "longest": 20,
+    "over50": []
+   }
+  },
+  {
+   "profile": "iphone",
+   "run": 9,
+   "toGrow": {
+    "longest": 29,
+    "over50": []
+   },
+   "toBuild": {
+    "longest": 24,
+    "over50": []
+   },
+   "toGrowAgain": {
+    "longest": 19,
+    "over50": []
+   },
+   "toBuildAgain": {
+    "longest": 21,
+    "over50": []
+   }
+  },
+  {
+   "profile": "iphone",
+   "run": 10,
+   "toGrow": {
+    "longest": 31,
+    "over50": []
+   },
+   "toBuild": {
+    "longest": 22,
+    "over50": []
+   },
+   "toGrowAgain": {
+    "longest": 21,
+    "over50": []
+   },
+   "toBuildAgain": {
+    "longest": 22,
+    "over50": []
+   }
+  },
+  {
+   "profile": "iphone",
+   "run": 11,
+   "toGrow": {
+    "longest": 24,
+    "over50": []
+   },
+   "toBuild": {
+    "longest": 27,
+    "over50": []
+   },
+   "toGrowAgain": {
+    "longest": 22,
+    "over50": []
+   },
+   "toBuildAgain": {
+    "longest": 21,
+    "over50": []
+   }
+  },
+  {
+   "profile": "iphone",
+   "run": 12,
+   "toGrow": {
+    "longest": 25,
+    "over50": []
+   },
+   "toBuild": {
+    "longest": 25,
+    "over50": []
+   },
+   "toGrowAgain": {
+    "longest": 21,
+    "over50": []
+   },
+   "toBuildAgain": {
+    "longest": 21,
+    "over50": []
+   }
+  },
+  {
+   "profile": "desktop",
+   "run": 1,
+   "toGrow": {
+    "longest": 38,
+    "over50": []
+   },
+   "toBuild": {
+    "longest": 29,
+    "over50": []
+   },
+   "toGrowAgain": {
+    "longest": 23,
+    "over50": []
+   },
+   "toBuildAgain": {
+    "longest": 25,
+    "over50": []
+   }
+  },
+  {
+   "profile": "desktop",
+   "run": 2,
+   "toGrow": {
+    "longest": 31,
+    "over50": []
+   },
+   "toBuild": {
+    "longest": 33,
+    "over50": []
+   },
+   "toGrowAgain": {
+    "longest": 30,
+    "over50": []
+   },
+   "toBuildAgain": {
+    "longest": 29,
+    "over50": []
+   }
+  },
+  {
+   "profile": "desktop",
+   "run": 3,
+   "toGrow": {
+    "longest": 32,
+    "over50": []
+   },
+   "toBuild": {
+    "longest": 30,
+    "over50": []
+   },
+   "toGrowAgain": {
+    "longest": 26,
+    "over50": []
+   },
+   "toBuildAgain": {
+    "longest": 29,
+    "over50": []
+   }
+  },
+  {
+   "profile": "desktop",
+   "run": 4,
+   "toGrow": {
+    "longest": 30,
+    "over50": []
+   },
+   "toBuild": {
+    "longest": 28,
+    "over50": []
+   },
+   "toGrowAgain": {
+    "longest": 31,
+    "over50": []
+   },
+   "toBuildAgain": {
+    "longest": 28,
+    "over50": []
+   }
+  },
+  {
+   "profile": "desktop",
+   "run": 5,
+   "toGrow": {
+    "longest": 29,
+    "over50": []
+   },
+   "toBuild": {
+    "longest": 31,
+    "over50": []
+   },
+   "toGrowAgain": {
+    "longest": 26,
+    "over50": []
+   },
+   "toBuildAgain": {
+    "longest": 30,
+    "over50": []
+   }
+  },
+  {
+   "profile": "desktop",
+   "run": 6,
+   "toGrow": {
+    "longest": 34,
+    "over50": []
+   },
+   "toBuild": {
+    "longest": 33,
+    "over50": []
+   },
+   "toGrowAgain": {
+    "longest": 30,
+    "over50": []
+   },
+   "toBuildAgain": {
+    "longest": 25,
+    "over50": []
+   }
+  },
+  {
+   "profile": "desktop",
+   "run": 7,
+   "toGrow": {
+    "longest": 39,
+    "over50": []
+   },
+   "toBuild": {
+    "longest": 32,
+    "over50": []
+   },
+   "toGrowAgain": {
+    "longest": 31,
+    "over50": []
+   },
+   "toBuildAgain": {
+    "longest": 28,
+    "over50": []
+   }
+  },
+  {
+   "profile": "desktop",
+   "run": 8,
+   "toGrow": {
+    "longest": 33,
+    "over50": []
+   },
+   "toBuild": {
+    "longest": 30,
+    "over50": []
+   },
+   "toGrowAgain": {
+    "longest": 72,
+    "over50": [
+     "72ms@262",
+     "59ms@334"
+    ]
+   },
+   "toBuildAgain": {
+    "longest": 26,
+    "over50": []
+   }
+  },
+  {
+   "profile": "desktop",
+   "run": 9,
+   "toGrow": {
+    "longest": 31,
+    "over50": []
+   },
+   "toBuild": {
+    "longest": 37,
+    "over50": []
+   },
+   "toGrowAgain": {
+    "longest": 31,
+    "over50": []
+   },
+   "toBuildAgain": {
+    "longest": 33,
+    "over50": []
+   }
+  },
+  {
+   "profile": "desktop",
+   "run": 10,
+   "toGrow": {
+    "longest": 37,
+    "over50": []
+   },
+   "toBuild": {
+    "longest": 31,
+    "over50": []
+   },
+   "toGrowAgain": {
+    "longest": 27,
+    "over50": []
+   },
+   "toBuildAgain": {
+    "longest": 27,
+    "over50": []
+   }
+  },
+  {
+   "profile": "desktop",
+   "run": 11,
+   "toGrow": {
+    "longest": 33,
+    "over50": []
+   },
+   "toBuild": {
+    "longest": 25,
+    "over50": []
+   },
+   "toGrowAgain": {
+    "longest": 28,
+    "over50": []
+   },
+   "toBuildAgain": {
+    "longest": 27,
+    "over50": []
+   }
+  },
+  {
+   "profile": "desktop",
+   "run": 12,
+   "toGrow": {
+    "longest": 33,
+    "over50": []
+   },
+   "toBuild": {
+    "longest": 32,
+    "over50": []
+   },
+   "toGrowAgain": {
+    "longest": 32,
+    "over50": []
+   },
+   "toBuildAgain": {
+    "longest": 31,
+    "over50": []
+   }
+  }
+ ]
+}

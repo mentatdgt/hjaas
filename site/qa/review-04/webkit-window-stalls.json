@@ -1,0 +1,38 @@
+[
+ {
+  "page": "an empty page",
+  "framesOver40msIn32s": [
+   "119 ms at 15.1 s"
+  ]
+ },
+ {
+  "page": "a page that repaints one canvas ten times a second",
+  "framesOver40msIn32s": []
+ },
+ {
+  "page": "the lab, Rachel paused",
+  "framesOver40msIn32s": [
+   "62 ms at 25.5 s"
+  ]
+ },
+ {
+  "page": "the lab, Rachel working",
+  "framesOver40msIn32s": []
+ },
+ {
+  "page": "an empty page",
+  "framesOver40msIn32s": []
+ },
+ {
+  "page": "a page that repaints one canvas ten times a second",
+  "framesOver40msIn32s": []
+ },
+ {
+  "page": "the lab, Rachel paused",
+  "framesOver40msIn32s": []
+ },
+ {
+  "page": "the lab, Rachel working",
+  "framesOver40msIn32s": []
+ }
+]

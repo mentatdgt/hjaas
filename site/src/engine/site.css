@@ -1,0 +1,1434 @@
+/* The site: one framed illustration on a paper page, and a small menu to move between scenes.
+   Every rule is scoped under .hj-scene so the site can move to another route untouched. */
+
+.hj-scene {
+  --plate-w: 1672;
+  --plate-h: 941;
+
+  /* Paper and ink. Mustard is a small accent only. */
+  --hj-paper: #f6f3ec;
+  --hj-mat: #fcfbf8;
+  --hj-ink: #302e29;
+  --hj-ink-soft: #645f55;
+  /* Fine lines: the frame, the edge of the picture, rules. */
+  --hj-line: rgba(48, 46, 41, 0.2);
+  --hj-mustard: #edb525;
+  --hj-red: #c9472c;
+
+  /* One family of curves for all UI motion. */
+  --hj-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --hj-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --hj-font: 'Bricolage Grotesque Variable', 'Avenir Next', 'Segoe UI', system-ui, sans-serif;
+  --hj-serif: 'Spectral', 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+
+  position: relative;
+  flex: 1 0 auto;
+  overflow-x: clip;
+  background: var(--hj-paper);
+  color: var(--hj-ink);
+  font-family: var(--hj-font);
+  /* The page takes its measurements from the scene's own width, not from the browser window. */
+  container-type: inline-size;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hj-scene *,
+.hj-scene *::before,
+.hj-scene *::after {
+  box-sizing: border-box;
+}
+
+.hj-scene ::selection {
+  background: var(--hj-mustard);
+  color: var(--hj-ink);
+}
+
+/* ---------- The page: identity, the framed picture, the caption ---------- */
+
+.hj-page {
+  --page-margin: clamp(20px, 4cqw, 72px);
+  --logo-w: clamp(160px, 14cqw, 210px);
+  /* The logo's own proportions; logo.ts sets the real ones when the image arrives. */
+  --logo-ratio: 1651 / 630;
+  --logo-h: calc(var(--logo-w) / (var(--logo-ratio)));
+  --pad-top: clamp(20px, 2.2cqw, 44px);
+  --pad-bottom: clamp(18px, 1.8cqw, 36px);
+  --gap-head: clamp(16px, 1.5cqw, 30px);
+  --gap-caption: clamp(12px, 1.1cqw, 22px);
+  --caption-h: 44px;
+  /* The scene menu's own row, where it has one (phones). */
+  --menu-h: 0px;
+  /* Everything on the page that is not the picture, top to bottom. */
+  --chrome: calc(
+    var(--pad-top) + var(--logo-h) + var(--menu-h) + var(--gap-head) + var(--gap-caption) + var(--caption-h) +
+      var(--pad-bottom)
+  );
+  /* The picture: about 1040 px on a 1440 px window, never wider than the page allows, and small enough
+     that the caption stays on screen. Very short windows keep a readable picture and let the page scroll. */
+  --pic-w: min(
+    calc(100cqw - 2 * var(--page-margin)),
+    max(72.2cqw, 820px),
+    max(calc((100svh - var(--chrome)) * var(--plate-w) / var(--plate-h)), 540px)
+  );
+  display: flex;
+  flex-direction: column;
+  width: var(--pic-w);
+  margin: 0 auto;
+  padding: var(--pad-top) 0 var(--pad-bottom);
+}
+
+.hj-masthead {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 1.8cqw, 30px);
+  min-height: var(--logo-h);
+  margin-bottom: var(--gap-head);
+}
+
+.hj-ident {
+  min-width: 0;
+}
+
+/* The scene menu: quiet tabs at the end of the masthead, just above the picture. */
+.hj-menu {
+  display: flex;
+  align-self: flex-end;
+  gap: clamp(18px, 1.8cqw, 34px);
+  margin-left: auto;
+  /* The tabs' underlines sit on the masthead's bottom edge. */
+  margin-bottom: -6px;
+}
+
+.hj-tab {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  border-bottom: 1.5px solid transparent;
+  color: var(--hj-ink-soft);
+  font-size: clamp(15.5px, 1.15cqw, 21px);
+  line-height: 1.2;
+  text-decoration: none;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+  transition:
+    color 140ms ease,
+    border-color 140ms ease;
+}
+
+/* The scene in the window. */
+.hj-tab[aria-current='page'] {
+  border-bottom-color: var(--hj-ink);
+  color: var(--hj-ink);
+  font-weight: 500;
+}
+
+.hj-tab:focus {
+  outline: none;
+}
+
+.hj-tab:focus-visible {
+  outline: 2px solid var(--hj-ink);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hj-tab:hover {
+    color: var(--hj-ink);
+  }
+}
+
+.hj-name {
+  margin: 0;
+  font-family: var(--hj-serif);
+  font-size: clamp(27px, 2.7cqw, 62px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.012em;
+}
+
+.hj-tagline {
+  max-width: 44ch;
+  margin: clamp(4px, 0.5cqw, 9px) 0 0;
+  color: var(--hj-ink-soft);
+  font-family: var(--hj-serif);
+  font-size: clamp(15px, 1.2cqw, 26px);
+  line-height: 1.35;
+  text-wrap: pretty;
+}
+
+/* The picture sits straight on the page: no frame, no mat. Its own soft edge is part of the plate (.hj-edge). */
+.hj-frame {
+  margin: 0;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.hj-window {
+  position: relative;
+}
+
+/* The window onto the room. Wide screens show the whole plate. Unpainted, it is the bare page. */
+.hj-viewport {
+  position: relative;
+  width: var(--pic-w);
+  aspect-ratio: 1672 / 941;
+  overflow: hidden;
+}
+
+/* The plate is the scene's coordinate system: children are placed in percentages of 1672 × 941. */
+.hj-plate {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  aspect-ratio: 1672 / 941;
+  /* One plate pixel in CSS pixels; index.ts sets the real value on every resize. */
+  --u: 1px;
+}
+
+.hj-room {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+/* The sheet the brush rubs away (paint.ts): blank paper over a scene being painted for the first time. */
+.hj-paint {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* The painting's edge: the colour fades into the paper along a wandering line, and the room's lines carry
+   on as pencil (edge.ts). A layer in the paper's colour above everything in the plate, so nothing ever
+   shows past the edge; its canvases are strips along the plate's sides, each placed by edge.ts. */
+.hj-edge {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hj-edge canvas {
+  position: absolute;
+  display: block;
+}
+
+/* Between scenes the sheet is a copy of the picture being left, and lies over the window itself. */
+.hj-paint.is-over-window {
+  z-index: 2;
+}
+
+.hj-shadow {
+  position: absolute;
+  pointer-events: none;
+  /* A blurred ellipse drawn as a gradient: no filter, nothing to repaint. */
+  background: radial-gradient(
+    ellipse closest-side,
+    rgba(60, 30, 10, 0.43) 0%,
+    rgba(60, 30, 10, 0.4) 52%,
+    rgba(60, 30, 10, 0.24) 74%,
+    rgba(60, 30, 10, 0.08) 90%,
+    rgba(60, 30, 10, 0) 100%
+  );
+}
+
+.hj-rachel {
+  position: absolute;
+  pointer-events: none;
+}
+
+.hj-rachel canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Before the intro: laid out, sized and decoded, but not yet shown. The page around it is already there. */
+.hj-scene.is-pre .hj-room,
+.hj-scene.is-pre .hj-shadow,
+.hj-scene.is-pre .hj-rachel,
+.hj-scene.is-pre .hj-mushrooms,
+.hj-scene.is-pre .hj-edge,
+.hj-scene.is-pre .hj-caption-main {
+  opacity: 0;
+}
+
+.hj-scene.is-pre .hj-mushrooms {
+  visibility: hidden;
+}
+
+/* A return visit, or reduced motion: no brushwork. The pencil of the edge comes up first, in 120 ms, and
+   everything else together in 200 ms, starting as the pencil lands. (Not all at once: while the edge is
+   only part there, the picture under it would show right to the plate's rim.) */
+.hj-scene.is-revealing .hj-edge {
+  transition: opacity 120ms linear;
+}
+
+.hj-scene.is-revealing .hj-room,
+.hj-scene.is-revealing .hj-shadow,
+.hj-scene.is-revealing .hj-rachel,
+.hj-scene.is-revealing .hj-mushrooms,
+.hj-scene.is-revealing .hj-caption-main {
+  transition: opacity 200ms linear 100ms;
+}
+
+/* ---------- Mushrooms ---------- */
+
+.hj-mushrooms {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* The button is the tap box: at least 44 × 44 CSS px however small the drawing is.
+   Its centre is the drawing's centre, unless that would put part of the box in the painting's soft edge,
+   where the picture fades into the paper. Then the box moves inward and the drawing stays put: mushrooms.ts
+   works out where (--bx, --by, in CSS px from the plate's corner) each time the plate changes size. */
+.hj-shroom {
+  --bw: max(44px, calc(var(--w) * var(--u) + 10px));
+  --bh: max(44px, calc(var(--h) * var(--u) + 10px));
+  /* The drawing's centre, in CSS px from the plate's corner. Until the box is placed, it is the box's too. */
+  --ax: calc(var(--cx) * var(--u));
+  --ay: calc(var(--cy) * var(--u));
+  --bx: var(--ax);
+  --by: var(--ay);
+  position: absolute;
+  left: var(--bx);
+  top: var(--by);
+  width: var(--bw);
+  height: var(--bh);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  background: none;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  /* The normal cursor: it must not give the hiding spots away. */
+  cursor: inherit;
+  touch-action: manipulation;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* However far the box has moved, the drawing and its shadow stay where they were painted. */
+.hj-shroom-art,
+.hj-shroom.is-grounded::before {
+  translate: calc(var(--ax) - var(--bx)) calc(var(--ay) - var(--by));
+}
+
+.hj-shroom:focus {
+  outline: none;
+}
+
+/* Keyboard users get a clear ring: Tab is the accessible way through the hunt. */
+.hj-shroom:focus-visible {
+  outline: 2px solid #fffdf6;
+  outline-offset: 0;
+  box-shadow: 0 0 0 4px rgba(48, 46, 41, 0.8);
+}
+
+.hj-shroom-art {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(var(--w) * var(--u));
+  height: calc(var(--h) * var(--u));
+  margin: calc(var(--h) * var(--u) / -2) 0 0 calc(var(--w) * var(--u) / -2);
+  transform-origin: 50% 100%;
+  /* A tap lands on the button, never on the image inside it. (Measured in WebKit, review 04: with the image
+     as the tap's target, the click reached the page up to 55 ms after the finger lifted; with the button,
+     within 3 ms. The button always covers its drawing, so nothing else changes.) */
+  pointer-events: none;
+}
+
+.hj-shroom-art img,
+.hj-flyer img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hj-shroom-art img.is-flipped,
+.hj-flyer img.is-flipped {
+  transform: scaleX(-1);
+}
+
+/* A small contact shadow so a standing mushroom sits on its surface. It stays behind when the mushroom is taken. */
+.hj-shroom.is-grounded::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(var(--w) * var(--u) * 0.9);
+  height: calc(var(--h) * var(--u) * 0.22);
+  margin-left: calc(var(--w) * var(--u) * -0.45);
+  margin-top: calc(var(--h) * var(--u) * 0.39);
+  background: radial-gradient(ellipse closest-side, rgba(50, 25, 8, 0.42), rgba(50, 25, 8, 0));
+}
+
+.hj-mushrooms.is-debug .hj-shroom {
+  outline: 1px dashed #00e5ff;
+  background: rgba(0, 229, 255, 0.12);
+}
+
+/* Where a collected mushroom travels, above the page. */
+.hj-fly {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hj-flyer {
+  position: absolute;
+  will-change: transform, opacity;
+}
+
+/* ---------- Logo: unchanged, only its place on the page is new ---------- */
+
+/* Its place in the masthead, held from the first moment so nothing moves when the image arrives. */
+.hj-logo-slot {
+  flex: none;
+  width: var(--logo-w);
+  height: var(--logo-h);
+}
+
+.hj-logo {
+  position: relative;
+  flex: none;
+  display: block;
+  width: var(--logo-w);
+  border-radius: 10px;
+}
+
+/* Lifts the chrome off the page behind it. On the image only, so the glint canvas above never re-filters it. */
+.hj-logo img {
+  filter: drop-shadow(0 3px 5px rgba(43, 26, 16, 0.38));
+}
+
+.hj-logo img,
+.hj-logo canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hj-logo canvas {
+  pointer-events: none;
+}
+
+.hj-logo {
+  transition: scale 160ms var(--hj-ease-out);
+}
+
+a.hj-logo:active {
+  scale: 0.98;
+}
+
+.hj-logo:focus {
+  outline: none;
+}
+
+.hj-logo:focus-visible {
+  outline: 2px solid var(--hj-ink);
+  outline-offset: 4px;
+}
+
+/* ---------- The caption under the picture ---------- */
+
+.hj-caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 28px;
+  min-height: var(--caption-h);
+  margin-top: var(--gap-caption);
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+.hj-caption-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 18px;
+  min-width: 0;
+  position: relative;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* "3 of 10 found". Equal-width digits, so the words never shift as the number changes. */
+.hj-tally {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums lining-nums;
+  white-space: nowrap;
+}
+
+.hj-tally[hidden] {
+  display: none;
+}
+
+/* Until 10 of 10: laid out, so its text is ready, but out of the flow, out of sight and out of reach. */
+.hj-contact.is-waiting {
+  position: absolute;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.hj-tally-icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+}
+
+.hj-tally-icon svg,
+.hj-contact svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.hj-tally-n {
+  display: inline-block;
+}
+
+.hj-ico-cap,
+.hj-ico-stem {
+  stroke: var(--hj-ink);
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+}
+
+.hj-ico-cap {
+  fill: var(--hj-red);
+}
+
+.hj-ico-stem {
+  fill: #fffdf6;
+}
+
+.hj-ico-dot {
+  fill: #fff3d6;
+}
+
+/* What the hunt is for, in a softer voice. */
+.hj-note {
+  margin: 0;
+  color: var(--hj-ink-soft);
+  font-size: 15px;
+  transition: opacity 160ms ease;
+}
+
+.hj-note:empty {
+  display: none;
+}
+
+.hj-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+  contain: strict;
+}
+
+/* The way to reach Hui Jie, once all ten are found: a flat, outlined button in the caption's place. */
+.hj-contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 44px;
+  margin: 0;
+  padding: 0 18px 0 14px;
+  border: 1.5px solid var(--hj-ink);
+  border-radius: 6px;
+  background: var(--hj-mat);
+  color: var(--hj-ink);
+  font: inherit;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-appearance: none;
+  appearance: none;
+  transition:
+    background-color 140ms ease,
+    transform 140ms var(--hj-ease-out);
+}
+
+.hj-contact svg {
+  width: 20px;
+  height: 20px;
+}
+
+.hj-contact:active {
+  transform: scale(0.98);
+}
+
+/* Quiet controls at the end of the caption: Skip while the room is painted, then Pause animation and
+   Replay painting. Skip shares the first control's place. */
+.hj-controls {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-items: end;
+  gap: 0 22px;
+  margin-left: auto;
+}
+
+.hj-controls > :nth-child(1) {
+  grid-area: 1 / 2;
+}
+
+.hj-controls > :nth-child(2) {
+  grid-area: 1 / 1;
+}
+
+.hj-controls > :nth-child(3) {
+  grid-area: 1 / 2;
+}
+
+.hj-link {
+  min-height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--hj-ink-soft);
+  font: inherit;
+  font-size: 14.5px;
+  text-decoration: underline;
+  text-decoration-color: rgba(48, 46, 41, 0.3);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-appearance: none;
+  appearance: none;
+  transition:
+    color 140ms ease,
+    text-decoration-color 140ms ease;
+}
+
+/* Controls swap by visibility, not display: all three keep their place, so nothing on the page moves. */
+.hj-link.is-off {
+  visibility: hidden;
+}
+
+.hj-link:active {
+  color: var(--hj-ink);
+}
+
+.hj-contact:focus-visible,
+.hj-link:focus-visible {
+  outline: 2px solid var(--hj-ink);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.hj-contact:focus-visible {
+  border-radius: 6px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hj-contact:hover {
+    background: #fff;
+  }
+
+  .hj-link:hover {
+    color: var(--hj-ink);
+    text-decoration-color: currentColor;
+  }
+}
+
+/* ---------- Contact form: a flat sheet of the same paper, opening from the button ---------- */
+
+.hj-dialog {
+  --anchor-left: 180px;
+  --anchor-bottom: 96px;
+  /* Edges of fields and chips: at least 3:1 against the sheet and the fields. */
+  --hj-edge: #858073;
+  position: fixed;
+  inset: auto auto var(--anchor-bottom) var(--anchor-left);
+  width: min(420px, calc(100vw - 24px));
+  max-width: none;
+  max-height: calc(100dvh - var(--anchor-bottom) - 16px);
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  background: none;
+  color: var(--hj-ink);
+  font-family: var(--hj-font);
+  /* It grows out of the button under its bottom left corner. */
+  transform-origin: 70px 100%;
+  opacity: 0;
+  transform: translateY(6px) scale(0.97);
+  transition:
+    opacity 140ms var(--hj-ease-out),
+    transform 180ms var(--hj-ease-out);
+}
+
+/* Too little room above the button (a short window): the sheet sits in the middle instead. */
+.hj-dialog.is-centred {
+  inset: 0;
+  height: fit-content;
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  transform-origin: 50% 50%;
+}
+
+.hj-dialog.is-open {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 200ms var(--hj-ease-out),
+    transform 260ms var(--hj-ease-out);
+}
+
+/* Laid out once ahead of time, unseen (form.ts, prepare()). */
+.hj-dialog.is-preparing {
+  display: block;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Opened or closed from the keyboard: no entrance or exit, it is simply there or gone. */
+.hj-dialog.is-instant,
+.hj-dialog.is-instant::backdrop {
+  transition: none;
+}
+
+.hj-dialog::backdrop {
+  background: rgba(48, 46, 41, 0);
+  transition: background-color 200ms ease;
+}
+
+.hj-dialog.is-open::backdrop {
+  background: rgba(48, 46, 41, 0.34);
+}
+
+.hj-sheet {
+  display: flex;
+  flex-direction: column;
+  max-height: inherit;
+  padding: 22px 0 0;
+  border: 1px solid rgba(48, 46, 41, 0.4);
+  border-radius: 8px;
+  background: var(--hj-mat);
+  box-shadow:
+    0 2px 4px rgba(48, 46, 41, 0.08),
+    0 28px 56px -24px rgba(48, 46, 41, 0.42);
+}
+
+/* The title and the close button stay put; only the form beneath them scrolls on short screens. */
+.hj-sheet-head {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 24px 14px;
+}
+
+.hj-sheet-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 2px 24px 24px;
+  scrollbar-width: thin;
+  scrollbar-color: #bdb6a6 transparent;
+}
+
+.hj-sheet h2:focus,
+.hj-sent h3:focus {
+  outline: none;
+}
+
+.hj-sheet h2 {
+  margin: 0;
+  font-family: var(--hj-serif);
+  font-size: 27px;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.hj-close {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin: -8px -12px -8px 0;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: var(--hj-ink-soft);
+  cursor: pointer;
+  transition:
+    background-color 140ms ease,
+    color 140ms ease,
+    transform 140ms var(--hj-ease-out);
+}
+
+.hj-close svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+
+.hj-close:active {
+  transform: scale(0.94);
+}
+
+.hj-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.hj-form[hidden],
+.hj-sent[hidden] {
+  display: none;
+}
+
+.hj-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.hj-field > label,
+.hj-field > legend {
+  padding: 0;
+  color: var(--hj-ink);
+  font-size: 14.5px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.hj-field > legend {
+  margin-bottom: 8px;
+}
+
+.hj-field input[type='text'],
+.hj-field input[type='email'],
+.hj-field textarea {
+  width: 100%;
+  margin: 0;
+  padding: 11px 12px;
+  border: 1px solid var(--hj-edge);
+  border-radius: 4px;
+  background: #fff;
+  color: var(--hj-ink);
+  caret-color: var(--hj-ink);
+  font: inherit;
+  /* 16 px keeps iOS from zooming the page when a field is focused. */
+  font-size: 16px;
+  line-height: 1.35;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: border-color 140ms ease;
+}
+
+.hj-field textarea {
+  min-height: 104px;
+  max-height: 240px;
+  /* Grows with the message where the browser can; no grab handle to style. */
+  field-sizing: content;
+  resize: none;
+}
+
+/* One focus ring for everything in the sheet: ink, two pixels, clear of the edge. */
+.hj-field input:focus-visible,
+.hj-field textarea:focus-visible {
+  outline: 2px solid var(--hj-ink);
+  outline-offset: 1px;
+  border-color: var(--hj-ink);
+}
+
+.hj-field input[aria-invalid='true'],
+.hj-field textarea[aria-invalid='true'] {
+  border-color: #b23a1e;
+}
+
+.hj-err {
+  margin: 0;
+  color: #9d3018;
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.hj-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.hj-chip {
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+
+.hj-chip input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.hj-chip span {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid var(--hj-edge);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--hj-ink);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.2;
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    transform 140ms var(--hj-ease-out);
+}
+
+/* A picked chip darkens its edge, takes a wash of mustard and gains a tick: never colour alone. */
+.hj-chip svg {
+  flex: none;
+  width: 0;
+  height: 14px;
+  margin-right: 0;
+  fill: none;
+  stroke: var(--hj-ink);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+}
+
+.hj-chip input:checked + span {
+  border-color: var(--hj-ink);
+  background: #fbeec4;
+  box-shadow: inset 0 0 0 0.5px var(--hj-ink);
+}
+
+.hj-chip input:checked + span svg {
+  width: 14px;
+  margin-right: 6px;
+  opacity: 1;
+}
+
+.hj-chip input:active + span {
+  transform: scale(0.97);
+}
+
+.hj-chip input:focus-visible + span {
+  outline: 2px solid var(--hj-ink);
+  outline-offset: 2px;
+}
+
+.hj-hint {
+  margin-left: 4px;
+  color: var(--hj-ink-soft);
+  font-weight: 400;
+}
+
+.hj-alert {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 4px;
+  background: #f6e0d6;
+  color: #7c2410;
+  font-size: 14.5px;
+  line-height: 1.35;
+}
+
+/* Shown at the top of the form when it cannot send at all, before anyone starts writing. */
+.hj-notice {
+  background: rgba(48, 46, 41, 0.07);
+  color: var(--hj-ink);
+}
+
+/* The one solid button on the page. */
+.hj-send {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  margin: 2px 0 0;
+  padding: 0 20px;
+  border: 1.5px solid var(--hj-ink);
+  border-radius: 6px;
+  background: var(--hj-ink);
+  color: var(--hj-mat);
+  font: inherit;
+  font-size: 16.5px;
+  font-weight: 600;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-appearance: none;
+  appearance: none;
+  transition:
+    transform 140ms var(--hj-ease-out),
+    background-color 140ms ease;
+}
+
+.hj-send:active {
+  transform: scale(0.98);
+}
+
+.hj-send[aria-disabled='true'] {
+  border-color: transparent;
+  background: #8b867b;
+  cursor: default;
+}
+
+.hj-send[aria-disabled='true']:active {
+  transform: none;
+}
+
+.hj-send.is-sending {
+  cursor: progress;
+}
+
+/* Three dots after "Sending": the only sign of waiting the button needs. */
+.hj-send.is-sending .hj-send-label::after {
+  content: '...';
+  display: inline-block;
+  width: 1.2em;
+  text-align: left;
+  animation: hj-dots 1s steps(4, jump-none) infinite;
+  clip-path: inset(0 100% 0 0);
+}
+
+@keyframes hj-dots {
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.hj-close:focus-visible,
+.hj-send:focus-visible {
+  outline: 2px solid var(--hj-ink);
+  outline-offset: 2px;
+}
+
+.hj-sent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0 0;
+  text-align: center;
+  animation: hj-sent-in 240ms var(--hj-ease-out) both;
+}
+
+@keyframes hj-sent-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+/* The hunt's own mushroom with a small tick: found, and sent. */
+.hj-sent-mark {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  margin-bottom: 8px;
+  border: 1px solid var(--hj-line);
+  border-radius: 50%;
+  background: #fff;
+}
+
+.hj-sent-mark > svg {
+  width: 40px;
+  height: 40px;
+  overflow: visible;
+}
+
+.hj-sent-tick {
+  position: absolute;
+  right: -5px;
+  bottom: -3px;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 2px solid var(--hj-mat);
+  border-radius: 50%;
+  background: var(--hj-mustard);
+}
+
+.hj-sent-tick svg {
+  width: 13px;
+  height: 13px;
+  fill: none;
+  stroke: var(--hj-ink);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.hj-sent h3 {
+  margin: 0;
+  font-family: var(--hj-serif);
+  font-size: 25px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.hj-sent p {
+  margin: 0;
+  color: var(--hj-ink-soft);
+  font-size: 16px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.hj-sent .hj-dev-note {
+  margin-top: 6px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  background: rgba(48, 46, 41, 0.07);
+  font-size: 14px;
+}
+
+.hj-sent .hj-send {
+  margin-top: 16px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hj-close:hover {
+    background: rgba(48, 46, 41, 0.07);
+    color: var(--hj-ink);
+  }
+
+  .hj-chip:hover span {
+    border-color: var(--hj-ink);
+  }
+
+  .hj-send:not([aria-disabled='true']):hover {
+    background: #47443d;
+  }
+}
+
+/* Phones: the sheet rises from the bottom edge. */
+@media (max-width: 600px) {
+  .hj-dialog,
+  .hj-dialog.is-centred {
+    inset: auto 0 0 0;
+    width: 100%;
+    height: auto;
+    max-height: calc(100dvh - 28px);
+    margin: 0;
+    transform-origin: 50% 100%;
+    opacity: 1;
+    transform: translateY(100%);
+    transition: transform 240ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  .hj-dialog.is-open {
+    transform: none;
+    transition: transform 420ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  .hj-sheet {
+    border-width: 1px 0 0;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .hj-sheet-head {
+    padding: 0 18px 14px;
+  }
+
+  .hj-sheet-body {
+    padding: 2px 18px calc(20px + env(safe-area-inset-bottom));
+  }
+}
+
+/* ---------- Phones: a tall crop of the room inside a thin mat, panned sideways ---------- */
+
+/* The one-time swipe hint lives in the caption, never over the picture. */
+.hj-swipe {
+  display: none;
+}
+
+@media (orientation: portrait) {
+  @container (max-width: 600px) {
+    .hj-page {
+      --page-margin: 18px;
+      --logo-w: clamp(120px, 33cqw, 140px);
+      --pad-top: 14px;
+      --pad-bottom: 18px;
+      --gap-head: 12px;
+      --gap-caption: 8px;
+      /* Count, note and controls, stacked. */
+      --caption-h: 104px;
+      /* The width of the window onto the room. */
+      --win-w: calc(100cqw - 2 * var(--page-margin));
+      width: auto;
+      margin: 0 var(--page-margin);
+    }
+
+    .hj-masthead {
+      flex-wrap: wrap;
+      gap: 0 14px;
+    }
+
+    /* The name stays beside the logo; its text wraps inside its own column. */
+    .hj-ident {
+      flex: 1 1 0;
+    }
+
+    /* The menu takes its own row under the identity, and stays on one row. */
+    .hj-menu {
+      flex: 0 0 100%;
+      gap: 26px;
+      margin: 2px 0 -4px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .hj-tab {
+      flex: none;
+    }
+
+    .hj-page:has(.hj-menu) {
+      --menu-h: 42px;
+    }
+
+    .hj-tagline {
+      font-size: 14.5px;
+      line-height: 1.3;
+    }
+
+    /* As tall as the screen allows, from 4:5 up to 2:3. A native scroller: the browser follows the finger
+       sideways, adds momentum and eases into the edges. Up-and-down swipes are left to the page. */
+    .hj-viewport {
+      width: 100%;
+      height: clamp(calc(var(--win-w) * 1.25), calc(100svh - var(--chrome)), calc(var(--win-w) * 1.5));
+      aspect-ratio: auto;
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-x: contain;
+      touch-action: pan-x pan-y;
+      scrollbar-width: none;
+    }
+
+    .hj-viewport::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* The window's own sides: a very narrow fade into the paper, so the crop does not look cut. It belongs
+       to the window, not the room: the plate's real soft edge shows when the visitor pans to either end,
+       and along the top and the bottom. */
+    .hj-window::before,
+    .hj-window::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      z-index: 3;
+      width: 12px;
+      pointer-events: none;
+    }
+
+    .hj-window::before {
+      left: 0;
+      background: linear-gradient(90deg, var(--hj-paper), rgba(246, 243, 236, 0));
+    }
+
+    .hj-window::after {
+      right: 0;
+      background: linear-gradient(270deg, var(--hj-paper), rgba(246, 243, 236, 0));
+    }
+
+    .hj-viewport.is-dragging {
+      cursor: grabbing;
+    }
+
+    .hj-caption {
+      position: relative;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      align-items: stretch;
+      justify-content: flex-start;
+      gap: 0;
+    }
+
+    .hj-caption-main {
+      flex-direction: column;
+      flex-wrap: nowrap;
+      align-items: flex-start;
+      gap: 2px;
+      min-height: 56px;
+      padding-top: 4px;
+    }
+
+    .hj-tally {
+      min-height: 28px;
+    }
+
+    .hj-controls {
+      justify-content: start;
+      justify-items: start;
+      gap: 0 26px;
+      margin-left: 0;
+    }
+
+    .hj-controls > :nth-child(1) {
+      grid-area: 1 / 1;
+    }
+
+    .hj-swipe {
+      position: absolute;
+      top: 4px;
+      right: 0;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      height: 28px;
+      margin: 0;
+      color: var(--hj-ink-soft);
+      font-size: 14px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 200ms linear;
+    }
+
+    .hj-swipe.is-on {
+      opacity: 1;
+      transition: opacity 300ms linear 400ms;
+    }
+
+    .hj-swipe svg {
+      display: block;
+      width: 7px;
+      height: 12px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .hj-swipe svg.is-right {
+      transform: scaleX(-1);
+    }
+  }
+}
+
+/* ---------- Large monitors: the identity and the caption grow with the picture ---------- */
+
+@container (min-width: 1800px) {
+  .hj-page {
+    --logo-w: 12cqw;
+    --caption-h: 52px;
+  }
+
+  .hj-caption {
+    font-size: 19px;
+  }
+
+  .hj-note {
+    font-size: 18px;
+  }
+
+  .hj-link {
+    font-size: 17px;
+  }
+
+  .hj-tally-icon,
+  .hj-contact svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hj-logo,
+  .hj-note {
+    transition: none;
+  }
+
+  /* Pressed controls change colour, not size. */
+  .hj-contact:active,
+  .hj-close:active,
+  .hj-send:active,
+  .hj-chip input:active + span {
+    transform: none;
+  }
+
+  /* The sheet fades; it does not slide or scale. */
+  .hj-dialog,
+  .hj-dialog.is-open {
+    transform: none;
+    transition: opacity 200ms ease;
+  }
+
+  .hj-dialog {
+    opacity: 0;
+  }
+
+  .hj-dialog.is-open {
+    opacity: 1;
+  }
+
+  .hj-sent {
+    animation-name: hj-fade-in;
+  }
+
+  .hj-send.is-sending .hj-send-label::after {
+    animation: none;
+    clip-path: none;
+  }
+}
+
+@keyframes hj-fade-in {
+  from {
+    opacity: 0;
+  }
+}

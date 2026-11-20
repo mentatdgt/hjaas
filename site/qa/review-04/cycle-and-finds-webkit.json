@@ -1,0 +1,189 @@
+{
+ "iphone-webkit-with-window": {
+  "routine": {
+   "watchedS": 34.3,
+   "frames": 2051,
+   "longestFrameMs": 116,
+   "over50": [
+    "116 ms during write_loop#2, 15.2 s after the page opened"
+   ],
+   "over33": 1,
+   "framesSheHadToSkip": 0
+  },
+  "finds": [
+   {
+    "spot": "pipe",
+    "from": "A1_mist_aim",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 68,
+    "longestFrameAtTheLandingMs": 40,
+    "longestFrameInAllMs": 68,
+    "over50": [
+     "68 ms, -51 ms after the click"
+    ]
+   },
+   {
+    "spot": "switch-box",
+    "from": "A2_mist_squeeze",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 18,
+    "longestFrameAtTheLandingMs": 18,
+    "longestFrameInAllMs": 19,
+    "over50": []
+   },
+   {
+    "spot": "door",
+    "from": "mist_to_write#12",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 19,
+    "longestFrameAtTheLandingMs": 39,
+    "longestFrameInAllMs": 39,
+    "over50": []
+   },
+   {
+    "spot": "rack",
+    "from": "write_loop#6",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 37,
+    "longestFrameAtTheLandingMs": 43,
+    "longestFrameInAllMs": 43,
+    "over50": []
+   },
+   {
+    "spot": "drain",
+    "from": "mist_to_write#20",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 52,
+    "longestFrameAtTheLandingMs": 29,
+    "longestFrameInAllMs": 52,
+    "over50": [
+     "52 ms, -33 ms after the click"
+    ]
+   }
+  ],
+  "framesSheHadToSkip": 0,
+  "errors": []
+ },
+ "iphone-webkit": {
+  "routine": {
+   "watchedS": 34.3,
+   "frames": 2057,
+   "longestFrameMs": 20,
+   "over50": [],
+   "over33": 0,
+   "framesSheHadToSkip": 0
+  },
+  "finds": [
+   {
+    "spot": "pipe",
+    "from": "A1_mist_aim",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 60,
+    "longestFrameAtTheLandingMs": 39,
+    "longestFrameInAllMs": 60,
+    "over50": [
+     "60 ms, -41 ms after the click"
+    ]
+   },
+   {
+    "spot": "switch-box",
+    "from": "A2_mist_squeeze",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 18,
+    "longestFrameAtTheLandingMs": 18,
+    "longestFrameInAllMs": 19,
+    "over50": []
+   },
+   {
+    "spot": "door",
+    "from": "mist_to_write#12",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 18,
+    "longestFrameAtTheLandingMs": 18,
+    "longestFrameInAllMs": 19,
+    "over50": []
+   },
+   {
+    "spot": "rack",
+    "from": "write_loop#6",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 37,
+    "longestFrameAtTheLandingMs": 45,
+    "longestFrameInAllMs": 45,
+    "over50": []
+   },
+   {
+    "spot": "drain",
+    "from": "mist_to_write#20",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 49,
+    "longestFrameAtTheLandingMs": 44,
+    "longestFrameInAllMs": 49,
+    "over50": []
+   }
+  ],
+  "framesSheHadToSkip": 0,
+  "errors": []
+ },
+ "desktop-webkit-with-window": {
+  "routine": {
+   "watchedS": 34.3,
+   "frames": 2050,
+   "longestFrameMs": 100,
+   "over50": [
+    "100 ms during write_loop#1, 15.2 s after the page opened"
+   ],
+   "over33": 1,
+   "framesSheHadToSkip": 0
+  },
+  "finds": [
+   {
+    "spot": "pipe",
+    "from": "A1_mist_aim",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 35,
+    "longestFrameAtTheLandingMs": 33,
+    "longestFrameInAllMs": 35,
+    "over50": []
+   },
+   {
+    "spot": "switch-box",
+    "from": "A2_mist_squeeze",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 18,
+    "longestFrameAtTheLandingMs": 18,
+    "longestFrameInAllMs": 21,
+    "over50": []
+   },
+   {
+    "spot": "door",
+    "from": "mist_to_write#12",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 17,
+    "longestFrameAtTheLandingMs": 18,
+    "longestFrameInAllMs": 19,
+    "over50": []
+   },
+   {
+    "spot": "rack",
+    "from": "write_loop#6",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 23,
+    "longestFrameAtTheLandingMs": 36,
+    "longestFrameInAllMs": 36,
+    "over50": []
+   },
+   {
+    "spot": "drain",
+    "from": "mist_to_write#20",
+    "fullReaction": true,
+    "longestFrameAtTheTapMs": 21,
+    "longestFrameAtTheLandingMs": 28,
+    "longestFrameInAllMs": 28,
+    "over50": []
+   }
+  ],
+  "framesSheHadToSkip": 0,
+  "errors": []
+ }
+}

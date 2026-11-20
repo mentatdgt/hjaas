@@ -1,0 +1,1068 @@
+{
+ "build": {
+  "rachelCovers": [
+   610,
+   400,
+   1198,
+   868
+  ],
+  "firstClean": null,
+  "rows": [
+   {
+    "n": 0,
+    "failed": [
+     "screed -10",
+     "tiles -13",
+     "toolbox -24"
+    ],
+    "overlap": "ladder-foot/toolbox",
+    "rachelLowest": 1
+   },
+   {
+    "n": 1,
+    "failed": [
+     "tiles -18",
+     "toolbox -4"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 2,
+    "failed": [
+     "screed -33",
+     "tiles -28",
+     "toolbox -26"
+    ],
+    "overlap": "ladder-foot/toolbox",
+    "rachelLowest": 1
+   },
+   {
+    "n": 3,
+    "failed": [
+     "screed -27",
+     "tiles -21"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 4,
+    "failed": [
+     "screed -28",
+     "tiles -31",
+     "toolbox -11"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 5,
+    "failed": [
+     "screed -5",
+     "tiles -10",
+     "toolbox -14"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 6,
+    "failed": [
+     "screed -34",
+     "tiles -22",
+     "toolbox -20"
+    ],
+    "overlap": "ladder-foot/toolbox",
+    "rachelLowest": 1
+   },
+   {
+    "n": 7,
+    "failed": [
+     "screed -14",
+     "tiles -18",
+     "toolbox -17"
+    ],
+    "overlap": "ladder-foot/toolbox",
+    "rachelLowest": 1
+   },
+   {
+    "n": 8,
+    "failed": [
+     "screed -37",
+     "tiles -23",
+     "toolbox -21"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 9,
+    "failed": [
+     "screed -43",
+     "tiles -23",
+     "toolbox -5"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 10,
+    "failed": [
+     "screed -30",
+     "tiles -26",
+     "toolbox -7"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 11,
+    "failed": [
+     "screed -20",
+     "tiles -23"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 12,
+    "failed": [
+     "screed -31",
+     "tiles -49",
+     "toolbox -53"
+    ],
+    "overlap": "ladder-foot/toolbox",
+    "rachelLowest": 1
+   },
+   {
+    "n": 13,
+    "failed": [
+     "screed -25",
+     "tiles -11",
+     "toolbox -3"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 14,
+    "failed": [
+     "screed -32",
+     "tiles -15",
+     "toolbox -12"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 15,
+    "failed": [
+     "screed -8",
+     "tiles -14",
+     "toolbox -17"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 16,
+    "failed": [
+     "screed -24",
+     "tiles -34",
+     "toolbox -16"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 17,
+    "failed": [
+     "screed -21",
+     "tiles -9",
+     "toolbox -10"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 18,
+    "failed": [
+     "screed -13",
+     "tiles -9",
+     "toolbox -22"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 19,
+    "failed": [
+     "screed -14",
+     "tiles -47",
+     "toolbox -13"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 20,
+    "failed": [
+     "screed -20",
+     "tiles -12",
+     "toolbox -9"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 21,
+    "failed": [
+     "screed -23",
+     "tiles -23",
+     "toolbox -7"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 22,
+    "failed": [
+     "screed -13",
+     "tiles -7",
+     "toolbox -4"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 23,
+    "failed": [
+     "screed -39",
+     "tiles -31",
+     "toolbox -4"
+    ],
+    "overlap": "ladder-foot/toolbox",
+    "rachelLowest": 1
+   },
+   {
+    "n": 24,
+    "failed": [
+     "screed -15",
+     "tiles -28",
+     "toolbox -2"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 25,
+    "failed": [
+     "screed -38",
+     "tiles -24",
+     "toolbox -36"
+    ],
+    "overlap": "ladder-foot/toolbox",
+    "rachelLowest": 1
+   },
+   {
+    "n": 26,
+    "failed": [
+     "screed -30",
+     "tiles -26",
+     "toolbox -15"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 27,
+    "failed": [
+     "screed -22",
+     "tiles -16",
+     "toolbox -10"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 28,
+    "failed": [
+     "screed -15",
+     "tiles -14",
+     "toolbox -7"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 29,
+    "failed": [
+     "screed -20",
+     "tiles -20",
+     "toolbox -7"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 30,
+    "failed": [
+     "screed -17",
+     "tiles -15"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 31,
+    "failed": [
+     "screed -6",
+     "tiles -11",
+     "toolbox -16"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 32,
+    "failed": [
+     "screed -31",
+     "tiles -23",
+     "toolbox -25"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 33,
+    "failed": [
+     "tiles -20",
+     "toolbox -14"
+    ],
+    "overlap": "ladder-foot/toolbox",
+    "rachelLowest": 1
+   },
+   {
+    "n": 34,
+    "failed": [
+     "screed -26",
+     "tiles (more than 60)",
+     "toolbox -12"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 35,
+    "failed": [
+     "screed -35",
+     "tiles -34",
+     "toolbox -2"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 36,
+    "failed": [
+     "screed -43",
+     "tiles -17",
+     "toolbox -14"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 37,
+    "failed": [
+     "screed -49",
+     "tiles -31",
+     "toolbox -18"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 38,
+    "failed": [
+     "screed -9",
+     "tiles -23",
+     "toolbox -4"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 39,
+    "failed": [
+     "screed -16",
+     "toolbox -6"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 40,
+    "failed": [
+     "screed -26",
+     "tiles -4",
+     "toolbox -29"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 41,
+    "failed": [
+     "screed -29",
+     "tiles -28",
+     "toolbox -28"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 42,
+    "failed": [
+     "screed -32",
+     "tiles -27"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 43,
+    "failed": [
+     "screed -16",
+     "tiles -9",
+     "toolbox -6"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 44,
+    "failed": [
+     "screed -19",
+     "tiles -42",
+     "toolbox -3"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 45,
+    "failed": [
+     "screed -26",
+     "tiles -10",
+     "toolbox -17"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 46,
+    "failed": [
+     "screed -31",
+     "tiles -17",
+     "toolbox -39"
+    ],
+    "overlap": "ladder-foot/toolbox",
+    "rachelLowest": 1
+   },
+   {
+    "n": 47,
+    "failed": [
+     "screed -31",
+     "tiles -26",
+     "toolbox -7"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 48,
+    "failed": [
+     "screed -33",
+     "tiles -38",
+     "toolbox -26"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 49,
+    "failed": [
+     "screed -21",
+     "tiles -23",
+     "toolbox -24"
+    ],
+    "overlap": "ladder-foot/toolbox",
+    "rachelLowest": 1
+   },
+   {
+    "n": 50,
+    "failed": [
+     "screed -25",
+     "tiles -17",
+     "toolbox -27"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 51,
+    "failed": [
+     "screed -17",
+     "tiles -29",
+     "toolbox -28"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 52,
+    "failed": [
+     "screed -19",
+     "tiles -7",
+     "toolbox -14"
+    ],
+    "overlap": "ladder-foot/toolbox",
+    "rachelLowest": 1
+   },
+   {
+    "n": 53,
+    "failed": [
+     "screed -19",
+     "tiles -35",
+     "toolbox -13"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 54,
+    "failed": [
+     "screed -30",
+     "tiles -3",
+     "toolbox -32"
+    ],
+    "overlap": "ladder-foot/toolbox",
+    "rachelLowest": 1
+   },
+   {
+    "n": 55,
+    "failed": [
+     "screed -19",
+     "tiles -15",
+     "toolbox -11"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 56,
+    "failed": [
+     "screed -37",
+     "tiles -25",
+     "toolbox -7"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 57,
+    "failed": [
+     "screed -14",
+     "tiles -25",
+     "toolbox -13"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 58,
+    "failed": [
+     "screed -13",
+     "tiles -24",
+     "toolbox -17"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 59,
+    "failed": [
+     "screed -40",
+     "tiles -9",
+     "toolbox -4"
+    ],
+    "overlap": false,
+    "rachelLowest": 0.997
+   },
+   {
+    "n": 60,
+    "failed": [
+     "screed -24",
+     "tiles -5",
+     "toolbox -3"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 61,
+    "failed": [
+     "screed -23",
+     "tiles -29",
+     "toolbox -1"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 62,
+    "failed": [
+     "screed -5",
+     "tiles -17",
+     "toolbox -8"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 63,
+    "failed": [
+     "screed -30",
+     "tiles -39",
+     "toolbox -4"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   }
+  ]
+ },
+ "grow": {
+  "rachelCovers": [
+   700,
+   230,
+   1144,
+   878
+  ],
+  "firstClean": 0,
+  "rows": [
+   {
+    "n": 0,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 1,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 2,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 3,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 4,
+    "failed": [
+     "pipe 21"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 5,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 6,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 7,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 8,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 9,
+    "failed": [
+     "pipe 11"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 10,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 11,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 12,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 13,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 14,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 15,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 16,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 17,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 0.998
+   },
+   {
+    "n": 18,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 19,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 20,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 21,
+    "failed": [
+     "pipe 1"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 22,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 23,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 24,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 25,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 26,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 0.988
+   },
+   {
+    "n": 27,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 28,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 29,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 30,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 31,
+    "failed": [
+     "pipe 2"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 32,
+    "failed": [],
+    "overlap": "door/bench",
+    "rachelLowest": 1
+   },
+   {
+    "n": 33,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 34,
+    "failed": [
+     "door -3"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 35,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 36,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 37,
+    "failed": [
+     "pipe 7"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 38,
+    "failed": [
+     "pipe 44"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 39,
+    "failed": [
+     "door (more than 60)"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 40,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 41,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 42,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 43,
+    "failed": [],
+    "overlap": "door/bench",
+    "rachelLowest": 1
+   },
+   {
+    "n": 44,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 45,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 46,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 47,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 48,
+    "failed": [
+     "door (more than 60)"
+    ],
+    "overlap": "door/bench",
+    "rachelLowest": 1
+   },
+   {
+    "n": 49,
+    "failed": [
+     "door (more than 60)",
+     "pipe 9"
+    ],
+    "overlap": "door/bench",
+    "rachelLowest": 1
+   },
+   {
+    "n": 50,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 51,
+    "failed": [
+     "pipe 14"
+    ],
+    "overlap": false,
+    "rachelLowest": 0.994
+   },
+   {
+    "n": 52,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 53,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 0.992
+   },
+   {
+    "n": 54,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 55,
+    "failed": [
+     "pipe 8"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 56,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 57,
+    "failed": [],
+    "overlap": "door/bench",
+    "rachelLowest": 1
+   },
+   {
+    "n": 58,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 59,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 60,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 61,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 62,
+    "failed": [
+     "pipe 22"
+    ],
+    "overlap": false,
+    "rachelLowest": 1
+   },
+   {
+    "n": 63,
+    "failed": [],
+    "overlap": false,
+    "rachelLowest": 1
+   }
+  ]
+ }
+}

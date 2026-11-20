@@ -1,0 +1,173 @@
+{
+ "return visitor (the short brush)": {
+  "Build only": {
+   "peakMB": 63,
+   "at": "build, pose reaction/rx_A24.png",
+   "partsMB": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "build.frames": 47.3,
+    "build.canvases": 4.7,
+    "build.room": 6.3,
+    "build.edge": 1.6,
+    "grow.edge": 1.6
+   },
+   "set": 860,
+   "fullReactions": [
+    true,
+    true
+   ]
+  },
+  "Build, then Grow": {
+   "peakMB": 78,
+   "at": "grow, pose mist_to_write#3",
+   "partsMB": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "build.frames": 2.4,
+    "build.edge": 1.6,
+    "grow.frames": 61.6,
+    "grow.canvases": 3,
+    "grow.room": 6.3,
+    "grow.edge": 1.6
+   },
+   "set": 735,
+   "fullReaction": true,
+   "framesSheHadToSkip": 0,
+   "errors": []
+  },
+  "Grow only": {
+   "peakMB": 75.6,
+   "at": "grow, pose mist_to_write#3",
+   "partsMB": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "grow.frames": 61.6,
+    "grow.canvases": 3,
+    "grow.room": 6.3,
+    "grow.edge": 1.6,
+    "build.edge": 1.6
+   }
+  },
+  "Grow, then Build": {
+   "peakMB": 70.8,
+   "at": "build, during a painting or a switch, pose -",
+   "partsMB": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "sheet": 3,
+    "grow.frames": 47.4,
+    "grow.canvases": 3,
+    "grow.room": 6.3,
+    "grow.edge": 1.6,
+    "build.room": 6.3,
+    "build.edge": 1.6
+   },
+   "set": 860,
+   "fullReaction": true,
+   "errors": []
+  },
+  "Grow, then Build, then Grow again": {
+   "peakMB": 78,
+   "at": "grow, pose mist_to_write#3",
+   "partsMB": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "grow.frames": 61.6,
+    "grow.canvases": 3,
+    "grow.room": 6.3,
+    "grow.edge": 1.6,
+    "build.frames": 2.4,
+    "build.edge": 1.6
+   },
+   "framesSheHadToSkipAfterComingBack": 0,
+   "errors": []
+  }
+ },
+ "new visitor (full paintings)": {
+  "Build only": {
+   "peakMB": 67.4,
+   "at": "build, pose frame_02",
+   "partsMB": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "sheet": 4.4,
+    "build.frames": 47.3,
+    "build.canvases": 4.7,
+    "build.room": 6.3,
+    "build.edge": 1.6,
+    "grow.edge": 1.6
+   },
+   "set": 860,
+   "fullReactions": [
+    true,
+    true
+   ]
+  },
+  "Build, then Grow": {
+   "peakMB": 78,
+   "at": "grow, pose mist_to_write#3",
+   "partsMB": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "build.frames": 2.4,
+    "build.edge": 1.6,
+    "grow.frames": 61.6,
+    "grow.canvases": 3,
+    "grow.room": 6.3,
+    "grow.edge": 1.6
+   },
+   "set": 735,
+   "fullReaction": true,
+   "framesSheHadToSkip": 0,
+   "errors": []
+  },
+  "Grow only": {
+   "peakMB": 75.6,
+   "at": "grow, pose mist_to_write#3",
+   "partsMB": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "grow.frames": 61.6,
+    "grow.canvases": 3,
+    "grow.room": 6.3,
+    "grow.edge": 1.6,
+    "build.edge": 1.6
+   }
+  },
+  "Grow, then Build": {
+   "peakMB": 72.2,
+   "at": "build, during a painting or a switch, pose -",
+   "partsMB": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "sheet": 4.4,
+    "grow.frames": 47.4,
+    "grow.canvases": 3,
+    "grow.room": 6.3,
+    "grow.edge": 1.6,
+    "build.room": 6.3,
+    "build.edge": 1.6
+   },
+   "set": 860,
+   "fullReaction": true,
+   "errors": []
+  },
+  "Grow, then Build, then Grow again": {
+   "peakMB": 78,
+   "at": "grow, pose mist_to_write#3",
+   "partsMB": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "grow.frames": 61.6,
+    "grow.canvases": 3,
+    "grow.room": 6.3,
+    "grow.edge": 1.6,
+    "build.frames": 2.4,
+    "build.edge": 1.6
+   },
+   "framesSheHadToSkipAfterComingBack": 0,
+   "errors": []
+  }
+ }
+}

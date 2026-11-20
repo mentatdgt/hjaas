@@ -1,0 +1,20 @@
+{
+ "1.5x": {
+  "canvas": [
+   860,
+   687
+  ],
+  "cssWidth": 343.4,
+  "artWidth": 860,
+  "pose": "frame_01"
+ },
+ "2x": {
+  "canvas": [
+   1032,
+   825
+  ],
+  "cssWidth": 343.7,
+  "artWidth": 1146,
+  "pose": "frame_01"
+ }
+}

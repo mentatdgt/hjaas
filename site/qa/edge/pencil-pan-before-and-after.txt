@@ -1,0 +1,9 @@
+Panning in WebKit (iPhone 14 profile, 390 x 844), the room panned end to end three times per run, both scenes.
+node qa/tools/pencil.mjs pan            (the pencil edge: four canvases along the plate's sides)
+HJ_EDGE=organic node qa/tools/pencil.mjs pan   (the edge before: one canvas over the plate)
+Alternated: pencil, organic, pencil, organic. Longest frame in ms; none of the 24 pans had a frame over 50 ms.
+
+pencil   build 22 20 23   grow 20 19 19
+organic  build 19 23 19   grow 19 19 19
+pencil   build 22 21 19   grow 23 19 28
+organic  build 19 21 19   grow 27 26 32

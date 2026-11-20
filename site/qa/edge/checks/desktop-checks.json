@@ -1,0 +1,145 @@
+{
+ "skip": {
+  "linksAtStart": [
+   "Skip"
+  ],
+  "during": {
+   "caption": "0",
+   "rachel": "0",
+   "mushroomsFindable": false,
+   "paperSheets": 1,
+   "count": "0 of 10 found"
+  },
+  "mushroomsHiddenWhileUnpainted": true,
+  "after80ms": {
+   "caption": "1",
+   "rachel": "1",
+   "mushroomsFindable": true,
+   "paperSheets": 1,
+   "count": "0 of 10 found"
+  },
+  "linksAfter": [
+   "Pause animation",
+   "Replay painting"
+  ],
+  "findRightAfterSkip": "1 of 10 found",
+  "errors": []
+ },
+ "replay": {
+  "replaying": {
+   "caption": "1",
+   "rachel": "0",
+   "mushroomsFindable": false,
+   "paperSheets": 1,
+   "count": "1 of 10 found",
+   "links": [
+    "Skip"
+   ]
+  },
+  "replayed": {
+   "caption": "1",
+   "rachel": "1",
+   "mushroomsFindable": true,
+   "paperSheets": 1,
+   "count": "1 of 10 found",
+   "links": [
+    "Pause animation",
+    "Replay painting"
+   ]
+  },
+  "errors": []
+ },
+ "returnVisit": {
+  "firstVisitPainted": true,
+  "secondVisit": {
+   "caption": "1",
+   "rachel": "1",
+   "mushroomsFindable": true,
+   "paperSheets": 0,
+   "count": "2 of 10 found"
+  },
+  "revealMs": 200,
+  "framesInBetween": 12,
+  "panBefore": 40,
+  "panAfter": 40,
+  "links": [
+   "Pause animation",
+   "Replay painting"
+  ],
+  "swipeHintShownAgain": 0
+ },
+ "pause": {
+  "posesBefore": [
+   "frame_02",
+   "frame_01",
+   "frame_03",
+   "frame_04",
+   "blink_half",
+   "blink_closed"
+  ],
+  "posesWhilePaused": [
+   "frame_01"
+  ],
+  "linksWhilePaused": [
+   "Play animation",
+   "Replay painting"
+  ],
+  "posesOnFindWhilePaused": [
+   "reaction/rx_K2.png",
+   "frame_01"
+  ],
+  "posesAfterPlay": [
+   "frame_01",
+   "frame_02",
+   "frame_03",
+   "frame_04",
+   "blink_half",
+   "blink_closed"
+  ],
+  "errors": []
+ },
+ "reducedMotion": {
+  "first": {
+   "caption": "1",
+   "rachel": "1",
+   "mushroomsFindable": true,
+   "paperSheets": 0,
+   "count": "0 of 10 found",
+   "links": []
+  },
+  "posesBeforeAnyFind": [
+   "frame_01"
+  ],
+  "countRightAfterClick": "1 of 10 found",
+  "flyerTransforms": [
+   "none"
+  ],
+  "poseDuringFind": "reaction/rx_K2.png",
+  "poseAfter": "frame_01",
+  "logoGlintPixels": 0,
+  "errors": []
+ },
+ "cursorAndKeyboard": {
+  "mushroom": "auto",
+  "room": "auto",
+  "titles": 0,
+  "hoverChangesPixels": false,
+  "tabOrder": [
+   "Replay painting",
+   "page",
+   "logo",
+   "Build",
+   "Grow",
+   "sill",
+   "drape",
+   "skirting",
+   "screed",
+   "tiles",
+   "conduit",
+   "socket",
+   "ladder-foot",
+   "ladder-step"
+  ],
+  "errors": []
+ }
+}

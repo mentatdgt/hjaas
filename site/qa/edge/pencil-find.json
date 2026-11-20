@@ -1,0 +1,53 @@
+[
+ {
+  "browser": "chrome, 1440 × 900",
+  "build": {
+   "mushrooms": 10,
+   "found": 10,
+   "missed": [],
+   "leftOnThePage": 0
+  },
+  "grow": {
+   "mushrooms": 10,
+   "found": 10,
+   "missed": [],
+   "leftOnThePage": 0
+  },
+  "errors": [],
+  "ok": true
+ },
+ {
+  "browser": "webkit, iPhone 14 profile",
+  "build": {
+   "mushrooms": 10,
+   "found": 10,
+   "missed": [],
+   "leftOnThePage": 0
+  },
+  "grow": {
+   "mushrooms": 10,
+   "found": 10,
+   "missed": [],
+   "leftOnThePage": 0
+  },
+  "errors": [],
+  "ok": true
+ },
+ {
+  "browser": "webkit, 320 × 640 phone",
+  "build": {
+   "mushrooms": 10,
+   "found": 10,
+   "missed": [],
+   "leftOnThePage": 0
+  },
+  "grow": {
+   "mushrooms": 10,
+   "found": 10,
+   "missed": [],
+   "leftOnThePage": 0
+  },
+  "errors": [],
+  "ok": true
+ }
+]

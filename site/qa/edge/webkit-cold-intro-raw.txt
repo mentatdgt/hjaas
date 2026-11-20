@@ -1,0 +1,25 @@
+# WebKit cold load with the watercolour edge and scene 2's frames. Production build (npm run preview), Playwright WebKit headless, this Mac.
+# Each run is a new browser and context: no HTTP cache, no saved progress, so the first-visit painting plays.
+# endGap: longest frame from 4.0 s after the brush's sheet enters the page to 1 s after the painting ends.
+
+## The end of the intro, iPhone 13 profile, 10 runs
+run 1: {"endGap":27,"endGapAt":5067,"fullGap":88,"over50":1,"slow":["88ms@-87"],"loopGap":24,"loop50":0,"roomReq":94,"roomDone":106,"brush":345,"introMs":4918}
+run 2: {"endGap":33,"endGapAt":5869,"fullGap":101,"over50":1,"slow":["101ms@-100"],"loopGap":37,"loop50":0,"roomReq":68,"roomDone":80,"brush":303,"introMs":4921}
+run 3: {"endGap":30,"endGapAt":5717,"fullGap":56,"over50":1,"slow":["56ms@-55"],"loopGap":30,"loop50":0,"roomReq":56,"roomDone":64,"brush":298,"introMs":4917}
+run 4: {"endGap":32,"endGapAt":5004,"fullGap":38,"over50":0,"slow":[],"loopGap":35,"loop50":0,"roomReq":68,"roomDone":85,"brush":304,"introMs":4921}
+run 5: {"endGap":31,"endGapAt":5885,"fullGap":38,"over50":0,"slow":[],"loopGap":31,"loop50":0,"roomReq":91,"roomDone":105,"brush":325,"introMs":4917}
+run 6: {"endGap":30,"endGapAt":5378,"fullGap":206,"over50":1,"slow":["206ms@-205"],"loopGap":23,"loop50":0,"roomReq":44,"roomDone":53,"brush":240,"introMs":4968}
+run 7: {"endGap":29,"endGapAt":5469,"fullGap":79,"over50":1,"slow":["79ms@-36"],"loopGap":20,"loop50":0,"roomReq":57,"roomDone":65,"brush":278,"introMs":4951}
+run 8: {"endGap":29,"endGapAt":5468,"fullGap":37,"over50":0,"slow":[],"loopGap":24,"loop50":0,"roomReq":103,"roomDone":114,"brush":331,"introMs":4919}
+run 9: {"endGap":29,"endGapAt":5191,"fullGap":56,"over50":1,"slow":["56ms@-55"],"loopGap":25,"loop50":0,"roomReq":72,"roomDone":90,"brush":314,"introMs":4927}
+run 10: {"endGap":30,"endGapAt":5005,"fullGap":71,"over50":1,"slow":["71ms@-32"],"loopGap":23,"loop50":0,"roomReq":53,"roomDone":60,"brush":251,"introMs":4938}
+{"profile":"iphone","load":0,"url":"http://localhost:4173/","endGap":[27,33,30,32,31,30,29,29,29,30],"fullGap":[88,101,56,38,38,206,79,37,56,71],"over50":[1,1,1,0,0,1,1,0,1,1],"loopGap":[24,37,30,35,31,23,20,24,25,23],"loop50":[0,0,0,0,0,0,0,0,0,0],"roomReq":[94,68,56,68,91,44,57,103,72,53],"brush":[345,303,298,304,325,240,278,331,314,251]}
+
+## The end of the intro, desktop 1280 x 760, 5 runs
+run 1: {"endGap":28,"endGapAt":5420,"fullGap":228,"over50":1,"slow":["228ms@-227"],"loopGap":23,"loop50":0,"roomReq":47,"roomDone":55,"brush":266,"introMs":4953}
+run 2: {"endGap":28,"endGapAt":5376,"fullGap":36,"over50":0,"slow":[],"loopGap":20,"loop50":0,"roomReq":89,"roomDone":102,"brush":318,"introMs":4926}
+run 3: {"endGap":29,"endGapAt":5395,"fullGap":53,"over50":1,"slow":["53ms@-52"],"loopGap":25,"loop50":0,"roomReq":58,"roomDone":66,"brush":288,"introMs":4928}
+run 4: {"endGap":28,"endGapAt":5323,"fullGap":72,"over50":1,"slow":["72ms@-71"],"loopGap":24,"loop50":0,"roomReq":52,"roomDone":64,"brush":274,"introMs":4921}
+run 5: {"endGap":30,"endGapAt":5213,"fullGap":45,"over50":0,"slow":[],"loopGap":32,"loop50":0,"roomReq":58,"roomDone":66,"brush":290,"introMs":4913}
+{"profile":"desktop","load":0,"url":"http://localhost:4173/","endGap":[28,28,29,28,30],"fullGap":[228,36,53,72,45],"over50":[1,0,1,1,0],"loopGap":[23,20,25,24,32],"loop50":[0,0,0,0,0],"roomReq":[47,89,58,52,58],"brush":[266,318,288,274,290]}
+machine load averages: 2.69 3.00 3.29

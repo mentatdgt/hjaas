@@ -1,0 +1,100 @@
+# Review 02, item 1: raw output of qa/tools/intro-frames.mjs (Playwright WebKit 27.2, cold load: new browser + new context per run)
+# 4174 = before (site/scene-1 + main), 4173 = after. Production builds via vite preview.
+
+## Main comparison (final script)
+== port 4174 cfg 5 iphone 0
+run 1: {"endGap":40,"endGapAt":2324,"fullGap":40,"over50":0,"slow":[],"roomReq":49,"roomDone":64,"brush":599,"introMs":3251}
+run 2: {"endGap":48,"endGapAt":3245,"fullGap":48,"over50":0,"slow":[],"roomReq":47,"roomDone":65,"brush":613,"introMs":3245}
+run 3: {"endGap":43,"endGapAt":3244,"fullGap":43,"over50":0,"slow":[],"roomReq":44,"roomDone":58,"brush":598,"introMs":3244}
+run 4: {"endGap":42,"endGapAt":3241,"fullGap":42,"over50":0,"slow":[],"roomReq":45,"roomDone":62,"brush":600,"introMs":3241}
+run 5: {"endGap":60,"endGapAt":3240,"fullGap":60,"over50":1,"slow":["60ms@3240"],"roomReq":46,"roomDone":55,"brush":632,"introMs":3240}
+{"profile":"iphone","load":0,"url":"http://localhost:4174/","endGap":[40,48,43,42,60],"fullGap":[40,48,43,42,60],"over50":[0,0,0,0,1],"roomReq":[49,47,44,45,46],"brush":[599,613,598,600,632]}
+== port 4173 cfg 5 iphone 0
+run 1: {"endGap":39,"endGapAt":2320,"fullGap":39,"over50":0,"slow":[],"roomReq":47,"roomDone":57,"brush":646,"introMs":3247}
+run 2: {"endGap":43,"endGapAt":2311,"fullGap":43,"over50":0,"slow":[],"roomReq":54,"roomDone":58,"brush":649,"introMs":3282}
+run 3: {"endGap":43,"endGapAt":2328,"fullGap":43,"over50":0,"slow":[],"roomReq":53,"roomDone":68,"brush":611,"introMs":3266}
+run 4: {"endGap":44,"endGapAt":2334,"fullGap":44,"over50":0,"slow":[],"roomReq":52,"roomDone":60,"brush":633,"introMs":3278}
+run 5: {"endGap":45,"endGapAt":2128,"fullGap":45,"over50":0,"slow":[],"roomReq":48,"roomDone":59,"brush":629,"introMs":3250}
+{"profile":"iphone","load":0,"url":"http://localhost:4173/","endGap":[39,43,43,44,45],"fullGap":[39,43,43,44,45],"over50":[0,0,0,0,0],"roomReq":[47,54,53,52,48],"brush":[646,649,611,633,629]}
+== port 4174 cfg 5 iphone 3
+run 1: {"endGap":106,"endGapAt":3249,"fullGap":106,"over50":15,"slow":["53ms@1742","68ms@1795","90ms@1907","82ms@1997","85ms@2079","71ms@2164","69ms@2235","77ms@2304","89ms@2381","58ms@3035","85ms@3164","106ms@3249","82ms@3355","60ms@3486","61ms@4142"],"roomReq":77,"roomDone":103,"brush":693,"introMs":3355}
+run 2: {"endGap":88,"endGapAt":3248,"fullGap":88,"over50":14,"slow":["53ms@24","85ms@1912","53ms@1997","77ms@2050","71ms@2127","56ms@2198","57ms@2254","77ms@2311","54ms@2811","54ms@3016","88ms@3248","66ms@3687","54ms@3980","72ms@4320"],"roomReq":33,"roomDone":63,"brush":678,"introMs":3336}
+run 3: {"endGap":157,"endGapAt":3240,"fullGap":157,"over50":18,"slow":["56ms@407","91ms@1946","79ms@2037","72ms@2116","62ms@2188","75ms@2250","109ms@2325","52ms@2482","52ms@2652","66ms@2843","73ms@2909","61ms@2982","54ms@3043","64ms@3097","157ms@3240","69ms@3535","58ms@3604","83ms@4354"],"roomReq":87,"roomDone":94,"brush":754,"introMs":3397}
+run 4: {"endGap":146,"endGapAt":3234,"fullGap":146,"over50":19,"slow":["56ms@67","61ms@1757","51ms@1897","92ms@1948","56ms@2040","74ms@2096","51ms@2170","65ms@2221","66ms@2286","101ms@2352","53ms@2816","55ms@2895","146ms@3234","66ms@3380","74ms@3493","65ms@3767","53ms@3832","60ms@4313","56ms@4373"],"roomReq":72,"roomDone":82,"brush":746,"introMs":3380}
+run 5: {"endGap":146,"endGapAt":3233,"fullGap":146,"over50":12,"slow":["71ms@1800","86ms@1915","80ms@2001","69ms@2081","64ms@2150","68ms@2214","77ms@2282","89ms@2359","53ms@2906","51ms@3050","146ms@3233","86ms@4345"],"roomReq":37,"roomDone":44,"brush":772,"introMs":3379}
+{"profile":"iphone","load":3,"url":"http://localhost:4174/","endGap":[106,88,157,146,146],"fullGap":[106,88,157,146,146],"over50":[15,14,18,19,12],"roomReq":[77,33,87,72,37],"brush":[693,678,754,746,772]}
+== port 4173 cfg 5 iphone 3
+run 1: {"endGap":104,"endGapAt":2314,"fullGap":104,"over50":19,"slow":["91ms@1936","70ms@2027","89ms@2097","62ms@2186","66ms@2248","104ms@2314","68ms@2746","63ms@2814","56ms@2877","85ms@2933","58ms@3056","54ms@3260","56ms@3314","72ms@3433","58ms@3555","58ms@3613","75ms@3713","85ms@3788","52ms@3873"],"roomReq":64,"roomDone":68,"brush":750,"introMs":3260}
+run 2: {"endGap":111,"endGapAt":2346,"fullGap":111,"over50":16,"slow":["55ms@1702","83ms@1907","82ms@1990","69ms@2072","66ms@2141","61ms@2207","78ms@2268","111ms@2346","54ms@2662","69ms@2911","62ms@3023","61ms@3264","70ms@3325","74ms@3395","99ms@3469","61ms@3959"],"roomReq":69,"roomDone":74,"brush":748,"introMs":3264}
+run 3: {"endGap":114,"endGapAt":2319,"fullGap":114,"over50":23,"slow":["52ms@1774","95ms@1909","76ms@2004","90ms@2080","77ms@2170","72ms@2247","114ms@2319","60ms@2651","71ms@2711","54ms@2782","54ms@2836","67ms@2890","65ms@2957","54ms@3059","101ms@3232","64ms@3420","74ms@3484","58ms@3558","69ms@3677","54ms@3746","66ms@3800","59ms@4057","73ms@4230"],"roomReq":57,"roomDone":72,"brush":697,"introMs":3333}
+run 4: {"endGap":95,"endGapAt":2326,"fullGap":95,"over50":15,"slow":["53ms@1769","87ms@1931","82ms@2018","80ms@2100","58ms@2180","88ms@2238","95ms@2326","58ms@2657","63ms@2935","63ms@3099","82ms@3236","55ms@3318","79ms@3532","65ms@3657","64ms@4067"],"roomReq":78,"roomDone":81,"brush":708,"introMs":3318}
+run 5: {"endGap":92,"endGapAt":2362,"fullGap":92,"over50":15,"slow":["84ms@1909","71ms@1993","88ms@2064","67ms@2152","83ms@2219","60ms@2302","92ms@2362","53ms@2654","63ms@3025","53ms@3251","67ms@3304","56ms@3426","76ms@3522","53ms@3702","63ms@3806"],"roomReq":65,"roomDone":69,"brush":737,"introMs":3251}
+{"profile":"iphone","load":3,"url":"http://localhost:4173/","endGap":[104,111,114,95,92],"fullGap":[104,111,114,95,92],"over50":[19,16,23,15,15],"roomReq":[64,69,57,78,65],"brush":[750,748,697,708,737]}
+== port 4174 cfg 3 desktop 0
+run 1: {"endGap":40,"endGapAt":1909,"fullGap":40,"over50":0,"slow":[],"roomReq":48,"roomDone":56,"brush":610,"introMs":3256}
+run 2: {"endGap":30,"endGapAt":1909,"fullGap":30,"over50":0,"slow":[],"roomReq":47,"roomDone":57,"brush":596,"introMs":3248}
+run 3: {"endGap":27,"endGapAt":4055,"fullGap":28,"over50":0,"slow":[],"roomReq":47,"roomDone":57,"brush":581,"introMs":3258}
+{"profile":"desktop","load":0,"url":"http://localhost:4174/","endGap":[40,30,27],"fullGap":[40,30,28],"over50":[0,0,0],"roomReq":[48,47,47],"brush":[610,596,581]}
+== port 4173 cfg 3 desktop 0
+run 1: {"endGap":30,"endGapAt":2313,"fullGap":31,"over50":0,"slow":[],"roomReq":47,"roomDone":54,"brush":583,"introMs":3248}
+run 2: {"endGap":29,"endGapAt":4138,"fullGap":29,"over50":0,"slow":[],"roomReq":48,"roomDone":54,"brush":581,"introMs":3258}
+run 3: {"endGap":28,"endGapAt":3364,"fullGap":29,"over50":0,"slow":[],"roomReq":45,"roomDone":57,"brush":565,"introMs":3255}
+{"profile":"desktop","load":0,"url":"http://localhost:4173/","endGap":[30,29,28],"fullGap":[31,29,29],"over50":[0,0,0],"roomReq":[47,48,45],"brush":[583,581,565]}
+
+## Second comparison, with the 4 s hammer-loop window (final script)
+== port 4174
+run 1: {"endGap":39,"endGapAt":3235,"fullGap":39,"over50":0,"slow":[],"loopGap":23,"loop50":0,"roomReq":46,"roomDone":63,"brush":628,"introMs":3274}
+run 2: {"endGap":40,"endGapAt":3239,"fullGap":40,"over50":0,"slow":[],"loopGap":28,"loop50":0,"roomReq":48,"roomDone":63,"brush":597,"introMs":3239}
+run 3: {"endGap":62,"endGapAt":3257,"fullGap":62,"over50":1,"slow":["62ms@3257"],"loopGap":29,"loop50":0,"roomReq":47,"roomDone":58,"brush":596,"introMs":3257}
+{"profile":"iphone","load":0,"url":"http://localhost:4174/","endGap":[39,40,62],"fullGap":[39,40,62],"over50":[0,0,1],"loopGap":[23,28,29],"loop50":[0,0,0],"roomReq":[46,48,47],"brush":[628,597,596]}
+== port 4173
+run 1: {"endGap":36,"endGapAt":2328,"fullGap":36,"over50":0,"slow":[],"loopGap":24,"loop50":0,"roomReq":49,"roomDone":57,"brush":630,"introMs":3257}
+run 2: {"endGap":37,"endGapAt":2336,"fullGap":37,"over50":0,"slow":[],"loopGap":33,"loop50":0,"roomReq":50,"roomDone":60,"brush":631,"introMs":3244}
+run 3: {"endGap":42,"endGapAt":3252,"fullGap":42,"over50":0,"slow":[],"loopGap":24,"loop50":0,"roomReq":46,"roomDone":56,"brush":630,"introMs":3294}
+{"profile":"iphone","load":0,"url":"http://localhost:4173/","endGap":[36,37,42],"fullGap":[36,37,42],"over50":[0,0,0],"loopGap":[24,33,24],"loop50":[0,0,0],"roomReq":[49,50,46],"brush":[630,631,630]}
+== port 4174
+run 1: {"endGap":51,"endGapAt":3238,"fullGap":51,"over50":1,"slow":["51ms@3238"],"loopGap":22,"loop50":0,"roomReq":48,"roomDone":60,"brush":628,"introMs":3289}
+run 2: {"endGap":41,"endGapAt":3241,"fullGap":41,"over50":0,"slow":[],"loopGap":23,"loop50":0,"roomReq":47,"roomDone":54,"brush":597,"introMs":3241}
+run 3: {"endGap":40,"endGapAt":2331,"fullGap":40,"over50":0,"slow":[],"loopGap":28,"loop50":0,"roomReq":46,"roomDone":52,"brush":633,"introMs":3268}
+{"profile":"iphone","load":0,"url":"http://localhost:4174/","endGap":[51,41,40],"fullGap":[51,41,40],"over50":[1,0,0],"loopGap":[22,23,28],"loop50":[0,0,0],"roomReq":[48,47,46],"brush":[628,597,633]}
+== port 4173
+run 1: {"endGap":38,"endGapAt":2316,"fullGap":38,"over50":0,"slow":[],"loopGap":29,"loop50":0,"roomReq":46,"roomDone":62,"brush":617,"introMs":3245}
+run 2: {"endGap":36,"endGapAt":2330,"fullGap":36,"over50":0,"slow":[],"loopGap":27,"loop50":0,"roomReq":45,"roomDone":59,"brush":599,"introMs":3247}
+run 3: {"endGap":38,"endGapAt":2325,"fullGap":38,"over50":0,"slow":[],"loopGap":23,"loop50":0,"roomReq":47,"roomDone":57,"brush":605,"introMs":3248}
+{"profile":"iphone","load":0,"url":"http://localhost:4173/","endGap":[38,36,38],"fullGap":[38,36,38],"over50":[0,0,0],"loopGap":[29,27,23],"loop50":[0,0,0],"roomReq":[46,45,47],"brush":[617,599,605]}
+
+## Earlier BEFORE runs (first script version: intro end = brush canvas removed, same moment on the old code)
+### 3 runs iPhone 13, 3 runs desktop (first WebKit launches on this VM)
+iphone endGap [392,55,54] fullGap [392,55,54] over50 [12,1,1]; worst frames at 2657 ms and 1917 ms after the brush started
+desktop endGap [331,83,92] fullGap [331,83,92] over50 [3,1,1]; worst frames at ~1910 ms (wash start)
+run 1: {"endGap":54,"endGapAt":3251,"fullGap":54,"over50":1,"slow":["54ms@3251"],"roomReq":48,"roomDone":54,"brush":630,"introMs":3253}
+run 2: {"endGap":43,"endGapAt":3234,"fullGap":43,"over50":0,"slow":[],"roomReq":52,"roomDone":67,"brush":639,"introMs":3237}
+run 3: {"endGap":62,"endGapAt":3239,"fullGap":62,"over50":1,"slow":["62ms@3239"],"roomReq":46,"roomDone":59,"brush":629,"introMs":3241}
+run 4: {"endGap":39,"endGapAt":3250,"fullGap":39,"over50":0,"slow":[],"roomReq":46,"roomDone":62,"brush":630,"introMs":3252}
+run 5: {"endGap":54,"endGapAt":3246,"fullGap":54,"over50":1,"slow":["54ms@3246"],"roomReq":61,"roomDone":71,"brush":617,"introMs":3249}
+{"profile":"iphone","url":"http://localhost:4173/","endGap":[54,43,62,39,54],"fullGap":[54,43,62,39,54],"over50":[1,0,1,0,1],"roomReq":[48,52,46,46,61],"brush":[630,639,629,630,617]}
+run 1: {"endGap":31,"endGapAt":1910,"fullGap":31,"over50":0,"slow":[],"roomReq":51,"roomDone":62,"brush":578,"introMs":3236}
+run 2: {"endGap":30,"endGapAt":3443,"fullGap":30,"over50":0,"slow":[],"roomReq":48,"roomDone":57,"brush":596,"introMs":3236}
+run 3: {"endGap":28,"endGapAt":4055,"fullGap":31,"over50":0,"slow":[],"roomReq":46,"roomDone":55,"brush":582,"introMs":3236}
+run 4: {"endGap":30,"endGapAt":1910,"fullGap":30,"over50":0,"slow":[],"roomReq":50,"roomDone":59,"brush":569,"introMs":3254}
+run 5: {"endGap":29,"endGapAt":3247,"fullGap":30,"over50":0,"slow":[],"roomReq":49,"roomDone":64,"brush":597,"introMs":3249}
+{"profile":"desktop","url":"http://localhost:4173/","endGap":[31,30,28,30,29],"fullGap":[31,30,31,30,30],"over50":[0,0,0,0,0],"roomReq":[51,48,46,50,49],"brush":[578,596,582,569,597]}
+run 1: {"endGap":113,"endGapAt":3233,"fullGap":113,"over50":12,"slow":["53ms@1739","95ms@1925","64ms@2020","76ms@2084","63ms@2160","61ms@2223","73ms@2284","92ms@2357","54ms@2971","52ms@3104","113ms@3233","71ms@3365"],"roomReq":71,"roomDone":84,"brush":714,"introMs":3236}
+run 2: {"endGap":115,"endGapAt":3236,"fullGap":115,"over50":15,"slow":["54ms@1769","75ms@1918","73ms@1993","81ms@2066","70ms@2147","74ms@2217","68ms@2291","101ms@2359","58ms@2914","59ms@3032","115ms@3236","63ms@3403","57ms@3492","58ms@3645","54ms@3737"],"roomReq":40,"roomDone":45,"brush":847,"introMs":3239}
+run 3: {"endGap":148,"endGapAt":3265,"fullGap":148,"over50":13,"slow":["51ms@1764","76ms@1941","84ms@2017","76ms@2101","60ms@2177","65ms@2237","74ms@2302","79ms@2376","57ms@3064","60ms@3205","148ms@3265","77ms@3590","57ms@3667"],"roomReq":79,"roomDone":96,"brush":708,"introMs":3267}
+run 4: {"endGap":78,"endGapAt":3287,"fullGap":78,"over50":14,"slow":["76ms@1948","65ms@2024","75ms@2089","62ms@2164","59ms@2226","69ms@2285","74ms@2354","68ms@3022","64ms@3155","68ms@3219","78ms@3287","67ms@3365","53ms@3458","58ms@4072"],"roomReq":62,"roomDone":74,"brush":687,"introMs":3290}
+{"profile":"iphone","load":3,"url":"http://localhost:4173/","endGap":[113,115,148,78],"fullGap":[113,115,148,78],"over50":[12,15,13,14],"roomReq":[71,40,79,62],"brush":[714,847,708,687]}
+
+## Final check on the finished branch (items 1-4 in), 4174 = before, 4173 = after
+run 1: {"endGap":40,"endGapAt":3241,"fullGap":40,"over50":0,"slow":[],"loopGap":31,"loop50":0,"roomReq":48,"roomDone":57,"brush":594,"introMs":3241}
+run 2: {"endGap":47,"endGapAt":3262,"fullGap":47,"over50":0,"slow":[],"loopGap":28,"loop50":0,"roomReq":47,"roomDone":58,"brush":618,"introMs":3262}
+run 3: {"endGap":42,"endGapAt":3241,"fullGap":42,"over50":0,"slow":[],"loopGap":25,"loop50":0,"roomReq":49,"roomDone":64,"brush":630,"introMs":3241}
+run 4: {"endGap":48,"endGapAt":3641,"fullGap":48,"over50":0,"slow":[],"loopGap":31,"loop50":0,"roomReq":44,"roomDone":53,"brush":616,"introMs":3279}
+run 5: {"endGap":53,"endGapAt":3243,"fullGap":53,"over50":1,"slow":["53ms@3243"],"loopGap":28,"loop50":0,"roomReq":47,"roomDone":62,"brush":633,"introMs":3243}
+{"profile":"iphone","load":0,"url":"http://localhost:4174/","endGap":[40,47,42,48,53],"fullGap":[40,47,42,48,53],"over50":[0,0,0,0,1],"loopGap":[31,28,25,31,28],"loop50":[0,0,0,0,0],"roomReq":[48,47,49,44,47],"brush":[594,618,630,616,633]}
+run 1: {"endGap":41,"endGapAt":2330,"fullGap":41,"over50":0,"slow":[],"loopGap":21,"loop50":0,"roomReq":5,"roomDone":14,"brush":612,"introMs":3244}
+run 2: {"endGap":41,"endGapAt":2335,"fullGap":41,"over50":0,"slow":[],"loopGap":22,"loop50":0,"roomReq":9,"roomDone":16,"brush":612,"introMs":3245}
+run 3: {"endGap":41,"endGapAt":2328,"fullGap":41,"over50":0,"slow":[],"loopGap":28,"loop50":0,"roomReq":4,"roomDone":11,"brush":677,"introMs":3245}
+run 4: {"endGap":47,"endGapAt":3278,"fullGap":47,"over50":0,"slow":[],"loopGap":27,"loop50":0,"roomReq":5,"roomDone":12,"brush":630,"introMs":3257}
+run 5: {"endGap":43,"endGapAt":3233,"fullGap":43,"over50":0,"slow":[],"loopGap":25,"loop50":0,"roomReq":5,"roomDone":15,"brush":615,"introMs":3276}
+{"profile":"iphone","load":0,"url":"http://localhost:4173/","endGap":[41,41,41,47,43],"fullGap":[41,41,41,47,43],"over50":[0,0,0,0,0],"loopGap":[21,22,28,27,25],"loop50":[0,0,0,0,0],"roomReq":[5,9,4,5,5],"brush":[612,612,677,630,615]}

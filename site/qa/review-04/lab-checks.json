@@ -1,0 +1,254 @@
+{
+ "lazy": {
+  "fetchedBeforeGrowIsOpened": [
+   "scene2/room.webp"
+  ],
+  "fetchedByArrival": [
+   "manifest",
+   "still"
+  ],
+  "orderAfterOpening": [
+   "manifest",
+   "still",
+   "mist_to_write",
+   "write_loop",
+   "look_up",
+   "thumbs_up"
+  ],
+  "files": 93,
+  "bytes": {
+   "scene1": 4224820,
+   "labPlate": 1236070,
+   "labStills": 1196906,
+   "labClips": 8418566
+  }
+ },
+ "seams-desktop-chrome": {
+  "set": "rachel",
+  "canvas": [
+   305,
+   429
+  ],
+  "scale": 0.311,
+  "rows": [
+   {
+    "clip": "mist_to_write",
+    "frames": 32,
+    "stillRedrawnDiffers": 0,
+    "largestDifferenceOutsidePatch": 0,
+    "meanDifferenceAtPatchEdge": 3.81,
+    "shareOfEdgePixelsOver24": "5.74%",
+    "shareOfFigureChangingAtFirstFrame": "12.4%"
+   },
+   {
+    "clip": "write_loop",
+    "frames": 25,
+    "stillRedrawnDiffers": 0,
+    "largestDifferenceOutsidePatch": 0,
+    "meanDifferenceAtPatchEdge": 6.11,
+    "shareOfEdgePixelsOver24": "8.6%",
+    "shareOfFigureChangingAtFirstFrame": "9.9%"
+   },
+   {
+    "clip": "look_up",
+    "frames": 17,
+    "stillRedrawnDiffers": 0,
+    "largestDifferenceOutsidePatch": 0,
+    "meanDifferenceAtPatchEdge": 3.02,
+    "shareOfEdgePixelsOver24": "3.63%",
+    "shareOfFigureChangingAtFirstFrame": "10.7%"
+   },
+   {
+    "clip": "thumbs_up",
+    "frames": 10,
+    "stillRedrawnDiffers": 0,
+    "largestDifferenceOutsidePatch": 0,
+    "meanDifferenceAtPatchEdge": 5.82,
+    "shareOfEdgePixelsOver24": "7.53%",
+    "shareOfFigureChangingAtFirstFrame": "12.5%"
+   }
+  ]
+ },
+ "seams-iphone-webkit": {
+  "set": "rachel-1.5x",
+  "canvas": [
+   735,
+   1035
+  ],
+  "scale": 1,
+  "rows": [
+   {
+    "clip": "mist_to_write",
+    "frames": 32,
+    "stillRedrawnDiffers": 0,
+    "largestDifferenceOutsidePatch": 0,
+    "meanDifferenceAtPatchEdge": 0.42,
+    "shareOfEdgePixelsOver24": "0.02%",
+    "shareOfFigureChangingAtFirstFrame": "1.1%"
+   },
+   {
+    "clip": "write_loop",
+    "frames": 25,
+    "stillRedrawnDiffers": 0,
+    "largestDifferenceOutsidePatch": 0,
+    "meanDifferenceAtPatchEdge": 0.89,
+    "shareOfEdgePixelsOver24": "0.01%",
+    "shareOfFigureChangingAtFirstFrame": "1.5%"
+   },
+   {
+    "clip": "look_up",
+    "frames": 17,
+    "stillRedrawnDiffers": 0,
+    "largestDifferenceOutsidePatch": 0,
+    "meanDifferenceAtPatchEdge": 0.96,
+    "shareOfEdgePixelsOver24": "0.01%",
+    "shareOfFigureChangingAtFirstFrame": "1.7%"
+   },
+   {
+    "clip": "thumbs_up",
+    "frames": 10,
+    "stillRedrawnDiffers": 0,
+    "largestDifferenceOutsidePatch": 0,
+    "meanDifferenceAtPatchEdge": 1.22,
+    "shareOfEdgePixelsOver24": "0.03%",
+    "shareOfFigureChangingAtFirstFrame": "0.2%"
+   }
+  ]
+ },
+ "routine-desktop-chrome": {
+  "routine": {
+   "watchedS": 39.2,
+   "cycleS": [
+    17.4
+   ],
+   "spraysPerRound": [
+    5,
+    3
+   ],
+   "writeLoopsPerRound": [
+    2,
+    2
+   ],
+   "holdMs": {
+    "aim": [
+     350,
+     1450
+    ],
+    "squeeze": [
+     283,
+     350
+    ],
+    "lift": [
+     383,
+     483
+    ],
+    "transitionFrame": [
+     66,
+     85
+    ],
+    "writeFrame": [
+     115,
+     135
+    ],
+    "blink": [
+     49,
+     50
+    ]
+   },
+   "blinks": 3,
+   "frames": 2355,
+   "longestFrameMs": 18,
+   "over50": []
+  },
+  "fromMisting": {
+   "wayHome": [],
+   "lookUpStartsMs": 376,
+   "thumbsUpMs": 2709,
+   "backAtWorkMs": 5592,
+   "reactionMs": 5216,
+   "longestFrameMs": 33,
+   "over50": 0
+  },
+  "fromWriting": {
+   "wayHome": [
+    "mist_to_write"
+   ],
+   "lookUpStartsMs": 2771,
+   "thumbsUpMs": 5105,
+   "backAtWorkMs": 7988,
+   "reactionMs": 5217,
+   "longestFrameMs": 18,
+   "over50": 0
+  },
+  "errors": []
+ },
+ "routine-iphone-webkit": {
+  "routine": {
+   "watchedS": 35.1,
+   "cycleS": [
+    17.4
+   ],
+   "spraysPerRound": [
+    3,
+    3
+   ],
+   "writeLoopsPerRound": [
+    2,
+    2
+   ],
+   "holdMs": {
+    "aim": [
+     351,
+     1117
+    ],
+    "squeeze": [
+     300,
+     334
+    ],
+    "lift": [
+     400,
+     467
+    ],
+    "transitionFrame": [
+     67,
+     86
+    ],
+    "writeFrame": [
+     115,
+     134
+    ],
+    "blink": [
+     49,
+     50
+    ]
+   },
+   "blinks": 3,
+   "frames": 2100,
+   "longestFrameMs": 111,
+   "over50": [
+    "111ms@9147"
+   ]
+  },
+  "fromMisting": {
+   "wayHome": [],
+   "lookUpStartsMs": 375,
+   "thumbsUpMs": 2708,
+   "backAtWorkMs": 5592,
+   "reactionMs": 5217,
+   "longestFrameMs": 48,
+   "over50": 0
+  },
+  "fromWriting": {
+   "wayHome": [
+    "mist_to_write"
+   ],
+   "lookUpStartsMs": 2739,
+   "thumbsUpMs": 5073,
+   "backAtWorkMs": 7955,
+   "reactionMs": 5216,
+   "longestFrameMs": 24,
+   "over50": 0
+  },
+  "errors": []
+ }
+}

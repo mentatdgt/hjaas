@@ -1,0 +1,406 @@
+[
+  {
+    "key": "desktop-counter",
+    "size": "desktop",
+    "state": "counter",
+    "url": "http://localhost:5173/?debug&reset&intro=off",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "injected": {
+      "ok": true
+    },
+    "consoleAfterInjection": [
+      {
+        "type": "log",
+        "text": "%c[impeccable] No anti-patterns found. color: #22c55e; font-weight: bold"
+      }
+    ],
+    "impeccableConsole": [
+      {
+        "type": "log",
+        "text": "%c[impeccable] No anti-patterns found. color: #22c55e; font-weight: bold"
+      }
+    ],
+    "structured": {
+      "hasApi": true,
+      "coreError": null,
+      "detect": [],
+      "detectAsync": [],
+      "visualContrast": []
+    },
+    "errors": [],
+    "consoleBeforeInjection": []
+  },
+  {
+    "key": "desktop-unlocked",
+    "size": "desktop",
+    "state": "unlocked",
+    "url": "http://localhost:5173/?debug&intro=off&found=10",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "injected": {
+      "ok": true
+    },
+    "consoleAfterInjection": [
+      {
+        "type": "startGroup",
+        "text": "%c[impeccable] 1 anti-pattern found color: oklch(84% 0.19 80.46); font-weight: bold"
+      },
+      {
+        "type": "log",
+        "text": "%ctext-occlusion%c span.hj-pin-label \"Contact Hui Jie\" is 100% covered by overlapping text (button.hj-pin-action) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+      },
+      {
+        "type": "endGroup",
+        "text": "console.groupEnd"
+      }
+    ],
+    "impeccableConsole": [
+      {
+        "type": "startGroup",
+        "text": "%c[impeccable] 1 anti-pattern found color: oklch(84% 0.19 80.46); font-weight: bold"
+      }
+    ],
+    "structured": {
+      "hasApi": true,
+      "coreError": null,
+      "detect": [
+        {
+          "selector": "span.hj-pin-label",
+          "tagName": "span",
+          "rect": {
+            "x": 1270,
+            "y": 72.78125,
+            "width": 121.890625,
+            "height": 44,
+            "top": 72.78125,
+            "right": 1391.890625,
+            "bottom": 116.78125,
+            "left": 1270
+          },
+          "isPageLevel": false,
+          "isHidden": false,
+          "findings": [
+            {
+              "type": "text-occlusion",
+              "category": "quality",
+              "severity": "warning",
+              "advisory": false,
+              "detail": "span.hj-pin-label \"Contact Hui Jie\" is 100% covered by overlapping text (button.hj-pin-action)",
+              "ignoreValue": "",
+              "name": "Text occluded by an overlapping element",
+              "description": "Text is painted under an opaque element or a second text run, so part of it cannot be read. A decorative box, a stacked layer, or an inline element with leaked padding lands on the words instead of beside them. Give overlapping layers room, or move the text out from under the layer above it."
+            }
+          ]
+        }
+      ],
+      "detectAsync": [
+        {
+          "selector": "span.hj-pin-label",
+          "tagName": "span",
+          "rect": {
+            "x": 1270,
+            "y": 72.78125,
+            "width": 121.890625,
+            "height": 44,
+            "top": 72.78125,
+            "right": 1391.890625,
+            "bottom": 116.78125,
+            "left": 1270
+          },
+          "isPageLevel": false,
+          "isHidden": false,
+          "findings": [
+            {
+              "type": "text-occlusion",
+              "category": "quality",
+              "severity": "warning",
+              "advisory": false,
+              "detail": "span.hj-pin-label \"Contact Hui Jie\" is 100% covered by overlapping text (button.hj-pin-action)",
+              "ignoreValue": "",
+              "name": "Text occluded by an overlapping element",
+              "description": "Text is painted under an opaque element or a second text run, so part of it cannot be read. A decorative box, a stacked layer, or an inline element with leaked padding lands on the words instead of beside them. Give overlapping layers room, or move the text out from under the layer above it."
+            }
+          ]
+        }
+      ],
+      "visualContrast": []
+    },
+    "errors": [],
+    "consoleBeforeInjection": []
+  },
+  {
+    "key": "desktop-form-open",
+    "size": "desktop",
+    "state": "form-open",
+    "url": "http://localhost:5173/?debug&intro=off&found=10",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "injected": {
+      "ok": true
+    },
+    "consoleAfterInjection": [
+      {
+        "type": "log",
+        "text": "%c[impeccable] No anti-patterns found. color: #22c55e; font-weight: bold"
+      }
+    ],
+    "impeccableConsole": [
+      {
+        "type": "log",
+        "text": "%c[impeccable] No anti-patterns found. color: #22c55e; font-weight: bold"
+      }
+    ],
+    "structured": {
+      "hasApi": true,
+      "coreError": null,
+      "detect": [],
+      "detectAsync": [],
+      "visualContrast": []
+    },
+    "errors": [],
+    "consoleBeforeInjection": []
+  },
+  {
+    "key": "desktop-form-errors",
+    "size": "desktop",
+    "state": "form-errors",
+    "url": "http://localhost:5173/?debug&intro=off&found=10",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "injected": {
+      "ok": true
+    },
+    "consoleAfterInjection": [
+      {
+        "type": "log",
+        "text": "%c[impeccable] No anti-patterns found. color: #22c55e; font-weight: bold"
+      }
+    ],
+    "impeccableConsole": [
+      {
+        "type": "log",
+        "text": "%c[impeccable] No anti-patterns found. color: #22c55e; font-weight: bold"
+      }
+    ],
+    "structured": {
+      "hasApi": true,
+      "coreError": null,
+      "detect": [],
+      "detectAsync": [],
+      "visualContrast": []
+    },
+    "errors": [],
+    "consoleBeforeInjection": []
+  },
+  {
+    "key": "phone-counter",
+    "size": "phone",
+    "state": "counter",
+    "url": "http://localhost:5173/?debug&reset&intro=off",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "injected": {
+      "ok": true
+    },
+    "consoleAfterInjection": [
+      {
+        "type": "log",
+        "text": "%c[impeccable] No anti-patterns found. color: #22c55e; font-weight: bold"
+      }
+    ],
+    "impeccableConsole": [
+      {
+        "type": "log",
+        "text": "%c[impeccable] No anti-patterns found. color: #22c55e; font-weight: bold"
+      }
+    ],
+    "structured": {
+      "hasApi": true,
+      "coreError": null,
+      "detect": [],
+      "detectAsync": [],
+      "visualContrast": []
+    },
+    "errors": [],
+    "consoleBeforeInjection": []
+  },
+  {
+    "key": "phone-unlocked",
+    "size": "phone",
+    "state": "unlocked",
+    "url": "http://localhost:5173/?debug&intro=off&found=10",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "injected": {
+      "ok": true
+    },
+    "consoleAfterInjection": [
+      {
+        "type": "startGroup",
+        "text": "%c[impeccable] 1 anti-pattern found color: oklch(84% 0.19 80.46); font-weight: bold"
+      },
+      {
+        "type": "log",
+        "text": "%ctext-occlusion%c span.hj-pin-label \"Contact Hui Jie\" is 100% covered by overlapping text (button.hj-pin-action) color: oklch(84% 0.19 80.46); font-weight: bold color: inherit JSHandle@node"
+      },
+      {
+        "type": "endGroup",
+        "text": "console.groupEnd"
+      }
+    ],
+    "impeccableConsole": [
+      {
+        "type": "startGroup",
+        "text": "%c[impeccable] 1 anti-pattern found color: oklch(84% 0.19 80.46); font-weight: bold"
+      }
+    ],
+    "structured": {
+      "hasApi": true,
+      "coreError": null,
+      "detect": [
+        {
+          "selector": "span.hj-pin-label",
+          "tagName": "span",
+          "rect": {
+            "x": 241,
+            "y": 135.75,
+            "width": 114.71875,
+            "height": 44,
+            "top": 135.75,
+            "right": 355.71875,
+            "bottom": 179.75,
+            "left": 241
+          },
+          "isPageLevel": false,
+          "isHidden": false,
+          "findings": [
+            {
+              "type": "text-occlusion",
+              "category": "quality",
+              "severity": "warning",
+              "advisory": false,
+              "detail": "span.hj-pin-label \"Contact Hui Jie\" is 100% covered by overlapping text (button.hj-pin-action)",
+              "ignoreValue": "",
+              "name": "Text occluded by an overlapping element",
+              "description": "Text is painted under an opaque element or a second text run, so part of it cannot be read. A decorative box, a stacked layer, or an inline element with leaked padding lands on the words instead of beside them. Give overlapping layers room, or move the text out from under the layer above it."
+            }
+          ]
+        }
+      ],
+      "detectAsync": [
+        {
+          "selector": "span.hj-pin-label",
+          "tagName": "span",
+          "rect": {
+            "x": 241,
+            "y": 135.75,
+            "width": 114.71875,
+            "height": 44,
+            "top": 135.75,
+            "right": 355.71875,
+            "bottom": 179.75,
+            "left": 241
+          },
+          "isPageLevel": false,
+          "isHidden": false,
+          "findings": [
+            {
+              "type": "text-occlusion",
+              "category": "quality",
+              "severity": "warning",
+              "advisory": false,
+              "detail": "span.hj-pin-label \"Contact Hui Jie\" is 100% covered by overlapping text (button.hj-pin-action)",
+              "ignoreValue": "",
+              "name": "Text occluded by an overlapping element",
+              "description": "Text is painted under an opaque element or a second text run, so part of it cannot be read. A decorative box, a stacked layer, or an inline element with leaked padding lands on the words instead of beside them. Give overlapping layers room, or move the text out from under the layer above it."
+            }
+          ]
+        }
+      ],
+      "visualContrast": []
+    },
+    "errors": [],
+    "consoleBeforeInjection": []
+  },
+  {
+    "key": "phone-form-open",
+    "size": "phone",
+    "state": "form-open",
+    "url": "http://localhost:5173/?debug&intro=off&found=10",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "injected": {
+      "ok": true
+    },
+    "consoleAfterInjection": [
+      {
+        "type": "log",
+        "text": "%c[impeccable] No anti-patterns found. color: #22c55e; font-weight: bold"
+      }
+    ],
+    "impeccableConsole": [
+      {
+        "type": "log",
+        "text": "%c[impeccable] No anti-patterns found. color: #22c55e; font-weight: bold"
+      }
+    ],
+    "structured": {
+      "hasApi": true,
+      "coreError": null,
+      "detect": [],
+      "detectAsync": [],
+      "visualContrast": []
+    },
+    "errors": [],
+    "consoleBeforeInjection": []
+  },
+  {
+    "key": "phone-form-errors",
+    "size": "phone",
+    "state": "form-errors",
+    "url": "http://localhost:5173/?debug&intro=off&found=10",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "injected": {
+      "ok": true
+    },
+    "consoleAfterInjection": [
+      {
+        "type": "log",
+        "text": "%c[impeccable] No anti-patterns found. color: #22c55e; font-weight: bold"
+      }
+    ],
+    "impeccableConsole": [
+      {
+        "type": "log",
+        "text": "%c[impeccable] No anti-patterns found. color: #22c55e; font-weight: bold"
+      }
+    ],
+    "structured": {
+      "hasApi": true,
+      "coreError": null,
+      "detect": [],
+      "detectAsync": [],
+      "visualContrast": []
+    },
+    "errors": [],
+    "consoleBeforeInjection": []
+  }
+]

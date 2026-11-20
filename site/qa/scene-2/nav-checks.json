@@ -1,0 +1,128 @@
+{
+ "address": {
+  "plain": {
+   "address": "",
+   "scene": "build",
+   "current": "Build",
+   "caption": "0 of 10 found Find the 10 hidden mushrooms",
+   "button": false,
+   "pan": 1
+  },
+  "afterClick": {
+   "address": "#grow",
+   "scene": "grow",
+   "current": "Grow",
+   "caption": "0 of 10 found Find the 10 hidden mushrooms Grow. 0 of 10 mushrooms found.",
+   "button": false,
+   "pan": 1
+  },
+  "afterBack": {
+   "address": "",
+   "scene": "build",
+   "current": "Build",
+   "caption": "0 of 10 found Find the 10 hidden mushrooms Build. 0 of 10 mushrooms found.",
+   "button": false,
+   "pan": 1
+  },
+  "afterForward": {
+   "address": "#grow",
+   "scene": "grow",
+   "current": "Grow",
+   "caption": "0 of 10 found Find the 10 hidden mushrooms Grow. 0 of 10 mushrooms found.",
+   "button": false,
+   "pan": 1
+  },
+  "directToGrow": {
+   "address": "#grow",
+   "scene": "grow",
+   "current": "Grow",
+   "caption": "0 of 10 found Find the 10 hidden mushrooms",
+   "button": false,
+   "pan": 1
+  },
+  "unknownName": {
+   "address": "#nowhere",
+   "scene": "build",
+   "current": "Build",
+   "caption": "0 of 10 found Find the 10 hidden mushrooms",
+   "button": false,
+   "pan": 1
+  },
+  "errors": []
+ },
+ "switch": {
+  "toGrow": {
+   "fromClickMs": 1601,
+   "brushMs": 1502
+  },
+  "toBuild": {
+   "fromClickMs": 1485,
+   "brushMs": 1433
+  },
+  "midway": {
+   "busy": true,
+   "sheets": 1,
+   "skip": "visible"
+  },
+  "clickAgainFinishesInMs": 43,
+  "skipControlFinishesInMs": 46,
+  "changedMindEndsOn": "build",
+  "errors": []
+ },
+ "firstVisit": {
+  "firstVisitMs": 5186,
+  "during": {
+   "sheetInsidePlate": true,
+   "mushroomsFindable": false
+  },
+  "revisitMs": 1487,
+  "errors": []
+ },
+ "reducedMotion": {
+  "fadeMs": 176,
+  "opacities": 13,
+  "startedAt": 1,
+  "strokes": "none (the sheet only fades)",
+  "after": {
+   "address": "#grow",
+   "scene": "grow",
+   "current": "Grow",
+   "caption": "0 of 10 found Find the 10 hidden mushrooms Grow. 0 of 10 mushrooms found.",
+   "button": false,
+   "pan": 1
+  },
+  "controls": [],
+  "errors": []
+ },
+ "keyboard": {
+  "tabOrder": [
+   "logo",
+   "tab:Build",
+   "tab:Grow",
+   "mushroom:sill"
+  ],
+  "focusedBeforeEnter": "Grow",
+  "afterEnter": {
+   "address": "#grow",
+   "scene": "grow",
+   "current": "Grow",
+   "caption": "0 of 10 found Find the 10 hidden mushrooms Grow. 0 of 10 mushrooms found.",
+   "button": false,
+   "pan": 1
+  },
+  "focusRing": {
+   "outline": "solid",
+   "width": "2px"
+  },
+  "semantics": {
+   "nav": "NAV",
+   "label": "Scenes",
+   "current": [
+    "Build:-",
+    "Grow:page"
+   ],
+   "picture": "Hui Jie in her mushroom lab. Ten mushrooms are hidden in the room."
+  },
+  "errors": []
+ }
+}

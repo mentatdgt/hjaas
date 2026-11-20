@@ -1,0 +1,188 @@
+[
+ {
+  "browser": "chrome, 1440 × 900",
+  "switches": [
+   {
+    "to": "grow",
+    "kind": "first visit: the full painting",
+    "arrived": true,
+    "screenshotsThrough": 69,
+    "barePaperPoints": 211,
+    "notPaperInAnyScreenshot": 0,
+    "pointsPastTheColour": 4354,
+    "withPaintInAnyScreenshot": 0,
+    "drawingTheEdgeTookMs": 53,
+    "wholeSwitchMs": 5530,
+    "edgeMegabytesAfter": {
+     "build.edge": 0,
+     "grow.edge": 2.6
+    }
+   },
+   {
+    "to": "build",
+    "kind": "the short brush",
+    "arrived": true,
+    "screenshotsThrough": 13,
+    "barePaperPoints": 211,
+    "notPaperInAnyScreenshot": 0,
+    "pointsPastTheColour": 4354,
+    "withPaintInAnyScreenshot": 0,
+    "drawingTheEdgeTookMs": 61,
+    "wholeSwitchMs": 1649,
+    "edgeMegabytesAfter": {
+     "build.edge": 2.6,
+     "grow.edge": 0
+    }
+   },
+   {
+    "to": "grow",
+    "kind": "the short brush",
+    "arrived": true,
+    "screenshotsThrough": 14,
+    "barePaperPoints": 211,
+    "notPaperInAnyScreenshot": 0,
+    "pointsPastTheColour": 4354,
+    "withPaintInAnyScreenshot": 0,
+    "drawingTheEdgeTookMs": 68,
+    "wholeSwitchMs": 1683,
+    "edgeMegabytesAfter": {
+     "build.edge": 0,
+     "grow.edge": 2.6
+    }
+   }
+  ],
+  "timingsWithNothingWatching": {
+   "pencil": {
+    "drawingTheEdgeMs": [
+     53,
+     53,
+     57,
+     62,
+     59,
+     64
+    ],
+    "tapToEndOfBrushMs": [
+     1596,
+     1577,
+     1592,
+     1574,
+     1591,
+     1591
+    ]
+   },
+   "organic": {
+    "drawingTheEdgeMs": [
+     31,
+     37,
+     27,
+     29,
+     29,
+     33
+    ],
+    "tapToEndOfBrushMs": [
+     1559,
+     1557,
+     1600,
+     1593,
+     1584,
+     1586
+    ]
+   }
+  },
+  "errors": [],
+  "ok": true
+ },
+ {
+  "browser": "webkit, iPhone 14 profile",
+  "switches": [
+   {
+    "to": "grow",
+    "kind": "first visit: the full painting",
+    "arrived": true,
+    "screenshotsThrough": 125,
+    "barePaperPoints": 0,
+    "notPaperInAnyScreenshot": 0,
+    "pointsPastTheColour": 401,
+    "withPaintInAnyScreenshot": 0,
+    "drawingTheEdgeTookMs": 166,
+    "wholeSwitchMs": 7085,
+    "edgeMegabytesAfter": {
+     "build.edge": 0,
+     "grow.edge": 2.6
+    }
+   },
+   {
+    "to": "build",
+    "kind": "the short brush",
+    "arrived": true,
+    "screenshotsThrough": 34,
+    "barePaperPoints": 0,
+    "notPaperInAnyScreenshot": 0,
+    "pointsPastTheColour": 401,
+    "withPaintInAnyScreenshot": 0,
+    "drawingTheEdgeTookMs": 221,
+    "wholeSwitchMs": 3197,
+    "edgeMegabytesAfter": {
+     "build.edge": 2.6,
+     "grow.edge": 0
+    }
+   },
+   {
+    "to": "grow",
+    "kind": "the short brush",
+    "arrived": true,
+    "screenshotsThrough": 33,
+    "barePaperPoints": 0,
+    "notPaperInAnyScreenshot": 0,
+    "pointsPastTheColour": 401,
+    "withPaintInAnyScreenshot": 0,
+    "drawingTheEdgeTookMs": 237,
+    "wholeSwitchMs": 3239,
+    "edgeMegabytesAfter": {
+     "build.edge": 0,
+     "grow.edge": 2.6
+    }
+   }
+  ],
+  "timingsWithNothingWatching": {
+   "pencil": {
+    "drawingTheEdgeMs": [
+     89,
+     77,
+     61,
+     83,
+     62,
+     83
+    ],
+    "tapToEndOfBrushMs": [
+     1593,
+     1578,
+     1573,
+     1574,
+     1587,
+     1591
+    ]
+   },
+   "organic": {
+    "drawingTheEdgeMs": [
+     16,
+     17,
+     30,
+     21,
+     18,
+     21
+    ],
+    "tapToEndOfBrushMs": [
+     1526,
+     1529,
+     1555,
+     1541,
+     1507,
+     1528
+    ]
+   }
+  },
+  "errors": [],
+  "ok": true
+ }
+]

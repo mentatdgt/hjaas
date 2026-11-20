@@ -1,0 +1,29 @@
+Frame times through the opening painting, WebKit, iPhone 13 profile, production build, ten cold loads each.
+node qa/tools/intro-frames.mjs 10 iphone 0 <url>   (fullGap: the longest frame from the sheet going in to 1 s after the intro ends; endGap: from the wash on; loopGap: the 4 s after)
+The Mac was not idle: iCloud's sync process was using about two thirds of one core throughout.
+
+THE PENCIL EDGE (this round)
+run 1: {"endGap":50,"endGapAt":4561,"fullGap":50,"over50":0,"slow":[],"loopGap":21,"loop50":0,"roomReq":118,"roomDone":136,"brush":485,"introMs":5292}
+run 2: {"endGap":30,"endGapAt":4515,"fullGap":33,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":115,"roomDone":129,"brush":412,"introMs":5245}
+run 3: {"endGap":34,"endGapAt":4866,"fullGap":34,"over50":0,"slow":[],"loopGap":21,"loop50":0,"roomReq":186,"roomDone":239,"brush":621,"introMs":5246}
+run 4: {"endGap":30,"endGapAt":4549,"fullGap":36,"over50":0,"slow":[],"loopGap":23,"loop50":0,"roomReq":126,"roomDone":139,"brush":437,"introMs":5271}
+run 5: {"endGap":36,"endGapAt":4873,"fullGap":36,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":130,"roomDone":148,"brush":512,"introMs":5250}
+run 6: {"endGap":37,"endGapAt":4567,"fullGap":39,"over50":0,"slow":[],"loopGap":20,"loop50":0,"roomReq":140,"roomDone":151,"brush":490,"introMs":5295}
+run 7: {"endGap":19,"endGapAt":4282,"fullGap":34,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":107,"roomDone":122,"brush":384,"introMs":5234}
+run 8: {"endGap":23,"endGapAt":4864,"fullGap":25,"over50":0,"slow":[],"loopGap":20,"loop50":0,"roomReq":52,"roomDone":61,"brush":319,"introMs":5229}
+run 9: {"endGap":21,"endGapAt":5030,"fullGap":28,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":53,"roomDone":63,"brush":309,"introMs":5247}
+run 10: {"endGap":21,"endGapAt":5022,"fullGap":27,"over50":0,"slow":[],"loopGap":19,"loop50":0,"roomReq":62,"roomDone":71,"brush":319,"introMs":5239}
+{"profile":"iphone","load":0,"url":"http://localhost:4173/","endGap":[50,30,34,30,36,37,19,23,21,21],"fullGap":[50,33,34,36,36,39,34,25,28,27],"over50":[0,0,0,0,0,0,0,0,0,0],"loopGap":[21,19,21,23,19,20,19,20,19,19],"loop50":[0,0,0,0,0,0,0,0,0,0],"roomReq":[118,115,186,126,130,140,107,52,53,62],"brush":[485,412,621,437,512,490,384,319,309,319]}
+
+THE BUILD BEFORE THIS ROUND (commit b32ba30, the organic edge)
+run 1: {"endGap":19,"endGapAt":5079,"fullGap":246,"over50":2,"slow":["246ms@-246","51ms@0"],"loopGap":20,"loop50":0,"roomReq":61,"roomDone":80,"brush":299,"introMs":4964}
+run 2: {"endGap":20,"endGapAt":4992,"fullGap":25,"over50":0,"slow":[],"loopGap":20,"loop50":0,"roomReq":54,"roomDone":71,"brush":257,"introMs":4924}
+run 3: {"endGap":19,"endGapAt":4022,"fullGap":25,"over50":0,"slow":[],"loopGap":21,"loop50":0,"roomReq":55,"roomDone":63,"brush":258,"introMs":4924}
+run 4: {"endGap":22,"endGapAt":4708,"fullGap":78,"over50":1,"slow":["78ms@-77"],"loopGap":20,"loop50":0,"roomReq":117,"roomDone":126,"brush":325,"introMs":4922}
+run 5: {"endGap":24,"endGapAt":4710,"fullGap":28,"over50":0,"slow":[],"loopGap":20,"loop50":0,"roomReq":60,"roomDone":68,"brush":264,"introMs":4927}
+run 6: {"endGap":19,"endGapAt":4692,"fullGap":40,"over50":0,"slow":[],"loopGap":20,"loop50":0,"roomReq":41,"roomDone":47,"brush":228,"introMs":4928}
+run 7: {"endGap":29,"endGapAt":4601,"fullGap":297,"over50":2,"slow":["297ms@-296","59ms@1"],"loopGap":22,"loop50":0,"roomReq":63,"roomDone":75,"brush":349,"introMs":4984}
+run 8: {"endGap":25,"endGapAt":4563,"fullGap":37,"over50":0,"slow":[],"loopGap":20,"loop50":0,"roomReq":47,"roomDone":54,"brush":224,"introMs":4930}
+run 9: {"endGap":32,"endGapAt":4699,"fullGap":42,"over50":0,"slow":[],"loopGap":20,"loop50":0,"roomReq":65,"roomDone":74,"brush":269,"introMs":4919}
+run 10: {"endGap":24,"endGapAt":4227,"fullGap":105,"over50":1,"slow":["105ms@-104"],"loopGap":22,"loop50":0,"roomReq":81,"roomDone":91,"brush":324,"introMs":4946}
+{"profile":"iphone","load":0,"url":"http://localhost:4174/","endGap":[19,20,19,22,24,19,29,25,32,24],"fullGap":[246,25,25,78,28,40,297,37,42,105],"over50":[2,0,0,1,0,0,2,0,0,1],"loopGap":[20,20,21,20,20,20,22,20,20,22],"loop50":[0,0,0,0,0,0,0,0,0,0],"roomReq":[61,54,55,117,60,41,63,47,65,81],"brush":[299,257,258,325,264,228,349,224,269,324]}

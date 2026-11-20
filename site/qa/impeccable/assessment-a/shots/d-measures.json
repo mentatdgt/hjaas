@@ -1,0 +1,527 @@
+{
+  "measures": {
+    "fresh": {
+      "logo": {
+        "x": 28,
+        "y": 68.8,
+        "w": 201.6,
+        "h": 119,
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "color": "rgb(0, 0, 238)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "counter": {
+        "x": 1193.7,
+        "y": 72.8,
+        "w": 218.3,
+        "h": 78,
+        "fontSize": "17px",
+        "fontWeight": "600",
+        "color": "rgb(43, 26, 16)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "pin": {
+        "x": 1227,
+        "y": 72.8,
+        "w": 185,
+        "h": 44,
+        "fontSize": "17px",
+        "fontWeight": "600",
+        "color": "rgb(43, 26, 16)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "pinFace": {
+        "x": 1229,
+        "y": 74.8,
+        "w": 181,
+        "h": 40,
+        "fontSize": "17px",
+        "fontWeight": "600",
+        "color": "rgb(43, 26, 16)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "icon": {
+        "x": 1310,
+        "y": 83.3,
+        "w": 22,
+        "h": 22,
+        "fontSize": "17px",
+        "fontWeight": "600",
+        "color": "rgb(43, 26, 16)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "count": {
+        "x": 1339.9,
+        "y": 72.8,
+        "w": 56.1,
+        "h": 44,
+        "fontSize": "17px",
+        "fontWeight": "600",
+        "color": "rgb(43, 26, 16)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "of": {
+        "x": 1365.1,
+        "y": 86.3,
+        "w": 30.9,
+        "h": 17,
+        "fontSize": "17px",
+        "fontWeight": "500",
+        "color": "rgb(106, 74, 44)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "note": {
+        "x": 1193.7,
+        "y": 124.8,
+        "w": 218.3,
+        "h": 26,
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "color": "rgb(251, 243, 223)",
+        "bg": "rgba(34, 20, 11, 0.8)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "hud": {
+        "x": 0,
+        "y": 44.8,
+        "w": 1440,
+        "h": 810.4,
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "color": "rgb(43, 26, 16)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "noteText": "Find the 10 hidden mushrooms",
+      "pinVars": {
+        "wc": "115px",
+        "wb": "185px",
+        "d0": "70px"
+      }
+    },
+    "midNote": {
+      "text": "Find the 10 hidden mushrooms",
+      "on": true
+    },
+    "unlocked": {
+      "pin": {
+        "x": 1227,
+        "y": 72.8,
+        "w": 185,
+        "h": 44,
+        "fontSize": "17px",
+        "fontWeight": "600",
+        "color": "rgb(43, 26, 16)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "action": {
+        "x": 1227,
+        "y": 72.8,
+        "w": 185,
+        "h": 44,
+        "fontSize": "17px",
+        "fontWeight": "600",
+        "color": "rgba(0, 0, 0, 0)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "label": {
+        "x": 1270,
+        "y": 72.8,
+        "w": 121.9,
+        "h": 44,
+        "fontSize": "17px",
+        "fontWeight": "600",
+        "color": "rgb(43, 26, 16)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "icon": {
+        "x": 1240,
+        "y": 83.3,
+        "w": 22,
+        "h": 22,
+        "fontSize": "17px",
+        "fontWeight": "600",
+        "color": "rgb(43, 26, 16)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "counter": {
+        "x": 1193.7,
+        "y": 72.8,
+        "w": 218.3,
+        "h": 78,
+        "fontSize": "17px",
+        "fontWeight": "600",
+        "color": "rgb(43, 26, 16)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      }
+    },
+    "tabOrderUnlocked": [
+      "a.hj-logo [HJaaS, Hui Jie as a Service]",
+      "button.hj-pin-action [Contact Hui Jie]",
+      "body. [10\n          / 10\n        \n   ]",
+      "a.hj-logo [HJaaS, Hui Jie as a Service]"
+    ],
+    "form": {
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "color": "rgb(43, 26, 16)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "sheet": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "color": "rgb(43, 26, 16)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "h2": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "fontSize": "24px",
+        "fontWeight": "680",
+        "color": "rgb(43, 26, 16)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "close": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "fontSize": "13.3333px",
+        "fontWeight": "400",
+        "color": "rgb(106, 74, 44)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "font": "Arial"
+      },
+      "label": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "fontSize": "14px",
+        "fontWeight": "600",
+        "color": "rgb(106, 74, 44)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "legend": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "fontSize": "14px",
+        "fontWeight": "600",
+        "color": "rgb(106, 74, 44)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "input": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "color": "rgb(43, 26, 16)",
+        "bg": "rgb(255, 253, 246)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "textarea": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "color": "rgb(43, 26, 16)",
+        "bg": "rgb(255, 253, 246)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "chip": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "fontSize": "15px",
+        "fontWeight": "600",
+        "color": "rgb(43, 26, 16)",
+        "bg": "rgb(255, 253, 246)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "send": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "fontSize": "17px",
+        "fontWeight": "600",
+        "color": "rgb(43, 26, 16)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "active": "",
+      "sheetScroll": {
+        "scrollH": 0,
+        "clientH": 0
+      },
+      "chips": [
+        {
+          "t": "Build",
+          "w": 0,
+          "h": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "t": "Design",
+          "w": 0,
+          "h": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "t": "Film",
+          "w": 0,
+          "h": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "t": "Grow",
+          "w": 0,
+          "h": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "t": "Travel",
+          "w": 0,
+          "h": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "t": "Something else",
+          "w": 0,
+          "h": 0,
+          "x": 0,
+          "y": 0
+        }
+      ]
+    },
+    "tabOrderDialog": [
+      "a.hj-logo",
+      "button.hj-pin-action",
+      "a.hj-logo",
+      "button.hj-pin-action",
+      "body.",
+      "a.hj-logo",
+      "button.hj-pin-action",
+      "a.hj-logo",
+      "button.hj-pin-action",
+      "body.",
+      "a.hj-logo",
+      "button.hj-pin-action",
+      "a.hj-logo"
+    ],
+    "errors": {
+      "active": "hj-name",
+      "err": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "fontSize": "13.5px",
+        "fontWeight": "500",
+        "color": "rgb(157, 48, 24)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "texts": [
+        null,
+        null,
+        null
+      ],
+      "sheet": {
+        "x": 1008,
+        "y": 127,
+        "w": 404,
+        "h": 578.8,
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "color": "rgb(43, 26, 16)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "sheetScroll": {
+        "scrollH": 575,
+        "clientH": 575
+      },
+      "invalidBorder": "rgb(156, 106, 28)"
+    },
+    "badEmail": [
+      null,
+      "That email looks incomplete. Check it for typos.",
+      null
+    ],
+    "filledChip": {
+      "bg": "rgb(237, 181, 37)",
+      "border": "rgb(156, 106, 28)",
+      "color": "rgb(43, 26, 16)"
+    },
+    "sending": {
+      "disabled": true,
+      "text": "Sending",
+      "filter": "saturate(0.7)",
+      "ariaBusy": null
+    },
+    "sent": {
+      "active": "hj-sent",
+      "sheet": {
+        "x": 1008,
+        "y": 127,
+        "w": 404,
+        "h": 579,
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "color": "rgb(43, 26, 16)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "h3": {
+        "x": 1137,
+        "y": 382.4,
+        "w": 146,
+        "h": 26,
+        "fontSize": "22px",
+        "fontWeight": "680",
+        "color": "rgb(43, 26, 16)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "p": {
+        "x": 1115.6,
+        "y": 416.4,
+        "w": 188.7,
+        "h": 22.4,
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "color": "rgb(106, 74, 44)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "done": {
+        "x": 1032,
+        "y": 530.6,
+        "w": 356,
+        "h": 48,
+        "fontSize": "17px",
+        "fontWeight": "600",
+        "color": "rgb(43, 26, 16)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "closeVisible": true
+    },
+    "afterEscape": {
+      "open": false,
+      "active": "hj-pin-action",
+      "focusVisible": true
+    },
+    "reopen": {
+      "formHidden": false,
+      "name": "",
+      "active": "hj-name"
+    },
+    "backdropClose": {
+      "open": false,
+      "active": "hj-pin-action"
+    },
+    "draftKept": "Draft Person",
+    "alert": {
+      "x": 1032,
+      "y": 631.8,
+      "w": 356,
+      "h": 59.1,
+      "fontSize": "14.5px",
+      "fontWeight": "500",
+      "color": "rgb(124, 36, 16)",
+      "bg": "rgb(246, 220, 207)",
+      "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+    },
+    "shortWindow": {
+      "dialog": {
+        "x": 848,
+        "y": 127,
+        "w": 404,
+        "h": 477,
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "color": "rgb(43, 26, 16)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "sheet": {
+        "x": 848,
+        "y": 127,
+        "w": 404,
+        "h": 477,
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "color": "rgb(43, 26, 16)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      },
+      "scroll": {
+        "scrollH": 648,
+        "clientH": 473
+      },
+      "pin": {
+        "x": 977.8,
+        "y": 28,
+        "w": 185,
+        "h": 44,
+        "fontSize": "17px",
+        "fontWeight": "600",
+        "color": "rgb(43, 26, 16)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "font": "\"Bricolage Grotesque Variable\", \"Avenir "
+      }
+    }
+  },
+  "logs": [
+    "debug: [vite] connecting...",
+    "debug: [vite] connected.",
+    "debug: [vite] connecting...",
+    "debug: [vite] connected.",
+    "debug: [vite] connecting...",
+    "debug: [vite] connected.",
+    "info: [hjaas] contact form payload (test mode, not sent): {name: Mei Lin Tan, email: meilin@gmail.com, needs: Array(2), message: We are redoing a 4-room flat in Tiong Bahru and wo…n and built-in shelving. Could we talk next week?}"
+  ]
+}

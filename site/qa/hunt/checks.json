@@ -1,0 +1,228 @@
+{
+ "spots": [
+  {
+   "id": "door",
+   "tier": "easy",
+   "heightPlatePx": 28,
+   "showsAtLeast": "98%",
+   "differsFromWhatIsBehindIt": 127,
+   "tucked": null,
+   "opacity": null,
+   "tapBoxAt1440": [
+    44,
+    44
+   ]
+  },
+  {
+   "id": "bench",
+   "tier": "easy",
+   "heightPlatePx": 22,
+   "showsAtLeast": "99%",
+   "differsFromWhatIsBehindIt": 88,
+   "tucked": null,
+   "opacity": null,
+   "tapBoxAt1440": [
+    44,
+    44
+   ]
+  },
+  {
+   "id": "crop-hood",
+   "tier": "hard",
+   "heightPlatePx": 18,
+   "showsAtLeast": "97%",
+   "differsFromWhatIsBehindIt": 61,
+   "tucked": null,
+   "opacity": "0.85",
+   "tapBoxAt1440": [
+    44,
+    44
+   ]
+  },
+  {
+   "id": "under-shelf",
+   "tier": "medium",
+   "heightPlatePx": 16,
+   "showsAtLeast": "99%",
+   "differsFromWhatIsBehindIt": 63,
+   "tucked": null,
+   "opacity": null,
+   "tapBoxAt1440": [
+    44,
+    44
+   ]
+  },
+  {
+   "id": "crop-shelf",
+   "tier": "hard",
+   "heightPlatePx": 20,
+   "showsAtLeast": "91%",
+   "differsFromWhatIsBehindIt": 107,
+   "tucked": "polygon(0px 0px, 100% 0px, 100% 85%, 0px 85%)",
+   "opacity": null,
+   "tapBoxAt1440": [
+    44,
+    44
+   ]
+  },
+  {
+   "id": "floor",
+   "tier": "medium",
+   "heightPlatePx": 24,
+   "showsAtLeast": "89%",
+   "differsFromWhatIsBehindIt": 133,
+   "tucked": null,
+   "opacity": null,
+   "tapBoxAt1440": [
+    44,
+    44
+   ]
+  },
+  {
+   "id": "pipe",
+   "tier": "medium",
+   "heightPlatePx": 16,
+   "showsAtLeast": "100%",
+   "differsFromWhatIsBehindIt": 151,
+   "tucked": null,
+   "opacity": null,
+   "tapBoxAt1440": [
+    44,
+    44
+   ]
+  },
+  {
+   "id": "switch-box",
+   "tier": "easy",
+   "heightPlatePx": 18,
+   "showsAtLeast": "94%",
+   "differsFromWhatIsBehindIt": 127,
+   "tucked": null,
+   "opacity": null,
+   "tapBoxAt1440": [
+    44,
+    44
+   ]
+  },
+  {
+   "id": "drain",
+   "tier": "medium",
+   "heightPlatePx": 21,
+   "showsAtLeast": "97%",
+   "differsFromWhatIsBehindIt": 122,
+   "tucked": null,
+   "opacity": null,
+   "tapBoxAt1440": [
+    44,
+    44
+   ]
+  },
+  {
+   "id": "crop-rack",
+   "tier": "hard",
+   "heightPlatePx": 18,
+   "showsAtLeast": "96%",
+   "differsFromWhatIsBehindIt": 96,
+   "tucked": null,
+   "opacity": null,
+   "tapBoxAt1440": [
+    44,
+    44
+   ]
+  }
+ ],
+ "rules": {
+  "tabOrder": {
+   "order": [
+    "door",
+    "bench",
+    "crop-hood",
+    "under-shelf",
+    "crop-shelf",
+    "floor",
+    "pipe",
+    "switch-box",
+    "drain",
+    "crop-rack"
+   ],
+   "leftToRight": true
+  },
+  "savedProgress": {
+   "caption": "4 of 10 found Find all 10 to reach Hui Jie",
+   "stillHidden": [
+    "bench",
+    "under-shelf",
+    "floor",
+    "pipe",
+    "switch-box",
+    "drain"
+   ]
+  },
+  "summary": {
+   "ten": true,
+   "tiers": {
+    "easy": [
+     "door",
+     "bench",
+     "switch-box"
+    ],
+    "medium": [
+     "under-shelf",
+     "floor",
+     "pipe",
+     "drain"
+    ],
+    "hard": [
+     "crop-hood",
+     "crop-shelf",
+     "crop-rack"
+    ]
+   },
+   "everyoneAtLeast14px": true,
+   "everyoneAtLeast60PercentInView": true,
+   "lowestContrast": "crop-hood"
+  },
+  "tapBoxes": [
+   {
+    "size": "chrome 1440x900",
+    "smallestBox": 44,
+    "lowestUnderADrawing": 1,
+    "lowestUnderATapBox": 1,
+    "overlaps": [],
+    "ok": true
+   },
+   {
+    "size": "chrome 2560x1440",
+    "smallestBox": 44,
+    "lowestUnderADrawing": 1,
+    "lowestUnderATapBox": 1,
+    "overlaps": [],
+    "ok": true
+   },
+   {
+    "size": "webkit 390x844",
+    "smallestBox": 44,
+    "lowestUnderADrawing": 1,
+    "lowestUnderATapBox": 1,
+    "overlaps": [],
+    "ok": true
+   },
+   {
+    "size": "webkit 360x740",
+    "smallestBox": 44,
+    "lowestUnderADrawing": 1,
+    "lowestUnderATapBox": 1,
+    "overlaps": [],
+    "ok": true
+   },
+   {
+    "size": "webkit 320x640",
+    "smallestBox": 44,
+    "lowestUnderADrawing": 1,
+    "lowestUnderATapBox": 1,
+    "overlaps": [],
+    "ok": true
+   }
+  ]
+ }
+}

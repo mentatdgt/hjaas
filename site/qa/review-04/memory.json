@@ -1,0 +1,62 @@
+{
+ "iphone-webkit": {
+  "set": "1.5x (canvas 735 px wide)",
+  "beforeMB": {
+   "everythingDecodedAtOnce": 242.7,
+   "stills": 37.9,
+   "mist_to_write": 100.2,
+   "write_loop": 58.3,
+   "look_up": 28.2,
+   "thumbs_up": 18.1
+  },
+  "afterMB": {
+   "peakWithGrowOpen": 66.9,
+   "atPose": "mist_to_write#3",
+   "stills": 21.3,
+   "canvases": 3.5,
+   "clipFramesAtThatMoment": 42,
+   "clipFramesPeak": 42,
+   "afterLeavingForBuild": 21.3
+  },
+  "samples": 3508,
+  "posesShown": 454,
+  "framesSheHadToSkip": 0,
+  "afterComingBackFromBuild": {
+   "framesSheHadToSkip": 0,
+   "reactionFramesDecodedAgain": true
+  },
+  "fullReactionFromMisting": true,
+  "fullReactionFromWriting": true,
+  "errors": []
+ },
+ "desktop-chrome": {
+  "set": "2x (as delivered)",
+  "beforeMB": {
+   "everythingDecodedAtOnce": 242.7,
+   "stills": 37.9,
+   "mist_to_write": 100.2,
+   "write_loop": 58.3,
+   "look_up": 28.2,
+   "thumbs_up": 18.1
+  },
+  "afterMB": {
+   "peakWithGrowOpen": 114.9,
+   "atPose": "mist_to_write#3",
+   "stills": 37.9,
+   "canvases": 2.6,
+   "clipFramesAtThatMoment": 74.5,
+   "clipFramesPeak": 74.5,
+   "afterLeavingForBuild": 37.9
+  },
+  "samples": 3754,
+  "posesShown": 460,
+  "framesSheHadToSkip": 0,
+  "afterComingBackFromBuild": {
+   "framesSheHadToSkip": 0,
+   "reactionFramesDecodedAgain": true
+  },
+  "fullReactionFromMisting": true,
+  "fullReactionFromWriting": true,
+  "errors": []
+ }
+}
