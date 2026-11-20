@@ -1,48 +1,271 @@
 {
- "note": "Scene 3 (café) routines. Holds in ms; [a,b] = random in range. Every actor runs its own routine independently and out of sync. Calm and slow. Layer order and positions are in frames.json.",
+ "note": "Scene 3 (caf\u00e9) routines. Holds in ms; [a,b] = random in range. Every actor runs its own routine independently and out of sync. Calm and slow. Layer order and positions are in frames.json.",
  "actors": {
   "rachel": {
    "routine": [
-    {"loop": "sketch", "repeat": [6, 12], "steps": [
-      {"still": "R_A1_sketch", "ms": [500, 900], "blink_ok": true},
-      {"still": "R_A2_stroke", "ms": [350, 600]}]},
-    {"clip": "sip", "ms": 83},
-    {"still": "R_B1_sip", "ms": [1800, 2600]},
-    {"clip": "sip", "ms": 70, "reverse": true},
-    {"still": "R_A1_sketch", "ms": [600, 1000]}
+    {
+     "loop": "sketch",
+     "repeat": [
+      6,
+      12
+     ],
+     "steps": [
+      {
+       "still": "R_A1_sketch",
+       "ms": [
+        500,
+        900
+       ],
+       "blink_ok": true
+      },
+      {
+       "still": "R_A2_stroke",
+       "ms": [
+        350,
+        600
+       ]
+      }
+     ]
+    },
+    {
+     "clip": "sip",
+     "ms": 83
+    },
+    {
+     "still": "R_B1_sip",
+     "ms": [
+      1800,
+      2600
+     ]
+    },
+    {
+     "clip": "sip",
+     "ms": 70,
+     "reverse": true
+    },
+    {
+     "still": "R_A1_sketch",
+     "ms": [
+      600,
+      1000
+     ]
+    }
    ],
-   "blink": {"on": "R_A1_sketch", "frames": [{"still": "R_A1_blink", "ms": 90}], "every_ms": [3000, 6000]},
+   "blink": {
+    "on": "R_A1_sketch",
+    "frames": [
+     {
+      "still": "R_A1_blink",
+      "ms": 90
+     }
+    ],
+    "every_ms": [
+     3000,
+     6000
+    ]
+   },
    "reaction": {
-    "note": "On a mushroom find. If she's mid-sip, finish: hold B1 300 ms, play sip in reverse, then react. No hand gesture.",
+    "note": "On a mushroom find. Drawn holds, no clip: a light glance up hidden by a blink, a smile, then a glance back down. If she's mid-sip, hold B1 300 ms, play sip in reverse, then react.",
     "steps": [
-     {"clip": "look_up", "ms": 60},
-     {"still": "R_K1_look", "ms": 1300},
-     {"clip": "look_up", "ms": 50, "reverse": true},
-     {"still": "R_A1_sketch", "ms": 300}
+     {
+      "still": "R_A1_blink",
+      "ms": 70
+     },
+     {
+      "still": "R_K1_blink",
+      "ms": 70
+     },
+     {
+      "still": "R_K1_look",
+      "ms": [
+       350,
+       450
+      ]
+     },
+     {
+      "still": "R_K2_smile",
+      "ms": [
+       1100,
+       1400
+      ]
+     },
+     {
+      "still": "R_K1_look",
+      "ms": 250
+     },
+     {
+      "still": "R_K1_blink",
+      "ms": 70
+     },
+     {
+      "still": "R_A1_blink",
+      "ms": 80
+     },
+     {
+      "still": "R_A1_sketch",
+      "ms": 400
+     }
     ]
    }
   },
-  "barista": {"routine": [
-    {"loop": "polish", "repeat": [5, 9], "steps": [
-      {"still": "B_1", "ms": [500, 800]}, {"still": "B_2", "ms": [500, 800]},
-      {"still": "B_3", "ms": [500, 800]}, {"still": "B_2", "ms": [500, 800]}]},
-    {"still": "B_4", "ms": [1200, 1800]}]},
-  "child": {"routine": [
-    {"loop": "colour", "repeat": [10, 18], "steps": [
-      {"still": "C_1", "ms": [300, 550]}, {"still": "C_2", "ms": [300, 550]}]},
-    {"still": "C_3", "ms": [1200, 1600]}]},
-  "oldman": {"routine": [
-    {"still": "O_1", "ms": [8000, 15000]},
-    {"still": "O_2", "ms": 450},
-    {"still": "O_3", "ms": [8000, 15000]}]},
-  "cat": {"routine": [
-    {"loop": "breathe", "repeat": [4, 8], "steps": [
-      {"still": "cat_1", "ms": [1000, 1300]}, {"still": "cat_2", "ms": [1000, 1300]}]},
-    {"still": "cat_3", "ms": 450}]},
-  "mum": {"routine": [
-    {"still": null, "ms": [4000, 8000], "note": "null = draw nothing; she's in the plate"},
-    {"still": "M_blink_half", "ms": 60},
-    {"still": "M_blink_closed", "ms": 90},
-    {"still": "M_blink_half", "ms": 60}]}
+  "barista": {
+   "routine": [
+    {
+     "loop": "polish",
+     "repeat": [
+      5,
+      9
+     ],
+     "steps": [
+      {
+       "still": "B_1",
+       "ms": [
+        500,
+        800
+       ]
+      },
+      {
+       "still": "B_2",
+       "ms": [
+        500,
+        800
+       ]
+      },
+      {
+       "still": "B_3",
+       "ms": [
+        500,
+        800
+       ]
+      },
+      {
+       "still": "B_2",
+       "ms": [
+        500,
+        800
+       ]
+      }
+     ]
+    },
+    {
+     "still": "B_4",
+     "ms": [
+      1200,
+      1800
+     ]
+    }
+   ]
+  },
+  "child": {
+   "routine": [
+    {
+     "loop": "colour",
+     "repeat": [
+      10,
+      18
+     ],
+     "steps": [
+      {
+       "still": "C_1",
+       "ms": [
+        300,
+        550
+       ]
+      },
+      {
+       "still": "C_2",
+       "ms": [
+        300,
+        550
+       ]
+      }
+     ]
+    },
+    {
+     "still": "C_3",
+     "ms": [
+      1200,
+      1600
+     ]
+    }
+   ]
+  },
+  "oldman": {
+   "routine": [
+    {
+     "still": "O_1",
+     "ms": [
+      8000,
+      15000
+     ]
+    },
+    {
+     "still": "O_2",
+     "ms": 450
+    },
+    {
+     "still": "O_3",
+     "ms": [
+      8000,
+      15000
+     ]
+    }
+   ]
+  },
+  "cat": {
+   "routine": [
+    {
+     "loop": "breathe",
+     "repeat": [
+      4,
+      8
+     ],
+     "steps": [
+      {
+       "still": "cat_1",
+       "ms": [
+        1000,
+        1300
+       ]
+      },
+      {
+       "still": "cat_2",
+       "ms": [
+        1000,
+        1300
+       ]
+      }
+     ]
+    },
+    {
+     "still": "cat_3",
+     "ms": 450
+    }
+   ]
+  },
+  "mum": {
+   "routine": [
+    {
+     "still": null,
+     "ms": [
+      4000,
+      8000
+     ],
+     "note": "null = draw nothing; she's in the plate"
+    },
+    {
+     "still": "M_blink_half",
+     "ms": 60
+    },
+    {
+     "still": "M_blink_closed",
+     "ms": 90
+    },
+    {
+     "still": "M_blink_half",
+     "ms": 60
+    }
+   ]
+  }
  }
 }

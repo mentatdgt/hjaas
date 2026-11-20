@@ -68,3 +68,6 @@ Quinn is restyling **every character** (round 5: Rachel's blink and look, the ba
 
 ## 8. Morning report
 A short table of what was asked for and the result, anything you decided yourself, and anything you couldn't do. Then how to see it (the dev URL with `#design`). Commit and push as you go.
+
+## Update 2026-11-20 22:40 (Wren): final café package is on main
+`frames/018-cafe-scene/site/` has been replaced with the final art: Rachel and the barista restyled; the child, mum, old man and cat as before; a new `sip` clip; anti-aliased edges. **The `look_up` clip is gone:** Rachel's reaction is now only stills (see `routine.json`). The layer boxes moved by about 1 px. Pull main, rebuild the assets and use it. The edge and mushroom work is unaffected.

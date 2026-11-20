@@ -1,6 +1,6 @@
 """Build the café (scene 3) animation package from approved 018 assets and the two Higgsfield clips.
 
-Usage: python3 -I tools/cafe_build.py <video_sip_dir> <video_look_dir> <outdir>
+Usage: python3 -I tools/cafe_build.py <video_sip_dir> <outdir>
 (video dirs hold f_001.png ... extracted at native size, 960x960)
 
 Output: <outdir>/plate.png, <outdir>/<actor>/*.png, <outdir>/frames.json
@@ -15,14 +15,16 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 A = f'{REPO}/frames/018-cafe-scene/approved'
 TRIM = 18
 CW, CH = 2580 - 2 * TRIM, 1432
-VID_SIP, VID_LOOK, OUT = sys.argv[1:4]
+VID_SIP, OUT = sys.argv[1:3]
 crop = json.load(open(f'{REPO}/frames/018-cafe-scene/hf-inputs/crops.json'))
+from scipy import ndimage as _ndi
 
 def key(name):
     a = np.asarray(Image.open(f'{A}/{name}.png').convert('RGBA')).astype(np.float32)
     r, g, b = a[..., 0], a[..., 1], a[..., 2]
     gs = np.clip((g - np.maximum(r, b) - 40) / 120, 0, 1)
     al = (1 - gs) * (a[..., 3] / 255)
+    al = ndi.gaussian_filter(al, 0.7)   # anti-alias the stair-stepped key edge
     edge = ndi.binary_dilation(al < 0.99, iterations=3)
     cap = np.maximum(r, b) * 1.05 + 10
     a[..., 1] = np.where(edge & (g > cap), cap, g)
@@ -42,7 +44,7 @@ actors = {
     'child':   ['018_C_1', '018_C_2', '018_C_3'],
     'oldman':  ['018_O_1', '018_O_2', '018_O_3'],
     'barista': ['018_B_1', '018_B_2', '018_B_3', '018_B_4'],
-    'rachel':  ['018_R_A1_sketch', '018_R_A2_stroke', '018_R_A1_blink', '018_R_B1_sip', '018_R_K1_look'],
+    'rachel':  ['018_R_A1_sketch', '018_R_A2_stroke', '018_R_A1_blink', '018_R_B1_sip', '018_R_K1_look', '018_R_K1_blink', '018_R_K2_smile'],
     'mum':     ['018_M_blink_half', '018_M_blink_closed'],
 }
 man = {'canvas': {'w': CW, 'h': CH, 'trim_x': TRIM, 'to_plate_scale': 1672 / CW,
@@ -56,8 +58,9 @@ for actor, names in actors.items():
     if actor == 'mum':      # the mum lives in the plate; her blink stills are patches over it
         base = np.dstack([plate, np.full((1432, 2580), 255, np.float32)])
         Kb = {}
+        mum_open = over(plate, key('018_mum_green'))
         for n, v in K.items():
-            diff = np.abs(over(plate, v) - plate).max(-1) > 6
+            diff = np.abs(over(plate, v) - mum_open).max(-1) > 12
             Kb[n] = (v, diff)
         U = np.zeros((1432, 2580), bool)
         for v, d in Kb.values(): U |= d
@@ -140,6 +143,5 @@ def build_clip(d, frames, base_name, name):
     man['clips'][name] = {'layer': 'rachel', 'base': base_name, 'x': int(lx), 'y': int(ly), 'frames': fl}
     print(name, 'patch', px1 - px0, 'x', py1 - py0, len(frames), 'frames at', lx, ly)
 
-build_clip(VID_SIP, list(range(1, 74, 2)) + [73], 'R_A1_sketch', 'sip')
-build_clip(VID_LOOK, list(range(1, 50, 2)), 'R_A1_sketch', 'look_up')
+build_clip(VID_SIP, list(range(8, 67, 2)) + [70, 73], 'R_A1_sketch', 'sip')
 json.dump(man, open(f'{OUT}/frames.json', 'w'), indent=1)
