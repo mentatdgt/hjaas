@@ -75,3 +75,7 @@ The user keeps this layout. **Hair changed: loose and wavy, no bandana, no bun**
 3. Move her a little left so her head and camera sit inside about 55–75% of the width, without covering the presenter or the Merlion's head. Same size and crop.
 4. Make the car a lower, longer fastback saloon, with the roof sloping to the tail. Same colours and position.
 5. Calm the leaves in the top-right corner a little.
+
+### Round 1 result, `incoming/019_r2.png` (2026-11-20, Wren)
+All five fixes are done: no glasses, loose hair with no bandana, Rachel's head and camera at about 60–72% of the width, a low fastback car, and calmer leaves. Quinn redrew the image rather than editing it, which is fine at staging. Rachel now holds a DSLR instead of the gimbal.
+One thing is left: the camera lens almost touches the presenter's raised left hand. Both of them will move in the animation, so they need a clear gap of about 40 px. Proposed: approve this layout and fix the gap in step 1 of the next task (020_scene).
