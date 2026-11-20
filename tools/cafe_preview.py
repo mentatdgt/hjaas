@@ -29,10 +29,9 @@ def timeline(actor, total_ms, react_ms=None):
     a = rt['actors'][actor]; tl = []; t = 0
     while t < total_ms:
         for ev, ms in expand(a['routine']):
-            if actor == 'rachel' and react_ms is not None and t <= react_ms < t + ms:
-                last = ev
-                if last[0] == 'clip' and last[1] == 'sip' or (last[0] == 'still' and last[1] == 'R_B1_sip'):
-                    for e2, m2 in expand([{"clip": "sip", "ms": 70, "reverse": True}]): tl.append((t, e2)); t += m2
+            if actor == 'rachel' and react_ms is not None and t <= react_ms < t + ms and ev[1] in ('R_S1_reach', 'R_S2_lift', 'R_B1_sip'):
+                react_ms = t + ms          # mid-sip: finish the sip first, react when she is sketching again
+            elif actor == 'rachel' and react_ms is not None and t <= react_ms < t + ms:
                 for e2, m2 in expand(a['reaction']['steps']): tl.append((t, e2)); t += m2
                 react_ms = None; break
             tl.append((t, ev)); t += ms

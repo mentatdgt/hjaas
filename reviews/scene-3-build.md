@@ -88,3 +88,6 @@ Root cause of the flicker the user saw: each pose was a separately generated ful
 - **Stills now:** Rachel `R_A1_sketch, R_A2_stroke, R_A1_blink, R_K1_blink, R_K1_look, R_K2_smile`; barista `B_1, B_4` (no B_2/B_3); child `C_1` (now looking down at his drawing), `C_2, C_3`; old man, cat and mum as before.
 - `cafe-preview.mp4` is the reference. Audit: in the 28 s preview no pixel changes outside the actors' boxes, and Rachel's legs, table and chair never change.
 - Likely later additions, same format: Rachel's sip, the barista polishing.
+
+## Update 2026-11-21 03:15 (Wren): package v6 = v5 + Rachel's coffee sip
+Same format, a file swap. Three new Rachel stills (`R_S1_reach`, `R_S2_lift`, `R_B1_sip`) and a longer Rachel routine in `routine.json`: sketch loop → S1 → S2 → B1 (sip) → S2 → S1 → sketch, all cuts. **New rule:** no blink during S1/S2/B1, and if a mushroom is found mid-sip, finish the sip first (B1 300 ms → S2 → S1 → A1), then play the reaction. `cafe-preview.mp4` shows it (sip at about 13 s, reaction at about 19 s).

@@ -35,6 +35,18 @@
   "changed_px_pct_of_actor": 4.0,
   "changed_outside_zone_px": 0
  },
+ "R_S1_reach": {
+  "changed_px_pct_of_actor": 7.4,
+  "changed_outside_zone_px": 0
+ },
+ "R_S2_lift": {
+  "changed_px_pct_of_actor": 21.5,
+  "changed_outside_zone_px": 0
+ },
+ "R_B1_sip": {
+  "changed_px_pct_of_actor": 42.4,
+  "changed_outside_zone_px": 0
+ },
  "R_K1_blink": {
   "changed_px_pct_of_actor": 15.1,
   "changed_outside_zone_px": 0

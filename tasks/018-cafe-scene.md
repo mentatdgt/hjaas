@@ -212,3 +212,8 @@ The user's review of preview v4: jitter, Rachel's hair and colours changing, the
 - **Cause:** each pose was a separately generated full image. A blink changed 25–29% of Rachel's pixels (hair, top, legs).
 - **Fix:** `tools/cafe_build5.py` builds every pose as base + moving part only. A blink now changes 4% (the eyes). The reaction uses the round-4 head family (consistent hair). The barista's B_2/B_3 are dropped. The child's eyes and mouth were edited directly (`tools/cafe_child_gaze.py`). The fan is rendered from the plate (`tools/cafe_fan.py`).
 - **Rounds 6 and 7 are cancelled** (colour pass, Quinn's child gaze). Rachel's sip continues as Quinn-loop job 001.
+
+### QC of Quinn's rounds 6–7 zip (Wren, 2026-11-21 03:00)
+- **Accepted: `018_R_S1_reach`, `018_R_S2_lift`.** Head and legs identical to A1 (0.6% and 1.5% of the head changed, the eyes). Used arms-only in package v6, with the round-4 `R_B1_sip` for the sip itself.
+- **Rejected: the colour pass on the child, mum and old man** (kept in `approved/round6-rejected/`). The child's hair became a flat blob with no outline, the mum's shadows turned blotchy, and the old man lost his hair and face detail. The originals stay. The child's gaze in these files also still looked sideways; Wren's direct edit stays.
+- Quinn-loop job 001 (sip poses) is cancelled: no longer needed.
