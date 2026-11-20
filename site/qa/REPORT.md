@@ -941,3 +941,54 @@ The last line it prints has the ten runs: `endGap` is the end of the intro, `ful
   browser may hold more (for example copies on the graphics card), or less.
 - **Whether the browser really frees a room's picture** when the page lets go of it. The page drops it; what
   WebKit then does with the decoded copy is its own business.
+
+## Edge (organic)
+
+`reviews/scene-edge-organic.md`, on `site/scene-2`. **Paused part-way, at the user's request (2026-11-20).**
+The new edge is built and is the default, and it is committed. Most of the checks the review asks for had
+not been run yet: see "Half-done" below. `main` was pulled first (as a merge); nothing was merged into any
+other branch.
+
+| | Asked for | Where it stands | Evidence |
+|---|---|---|---|
+| ✅ | The organic edge, as the mock-up was made | Built from the review's recipe, in plate pixels: the rounded rectangle (radius 6% of the width), four scales of noise for the wander (up to 60 px in or out), a melt whose width changes along the edge (from 15 to 105 px, down to 6), and a calmer, thinner bottom fifth. Seeded per scene. | `src/engine/edge.ts` |
+| ✅ | The mock-up beside the build at 1440 × 900 | Made. To my eye the character matches option 2: the line wanders, the softness changes, and where the wander runs out past the plate the picture ends on a crisp straight line, as in the mock-up. | `edge/organic-compare.jpg` |
+| ✅ | Production gets only this edge | `organic` is the default. `a-round`, `a`, `b` and `c` remain for `?edge=` in development. | `src/engine/edge.ts` |
+| ✅ | Rachel fully opaque in every pose | Every pixel any of her frames ever covers, in both scenes, read from the formula and from the edge as drawn on the page: **1.00 everywhere.** The fade comes no nearer to her than 46 px in Build and 10 px in Grow (under the trolley's wheels). | `edge/organic-rachel.json` |
+| ⚠️ | Every mushroom and tap area at 0.95 or more | By the formula, yes: `npm test` checks all 20 drawings and their tap boxes at six screen sizes, and passes. **Not yet read back from the page** as the review asks. | `src/engine/edge.test.ts` |
+| ✅ | Nudge a spot minimally, don't weaken the edge | Three of Build's mushrooms along the bottom moved up: `screed` 13 px, `tiles` 7 px, `toolbox` 4 px. Nothing in Grow moved. | `src/scenes/build.ts`, `edge/organic-pick.json` |
+| ❌ | Screenshots of Build and Grow at 1440 × 900, 390 × 844 and 360 × 740 | Not taken. | – |
+| ❌ | The paint-in still reveals into this shape | Not checked. Nothing about how the brush works changed, but I have not watched it. | – |
+| ❌ | Panning and switching stay smooth (WebKit) | Not re-checked. The edge is still drawn once per scene. | – |
+
+`npm test`: 53 of 53 pass. There are no tests yet for the organic edge's own character (that it wanders,
+that its softness varies).
+
+### Half-done
+
+- **The checks marked ❌ and ⚠️ above.**
+- **Memory was not re-measured.** The organic edge is drawn at half the plate's size, not a quarter, because
+  its crisp places and fine wander need the detail: 1.6 MB per scene against 0.4. To pay for that, a scene
+  out of sight now gives its edge back too (it is kept as a small PNG). By my arithmetic the lab's peak goes
+  from 77.4 to about 78.2 MB on the phone profile, still under 80, but that is not measured.
+- **The edge of a scene loaded in the background is now worked out a slice at a time.** Not checked on a
+  slow phone profile.
+- **The README** still describes the old edge.
+
+### Decisions I made
+
+1. **The picture can end on a straight, crisp line at the plate's own rim.** The recipe lets the wander run
+   outward as well as inward, and there is no picture beyond the plate, so where it runs outward the picture
+   simply stops. The mock-up does the same. The earlier edges never did this.
+2. **Build uses the 22nd of its possible edges.** Each scene's edge comes from a seed. With Build's own first
+   seed the three mushrooms at the front of the floor would have had to move 10, 13 and 24 px, and two tap
+   boxes would have overlapped on the smallest phone. I tried 64 seeds and took the one that asks least of
+   them (13, 7 and 4 px). The edge is no weaker for it: it is the same recipe with a different throw of the
+   dice. Grow keeps its own first seed, which needs nothing moved.
+3. **No seed clears Build's floor mushrooms without moving them:** they stand 25 to 32 px from the bottom.
+4. **Half the plate's size for the edge's canvas,** as above.
+
+### Not done, or not verified
+
+- Everything under "Half-done".
+- **A real phone.**
