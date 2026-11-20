@@ -15,11 +15,10 @@ New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a
 | 5 | Travel | Lookout | ⏳ Backdrop only (`scene/travel-lookout.png`); location to confirm | ⏳ | — |
 
 ## Now
-- **You:** watch `frames/018-cafe-scene/cafe-preview.mp4` (v5). Start the Quinn loop with one Terminal command (`QUINN-LOOP.md`). Phone-check scene 2, then say "merge".
-- **Quinn loop:** smoke test, then job 001 (Rachel's sip poses).
-- **Fable:** café build on `site/scene-3`; swap in package v5.
-- **Wren (café chat):** run the Quinn loop, add the sip and the barista's polishing, final preview.
-- **Film chat:** scene 4 is packaged and briefed (`reviews/scene-4-build.md`). It waits for the café merge; then Fable builds and Wren reviews. Open: Sean's OK before launch.
+- **Fable:** swap café package v7.3 into `site/scene-3`, re-run the café QA, report.
+- **You:** phone-check scene 2, then say "merge". Then check scene 3 on the phone once Fable reports.
+- **Quinn loop:** idle for the café (the Film chat may use it).
+- **Film chat:** scene 4 is packaged; it waits for the café merge.
 
 ## Next
 1. Approve scene 2 on a phone → merge `site/scene-2` into `main` (it includes scene 1).
