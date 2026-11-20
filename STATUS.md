@@ -2,7 +2,7 @@
 
 Where everything stands. Update this whenever a scene changes state. **Last updated: 2026-11-20 (Wren).**
 
-New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a scene gets made) and the current handover: `HANDOVER-scene-3.md`.
+New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a scene gets made) and the handover for your scene: `HANDOVER-scene-3.md` (café, finishing in the original Wren chat) or `HANDOVER-next-scene.md` (scene 4, new chat).
 
 ## Scenes
 
@@ -22,7 +22,7 @@ New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a
 ## Next
 1. Approve scene 2 on a phone → merge `site/scene-2` into `main` (it includes scene 1).
 2. Finish the café art → cut `site/scene-3` from `main` → Fable builds the Design tab.
-3. Choose scene 4 or 5.
+3. Scene 4 is starting in a new Wren chat (`HANDOVER-next-scene.md`). Travel is recommended unless Sean has agreed to Film.
 
 ## Branches
 | Branch | Holds |
