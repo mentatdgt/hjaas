@@ -30,7 +30,7 @@ For: Fable, overnight 2026-11-20, working unattended (rules in `HANDOVER.md`, "W
 - **Pencil line map:** `scene/pencil/design-lines.png`, 2544×1432, registered to `plate.png`. Same edge recipe as Build and Grow, at this canvas's scale.
 
 ## 3. Coming in the morning: build for a clean drop-in
-Quinn is restyling **Rachel and the barista** tonight: same files, names, canvas and positions, new face and hair style. Rachel's reaction is getting two new stills, `R_K2_smile` and `R_K1_blink`. Wren will then re-cut the `sip` and `look_up` clips and update `frames.json` and `routine.json`.
+Quinn is restyling **every character** (round 5: Rachel's blink and look, the barista, child, old man, mum and cat): same files, names, canvas and silhouettes, new face and rendering style. The mum's restyle also means a new `plate.png`. Rachel's reaction is getting two new stills, `R_K2_smile` and `R_K1_blink`. Wren will then re-cut the `sip` and `look_up` clips and update `frames.json` and `routine.json`.
 - Build so a new package folder is a file swap with **no code change**.
 - Make sure the routine engine handles a reaction with this shape:
   - `look_up` clip;
