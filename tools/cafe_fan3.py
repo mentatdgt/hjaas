@@ -93,7 +93,13 @@ def render(theta):
         d.polygon(P_, fill=tuple(int(c) for c in BASE) + (255,))
         d.polygon(S_, fill=tuple(int(c) for c in SHADE) + (255,))
         d.line(P_ + [P_[0]], fill=tuple(int(c) for c in LINE) + (255,), width=lw, joint='curve')
-    return np.asarray(img.resize((W, H), Image.LANCZOS)).astype(np.float32)
+    out = np.asarray(img.resize((W, H), Image.LANCZOS)).astype(np.float32)
+    # soft painted gradation like the rest of the café: warm window light from the left, a little darker toward the hub
+    xs = np.arange(W)[None, :] / W; r = np.hypot((np.arange(W)[None, :] - Hc[0]) / a, (np.arange(H)[:, None] - Hc[1]) / b)
+    light = 1 + 0.10 * (0.5 - xs) + 0.06 * np.clip(r - 0.45, -0.3, 0.4)
+    warm = np.stack([light * 1.01, light, light * 0.97], -1)
+    out[..., :3] = np.where(out[..., 3:] > 0, np.clip(ndi.gaussian_filter(out[..., :3], (1.2, 1.2, 0)) * 0 + out[..., :3] * warm, 0, 255), out[..., :3])
+    return out
 hub_rgba = np.dstack([drawn, ndi.gaussian_filter(hub.astype(np.float32), 0.6) * 255])
 n = int(round(120 / STEP)); frames = []; sweep = np.zeros((H, W), bool)
 for f in range(n):
