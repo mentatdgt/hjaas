@@ -103,6 +103,8 @@ export class Character {
   private drawn = '';
   /** The rectangle of that frame now covered by a patch ('' when it is clean). */
   private patched = '';
+  /** Her canvas holds two poses part-way through a dissolve (see dissolve()), not one clean frame. */
+  private mixed = false;
   private scratch: CanvasRenderingContext2D | null = null;
   private scratchIdle = 0;
 
@@ -181,6 +183,7 @@ export class Character {
     }
     this.drawn = '';
     this.patched = '';
+    this.mixed = false;
   }
 
   /** Add a clip frame: a patch over one of her stills. */
@@ -259,13 +262,48 @@ export class Character {
 
   /** Switch pose. One draw call on one canvas: there is never a frame with two poses or none. */
   show(name: string): void {
-    if (name === this.pose) return;
+    if (name === this.pose && !this.mixed) return;
     if (!this.has(name)) {
       this.missed++;
       return;
     }
     this.pose = name;
     this.draw();
+  }
+
+  /**
+   * Switch pose by a true cross-dissolve: the canvas holds `from` and `name` blended, `t` of the way from
+   * the one to the other (0 to 1; call it every frame, and at 1 she is simply showing `name`). Each pixel is
+   * the weighted sum of the two drawings, colour and coverage alike, so where their outlines differ the room
+   * behind shows through by exactly as much as it should: what the package's preview does (routine.json,
+   * `fade_ms`). Two whole poses only: a clip frame, or a pose not in memory, is shown at once.
+   */
+  dissolve(from: string, name: string, t: number): void {
+    const a = from === NOTHING ? null : this.frames.get(from);
+    const b = name === NOTHING ? null : this.frames.get(name);
+    if (t >= 1 || from === name || (from !== NOTHING && !a) || (name !== NOTHING && !b) || !this.canvas.width) {
+      this.show(name);
+      return;
+    }
+    const { ctx, canvas } = this;
+    this.pose = name;
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    // 'copy' leaves the first drawing at its share; 'lighter' adds the second at its own.
+    ctx.globalCompositeOperation = 'copy';
+    ctx.globalAlpha = 1 - t;
+    if (a) ctx.drawImage(a, 0, 0, canvas.width, canvas.height);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (b) {
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.globalAlpha = t;
+      ctx.drawImage(b, 0, 0, canvas.width, canvas.height);
+    }
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = 'source-over';
+    this.drawn = '';
+    this.patched = '';
+    this.mixed = true;
   }
 
   /**
@@ -325,8 +363,10 @@ export class Character {
   private draw(): void {
     const { ctx, canvas } = this;
     if (!canvas.width) return;
+    const mixed = this.mixed;
+    this.mixed = false;
     if (this.pose === NOTHING) {
-      if (this.drawn) ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (this.drawn || mixed) ctx.clearRect(0, 0, canvas.width, canvas.height);
       this.drawn = '';
       this.patched = '';
       return;

@@ -111,6 +111,8 @@ for (const [name, clip] of Object.entries(labFrames.clips)) {
 //   further down with the grown boxes; routine.json is copied as delivered.
 const cafe = 'frames/018-cafe-scene/site';
 const cafeFrames = JSON.parse(await readFile(join(repo, cafe, 'frames.json'), 'utf8'));
+// (A new delivery may drop files the last one had: the folder is made afresh, unless only other files were asked for.)
+if (!process.argv[2] || ['scene3', 'cast'].includes(process.argv[2])) await rm(join(assets, 'scene3/cast'), { recursive: true, force: true });
 add(`${cafe}/${cafeFrames.plate}`, 'scene3/room.webp', plate, { width: 1672, height: 941, fit: 'fill', kernel: 'lanczos3' }, assets);
 const cafeFrame = { quality: 93, alphaQuality: 100, smartSubsample: true, effort: 6 };
 const cafeOut = { ...cafeFrames, layers: [], clips: {} };

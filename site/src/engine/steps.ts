@@ -14,6 +14,11 @@ export interface Step {
    * (clips.ts: a hold away from the rest pose, with a way home after it).
    */
   brief?: number;
+  /**
+   * Dissolve into this pose from the one before it, over this many ms at the start of the step: a true
+   * cross-dissolve of the two drawings (routine.json's `fade_ms`). Left out: an instant cut.
+   */
+  fade?: number;
 }
 
 export type Rng = () => number;

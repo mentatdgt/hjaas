@@ -4,7 +4,7 @@ import { PLATE, type Frame, asset, decodeBlob, fetchBlob, idle, loadFrame, loadP
 import { leadOf, splitCast, type CastFrames, type CastRoutines } from './cast';
 import { Character } from './character';
 import { edgeAlpha, edgeName, makeEdge, type Edge, type EdgeStyle } from './edge';
-import { checkClips, clipPose, clipReaction, clipSchedule, clipsInUse, restOf, type ClipFrames, type ClipRoutine } from './clips';
+import { checkClips, clipPose, clipReaction, clipSchedule, clipsInUse, restOf, stillsInUse, type ClipFrames, type ClipRoutine } from './clips';
 import { Hunt } from './mushrooms';
 import { Player, type Schedule } from './player';
 import { Reel } from './reel';
@@ -200,8 +200,9 @@ async function actorCast(
   options: { keeps: boolean; className?: string; name?: string },
 ): Promise<Cast> {
   // The stills first: they are all she needs to start her routine, and they stay decoded while the scene
-  // is on show. Their files are kept, so they can be decoded again after a sleep.
-  const names = Object.keys(frames.stills);
+  // is on show. Their files are kept, so they can be decoded again after a sleep. Only the stills the
+  // routine, the blinks and the reaction ever show: a package may carry others (a pose for a later routine).
+  const names = stillsInUse(frames, routine);
   const stillFiles = await Promise.all(names.map((name) => load(frames.stills[name])));
   const stills = await Promise.all(stillFiles.map(decodeBlob));
   const c = frames.canvas;

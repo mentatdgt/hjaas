@@ -23,6 +23,9 @@ export class Player {
   private raf = 0;
   private running = false;
 
+  /** A dissolve under way: the pose it started from. (The step being played says how long it takes.) */
+  private fadingFrom: string | null = null;
+
   private queued: Step[] | null = null;
   private reaction: Step[] | null = null;
   private reactionIndex = 0;
@@ -74,6 +77,7 @@ export class Player {
     this.reactionDone?.();
     this.reactionDone = null;
     this.elapsed = 0;
+    this.fadingFrom = null;
     this.step = { pose: this.rest, ms: 0 };
     this.rachel.show(this.rest);
     this.onStep?.(this.step);
@@ -112,6 +116,7 @@ export class Player {
       this.elapsed -= this.step.ms;
       this.advance();
     }
+    this.blend();
     this.raf = requestAnimationFrame(this.tick);
   };
 
@@ -154,9 +159,21 @@ export class Player {
   }
 
   private enter(step: Step): void {
+    const from = this.rachel.current;
     this.step = step;
-    this.rachel.show(step.pose);
+    // A step may dissolve in from the pose before it (steps.ts, `fade`); blend() carries it on each frame.
+    this.fadingFrom = step.fade && step.fade > 0 && from !== step.pose ? from : null;
+    if (this.fadingFrom === null) this.rachel.show(step.pose);
+    else this.rachel.dissolve(this.fadingFrom, step.pose, 0);
     this.onStep?.(step);
     this.onPose?.(step.pose, performance.now());
+  }
+
+  /** One frame of a dissolve, eased as the package's preview eases it (smoothstep). */
+  private blend(): void {
+    if (this.fadingFrom === null) return;
+    const t = Math.min(1, Math.max(0, this.elapsed / (this.step.fade ?? 1)));
+    this.rachel.dissolve(this.fadingFrom, this.step.pose, t * t * (3 - 2 * t));
+    if (t >= 1) this.fadingFrom = null;
   }
 }

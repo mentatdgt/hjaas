@@ -27,6 +27,9 @@
 //   - Blinks: `blink` may be a list of rules, and a rule's `on` a list of stills. A hold in the reaction
 //     may blink too: `"blink_ok": true` (the rule for that still is used), or `"blink"` naming the blink's
 //     still or giving its frames. Times in the reaction may be ranges, rolled each time she reacts.
+//   - `"fade_ms"` on a still, in the routine, in a loop or in the reaction: the still is dissolved in from
+//     the pose before it over that long, at the start of its hold (a true cross-dissolve: character.ts).
+//     Without it the pose changes at once, as a blink must.
 //
 // Clip frames are large, so they are not all kept decoded (reel.ts). Each step of the routine therefore says
 // which clip frames may be shown soon after it (`soon`): the next few if nothing interrupts, and the first
@@ -46,9 +49,9 @@ export interface ClipFrames {
 }
 
 type RoutineItem =
-  | { loop: string; repeat: Ms; steps: ReadonlyArray<{ still: string | null; ms: Ms }> }
+  | { loop: string; repeat: Ms; steps: ReadonlyArray<{ still: string | null; ms: Ms; blink_ok?: boolean; fade_ms?: number }> }
   | { loop: string; repeat: Ms; clip: string; ms: number }
-  | { still: string | null; ms: Ms; blink_ok?: boolean }
+  | { still: string | null; ms: Ms; blink_ok?: boolean; fade_ms?: number }
   | { clip: string; ms: number; reverse?: boolean };
 
 type BlinkFrames = ReadonlyArray<{ still: string; ms: number }>;
@@ -62,7 +65,7 @@ interface BlinkRule {
 type ReactionItem =
   | { clip: string; ms: number; reverse?: boolean; first_ms?: number; first_n?: number }
   | { hold_last: number }
-  | { still: string; ms: Ms; blink_ok?: boolean; blink?: string | { still?: string; ms?: number; frames?: BlinkFrames } };
+  | { still: string; ms: Ms; fade_ms?: number; blink_ok?: boolean; blink?: string | { still?: string; ms?: number; frames?: BlinkFrames } };
 
 export interface ClipRoutine {
   routine: readonly RoutineItem[];
@@ -171,6 +174,32 @@ export function clipsInUse(routine: ClipRoutine): { routine: string[]; reaction:
   return { routine: [...idle], reaction: [...reaction] };
 }
 
+/** The stills the manifests ever show: the routine's, the blinks' and the reaction's, and every clip's base. */
+export function stillsInUse(frames: ClipFrames, routine: ClipRoutine): string[] {
+  const used = new Set<string>();
+  const add = (name: string | null | undefined): void => void (name && used.add(name));
+  const clipBase = (name: string): void => add(frames.clips?.[name]?.base);
+  for (const item of routine.routine ?? []) {
+    if ('steps' in item) for (const step of item.steps) add(step.still);
+    else if ('clip' in item) clipBase(item.clip);
+    else add(item.still);
+  }
+  for (const rule of blinkRules(routine)) {
+    for (const on of typeof rule.on === 'string' ? [rule.on] : rule.on) add(on);
+    for (const frame of rule.frames) add(frame.still);
+  }
+  add(routine.reaction?.enter_from);
+  for (const item of routine.reaction?.steps ?? []) {
+    if ('clip' in item) clipBase(item.clip);
+    else if ('still' in item) {
+      add(item.still);
+      if (typeof item.blink === 'string') add(item.blink);
+      else if (item.blink) for (const frame of item.blink.frames ?? [{ still: item.blink.still }]) add(frame.still);
+    }
+  }
+  return [...used].filter((name) => name in frames.stills);
+}
+
 /** One frame of a clip, in playing order. */
 function clipSteps(frames: ClipFrames, clip: string, ms: number, reverse = false): Step[] {
   const steps = frames.clips[clip].frames.map((_, index) => ({ pose: clipPose(clip, index), ms }));
@@ -220,13 +249,17 @@ export function* clipSchedule(
    * One hold of a still, with a blink slipped into the middle when one is due, allowed and fits. `home` is
    * the way back to the rest still from a hold somewhere else (see wayBack): such a hold may be cut short.
    */
-  function* hold(still: string | null, ms: number, blinkOk: boolean, home: Step[] | null = null): Generator<Moment> {
+  function* hold(still: string | null, ms: number, blinkOk: boolean, home: Step[] | null = null, fadeMs?: number): Generator<Moment> {
     const pose = still ?? NOTHING;
+    // The dissolve belongs to the start of the hold: after a blink in the middle of it, the pose is simply back.
+    const fade = fadeMs !== undefined && fadeMs > 0 ? { fade: fadeMs } : {};
     const blink = blinkOk && every !== undefined ? rules.find((rule) => blinksOn(rule, pose)) : undefined;
     const blinkMs = blink ? blink.frames.reduce((sum, frame) => sum + frame.ms, 0) : 0;
-    if (blink && ms >= blinkMs + 2 * BLINK_MARGIN_MS && sinceBlink + ms / 2 >= nextBlink) {
-      const before = BLINK_MARGIN_MS + rnd() * (ms - blinkMs - 2 * BLINK_MARGIN_MS);
-      yield { step: { pose, ms: before }, home: [] };
+    // (A blink waits for the dissolve into the pose to finish.)
+    const lead = Math.max(BLINK_MARGIN_MS, fadeMs ?? 0);
+    if (blink && ms >= blinkMs + lead + BLINK_MARGIN_MS && sinceBlink + ms / 2 >= nextBlink) {
+      const before = lead + rnd() * (ms - blinkMs - lead - BLINK_MARGIN_MS);
+      yield { step: { pose, ms: before, ...fade }, home: [] };
       for (const frame of blink.frames) yield { step: { pose: frame.still, ms: frame.ms }, home: [] };
       yield { step: { pose, ms: ms - before - blinkMs }, home: [] };
       sinceBlink = ms - before - blinkMs;
@@ -234,7 +267,7 @@ export function* clipSchedule(
       return;
     }
     sinceBlink += ms;
-    yield home ? { step: { pose, ms, brief: BRIEF_MS }, home } : { step: { pose, ms }, home: [] };
+    yield home ? { step: { pose, ms, brief: BRIEF_MS, ...fade }, home } : { step: { pose, ms, ...fade }, home: [] };
   }
 
   /**
@@ -258,8 +291,8 @@ export function* clipSchedule(
     for (const [index, item] of routine.routine.entries()) {
       if ('steps' in item) {
         for (let n = Math.max(1, count(item.repeat)); n > 0; n--) {
-          // Blinks are for the marked holds; a loop's own holds on the same still are too short to matter.
-          for (const step of item.steps) yield* hold(step.still, roll(step.ms), false);
+          // Blinks are for the marked holds, in a loop as anywhere.
+          for (const step of item.steps) yield* hold(step.still, roll(step.ms), step.blink_ok === true, null, step.fade_ms);
         }
       } else if ('clip' in item && 'loop' in item) {
         if (!withClips) continue;
@@ -288,7 +321,7 @@ export function* clipSchedule(
         const before = routine.routine[index - 1];
         if (!withClips && before && 'clip' in before && !('loop' in before) && !before.reverse && item.still !== frames.clips[before.clip].base) continue;
         const elsewhere = rest && withClips && item.still !== null && item.still !== rest;
-        yield* hold(item.still, roll(item.ms), item.blink_ok === true, elsewhere ? wayBack(index) : null);
+        yield* hold(item.still, roll(item.ms), item.blink_ok === true, elsewhere ? wayBack(index) : null, item.fade_ms);
       }
     }
   }
@@ -352,11 +385,12 @@ export function clipReaction(frames: ClipFrames, routine: ClipRoutine): ClipReac
         const own = typeof item.blink === 'string' ? [{ still: item.blink, ms: BLINK_MS }] : item.blink ? (item.blink.frames ?? (item.blink.still ? [{ still: item.blink.still, ms: item.blink.ms ?? BLINK_MS }] : null)) : null;
         const blink = own ?? (item.blink_ok ? rules.find((rule) => blinksOn(rule, item.still))?.frames : undefined);
         const blinkMs = blink ? blink.reduce((sum, frame) => sum + frame.ms, 0) : 0;
+        const fade = item.fade_ms !== undefined && item.fade_ms > 0 ? { fade: item.fade_ms } : {};
         if (rnd && blink && ms >= blinkMs + 6 * BLINK_MARGIN_MS && rnd() < 0.7) {
           const before = 3 * BLINK_MARGIN_MS + rnd() * (ms - blinkMs - 6 * BLINK_MARGIN_MS);
-          steps.push({ pose: item.still, ms: before }, ...blink.map((frame) => ({ pose: frame.still, ms: frame.ms })), { pose: item.still, ms: ms - before - blinkMs });
+          steps.push({ pose: item.still, ms: before, ...fade }, ...blink.map((frame) => ({ pose: frame.still, ms: frame.ms })), { pose: item.still, ms: ms - before - blinkMs });
         } else {
-          steps.push({ pose: item.still, ms });
+          steps.push({ pose: item.still, ms, ...fade });
         }
       }
     }
