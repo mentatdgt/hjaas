@@ -130,3 +130,13 @@ Higgsfield prompts will say "talking animatedly". If a clip's mouth looks wrong,
 - `approved/` is updated; the old Rachel files are in `pre-round3/`. `approved/020_scene.png` is rebuilt (plate + W_1 + M_1 + R_A1).
 - **Talking:** cycle M_x ↔ M_x_closed (+ M_1_mid in M_1) at about 4–7 swaps a second, with pauses; random blinks in M_1.
 - Next: Higgsfield, clip 1 first (M_1 → M_2, 4.5 credits), after the user's OK.
+
+### Round 4 (2026-11-21, Wren): no AI video; drawn in-betweens through the Quinn loop
+The café showed that Kling redraws flat-style faces (BIBLE §5: no AI video for flat-style faces), so **scene 4 buys no Higgsfield clips** (that saves the 18 credits quoted).
+- **No-flicker check:** the presenter's poses already change only his arms or mouth. In K1, Quinn had redrawn her shorts by a pixel or two, so Wren locked everything below the tank hem (y ≥ 765) to A1. The original is kept as `incoming/round3b/020_R_K1_look_unlocked.png`.
+- **Loop jobs** (in `~/hjaas/wren-inbox/quinn/jobs/`; copies in `jobs/`): `020a-film-presenter` → M_12 and M_13 (arms halfway to the pointing pose and to hands together); `020b-film-rachel-turn` → R_K0 (head in profile, halfway through the turn). Crops: presenter x440–1080, y240–880; Rachel x840–1540, y241–941; both scaled to 1024. Wren pastes back only the arms (presenter) or the head and shoulders (Rachel).
+- **Routine plan for Fable:**
+  - Presenter: talks in M_1 (lip-flap M_1 / M_1_mid / M_1_closed, random blinks); every 6–10 s, M_1 → M_12 → M_2 (100 ms per step), holds 2–3 s talking (M_2 / M_2_closed), then back the same way; the same for M_3 via M_13.
+  - Rachel: holds A1 with the REC dot blinking; every 8–14 s, a soft 150 ms dissolve to B1 (glance), holds 1–1.5 s, and dissolves back.
+  - Reaction (on a find): cut A1 → K0 (90 ms) → K1, holds 1.8 s, then K1 → K0 → A1.
+  - Water: W_1–3 at 8–10 fps.
