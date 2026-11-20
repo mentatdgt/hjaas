@@ -46,20 +46,20 @@
   "edge": 95,
   "herFramesCoverPlate": {
    "x": [
-    196,
+    198,
     1610
    ],
    "y": [
-    312,
-    908
+    310,
+    906
    ]
   },
-  "pixelsChecked": 46797,
+  "pixelsChecked": 46937,
   "lowestByTheFormula": 1,
   "lowestOnTheDrawnEdge": 1,
   "strongestPencilOverHer": 0,
   "worstPoint": null,
-  "fadeComesNoNearerThanPx": 6,
+  "fadeComesNoNearerThanPx": 8,
   "ok": true
  }
 ]

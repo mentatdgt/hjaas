@@ -115,7 +115,7 @@ when someone opens its address directly.
 | Step | What it does |
 |---|---|
 | `{ "still": "A", "ms": 900 }` or `"ms": [600, 900]` | Hold a still: a fixed time, or one rolled in the range each time. |
-| `"fade_ms": 150` on a still | Dissolve into it from the pose before, over that long, at the start of the hold: a true cross-dissolve of the two drawings. Without it, an instant cut. |
+| `"fade_ms": 150` on a still of a loop | Dissolve into it from the loop's still before it, over that long, at the start of the hold: a true cross-dissolve of the two drawings. Only between two stills of the same loop: coming into the loop, on a still by itself and in the reaction it is ignored, and the pose cuts. Without it, an instant cut. |
 | `"blink_ok": true` on a still | She may blink in the middle of this hold (the `blink` rule says how, and how often). |
 | `{ "still": null, "ms": … }` | Draw nothing: an actor who is part of the plate and only drawn for a moment. |
 | `{ "loop": "name", "repeat": [6, 12], "steps": [ … ] }` | A few stills, round and round, a rolled number of times. |
@@ -123,17 +123,21 @@ when someone opens its address directly.
 | `{ "loop": "name", "repeat": 2, "clip": "name", "ms": 70 }` | Play a clip round and round. |
 
 `"blink"` is one rule or a list: `{ "on": "A" or ["A", "B"], "frames": [{ "still": "A_blink", "ms": 90 }], "every_ms": [3000, 6000] }`.
-`"reaction": { "steps": [ … ] }` is a fixed list of stills (with `ms`, a range, `fade_ms`) and clips; a held
+`"reaction": { "steps": [ … ] }` is a fixed list of stills (with `ms` or a range) and clips, all cuts; a held
 still may blink (`"blink_ok": true`, or `"blink": "A_blink"`). It starts from `enter_from`, or if that is left
-out from the still the routine opens on (or the base still of the reaction's first clip). A hold away from
-that still which the routine leaves by clips alone (a sip, held, and the sip backwards) is cut to 300 ms when
-a find is waiting, and those clips take her back. Only the stills the manifests show are downloaded.
+out from the still the routine opens on (or the base still of the reaction's first clip). Away from that
+still on poses the routine goes through one after another, with no loop on the way back (the café's sip:
+reach, lift, sip, lift, reach, sketch), a find does not interrupt: she finishes, with any hold on the way cut
+to 300 ms, and reacts once she is back. She blinks only on a still the `blink` rule names, in a hold marked
+`blink_ok`. Only the stills the manifests show are downloaded.
 
 **A new delivery of the café** is a file swap: replace `frames/018-cafe-scene/site/` (and the line map in
 `scene/pencil/` if the plate changed), run `npm run assets` and `npm test`. `npm run assets` shrinks the
 plate to the page's size, uses the cast at the size delivered, grows an actor's box to hold any clip patch
 that reaches outside it, and writes `src/scenes/design-cast.json`: each actor's box, the rectangle of
-every pixel it ever covers, and which actors are pieces of the room. The scene's config reads that file for `keep`, and `npm test` holds the hunt to
+every pixel it ever covers, and which actors are pieces of the room. Inside a moving piece's box it also
+rubs out of the line map any pencil line the delivered plate does not have (a fan blade cannot be drawn in
+pencil: it would stand still). The scene's config reads that file for `keep`, and `npm test` holds the hunt to
 it (no mushroom in any actor's box), so the tests say so if new drawings cover a hiding place. If they do,
 or if the edge no longer leaves every mushroom clear, `node qa/tools/pencil.mjs pick 400 design` lists the
 edges that do.

@@ -121,6 +121,74 @@ describe('Rachel in the café', () => {
     expect(schedule.next('react').value.pose).toBe(REST);
   });
 
+  // The coffee sip (package v6 on): reach, lift, sip, lift, reach, as cuts between drawn poses.
+  const SIP = ['R_S1_reach', 'R_S2_lift', 'R_B1_sip', 'R_S2_lift', 'R_S1_reach'];
+  const sipping = new Set(SIP);
+  /** Play to the nth pose of the sip, say a find is waiting, and collect what follows up to the rest pose. */
+  const found = (nth: number): { at: Step; home: Step[] } => {
+    const schedule = clipSchedule(own, routine, seeded(11));
+    let step = schedule.next().value;
+    for (let seen = -1; ; step = schedule.next().value) {
+      if (sipping.has(step.pose)) seen++;
+      else seen = -1;
+      if (seen === nth) break;
+    }
+    const at = step;
+    const home: Step[] = [];
+    do home.push((step = schedule.next('react').value));
+    while (step.pose !== REST && home.length < 50);
+    return { at, home };
+  };
+
+  it('sips her coffee once in each pass of the routine: five poses, all cuts, back to the sketch', () => {
+    const steps = take('rachel', 2000);
+    const runs: string[][] = [];
+    steps.forEach((step, i) => {
+      if (!sipping.has(step.pose)) return;
+      expect(step.fade).toBeUndefined();
+      if (i > 0 && sipping.has(steps[i - 1].pose)) runs[runs.length - 1].push(step.pose);
+      else {
+        expect(steps[i - 1].pose).toBe(REST);
+        runs.push([step.pose]);
+      }
+      if (!sipping.has(steps[i + 1]?.pose ?? REST)) {
+        expect(steps[i + 1]?.pose ?? REST).toBe(REST);
+        expect(steps[i + 1]?.fade).toBeUndefined();
+      }
+    });
+    expect(runs.length).toBeGreaterThan(20);
+    for (const run of runs.slice(0, -1)) expect(run).toEqual(SIP);
+  });
+
+  it('never blinks during the sip, or on the frames beside it', () => {
+    const steps = take('rachel', 4000);
+    steps.forEach((step, i) => {
+      if (step.pose !== 'R_A1_blink') return;
+      expect(sipping.has(steps[i - 1].pose)).toBe(false);
+      expect(sipping.has(steps[i + 1].pose)).toBe(false);
+    });
+    expect(steps.some((step) => step.pose === 'R_A1_blink')).toBe(true);
+  });
+
+  it('a find during the sip: she finishes it first, with the cup at her lips for 300 ms, and only then is home', () => {
+    const quick = (steps: Step[]): Array<[string, number]> => steps.map((step) => [step.pose, step.ms]);
+    const down: Array<[string, number]> = [['R_S2_lift', 210], ['R_S1_reach', 230], [REST, 300]];
+    // Reaching for the cup, and lifting it: the rest of the sip, the long hold cut short.
+    expect(quick(found(0).home)).toEqual([['R_S2_lift', 190], ['R_B1_sip', 300], ...down]);
+    expect(quick(found(1).home)).toEqual([['R_B1_sip', 300], ...down]);
+    // With the cup at her lips: that hold itself may end at 300 ms.
+    const lips = found(2);
+    expect(lips.at.pose).toBe('R_B1_sip');
+    expect(lips.at.brief).toBe(300);
+    expect(lips.at.ms).toBeGreaterThanOrEqual(1800);
+    expect(quick(lips.home)).toEqual(down);
+    // On the way down she simply carries on.
+    expect(quick(found(3).home)).toEqual(down.slice(1));
+    expect(quick(found(4).home)).toEqual(down.slice(2));
+    // Nothing on the way home is dissolved, blinked in or skipped.
+    for (let nth = 0; nth < 5; nth++) for (const step of found(nth).home) expect(step.fade).toBeUndefined();
+  });
+
   it('blinks only in the middle of a hold on the sketch pose, after the dissolve into it', () => {
     const steps = take('rachel', 3000);
     let blinks = 0;
@@ -139,16 +207,16 @@ describe('Rachel in the café', () => {
 
   it('reacts as routine.json says, with every hold inside its range', () => {
     const reaction = clipReaction(own, routine)!;
-    const written = routine.reaction!.steps as Array<{ still: string; ms: number | [number, number]; fade_ms?: number }>;
+    const written = routine.reaction!.steps as Array<{ still: string; ms: number | [number, number] }>;
     expect(reaction.steps.map((step) => step.pose)).toEqual(written.map((item) => item.still));
     const rnd = seeded(8);
     for (let n = 0; n < 20; n++) {
       const rolled = reaction.roll(rnd);
       rolled.forEach((step, i) => {
-        const { ms, fade_ms } = written[i];
+          const { ms } = written[i];
         expect(step.ms).toBeGreaterThanOrEqual(typeof ms === 'number' ? ms : ms[0]);
         expect(step.ms).toBeLessThanOrEqual(typeof ms === 'number' ? ms : ms[1]);
-        expect(step.fade).toBe(fade_ms);
+        expect(step.fade).toBeUndefined();
       });
     }
     // Her held pose, for paused or reduced motion, is the one she holds longest.
@@ -157,24 +225,84 @@ describe('Rachel in the café', () => {
   });
 });
 
+describe('the rest of the café (package v7)', () => {
+  it('the barista polishes a glass on cuts alone, then glances up', () => {
+    const steps = take('barista', 600);
+    const seen = new Set(steps.map((step) => step.pose));
+    expect([...seen].sort()).toEqual(['B_1', 'B_2_polish', 'B_3_polish', 'B_4_glance']);
+    for (const step of steps) expect(step.fade).toBeUndefined();
+    // Each polishing pose comes from, and goes back to, the pose between them.
+    steps.forEach((step, i) => {
+      if (i > 0 && i < steps.length - 1 && step.pose !== 'B_1') expect([steps[i - 1].pose, steps[i + 1].pose]).toEqual(['B_1', 'B_1']);
+    });
+  });
+
+  it('the child colours with his head down, then looks up at his mum and back, on cuts', () => {
+    const steps = take('child', 1200);
+    let looks = 0;
+    steps.forEach((step, i) => {
+      if (step.pose !== 'C_3' || i === 0) return;
+      looks++;
+      expect(step.fade).toBeUndefined();
+      expect(step.ms).toBeGreaterThanOrEqual(1500);
+      expect(step.ms).toBeLessThanOrEqual(2000);
+      expect(steps[i - 1].pose).toBe('C_1');
+      expect(steps[i + 1]?.pose ?? 'C_1').toBe('C_1');
+      expect(steps[i + 1]?.fade).toBeUndefined();
+    });
+    expect(looks).toBeGreaterThan(20);
+    // Colouring is the one place he dissolves.
+    expect(steps.filter((step) => step.fade === 150).length).toBeGreaterThan(500);
+  });
+});
+
 describe('fade_ms: a dissolve into a still', () => {
-  it('is carried by the step it is written on, in a loop and out of one', () => {
+  it('is played only from one still of a loop into another still of the same loop', () => {
     for (const a of actors) {
-      const written = new Map<string, Set<number | undefined>>();
-      for (const item of a.routine.routine) {
-        for (const step of 'steps' in item ? item.steps : 'still' in item ? [item] : []) {
-          if (step.still) written.set(step.still, (written.get(step.still) ?? new Set()).add(step.fade_ms));
-        }
-      }
-      const blinks = new Set(([] as string[]).concat(...[a.routine.blink ?? []].flat().map((rule) => rule.frames.map((frame) => frame.still))));
+      // Each loop's stills, with the dissolve written on them.
+      const loops = a.routine.routine.flatMap((item) => ('steps' in item ? [new Map(item.steps.map((step) => [step.still ?? NOTHING, step.fade_ms]))] : []));
       const steps = take(a.name, 600);
+      let fades = 0;
       steps.forEach((step, i) => {
-        if (step.pose === NOTHING || blinks.has(step.pose)) return expect(step.fade, `${a.name} ${step.pose}`).toBeUndefined();
-        // (The rest of a hold, after a blink in the middle of it, cuts back.)
-        if (i > 0 && blinks.has(steps[i - 1].pose)) return expect(step.fade).toBeUndefined();
-        expect([...written.get(step.pose)!], `${a.name} ${step.pose}`).toContain(step.fade);
+        if (step.fade === undefined) return;
+        fades++;
+        const before = steps[i - 1];
+        expect(before, `${a.name} ${step.pose}`).toBeDefined();
+        const loop = loops.find((stills) => stills.has(step.pose) && stills.has(before.pose));
+        expect(loop, `${a.name}: ${before.pose} into ${step.pose}`).toBeDefined();
+        expect(step.fade).toBe(loop!.get(step.pose));
+        expect(before.pose).not.toBe(step.pose);
       });
+      if (loops.some((stills) => [...stills.values()].some((ms) => ms))) expect(fades, a.name).toBeGreaterThan(50);
     }
+  });
+
+  it('is not played coming into a loop: from the stretch the cat comes back to breathing on a cut', () => {
+    const cat = take('cat', 400);
+    let returns = 0;
+    cat.forEach((step, i) => {
+      if (i === 0 || cat[i - 1].pose !== 'cat_3') return;
+      returns++;
+      expect(step.pose).toBe('cat_1');
+      expect(step.fade).toBeUndefined();
+      expect(cat[i + 1].fade).toBe(1000);
+    });
+    expect(returns).toBeGreaterThan(10);
+    // The very first pose of all is not dissolved into either.
+    for (const a of actors) expect(take(a.name, 1)[0].fade, a.name).toBeUndefined();
+  });
+
+  it('is ignored anywhere else, whatever a manifest says: a hold by itself and the whole reaction cut', () => {
+    const { frames: own, routine } = actor('cat');
+    const wrong = {
+      routine: [...routine.routine.map((item) => ('steps' in item ? item : { ...item, fade_ms: 400 })), { still: 'cat_2', ms: 500, fade_ms: 400 }],
+      reaction: { steps: [{ still: 'cat_3', ms: 500, fade_ms: 400 }, { still: 'cat_1', ms: 300, fade_ms: 400 }] },
+    } as unknown as ClipRoutine;
+    const schedule = clipSchedule(own, wrong, seeded(3));
+    const steps = Array.from({ length: 300 }, () => schedule.next().value);
+    for (const step of steps) if (step.fade !== undefined) expect(step.fade).toBe(1000);
+    const reaction = clipReaction(own, wrong)!;
+    for (const step of [...reaction.steps, ...reaction.roll(seeded(2))]) expect(step.fade).toBeUndefined();
   });
 
   it('is only ever written between two stills of the same loop: every other change is a cut (the package\'s rule)', () => {
@@ -306,11 +434,12 @@ describe('a cast member with clips (made up: the café has none for now)', () =>
     for (let i = 0; i < 300; i++) expect(['sketch', 'blink']).toContain(schedule.next().value.pose);
   });
 
-  it('reacts: looks up, holds the look, dissolves into the smile, and comes back by the other clip, reversed', () => {
+  it('reacts: looks up, holds the look, smiles, and comes back by the other clip, reversed', () => {
     const reaction = clipReaction(own, routine)!;
     expect(poses(reaction.steps)).toEqual(['look', 'smile', 'sketch']);
     expect(reaction.steps.find((step) => step.pose === 'look')).toEqual({ pose: 'look', ms: 600 });
-    expect(reaction.steps.find((step) => step.pose === 'smile')).toEqual({ pose: 'smile', ms: 1400, fade: 150 });
+    // (The made-up manifest asks for a dissolve into the smile. A reaction is all cuts, so it gets none.)
+    expect(reaction.steps.find((step) => step.pose === 'smile')).toEqual({ pose: 'smile', ms: 1400 });
     const back = reaction.steps.filter((step) => step.pose.startsWith('sip#')).map((step) => step.pose);
     expect(back[0]).toBe('sip#11');
     expect(back.at(-1)).toBe('sip#0');
@@ -335,7 +464,7 @@ describe('a cast member with clips (made up: the café has none for now)', () =>
           expect(held).toEqual(['look', 'smile', 'look_blink', 'smile', 'sketch']);
           const at = steps.findIndex((step) => step.pose === 'look_blink');
           expect(steps[at - 1].ms).toBeGreaterThanOrEqual(240);
-          expect(steps[at - 1].fade).toBe(150);
+          expect(steps[at - 1].fade).toBeUndefined();
           expect(steps[at + 1].ms).toBeGreaterThanOrEqual(240);
           expect(steps[at + 1].fade).toBeUndefined();
           const total = steps[at - 1].ms + steps[at].ms + steps[at + 1].ms;

@@ -188,16 +188,61 @@ const cafeCast = { note: `Made by npm run assets from ${cafe}/frames.json. Do no
 // plate's sides (src/engine/edge-band.json says how deep), so only those parts are shipped, as two pictures:
 // the top strip over the bottom one, and the left strip beside the right one. Lossless: they are used as
 // they are, grain and all.
+//
+// A piece of the room that moves (the café's fan: `room` above) cannot be drawn in pencil: a line stays
+// where it is. The plate is delivered without the moving part, so inside such a piece's box the map keeps
+// only the lines the plate itself would give (the fan's rod and hub, the beams behind it) and loses the
+// rest (blades from a plate that still had them). "Would give" is the stroke test of tools/pencil_lines.py:
+// darker than its blurred surroundings by enough. A map made from the delivered plate passes untouched.
 const band = JSON.parse(await readFile(join(site, 'src/engine/edge-band.json'), 'utf8'));
 const pencil = { lossless: true, effort: 6 };
+const STROKE = { blur: 2.2, floor: 6, range: 16, over: 0.3, reach: 5 };
+/** The map (raw greyscale), with the lines the plate does not have rubbed out of each box (in map px). */
+async function withoutMovingLines(data, info, plateFile, boxes) {
+  for (const box of boxes) {
+    // The stroke test needs the plate around the box too, as far as the blur looks.
+    const pad = 12;
+    const left = Math.max(0, box.x - pad);
+    const top = Math.max(0, box.y - pad);
+    const width = Math.min(info.width, box.x + box.w + pad) - left;
+    const height = Math.min(info.height, box.y + box.h + pad) - top;
+    const grey = () => sharp(plateFile).resize(info.width, info.height, { fit: 'fill', kernel: 'lanczos3' }).greyscale().extract({ left, top, width, height });
+    const [sharpOne, blurred] = await Promise.all([grey().raw().toBuffer(), grey().blur(STROKE.blur).raw().toBuffer()]);
+    const stroke = new Uint8Array(width * height);
+    for (let i = 0; i < stroke.length; i++) stroke[i] = (blurred[i] - sharpOne[i] - STROKE.floor) / STROKE.range > STROKE.over ? 1 : 0;
+    // A line of the map may lie a few px from the stroke it was made from (the map is thickened and softened).
+    const near = (x, y) => {
+      for (let dy = -STROKE.reach; dy <= STROKE.reach; dy++) {
+        for (let dx = -STROKE.reach; dx <= STROKE.reach; dx++) {
+          const px = x - left + dx;
+          const py = y - top + dy;
+          if (px >= 0 && py >= 0 && px < width && py < height && stroke[py * width + px]) return true;
+        }
+      }
+      return false;
+    };
+    for (let y = Math.max(0, box.y); y < Math.min(info.height, box.y + box.h); y++) {
+      for (let x = Math.max(0, box.x); x < Math.min(info.width, box.x + box.w); x++) {
+        if (data[y * info.width + x] && !near(x, y)) data[y * info.width + x] = 0;
+      }
+    }
+  }
+  return data;
+}
 // (The café's map is the size of its own, larger plate: it is shrunk with it.)
-for (const [map, dir] of [['build-lines.png', 'scene1'], ['grow-lines.png', 'scene2'], ['design-lines.png', 'scene3']]) {
+const cafeMoving = { plate: join(repo, cafe, cafeFrames.plate), canvas: cafeFrames.canvas, boxes: cafeFrames.layers.filter((layer) => cafeCast.room.includes(layer.actor)) };
+for (const [map, dir, moving] of [['build-lines.png', 'scene1'], ['grow-lines.png', 'scene2'], ['design-lines.png', 'scene3', cafeMoving]]) {
   const lines = (async () => {
     const file = sharp(join(repo, 'scene/pencil', map));
     const size = await file.metadata();
     if (Math.abs(size.width / size.height - 1672 / 941) > 0.002) throw new Error(`scene/pencil/${map} (${size.width} x ${size.height}) is not the shape of a plate.`);
-    const sized = size.width === 1672 && size.height === 941 ? file : file.resize(1672, 941, { fit: 'fill', kernel: 'lanczos3' });
-    return sized.greyscale().raw().toBuffer({ resolveWithObject: true });
+    const fitted = (picture) => (size.width === 1672 && size.height === 941 ? picture : picture.resize(1672, 941, { fit: 'fill', kernel: 'lanczos3' }));
+    if (!moving?.boxes.length) return fitted(file).greyscale().raw().toBuffer({ resolveWithObject: true });
+    const { data, info } = await file.greyscale().raw().toBuffer({ resolveWithObject: true });
+    const k = info.width / moving.canvas.w;
+    const boxes = moving.boxes.map((layer) => ({ x: Math.floor(layer.x * k), y: Math.floor(layer.y * k), w: Math.ceil(layer.w * k), h: Math.ceil(layer.h * k) }));
+    const kept = await withoutMovingLines(data, info, moving.plate, boxes);
+    return fitted(sharp(kept, { raw: { width: info.width, height: info.height, channels: 1 } })).toColourspace('b-w').raw().toBuffer({ resolveWithObject: true });
   })();
   const cut = async (pieces, width, height) => {
     const { data, info } = await lines;

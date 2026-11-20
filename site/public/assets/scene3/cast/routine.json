@@ -1,5 +1,5 @@
 {
- "note": "Scene 3 (caf\u00e9) routines, v5. Holds in ms; [a,b] = random in range. Each actor runs independently and out of sync. RULE: fade_ms (a true cross-dissolve into a still) applies ONLY between two stills of the same loop. Every other change is an instant cut. Within a layer every still is pixel-identical to the first outside the part that moves, so cuts never flicker. The fan is part of the room: play its loop forever, do not apply the 'fully painted under actors' edge rule to it, and let the edge fade it like the plate.",
+ "note": "Scene 3 (caf\u00e9) routines, v7. Holds in ms; [a,b] = random in range. Each actor runs independently and out of sync. RULE: fade_ms (a true cross-dissolve into a still) applies ONLY between two stills of the same loop. Every other change is an instant cut. Within a layer every still is pixel-identical to the first outside the part that moves, so cuts never flicker. The fan is part of the room: play its loop forever, do not apply the 'fully painted under actors' edge rule to it, and let the edge fade it like the plate.",
  "actors": {
   "fan": {
    "routine": [
@@ -89,22 +89,6 @@
       {
        "still": "fan_19",
        "ms": 42
-      },
-      {
-       "still": "fan_20",
-       "ms": 42
-      },
-      {
-       "still": "fan_21",
-       "ms": 42
-      },
-      {
-       "still": "fan_22",
-       "ms": 42
-      },
-      {
-       "still": "fan_23",
-       "ms": 42
       }
      ]
     }
@@ -115,8 +99,8 @@
     {
      "loop": "sketch",
      "repeat": [
-      6,
-      12
+      5,
+      9
      ],
      "steps": [
       {
@@ -136,6 +120,43 @@
        ],
        "fade_ms": 120
       }
+     ]
+    },
+    {
+     "still": "R_A1_sketch",
+     "ms": [
+      500,
+      800
+     ]
+    },
+    {
+     "still": "R_S1_reach",
+     "ms": 190
+    },
+    {
+     "still": "R_S2_lift",
+     "ms": 190
+    },
+    {
+     "still": "R_B1_sip",
+     "ms": [
+      1800,
+      2600
+     ]
+    },
+    {
+     "still": "R_S2_lift",
+     "ms": 210
+    },
+    {
+     "still": "R_S1_reach",
+     "ms": 230
+    },
+    {
+     "still": "R_A1_sketch",
+     "ms": [
+      700,
+      1000
      ]
     }
    ],
@@ -194,28 +215,74 @@
       "ms": 400
      }
     ]
-   }
+   },
+   "note": "The coffee sip is four drawn poses with cuts: A1 > S1 (stylus down, hand to cup) > S2 (cup lifted, eyes half closed) > B1 (sip) and back. No blink during S1/S2/B1. If a mushroom is found mid-sip, finish the sip (B1 300 ms > S2 > S1 > A1) and then play the reaction."
   },
   "barista": {
-   "note": "Hands stay still for now (the drawn polishing poses jumped). She glances up now and then, eyes only.",
+   "note": "Polishing: cuts between drawn poses at a calm pace (no dissolves: the cloth moves too far for a clean fade). Glance: eyes only.",
    "routine": [
     {
-     "still": "B_1",
-     "ms": [
-      5000,
-      9000
+     "loop": "polish",
+     "repeat": [
+      3,
+      6
+     ],
+     "steps": [
+      {
+       "still": "B_1",
+       "ms": [
+        700,
+        1000
+       ]
+      },
+      {
+       "still": "B_2_polish",
+       "ms": [
+        700,
+        1000
+       ]
+      },
+      {
+       "still": "B_1",
+       "ms": [
+        600,
+        900
+       ]
+      },
+      {
+       "still": "B_3_polish",
+       "ms": [
+        700,
+        1000
+       ]
+      }
      ]
     },
     {
-     "still": "B_4",
+     "still": "B_1",
+     "ms": [
+      1500,
+      2500
+     ]
+    },
+    {
+     "still": "B_4_glance",
      "ms": [
       1400,
       2000
+     ]
+    },
+    {
+     "still": "B_1",
+     "ms": [
+      800,
+      1200
      ]
     }
    ]
   },
   "child": {
+   "note": "Colours with his head down (C_1/C_2, the crayon moves with a short dissolve), then looks up at his mum and grins (C_3, cuts).",
    "routine": [
     {
      "loop": "colour",
@@ -243,10 +310,24 @@
      ]
     },
     {
+     "still": "C_1",
+     "ms": [
+      300,
+      500
+     ]
+    },
+    {
      "still": "C_3",
      "ms": [
       1500,
       2000
+     ]
+    },
+    {
+     "still": "C_1",
+     "ms": [
+      600,
+      900
      ]
     }
    ]
