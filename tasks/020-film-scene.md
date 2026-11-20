@@ -79,5 +79,5 @@ Same canvas, green background, piece in exactly the same place. Change only what
 
 ## Revision notes
 ### Step 1 (2026-11-20, Wren): APPROVED from a screenshot preview
-Rachel has moved right: her lens is now about 11% of the width clear of the presenter's hand. The camera screen is a plain dark rectangle, and nothing else has changed. Quinn continues with steps 2–4. Wren needs the original downloaded `020_scene.png` (not a screenshot) to check registration at QC.
+Rachel has moved right: her lens is now about 11% of the width clear of the presenter's hand. The camera screen is a plain dark rectangle, and nothing else has changed. Quinn continues with steps 2–4. The original is in `frames/020-film-scene/incoming/020_scene.png`, at **1672×941** (Quinn's output, the same size as scenes 1 and 2). Every step 2–4 file must be exactly 1672×941. Upscale the Higgsfield clips if phones need it.
 Phone window note for Fable: her head now sits at about 72–85% of the width, so shift the window to about 37–85%.
