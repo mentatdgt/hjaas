@@ -112,7 +112,7 @@ All 28 files are at 2580×1432. The scene is byte-identical to the approved one,
 Minor, accepted: the cat_2/cat_3 outlines are slightly stair-stepped at full zoom (invisible at site size).
 
 ### Round 4: restyle Rachel and the barista to the model sheet (after M01 is approved)
-Rachel and the barista drifted towards anime (eyeliner, lashes, glossy strand hair, gradient skin). Redo them in the style of the approved `M01_rachel_model.png` (rules in `tasks/M01-rachel-model-sheet.md`). Everything else in the café stays exactly as it is.
+Rachel and the barista drifted towards anime (eyeliner, lashes, glossy strand hair, gradient skin). Redo them in the style of the approved `reference/rachel/M01_rachel_model.png` (rules in `tasks/M01-rachel-model-sheet.md`). Everything else in the café stays exactly as it is.
 - **Rachel:** `018_R_A1_sketch`, `018_R_A2_stroke`, `018_R_A1_blink`, `018_R_B1_sip`, `018_R_K1_look`, plus `018_rachel_green` (= A1).
 - **Barista:** `018_B_1`–`B_4` and `018_barista_green` (= B_1), with the same style rules: round white eyes with dot pupils, solid hair shapes, flat shading. She keeps her look: warm deep brown skin, long dark hair with curtain bangs, silver hoops, white ribbed top, dark apron.
 - Each is an **edit of the current file**: same canvas (2580×1432), same position, size, pose, outline silhouette and props, on flat `#00FF00`. Only the style of the face, hair and shading changes. Keep the poses' differences exactly as they are now (stroke, blink, sip, look, polishing, glance).

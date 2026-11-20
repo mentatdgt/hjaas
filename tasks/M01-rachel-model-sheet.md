@@ -1,6 +1,6 @@
 ---
 id: M01-rachel-model-sheet
-status: open
+status: approved
 references:
   - reference/scene-keyframe-hammering.png     # scene 1: the closest to the target style (but she wears glasses there: drop them)
   - frames/018-cafe-scene/approved/018_R_A1_sketch.png   # the café Rachel: right outfit, hair and pose, but the style has drifted
@@ -36,3 +36,6 @@ used_on: every scene. This becomes Rachel's master reference.
 - [ ] Eyes are round whites with dot pupils: no lashes, no eyeliner, no glasses.
 - [ ] Hair is solid shapes, not strands. Shading is flat with one shadow tone.
 - [ ] Recognisably the same person as scene 1 and the café: face shape, hair, skin, pendant, outfit.
+
+## Approved (2026-11-20): `reference/rachel/M01_rachel_model.png`
+Of Quinn's three near-identical versions, this is the one with the warmer, slightly lighter outlines. It sits best against the painted backgrounds, and its neutral face has a gentle smile instead of a blank stare. The other two are kept as `M01_option_*.png`. **This is the master for Rachel in every scene.**
