@@ -116,3 +116,10 @@ Registration is perfect: the camera, hands, tank, shorts and bottom crop are pix
 2. **A1, B1 (and rachel_green) hair shadow:** the one big dark blob in the middle of the back of her hair reads as a hole. Replace it with **2–3 narrow dark strands following the waves**, like the inner layers on M01. Same silhouette.
 3. **Skin:** her arms, shoulders and hands are still the old pale peach, so in K1 they don't match her new orange-tan face. Recolour all her visible skin (all four files) to M01's warm tan, with one hard shadow tone. Shapes and pixels' positions stay identical.
 Everything else stays.
+
+### Round 3, presenter additions (user, 2026-11-20): he must look like he's talking in every pose
+Lip-flap is done in code by swapping mouth frames, so every held pose needs a closed mouth. Each file is an edit of the existing one, nothing else changes:
+- `020_M_2_closed.png`: M_2 with his mouth closed in a smile.
+- `020_M_3_closed.png`: M_3 with his mouth closed in a smile.
+- `020_M_1_mid.png`: M_1 with his mouth half open (a third mouth shape for lip-sync).
+Higgsfield prompts will say "talking animatedly". If a clip's mouth looks wrong, Wren overlays the drawn mouth frames instead.
