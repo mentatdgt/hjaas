@@ -121,3 +121,9 @@ Rachel and the barista drifted towards anime (eyeliner, lashes, glossy strand ha
 **Round 4 also: a more natural reaction.** The user found the look to camera stiff and artificial. Three causes: a wide-eyed fixed stare, a frozen 1.3 s hold, and the same clip played backwards (blink included). Redraw `018_R_K1_look` in the new style as a **soft, friendly glance**: head lifted, very slight tilt, eyes on the viewer, small natural smile, relaxed brows. Add two new poses, both edits of the new K1:
 - `018_R_K2_smile`: the smile widens and her eyes soften into happy curves, as if pleased; her head tilts a touch more. Hands unchanged.
 - `018_R_K1_blink`: K1 with her eyes closed (a simple curved line).
+
+### QC round 4: PASS with one fix (Wren, 2026-11-20)
+- The style now matches the model sheet: round white eyes, dot pupils, solid hair, simple brows. Registration is exact (Quinn kept every silhouette). The sip and K2 smile are lovely.
+- **Fix (round 5, one file):** in `018_B_4` the barista glances to the RIGHT, towards the grinder and the old man. She should glance LEFT and slightly down, towards Rachel, with a small friendly smile. Edit B_4 only: move her pupils and turn her face very slightly left. Nothing else changes.
+- Wren will handle in packaging: the binary green key leaves stair-stepped hair outlines at 2×, so the alpha edge gets anti-aliased.
+- Accepted: the arms and clothes keep a little soft shading (mild). K1's wide-eyed look is only a passing frame; the reaction holds on K2's smile.
