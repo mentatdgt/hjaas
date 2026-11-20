@@ -1034,7 +1034,7 @@ brief, on purpose: the edge is not drawn once and kept, it is drawn each time it
 | ✅ | All 20 still findable | Every mushroom of both scenes clicked or tapped on the drawing itself, on desktop, the iPhone profile and a 320 × 640 phone: 20 of 20 each time. Grow's hunt rules (sizes, how much shows, Tab order, saved progress) still hold. | `edge/pencil-find.json`, `edge/pencil-hunt-checks.json` |
 | ✅ | Nudge minimally or choose a seed | Both. Build has a new edge (the 243rd of 1500 tried) and three floor mushrooms moved up: `screed` 7 px, `tiles` 7 px, `toolbox` 13 px. Grow has a new edge (the 129th) and nothing moved. | `src/scenes/build.ts`, `grow.ts`, `edge/pencil-pick.json` |
 | ✅ | Rachel fully opaque in every pose | Under every pixel any of her frames ever covers, in both scenes, by the formula and on the edge as drawn: **1.00 everywhere, and no pencil over her.** The fade comes no nearer to her than 6 px in Build (under her boots) and 10 px in Grow. | `edge/pencil-rachel.json` |
-| ✅ | The paint-in: the pencil first, then the colour | Done as asked, not the simpler way: the pencil fades up alone for 0.32 s, then the brush starts. Checked at a quarter of the speed: while the pencil is alone, none of the 47,495 points inside Build's painting (46,511 in Grow's) has any colour. Then at 1.2, 2.4 and 3.6 s: no bare-paper point shows anything, and none of the 5,776 points past the colour's edge (5,871 in Grow) shows paint, only paper or pencil. Recorded on desktop and the iPhone profile. | `edge/pencil-reveal.json`, `pencil-*-painting-*.jpg`, `pencil-film-*.mp4`, `pencil-film-*-stills.jpg` |
+| ✅ | The paint-in: the pencil first, then the colour (**changed in round 3b, at the end of this section: the pencil now arrives with the colour**) | Done as asked, not the simpler way: the pencil fades up alone for 0.32 s, then the brush starts. Checked at a quarter of the speed: while the pencil is alone, none of the 47,495 points inside Build's painting (46,511 in Grow's) has any colour. Then at 1.2, 2.4 and 3.6 s: no bare-paper point shows anything, and none of the 5,776 points past the colour's edge (5,871 in Grow) shows paint, only paper or pencil. Recorded on desktop and the iPhone profile. | `pencil-film-*.mp4`, `pencil-film-*-stills.jpg` (re-recorded in round 3b) |
 | ✅ | Production gets only this edge | `pencil` is the default. `organic` and the older ones remain for `?edge=` in development. | `src/engine/edge.ts` |
 | ✅ | Memory under 80 MB on the phone profile | Build only **62.5 MB**; Build, then Grow **77.5 MB**; Grow, then Build **70.3 MB**. A new visitor: 66.9, 77.5 and 71.6 MB. (Last round: 63.0, 78.0, 70.8.) She never had to skip a frame. | `edge/pencil-memory.json` |
 | ✅ | Compute in slices, nothing over about 12 ms in WebKit | Drawing an edge is 50 to 95 ms of work in WebKit, in slices: the page was never held for more than 8 ms (9 ms in Chrome; 9 to 19 ms with the processor slowed 4× and 6×). | `edge/pencil-cost.json` |
@@ -1052,9 +1052,10 @@ every scene, and the quick way of drawing it agreeing with the formula.
 - **The edge:** as in mock-up B. The amount of pencil depends on what the room has near its sides: Grow has
   a lot (shelving, the door, the window), Build less along the top and bottom.
 - **A first visit:** a faint pencil sketch of the room's outer lines comes up on the bare page, and a third
-  of a second later the brush starts. The whole painting is about 5.25 s instead of 4.95.
+  of a second later the brush starts. The whole painting is about 5.25 s instead of 4.95. *(Round 3b took
+  this out again: see the end of this section.)*
 - **A return visit, or reduced motion:** the pencil comes up in 120 ms, everything else in 200 ms just
-  behind it: 300 ms in all instead of 200.
+  behind it: 300 ms in all instead of 200. *(Round 3b: 200 ms again, all together.)*
 
 ### What changed in memory and loading
 
@@ -1107,10 +1108,10 @@ but the numbers are clean. (`edge/pencil-intro-frames-webkit.txt`)
    mushrooms least. No edge leaves Build's three floor mushrooms where they were.
 6. **Build's three floor mushrooms are now 25, 29 and 17 px above where they were first placed** (small
    moves over the edge rounds). They still stand on the floor and read correctly to my eye.
-7. **The pencil gets 0.32 s to itself before the brush.** The edge is also what stops the paint at the
+7. *(Undone in round 3b.)* **The pencil gets 0.32 s to itself before the brush.** The edge is also what stops the paint at the
    painting's shape, so it has to be fully there before any paint is. Fading it in while the brush was
    already at work would have shown the first strokes right to the plate's rim.
-8. **The short reveal is staggered for the same reason** (the pencil 120 ms, then the rest). With reduced
+8. *(Undone in round 3b.)* **The short reveal is staggered for the same reason** (the pencil 120 ms, then the rest). With reduced
    motion on, in about 20 screenshots through it per scene, no paint showed past the edge.
 9. **`?edge=organic` now shows the organic edge on the new seeds,** so it compares like with like. Some
    mushrooms sit in its fade; it is for comparison only.
@@ -1165,3 +1166,75 @@ and the edge is still drawn again when a scene returns, as decided.
   the old patch by the toolbox; nothing else in them changed.
 - **Not measured again:** memory, timings and the finding of all 20 mushrooms. The line pictures have the
   same pixel sizes and no code changed, so none of these can have moved.
+
+### Round 3b (2026-11-20): the pencil arrives with the colour, not before
+
+The user found it strange that the line drawings were already there when the colour came in. Now the pencil
+beyond the colour is sketched in beside each brush stroke as the stroke gets there.
+
+| | Asked for | Result | Evidence |
+|---|---|---|---|
+| ✅ | Drop the pencil-only fade-up | Gone. The brush starts at once, and the painting is back to its old length: wash at 4.06 s, Rachel at 4.40 s, caption at 4.56 s, about 4.95 s in all (it was 5.25 s). | `src/engine/transition.ts` |
+| ✅ | Drive the pencil from the paint-in reveal, spread outward by about 70 px | Each stroke brings up the pencil around its own paint, 70 px further out, with a soft falloff. Read back every frame of a painting at a quarter speed (about 1,100 frames per run, both scenes, desktop Chrome and the iPhone profile in WebKit): the pencil never showed more than 51 to 54 px from paint that was already there, in about 2 million readings per run. | `edge/pencil-reveal.json` |
+| ✅ | Pencil never shows where the colour has not come yet | The same readings: for every pencil point, the pencil was half up no sooner than 8 to 12 ms after the brush first laid paint within 70 px of it (median 87 to 92 ms after; nine in ten within 0.2 s in Grow and 0.34 s in Build). Before the brush starts, the page is bare paper: under what covers the pencil it shows at 1% at the very most (measured: 99.2% of the paper's pixels exact, the rest within 6 of 255). | `edge/pencil-reveal.json` |
+| ✅ | Sketched in over about 150 to 250 ms | A pencil point takes 142 to 154 ms (median) to go from a tenth to nine tenths there; nine in ten take under 188 to 204 ms. 2 to 4% take over 0.4 s: they sit just outside one stroke's reach and are finished by the next stroke. | `edge/pencil-reveal.json` |
+| ✅ | No paint past the edge, still | Screenshots at 0.3, 0.9, 1.5, 2.3, 3.0 and 3.7 s, both scenes: none of the 622 (Build) and 640 (Grow) bare-paper points shows anything, and none of the 5,776 and 5,871 points past the colour's edge shows paint. | `edge/pencil-reveal.json` |
+| ✅ | The same for the return-visit reveal | The finished picture is put up whole under a blank sheet of paper, and the sheet fades off it in 200 ms: colour and pencil are exactly as far along as each other in every screenshot (difference 0.001 at most), and nothing shows past the edge. It is 200 ms again, not 300. | `edge/pencil-reveal.json` |
+| ✅ | Recorded on desktop and the iPhone profile | A first visit, then to Grow (its own painting) and back, on desktop Chrome and on the iPhone profile in WebKit. | `edge/pencil-film-desktop.mp4`, `edge/pencil-film-iphone.mp4`, and their `-stills.jpg` |
+| ✅ | Three stills: early, middle, late | Build and Grow on desktop at 0.9, 2.3 and 3.7 s, and Build on the iPhone profile. | `edge/pencil-reveal-build-*.jpg`, `pencil-reveal-grow-*.jpg`, `pencil-reveal-iphone-*.jpg` |
+| ⚠️ | Keep the frame budget in WebKit | The extra work is small: about 0.06 ms of script per frame while the brush is at work (the longest single frame of brush work 1 to 4 ms, the same as before). But the Mac was very busy all evening (load 10 to 16), and on it **both** builds dropped frames, so I could not show the 50 ms figure of the last round for either. Measured in turn: see below. | `edge/pencil-3b-frames-webkit.txt` |
+| ✅ | Under 80 MB | Unchanged at the peak: 77.5 MB with the lab open. A first-visit painting holds 0.4 MB more while it runs (Build as a new visitor 67.3 MB, was 66.9). | `edge/pencil-memory.json` |
+
+**How it works.** The pencil is part of the edge, which lies over the sheet of paper that the brush rubs
+away (the edge is what stops the paint at the painting's shape). So the pencil gets a veil of its own: a
+second, coarse sheet of paper (a quarter of the plate's size, 0.4 MB) that lies only where the edge holds
+the colour back. The brush's own strokes take it off, with the same bristles, 70 px wider and in two
+passes: one with the brush that only thins the veil, and one 0.18 s behind that takes it off. Nothing is
+read back from the screen and nothing is filtered, so it costs a handful of extra line strokes on a small
+canvas per frame.
+
+**The frame budget, as far as this evening's Mac allows.** WebKit, iPhone profile, this build and the one
+before it measured in turn:
+
+- **Script per frame of the painting** (8 loads each, dev server): while the brush is at work, 34 to 88 ms
+  of script in total over about 240 frames, against 26 to 74 ms before; the longest single frame's script 1
+  to 4 ms in both.
+- **Two frames are over 12 ms of script in both builds,** and were before this round: the frame in which
+  the wash starts and the mushrooms become findable (4 to 28 ms now, 6 to 44 ms before), and the frame in
+  which Rachel comes in (7 to 27 ms now, 10 to 38 ms before). Not from this round; I have not traced them.
+- **Frame times through the opening painting** (production build, 12 cold loads each): frames over 50 ms
+  in 11 of 12 loads now and 12 of 12 before, almost all of them at the same four moments at the end of
+  the painting in both. While the brush is at work: 23 such frames in 7 of 12 loads now, 10 in 8 of 12
+  before. That is bursts in three of the loads; with this much else running I cannot tell whether the veil
+  has any part in it. It needs measuring again on a quiet machine.
+- **The short reveal** (production build, 18 reloads now, 18 before): every frame of the 200 ms reveal was
+  17 to 18 ms now (17 to 61 ms before). Taking the blank sheet off again, 2.5 s later, cost nothing
+  measurable.
+
+**Decisions I made (round 3b)**
+
+1. **The spread is worked out from the brush strokes, not by filtering the reveal mask.** The brief
+   suggests a max-filter and a blur on a small copy of the mask each frame. Reading a canvas back every
+   frame is the kind of work that makes WebKit drop frames, so the veil is drawn with the same strokes,
+   wider. The result is the same shape: the reveal, grown by about 70 px, soft at its rim.
+2. **The pencil finishes about 0.1 s after its colour, not exactly with it.** To take 150 to 250 ms the
+   pencil must either start well before the colour or end a little after it. It starts when the paint is
+   about 70 px away and is complete about 0.18 s behind the brush.
+3. **The faint outer fringe of the colour comes up with the pencil.** The veil has to cover the pencil
+   wherever the colour is thin, so the colour's last few percent there arrive with the pencil's timing,
+   not the brush's. Where 99.5% or more of the painting shows, the veil is 15% at most; where all of it
+   shows, there is none.
+4. **The return-visit reveal is a blank sheet fading off the finished picture,** in place of each part
+   fading up by itself. It is the only way the edge's pencil and the colour can be exactly together without
+   the room showing past the edge on the way in. It is also 200 ms again.
+5. **A scene opened for the first time from another** draws its edge after the blank sheet is up. The edge
+   stays out of sight until the veil has taken its shape from it, in the painting's first frame.
+6. **The switch between scenes already seen is unchanged:** the new picture, pencil and all, was already
+   brushed in under the old one.
+
+**Not done, or not verified**
+
+- **A quiet machine.** See the frame budget above. Everything else here does not depend on timing.
+- **A real phone.**
+- **The two slow frames at the wash and at Rachel's entrance** (over 12 ms of script in both builds).
+

@@ -7,7 +7,8 @@
 //   node qa/tools/pencil.mjs spots     the drawn edge under every mushroom and tap box, at five sizes
 //   node qa/tools/pencil.mjs find      all 20 mushrooms clicked or tapped on the drawing itself, desktop and two phones
 //   node qa/tools/pencil.mjs rachel    the drawn edge under every pixel Rachel ever covers, both scenes
-//   node qa/tools/pencil.mjs reveal    a first-visit painting: the pencil first, and no paint past the edge
+//   node qa/tools/pencil.mjs reveal    a first-visit painting and the short reveal: the pencil with the colour, never before it
+//   node qa/tools/pencil.mjs quick [n] WebKit, phone, production build: frame times through the short reveal of a return visit
 //   node qa/tools/pencil.mjs switch    moving between scenes: the edge is drawn again before anything of the new scene shows
 //   node qa/tools/pencil.mjs film      recordings of a first visit and of two switches, desktop and iPhone profile, with stills
 //   node qa/tools/pencil.mjs pan       WebKit, phone: frame times while the room is panned end to end (HJ_EDGE=organic for the edge before)
@@ -401,107 +402,263 @@ run.rachel = async () => {
   await save('pencil-rachel.json', report);
 };
 
-// A first-visit painting. The pencil comes first: before the brush starts there are pencil lines on the
-// page and no colour anywhere. Then the paint reveals into the edge's shape: at several moments, every point
-// the edge leaves as bare paper is paper on the screen, and every point past the colour's edge is paper or
-// pencil, never paint.
+// A first-visit painting (round 3b: the pencil arrives with the colour, not before). Three readings:
+//   1. The sheet over the room and the veil over the edge's pencil, read back every frame of a painting
+//      played at a quarter speed: the veil lies only where the edge holds the colour back; the pencil never
+//      shows further than a stroke's margin (about 70 px) from paint that is already there; how long a
+//      pencil point takes to come up, and how that sits against the colour arriving at the painting's edge
+//      beside it.
+//   2. Screenshots at full speed: bare paper stays paper, and past the colour's edge there is only paper or
+//      pencil, never paint. Three stills of each scene (early, middle, late), and of Build on the phone.
+//   3. The short reveal of a return visit (also what reduced motion gets): in every screenshot of it the
+//      pencil is as far along as the colour, and nothing shows past the edge.
+const WATCH = `(() => {
+  const W = 418, H = 235;
+  const scratch = document.createElement('canvas'); scratch.width = W; scratch.height = H;
+  const ctx = scratch.getContext('2d', { willReadFrequently: true });
+  const never = () => new Float32Array(W * H).fill(-1);
+  const w = window.__watch = { W, H, frames: 0, V0: null, far: 0, farOver110: 0, lifted: 0, tC: never(), t10: never(), t50: never(), t90: never(), done: false };
+  const slow = Number(new URLSearchParams(location.search).get('slow') ?? 1);
+  const alpha = (canvas) => { ctx.globalCompositeOperation = 'copy'; ctx.drawImage(canvas, 0, 0, W, H); return ctx.getImageData(0, 0, W, H).data; };
+  const dist = new Float32Array(W * H);
+  const tick = () => {
+    const hj = window.__hj;
+    if (hj?.marks.introEnd > 0) { w.done = true; return; }
+    requestAnimationFrame(tick);
+    const sheet = document.querySelector('.hj-plate .hj-paint:not(.is-veil)');
+    const veil = document.querySelector('.hj-plate .hj-paint.is-veil');
+    if (!sheet || !veil || !(hj?.marks.introStart > 0)) return;
+    const t = (performance.now() - hj.marks.introStart) / slow;
+    const S = alpha(sheet), V = alpha(veil).slice();
+    w.frames++;
+    if (!w.V0) { w.V0 = new Uint8Array(W * H); for (let i = 0; i < W * H; i++) w.V0[i] = V[i * 4 + 3]; }
+    for (let i = 0; i < W * H; i++) {
+      const s = S[i * 4 + 3], v = V[i * 4 + 3];
+      if (w.tC[i] < 0 && s < 128) w.tC[i] = t;
+      if (w.t10[i] < 0 && v < 230) w.t10[i] = t;
+      if (w.t50[i] < 0 && v < 128) w.t50[i] = t;
+      if (w.t90[i] < 0 && v < 26) w.t90[i] = t;
+    }
+    // How far the lifted veil reaches from paint that is there (every sixth frame, while the brush is at work).
+    if (w.frames % 6 === 0 && t < 4000) {
+      for (let i = 0; i < W * H; i++) dist[i] = S[i * 4 + 3] < 128 ? 0 : 1e6;
+      for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const i = y * W + x; let d = dist[i]; if (x) d = Math.min(d, dist[i - 1] + 1); if (y) { d = Math.min(d, dist[i - W] + 1); if (x) d = Math.min(d, dist[i - W - 1] + 1.414); if (x < W - 1) d = Math.min(d, dist[i - W + 1] + 1.414); } dist[i] = d; }
+      for (let y = H - 1; y >= 0; y--) for (let x = W - 1; x >= 0; x--) { const i = y * W + x; let d = dist[i]; if (x < W - 1) d = Math.min(d, dist[i + 1] + 1); if (y < H - 1) { d = Math.min(d, dist[i + W] + 1); if (x < W - 1) d = Math.min(d, dist[i + W + 1] + 1.414); if (x) d = Math.min(d, dist[i + W - 1] + 1.414); } dist[i] = d; }
+      for (let i = 0; i < W * H; i++) if (w.V0[i] > 200 && V[i * 4 + 3] < 128 && dist[i] < 1e5) { w.lifted++; if (dist[i] > w.far) w.far = dist[i]; if (dist[i] * 4 > 110) w.farOver110++; }
+    }
+  };
+  requestAnimationFrame(tick);
+})();`;
+const PAPER = [246, 243, 236];
+const isPaper = (p) => Math.abs(p[0] - 246) <= 4 && Math.abs(p[1] - 243) <= 4 && Math.abs(p[2] - 236) <= 4;
+// Pencil on paper: somewhere on the line from paper (246, 243, 236) to graphite (78, 74, 70). Paint is not.
+const isPencil = (p) => { const t = (246 - p[0]) / 168; return t >= -0.03 && t <= 1.03 && Math.abs(p[1] - (243 - 169 * t)) <= 7 && Math.abs(p[2] - (236 - 166 * t)) <= 7; };
+// Points of the plate by what the finished edge leaves there: bare paper, pencil only, or the whole painting.
+const pointsOf = (page, id) => page.evaluate(async (id) => {
+  const { edgeAlpha, edgeSeed, edgeName, pencilReach } = await import('/src/engine/edge.ts');
+  const { SCENES } = await import('/src/scenes/index.ts');
+  const seed = edgeSeed(edgeName(SCENES.find((s) => s.id === id)));
+  const paint = edgeAlpha('pencil', seed); const pencil = pencilReach(seed);
+  const paper = []; const sketch = []; const inside = [];
+  // "Paper" and "no colour" mean so there and for 4 px around: the screenshot is smaller than the plate.
+  const around = [[0, 0], [4, 0], [-4, 0], [0, 4], [0, -4], [3, 3], [-3, 3], [3, -3], [-3, -3]];
+  for (let y = 3; y < 941; y += 5) for (let x = 3; x < 1672; x += 5) {
+    if (around.every(([dx, dy]) => pencil(x + dx, y + dy) <= 0.001)) paper.push([x, y]);
+    else if (around.every(([dx, dy]) => paint(x + dx, y + dy) <= 0.001)) sketch.push([x, y]);
+    else if (paint(x, y) >= 0.999) inside.push([x, y]);
+  }
+  return { paper, sketch, inside };
+}, id);
+const reader = async (png) => {
+  const shot = await sharp(png).removeAlpha().raw().toBuffer({ resolveWithObject: true });
+  const k = shot.info.width / 1672;
+  return ([x, y]) => { const i = (Math.min(shot.info.height - 1, Math.round(y * k)) * shot.info.width + Math.min(shot.info.width - 1, Math.round(x * k))) * 3; return [shot.data[i], shot.data[i + 1], shot.data[i + 2]]; };
+};
+const STILLS = { early: 900, middle: 2300, late: 3700 };
+
 run.reveal = async () => {
   const report = [];
-  const browser = await chromium.launch({ channel: 'chrome' });
+  const chrome = await chromium.launch({ channel: 'chrome' });
+  const safari = await webkit.launch();
   for (const id of ['build', 'grow']) {
-    const rows = [];
     const errors = [];
-    // Twice: once at a quarter of the speed (?slow=4), to catch the 0.32 s the pencil has to itself, and
-    // once at full speed for the brush.
-    for (const [query, moments] of [['&slow=4', [500, 1150]], ['', [1200, 2400, 3600]]]) {
-      const page = await (await browser.newContext({ viewport: { width: 1440, height: 900 } })).newPage();
+    // 1. The sheet and the veil, frame by frame, at a quarter speed. Desktop Chrome and the iPhone profile.
+    const watched = [];
+    for (const [engine, browser, options] of [['chrome 1440x900', chrome, { viewport: { width: 1440, height: 900 } }], ['webkit iPhone 14', safari, { ...devices['iPhone 14'] }]]) {
+      const context = await browser.newContext(options);
+      await context.addInitScript(WATCH);
+      const page = await context.newPage();
       errors.push(...errorsOf(page));
-      await page.goto(`${base}?debug&reset&seed=7${query}#${id}`);
-      await page.waitForFunction(() => window.__hj?.marks.introStart > 0, null, { timeout: 30000 });
-      await clean(page);
-      const plate = await page.locator('.hj-plate').boundingBox();
-      const points = await page.evaluate(async (id) => {
+      await page.goto(`${base}?debug&reset&seed=7&slow=4#${id}`);
+      await page.waitForFunction(() => window.__watch?.done === true, null, { timeout: 90000 });
+      watched.push({ engine, ...(await page.evaluate(async (id) => {
         const { edgeAlpha, edgeSeed, edgeName, pencilReach } = await import('/src/engine/edge.ts');
         const { SCENES } = await import('/src/scenes/index.ts');
         const seed = edgeSeed(edgeName(SCENES.find((s) => s.id === id)));
         const paint = edgeAlpha('pencil', seed); const pencil = pencilReach(seed);
-        const paper = []; const sketch = []; const inside = [];
-        // "Paper" and "no colour" mean so there and for 4 px around: the screenshot is smaller than the plate.
-        const around = [[0, 0], [4, 0], [-4, 0], [0, 4], [0, -4], [3, 3], [-3, 3], [3, -3], [-3, -3]];
-        for (let y = 3; y < 941; y += 5) for (let x = 3; x < 1672; x += 5) {
-          if (around.every(([dx, dy]) => pencil(x + dx, y + dy) <= 0.001)) paper.push([x, y]);
-          else if (around.every(([dx, dy]) => paint(x + dx, y + dy) <= 0.001)) sketch.push([x, y]);
-          else if (paint(x, y) >= 0.999) inside.push([x, y]);
+        const w = window.__watch; const { W, H } = w;
+        const kx = 1672 / W; const ky = 941 / H;
+        const P = new Float32Array(W * H); const Q = new Float32Array(W * H);
+        for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { P[y * W + x] = paint((x + 0.5) * kx, (y + 0.5) * ky); Q[y * W + x] = pencil((x + 0.5) * kx, (y + 0.5) * ky); }
+        const WASH = 4060;
+        const rise = []; const lead = []; let pencilPoints = 0; let leftToTheWash = 0;
+        let onThePicture = 0; let whole = 0;
+        // "The whole painting" means so there and for 12 px around: the veil's pixels are 4 px of the plate.
+        const allThere = (x, y) => [[0, 0], [12, 0], [-12, 0], [0, 12], [0, -12], [9, 9], [-9, 9], [9, -9], [-9, -9]].every(([dx, dy]) => paint(x + dx, y + dy) >= 0.999);
+        for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const i = y * W + x; if (w.V0[i] > onThePicture && allThere((x + 0.5) * kx, (y + 0.5) * ky)) onThePicture = w.V0[i]; if (Q[i] > 0.3 && P[i] < 0.3 && w.V0[i] >= 250) whole++; }
+        for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+          const i = y * W + x;
+          // A pencil point: the pencil reaches it, the colour all but does not.
+          if (!(Q[i] > 0.3 && P[i] < 0.3)) continue;
+          pencilPoints++;
+          if (w.t50[i] < 0 || w.t50[i] >= WASH) { leftToTheWash++; continue; }
+          if (w.t90[i] >= 0 && w.t10[i] >= 0) rise.push(w.t90[i] - w.t10[i]);
+          // When the brush first laid paint within 70 px of it.
+          let first = 1e9;
+          for (let dy = -18; dy <= 18; dy++) for (let dx = -18; dx <= 18; dx++) {
+            const xx = x + dx; const yy = y + dy;
+            if (xx < 0 || yy < 0 || xx >= W || yy >= H || dx * dx + dy * dy > 17.5 * 17.5) continue;
+            const t = w.tC[yy * W + xx];
+            if (t >= 0 && t < first) first = t;
+          }
+          if (first < 1e9) lead.push(w.t50[i] - first);
         }
-        return { paper, sketch, inside };
-      }, id);
-      for (const at of moments) {
+        const spread = (list) => { const s = [...list].sort((a, b) => a - b); const q = (f) => Math.round(s[Math.min(s.length - 1, Math.floor(f * s.length))]); return { points: s.length, tenth: q(0.1), median: q(0.5), ninetieth: q(0.9), least: Math.round(s[0]), most: Math.round(s.at(-1)), shareOver400: Math.round((s.filter((v) => v > 400).length / s.length) * 1000) / 1000 }; };
+        return {
+          framesRead: w.frames,
+          theVeilBeforeTheBrush: { mostOverTheWholePaintingOutOf255: onThePicture, pencilPointsItCoversWhole: whole },
+          thePencilAheadOfThePaint: { furthestPlatePx: Math.round(w.far * kx), readings: w.lifted, readingsOver110Px: w.farOver110 },
+          pencilPoints, pencilPointsLeftToTheWash: leftToTheWash,
+          msForAPencilPointToComeUp: spread(rise),
+          msFromPaintWithin70PxToThePencilHalfUp: spread(lead),
+        };
+      }, id)) });
+      await context.close();
+    }
+    // 2. Screenshots at full speed.
+    const rows = [];
+    {
+      const context = await chrome.newContext({ viewport: { width: 1440, height: 900 } });
+      // (Worked out on a page of its own, so that the painting is not kept waiting.)
+      const aside = await context.newPage();
+      await aside.goto(`${base}?debug&intro=off#${id}`);
+      await ready(aside);
+      const points = await pointsOf(aside, id);
+      await aside.close();
+      const page = await context.newPage();
+      errors.push(...errorsOf(page));
+      await page.goto(`${base}?debug&reset&seed=7#${id}`);
+      await page.waitForFunction(() => window.__hj?.marks.introStart > 0, null, { timeout: 30000 });
+      await clean(page);
+      const plate = await page.locator('.hj-plate').boundingBox();
+      for (const at of [300, 900, 1500, 2300, 3000, 3700]) {
         await page.waitForFunction((t) => performance.now() - window.__hj.marks.introStart >= t, at, { polling: 'raf' });
         const taken = await page.evaluate(() => Math.round(performance.now() - window.__hj.marks.introStart));
-        const png = await page.screenshot({ clip: plate });
-        const shot = await sharp(png).raw().toBuffer({ resolveWithObject: true });
-        const k = shot.info.width / 1672;
-        const c = shot.info.channels;
-        const px = ([x, y]) => { const i = (Math.min(shot.info.height - 1, Math.round(y * k)) * shot.info.width + Math.min(shot.info.width - 1, Math.round(x * k))) * c; return [shot.data[i], shot.data[i + 1], shot.data[i + 2]]; };
-        const isPaper = (p) => Math.abs(p[0] - 246) <= 4 && Math.abs(p[1] - 243) <= 4 && Math.abs(p[2] - 236) <= 4;
-        // Pencil on paper: somewhere on the line from paper (246, 243, 236) to graphite (78, 74, 70). Paint is not.
-        const isPencil = (p) => { const t = (246 - p[0]) / 168; return t >= -0.03 && t <= 1.03 && Math.abs(p[1] - (243 - 169 * t)) <= 7 && Math.abs(p[2] - (236 - 166 * t)) <= 7; };
+        const full = await page.screenshot();
+        const px = await reader(await sharp(full).extract({ left: Math.round(plate.x), top: Math.round(plate.y), width: Math.round(plate.width), height: Math.round(plate.height) }).png().toBuffer());
         rows.push({
-          speed: query ? 'a quarter (the pencil has 1280 ms to itself)' : 'full (the pencil has 320 ms to itself)', atMs: taken,
+          atMs: taken,
           pointsThatMustBeBarePaper: points.paper.length, notPaper: points.paper.filter((p) => !isPaper(px(p))).length,
           pointsPastTheColoursEdge: points.sketch.length, paintThere: points.sketch.filter((p) => !isPencil(px(p))).length, pencilThere: points.sketch.filter((p) => !isPaper(px(p)) && isPencil(px(p))).length,
           pointsInsideThePainting: points.inside.length, painted: points.inside.filter((p) => !isPaper(px(p))).length,
         });
-        if (at === 1150 || at === 2400) await sharp(await page.screenshot()).jpeg({ quality: 90 }).toFile(`${out}pencil-${id}-painting-${at === 1150 ? 'pencil-first' : 'mid'}.jpg`);
+        const still = Object.entries(STILLS).find(([, ms]) => ms === at);
+        if (still) await sharp(full).jpeg({ quality: 90 }).toFile(`${out}pencil-reveal-${id}-${still[0]}.jpg`);
       }
       await page.close();
     }
-    // And the short reveal of a return visit (also what reduced motion gets): the edge's pencil fades up
-    // just ahead of everything else, so the picture never shows to the plate's rim on its way in.
-    const quick = { screenshots: 0, pointChecks: 0, barePaperPointsNotPaper: 0, pointsPastTheColourWithPaint: 0 };
-    {
-      const page = await (await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' })).newPage();
+    // The same three moments on the phone (Build only: the stills are for looking at).
+    if (id === 'build') {
+      const context = await safari.newContext({ ...devices['iPhone 14'] });
+      const page = await context.newPage();
       errors.push(...errorsOf(page));
-      // Screenshots are taken from before the reveal starts until well after it ends, as fast as they come.
       await page.goto(`${base}?debug&reset&seed=7#${id}`);
+      await page.waitForFunction(() => window.__hj?.marks.introStart > 0, null, { timeout: 30000 });
+      await clean(page);
+      for (const [name, at] of Object.entries(STILLS)) {
+        await page.waitForFunction((t) => performance.now() - window.__hj.marks.introStart >= t, at, { polling: 'raf' });
+        await sharp(await page.screenshot()).jpeg({ quality: 90 }).toFile(`${out}pencil-reveal-iphone-${name}.jpg`);
+      }
+      await context.close();
+    }
+    // 3. The short reveal. Screenshots from before it starts until well after it ends, as fast as they come.
+    const quick = { screenshots: 0, screenshotsPartWay: 0, pointChecks: 0, barePaperPointsNotPaper: 0, pointsPastTheColourWithPaint: 0, pencilAheadOfTheColourAtMost: 0, pencilBehindTheColourAtMost: 0 };
+    {
+      const page = await (await chrome.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' })).newPage();
+      errors.push(...errorsOf(page));
+      await page.goto(`${base}?debug&reset&seed=7#${id}`, { waitUntil: 'commit' });
       await page.waitForSelector('.hj-plate');
       const plate = await page.locator('.hj-plate').boundingBox();
       const shots = [];
       const t0 = Date.now();
       while (Date.now() - t0 < 2500) shots.push(await page.screenshot({ clip: plate }));
-      const points = await page.evaluate(async (id) => {
-        const { edgeAlpha, edgeSeed, edgeName, pencilReach } = await import('/src/engine/edge.ts');
-        const { SCENES } = await import('/src/scenes/index.ts');
-        const seed = edgeSeed(edgeName(SCENES.find((s) => s.id === id)));
-        const paint = edgeAlpha('pencil', seed); const pencil = pencilReach(seed);
-        const paper = []; const sketch = [];
-        const around = [[0, 0], [4, 0], [-4, 0], [0, 4], [0, -4], [3, 3], [-3, 3], [3, -3], [-3, -3]];
-        for (let y = 3; y < 941; y += 5) for (let x = 3; x < 1672; x += 5) {
-          if (around.every(([dx, dy]) => pencil(x + dx, y + dy) <= 0.001)) paper.push([x, y]);
-          else if (around.every(([dx, dy]) => paint(x + dx, y + dy) <= 0.001)) sketch.push([x, y]);
-        }
-        return { paper, sketch };
-      }, id);
+      await clean(page);
+      const points = await pointsOf(page, id);
+      // How far along a set of points is, from paper (0) to how they end up (1): only points that end up
+      // well away from paper are asked.
+      const last = await reader(shots.at(-1));
+      const strong = (list) => list.filter((p) => { const f = last(p); return Math.abs(f[0] - PAPER[0]) + Math.abs(f[1] - PAPER[1]) + Math.abs(f[2] - PAPER[2]) > 150; });
+      const colour = strong(points.inside.filter((_, i) => i % 7 === 0)); const pencil = strong(points.sketch);
+      const along = (px, list) => { let got = 0; let whole = 0; for (const p of list) { const now = px(p); const f = last(p); for (let c = 0; c < 3; c++) { got += Math.abs(now[c] - PAPER[c]); whole += Math.abs(f[c] - PAPER[c]); } } return got / whole; };
       for (const png of shots) {
-        const shot = await sharp(png).raw().toBuffer({ resolveWithObject: true });
-        const k = shot.info.width / 1672;
-        const px = ([x, y]) => { const i = (Math.min(shot.info.height - 1, Math.round(y * k)) * shot.info.width + Math.min(shot.info.width - 1, Math.round(x * k))) * shot.info.channels; return [shot.data[i], shot.data[i + 1], shot.data[i + 2]]; };
-        const isPaper = (p) => Math.abs(p[0] - 246) <= 4 && Math.abs(p[1] - 243) <= 4 && Math.abs(p[2] - 236) <= 4;
-        const isPencil = (p) => { const t = (246 - p[0]) / 168; return t >= -0.03 && t <= 1.03 && Math.abs(p[1] - (243 - 169 * t)) <= 7 && Math.abs(p[2] - (236 - 166 * t)) <= 7; };
+        const px = await reader(png);
         quick.screenshots++;
         quick.pointChecks += points.paper.length + points.sketch.length;
         quick.barePaperPointsNotPaper += points.paper.filter((p) => !isPaper(px(p))).length;
         quick.pointsPastTheColourWithPaint += points.sketch.filter((p) => !isPencil(px(p))).length;
+        const c = along(px, colour); const p = along(px, pencil);
+        if (c > 0.03 && c < 0.97) quick.screenshotsPartWay++;
+        quick.pencilAheadOfTheColourAtMost = Math.max(quick.pencilAheadOfTheColourAtMost, Math.round((p - c) * 1000) / 1000);
+        quick.pencilBehindTheColourAtMost = Math.max(quick.pencilBehindTheColourAtMost, Math.round((c - p) * 1000) / 1000);
       }
+      quick.pointsAsked = { colour: colour.length, pencil: pencil.length };
       await page.close();
     }
-    const early = rows.filter((r) => r.speed.startsWith('a quarter'));
-    const pencilFirst = early.every((r) => r.painted === 0 && r.atMs < 1280) && early.at(-1).pencilThere > 50;
-    report.push({ scene: id, moments: rows, pencilFirst, theShortRevealWithReducedMotion: quick, ok: rows.every((r) => r.notPaper === 0 && r.paintThere === 0) && pencilFirst && quick.barePaperPointsNotPaper === 0 && quick.pointsPastTheColourWithPaint === 0, errors });
+    const ok = rows.every((r) => r.notPaper === 0 && r.paintThere === 0)
+      && watched.every((w) => w.theVeilBeforeTheBrush.mostOverTheWholePaintingOutOf255 <= 64 && w.thePencilAheadOfThePaint.readingsOver110Px <= w.thePencilAheadOfThePaint.readings * 0.01)
+      && quick.barePaperPointsNotPaper === 0 && quick.pointsPastTheColourWithPaint === 0 && quick.pencilAheadOfTheColourAtMost <= 0.05;
+    report.push({ scene: id, theSheetAndTheVeilFrameByFrame: watched, moments: rows, theShortRevealWithReducedMotion: quick, ok, errors });
     say(id, report.at(-1));
   }
-  await browser.close();
+  await chrome.close();
+  await safari.close();
   await save('pencil-reveal.json', report);
+};
+
+// The short reveal of a return visit, in WebKit on the iPhone profile, against the production build
+// (HJ_URL, e.g. http://localhost:4173/): frame times from the picture starting to show until 3.2 s later,
+// which takes in the blank sheet being taken off the page again.
+run.quick = async () => {
+  const rows = [];
+  const browser = await webkit.launch();
+  const context = await browser.newContext({ ...devices['iPhone 14'] });
+  await context.addInitScript(`(() => {
+    const w = window.__gaps = { start: 0, gaps: [] };
+    let last = performance.now();
+    const tick = (now) => {
+      if (!w.start && document.querySelector('.hj-scene:not(.is-pre) .hj-plate')) w.start = now;
+      if (w.start) w.gaps.push([Math.round(now - last), Math.round(now - w.start)]);
+      last = now;
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  })();`);
+  const page = await context.newPage();
+  // A first visit, so that every later load is a return.
+  await page.goto(base);
+  await page.waitForSelector('.hj-scene:not(.is-pre) .hj-plate', { state: 'attached', timeout: 30000 });
+  await page.waitForTimeout(7000);
+  for (let i = 0; i < Number(process.argv[3] ?? 8); i++) {
+    await page.reload();
+    await page.waitForFunction(() => window.__gaps?.start > 0 && performance.now() - window.__gaps.start > 3300, null, { timeout: 30000 });
+    const gaps = (await page.evaluate(() => window.__gaps.gaps)).filter(([, at]) => at > 0 && at <= 3200);
+    const row = { longestMs: Math.max(...gaps.map(([g]) => g)), over50: gaps.filter(([g]) => g > 50).map(([g, at]) => `${g}@${at}`), inTheReveal: Math.max(...gaps.filter(([, at]) => at <= 260).map(([g]) => g)), blankSheets: await page.locator('.hj-blank').count() };
+    rows.push(row);
+    say(`reload ${i + 1}`, row);
+  }
+  await browser.close();
+  say('longest', rows.map((r) => r.longestMs));
+  say('in the reveal', rows.map((r) => r.inTheReveal));
 };
 
 // Which of a scene's possible edges to use. Each must keep the colour whole under every pixel Rachel ever
@@ -720,7 +877,7 @@ run.switch = async () => {
   console.log(report.every((r) => r.ok) ? 'EVERY SWITCH: the edge was there before anything of the new scene showed' : 'A SWITCH SHOWED PAST THE EDGE (or an error was logged)');
 };
 
-// Recordings: a first visit (the pencil, the painting), then to Grow (its full painting) and back to Build
+// Recordings: a first visit (the painting, the pencil arriving with it), then to Grow (its full painting) and back to Build
 // (the short brush), on desktop Chrome and on the iPhone profile in WebKit. Needs ffmpeg for the .mp4 and
 // the strip of stills.
 run.film = async () => {
@@ -754,15 +911,16 @@ run.film = async () => {
     const [webm] = (await readdir(dir)).filter((f) => f.endsWith('.webm'));
     const mp4 = `${out}pencil-film-${name}.mp4`;
     execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', `${dir}${webm}`, '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '24', '-movflags', '+faststart', mp4]);
-    // Stills: the pencil alone, the brush at work, the finished picture; the same for the lab; the short brush back.
-    const moments = [introAt + 0.2, introAt + 0.45, introAt + 1.6, introAt + 3.4, introAt + 5.6, toGrow + 0.75, toGrow + 2.2, toGrow + 6.2, toBuild + 0.7, toBuild + 2.4];
+    // Stills: the brush at work, the pencil coming up beside it, the finished picture; the same for the lab;
+    // the short brush back.
+    const moments = [introAt + 0.5, introAt + 1.4, introAt + 2.4, introAt + 3.4, introAt + 5.4, toGrow + 1.2, toGrow + 2.6, toGrow + 6.2, toBuild + 0.7, toBuild + 2.4];
     const stills = [];
     for (const [i, at] of moments.entries()) {
       const file = `${dir}still-${i}.png`;
       execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-ss', String(at), '-i', mp4, '-frames:v', '1', file]);
       stills.push(await sharp(file).resize({ height: 420 }).toBuffer());
     }
-    await sheetOf([[`${name}: a first visit at ${[0.2, 0.45, 1.6, 3.4, 5.6].join(', ')} s (the pencil alone, then the brush, then the finished picture)`, stills.slice(0, 5)], ['To Grow for the first time (its own pencil, then its painting), and back to Build (the short brush)', stills.slice(5)]], `${out}pencil-film-${name}-stills.jpg`);
+    await sheetOf([[`${name}: a first visit at about ${[0.5, 1.4, 2.4, 3.4, 5.4].join(', ')} s (the pencil comes up beside each stroke, never before it; then the finished picture)`, stills.slice(0, 5)], ['To Grow for the first time (its painting, the pencil with it), and back to Build (the short brush)', stills.slice(5)]], `${out}pencil-film-${name}-stills.jpg`);
     await rm(dir, { recursive: true, force: true });
     say(name, mp4);
   }

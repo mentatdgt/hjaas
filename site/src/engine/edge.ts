@@ -414,6 +414,8 @@ export interface Edge {
   make(): Promise<void>;
   /** Give the pixels back. make() draws it again. */
   release(): void;
+  /** All of it is drawn. */
+  readonly whole: boolean;
   /** What its canvases take, in bytes (and, while it is being made, the line map being read). */
   readonly bytes: number;
   /** Copy it onto another canvas, over a plate drawn at this rectangle. */
@@ -504,6 +506,9 @@ export function makeEdge(style: EdgeStyle, seed: number, paper: [number, number,
       release: () => {
         made = null;
         strip.canvas.width = strip.canvas.height = 0;
+      },
+      get whole() {
+        return strip.canvas.width > 0;
       },
       get bytes() {
         return strip.canvas.width * strip.canvas.height * 4;
@@ -648,6 +653,10 @@ export function makeEdge(style: EdgeStyle, seed: number, paper: [number, number,
       round++;
       made = null;
       for (const strip of strips) strip.canvas.width = strip.canvas.height = 0;
+    },
+    get whole() {
+      // (Each strip's canvas gets its pixels only when they are all worked out.)
+      return strips.every((strip) => strip.canvas.width > 0);
     },
     get bytes() {
       return strips.reduce((sum, strip) => sum + strip.canvas.width * strip.canvas.height * 4, working);

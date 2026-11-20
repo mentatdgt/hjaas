@@ -450,6 +450,16 @@ export class Scene {
   }
 
   /**
+   * Copy the edge as it is drawn onto another canvas, over a plate at this rectangle. False, and nothing
+   * drawn, while the edge is not all there (see dress()).
+   */
+  edgeOnto(ctx: CanvasRenderingContext2D, left: number, top: number, width: number, height: number): boolean {
+    if (!this.edge.whole) return false;
+    this.edge.draw(ctx, left, top, width, height);
+    return true;
+  }
+
+  /**
    * Stop and go back to the rest pose, dropping any reaction (the room is about to be painted again). Her
    * routine then starts from the top: carried on from the middle of a clip, it would jump.
    */

@@ -45,7 +45,7 @@ Inside `src/engine/`:
 | `site.ts` | Builds the page (identity, scene menu, framed picture, caption, controls), keeps progress, and moves between scenes. |
 | `types.ts` | What a scene is, as data: `SceneConfig`. |
 | `scene.ts` | One scene built from its config: plate, character, mushrooms. |
-| `transition.ts`, `paint.ts` | How a picture arrives: the first-visit painting (the edge's pencil first, then the brush), the short brush between scenes, the short fades. |
+| `transition.ts`, `paint.ts` | How a picture arrives: the first-visit painting (the brush, and the edge's pencil sketched in beside each stroke as it gets there), the short brush between scenes, the short fades. |
 | `edge.ts` | The painting's edge: the colour fades into the paper along a wandering line, crisp in places and wide in others, and the room's lines carry on as pencil before trailing off. Rounded corners, and never a straight cut. Worked out per scene from a seed and drawn, at the plate's full size, in four strips along the plate's sides (`edge-band.json` says how deep). Also places each mushroom's tap box clear of it. |
 | `character.ts`, `player.ts`, `steps.ts` | A character's canvas (whole frames, or a patch over a still), her placement on the plate, and the player that shows her poses. |
 | `clips.ts` | Reads Wren's delivered format (`frames.json` + `routine.json`): stills, clips of patches, the routine, blinks, the reaction and its entry rule. |

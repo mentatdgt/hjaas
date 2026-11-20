@@ -1,0 +1,70 @@
+Round 3b (the pencil arrives with the colour): frame times in WebKit, this build against the one before it (commit 1cf5cca).
+The Mac was busy throughout: load average 10 to 16 (iCloud sync, kernel_task and other apps), so every figure here is worse than
+on a quiet machine, for both builds alike. The two builds were measured in turn, three loads at a time, so they share the conditions.
+
+1. THE OPENING PAINTING, iPhone 13 profile, production build, twelve cold loads each
+node qa/tools/intro-frames.mjs 3 iphone 0 <url>, four times each, alternating (fullGap: the longest frame from the sheet going in to 1 s
+after the intro ends; slow: frames over 50 ms as length@ms from the sheet going in; loopGap: the 4 s after)
+
+THIS BUILD (the veil over the pencil)
+run 1: {"endGap":105,"endGapAt":4941,"fullGap":105,"over50":3,"slow":["92ms@4241","57ms@4591","105ms@4941"],"loopGap":51,"loop50":1,"roomReq":487,"roomDone":552,"brush":920,"introMs":5046}
+run 2: {"endGap":42,"endGapAt":4942,"fullGap":45,"over50":0,"slow":[],"loopGap":23,"loop50":0,"roomReq":176,"roomDone":203,"brush":588,"introMs":4984}
+run 3: {"endGap":44,"endGapAt":4947,"fullGap":52,"over50":1,"slow":["52ms@1480"],"loopGap":31,"loop50":0,"roomReq":216,"roomDone":237,"brush":658,"introMs":4991}
+run 4: {"endGap":57,"endGapAt":4243,"fullGap":320,"over50":7,"slow":["52ms@1153","113ms@1245","121ms@1361","320ms@1482","67ms@1892","121ms@2009","57ms@4243"],"loopGap":38,"loop50":0,"roomReq":184,"roomDone":265,"brush":744,"introMs":4979}
+run 5: {"endGap":50,"endGapAt":4268,"fullGap":58,"over50":1,"slow":["58ms@3"],"loopGap":18,"loop50":0,"roomReq":486,"roomDone":596,"brush":1178,"introMs":5004}
+run 6: {"endGap":248,"endGapAt":5626,"fullGap":248,"over50":7,"slow":["188ms@4243","56ms@4576","165ms@4632","62ms@4797","64ms@4942","248ms@5626","91ms@5874"],"loopGap":116,"loop50":1,"roomReq":381,"roomDone":453,"brush":983,"introMs":5006}
+run 7: {"endGap":146,"endGapAt":4703,"fullGap":146,"over50":6,"slow":["51ms@3","83ms@4250","119ms@4584","146ms@4703","58ms@4849","68ms@4951"],"loopGap":146,"loop50":5,"roomReq":466,"roomDone":549,"brush":1082,"introMs":5019}
+run 8: {"endGap":80,"endGapAt":4248,"fullGap":80,"over50":2,"slow":["52ms@-51","80ms@4248"],"loopGap":34,"loop50":0,"roomReq":355,"roomDone":453,"brush":1137,"introMs":4991}
+run 9: {"endGap":168,"endGapAt":4192,"fullGap":168,"over50":8,"slow":["73ms@3","106ms@290","82ms@489","168ms@4192","123ms@4360","126ms@4706","107ms@4857","67ms@5073"],"loopGap":100,"loop50":1,"roomReq":524,"roomDone":622,"brush":1436,"introMs":5140}
+run 10: {"endGap":153,"endGapAt":4967,"fullGap":153,"over50":10,"slow":["55ms@2","55ms@1219","62ms@1274","100ms@1574","131ms@1752","61ms@2001","75ms@2418","115ms@4268","64ms@4618","153ms@4967"],"loopGap":45,"loop50":0,"roomReq":571,"roomDone":780,"brush":1684,"introMs":5120}
+run 11: {"endGap":99,"endGapAt":4271,"fullGap":199,"over50":7,"slow":["61ms@3","63ms@1471","54ms@1570","199ms@1787","99ms@4271","76ms@4621","59ms@4771"],"loopGap":72,"loop50":2,"roomReq":225,"roomDone":313,"brush":1033,"introMs":5010}
+run 12: {"endGap":72,"endGapAt":4240,"fullGap":72,"over50":4,"slow":["72ms@4240","63ms@4590","72ms@4740","57ms@4939"],"loopGap":55,"loop50":2,"roomReq":874,"roomDone":1109,"brush":1648,"introMs":4996}
+fullGap [105, 45, 52, 320, 58, 248, 146, 80, 168, 153, 199, 72]  over50 [3, 0, 1, 7, 1, 7, 6, 2, 8, 10, 7, 4]  loopGap [51, 23, 31, 38, 18, 116, 146, 34, 100, 45, 72, 55]
+frames over 50 ms while the brush is at work (5 ms to 4 s): [0, 0, 1, 6, 1, 0, 1, 0, 3, 7, 4, 0], in 7 of 12 loads
+
+THE BUILD BEFORE (the pencil fades up first)
+run 1: {"endGap":107,"endGapAt":4564,"fullGap":107,"over50":3,"slow":["84ms@4349","107ms@4564","54ms@4914"],"loopGap":39,"loop50":0,"roomReq":215,"roomDone":242,"brush":694,"introMs":5300}
+run 2: {"endGap":49,"endGapAt":4530,"fullGap":108,"over50":1,"slow":["108ms@990"],"loopGap":24,"loop50":0,"roomReq":157,"roomDone":182,"brush":507,"introMs":5262}
+run 3: {"endGap":96,"endGapAt":4616,"fullGap":96,"over50":1,"slow":["96ms@4616"],"loopGap":26,"loop50":0,"roomReq":177,"roomDone":193,"brush":532,"introMs":5298}
+run 4: {"endGap":188,"endGapAt":4920,"fullGap":188,"over50":5,"slow":["53ms@3120","81ms@4570","188ms@4920","125ms@5108","153ms@5267"],"loopGap":34,"loop50":0,"roomReq":631,"roomDone":816,"brush":1698,"introMs":5420}
+run 5: {"endGap":59,"endGapAt":4561,"fullGap":70,"over50":3,"slow":["70ms@1707","59ms@4561","59ms@4910"],"loopGap":33,"loop50":0,"roomReq":328,"roomDone":382,"brush":893,"introMs":5301}
+run 6: {"endGap":165,"endGapAt":3838,"fullGap":165,"over50":7,"slow":["63ms@-60","68ms@3","165ms@3838","80ms@4084","138ms@4585","54ms@4925","70ms@5086"],"loopGap":42,"loop50":0,"roomReq":282,"roomDone":365,"brush":1062,"introMs":5325}
+run 7: {"endGap":188,"endGapAt":4574,"fullGap":188,"over50":2,"slow":["188ms@4574","112ms@4925"],"loopGap":20,"loop50":0,"roomReq":448,"roomDone":607,"brush":1204,"introMs":5314}
+run 8: {"endGap":77,"endGapAt":4600,"fullGap":77,"over50":6,"slow":["51ms@-49","69ms@2","77ms@4600","60ms@4950","52ms@5100","54ms@5300"],"loopGap":48,"loop50":0,"roomReq":633,"roomDone":793,"brush":1552,"introMs":5354}
+run 9: {"endGap":165,"endGapAt":5300,"fullGap":165,"over50":5,"slow":["76ms@2","55ms@4600","78ms@4950","91ms@5101","165ms@5300"],"loopGap":70,"loop50":1,"roomReq":301,"roomDone":337,"brush":1141,"introMs":5465}
+run 10: {"endGap":126,"endGapAt":4923,"fullGap":126,"over50":7,"slow":["61ms@-59","51ms@2","80ms@523","118ms@4574","126ms@4923","110ms@5074","65ms@5274"],"loopGap":26,"loop50":0,"roomReq":173,"roomDone":280,"brush":701,"introMs":5339}
+run 11: {"endGap":138,"endGapAt":4652,"fullGap":138,"over50":5,"slow":["101ms@-96","95ms@5","65ms@4587","138ms@4652","70ms@5119"],"loopGap":43,"loop50":0,"roomReq":160,"roomDone":179,"brush":582,"introMs":5370}
+run 12: {"endGap":82,"endGapAt":5053,"fullGap":82,"over50":4,"slow":["70ms@4554","73ms@4904","82ms@5053","69ms@5254"],"loopGap":164,"loop50":1,"roomReq":391,"roomDone":456,"brush":851,"introMs":5323}
+fullGap [107, 108, 96, 188, 70, 165, 188, 77, 165, 126, 138, 82]  over50 [3, 1, 1, 5, 3, 7, 2, 6, 5, 7, 5, 4]  loopGap [39, 24, 26, 34, 33, 42, 20, 48, 70, 26, 43, 164]
+frames over 50 ms while the brush is at work (5 ms to 4 s): [0, 1, 0, 1, 1, 2, 0, 1, 1, 2, 1, 0], in 8 of 12 loads
+
+2. SCRIPT TIME PER FRAME OF THE PAINTING, iPhone 14 profile, dev server, eight loads each, in turn
+(the time GSAP's tick takes, which is the brush, the veil, the wash and the entrances; WebKit's clock has 1 ms steps)
+washStart: the frame in which the wash starts and the mushrooms become findable; herEntrance: the frame Rachel's entrance starts in;
+work: the frame her routine starts in; longestOther: the longest of every other frame; brushTotalMs: all frames before the wash, summed.
+
+THIS BUILD
+{"ticks":285,"totalMs":55,"washStart":4,"herEntrance":11,"work":4,"longestOther":1,"brushTotalMs":34}
+{"ticks":286,"totalMs":73,"washStart":8,"herEntrance":7,"work":3,"longestOther":1,"brushTotalMs":43}
+{"ticks":279,"totalMs":90,"washStart":28,"herEntrance":14,"work":5,"longestOther":2,"brushTotalMs":35}
+{"ticks":283,"totalMs":106,"washStart":9,"herEntrance":27,"work":6,"longestOther":1,"brushTotalMs":57}
+{"ticks":262,"totalMs":118,"washStart":25,"herEntrance":23,"work":8,"longestOther":2,"brushTotalMs":53}
+{"ticks":256,"totalMs":135,"washStart":24,"herEntrance":11,"work":6,"longestOther":4,"brushTotalMs":88}
+{"ticks":284,"totalMs":118,"washStart":25,"herEntrance":12,"work":5,"longestOther":4,"brushTotalMs":69}
+{"ticks":285,"totalMs":75,"washStart":6,"herEntrance":10,"work":4,"longestOther":2,"brushTotalMs":50}
+
+THE BUILD BEFORE
+{"ticks":300,"totalMs":73,"washStart":20,"herEntrance":11,"work":6,"longestOther":1,"brushTotalMs":33}
+{"ticks":299,"totalMs":61,"washStart":6,"herEntrance":15,"work":9,"longestOther":1,"brushTotalMs":26}
+{"ticks":300,"totalMs":91,"washStart":23,"herEntrance":18,"work":6,"longestOther":1,"brushTotalMs":40}
+{"ticks":301,"totalMs":79,"washStart":17,"herEntrance":10,"work":5,"longestOther":2,"brushTotalMs":41}
+{"ticks":285,"totalMs":206,"washStart":44,"herEntrance":38,"work":30,"longestOther":4,"brushTotalMs":74}
+{"ticks":291,"totalMs":93,"washStart":25,"herEntrance":11,"work":5,"longestOther":1,"brushTotalMs":47}
+{"ticks":303,"totalMs":72,"washStart":14,"herEntrance":10,"work":6,"longestOther":2,"brushTotalMs":36}
+{"ticks":301,"totalMs":80,"washStart":25,"herEntrance":10,"work":8,"longestOther":2,"brushTotalMs":35}
+
+3. THE SHORT REVEAL OF A RETURN VISIT, iPhone 14 profile, production build (node qa/tools/pencil.mjs quick)
+Longest frame in the 3.2 s from the picture starting to show, per reload; and the longest within the reveal itself (the first 260 ms).
+THIS BUILD        longest [96,36,18,19,18] [37,18,20,19,189] [18,20,36,33,108,19,23,222]   in the reveal: 17 or 18 ms in all 18 reloads
+THE BUILD BEFORE  longest [31,21,20,547,31] [177,20,19,24,61] [18,18,22,19,19,83,26,20]    in the reveal: 17 to 61 ms
+The frames over 50 ms fell at no particular moment (325, 1391 and 2362 ms in the last sets), in both builds: the machine, not the page.

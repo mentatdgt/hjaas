@@ -36,6 +36,7 @@ interface Stroke {
   step: number;
   bristles: Bristle[];
   drawn: number; // how far along the path has been painted, in plate px
+  again: number; // a veil only: how far its second pass has got
 }
 
 const SAMPLE_PX = 9;
@@ -127,7 +128,7 @@ function buildStroke(plan: StrokePlan, rnd: Rng): Stroke {
     }
   }
 
-  return { plan, x, y, nx, ny, length: (n - 1) * SAMPLE_PX, step: SAMPLE_PX, bristles, drawn: 0 };
+  return { plan, x, y, nx, ny, length: (n - 1) * SAMPLE_PX, step: SAMPLE_PX, bristles, drawn: 0, again: 0 };
 }
 
 
@@ -142,8 +143,28 @@ export interface SheetOptions {
   pace?: number;
   /** Most pixels the sheet may have. A plain colour needs few; a picture needs more. */
   maxPixels?: number;
+  /**
+   * A veil, not a sheet: it lies over something that should come up beside the paint, not under it (the
+   * pencil of the painting's edge). Every stroke takes it off this many plate px further out than the
+   * stroke's own paint reaches, softly: see VEIL.
+   */
+  spread?: number;
   seed?: number;
 }
+
+/**
+ * How a veil comes off. Its strokes are the sheet's own (same plans, same seed, so the same bristles),
+ * each bristle drawn wider by the veil's spread, and they pass twice:
+ *
+ * - with the brush: the full spread, but only thinning the veil, by `share` for every `per` px a bristle
+ *   travels. What lies just ahead of the paint, and beside it, starts to show.
+ * - `lag` seconds behind the brush: `full` of the spread, and all of the veil. What was half there is there.
+ *
+ * So a point near the paint comes up over the time the brush takes to cover the difference, plus the lag:
+ * between a sixth and a quarter of a second. Beyond `full` of the spread, the first pass alone leaves a
+ * soft falloff. The streaky outer bristles are left out: they lay too little paint to bring anything along.
+ */
+const VEIL = { share: 0.13, per: 70, full: 0.64, lag: 0.18 } as const;
 
 export class Painter {
   /** The sheet over the picture. Fully clear once the wash is done. */
@@ -153,6 +174,7 @@ export class Painter {
   private readonly ctx: CanvasRenderingContext2D;
   private readonly strokes: Stroke[];
   private readonly pace: number;
+  private readonly spread: number;
   /** Canvas pixels per CSS px. */
   private readonly px: number;
   private readonly size: { width: number; height: number };
@@ -162,7 +184,7 @@ export class Painter {
   private begun = false;
 
   constructor(options: SheetOptions) {
-    const { width, height, pace = 1, maxPixels = 1_100_000, seed = 11 } = options;
+    const { width, height, pace = 1, maxPixels = 1_100_000, spread = 0, seed = 11 } = options;
     // At most 2x, and never more than `maxPixels`.
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const fit = Math.min(1, Math.sqrt(maxPixels / (width * dpr * height * dpr)));
@@ -182,6 +204,7 @@ export class Painter {
 
     const rnd = seeded(seed);
     this.pace = pace;
+    this.spread = spread;
     this.strokes = options.strokes.map((plan) => buildStroke(plan, rnd));
     this.seconds = Math.max(...options.strokes.map((stroke) => stroke.at + stroke.takes)) / pace;
     this.aim(width / PLATE_W, 0);
@@ -220,6 +243,26 @@ export class Painter {
   /** Paint everything due by `seconds`. Returns true once every stroke is finished. */
   paintTo(seconds: number): boolean {
     this.begun = true;
+    const done = this.advance(seconds, false);
+    if (this.spread > 0) this.advance(seconds - VEIL.lag, true);
+    return done;
+  }
+
+  /** Fill the sheet afresh, before any stroke: a veil takes its shape from what it is laid over. */
+  refill(fill: SheetOptions['fill']): void {
+    const { ctx, canvas, px, size } = this;
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.globalAlpha = 1;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.setTransform(px, 0, 0, px, 0, 0);
+    fill(ctx, size.width, size.height);
+    ctx.restore();
+  }
+
+  /** Bring every stroke up to `seconds`: the brush itself, or (`again`) a veil's second pass. */
+  private advance(seconds: number, again: boolean): boolean {
     const at = seconds * this.pace;
     let done = true;
     for (const stroke of this.strokes) {
@@ -233,9 +276,11 @@ export class Painter {
       const reach = stroke.length + plan.width * 0.6;
       // The hand speeds up into a stroke and eases off at the end.
       const target = EASE_STROKE(Math.min(1, t)) * reach;
-      if (target > stroke.drawn) {
-        this.lay(stroke, stroke.drawn, target);
-        stroke.drawn = target;
+      const drawn = again ? stroke.again : stroke.drawn;
+      if (target > drawn) {
+        this.lay(stroke, drawn, target, again);
+        if (again) stroke.again = target;
+        else stroke.drawn = target;
       }
       if (t < 1) done = false;
     }
@@ -257,12 +302,17 @@ export class Painter {
   }
 
   /** Rub the sheet away along the stretch of a stroke between two brush positions. */
-  private lay(stroke: Stroke, from: number, to: number): void {
+  private lay(stroke: Stroke, from: number, to: number, again = false): void {
     if (this.washed >= 1) return;
     const { ctx } = this;
     const { x, y, nx, ny, step, length } = stroke;
     const last = x.length - 1;
+    // A veil (see VEIL): wider bristles, and its first pass only thins it, by the distance travelled.
+    const veil = this.spread > 0;
+    const wider = veil ? 2 * this.spread * (again ? VEIL.full : 1) : 0;
+    const thin = veil && !again ? 1 - Math.pow(1 - VEIL.share, (to - from) / VEIL.per) : 1;
     for (const bristle of stroke.bristles) {
+      if (veil && bristle.alpha < 1) continue;
       // Each bristle paints its own stretch; a small overlap with the previous frame hides the joins.
       const a = Math.max(0, from + bristle.lead - step);
       const b = Math.min(length, to + bristle.lead);
@@ -270,8 +320,8 @@ export class Painter {
       const i0 = Math.floor(a / step);
       const i1 = Math.min(last, Math.ceil(b / step));
       if (i1 <= i0) continue;
-      ctx.globalAlpha = bristle.alpha;
-      ctx.lineWidth = bristle.width;
+      ctx.globalAlpha = bristle.alpha * thin;
+      ctx.lineWidth = bristle.width + wider;
       ctx.beginPath();
       for (let i = i0; i <= i1; i++) {
         const off = bristle.offset + Math.sin(i * 0.21 + bristle.phase) * bristle.wobble;

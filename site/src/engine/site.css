@@ -265,19 +265,17 @@
   visibility: hidden;
 }
 
-/* A return visit, or reduced motion: no brushwork. The pencil of the edge comes up first, in 120 ms, and
-   everything else together in 200 ms, starting as the pencil lands. (Not all at once: while the edge is
-   only part there, the picture under it would show right to the plate's rim.) */
-.hj-scene.is-revealing .hj-edge {
-  transition: opacity 120ms linear;
+/* A return visit, or reduced motion: no brushwork, everything shows together in 200 ms. The picture is put
+   up whole under a blank sheet in the paper's colour (transition.ts), which fades off it: colour and pencil
+   alike, and nothing past the edge. The caption is outside the picture and fades up alongside. */
+.hj-blank {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
 }
 
-.hj-scene.is-revealing .hj-room,
-.hj-scene.is-revealing .hj-shadow,
-.hj-scene.is-revealing .hj-rachel,
-.hj-scene.is-revealing .hj-mushrooms,
 .hj-scene.is-revealing .hj-caption-main {
-  transition: opacity 200ms linear 100ms;
+  transition: opacity 200ms linear;
 }
 
 /* ---------- Mushrooms ---------- */

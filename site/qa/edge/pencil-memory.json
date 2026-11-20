@@ -2,7 +2,7 @@
  "return visitor (the short brush)": {
   "Build only": {
    "peakMB": 62.5,
-   "at": "build, pose frame_01",
+   "at": "build, pose frame_02",
    "partsMB": {
     "sprites": 0.9,
     "logo": 0.7,
@@ -81,12 +81,12 @@
  },
  "new visitor (full paintings)": {
   "Build only": {
-   "peakMB": 66.9,
-   "at": "build, pose frame_02",
+   "peakMB": 67.3,
+   "at": "build, pose frame_03",
    "partsMB": {
     "sprites": 0.9,
     "logo": 0.7,
-    "sheet": 4.4,
+    "sheet": 4.8,
     "build.frames": 47.3,
     "build.canvases": 4.7,
     "build.room": 6.3,
@@ -128,12 +128,12 @@
    }
   },
   "Grow, then Build": {
-   "peakMB": 71.6,
+   "peakMB": 72,
    "at": "build, during a painting or a switch, pose -",
    "partsMB": {
     "sprites": 0.9,
     "logo": 0.7,
-    "sheet": 4.4,
+    "sheet": 4.8,
     "grow.frames": 47.4,
     "grow.canvases": 3,
     "grow.room": 6.3,
