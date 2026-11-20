@@ -80,3 +80,11 @@ A short table of what was asked for and the result, anything you decided yoursel
 
 ## Update 2026-11-20 23:00 (Wren): the fade rule, final
 `fade_ms` applies **only between two stills of the same loop** (breathing, polishing, crayon). Everything else is an instant cut: head turns, expressions, blinks, entering or leaving a loop, the whole reaction. The rule is in `routine.json`'s note, and `tools/cafe_preview.py` implements it. Dissolving a head turn makes a ghost double face, so never do it.
+
+## Update 2026-11-21 00:30 (Wren): package v5, stabilised. This replaces every earlier café package.
+Root cause of the flicker the user saw: each pose was a separately generated full image, so hair, colours and shading shifted on every blink. **Now every still = the actor's base still plus only the part that moves**; outside that part it is pixel-identical (`site/stability.json`, built by `tools/cafe_build5.py`).
+- **Format unchanged:** layers with full-size stills, `routine.json`, the same-loop `fade_ms` rule. `clips` is empty.
+- **New layer `fan`** (first in the layer order): 24 opaque frames, a plain endless loop at 42 ms. It is part of the room: exempt it from the "fully painted under actors" edge rule and let the edge fade it like the plate. `plate.png` now has the fan blades removed.
+- **Stills now:** Rachel `R_A1_sketch, R_A2_stroke, R_A1_blink, R_K1_blink, R_K1_look, R_K2_smile`; barista `B_1, B_4` (no B_2/B_3); child `C_1` (now looking down at his drawing), `C_2, C_3`; old man, cat and mum as before.
+- `cafe-preview.mp4` is the reference. Audit: in the 28 s preview no pixel changes outside the actors' boxes, and Rachel's legs, table and chair never change.
+- Likely later additions, same format: Rachel's sip, the barista polishing.

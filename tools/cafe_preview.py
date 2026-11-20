@@ -79,5 +79,5 @@ for fi in range(int(SECS * FPS)):
             if y < 0 or x < 0: p = p.crop((max(0, -x), max(0, -y), p.width, p.height)); x, y = max(x, 0), max(y, 0)
             fr.alpha_composite(p, (x, y))
     fr.convert('RGB').resize((ow, oh), Image.LANCZOS).save(f'{tmp}/{fi:05d}.png')
-subprocess.run(['ffmpeg', '-v', 'error', '-y', '-framerate', str(FPS), '-i', f'{tmp}/%05d.png', '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '20', '-pix_fmt', 'yuv420p', OUTF], check=True)
+subprocess.run(['ffmpeg', '-v', 'error', '-y', '-framerate', str(FPS), '-i', f'{tmp}/%05d.png', '-c:v', 'libx264', '-preset', 'slow', '-tune', 'animation', '-g', '12', '-crf', '13', '-pix_fmt', 'yuv420p', OUTF], check=True)
 print('wrote', OUTF)
