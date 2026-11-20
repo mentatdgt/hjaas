@@ -1,6 +1,6 @@
 # HJaaS: status
 
-Where everything stands. Update this whenever a scene changes state. **Last updated: 2026-11-20 (Wren).**
+Where everything stands. Update this whenever a scene changes state. **Last updated: 2026-11-20 evening (Wren).**
 
 New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a scene gets made) and the handover for your scene: `HANDOVER-scene-3.md` (café, finishing in the original Wren chat) or `HANDOVER-next-scene.md` (scene 4, new chat).
 
@@ -9,14 +9,15 @@ New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a
 | # | Tab | Scene | Art | Site build | On `main`? |
 |---|---|---|---|---|---|
 | 1 | Build | Contracting: Rachel hammers a box in an unfinished room | ✅ Approved, but **needs glasses removed** | ✅ Built (elegant version) | ❌ Waiting to merge |
-| 2 | Grow | Mushroom lab: misting, writing, rotating the rack | ✅ Approved (task 017) | 🔧 Fable is on review 05 (memory) and the organic edge | ❌ Waiting to merge |
+| 2 | Grow | Mushroom lab: misting, writing, rotating the rack | ✅ Approved (task 017) | ✅ Review 05 and the organic edge done (Wren reviewed 2026-11-20); waiting for your phone check | ❌ Waiting to merge |
 | 3 | Design | Café: Rachel sketches on an iPad, then sips coffee; barista, mum, child, old man, cat | 🔧 Task 018, round 1: fixes to `018_scene` | ⏳ Not started | — |
 | 4 | Film | Merlion at night: Rachel (from behind) films a presenter by a silver car | 🔧 Task 019: Quinn draws 5 staging options (separate ChatGPT chat) | ⏳ | — |
 | 5 | Travel | Lookout | ⏳ Backdrop only (`scene/travel-lookout.png`); location to confirm | ⏳ | — |
 
 ## Now
 - **Quinn:** task 018, round 1 fixes to the café scene: the old man's chair and gaze, the barista between the machine and the grinder with a real cup, the child on the middle chair facing Rachel, the iPad edge. Quinn stops for approval before steps 2–4.
-- **Fable (on `site/scene-2`):** review 05 (whole-page memory under 80 MB on phones) plus the organic edge (`reviews/scene-edge-organic.md`). Wren reviews when the report arrives.
+- **You:** check `site/scene-2` on your phone (both tabs, the organic edge). Then Wren merges it into `main`.
+- **Fable:** idle. WebKit timing numbers were noisy because the Mac was busy (the old build was equally noisy, so it's not a regression). Re-measure on a quiet Mac or a real iPhone before launch.
 - **Wren:** QC the café scene → approve → Quinn does steps 2–4 → QC → Higgsfield clips (with a quote first) → package → Fable brief.
 
 ## Next
