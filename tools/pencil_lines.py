@@ -27,6 +27,12 @@ def lines(plate):
     blur = ndi.gaussian_filter(g, 2.2)
     dog = np.clip((blur - g - 6) / 16, 0, 1)        # thin strokes darker than their surroundings
     dark = np.clip((95 - g) / 55, 0, 1)             # thick dark outlines
+    # ...but not big dark fills (a black toolbox, deep shadow): those would turn into graphite patches.
+    # Their outlines still come through from the DoG term.
+    fill = ndi.binary_opening(dark > 0.5, structure=np.ones((9, 9)))
+    fill = ndi.binary_dilation(fill, iterations=1)
+    dark = dark * ~fill
+    dark = dark * ndi.binary_dilation(dog > 0.3, iterations=2)   # only dark pixels that belong to a stroke
     l = np.maximum(dog, 0.8 * dark)
     m = l > 0.35                                    # drop texture specks: keep connected strokes only
     lab, n = ndi.label(m)

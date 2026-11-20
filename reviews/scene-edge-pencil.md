@@ -53,3 +53,8 @@ Inside the painting the overlay is clear, so there's no pencil over the paint. O
 - Add an "Edge (pencil)" section to `site/qa/REPORT.md`.
 
 **Note for later (café):** the cast (barista, child, old man, cat) and the mum get the same rule as Rachel: `aPaint` = 1 under them.
+
+## Wren's review of round 3 (2026-11-20): approved, plus one asset refresh
+- All checks pass. The hard cuts are gone, and the pencil matches mock-up B.
+- **Decision:** keep "redraw the edge when a scene returns" (+10–60 ms on a 1.5 s switch is invisible). Don't rework Rachel's return frame.
+- **Toolbox patch fixed at the source:** `tools/pencil_lines.py` no longer turns big dark fills (the toolbox, the drop cloth's shadows) into graphite. Only outlines remain. Both `scene/pencil/*-lines.png` are regenerated on `main`. Pull, rebuild the assets, re-check the mushrooms (≥ 0.95) and Rachel, re-shoot `pencil-compare.jpg` and `pencil-corners.jpg`, then commit and push. No code changes expected.
