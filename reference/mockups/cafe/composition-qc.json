@@ -1,0 +1,171 @@
+{
+  "background": {
+    "width": 1672,
+    "height": 941
+  },
+  "cast": [
+    {
+      "name": "barista",
+      "left": 1157,
+      "top": 293,
+      "width": 120,
+      "height": 205,
+      "visibleBounds": [
+        1170,
+        293,
+        1276,
+        485
+      ],
+      "sourceCrop": {
+        "x0": 214,
+        "y0": 76,
+        "w": 722,
+        "h": 1231
+      }
+    },
+    {
+      "name": "mother",
+      "left": 284,
+      "top": 365,
+      "width": 128,
+      "height": 330,
+      "visibleBounds": [
+        284,
+        365,
+        411,
+        694
+      ],
+      "sourceCrop": {
+        "x0": 231,
+        "y0": 27,
+        "w": 577,
+        "h": 1490
+      }
+    },
+    {
+      "name": "child",
+      "left": 128,
+      "top": 457,
+      "width": 144,
+      "height": 195,
+      "visibleBounds": [
+        128,
+        457,
+        271,
+        651
+      ],
+      "sourceCrop": {
+        "x0": 110,
+        "y0": 64,
+        "w": 861,
+        "h": 1170
+      }
+    },
+    {
+      "name": "oldman",
+      "left": 1366,
+      "top": 382,
+      "width": 195,
+      "height": 350,
+      "visibleBounds": [
+        1366,
+        382,
+        1559,
+        731
+      ],
+      "sourceCrop": {
+        "x0": 134,
+        "y0": 32,
+        "w": 829,
+        "h": 1489
+      }
+    },
+    {
+      "name": "kopi_on_existing_table",
+      "left": 1533,
+      "top": 525,
+      "width": 54,
+      "height": 37,
+      "visibleBounds": [
+        1533,
+        525,
+        1586,
+        561
+      ],
+      "sourceCrop": {
+        "x0": 652,
+        "y0": 765,
+        "w": 158,
+        "h": 109
+      }
+    }
+  ],
+  "options": [
+    {
+      "option": 1,
+      "left": 832,
+      "top": 390,
+      "width": 276,
+      "height": 515,
+      "visibleBounds": [
+        832,
+        390,
+        1107,
+        904
+      ],
+      "sourceCrop": {
+        "x0": 162,
+        "y0": 23,
+        "w": 759,
+        "h": 1417
+      },
+      "castOverlapPixels": 0,
+      "uncoveredPixels": 1395737,
+      "uncoveredChanged": 0
+    },
+    {
+      "option": 2,
+      "left": 788,
+      "top": 390,
+      "width": 365,
+      "height": 515,
+      "visibleBounds": [
+        788,
+        390,
+        1152,
+        904
+      ],
+      "sourceCrop": {
+        "x0": 72,
+        "y0": 29,
+        "w": 980,
+        "h": 1383
+      },
+      "castOverlapPixels": 0,
+      "uncoveredPixels": 1376574,
+      "uncoveredChanged": 0
+    },
+    {
+      "option": 3,
+      "left": 773,
+      "top": 390,
+      "width": 395,
+      "height": 515,
+      "visibleBounds": [
+        773,
+        390,
+        1167,
+        904
+      ],
+      "sourceCrop": {
+        "x0": 13,
+        "y0": 40,
+        "w": 1062,
+        "h": 1386
+      },
+      "castOverlapPixels": 0,
+      "uncoveredPixels": 1365781,
+      "uncoveredChanged": 0
+    }
+  ]
+}
