@@ -26,6 +26,8 @@ User drops the files into `wren-inbox` (or attaches a zip) and says **"QC NNN"**
 - Inputs are imported from `raw.githubusercontent.com` (repo is public). The user downloads the results into `wren-inbox` (the proxy blocks the download domain).
 - Processing: key out, register on a stable region, colour-fit **once per clip** on pixels with diff < 25, keep only clean frames (drop smears), composite only the moving zones.
 
+**Lesson from the café (2026-11-20): AI video only suits the softer, painterly characters (it worked for the lab).** For flat model-sheet characters, Kling redraws the face and hair its own way: the clip pops at both ends and the face morphs. Use drawn poses with timed holds instead: cuts for head turns and expressions (hide them behind a blink), short dissolves only between near-identical poses. If you do try a clip, buy ONE first and check every frame before buying more.
+
 ## 5. Package (Wren)
 - Base stills plus **cropped patches** per clip; `frames.json` lists positions; `routine.json` describes the loop and timings (data-driven, so Fable's engine plays it).
 - 1× and 1.5× (phone) sets, WebP. Preview video for the user. Tools: `tools/lab_build_stills.py`, `lab_build_clips.py`, `build_lib.py`, `lab_package.py`.

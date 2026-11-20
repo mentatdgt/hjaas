@@ -1,5 +1,5 @@
 {
- "note": "Scene 3 (caf\u00e9) routines. Holds in ms; [a,b] = random in range. Each actor runs independently and out of sync. 'fade_ms' = a true cross-dissolve INTO this still from the previous one (lerp of the two composited results), at the start of the step; no fade_ms = an instant cut (blinks). Calm and slow.",
+ "note": "Scene 3 (caf\u00e9) routines. Holds in ms; [a,b] = random in range. Each actor runs independently and out of sync. RULE: fade_ms (a true cross-dissolve into a still) applies ONLY between two stills of the same loop, where the poses differ slightly (breathing, polishing, crayon). Every other change is an instant cut: head turns, expression changes, blinks, entering or leaving a loop. Dissolving a head turn makes a ghost double face.",
  "actors": {
   "rachel": {
    "routine": [
@@ -66,13 +66,11 @@
       "ms": [
        1100,
        1400
-      ],
-      "fade_ms": 150
+      ]
      },
      {
       "still": "R_K1_look",
-      "ms": 250,
-      "fade_ms": 150
+      "ms": 250
      },
      {
       "still": "R_K1_blink",
@@ -122,8 +120,7 @@
      "ms": [
       1500,
       2200
-     ],
-     "fade_ms": 200
+     ]
     }
    ],
    "note": "B_3 is not used: it jumps too far from B_1 and B_2."
@@ -160,8 +157,7 @@
      "ms": [
       1400,
       1900
-     ],
-     "fade_ms": 120
+     ]
     }
    ]
   },
@@ -172,21 +168,18 @@
      "ms": [
       8000,
       14000
-     ],
-     "fade_ms": 300
+     ]
     },
     {
      "still": "O_2",
-     "ms": 500,
-     "fade_ms": 150
+     "ms": 500
     },
     {
      "still": "O_3",
      "ms": [
       8000,
       14000
-     ],
-     "fade_ms": 150
+     ]
     }
    ]
   },
@@ -219,8 +212,7 @@
     },
     {
      "still": "cat_3",
-     "ms": 600,
-     "fade_ms": 250
+     "ms": 600
     }
    ]
   },

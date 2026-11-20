@@ -77,3 +77,6 @@ A short table of what was asked for and the result, anything you decided yoursel
 - **`routine.json` has a new field, `fade_ms`:** a true cross-dissolve INTO a still from the previous one, at the start of the step (lerp of the two composited results, smoothstep). No `fade_ms` means an instant cut, as for blinks. Please support it.
 - The barista no longer uses B_3. The cat breathes with 1 s dissolves.
 - `cafe-preview.mp4` shows the intended result. Pull main and rebuild the assets.
+
+## Update 2026-11-20 23:00 (Wren): the fade rule, final
+`fade_ms` applies **only between two stills of the same loop** (breathing, polishing, crayon). Everything else is an instant cut: head turns, expressions, blinks, entering or leaving a loop, the whole reaction. The rule is in `routine.json`'s note, and `tools/cafe_preview.py` implements it. Dissolving a head turn makes a ghost double face, so never do it.
