@@ -27,7 +27,7 @@ What's decided. Everyone (Wren, Quinn, Fable, Foreman) follows this. If a task, 
 | 2 Grow | Lab: white lab coat over a dark top, olive cargos, boots (`hjaas6.png`) | Low ponytail, dark tie | Mist → write on the clipboard → rotate the rack, unhurried | Looks up, thumbs-up (may change to a peace sign) |
 | 3 Design | Outfit 1 | Loose, wavy | Sketch on the iPad ↔ sip a hot coffee, two stages | Looks up at you with a warm smile, no gesture |
 | 4 Film | Black tank, tan cargo shorts (seen from behind, cropped at the thighs) | Loose, wavy, no bandana | Holds still, filming the presenter with a DSLR; the screen shows him live and the red REC dot blinks (no head movement) | Looks back over her shoulder at you and smiles |
-| 5 Travel | TBD | TBD | TBD | Look and a small wave |
+| 5 Set design (tab name TBD; replaces Travel, user 2026-11-21) | Outfit 1 | Loose, wavy | On a ladder painting a theatre backdrop: brush strokes ↔ leans back to judge it, then dips the brush in the pot hooked on the ladder | Turns her head to you, smiles, raises the brush in a little salute |
 
 The reaction changes per scene so the thumbs-up doesn't repeat everywhere.
 
@@ -45,6 +45,11 @@ All original characters, described in words. Never based on a real person's phot
 ## 4b. Supporting cast (film)
 - **Presenter:** an original character, described in words only: a friendly young East Asian man with short black hair and thin glasses, a black short-sleeved shirt with a clip-on mic, a watch, light-grey jeans and white sneakers. He stands in front of a silver fastback car (no badges), talking to camera with lively gestures and blinks. His gestures always stay clear of Rachel's camera.
 - **Merlion water:** flows constantly (a hand-drawn loop).
+
+## 4c. Supporting cast and set (scene 5, theatre)
+- **The backdrop fills in with the hunt:** part of the sky is bare canvas with pencil lines; each find paints one more patch; at 10/10 it is complete (Wren cuts the stages from the finished and pencil versions).
+- **Stagehand:** an original character: a middle-aged contractor in a T-shirt and jeans, work boots. Every 40–70 s (random) he crosses BEHIND the backdrop: a brief glimpse as he steps in from the left wing (carrying a plank), then only his boots and jean cuffs walk across under the backdrop's hem and exit right behind the curtain. 10–15 s later he walks back right to left (carrying something else). A drawn walk cycle moved at a steady speed, feet planted, never sliding.
+- **Ambient:** the caged work lamp sways rigidly on its hook; dust motes drift in the floodlight beam (code); the fly ropes sway slightly. The velvet curtain stays still.
 
 ## 5. Working rules
 - **Roles:** Wren (Claude) does art direction, QC, tasks, Higgsfield jobs and commits. Quinn (ChatGPT) draws, with read-only GitHub access. Fable (Claude Fable 5.2 in Claude Code on the Mac) builds the site. Foreman (Grok) dispatches Cursor agents for PRs into site branches. The user carries files and makes the calls.

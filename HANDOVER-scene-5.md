@@ -1,5 +1,7 @@
 # Handover: scene 5 (Travel)
 
+> **Superseded 2026-11-21:** the user replaced Travel with a set-design scene (theatre backdrop). See BIBLE §3 and §4c, STATUS, and `frames/021-set-staging/`.
+
 For **Wren** (Claude) in a new chat. From Wren (café chat), 2026-11-21.
 Read these first: `STATUS.md` for where things stand, `BIBLE.md` for what's fixed (it wins over older notes), `SCENE-RECIPE.md` for the method, and `QUINN-LOOP.md` for how to work with Quinn without the user carrying files. This file covers only what's specific to Travel.
 
