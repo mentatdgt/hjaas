@@ -1,13 +1,13 @@
 # HJaaS: the bible
 
-What's decided. Everyone (Wren, Quinn, Fable, Foreman) follows this. If a task, review or old note disagrees, this file wins; then fix the other file. **Last updated: 2026-11-20.**
+What's decided. Everyone (Wren, Quinn, Fable, Foreman) follows this. If a task, review or old note disagrees, this file wins; then fix the other file. **Last updated: 2026-11-21.**
 
 ## 1. The site
 - **HJaaS: Hui Jie As a Service.** A gift for Hui Jie (English name **Rachel**), an interior designer who also does contracting, video, mushroom farming and travel. It should feel handmade, warm, playful and elegant, never like a template or a game HUD.
 - **Format:** a painting sitting on a paper page, not a full-bleed screen. Each scene is a living hand-drawn illustration with a small scene menu (Build / Grow / Design / …).
-- **The hunt:** 10 hidden mushrooms per scene. Difficulty: 3 easy, 4 medium, 3 hard. Fair: always visible, never under UI, hit areas ≥ 44 px.
+- **The hunt:** 10 hidden mushrooms per scene (user confirmed 2026-11-21, knowing it's a lot). Difficulty: 3 easy, 4 medium, 3 hard. Fair: always visible, never under UI, hit areas ≥ 44 px.
 - **Hint:** one gentle wiggle after 60 s, once per visit. No more hand-holding.
-- **Prize:** finding 10/10 in any scene for the first time unlocks the contact form.
+- **Prize (changed 2026-11-21):** the contact form unlocks only when **every mushroom in every scene** is found (10 × 5 = 50). No email shortcut: the site is a fun gift, not a sales tool. Progress must be saved in the visitor's browser so they can come back and carry on.
 - **Text:** none yet besides the logo, counter, hunt prompt, unlock moment and form labels. The user adds copy later.
 
 ## 2. Look and motion
@@ -15,7 +15,7 @@ What's decided. Everyone (Wren, Quinn, Fable, Foreman) follows this. If a task, 
 - **Logo:** the tape-measure pin, `assets/logo/hjaas-logo.png`; favicon `assets/logo/hjaas-reel.png`.
 - **Page:** paper-coloured page with the scene inset; the edge is the **organic watercolour feather with a pencil trail** (option B, `reviews/scene-edge-pencil.md`): the colour fades, pencil lines carry on a little and trail off into the paper. Never a hard straight cut.
 - **Intro:** 5 s watercolour paint-in with doubled strokes, easing `cubic-bezier(0.645, 0.045, 0.355, 1)`. Skip and pause available; reduced motion respected.
-- **UI:** quiet and small. The counter is a little enamel-pin jewel, not a HUD.
+- **UI:** quiet and small. The counter is a little enamel-pin jewel, not a HUD. **Under review (2026-11-21):** the user finds the pin cartoony; proposal is a gallery-label counter in the page margin (pencil mushroom outlines that wash with colour, label flips from "3 of 10 found" to "3 more here" past halfway, scene dots in the menu, a "Write to Rachel" goal line). Mockups: the "HJaaS mushroom hunt: counter mockups" canvas. Not decided until the user OKs it.
 - **Motion bar:** smooth and human, never jerky. Randomised holds, natural blinks, no popping or pose glitches. 60 fps on a throttled phone.
 
 ## 3. Rachel
@@ -47,7 +47,7 @@ All original characters, described in words. Never based on a real person's phot
 - **Merlion water:** flows constantly (a hand-drawn loop).
 
 ## 4c. Supporting cast and set (scene 5, theatre)
-- **The backdrop fills in with the hunt:** part of the sky is bare canvas with pencil lines; each find paints one more patch; at 10/10 it is complete (Wren cuts the stages from the finished and pencil versions).
+- **The backdrop fills in with the hunt:** part of the sky is bare canvas with pencil lines; each find in this scene paints one more patch; at 10/10 here it is complete (Wren cuts the stages from the finished and pencil versions).
 - **Stagehand:** an original character: a middle-aged contractor in a T-shirt and jeans, work boots. Every 40–70 s (random) he crosses BEHIND the backdrop: a brief glimpse as he steps in from the left wing (carrying a plank), then only his boots and jean cuffs walk across under the backdrop's hem and exit right behind the curtain. 10–15 s later he walks back right to left (carrying something else). A drawn walk cycle moved at a steady speed, feet planted, never sliding.
 - **Ambient:** the caged work lamp sways rigidly on its hook; dust motes drift in the floodlight beam (code); the fly ropes sway slightly. The velvet curtain stays still.
 
