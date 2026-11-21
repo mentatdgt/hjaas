@@ -1,6 +1,6 @@
 # HJaaS: status
 
-Where everything stands. Update this whenever a scene changes state. **Last updated: 2026-11-21 21:30 (Wren, scene-5 chat: v3 OK, tab "Set Design", Fable brief written).**
+Where everything stands. Update this whenever a scene changes state. **Last updated: 2026-11-22 07:50 (Wren, scene-5 chat: Fable's scene-5 build reviewed; gap-mask fix on `main`).**
 
 New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a scene gets made) and the handover for your scene: `HANDOVER-scene-3.md` (café, finishing in the original Wren chat) `HANDOVER-next-scene.md` (scene 4, Film) or `HANDOVER-scene-5.md` (scene 5, set design: **start here for the new chat**).
 
@@ -12,12 +12,12 @@ New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a
 | 2 | Grow | Mushroom lab: misting, writing, rotating the rack | ✅ Approved (task 017); later, a light restyle to the model sheet | ✅ Pencil edge done; Round 3b (pencil arrives with the colour) overnight | ✅ Merged 2026-11-21 (no phone check yet) |
 | 3 | Design | Café: Rachel sketches, sips coffee and reacts; barista, mum, child, old man, cat, ceiling fan | ✅ Art final: package v7.5 on `main` (v7.3 user OK; v7.4 shadow; v7.5 floor seam) | 🔧 Fable: v7.4 integrated on `site/scene-3`; v7.5 file swap next | — |
 | 4 | Film | Merlion at night: Rachel (from behind) films a presenter by a silver car | ✅ **Art final** (your OK 2026-11-21 14:28) | ✅ **Approved on your phone 2026-11-21 16:56** (round 2, `site/scene-4` 2e19df6). Paused here | ⏳ Merges right after `site/scene-3` |
-| 5 | Set Design | **Set design, replacing Travel**: Rachel paints a theatre backdrop; the backdrop fills in with the hunt; a stagehand's boots cross behind it; the lamp swings | ✅ **Art final** (preview v3, your OK 2026-11-21 21:13: "okay for now") | 📝 Brief ready: `reviews/scene-5-build.md`, for `site/scene-5` | — |
+| 5 | Set Design | **Set design, replacing Travel**: Rachel paints a theatre backdrop; the backdrop fills in with the hunt; a stagehand's boots cross behind it; the lamp swings | ✅ **Art final** (preview v3, your OK 2026-11-21 21:13: "okay for now") | ✅ Built on `site/scene-5` (report 01, Wren's review passed 2026-11-22); one mask fix to pick up, then your phone check | — |
 
 ## Now
 - **Fable:** swap café v7.5 into `site/scene-3`, then merge into `site/scene-4`; finish the scene-4 report.
 - **You:** phone-check scenes 1–3; then `site/scene-3` merges into `main`, then `site/scene-4`.
-- **Scene 5 (Set Design):** art final, tab named "Set Design". Fable builds it from `reviews/scene-5-build.md` on `site/scene-5` (stacked on `site/scene-4`); Wren reviews the report. The brief also moves the unlock to all 50 (the site still unlocks on the first finished scene).
+- **Scene 5 (Set Design):** built on `site/scene-5` (stacked on `site/scene-4`), including the unlock at all 50. Wren's review passed; Fable swaps in the fixed gap mask (boots no longer show over the curtain), then your phone check.
 
 ## Next
 1. Merge `site/scene-3` into `main` after your phone check, then `site/scene-4` after Wren reviews Fable's scene-4 report.

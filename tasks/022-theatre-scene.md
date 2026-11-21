@@ -22,3 +22,6 @@ Chosen 2026-11-21 from mock-ups 021a–e (A, theatre backdrop). The user restore
 
 ## Package: `frames/022-theatre-scene/site/`
 Layers in order: backdrop_01..10 (hunt progress), stagehand (sprite track + mask), lamp, rachel. See `routine.json` notes.
+
+## 2026-11-22: gap mask closed over the curtain (Fable's review 01)
+Fable's build review found the boots drawn over the right-hand curtain at the end of the walk back (plate x 1560–1672): the curtain's shadowed folds passed the mask's darkness test. `tools/theatre_walk.py` now closes the mask from the curtain's left edge rightward, row by row; `tools/theatre_package.py` keeps the mask at the full 1672 px width. Only `stagehand/gap_mask.png` changed (identical left of x 1480); the rebuild matches the package; QA ALL OK; preview re-rendered (v4, walk timing unchanged).

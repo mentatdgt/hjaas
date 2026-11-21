@@ -34,6 +34,15 @@ def gap_mask(plate):
     a = np.asarray(Image.open(plate).convert('RGB')).astype(np.float32)
     lum = a @ np.array([0.3, 0.59, 0.11]); m = np.zeros(lum.shape, bool)
     m[HEM:704] = lum[HEM:704] < 72
+    # The right-hand curtain hangs in front of the gap: its shadowed folds are dark enough to pass the test
+    # above, so close the mask from the curtain's left edge rightward, row by row (2026-11-22, Fable's review 01).
+    r, g, b = a[..., 0], a[..., 1], a[..., 2]
+    curt = ndi.binary_opening((r > 95) & (r > 2.0 * np.maximum(g, b)), iterations=1)
+    X0 = 1360                                  # the curtain zone starts right of the cart
+    for y in range(HEM, 704):
+        run = ndi.uniform_filter1d(curt[y, X0:].astype(np.float32), 7)
+        xs = np.where(run > 0.6)[0]
+        if len(xs): m[y, X0 + xs[0] - 3:] = False
     m = ndi.binary_opening(m, iterations=1); m = ndi.binary_erosion(m, iterations=1)
     return ndi.gaussian_filter(m.astype(np.float32), 0.8)
 

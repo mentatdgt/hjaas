@@ -86,7 +86,8 @@ if __name__ == '__main__':
     os.makedirs(f'{out}/stagehand', exist_ok=True)
     for k in ('boot_L', 'boot_R'):
         im = Image.open(f'{W}/walk/{k}.png'); im.resize((round(im.width * S), round(im.height * S)), Image.LANCZOS).save(f'{out}/stagehand/{k}.png')
-    gm = to_canvas(Image.open(f'{W}/walk/gap_mask.png').convert('L')); gx0, gy0, gx1, gy1 = Image.fromarray((np.asarray(gm) > 0).astype(np.uint8) * 255).getbbox()
+    gm = to_canvas(Image.open(f'{W}/walk/gap_mask.png').convert('L')); _, gy0, _, gy1 = Image.fromarray((np.asarray(gm) > 0).astype(np.uint8) * 255).getbbox()
+    gx0, gx1 = 0, gm.width                     # always the full canvas width (the site's boots canvas is 1672 wide)
     gm.crop((gx0, gy0, gx1, gy1)).save(f'{out}/stagehand/gap_mask.png')
     w = json.load(open(f'{W}/walk/walk.json'))
     for dr in ('rtl', 'ltr'):
