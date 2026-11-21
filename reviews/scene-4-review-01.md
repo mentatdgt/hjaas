@@ -1,8 +1,14 @@
 # Scene 4 "Film": build report 01
 
 From: Fable. For: Wren and the user. 2026-11-21. Brief: `reviews/scene-4-build.md`.
-Branch: `site/scene-4`, made from the tip of `site/scene-3` and carrying the café up to v7.5. Nothing was
-merged into any other branch and `main` was not touched.
+Branch: `site/scene-4`, made from the tip of `site/scene-3` and carrying the café up to v7.5. It has the
+reshaped car (the brief's update after build 01: `plate.png`, `film-lines.png` and the preview brought from
+`main` by path). Nothing was merged into any other branch and `main` was not touched.
+
+Everything in sections 1 to 3 was checked again on the reshaped car (screenshots, the hunt, the camera
+screen, the page against the package and its new preview, the 20 s recordings, the edge, all 40 mushrooms):
+all passed, and no mushroom moved. Memory, frame times and the two calm traces were measured on the first
+plate; the code and the plate's size did not change.
 
 **To see it**
 
@@ -36,12 +42,12 @@ cd ~/hjaas && git checkout site/scene-4 && git pull && cd site && npm install &&
 | ✅ | Pencil edge B with round 3b's reveal (§6) | Film's first-visit painting: the pencil never ahead of the colour's margin, no paint past the colour's edge, bare paper stays paper; the rim is paper all the way round. | `edge/pencil-reveal-film.json`, `pencil-reveal-film-*.jpg`, `pencil-rim.json` |
 | ✅ | Presenter, and Rachel above her waist, fully painted (§6) | `aPaint` = 1.00 under all 53,105 points they cover (Rachel above plate y 760), by the formula and on the edge as drawn; the fade comes no nearer than 44 px. Below her waist the edge fades her legs into the paper with the rest of the bottom edge: no cut. | `edge/pencil-rachel.json` |
 | ⚠️ | Phones open on x 620 to 1420, both people in frame (§6) | A phone's window is 628 to 752 plate px wide, not 800: the picture is as tall as the screen allows in every scene. It opens centred on the pair: x 663 to 1290 on a 390 × 844 phone. His head and her camera are fully in; his open left hand and the right-hand side of her hair are cut. Panning shows the rest. Section 5. | `scene4/film-390x844.jpg`, `shots.json` |
-| MEMORY_ROW
+| ✅ | Under 80 MB on the phone profile, all four scenes in any order; a hidden scene lets go (§7) | All 32 visiting orders measured (all 24 for a returning visitor, 8 for a new one, with a find in every scene): 77.8 MB at most, and it is always the lab alone, as before. Film opened first is 33 MB (its frames 12.8 MB). Away from Film it keeps 0.4 MB, the camera screen's copy of the plate; everything else is given back. Every reaction played in full. | `scene4/memory.json` |
 | ✅ | 60 fps on a throttled phone (§7) | Chrome with the processor slowed four times: Film's painting and Film at work 17 ms a frame. Trace: Film at work drops no frames (longest task 6 ms), the painting 2 of 361, a find 3 of 210. Section 4. | `traces/SUMMARY.md`, `scene4/frames.json` |
 | ⚠️ | No long tasks over about 12 ms in WebKit (§7) | Film's painting 23 to 24 ms at the longest frame and Film at work 19 to 21 ms (a frame is 16.7), none over 33 ms. Coming back to Film by the short brush: 21 to 41 ms in two runs, and frames of 62 and 83 ms in a third run that was noisy throughout. Section 4. | `scene4/frames.json` |
 | ✅ | Screenshots (§8) | 1440 × 900; 390 × 844 and 360 × 740 as they open and panned to each end. | `scene4/film-*.jpg` |
 | ✅ | A 20 s recording with one find and one gesture each way (§8) | Desktop and iPhone profile, exactly 20 s each: he points at 1.5 s and comes back at 5.4 s, the find is at 6.4 s, her look ends at 8.7 s, hands together at 12.3 s and back at 15.8 s. Also each one's first-visit painting. | `scene4/film-desktop.mp4`, `film-iphone.mp4`, `film-*-painting.mp4`, `film-*-stills-*.jpg` |
-| ✅ | A throttled-phone trace (§8) | Two: the painting, at work and a find; and round the four scenes. | `traces/SUMMARY.md` |
+| ✅ | A throttled-phone trace (§8) | Two on the first plate with the Mac calm: the painting, at work and a find; and round the four scenes. One more on the reshaped car, taken while iCloud was syncing (load 9 to 13): see section 4. | `traces/SUMMARY.md` |
 | ✅ | Checked against the animation standards (§8) | Section 6. | |
 
 Tests: 172 pass (`npm test`), 48 of them new for this scene. `tsc` clean, production build fine.
@@ -119,6 +125,13 @@ short-brush switch has one frame of 100 to 133 ms at the tap, Film like the othe
 | Film's painting for a new visitor (second trace) | 360 | 6, as the painting starts | 60 ms |
 | Round the four scenes (three first visits, three short-brush switches) | 2007 | 63, where each scene goes on the plate | 145 ms (the room's picture decoded again) |
 
+Those were taken on the first plate, with the Mac at load 4 to 6. The car was then reshaped (only the
+plate's pixels changed: same size, same code). One more trace on the new plate, painting and a find, came
+out while iCloud Drive was syncing and the load was 9 to 13: 14 frames dropped of 360 in the painting
+(tasks of 119 to 124 ms, one of them a garbage collection), 1 of 174 at work, 8 of 210 on the find. The
+same moments on the calm Mac dropped 2, 0 and 3. I read the difference as the Mac, not the picture, but I
+did not get a calm moment to take it again (`s4-film-car2-paint-in-and-find-mobile-4x.json.gz`).
+
 ## 5. Decisions I made
 
 1. **The water is scenery because the brief says so, by name.** Its stills are cut out like an actor's, so
@@ -180,7 +193,7 @@ short-brush switch has one frame of 100 to 133 ms at the tap, Film like the othe
 ## 8. Not done, or not verified
 
 - Nothing was tested on a real phone.
-- The noisy WebKit run (section 4) was not repeated on a quiet machine.
+- The noisy WebKit run and the new-plate trace (section 4) were not repeated on a quiet machine.
 - The 90 ms turn is not in the iPhone recording: the recorder takes about 25 pictures a second and missed
   it. The page shows it (89 to 92 ms in `react.json`); the desktop recording has it.
 - Sean's consent and the scene's copy are the user's (brief §9).

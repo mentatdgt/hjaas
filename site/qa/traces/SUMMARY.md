@@ -140,3 +140,11 @@ Two traces, same phone profile (`390x844x3,mobile,touch`, CPU throttling 4), pro
 | | Then Build, Grow and Design for the first time (full paintings), back to Film, to Build and to Film again (the short brush). 33 s. | 2007 frames begun, 63 dropped, where each scene goes on the plate: 8 (Build, first time), 4 (Grow), 5 (Design), 10 (back to Film), 29 (back to Build), 7 (back to Film). Seven tasks over 50 ms: two of 98 and 99 ms as Build and Design are first put on the plate, and at each short-brush switch the room's picture decoded again (93 to 104 ms at 4× slow-down), as in every scene since review 05. CLS 0.02. |
 
 The frame times without the tracer, in WebKit and in throttled Chrome, are in `../scene4/frames.json`.
+
+### Scene 4 on the reshaped car (brief update after build 01)
+
+One trace, same profile, production build with the new plate: `s4-film-car2-paint-in-and-find-mobile-4x.json.gz`
+(raw, not in git). Taken at load 9 to 13 (iCloud Drive syncing), so noisier than the two above: the painting
+(1.4 to 7.4 s) 360 frames begun, 14 dropped, four tasks of 53 to 124 ms (layout, a garbage collection); at
+work 174 begun, 1 dropped; a find 210 begun, 8 dropped, one task of 96 ms. On the calm Mac the same parts
+dropped 2, 0 and 3.

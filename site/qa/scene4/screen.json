@@ -2,10 +2,10 @@
  {
   "browser": "chrome, 1440 × 900, 2×",
   "live": {
-   "framesRead": 1217,
-   "seconds": 20.3,
-   "poseChangesUnderIt": 285,
-   "screenChangedInTheSameFrame": 285,
+   "framesRead": 1228,
+   "seconds": 20.5,
+   "poseChangesUnderIt": 296,
+   "screenChangedInTheSameFrame": 296,
    "inTheNextFrame": 0,
    "later": 0,
    "laterExamples": [],
@@ -15,8 +15,8 @@
     {
      "change": "R_A1_film > R_K0_turn",
      "theScreenMoves": false,
-     "pictureChangedInThatFrame": false,
-     "somethingUnderItChangedInThatFrameToo": false
+     "pictureChangedInThatFrame": true,
+     "somethingUnderItChangedInThatFrameToo": true
     },
     {
      "change": "R_K0_turn > R_K1_look",
@@ -28,7 +28,7 @@
      "change": "R_K1_look > R_K0_turn",
      "theScreenMoves": true,
      "pictureChangedInThatFrame": true,
-     "somethingUnderItChangedInThatFrameToo": true
+     "somethingUnderItChangedInThatFrameToo": false
     },
     {
      "change": "R_K0_turn > R_A1_film",
@@ -40,8 +40,12 @@
    "ok": true
   },
   "theDot": {
-   "stretches": 39,
+   "stretches": 40,
    "litMs": [
+    499.9,
+    500,
+    500,
+    499.9,
     500,
     500,
     499.9,
@@ -49,40 +53,37 @@
     500,
     500,
     500,
+    500,
+    500,
+    500,
+    500,
     499.9,
-    499.9,
-    500,
-    500,
-    500,
     500,
     500.1,
-    499.9,
-    499.9,
-    499.9,
-    499.9,
-    500.1
+    500,
+    500
    ],
    "darkMs": [
     500,
-    499.9,
     500,
-    500.1,
-    499.9,
     500,
-    499.9,
     500,
-    500.1,
+    500,
+    500,
+    500,
     500,
     500,
     499.9,
+    499.9,
+    500,
     500,
     499.9,
     500,
     500,
-    500.1,
     500,
-    500,
-    499.9
+    499.9,
+    499.9,
+    500
    ],
    "shortestMs": 499.9,
    "longestMs": 500.1,
@@ -90,11 +91,11 @@
    "even": true
   },
   "theWater": {
-   "changes": 184,
+   "changes": 186,
    "shortestGapMs": 99.9,
    "medianGapMs": 116.6,
    "longestGapMs": 116.8,
-   "meanGapMs": 109.9,
+   "meanGapMs": 110,
    "gapsOver150": 0,
    "roundAndRound": true,
    "ok": true
@@ -110,7 +111,7 @@
      0.4216691068814056
     ]
    },
-   "framesRead": 1217,
+   "framesRead": 1228,
    "lowestAlphaUnderThePresentersPoint": 255,
    "lowestAlphaUnderRachelsPoint": 255,
    "herPosesSeen": [
@@ -121,7 +122,7 @@
    "hisPosesSeen": 10,
    "neverClear": true
   },
-  "aFindAt": "8 s into the reading",
+  "aFindAt": "8.1 s into the reading",
   "where": {
    "R_A1_film": {
     "wantedPlatePx": [
@@ -228,7 +229,7 @@
     },
     "againstOnePlainDrawImage": {
      "meanDifferenceOutOf255": 4.1,
-     "ninetyFifth": 16.7,
+     "ninetyFifth": 17.3,
      "largest": 55
     },
     "opaque": true
@@ -243,13 +244,13 @@
      45
     ],
     "againstTheSourceAveragedDownExactly": {
-     "meanDifferenceOutOf255": 4,
+     "meanDifferenceOutOf255": 4.1,
      "ninetyFifth": 13.7,
      "largest": 41.7
     },
     "againstOnePlainDrawImage": {
-     "meanDifferenceOutOf255": 4,
-     "ninetyFifth": 16,
+     "meanDifferenceOutOf255": 4.1,
+     "ninetyFifth": 16.7,
      "largest": 55
     },
     "opaque": true
@@ -264,13 +265,13 @@
      45
     ],
     "againstTheSourceAveragedDownExactly": {
-     "meanDifferenceOutOf255": 3.9,
-     "ninetyFifth": 14,
+     "meanDifferenceOutOf255": 4,
+     "ninetyFifth": 14.7,
      "largest": 41.7
     },
     "againstOnePlainDrawImage": {
-     "meanDifferenceOutOf255": 3.8,
-     "ninetyFifth": 16.3,
+     "meanDifferenceOutOf255": 3.9,
+     "ninetyFifth": 17.3,
      "largest": 41.7
     },
     "opaque": true
@@ -285,13 +286,13 @@
      45
     ],
     "againstTheSourceAveragedDownExactly": {
-     "meanDifferenceOutOf255": 4,
-     "ninetyFifth": 14.3,
+     "meanDifferenceOutOf255": 4.2,
+     "ninetyFifth": 15.3,
      "largest": 41.3
     },
     "againstOnePlainDrawImage": {
-     "meanDifferenceOutOf255": 4.2,
-     "ninetyFifth": 18,
+     "meanDifferenceOutOf255": 4.3,
+     "ninetyFifth": 18.7,
      "largest": 54
     },
     "opaque": true
@@ -306,13 +307,13 @@
      45
     ],
     "againstTheSourceAveragedDownExactly": {
-     "meanDifferenceOutOf255": 4.2,
-     "ninetyFifth": 14.7,
+     "meanDifferenceOutOf255": 4.3,
+     "ninetyFifth": 15.3,
      "largest": 41.7
     },
     "againstOnePlainDrawImage": {
-     "meanDifferenceOutOf255": 4.1,
-     "ninetyFifth": 17.3,
+     "meanDifferenceOutOf255": 4.3,
+     "ninetyFifth": 18,
      "largest": 53.7
     },
     "opaque": true
@@ -323,10 +324,10 @@
  {
   "browser": "webkit, iPhone 14 profile",
   "live": {
-   "framesRead": 1219,
-   "seconds": 20.3,
-   "poseChangesUnderIt": 292,
-   "screenChangedInTheSameFrame": 292,
+   "framesRead": 1217,
+   "seconds": 20.4,
+   "poseChangesUnderIt": 290,
+   "screenChangedInTheSameFrame": 290,
    "inTheNextFrame": 0,
    "later": 0,
    "laterExamples": [],
@@ -336,14 +337,14 @@
     {
      "change": "R_A1_film > R_K0_turn",
      "theScreenMoves": false,
-     "pictureChangedInThatFrame": false,
-     "somethingUnderItChangedInThatFrameToo": false
+     "pictureChangedInThatFrame": true,
+     "somethingUnderItChangedInThatFrameToo": true
     },
     {
      "change": "R_K0_turn > R_K1_look",
      "theScreenMoves": true,
      "pictureChangedInThatFrame": true,
-     "somethingUnderItChangedInThatFrameToo": false
+     "somethingUnderItChangedInThatFrameToo": true
     },
     {
      "change": "R_K1_look > R_K0_turn",
@@ -364,58 +365,58 @@
    "stretches": 39,
    "litMs": [
     500,
-    501,
-    499,
     500,
-    501,
-    501,
-    499,
-    499,
     500,
-    501,
-    488,
+    500,
+    502,
+    500,
     500,
     499,
-    501,
-    499,
-    499,
+    500,
     498,
+    501,
     500,
-    497
+    501,
+    501,
+    500,
+    504,
+    500,
+    500,
+    500
    ],
    "darkMs": [
     500,
     500,
     500,
     500,
+    499,
+    499,
     500,
+    500,
+    501,
+    501,
+    501,
+    499,
+    499,
     499,
     500,
     501,
+    495,
     500,
     500,
-    499,
-    513,
-    500,
-    501,
-    499,
-    501,
-    502,
-    500,
-    503,
     500
    ],
-   "shortestMs": 488,
-   "longestMs": 513,
+   "shortestMs": 495,
+   "longestMs": 504,
    "beatsDuringHerReaction": 4,
    "even": true
   },
   "theWater": {
    "changes": 185,
-   "shortestGapMs": 97,
+   "shortestGapMs": 94,
    "medianGapMs": 116,
-   "longestGapMs": 124,
-   "meanGapMs": 110.1,
+   "longestGapMs": 122,
+   "meanGapMs": 110,
    "gapsOver150": 0,
    "roundAndRound": true,
    "ok": true
@@ -431,7 +432,7 @@
      0.4216691068814056
     ]
    },
-   "framesRead": 1219,
+   "framesRead": 1217,
    "lowestAlphaUnderThePresentersPoint": 255,
    "lowestAlphaUnderRachelsPoint": 255,
    "herPosesSeen": [
@@ -544,12 +545,12 @@
     ],
     "againstTheSourceAveragedDownExactly": {
      "meanDifferenceOutOf255": 5.2,
-     "ninetyFifth": 20.7,
+     "ninetyFifth": 21,
      "largest": 64.3
     },
     "againstOnePlainDrawImage": {
      "meanDifferenceOutOf255": 8.4,
-     "ninetyFifth": 32.7,
+     "ninetyFifth": 33,
      "largest": 72.3
     },
     "opaque": true
@@ -565,12 +566,12 @@
     ],
     "againstTheSourceAveragedDownExactly": {
      "meanDifferenceOutOf255": 5,
-     "ninetyFifth": 20,
+     "ninetyFifth": 20.3,
      "largest": 64.3
     },
     "againstOnePlainDrawImage": {
-     "meanDifferenceOutOf255": 8.2,
-     "ninetyFifth": 32,
+     "meanDifferenceOutOf255": 8.3,
+     "ninetyFifth": 32.3,
      "largest": 72.3
     },
     "opaque": true
@@ -585,13 +586,13 @@
      61
     ],
     "againstTheSourceAveragedDownExactly": {
-     "meanDifferenceOutOf255": 4.8,
-     "ninetyFifth": 19.7,
+     "meanDifferenceOutOf255": 5,
+     "ninetyFifth": 20.3,
      "largest": 64.3
     },
     "againstOnePlainDrawImage": {
-     "meanDifferenceOutOf255": 7.7,
-     "ninetyFifth": 31,
+     "meanDifferenceOutOf255": 8,
+     "ninetyFifth": 33,
      "largest": 68
     },
     "opaque": true
@@ -606,13 +607,13 @@
      61
     ],
     "againstTheSourceAveragedDownExactly": {
-     "meanDifferenceOutOf255": 5,
-     "ninetyFifth": 20.3,
+     "meanDifferenceOutOf255": 5.2,
+     "ninetyFifth": 20.7,
      "largest": 64
     },
     "againstOnePlainDrawImage": {
-     "meanDifferenceOutOf255": 7.6,
-     "ninetyFifth": 29.7,
+     "meanDifferenceOutOf255": 8,
+     "ninetyFifth": 31.3,
      "largest": 74.7
     },
     "opaque": true
@@ -627,13 +628,13 @@
      61
     ],
     "againstTheSourceAveragedDownExactly": {
-     "meanDifferenceOutOf255": 5,
-     "ninetyFifth": 20.3,
+     "meanDifferenceOutOf255": 5.2,
+     "ninetyFifth": 21,
      "largest": 64.3
     },
     "againstOnePlainDrawImage": {
-     "meanDifferenceOutOf255": 8.2,
-     "ninetyFifth": 32.3,
+     "meanDifferenceOutOf255": 8.5,
+     "ninetyFifth": 34,
      "largest": 77.7
     },
     "opaque": true

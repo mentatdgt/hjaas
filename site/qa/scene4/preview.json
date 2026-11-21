@@ -41,7 +41,7 @@
     39,
     35
    ],
-   "meanDifferenceFromThePreviewsOutOf255": 29.5,
+   "meanDifferenceFromThePreviewsOutOf255": 29.6,
    "largest": 175.3,
    "note": "the preview resizes the crop with Lanczos to 40 × 36 px; the page averages it down to the pixels the screen covers and the browser then places that canvas on the page, so at about one screen pixel per plate pixel (this window) the page's is the softer of the two; on a phone or a 2× display it has two to three times the pixels"
   }
@@ -88,8 +88,8 @@
     39,
     35
    ],
-   "meanDifferenceFromThePreviewsOutOf255": 36.4,
-   "largest": 156.3,
+   "meanDifferenceFromThePreviewsOutOf255": 36.5,
+   "largest": 158.3,
    "note": "the preview resizes the crop with Lanczos to 40 × 36 px; the page averages it down to the pixels the screen covers and the browser then places that canvas on the page, so at about one screen pixel per plate pixel (this window) the page's is the softer of the two; on a phone or a 2× display it has two to three times the pixels"
   }
  },
@@ -135,7 +135,7 @@
     39,
     35
    ],
-   "meanDifferenceFromThePreviewsOutOf255": 33,
+   "meanDifferenceFromThePreviewsOutOf255": 32.9,
    "largest": 155.7,
    "note": "the preview resizes the crop with Lanczos to 40 × 36 px; the page averages it down to the pixels the screen covers and the browser then places that canvas on the page, so at about one screen pixel per plate pixel (this window) the page's is the softer of the two; on a phone or a 2× display it has two to three times the pixels"
   }
@@ -182,7 +182,7 @@
     38,
     34
    ],
-   "meanDifferenceFromThePreviewsOutOf255": 27.1,
+   "meanDifferenceFromThePreviewsOutOf255": 27.2,
    "largest": 161,
    "note": "the preview resizes the crop with Lanczos to 40 × 36 px; the page averages it down to the pixels the screen covers and the browser then places that canvas on the page, so at about one screen pixel per plate pixel (this window) the page's is the softer of the two; on a phone or a 2× display it has two to three times the pixels"
   }
@@ -229,7 +229,7 @@
     38,
     34
    ],
-   "meanDifferenceFromThePreviewsOutOf255": 25.9,
+   "meanDifferenceFromThePreviewsOutOf255": 25.8,
    "largest": 161,
    "note": "the preview resizes the crop with Lanczos to 40 × 36 px; the page averages it down to the pixels the screen covers and the browser then places that canvas on the page, so at about one screen pixel per plate pixel (this window) the page's is the softer of the two; on a phone or a 2× display it has two to three times the pixels"
   }
