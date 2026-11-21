@@ -78,7 +78,7 @@ worked example), listed in `src/scenes/index.ts`. The menu shows whatever is lis
   and by how much; `node qa/tools/pencil.mjs rachel` and `spots` check the result on the page;
 - optionally `keep`, rectangles of the plate the painting must be whole in. Only for a scene whose cast comes
   nearer the plate's rim than any edge leaves whole (the café: Rachel's boots and the cat are 35 px from the
-  bottom). Around each rectangle the painting reaches out toward the rim, as far as it needs to; the rim
+  bottom, and the fringe of her shadow 18 px). Around each rectangle the painting reaches out toward the rim, as far as it needs to; the rim
   itself stays paper, and everywhere else the edge is the ordinary one. The rule is at `KeepBox` in
   `src/engine/edge.ts`;
 - `lines`, the pencil lines the edge trails off in. Put the scene's line map (greyscale, the plate's size,

@@ -8,6 +8,7 @@
 //   node qa/tools/scene3.mjs react     a find: what she does, desktop and phone, and with reduced motion; and the cross-dissolve itself, measured
 //   node qa/tools/scene3.mjs film      30 s of the café with one find, desktop and iPhone profile, and its first-visit painting
 //   node qa/tools/scene3.mjs preview   the page against the package's own picture (plate + stills, as tools/cafe_preview.py draws frames/018-cafe-scene/cafe-preview.mp4)
+//   node qa/tools/scene3.mjs shadow    Rachel's shadow (it comes with her since v7.4) against the rim's own fade, in numbers and close up
 //   node qa/tools/scene3.mjs frames    frame times in WebKit (phone) and throttled Chrome: the café's painting, and Build → Grow → Design → Build
 import { chromium, webkit, devices } from 'playwright';
 import { mkdir, writeFile, readFile } from 'node:fs/promises';
@@ -556,6 +557,103 @@ run.preview = async () => {
   await row('the sip: cafe-preview.mp4 at 14.2 s  |  the package drawn as the preview draws it  |  the page on the same poses (its edge is the site\'s own)', [theirFrame, shown.theirs, shown.mine], `${out}preview-compare.jpg`);
   report.errors = errors;
   await save('preview.json', report);
+};
+
+// Rachel's shadow is part of her stills (package v7.4), and its outer fringe comes nearer the plate's bottom
+// than the rim's own 28 px fade, where nothing is ever whole. How much of her is in that fade, and how
+// visible it is: every pixel her stills cover there, against the plate under it. Then her boots, the shadow
+// and the edge below them at twice the plate's size, as the page draws them.
+run.shadow = async () => {
+  const pkg = new URL('../../../frames/018-cafe-scene/site/', import.meta.url).pathname;
+  const frames = JSON.parse(await readFile(`${pkg}frames.json`, 'utf8'));
+  const routines = JSON.parse(await readFile(`${pkg}routine.json`, 'utf8'));
+  const lead = frames.layers.find((layer) => routines.actors[layer.actor]?.reaction);
+  const k = 1672 / frames.canvas.w;
+  const RIM = 28;
+  const plate = await sharp(`${pkg}${frames.plate}`).extract({ left: lead.x, top: lead.y, width: lead.w, height: lead.h }).removeAlpha().raw().toBuffer();
+  const lum = (b, i) => 0.299 * b[i] + 0.587 * b[i + 1] + 0.114 * b[i + 2];
+  // Per pixel of her layer, over all her stills: is it ever covered, and the most it ever darkens the floor.
+  const covered = new Uint8Array(lead.w * lead.h);
+  const darkens = new Float32Array(lead.w * lead.h);
+  const differs = new Float32Array(lead.w * lead.h);
+  for (const still of lead.stills) {
+    const data = await sharp(`${pkg}${frames.stills[still]}`).ensureAlpha().raw().toBuffer();
+    for (let i = 0; i < covered.length; i++) {
+      const a = data[i * 4 + 3] / 255;
+      if (data[i * 4 + 3] <= 8) continue;
+      covered[i] = Math.max(covered[i], data[i * 4 + 3]);
+      darkens[i] = Math.max(darkens[i], (lum(plate, i * 3) - lum(data, i * 4)) * a);
+      for (let c = 0; c < 3; c++) differs[i] = Math.max(differs[i], Math.abs(data[i * 4 + c] - plate[i * 3 + c]) * a);
+    }
+  }
+  const all = { px: 0 };
+  const fade = { px: 0, solidPx: 0, mostItDiffersFromTheFloorOutOf255: 0, meanOutOf255: 0, mostItDarkensTheFloorOutOf255: 0, nearestTheRimPlatePx: Infinity };
+  for (let y = 0; y < lead.h; y++) for (let x = 0; x < lead.w; x++) {
+    const i = y * lead.w + x;
+    if (!covered[i]) continue;
+    all.px++;
+    const px = (lead.x + x + 0.5) * k; const py = (lead.y + y + 0.5) * k;
+    const din = Math.min(px, 1672 - px, py, 941 - py);
+    if (din >= RIM) continue;
+    fade.px++;
+    if (covered[i] > 128) fade.solidPx++;
+    fade.mostItDiffersFromTheFloorOutOf255 = Math.max(fade.mostItDiffersFromTheFloorOutOf255, differs[i]);
+    fade.meanOutOf255 += differs[i];
+    fade.mostItDarkensTheFloorOutOf255 = Math.max(fade.mostItDarkensTheFloorOutOf255, darkens[i]);
+    fade.nearestTheRimPlatePx = Math.min(fade.nearestTheRimPlatePx, din);
+  }
+  const round = (v, to = 10) => Math.round(v * to) / to;
+  const report = {
+    lead: lead.actor,
+    herLayerOnThePlate: [lead.x, lead.y, lead.x + lead.w, lead.y + lead.h].map((v) => round(v * k)),
+    canvasPxSheEverCovers: all.px,
+    insideTheRimsOwn28PxFade: {
+      canvasPx: fade.px,
+      shareOfAllSheCovers: round(fade.px / all.px, 10000),
+      ofThoseMoreThanHalfSolid: fade.solidPx,
+      mostItDiffersFromTheFloorUnderItOutOf255: round(fade.mostItDiffersFromTheFloorOutOf255),
+      meanDifferenceOutOf255: round(fade.px ? fade.meanOutOf255 / fade.px : 0),
+      mostItDarkensTheFloorOutOf255: round(fade.mostItDarkensTheFloorOutOf255),
+      nearestTheRimPlatePx: round(fade.nearestTheRimPlatePx),
+    },
+  };
+  // On the page: the painting's edge under those same pixels, and the close-up.
+  const browser = await chromium.launch({ channel: 'chrome' });
+  const page = await (await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 3.2 })).newPage();
+  await page.goto(`${base}?debug&reset&intro=off&seed=7#design`);
+  await ready(page);
+  await SCENE.design.loaded(page);
+  await clean(page);
+  await page.waitForTimeout(600);
+  report.onThePage = await page.evaluate(async ({ box, RIM }) => {
+    const { edgeAlpha, edgeSeed, edgeName } = await import('/src/engine/edge.ts');
+    const { SCENES } = await import('/src/scenes/index.ts');
+    const scene = SCENES.find((s) => s.id === 'design');
+    const alpha = edgeAlpha('pencil', edgeSeed(edgeName(scene)), scene.keep);
+    const rim = (d) => { const t = Math.min(1, Math.max(0, d / RIM)); return t * t * (3 - 2 * t); };
+    // Along her layer's stretch of the bottom: the painting at each distance from the rim, at its lowest.
+    const rows = {};
+    for (const d of [16, 18, 20, 22, 24, 26, 28, 30, 34]) {
+      let low = 1;
+      for (let x = box[0] + 20; x <= box[2] - 20; x += 2) low = Math.min(low, alpha(x, 941 - d));
+      rows[`${d} px from the rim`] = { thePaintingAtItsLowest: Math.round(low * 1000) / 1000, theMostTheRimAllows: Math.round(rim(d) * 1000) / 1000 };
+    }
+    return { edge: scene.edge ?? 0, keep: scene.keep, underHerAlongTheBottom: rows };
+  }, { box: report.herLayerOnThePlate, RIM });
+  await page.evaluate(() => window.__hj.scene.hold());
+  await page.evaluate(() => { for (const cast of window.__hj.scene.casts) if (cast.character.el.dataset.actor !== 'fan') cast.character.show(cast.character.rest); });
+  await page.waitForTimeout(200);
+  const plateBox = await page.locator('.hj-plate').boundingBox();
+  const u = plateBox.width / 1672;
+  const clip = { x: plateBox.x + 840 * u, y: plateBox.y + 760 * u, width: 400 * u, height: 205 * u };
+  await sharp(await page.screenshot({ clip })).jpeg({ quality: 92 }).toFile(`${out}shadow-close-up.jpg`);
+  // The same with the mushrooms and the cast hidden: the floor she will arrive on, clean of any shadow.
+  await page.evaluate(() => { document.querySelector('.hj-rachel').style.visibility = 'hidden'; });
+  await page.waitForTimeout(150);
+  await sharp(await page.screenshot({ clip })).jpeg({ quality: 92 }).toFile(`${out}shadow-close-up-before-she-arrives.jpg`);
+  await browser.close();
+  say('shadow', report);
+  await save('shadow.json', report);
 };
 
 // Frame times. WebKit on the iPhone profile and Chrome with the processor slowed four times, against the

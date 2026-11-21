@@ -214,7 +214,9 @@ function washFrom(din: number, bottom: number, wander: number, swing: number, ou
  * The rule, as agreed with Wren (reviews/scene-3-build.md, section 5):
  * - only around the boxes that need it: a box further in than the edge can reach changes nothing;
  * - the plate's outer rim stays bare paper all the way round: the 28 px rim fade applies to the lobe too, so
- *   from paper to the whole painting is never less than 28 px;
+ *   from paper to the whole painting is never less than 28 px. A box that reaches into that fade (the outer
+ *   fringe of Rachel's shadow, which is part of her stills) is as whole there as the rim allows, and whole
+ *   from 28 px in;
  * - no pencil band there: beside a box with 80 px of room or less the pencil ends where the colour does,
  *   and comes back along the lobe's shoulders (a box with 120 px or more keeps the ordinary pencil);
  * - everywhere else, the ordinary pencil edge.

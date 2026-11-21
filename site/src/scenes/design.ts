@@ -82,7 +82,9 @@ export const design: SceneConfig = {
   spots: SPOTS,
   // Rachel's boots and the cat come within 35 px of the plate's bottom, and the old man's chair within 62 px
   // of its side: nearer than any of the room's possible edges leaves whole. So the painting is told where
-  // its cast is, and reaches out around them (edge.ts, KeepBox).
+  // its cast is, and reaches out around them (edge.ts, KeepBox). Her shadow is part of her stills, and its
+  // faint outer fringe comes to 18 px from the bottom: inside the rim's own fade, where the painting is as
+  // whole as the rim allows.
   keep: Object.values(cast.covers) as unknown as KeepBox[],
   // Of the edges the room could have, the first that fits the strips the edge is drawn in and leaves every
   // mushroom and tap box where it is (qa/tools/pencil.mjs pick).
