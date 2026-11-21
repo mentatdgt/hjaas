@@ -1,7 +1,7 @@
 # HJaaS site
 
 One painting on a paper page, its edges fading into the paper, and a small menu to move between scenes. Each scene is a room with
-Rachel at work in it and ten hidden mushrooms; finding all ten in any scene unlocks the contact form.
+Rachel at work in it and ten hidden mushrooms; finding all of them, in every scene, unlocks the contact form.
 
 | Scene | Address | State |
 |---|---|---|
@@ -33,7 +33,7 @@ http://localhost:4173/. `npm test` runs the unit tests.
 | `src/main.ts`, `index.html` | The host page. It only mounts the site. |
 | `src/engine/` | Everything that shows a scene and the page around it. It knows nothing about any one scene. |
 | `src/scenes/` | One file per scene, which only describes it, and `index.ts`, the list of scenes in menu order. |
-| `public/assets/` | WebP copies of the approved art, made by `npm run assets`: `scene1/`, `scene2/`, `scene3/`, `scene4/`, and `shared/` (mushrooms, logo). Never edit these by hand. |
+| `public/assets/` | WebP copies of the approved art, made by `npm run assets`: `scene1/` to `scene5/`, and `shared/` (mushrooms, logo). Never edit these by hand. |
 | `scripts/build-assets.mjs` | Reads `frames/`, `scene/`, `reference/` and `assets/` (never writes there) and makes the WebP copies, the favicon and the link-preview image (`og-image.png`). |
 | `public/robots.txt` | Blocks all crawling until launch. Open it up then, and give `og:image` in `index.html` the full address (`TODO(launch)`). |
 | `qa/` | Evidence: recordings, screenshots, traces, reviews, and `REPORT.md`. `qa/tools/` holds the scripts that made them. |
@@ -50,6 +50,8 @@ Inside `src/engine/`:
 | `character.ts`, `player.ts`, `steps.ts` | A character's canvas (whole frames, a patch over a still, or two poses part-way through a cross-dissolve), her placement on the plate, and the player that shows her poses. |
 | `clips.ts` | Reads Wren's delivered format (`frames.json` + `routine.json`): stills, clips of patches, the routine, blinks, dissolves (`fade_ms`), the reaction and its entry rule. |
 | `cast.ts` | Takes a package with a whole cast apart (scenes 3 and 4): each actor becomes a pair of manifests that `clips.ts` plays as if it were alone on the plate. Also reads the package's live screen, if it has one. |
+| `progress.ts` | The hunt's progress in the picture (scene 5: the backdrop, one more swath per find): every swath reached drawn once on one canvas, a new one fading in over it and drawn in when the fade ends. |
+| `walk.ts` | A sprite-track layer (scene 5: the stagehand's boots): two sprites placed and turned frame by frame from a track, the far one darker, kept inside a mask; when it walks, from its routine entry. |
 | `screen.ts` | A live screen in the picture (scene 4: the back of Rachel's camera): a small canvas on the actor who holds it, showing the room and the actors drawn before her, redrawn whenever one of them is, moved with her pose, with the blinking REC dot. |
 | `reel.ts` | Keeps a clip character's memory down: her patches stay as downloaded and are decoded only a few frames ahead of being shown, then given back. |
 | `routine.ts` | A simpler loop manifest for whole-frame characters: loops, cycles, transitions, blinks. |
@@ -59,7 +61,7 @@ Inside `src/engine/`:
 | `logo.ts`, `glint.ts` | The logo and its glint, clipped to the image's own alpha. Nothing else glints. |
 | `pan.ts` | The portrait-phone crop, sideways panning, and where the visitor left each room. |
 | `form.ts`, `submit.ts` | The contact form, and the one function that sends it. |
-| `state.ts` | Progress in `localStorage`: per scene, the mushrooms found and the pan position; shared, the unlock. |
+| `state.ts` | Progress in `localStorage`: per scene, the mushrooms found and the pan position. The unlock is worked out from the finds (every spot of every scene), never trusted from storage. |
 | `flags.ts` | URL switches for QA (below). |
 
 ## Adding or changing a scene
@@ -114,6 +116,10 @@ when someone opens its address directly.
   rectangle, with nothing cut out, is a piece of the room that moves (the café's ceiling fan): the edge
   fades it as it fades the plate. So is a layer marked `"scenery": true` (the Merlion's water). A layer's
   stills are the ones it lists and any other still its routine names (the presenter's blink stills). Nothing in the engine names an actor.
+  Two kinds of layer are not actors: `"hunt_progress": k` (a still shown once k mushrooms of the scene are
+  found; fades in over the routine entry's `fade_ms`, 700 ms if none) and `"sprite_track"` (no stills: a
+  track, `sprites` and a `mask`; its routine entry has `first_ms`, `return_after_ms`, `every_ms` and a
+  `sequence` of tracks). `npm run assets` keeps the swaths and the mask lossless.
   A package may have a live screen: `"camera_screen": { "source": {x, y, w, h}, "rect_by_still": { "<still>":
   {x, y, w, h} } }` in `frames.json`. `source` is the part of the scene it shows; each rect is where the
   screen is while the actor who holds it is on that still. The picture is drawn 2 px inside the rect, with
@@ -144,7 +150,8 @@ to 300 ms, and reacts once she is back. She blinks only on a still the `blink` r
 a tenth of a second) may blink on any hold of a still the rule names: in the middle of a long one, or in place
 of the first 110 ms of a short one. Only the stills the manifests show are downloaded.
 
-A scene's config may say `again: 'hold'`: a mushroom found while she is still answering the last one starts
+A scene's config may say `answer: 'at-once'`: the reaction cuts straight in from whatever pose she is in,
+instead of waiting for her rest pose (scene 5). And `again: 'hold'`: a mushroom found while she is still answering the last one starts
 the reaction's held look again from now (she never turns twice). Without it a reaction under way is left as
 it is.
 
@@ -209,7 +216,8 @@ ignores them all, so nobody can skip the hunt with `?found=10`.
 |---|---|
 | `?reset` | Forget saved progress first. |
 | `?intro=full`, `?intro=quick`, `?intro=off` | Choose the opening: `full` is the first-visit painting, `quick` the short reveal of a return visit, `off` none. |
-| `?found=9` | Start the opening scene with that many mushrooms found (not saved). `?found=10` shows the unlocked button. |
+| `?found=9` | Start the opening scene with that many mushrooms found (not saved). It no longer unlocks anything by itself. |
+| `?all=49` | That many finds across the scenes in menu order (not saved; wins over `?found`). `?all=49#set` leaves only Set Design's last spot. |
 | `?hint=5` | Seconds before the hint wiggle, instead of 60. |
 | `?seed=7` | Repeatable hammer rhythm and brush strokes. |
 | `?edge=organic`, `?edge=a-round`, `?edge=a`, `?edge=b`, `?edge=c` | The earlier edges, for comparison: `organic` is the wash without the pencil (and with its straight cuts), the others the even feathers before it. The site ships `pencil`. |

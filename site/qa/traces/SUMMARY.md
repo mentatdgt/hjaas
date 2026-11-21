@@ -155,3 +155,17 @@ dropped 2, 0 and 3.
 (1.1 to 7.1 s) 360 frames begun, 1 dropped, longest task 20 ms; at work 114 begun, none dropped; a find 210
 begun, 3 dropped, longest task 32 ms. Before the painting starts (0.9 s, blank paper) one task of 104 ms puts
 the cast on the plate.
+
+## Scene 5 (Set Design: the theatre backdrop), 2026-11-21
+
+Two traces, phone profile (`390x844x3,mobile,touch`, CPU throttling 4), production build of `site/scene-5`,
+the Mac calm (load about 2). Raw files, not in git: `s5-set-paint-in-find-walk-mobile-4x.json.gz` and
+`s5-switching-mobile-4x.json.gz`.
+
+| Trace | Part | Result |
+|---|---|---|
+| paint-in, find, walk | A new visitor opens `#set` (storage cleared before the page's script runs): the painting, 1.0 to 7.0 s. | 360 frames begun, none dropped. Longest task 13 ms. LCP 0.74 s, CLS 0.00. |
+| | At work, 7.0 to 9.6 s (the lamp, Rachel). | 156 begun, none dropped. Longest task 3 ms. |
+| | A find (`--mark hj-qa-find --span 3000`): the salute and the swath's 700 ms fade. | 180 begun, none dropped. Longest task 31 ms. |
+| | The first walk, as scheduled (`--mark hj-qa-walk --span 4600`). | 276 begun, 1 dropped. Longest task 25 ms. (The trace's own page script read the boots' canvas every 100 ms to find the walk.) |
+| switching | From Set Design: Build, Grow, Design and Film for the first time, back to Set Design, to Build and to Set Design (the short brush). 41 s. | 2444 begun, 40 dropped, where each scene goes on the plate: 4 (Build), 3 (Grow), 6 (Design), 1 (Film), 9 (back to Set Design), 9 (Build), 8 (Set Design). Five tasks over 50 ms: 50 and 62 ms as Design first goes on, and the room's picture decoded again at each short-brush switch (115 to 131 ms at 4×). CLS 0.02. |

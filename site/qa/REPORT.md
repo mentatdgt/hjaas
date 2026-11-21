@@ -1571,3 +1571,9 @@ On `site/scene-4`, made from the tip of `site/scene-3`. Brief: `reviews/scene-4-
 `reviews/scene-4-review-01.md` (the table of what was asked, the camera screen as built, the hunt, frame
 times, decisions, the animation standards, notes for Wren). The evidence is in `qa/scene4/` (made by
 `qa/tools/scene4.mjs`), `qa/edge/pencil-*.json` (all four scenes) and `qa/traces/SUMMARY.md`.
+
+## Scene 5: Set Design (the theatre backdrop)
+
+On `site/scene-5`, made from the tip of `site/scene-4`. Brief: `reviews/scene-5-build.md`. The report is
+`reviews/scene-5-review-01.md`. Evidence in `qa/scene5/` (made by `qa/tools/scene5.mjs`),
+`qa/edge/pencil-*.json` (all five scenes) and `qa/traces/SUMMARY.md`.
