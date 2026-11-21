@@ -1,55 +1,116 @@
-# Handover: scene 5 (Travel)
+# Handover: scene 5, set design (theatre)
 
-> **Superseded 2026-11-21:** the user replaced Travel with a set-design scene (theatre backdrop). See BIBLE §3 and §4c, STATUS, and `frames/021-set-staging/`.
+For **Wren** (Claude) in a new chat. From Wren (café chat), 2026-11-21 19:30 JST.
+Read first: `STATUS.md` (where everything stands), `BIBLE.md` (what's decided; it wins over older notes), `SCENE-RECIPE.md` (method, including the 2026-11-21 rules), `QUINN-LOOP.md` (Quinn without the user carrying files).
+This replaces the earlier Travel handover: **the user replaced Travel with set design** (2026-11-21).
 
-For **Wren** (Claude) in a new chat. From Wren (café chat), 2026-11-21.
-Read these first: `STATUS.md` for where things stand, `BIBLE.md` for what's fixed (it wins over older notes), `SCENE-RECIPE.md` for the method, and `QUINN-LOOP.md` for how to work with Quinn without the user carrying files. This file covers only what's specific to Travel.
+## 1. Where things stand (all scenes)
+| # | Tab | State | Owner |
+|---|---|---|---|
+| 1 | Build | On `main`. Still needs the model-sheet restyle and **glasses removed** (decided: no glasses anywhere). | later task |
+| 2 | Grow | On `main`. Light model-sheet restyle later. | later task |
+| 3 | Design (café) | Art final (package v7.5 on `main`). Fable has it on `site/scene-3`. Waiting for the user's phone check, then merge. | you (the café chat is ending) |
+| 4 | Film (Merlion) | Art final. Fable's build on `site/scene-4` (stacked on scene 3). Round 2 reviewed by the Film chat. Waiting for the phone check. Sean's consent needed before launch. | **the Film Wren chat owns Film; don't touch it** |
+| 5 | Set design (theatre) | **Preview v3 sent to the user at 19:20; waiting for their verdict.** Package `frames/022-theatre-scene/site/` committed. No Fable brief yet. | **you** |
 
-## 1. The situation
-- **Scenes 1–2** (Build, Grow) are merged into `main`.
-- **Scene 3** (Design, the café): the art is final (package v7.5 on `main`). Fable is integrating it on `site/scene-3`, and the café chat owns it. **Don't touch task 018 or the café files.**
-- **Scene 4** (Film, Merlion): the art is packaged (task 020). Fable has built it on `site/scene-4`, stacked on `site/scene-3`. Fable's report (`reviews/scene-4-review-01.md`) is still to come, and the café chat reviews it.
-- **This chat owns scene 5, Travel:** choosing what it is, staging it with Quinn, task 021 onwards, its package and its Fable brief.
+Merges: `site/scene-3` → `main` after the phone check, then `site/scene-4`. Never merge into `main` without Wren's review and the user's OK.
 
-## 2. What exists
-- Backdrop `scene/travel-lookout.png` (task 009): a rocky mountain lookout over a green valley with a river, golden light from the left. **The location is a placeholder** I assumed to suit the hiking outfit.
-- Outfit reference: outfit 3, technical hiking gear (`reference/hjaas1.png`).
-- Rachel's model sheet: `reference/rachel/M01_rachel_model.png` (task M01). It's the drawing reference for her face and proportions in every new scene. **No glasses, ever.**
-- BIBLE §3 row: `5 Travel | TBD | TBD | TBD | Look and a small wave`.
+## 2. Scene 5 in one paragraph
+Rachel stands on a wooden A-frame ladder on a theatre stage, painting a huge backdrop: the left part is painted sky, hills and lake, the right part bare canvas with pencil lines. **The backdrop fills in as the visitor hunts:** each mushroom found in this scene paints one more swath, and at 10/10 it is complete. A **stagehand** (middle-aged contractor, grey T-shirt, jeans, tan boots) crosses behind the backdrop about once a minute. Only his boots show, in the dark gap under its hem: right to left with purpose, then 10–15 s later left to right. No glimpse of him, no peeking (the user found that creepy). The **caged work lamp** at the top right swings slowly. Mock-up A's busyness stays: seat backs along the bottom, knotted ropes, dripping paint pots, paint cart.
 
-## 3. First job: settle the scene with the user (one short question with choices)
-Record the answers in `BIBLE.md` §3:
-1. **Location:** keep the mountain lookout, or a real trip of Rachel's? If it changes, Quinn redraws the backdrop first (task 021). If it stays, check that the backdrop still matches the warm painted look of the café and Film. If it doesn't, give it a light restyle pass.
-2. **Outfit and hair:** hiking gear from `hjaas1.png`, with a bandana and bun, or loose hair.
-3. **The two-stage loop,** for example: looking out with a hand shading her eyes ↔ a sip from a water bottle, or taking a photo on her phone.
-4. **Supporting life:** a bird, a drifting cloud, swaying grass? Keep it to one or two small moving things, like the café's fan and cat.
-5. **The reaction to a find:** the BIBLE says "look and a small wave". The user found the café's look-to-camera unnatural, so propose a wave **without** turning to camera (or a small turn of the head only), and confirm.
+## 3. Decisions the user made (don't reopen)
+- Scene: mock-up A (theatre backdrop), from five options (`frames/021-set-staging/021_contact.jpg`).
+- **Keep the original's busyness:** seats, ropes and pots. The cleaner recompose (job 021f) was rejected.
+- **Outfit for this scene:** white tank top, navy cargo trousers, brown boots, gold pendant, hair loose and wavy. No glasses.
+- Animation ideas approved: strokes ↔ lean back ↔ dip the brush. Reaction: turns her head to you, smiles, raises the brush in a salute. Backdrop fills with the hunt. Lamp swings. Curtain stays still.
+- Stagehand: boots only, right to left, then back. No glimpse.
+- Model: the user is on Opus 5.5 and is saving Fable for site building.
 
-## 4. Then follow the recipe, using what the café taught us
-1. **Staging (task 021):** 3 mock-ups from Quinn on the backdrop. The user picks one, then fix rounds until it's right. Every later image is an edit of this one.
-2. **Pieces (task 022):** the scene, then the plate, then green anchors, then poses, all at the scene's exact size.
-3. **Build every pose as the approved base plus only the moving part,** pasted and colour-matched. Pixels elsewhere stay identical, so nothing flickers. The proven tools are `tools/cafe_build7.py` (zone, fit, paste) and `tools/quinn_register.py` (aligns a Quinn crop back onto the base).
-4. **No AI video for Rachel's flat-style face** (Kling morphs and pops it). Head turns and expressions are drawn poses, cut and hidden behind a blink. Dissolves only between near-identical stills of the same loop.
-5. **Mechanical things move rigidly and physically** (the café fan used a rigid model). Don't use blur or warping: they look photographic or "AI".
-6. **Shadows belong to the person who casts them:** a character's shadow goes in her own stills, never in the plate, so it can't appear before she does (café v7.4).
-7. **The style must be consistent across the whole scene:** the same subtle painted gradation on everyone, with Rachel drawn to the model sheet.
-8. **Package** in the café format: `frames.json` (layers with x, y, w and h, plus stills) and `routine.json` (per-actor loops, still/ms ranges, `fade_ms`, a reaction block). Render a preview with `tools/cafe_preview.py`. Audit it: no pixel changes outside actor boxes.
-9. **Fable brief** in `reviews/scene-5-build.md`. Fable builds on `site/scene-5`, stacked on `site/scene-4`, unless scene 4 has merged into `main` by then.
+## 4. Open questions for the user
+1. **Verdict on preview v3** (`frames/022-theatre-scene/theatre-preview.mp4`; close-up sent in chat). The user's earlier complaints were all fixed in v3: missing feet, see-through trousers and brush, torso and face glitches, and cream islands in the backdrop. Ask what still looks off and at which second.
+2. **Tab name: "Set" or "Stage".** Not chosen yet. It replaces "Travel" in the menu and in the contact form's checkbox.
+3. Optional tweaks I offered: make the boots a little larger or brighter (they're small and dim backstage); soften any pose change that feels too abrupt.
 
-## 5. Working with Quinn: use the loop, not the user
-- Jobs go in `~/hjaas/wren-inbox/quinn/jobs/NNN-name/` on the user's Mac (over the device bridge): `job.md`, `in/*.png`, then `out/`, with `DONE` or `FAILED` when finished. The user keeps `quinn_watch.sh` running in Terminal.
-- Ask for **crops of one character**, never whole scenes, and never use a returned image whole.
-- Check every 10 minutes with a timed check-in. Allow a maximum of 3 rounds per piece, then tell the user.
-- Number jobs from where the folder's highest number leaves off.
+## 5. Files
+- `tasks/022-theatre-scene.md`: the task record.
+- `frames/021-set-staging/`: the five mock-ups.
+- `frames/022-theatre-scene/incoming/`:
+  - `022_scene_LOCKED_1536x1024.png`: **the locked scene**;
+  - candidates v1–v3;
+  - the stagehand design sheet and in-scene test.
+- `frames/022-theatre-scene/approved/quinn/`:
+  - `plate.png` (Rachel removed);
+  - `plate_finished.png` (the backdrop completed);
+  - the six pose crops (A2_stroke_low, A3_stroke_out, A1_blink, B1_lean, B2_dip, K1_salute; each a crop of the scene at x 330–1354);
+  - `boot_facing_left/right.png`.
+- `frames/022-theatre-scene/approved/green/`: Quinn's green-screen cut-outs of all seven poses (job 022f). **Every outline comes from these.**
+- `frames/022-theatre-scene/site/`: **the package** (café format).
+  - `frames.json` layers in draw order: `backdrop_01..10` (`hunt_progress` 1–10, `scenery`), `stagehand` (`sprite_track` + `mask`), `lamp` (36 frames, `scenery`), `rachel` (7 stills).
+  - `routine.json`: the hand-written routines and notes, kept across rebuilds.
+  - `stagehand/walk.json`: tracks `rtl` and `ltr` at 30 fps; per frame, two boots with x, y (bottom-centre), rot and far.
+  - Canvas 1672×941 = Quinn space 1536×1024 cropped to y 120–984 and scaled by 1672/1536.
 
-## 6. Sharing the repo with the café chat
-- Run `git pull --rebase origin main` before every commit. Touch only scene-5 files and your own row in `STATUS.md`.
-- Higgsfield credits are shared. Travel shouldn't need any (no AI video). Any paid job needs a quote and the user's yes.
-- Never pass a real person's photo to Quinn, and never commit one.
+## 6. Tools (all in `tools/`), and the rebuild
+`bash tools/theatre_rebuild.sh <work_dir> [--preview]` rebuilds everything from the repo. It was checked identical to the committed package at 19:25. In order:
+1. `theatre_lamp.py`: cuts the lamp out, fills the plate behind it, renders the rigid pendulum frames.
+2. `theatre_build.py`: Rachel's stills. Colour from the drawings, outline from the green cut-outs. Strokes change only her arm and brush (never her face). Blink changes only her eyes. Lean, dip and salute swap her whole upper body, cut across the jeans. Legs and boots never change.
+3. `theatre_walk.py`: boots as rigid sprites that roll off the toe, arc and land on the heel, so they never slide. Clipped to the dark gap under the hem.
+4. `theatre_qa.py`: **must say ALL OK.** It checks full opacity inside every outline, nothing outside it, unchanged legs, and an unchanged face on strokes. It also writes a sheet.
+5. `theatre_package.py`: writes the package. The backdrop patches are ten equal visible swaths. The paint front only moves rightward, so no islands are left.
+6. `theatre_preview.py`: preview video, with finds at 6.5, 12.5, 19.5 and 26 s and walks at 3 s and about 18.6 s.
+Then copy `<work_dir>/site` to `frames/022-theatre-scene/site`.
 
-## 7. How the user likes to work
-- Low cognitive load: one short, paste-ready prompt per step, with the details in the task file.
-- One clear, certain recommendation, verified before giving step-by-step instructions. Don't jump between plans.
-- Restate any ambiguous visual direction before acting on it.
-- Don't make the user relay between Wren and Quinn.
-- Names: Quinn = ChatGPT (draws, via the Codex loop). Fable = Claude Fable 5.2 in Claude Code (builds the site). Foreman = Grok orchestrator. You = Wren.
+## 7. Lessons from this scene (now rules in SCENE-RECIPE)
+- **Never cut a character out by comparing the scene with the plate.** Wherever she matches the background, she goes see-through. Always use green-screen cut-outs from Quinn, made with masks, not regeneration.
+- **Before showing the user anything:**
+  - run the QA script;
+  - look at **every distinct pose in the actual video at 1:1**: boots, trousers, torso, brush, face;
+  - step through the backdrop stages one by one.
+  The user caught three rounds of artefacts that a proper check would have caught. Don't repeat that.
+- Don't let Quinn redraw the head in arm-only poses: the face then jitters between strokes.
+- Patch edges must not run through hair, faces or waists. Swap whole regions and cut where the join can't show.
+
+## 8. Next steps (in order)
+1. Get the user's verdict on v3 and the tab name. Fix anything they flag, re-run the QA script, check 1:1, re-render, commit.
+2. Write **Fable's build brief**, `reviews/scene-5-build.md`, in the pattern of `reviews/scene-4-build.md`. It must cover:
+   - **branching:** a new tab on `site/scene-5`, stacked on `site/scene-4` (or cut from `main` if 3 and 4 have merged by then);
+   - **assets:** built from `frames/022-theatre-scene/site/`;
+   - **draw order:** plate, backdrop patches, boots (clipped to `gap_mask`), lamp, Rachel;
+   - **three engine additions:** (a) `sprite_track` layers (draw sprites per frame from `walk.json` at x, y, rot about the bottom-centre, the far boot 15% darker, clipped to the mask); (b) `hunt_progress` layers (the k-th find in this scene fades in `backdrop_k` over 700 ms with ease-out, starting with her reaction; saved with the hunt; shown at once on a return visit; no fade with reduced motion); (c) the stagehand schedule from `routine.json` (first walk 8–15 s, then every 40–70 s, `rtl` then `ltr` after 10–15 s; none when paused or with reduced motion);
+   - **the hunt:** 10 mushrooms (3 easy, 4 medium, 3 hard), never on actor layers or the backdrop patches, at least 44 px tap boxes;
+   - **the prize:** the contact form unlocks at **all 50**, five scenes × 10 (BIBLE §1);
+   - **"Travel" replaced** by the new tab name in the menu and in the contact form's checkbox;
+   - **Fable's usual evidence:** Playwright recordings, a Chrome DevTools trace on a throttled phone, the review-animations standards, and memory under 80 MB.
+3. Review Fable's report like the café and Film ones: evidence first, then a short paste for the user.
+4. Phone checks of scenes 3–5, then merges in order.
+
+## 9. The Quinn loop (how you work with Quinn)
+- **Jobs:** `~/hjaas/wren-inbox/quinn/jobs/NNN-name/` on the user's Mac, through the device bridge, with `job.md` and `in/*.png`.
+  - Commit the images first and `job.md` last (the watcher starts a job as soon as `job.md` exists).
+  - Results land in `out/`, then `DONE` or `FAILED` appears.
+  - Jobs run one at a time; each takes 5–25 min.
+- **Next job numbers:** the scene-5 jobs used 021a–i and 022a–f. Number new ones **022g and on**.
+- **Running:** the user keeps `bash ~/hjaas/wren-inbox/quinn/quinn_watch.sh` running in Terminal, with the Mac awake and the Claude desktop app open.
+- **Collecting:** stage `out/*.png` with `device_stage_files`, QC, and copy the approved files into the repo.
+- **Rules:**
+  - ask for crops of one character;
+  - say what must not change;
+  - ask for masks, not regeneration, when pixels must stay;
+  - allow at most 3 rounds per piece, then report to the user.
+
+## 10. How the user likes to work
+- Low cognitive load: one short, paste-ready prompt per step, with the details in the repo.
+- One clear, certain recommendation. Verify before giving step-by-step instructions. Don't jump between plans.
+- **Check work properly before showing it** (see §7). They notice artefacts and lose trust when they're the one finding them.
+- Never make them relay between Wren and Quinn.
+- Get a cost quote and their yes before any paid Higgsfield job. Scene 5 used none: there's no AI video for flat-style faces.
+- **Never:**
+  - pass a real person's photo to Quinn;
+  - commit secrets;
+  - draw glasses on Rachel.
+- **Names:**
+  - Quinn = ChatGPT (draws, via the Codex loop);
+  - Fable = Claude Fable 5.2 in Claude Code on the Mac (builds the site);
+  - Foreman = Grok orchestrator;
+  - you = Wren.
+- **Git:** run `git pull --rebase origin main` before every commit (the Film chat commits too). Repo `mentatdgt/hjaas`; the Mac copy is at `~/hjaas`.
