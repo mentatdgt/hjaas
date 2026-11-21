@@ -30,7 +30,7 @@ def add_layer(m, out, actor, named, extra=None):
     if extra: layer.update(extra)
     m['layers'].append(layer)
 
-def patches(plate, fin, n=10, seed=5):
+def patches(plate, fin, W, n=10, seed=5):
     """Split the still-unpainted part of the backdrop into n ragged swaths, nearest the painted edge first."""
     a = np.asarray(plate).astype(np.float32); b = np.asarray(fin).astype(np.float32)
     d = np.abs(a - b).max(-1) > 26
@@ -44,10 +44,23 @@ def patches(plate, fin, n=10, seed=5):
     rng = np.random.default_rng(seed)
     noise = ndi.gaussian_filter(rng.standard_normal(d.shape), 28); noise /= noise.std()
     f = dist + 34 * noise
-    qs = np.quantile(f[d], np.linspace(0, 1, n + 1))
-    out = []
+    # equal shares of what a visitor can SEE: pixels behind Rachel (any pose) all go into the first patch
+    rach = np.zeros(d.shape, bool)
+    for pth in glob.glob(f'{W}/R_*.png'): rach |= np.asarray(Image.open(pth))[..., 3] > 0
+    vis = d & ~rach
+    qs = np.quantile(f[vis], np.linspace(0, 1, n + 1)); qs[-1] = f[d].max() + 1
+    painted0 = (xx < rowmin) & (xx >= 700) & d.any(1)[:, None]          # the painted part: left of the ragged edge, row by row
+    prev = np.zeros_like(d); out = []
     for i in range(n):
-        m = d & (f >= qs[i]) & (f <= qs[i + 1] + (0 if i < n - 1 else 1e9))
+        C = (d & ((f <= qs[i + 1]) | (rach & (i == 0)))) | prev
+        # keep only paint that touches the painted part (no floating islands), and leave no unpainted holes inside it
+        U = C | painted0; lab, k = ndi.label(U); keep = np.unique(lab[painted0 & (lab > 0)])
+        C = np.isin(lab, keep) & d
+        holes = ndi.binary_fill_holes(C | painted0) & ~(C | painted0) & d      # only small unpainted gaps get filled
+        hl, hk = ndi.label(holes)
+        if hk: hs = ndi.sum(holes, hl, range(1, hk + 1)); C |= np.isin(hl, [j + 1 for j, s_ in enumerate(hs) if s_ < 3000])
+        if i == n - 1: C = d.copy()
+        m = C & ~prev; prev = C
         m = ndi.binary_dilation(m, iterations=2) & ndi.binary_dilation(d, iterations=2)
         al = ndi.gaussian_filter(m.astype(np.float32), 1.6)
         out.append(Image.fromarray(np.dstack([b, al * 255]).clip(0, 255).astype(np.uint8)))
@@ -60,7 +73,7 @@ if __name__ == '__main__':
     m = {'canvas': {'w': CW, 'h': CH, 'note': 'Scene 5 (theatre) canvas 1672x941 (= Quinn space 1536x1024 cropped to y 120..984 and scaled by 1672/1536). Draw layers in order over plate.png; each still at its layer x,y. Within a layer every still is pixel-identical to the first outside the part that moves.'},
          'plate': 'plate.png', 'layers': [], 'stills': {}, 'clips': {}}
     # 1. the backdrop: one patch per mushroom found in this scene (hunt progress, not a routine)
-    ps, dmask = patches(plate, fin)
+    ps, dmask = patches(plate, fin, W)
     for i, p in enumerate(ps):
         add_layer(m, out, f'backdrop_{i + 1:02d}', {f'P_{i + 1:02d}': p},
                   {'scenery': True, 'hunt_progress': i + 1})

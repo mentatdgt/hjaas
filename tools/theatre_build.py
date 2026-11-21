@@ -49,7 +49,7 @@ REGION = (600, 120, 1060, 720)  # where Rachel can be (x0, y0, x1, y1), full coo
 
 def load(p): return np.asarray(Image.open(p).convert('RGB')).astype(np.float32)
 
-def silhouette(img, plate, thr=40):
+def silhouette(img, plate, thr=40, close=3):
     x0, y0, x1, y1 = REGION
     d = np.abs(img - plate).max(-1) > thr
     r = np.zeros_like(d); r[y0:y1, x0:x1] = True; d &= r
@@ -57,7 +57,7 @@ def silhouette(img, plate, thr=40):
     lab, n = ndi.label(d)
     if n:
         sz = ndi.sum(d, lab, range(1, n + 1)); d = lab == (int(np.argmax(sz)) + 1)
-    d = ndi.binary_closing(d, iterations=3); d = ndi.binary_fill_holes(d)
+    d = ndi.binary_closing(d, iterations=close); d = ndi.binary_fill_holes(d)
     return ndi.gaussian_filter(d.astype(np.float32), 0.6)
 
 def rgba(rgb, al): return np.dstack([rgb, np.clip(al, 0, 1) * 255]).astype(np.float32)
@@ -66,14 +66,26 @@ if __name__ == '__main__':
     out, plate_p, pose_dir = sys.argv[1:4]; names = sys.argv[4:]
     os.makedirs(out, exist_ok=True)
     S = load(SCENE); P = load(plate_p)
-    base = rgba(S, silhouette(S, P))
+    base = rgba(S, silhouette(S, P, thr=55, close=4))   # same cut as the poses, so outlines never shift between stills
     Image.fromarray(base.astype(np.uint8)).save(f'{out}/R_A1.png')
     x0, y0, x1, y1 = REGION
     region = np.zeros(S.shape[:2], bool); region[y0:y1, x0:x1] = True
+    H, Wd = S.shape[:2]; yy, xx = np.mgrid[0:H, 0:Wd]
+    # Where each pose may differ from the base (full Quinn-space coords, measured on the locked scene):
+    # strokes move ONLY the arm and brush (her head stays the base drawing, so her face never jumps);
+    # the blink touches only the eyes; the lean, the dip and the salute replace her whole upper body down to
+    # a cut line across the jeans (below the tank's hem in every pose), so no seam runs through her hair or face.
+    ARM = ((xx >= 812) | ((yy >= 318) & (xx >= 790))) & (yy <= 420)
+    UPPER = yy < 452
+    MODE = {'A2_stroke_low': 'arm', 'A3_stroke_out': 'arm', 'A1_blink': 'diff', 'B1_lean': 'upper', 'B2_dip': 'upper', 'K1_salute': 'upper'}
     for n in names:
         q = S.copy(); q[:, CX:CX + 1024] = load(f'{pose_dir}/{n}.png')
-        src = rgba(q, silhouette(q, P))
-        z = zone(base, src, thr=22, minsize=60, grow=5, region=region)
+        src = rgba(q, silhouette(q, P, thr=55, close=4))
+        mode = MODE.get(n, 'diff')
+        if mode == 'upper':
+            z = region & UPPER & ((base[..., 3] > 0) | (src[..., 3] > 0)); z = ndi.binary_dilation(z, iterations=3) & UPPER
+        else:
+            z = zone(base, src, thr=22, minsize=60, grow=5, region=region & (ARM if mode == 'arm' else True))
         still = paste(base, src, z, feather=1.6, match=True)
         Image.fromarray(np.clip(still, 0, 255).astype(np.uint8)).save(f'{out}/R_{n}.png')
         print(n, 'zone px', int(z.sum()))
