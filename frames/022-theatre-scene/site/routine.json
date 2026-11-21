@@ -1,0 +1,295 @@
+{
+ "note": "Scene 5 (theatre) routines. Holds in ms; [a,b] = random in range. Every change is an instant cut (no fade_ms in this scene). Within a layer every still is pixel-identical to the first outside the part that moves, so cuts never flicker.",
+ "actors": {
+  "lamp": {
+   "routine": [
+    {
+     "loop": "swing",
+     "repeat": [
+      1000,
+      1000
+     ],
+     "steps": [
+      {
+       "still": "L_00",
+       "ms": 100
+      },
+      {
+       "still": "L_01",
+       "ms": 100
+      },
+      {
+       "still": "L_02",
+       "ms": 100
+      },
+      {
+       "still": "L_03",
+       "ms": 100
+      },
+      {
+       "still": "L_04",
+       "ms": 100
+      },
+      {
+       "still": "L_05",
+       "ms": 100
+      },
+      {
+       "still": "L_06",
+       "ms": 100
+      },
+      {
+       "still": "L_07",
+       "ms": 100
+      },
+      {
+       "still": "L_08",
+       "ms": 100
+      },
+      {
+       "still": "L_09",
+       "ms": 100
+      },
+      {
+       "still": "L_10",
+       "ms": 100
+      },
+      {
+       "still": "L_11",
+       "ms": 100
+      },
+      {
+       "still": "L_12",
+       "ms": 100
+      },
+      {
+       "still": "L_13",
+       "ms": 100
+      },
+      {
+       "still": "L_14",
+       "ms": 100
+      },
+      {
+       "still": "L_15",
+       "ms": 100
+      },
+      {
+       "still": "L_16",
+       "ms": 100
+      },
+      {
+       "still": "L_17",
+       "ms": 100
+      },
+      {
+       "still": "L_18",
+       "ms": 100
+      },
+      {
+       "still": "L_19",
+       "ms": 100
+      },
+      {
+       "still": "L_20",
+       "ms": 100
+      },
+      {
+       "still": "L_21",
+       "ms": 100
+      },
+      {
+       "still": "L_22",
+       "ms": 100
+      },
+      {
+       "still": "L_23",
+       "ms": 100
+      },
+      {
+       "still": "L_24",
+       "ms": 100
+      },
+      {
+       "still": "L_25",
+       "ms": 100
+      },
+      {
+       "still": "L_26",
+       "ms": 100
+      },
+      {
+       "still": "L_27",
+       "ms": 100
+      },
+      {
+       "still": "L_28",
+       "ms": 100
+      },
+      {
+       "still": "L_29",
+       "ms": 100
+      },
+      {
+       "still": "L_30",
+       "ms": 100
+      },
+      {
+       "still": "L_31",
+       "ms": 100
+      },
+      {
+       "still": "L_32",
+       "ms": 100
+      },
+      {
+       "still": "L_33",
+       "ms": 100
+      },
+      {
+       "still": "L_34",
+       "ms": 100
+      },
+      {
+       "still": "L_35",
+       "ms": 100
+      }
+     ]
+    }
+   ],
+   "note": "The caged work lamp swings as one rigid piece on its rope (3.6 s per swing). Part of the scenery: let the edge treat it like the plate."
+  },
+  "rachel": {
+   "routine": [
+    {
+     "loop": "paint",
+     "repeat": [
+      3,
+      6
+     ],
+     "steps": [
+      {
+       "still": "R_A1",
+       "ms": [
+        500,
+        900
+       ],
+       "blink_ok": true
+      },
+      {
+       "still": "R_A2_stroke_low",
+       "ms": [
+        300,
+        500
+       ]
+      },
+      {
+       "still": "R_A3_stroke_out",
+       "ms": [
+        300,
+        550
+       ]
+      },
+      {
+       "still": "R_A2_stroke_low",
+       "ms": [
+        250,
+        400
+       ]
+      }
+     ]
+    },
+    {
+     "still": "R_A1",
+     "ms": [
+      400,
+      700
+     ],
+     "blink_ok": true
+    },
+    {
+     "still": "R_B1_lean",
+     "ms": [
+      2000,
+      3000
+     ]
+    },
+    {
+     "still": "R_A1",
+     "ms": [
+      300,
+      500
+     ]
+    },
+    {
+     "still": "R_B2_dip",
+     "ms": [
+      800,
+      1100
+     ]
+    },
+    {
+     "still": "R_A1",
+     "ms": [
+      500,
+      800
+     ],
+     "blink_ok": true
+    }
+   ],
+   "blink": {
+    "on": "R_A1",
+    "frames": [
+     {
+      "still": "R_A1_blink",
+      "ms": 100
+     }
+    ],
+    "every_ms": [
+     3000,
+     6000
+    ]
+   },
+   "reaction": {
+    "note": "On a mushroom find: she turns her head to you, smiles and raises the brush in a little salute, then goes back to painting. Cut straight in from whatever pose she is in.",
+    "steps": [
+     {
+      "still": "R_K1_salute",
+      "ms": [
+       1700,
+       2100
+      ]
+     },
+     {
+      "still": "R_A1",
+      "ms": 400
+     }
+    ]
+   },
+   "note": "Paints in short strokes (A1 > A2 > A3 > A2), now and then leans back to judge it (B1), then dips the brush in the pot on the ladder (B2)."
+  },
+  "stagehand": {
+   "note": "Boots only, behind the backdrop, clipped to the gap mask. First crossing 8-15 s after the scene starts; then every 40-70 s: walk 'rtl' (right to left), wait 10-15 s, walk 'ltr' (left to right). Each walk plays its track once at its fps. Paused / reduced motion: no walking. He never reacts to finds.",
+   "first_ms": [
+    8000,
+    15000
+   ],
+   "every_ms": [
+    40000,
+    70000
+   ],
+   "return_after_ms": [
+    10000,
+    15000
+   ],
+   "sequence": [
+    "rtl",
+    "ltr"
+   ]
+  },
+  "backdrop": {
+   "note": "Hunt progress, not a routine. The k-th mushroom found IN THIS SCENE fades in layer backdrop_k (P_k) over 700 ms, ease-out, starting with her reaction. Saved with the hunt: on a return visit patches 1..found are shown at once. At 10/10 the backdrop is complete. Reduced motion: no fade, the patch just appears.",
+   "fade_ms": 700
+  }
+ }
+}

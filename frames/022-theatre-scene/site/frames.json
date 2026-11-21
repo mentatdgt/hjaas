@@ -1,0 +1,262 @@
+{
+ "canvas": {
+  "w": 1672,
+  "h": 941,
+  "note": "Scene 5 (theatre) canvas 1672x941 (= Quinn space 1536x1024 cropped to y 120..984 and scaled by 1672/1536). Draw layers in order over plate.png; each still at its layer x,y. Within a layer every still is pixel-identical to the first outside the part that moves."
+ },
+ "plate": "plate.png",
+ "layers": [
+  {
+   "actor": "backdrop_01",
+   "x": 929,
+   "y": 0,
+   "w": 353,
+   "h": 562,
+   "stills": [
+    "P_01"
+   ],
+   "scenery": true,
+   "hunt_progress": 1
+  },
+  {
+   "actor": "backdrop_02",
+   "x": 976,
+   "y": 0,
+   "w": 523,
+   "h": 562,
+   "stills": [
+    "P_02"
+   ],
+   "scenery": true,
+   "hunt_progress": 2
+  },
+  {
+   "actor": "backdrop_03",
+   "x": 994,
+   "y": 0,
+   "w": 508,
+   "h": 562,
+   "stills": [
+    "P_03"
+   ],
+   "scenery": true,
+   "hunt_progress": 3
+  },
+  {
+   "actor": "backdrop_04",
+   "x": 1013,
+   "y": 0,
+   "w": 516,
+   "h": 561,
+   "stills": [
+    "P_04"
+   ],
+   "scenery": true,
+   "hunt_progress": 4
+  },
+  {
+   "actor": "backdrop_05",
+   "x": 1126,
+   "y": 0,
+   "w": 403,
+   "h": 561,
+   "stills": [
+    "P_05"
+   ],
+   "scenery": true,
+   "hunt_progress": 5
+  },
+  {
+   "actor": "backdrop_06",
+   "x": 1142,
+   "y": 0,
+   "w": 387,
+   "h": 561,
+   "stills": [
+    "P_06"
+   ],
+   "scenery": true,
+   "hunt_progress": 6
+  },
+  {
+   "actor": "backdrop_07",
+   "x": 1158,
+   "y": 23,
+   "w": 371,
+   "h": 538,
+   "stills": [
+    "P_07"
+   ],
+   "scenery": true,
+   "hunt_progress": 7
+  },
+  {
+   "actor": "backdrop_08",
+   "x": 1242,
+   "y": 44,
+   "w": 285,
+   "h": 515,
+   "stills": [
+    "P_08"
+   ],
+   "scenery": true,
+   "hunt_progress": 8
+  },
+  {
+   "actor": "backdrop_09",
+   "x": 1299,
+   "y": 60,
+   "w": 227,
+   "h": 498,
+   "stills": [
+    "P_09"
+   ],
+   "scenery": true,
+   "hunt_progress": 9
+  },
+  {
+   "actor": "backdrop_10",
+   "x": 1343,
+   "y": 78,
+   "w": 179,
+   "h": 475,
+   "stills": [
+    "P_10"
+   ],
+   "scenery": true,
+   "hunt_progress": 10
+  },
+  {
+   "actor": "stagehand",
+   "x": 0,
+   "y": 0,
+   "w": 1672,
+   "h": 941,
+   "stills": [],
+   "sprite_track": "stagehand/walk.json",
+   "sprites": {
+    "boot_L": "stagehand/boot_L.png",
+    "boot_R": "stagehand/boot_R.png"
+   },
+   "mask": "stagehand/gap_mask.png"
+  },
+  {
+   "actor": "lamp",
+   "x": 1327,
+   "y": 0,
+   "w": 100,
+   "h": 101,
+   "stills": [
+    "L_00",
+    "L_01",
+    "L_02",
+    "L_03",
+    "L_04",
+    "L_05",
+    "L_06",
+    "L_07",
+    "L_08",
+    "L_09",
+    "L_10",
+    "L_11",
+    "L_12",
+    "L_13",
+    "L_14",
+    "L_15",
+    "L_16",
+    "L_17",
+    "L_18",
+    "L_19",
+    "L_20",
+    "L_21",
+    "L_22",
+    "L_23",
+    "L_24",
+    "L_25",
+    "L_26",
+    "L_27",
+    "L_28",
+    "L_29",
+    "L_30",
+    "L_31",
+    "L_32",
+    "L_33",
+    "L_34",
+    "L_35"
+   ],
+   "scenery": true
+  },
+  {
+   "actor": "rachel",
+   "x": 702,
+   "y": 75,
+   "w": 395,
+   "h": 500,
+   "stills": [
+    "R_A1",
+    "R_A2_stroke_low",
+    "R_A3_stroke_out",
+    "R_A1_blink",
+    "R_B1_lean",
+    "R_B2_dip",
+    "R_K1_salute"
+   ]
+  }
+ ],
+ "stills": {
+  "P_01": "backdrop_01/P_01.png",
+  "P_02": "backdrop_02/P_02.png",
+  "P_03": "backdrop_03/P_03.png",
+  "P_04": "backdrop_04/P_04.png",
+  "P_05": "backdrop_05/P_05.png",
+  "P_06": "backdrop_06/P_06.png",
+  "P_07": "backdrop_07/P_07.png",
+  "P_08": "backdrop_08/P_08.png",
+  "P_09": "backdrop_09/P_09.png",
+  "P_10": "backdrop_10/P_10.png",
+  "L_00": "lamp/L_00.png",
+  "L_01": "lamp/L_01.png",
+  "L_02": "lamp/L_02.png",
+  "L_03": "lamp/L_03.png",
+  "L_04": "lamp/L_04.png",
+  "L_05": "lamp/L_05.png",
+  "L_06": "lamp/L_06.png",
+  "L_07": "lamp/L_07.png",
+  "L_08": "lamp/L_08.png",
+  "L_09": "lamp/L_09.png",
+  "L_10": "lamp/L_10.png",
+  "L_11": "lamp/L_11.png",
+  "L_12": "lamp/L_12.png",
+  "L_13": "lamp/L_13.png",
+  "L_14": "lamp/L_14.png",
+  "L_15": "lamp/L_15.png",
+  "L_16": "lamp/L_16.png",
+  "L_17": "lamp/L_17.png",
+  "L_18": "lamp/L_18.png",
+  "L_19": "lamp/L_19.png",
+  "L_20": "lamp/L_20.png",
+  "L_21": "lamp/L_21.png",
+  "L_22": "lamp/L_22.png",
+  "L_23": "lamp/L_23.png",
+  "L_24": "lamp/L_24.png",
+  "L_25": "lamp/L_25.png",
+  "L_26": "lamp/L_26.png",
+  "L_27": "lamp/L_27.png",
+  "L_28": "lamp/L_28.png",
+  "L_29": "lamp/L_29.png",
+  "L_30": "lamp/L_30.png",
+  "L_31": "lamp/L_31.png",
+  "L_32": "lamp/L_32.png",
+  "L_33": "lamp/L_33.png",
+  "L_34": "lamp/L_34.png",
+  "L_35": "lamp/L_35.png",
+  "R_A1": "rachel/R_A1.png",
+  "R_A2_stroke_low": "rachel/R_A2_stroke_low.png",
+  "R_A3_stroke_out": "rachel/R_A3_stroke_out.png",
+  "R_A1_blink": "rachel/R_A1_blink.png",
+  "R_B1_lean": "rachel/R_B1_lean.png",
+  "R_B2_dip": "rachel/R_B2_dip.png",
+  "R_K1_salute": "rachel/R_K1_salute.png"
+ },
+ "clips": {}
+}
