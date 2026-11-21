@@ -27,7 +27,7 @@ What's decided. Everyone (Wren, Quinn, Fable, Foreman) follows this. If a task, 
 | 2 Grow | Lab: white lab coat over a dark top, olive cargos, boots (`hjaas6.png`) | Low ponytail, dark tie | Mist → write on the clipboard → rotate the rack, unhurried | Looks up, thumbs-up (may change to a peace sign) |
 | 3 Design | Outfit 1 | Loose, wavy | Sketch on the iPad ↔ sip a hot coffee, two stages | Looks up at you with a warm smile, no gesture |
 | 4 Film | Black tank, tan cargo shorts (seen from behind, cropped at the thighs) | Loose, wavy, no bandana | Holds still, filming the presenter with a DSLR; the screen shows him live and the red REC dot blinks (no head movement) | Looks back over her shoulder at you and smiles |
-| 5 Set design (tab name TBD; replaces Travel, user 2026-11-21) | Outfit 1 | Loose, wavy | On a ladder painting a theatre backdrop: brush strokes ↔ leans back to judge it, then dips the brush in the pot hooked on the ladder | Turns her head to you, smiles, raises the brush in a little salute |
+| 5 Set design (tab name TBD; replaces Travel, user 2026-11-21) | White tank top, navy cargo trousers, brown boots (user 2026-11-21, for variety) | Loose, wavy | On a ladder painting a theatre backdrop: brush strokes ↔ leans back to judge it, then dips the brush in the pot hooked on the ladder | Turns her head to you, smiles, raises the brush in a little salute |
 
 The reaction changes per scene so the thumbs-up doesn't repeat everywhere.
 
