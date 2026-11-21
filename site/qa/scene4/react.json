@@ -1,0 +1,194 @@
+[
+ {
+  "browser": "chrome, 1440 × 900",
+  "hasProlong": true,
+  "sceneAsksToHoldTheLook": "hold",
+  "aFind": {
+   "thenShe": [
+    "1.2 ms: R_K0_turn, shown 86.7 ms",
+    "87.9 ms: R_K1_look, shown 1900.9 ms",
+    "1988.8 ms: R_K0_turn, shown 99.1 ms",
+    "2087.9 ms: R_A1_film, shown 500 ms",
+    "2587.9 ms: R_A1_film, shown 466.9 ms",
+    "3054.8 ms: R_A1_film"
+   ],
+   "msFromTheFindToHerFirstMove": 1.2,
+   "posesSheMissed": 0,
+   "asRoutineJsonSays": true,
+   "shownMs": {
+    "R_K0_turn": 86.7,
+    "R_K1_look": 1900.9,
+    "R_K0_turnBack": 99.1,
+    "R_A1_film": 500
+   }
+  },
+  "aSecondFindDuringTheLook": {
+   "secondFindMsIntoTheLook": 808.1,
+   "thenShe": [
+    "1.6 ms: R_K0_turn, shown 97.3 ms",
+    "98.9 ms: R_K1_look, shown 2435.5 ms",
+    "2534.4 ms: R_K0_turn, shown 79.3 ms",
+    "2613.7 ms: R_A1_film, shown 500 ms",
+    "3113.7 ms: R_A1_film, shown 417.3 ms",
+    "3531 ms: R_A1_film"
+   ],
+   "theLookWasShownMs": 2435.5,
+   "msOfLookAfterTheSecondFind": 1627.4,
+   "turns": 2,
+   "noSecondTurn": true,
+   "theLookWasExtended": true
+  },
+  "aFindAsSheTurnsBack": {
+   "landedOn": "R_K0_turn, 0 ms into it",
+   "thenShe": [
+    "6.2 ms: R_K0_turn, shown 80.6 ms",
+    "86.8 ms: R_K1_look, shown 1602.4 ms",
+    "1689.2 ms: R_K0_turn, shown 96.3 ms",
+    "1785.5 ms: R_A1_film, shown 500 ms",
+    "2285.5 ms: R_A1_film, shown 350.2 ms",
+    "2635.7 ms: R_A1_film"
+   ],
+   "turns": 2,
+   "looks": 1,
+   "nothingNew": true,
+   "bothFindsCounted": true
+  },
+  "aFindInTheHoldAfter": {
+   "landedOn": "R_A1_film, 132.9 ms into it",
+   "thenShe": [
+    "0.8 ms: R_K0_turn, shown 83.8 ms",
+    "84.6 ms: R_K1_look, shown 1832.6 ms",
+    "1917.2 ms: R_K0_turn, shown 82.8 ms",
+    "2000 ms: R_A1_film, shown 499.9 ms",
+    "2499.9 ms: R_A1_film, shown 483.5 ms",
+    "2983.4 ms: R_A1_film"
+   ],
+   "turns": 2,
+   "looks": 1,
+   "nothingNew": true,
+   "bothFindsCounted": true
+  },
+  "thePresenterMeanwhile": {
+   "steps": 126,
+   "seconds": 20.9,
+   "gestures": "M_1 > M_12 > M_2 > M_12 > M_1 > M_13 > M_3 > M_13 > M_1",
+   "blinks": 4,
+   "problems": [],
+   "heNeverReacts": true
+  },
+  "mushroomsLeft": 3,
+  "errors": []
+ },
+ {
+  "browser": "webkit, iPhone 14 profile",
+  "hasProlong": true,
+  "sceneAsksToHoldTheLook": "hold",
+  "aFind": {
+   "thenShe": [
+    "4 ms: R_K0_turn, shown 98 ms",
+    "102 ms: R_K1_look, shown 1899 ms",
+    "2001 ms: R_K0_turn, shown 99 ms",
+    "2100 ms: R_A1_film, shown 499 ms",
+    "2599 ms: R_A1_film, shown 385 ms",
+    "2984 ms: R_A1_film"
+   ],
+   "msFromTheFindToHerFirstMove": 4,
+   "posesSheMissed": 0,
+   "asRoutineJsonSays": true,
+   "shownMs": {
+    "R_K0_turn": 98,
+    "R_K1_look": 1899,
+    "R_K0_turnBack": 99,
+    "R_A1_film": 499
+   }
+  },
+  "aSecondFindDuringTheLook": {
+   "secondFindMsIntoTheLook": 809,
+   "thenShe": [
+    "5 ms: R_K0_turn, shown 89 ms",
+    "94 ms: R_K1_look, shown 2433 ms",
+    "2527 ms: R_K0_turn, shown 82 ms",
+    "2609 ms: R_A1_film, shown 501 ms",
+    "3110 ms: R_A1_film, shown 383 ms",
+    "3493 ms: R_A1_film"
+   ],
+   "theLookWasShownMs": 2433,
+   "msOfLookAfterTheSecondFind": 1624,
+   "turns": 2,
+   "noSecondTurn": true,
+   "theLookWasExtended": true
+  },
+  "aFindAsSheTurnsBack": {
+   "landedOn": "R_K0_turn, 0 ms into it",
+   "thenShe": [
+    "20 ms: R_K0_turn, shown 80 ms",
+    "100 ms: R_K1_look, shown 1600 ms",
+    "1700 ms: R_K0_turn, shown 99 ms",
+    "1799 ms: R_A1_film, shown 500 ms",
+    "2299 ms: R_A1_film, shown 433 ms",
+    "2732 ms: R_A1_film"
+   ],
+   "turns": 2,
+   "looks": 1,
+   "nothingNew": true,
+   "bothFindsCounted": true
+  },
+  "aFindInTheHoldAfter": {
+   "landedOn": "R_A1_film, 133 ms into it",
+   "thenShe": [
+    "16 ms: R_K0_turn, shown 74 ms",
+    "90 ms: R_K1_look, shown 1833 ms",
+    "1923 ms: R_K0_turn, shown 83 ms",
+    "2006 ms: R_A1_film, shown 500 ms",
+    "2506 ms: R_A1_film, shown 400 ms",
+    "2906 ms: R_A1_film"
+   ],
+   "turns": 2,
+   "looks": 1,
+   "nothingNew": true,
+   "bothFindsCounted": true
+  },
+  "thePresenterMeanwhile": {
+   "steps": 125,
+   "seconds": 21,
+   "gestures": "M_1 > M_12 > M_2 > M_12 > M_1 > M_13 > M_3 > M_13 > M_1",
+   "blinks": 4,
+   "problems": [],
+   "heNeverReacts": true
+  },
+  "mushroomsLeft": 3,
+  "errors": []
+ },
+ {
+  "browser": "chrome, reduced motion",
+  "hasProlong": true,
+  "sceneAsksToHoldTheLook": "hold",
+  "aFind": {
+   "thenShe": [
+    "2.1 ms: R_K1_look, shown 1801.4 ms",
+    "1803.5 ms: R_A1_film, shown 432.1 ms",
+    "2235.6 ms: R_A1_film, shown 200 ms",
+    "2435.6 ms: R_A1_film, shown 200.3 ms",
+    "2635.9 ms: R_A1_film"
+   ],
+   "msFromTheFindToHerFirstMove": 2.1,
+   "posesSheMissed": 0,
+   "oneHeldLook": true,
+   "theLookWasShownMs": 1801.4
+  },
+  "theScreen": {
+   "framesRead": 145,
+   "differentPicturesSeen": 1,
+   "framesWithTheDotLit": 145,
+   "posesSeen": [
+    "water:W_1",
+    "presenter:M_1",
+    "rachel:R_A1_film"
+   ],
+   "aStillCopy": true,
+   "theDotStaysLit": true
+  },
+  "mushroomsLeft": 9,
+  "errors": []
+ }
+]

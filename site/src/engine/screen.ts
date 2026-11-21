@@ -28,8 +28,6 @@ export function dotLit(ms: number, still: boolean): boolean {
   return still || Math.floor(Math.max(0, ms) / DOT.ms) % 2 === 0;
 }
 
-const pct = (value: number, of: number): string => `${(value / of) * 100}%`;
-
 export class Viewfinder {
   readonly el: HTMLCanvasElement;
   private readonly ctx: CanvasRenderingContext2D;
@@ -100,19 +98,24 @@ export class Viewfinder {
     el.style.display = picture ? '' : 'none';
     if (!picture) return;
     const p = holder.placement;
-    const key = `${picture.x},${picture.y},${picture.w},${picture.h},${holder.el.clientWidth}`;
-    if (key !== this.placed) {
+    // Her box on the page, to the fraction of a pixel: the screen is set on whole screen pixels inside it.
+    const box = holder.el.getBoundingClientRect();
+    const key = `${picture.x},${picture.y},${picture.w},${picture.h},${box.left},${box.top},${box.width}`;
+    if (key !== this.placed && box.width) {
       this.placed = key;
-      Object.assign(el.style, {
-        left: pct(picture.x - p.left, p.width),
-        top: pct(picture.y - p.top, p.height),
-        width: pct(picture.w, p.width),
-        height: pct(picture.h, p.height),
-      });
-      // As many pixels as it covers on screen: one plate px is `shown` screen px.
-      const shown = (holder.el.getBoundingClientRect().width / p.width) * Math.min(window.devicePixelRatio || 1, 3);
-      const w = Math.max(8, Math.round(picture.w * shown));
-      const h = Math.max(8, Math.round(picture.h * shown));
+      // One plate px is `u` CSS px. The picture's corners are put on the screen's own pixel grid, so the
+      // canvas is shown pixel for pixel and is as sharp as it can be however small it is (25 px across on
+      // an ordinary desktop screen).
+      const u = box.width / p.width;
+      const dpr = Math.min(window.devicePixelRatio || 1, 3);
+      const snap = (css: number): number => Math.round(css * dpr) / dpr;
+      const left = snap(box.left + (picture.x - p.left) * u);
+      const top = snap(box.top + (picture.y - p.top) * u);
+      const right = snap(box.left + (picture.x + picture.w - p.left) * u);
+      const bottom = snap(box.top + (picture.y + picture.h - p.top) * u);
+      Object.assign(el.style, { left: `${left - box.left}px`, top: `${top - box.top}px`, width: `${right - left}px`, height: `${bottom - top}px` });
+      const w = Math.max(8, Math.round((right - left) * dpr));
+      const h = Math.max(8, Math.round((bottom - top) * dpr));
       if (el.width !== w || el.height !== h) {
         el.width = w;
         el.height = h;

@@ -1,0 +1,238 @@
+{
+ "at rest": {
+  "poses": {
+   "water": "W_1",
+   "presenter": "M_1",
+   "rachel": "R_A1_film"
+  },
+  "platePxOnTheScreen": [
+   1662,
+   936
+  ],
+  "theRoom": {
+   "screenshotOffsetPx": [
+    -0.5,
+    0
+   ],
+   "meanDifferenceOutOf255": 5.31
+  },
+  "actors": {
+   "water": "scenery, soft and see-through: not placed by this measure",
+   "presenter": {
+    "screenPxFromWhereThePackagePutsIt": [
+     -0.6,
+     -0.1
+    ],
+    "meanDifferenceOutOf255": 3.92,
+    "inPlace": true
+   },
+   "rachel": {
+    "screenPxFromWhereThePackagePutsIt": [
+     -0.5,
+     -0.6
+    ],
+    "meanDifferenceOutOf255": 1.79,
+    "inPlace": true
+   }
+  },
+  "everyActorIsInPlace": true,
+  "theCameraScreen": {
+   "screenPx": [
+    39,
+    35
+   ],
+   "meanDifferenceFromThePreviewsOutOf255": 30.3,
+   "largest": 175.3,
+   "note": "the preview resizes the crop with Lanczos to 40 × 36 px; the page averages it down to the pixels the screen covers and the browser then places that canvas on the page, so at about one screen pixel per plate pixel (this window) the page's is the softer of the two; on a phone or a 2× display it has two to three times the pixels"
+  }
+ },
+ "pointing": {
+  "poses": {
+   "water": "W_2",
+   "presenter": "M_2",
+   "rachel": "R_A1_film"
+  },
+  "platePxOnTheScreen": [
+   1662,
+   936
+  ],
+  "theRoom": {
+   "screenshotOffsetPx": [
+    -0.6,
+    0
+   ],
+   "meanDifferenceOutOf255": 5.3
+  },
+  "actors": {
+   "water": "scenery, soft and see-through: not placed by this measure",
+   "presenter": {
+    "screenPxFromWhereThePackagePutsIt": [
+     -0.5,
+     -0.1
+    ],
+    "meanDifferenceOutOf255": 3.78,
+    "inPlace": true
+   },
+   "rachel": {
+    "screenPxFromWhereThePackagePutsIt": [
+     -0.4,
+     -0.6
+    ],
+    "meanDifferenceOutOf255": 1.79,
+    "inPlace": true
+   }
+  },
+  "everyActorIsInPlace": true,
+  "theCameraScreen": {
+   "screenPx": [
+    39,
+    35
+   ],
+   "meanDifferenceFromThePreviewsOutOf255": 37,
+   "largest": 158,
+   "note": "the preview resizes the crop with Lanczos to 40 × 36 px; the page averages it down to the pixels the screen covers and the browser then places that canvas on the page, so at about one screen pixel per plate pixel (this window) the page's is the softer of the two; on a phone or a 2× display it has two to three times the pixels"
+  }
+ },
+ "hands together": {
+  "poses": {
+   "water": "W_3",
+   "presenter": "M_3_closed",
+   "rachel": "R_A1_film"
+  },
+  "platePxOnTheScreen": [
+   1662,
+   936
+  ],
+  "theRoom": {
+   "screenshotOffsetPx": [
+    -0.6,
+    0
+   ],
+   "meanDifferenceOutOf255": 5.31
+  },
+  "actors": {
+   "water": "scenery, soft and see-through: not placed by this measure",
+   "presenter": {
+    "screenPxFromWhereThePackagePutsIt": [
+     -0.5,
+     -0.1
+    ],
+    "meanDifferenceOutOf255": 4.04,
+    "inPlace": true
+   },
+   "rachel": {
+    "screenPxFromWhereThePackagePutsIt": [
+     -0.4,
+     -0.6
+    ],
+    "meanDifferenceOutOf255": 1.79,
+    "inPlace": true
+   }
+  },
+  "everyActorIsInPlace": true,
+  "theCameraScreen": {
+   "screenPx": [
+    39,
+    35
+   ],
+   "meanDifferenceFromThePreviewsOutOf255": 33.8,
+   "largest": 157.3,
+   "note": "the preview resizes the crop with Lanczos to 40 × 36 px; the page averages it down to the pixels the screen covers and the browser then places that canvas on the page, so at about one screen pixel per plate pixel (this window) the page's is the softer of the two; on a phone or a 2× display it has two to three times the pixels"
+  }
+ },
+ "her look": {
+  "poses": {
+   "water": "W_1",
+   "presenter": "M_1_closed",
+   "rachel": "R_K1_look"
+  },
+  "platePxOnTheScreen": [
+   1662,
+   936
+  ],
+  "theRoom": {
+   "screenshotOffsetPx": [
+    -0.5,
+    0
+   ],
+   "meanDifferenceOutOf255": 5.31
+  },
+  "actors": {
+   "water": "scenery, soft and see-through: not placed by this measure",
+   "presenter": {
+    "screenPxFromWhereThePackagePutsIt": [
+     -0.6,
+     -0.1
+    ],
+    "meanDifferenceOutOf255": 3.86,
+    "inPlace": true
+   },
+   "rachel": {
+    "screenPxFromWhereThePackagePutsIt": [
+     -0.6,
+     -0.7
+    ],
+    "meanDifferenceOutOf255": 2.56,
+    "inPlace": true
+   }
+  },
+  "everyActorIsInPlace": true,
+  "theCameraScreen": {
+   "screenPx": [
+    38,
+    34
+   ],
+   "meanDifferenceFromThePreviewsOutOf255": 18.5,
+   "largest": 161,
+   "note": "the preview resizes the crop with Lanczos to 40 × 36 px; the page averages it down to the pixels the screen covers and the browser then places that canvas on the page, so at about one screen pixel per plate pixel (this window) the page's is the softer of the two; on a phone or a 2× display it has two to three times the pixels"
+  }
+ },
+ "her look, as in the preview at 9.5 s": {
+  "poses": {
+   "water": "W_1",
+   "presenter": "M_3",
+   "rachel": "R_K1_look"
+  },
+  "platePxOnTheScreen": [
+   1662,
+   936
+  ],
+  "theRoom": {
+   "screenshotOffsetPx": [
+    -0.5,
+    0
+   ],
+   "meanDifferenceOutOf255": 5.31
+  },
+  "actors": {
+   "water": "scenery, soft and see-through: not placed by this measure",
+   "presenter": {
+    "screenPxFromWhereThePackagePutsIt": [
+     -0.6,
+     -0.1
+    ],
+    "meanDifferenceOutOf255": 4.11,
+    "inPlace": true
+   },
+   "rachel": {
+    "screenPxFromWhereThePackagePutsIt": [
+     -0.6,
+     -0.7
+    ],
+    "meanDifferenceOutOf255": 2.56,
+    "inPlace": true
+   }
+  },
+  "everyActorIsInPlace": true,
+  "theCameraScreen": {
+   "screenPx": [
+    38,
+    34
+   ],
+   "meanDifferenceFromThePreviewsOutOf255": 17.7,
+   "largest": 161,
+   "note": "the preview resizes the crop with Lanczos to 40 × 36 px; the page averages it down to the pixels the screen covers and the browser then places that canvas on the page, so at about one screen pixel per plate pixel (this window) the page's is the softer of the two; on a phone or a 2× display it has two to three times the pixels"
+  }
+ },
+ "errors": []
+}

@@ -1,0 +1,636 @@
+[
+ {
+  "browser": "chrome, 1440 × 900, 2×",
+  "live": {
+   "framesRead": 1217,
+   "seconds": 20.3,
+   "poseChangesUnderIt": 287,
+   "screenChangedInTheSameFrame": 287,
+   "inTheNextFrame": 0,
+   "later": 0,
+   "laterExamples": [],
+   "poseChangesThatDidNotChangeThePicture": 0,
+   "changesWithNothingUnderItChanging": 0,
+   "herOwnPoseChanges": [
+    {
+     "change": "R_A1_film > R_K0_turn",
+     "theScreenMoves": false,
+     "pictureChangedInThatFrame": true
+    },
+    {
+     "change": "R_K0_turn > R_K1_look",
+     "theScreenMoves": true,
+     "pictureChangedInThatFrame": true
+    },
+    {
+     "change": "R_K1_look > R_K0_turn",
+     "theScreenMoves": true,
+     "pictureChangedInThatFrame": true
+    },
+    {
+     "change": "R_K0_turn > R_A1_film",
+     "theScreenMoves": false,
+     "pictureChangedInThatFrame": false
+    }
+   ],
+   "ok": false
+  },
+  "theDot": {
+   "stretches": 39,
+   "litMs": [
+    500,
+    499.9,
+    499.9,
+    500,
+    500,
+    500,
+    499.9,
+    500,
+    500,
+    499.9,
+    500,
+    500.1,
+    499.9,
+    500,
+    500,
+    500,
+    500,
+    499.9,
+    500
+   ],
+   "darkMs": [
+    499.9,
+    500,
+    500.1,
+    500,
+    500,
+    499.9,
+    500,
+    500.1,
+    499.9,
+    500,
+    500,
+    499.9,
+    500,
+    500,
+    500,
+    499.9,
+    500,
+    500,
+    500,
+    499.9
+   ],
+   "shortestMs": 499.9,
+   "longestMs": 500.1,
+   "beatsDuringHerReaction": 4,
+   "even": true
+  },
+  "theWater": {
+   "changes": 184,
+   "shortestGapMs": 99.9,
+   "medianGapMs": 116.6,
+   "longestGapMs": 116.8,
+   "meanGapMs": 110,
+   "gapsOver150": 0,
+   "roundAndRound": true,
+   "ok": true
+  },
+  "noFlicker": {
+   "solidPointOfEach": {
+    "presenter": [
+     0.5,
+     0.42105263157894735
+    ],
+    "rachel": [
+     0.5042016806722689,
+     0.4216691068814056
+    ]
+   },
+   "framesRead": 1217,
+   "lowestAlphaUnderThePresentersPoint": 255,
+   "lowestAlphaUnderRachelsPoint": 255,
+   "herPosesSeen": [
+    "R_A1_film",
+    "R_K0_turn",
+    "R_K1_look"
+   ],
+   "hisPosesSeen": 10,
+   "neverClear": true
+  },
+  "aFindAt": "8.1 s into the reading",
+  "where": {
+   "R_A1_film": {
+    "wantedPlatePx": [
+     1074,
+     509,
+     40,
+     36
+    ],
+    "onThePagePlatePx": [
+     1074,
+     508.9,
+     40.2,
+     36.2
+    ],
+    "offBy": [
+     0,
+     -0.1,
+     0.2,
+     0.2
+    ],
+    "canvasPx": [
+     50,
+     45
+    ],
+    "cssPx": [
+     25,
+     22.5
+    ],
+    "withinHalfAPlatePx": true
+   },
+   "R_K0_turn": {
+    "wantedPlatePx": [
+     1074,
+     509,
+     40,
+     36
+    ],
+    "onThePagePlatePx": [
+     1074,
+     508.9,
+     40.2,
+     36.2
+    ],
+    "offBy": [
+     0,
+     -0.1,
+     0.2,
+     0.2
+    ],
+    "canvasPx": [
+     50,
+     45
+    ],
+    "cssPx": [
+     25,
+     22.5
+    ],
+    "withinHalfAPlatePx": true
+   },
+   "R_K1_look": {
+    "wantedPlatePx": [
+     1055,
+     552,
+     39,
+     35
+    ],
+    "onThePagePlatePx": [
+     1054.7,
+     552.3,
+     39.4,
+     34.6
+    ],
+    "offBy": [
+     -0.3,
+     0.3,
+     0.4,
+     -0.4
+    ],
+    "canvasPx": [
+     49,
+     43
+    ],
+    "cssPx": [
+     24.5,
+     21.5
+    ],
+    "withinHalfAPlatePx": true
+   }
+  },
+  "what": {
+   "talking, hands open": {
+    "poses": {
+     "presenter": "M_1",
+     "water": "W_1"
+    },
+    "screenPx": [
+     50,
+     45
+    ],
+    "againstTheSourceAveragedDownExactly": {
+     "meanDifferenceOutOf255": 4.1,
+     "ninetyFifth": 13.7,
+     "largest": 41.7
+    },
+    "againstOnePlainDrawImage": {
+     "meanDifferenceOutOf255": 4.1,
+     "ninetyFifth": 16.7,
+     "largest": 55
+    },
+    "opaque": true
+   },
+   "mouth closed": {
+    "poses": {
+     "presenter": "M_1_closed",
+     "water": "W_2"
+    },
+    "screenPx": [
+     50,
+     45
+    ],
+    "againstTheSourceAveragedDownExactly": {
+     "meanDifferenceOutOf255": 4,
+     "ninetyFifth": 13.7,
+     "largest": 41.7
+    },
+    "againstOnePlainDrawImage": {
+     "meanDifferenceOutOf255": 4,
+     "ninetyFifth": 16,
+     "largest": 55
+    },
+    "opaque": true
+   },
+   "pointing": {
+    "poses": {
+     "presenter": "M_2",
+     "water": "W_3"
+    },
+    "screenPx": [
+     50,
+     45
+    ],
+    "againstTheSourceAveragedDownExactly": {
+     "meanDifferenceOutOf255": 3.9,
+     "ninetyFifth": 14,
+     "largest": 41.7
+    },
+    "againstOnePlainDrawImage": {
+     "meanDifferenceOutOf255": 3.8,
+     "ninetyFifth": 16.3,
+     "largest": 41.7
+    },
+    "opaque": true
+   },
+   "hands together": {
+    "poses": {
+     "presenter": "M_3",
+     "water": "W_1"
+    },
+    "screenPx": [
+     50,
+     45
+    ],
+    "againstTheSourceAveragedDownExactly": {
+     "meanDifferenceOutOf255": 4,
+     "ninetyFifth": 14.3,
+     "largest": 41.3
+    },
+    "againstOnePlainDrawImage": {
+     "meanDifferenceOutOf255": 4.2,
+     "ninetyFifth": 18,
+     "largest": 54
+    },
+    "opaque": true
+   },
+   "the in-between": {
+    "poses": {
+     "presenter": "M_12",
+     "water": "W_2"
+    },
+    "screenPx": [
+     50,
+     45
+    ],
+    "againstTheSourceAveragedDownExactly": {
+     "meanDifferenceOutOf255": 4.2,
+     "ninetyFifth": 14.7,
+     "largest": 41.7
+    },
+    "againstOnePlainDrawImage": {
+     "meanDifferenceOutOf255": 4.1,
+     "ninetyFifth": 17.3,
+     "largest": 53.7
+    },
+    "opaque": true
+   }
+  },
+  "errors": []
+ },
+ {
+  "browser": "webkit, iPhone 14 profile",
+  "live": {
+   "framesRead": 1216,
+   "seconds": 20.2,
+   "poseChangesUnderIt": 292,
+   "screenChangedInTheSameFrame": 292,
+   "inTheNextFrame": 0,
+   "later": 0,
+   "laterExamples": [],
+   "poseChangesThatDidNotChangeThePicture": 0,
+   "changesWithNothingUnderItChanging": 0,
+   "herOwnPoseChanges": [
+    {
+     "change": "R_A1_film > R_K0_turn",
+     "theScreenMoves": false,
+     "pictureChangedInThatFrame": false
+    },
+    {
+     "change": "R_K0_turn > R_K1_look",
+     "theScreenMoves": true,
+     "pictureChangedInThatFrame": true
+    },
+    {
+     "change": "R_K1_look > R_K0_turn",
+     "theScreenMoves": true,
+     "pictureChangedInThatFrame": true
+    },
+    {
+     "change": "R_K0_turn > R_A1_film",
+     "theScreenMoves": false,
+     "pictureChangedInThatFrame": true
+    }
+   ],
+   "ok": false
+  },
+  "theDot": {
+   "stretches": 39,
+   "litMs": [
+    504,
+    503,
+    500,
+    500,
+    497,
+    501,
+    499,
+    499,
+    500,
+    500,
+    500,
+    500,
+    503,
+    501,
+    500,
+    502,
+    500,
+    485,
+    500
+   ],
+   "darkMs": [
+    500,
+    494,
+    500,
+    500,
+    501,
+    501,
+    499,
+    502,
+    500,
+    500,
+    500,
+    500,
+    498,
+    499,
+    499,
+    498,
+    500,
+    515,
+    500,
+    500
+   ],
+   "shortestMs": 485,
+   "longestMs": 515,
+   "beatsDuringHerReaction": 4,
+   "even": true
+  },
+  "theWater": {
+   "changes": 184,
+   "shortestGapMs": 97,
+   "medianGapMs": 116,
+   "longestGapMs": 119,
+   "meanGapMs": 110,
+   "gapsOver150": 0,
+   "roundAndRound": true,
+   "ok": true
+  },
+  "noFlicker": {
+   "solidPointOfEach": {
+    "presenter": [
+     0.5,
+     0.42105263157894735
+    ],
+    "rachel": [
+     0.5042016806722689,
+     0.4216691068814056
+    ]
+   },
+   "framesRead": 1216,
+   "lowestAlphaUnderThePresentersPoint": 255,
+   "lowestAlphaUnderRachelsPoint": 255,
+   "herPosesSeen": [
+    "R_A1_film",
+    "R_K0_turn",
+    "R_K1_look"
+   ],
+   "hisPosesSeen": 10,
+   "neverClear": true
+  },
+  "aFindAt": "8 s into the reading",
+  "where": {
+   "R_A1_film": {
+    "wantedPlatePx": [
+     1074,
+     509,
+     40,
+     36
+    ],
+    "onThePagePlatePx": [
+     1073.9,
+     508.9,
+     40.2,
+     36
+    ],
+    "offBy": [
+     -0.1,
+     -0.1,
+     0.2,
+     0
+    ],
+    "canvasPx": [
+     68,
+     61
+    ],
+    "cssPx": [
+     22.7,
+     20.3
+    ],
+    "withinHalfAPlatePx": true
+   },
+   "R_K0_turn": {
+    "wantedPlatePx": [
+     1074,
+     509,
+     40,
+     36
+    ],
+    "onThePagePlatePx": [
+     1073.9,
+     508.9,
+     40.2,
+     36
+    ],
+    "offBy": [
+     -0.1,
+     -0.1,
+     0.2,
+     0
+    ],
+    "canvasPx": [
+     68,
+     61
+    ],
+    "cssPx": [
+     22.7,
+     20.3
+    ],
+    "withinHalfAPlatePx": true
+   },
+   "R_K1_look": {
+    "wantedPlatePx": [
+     1055,
+     552,
+     39,
+     35
+    ],
+    "onThePagePlatePx": [
+     1055,
+     552,
+     39,
+     34.8
+    ],
+    "offBy": [
+     0,
+     0,
+     0,
+     -0.2
+    ],
+    "canvasPx": [
+     66,
+     59
+    ],
+    "cssPx": [
+     22,
+     19.7
+    ],
+    "withinHalfAPlatePx": true
+   }
+  },
+  "what": {
+   "talking, hands open": {
+    "poses": {
+     "presenter": "M_1",
+     "water": "W_1"
+    },
+    "screenPx": [
+     68,
+     61
+    ],
+    "againstTheSourceAveragedDownExactly": {
+     "meanDifferenceOutOf255": 5.2,
+     "ninetyFifth": 20.7,
+     "largest": 64.3
+    },
+    "againstOnePlainDrawImage": {
+     "meanDifferenceOutOf255": 8.4,
+     "ninetyFifth": 32.7,
+     "largest": 72.3
+    },
+    "opaque": true
+   },
+   "mouth closed": {
+    "poses": {
+     "presenter": "M_1_closed",
+     "water": "W_2"
+    },
+    "screenPx": [
+     68,
+     61
+    ],
+    "againstTheSourceAveragedDownExactly": {
+     "meanDifferenceOutOf255": 5,
+     "ninetyFifth": 20,
+     "largest": 64.3
+    },
+    "againstOnePlainDrawImage": {
+     "meanDifferenceOutOf255": 8.2,
+     "ninetyFifth": 32,
+     "largest": 72.3
+    },
+    "opaque": true
+   },
+   "pointing": {
+    "poses": {
+     "presenter": "M_2",
+     "water": "W_3"
+    },
+    "screenPx": [
+     68,
+     61
+    ],
+    "againstTheSourceAveragedDownExactly": {
+     "meanDifferenceOutOf255": 4.8,
+     "ninetyFifth": 19.7,
+     "largest": 64.3
+    },
+    "againstOnePlainDrawImage": {
+     "meanDifferenceOutOf255": 7.7,
+     "ninetyFifth": 31,
+     "largest": 68
+    },
+    "opaque": true
+   },
+   "hands together": {
+    "poses": {
+     "presenter": "M_3",
+     "water": "W_1"
+    },
+    "screenPx": [
+     68,
+     61
+    ],
+    "againstTheSourceAveragedDownExactly": {
+     "meanDifferenceOutOf255": 5,
+     "ninetyFifth": 20.3,
+     "largest": 64
+    },
+    "againstOnePlainDrawImage": {
+     "meanDifferenceOutOf255": 7.6,
+     "ninetyFifth": 29.7,
+     "largest": 74.7
+    },
+    "opaque": true
+   },
+   "the in-between": {
+    "poses": {
+     "presenter": "M_12",
+     "water": "W_2"
+    },
+    "screenPx": [
+     68,
+     61
+    ],
+    "againstTheSourceAveragedDownExactly": {
+     "meanDifferenceOutOf255": 5,
+     "ninetyFifth": 20.3,
+     "largest": 64.3
+    },
+    "againstOnePlainDrawImage": {
+     "meanDifferenceOutOf255": 8.2,
+     "ninetyFifth": 32.3,
+     "largest": 77.7
+    },
+    "opaque": true
+   }
+  },
+  "errors": []
+ }
+]

@@ -1,0 +1,60 @@
+{
+ "desktop, the painting": {
+  "file": "film-desktop-painting.mp4",
+  "paintingTakesS": 4.8
+ },
+ "desktop": {
+  "file": "film-desktop.mp4",
+  "seed": 7,
+  "seconds": 20,
+  "cutFromTheTakeAtS": 4.4,
+  "thePointInAndOutAtS": [
+   1.5,
+   5.4
+  ],
+  "handsTogetherInAndOutAtS": [
+   12.3,
+   15.8
+  ],
+  "theFindAtS": 6.4,
+  "theFindWas": "paving",
+  "theTurnIsInTheRecording": false,
+  "herTurnLookAndBackAtS": [
+   6.5,
+   6.5,
+   8.2
+  ],
+  "herReactionEndsAtS": 8.7,
+  "holdsOneFindAndAGestureEachWay": true,
+  "stepsOfHersLogged": 6
+ },
+ "iphone, the painting": {
+  "file": "film-iphone-painting.mp4",
+  "paintingTakesS": 4.8
+ },
+ "iphone": {
+  "file": "film-iphone.mp4",
+  "seed": 7,
+  "seconds": 20,
+  "cutFromTheTakeAtS": 4.5,
+  "thePointInAndOutAtS": [
+   1.5,
+   5.4
+  ],
+  "handsTogetherInAndOutAtS": [
+   12.4,
+   15.8
+  ],
+  "theFindAtS": 6.4,
+  "theFindWas": "sill",
+  "theTurnIsInTheRecording": false,
+  "herTurnLookAndBackAtS": [
+   6.5,
+   6.6,
+   8.3
+  ],
+  "herReactionEndsAtS": 8.8,
+  "holdsOneFindAndAGestureEachWay": true,
+  "stepsOfHersLogged": 6
+ }
+}

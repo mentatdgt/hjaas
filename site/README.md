@@ -33,7 +33,7 @@ http://localhost:4173/. `npm test` runs the unit tests.
 | `src/main.ts`, `index.html` | The host page. It only mounts the site. |
 | `src/engine/` | Everything that shows a scene and the page around it. It knows nothing about any one scene. |
 | `src/scenes/` | One file per scene, which only describes it, and `index.ts`, the list of scenes in menu order. |
-| `public/assets/` | WebP copies of the approved art, made by `npm run assets`: `scene1/`, `scene2/`, `scene3/`, and `shared/` (mushrooms, logo). Never edit these by hand. |
+| `public/assets/` | WebP copies of the approved art, made by `npm run assets`: `scene1/`, `scene2/`, `scene3/`, `scene4/`, and `shared/` (mushrooms, logo). Never edit these by hand. |
 | `scripts/build-assets.mjs` | Reads `frames/`, `scene/`, `reference/` and `assets/` (never writes there) and makes the WebP copies, the favicon and the link-preview image (`og-image.png`). |
 | `public/robots.txt` | Blocks all crawling until launch. Open it up then, and give `og:image` in `index.html` the full address (`TODO(launch)`). |
 | `qa/` | Evidence: recordings, screenshots, traces, reviews, and `REPORT.md`. `qa/tools/` holds the scripts that made them. |
@@ -49,7 +49,8 @@ Inside `src/engine/`:
 | `edge.ts` | The painting's edge: the colour fades into the paper along a wandering line, crisp in places and wide in others, and the room's lines carry on as pencil before trailing off. Rounded corners, and never a straight cut. Worked out per scene from a seed and drawn, at the plate's full size, in four strips along the plate's sides (`edge-band.json` says how deep). Also places each mushroom's tap box clear of it. |
 | `character.ts`, `player.ts`, `steps.ts` | A character's canvas (whole frames, a patch over a still, or two poses part-way through a cross-dissolve), her placement on the plate, and the player that shows her poses. |
 | `clips.ts` | Reads Wren's delivered format (`frames.json` + `routine.json`): stills, clips of patches, the routine, blinks, dissolves (`fade_ms`), the reaction and its entry rule. |
-| `cast.ts` | Takes a package with a whole cast apart (scene 3): each actor becomes a pair of manifests that `clips.ts` plays as if it were alone on the plate. |
+| `cast.ts` | Takes a package with a whole cast apart (scenes 3 and 4): each actor becomes a pair of manifests that `clips.ts` plays as if it were alone on the plate. Also reads the package's live screen, if it has one. |
+| `screen.ts` | A live screen in the picture (scene 4: the back of Rachel's camera): a small canvas on the actor who holds it, showing the room and the actors drawn before her, redrawn whenever one of them is, moved with her pose, with the blinking REC dot. |
 | `reel.ts` | Keeps a clip character's memory down: her patches stay as downloaded and are decoded only a few frames ahead of being shown, then given back. |
 | `routine.ts` | A simpler loop manifest for whole-frame characters: loops, cycles, transitions, blinks. |
 | `reaction.ts` | Loads and plays `reaction.json` exactly as delivered. |
@@ -101,14 +102,20 @@ when someone opens its address directly.
   (routine, blinks, reaction). The format is described at the top of `src/engine/clips.ts`. Both files are
   copied as delivered by `npm run assets`; the config only names them.
 
-- **A whole cast** (scene 3, the café), delivered as one package in `frames/NNN-…/site/`: `frames.json`
+- **A whole cast** (scene 3, the café, and scene 4, the film shoot), delivered as one package in `frames/NNN-…/site/`: `frames.json`
   lists the actors as layers, bottom to top, each with its box on the scene's canvas and its stills (and any
   clips, each belonging to one layer); `routine.json` has one routine per actor under `actors`. The format is
   described at the top of `src/engine/cast.ts`. Every actor has a canvas and a player of its own and they run
   out of step. The actor with a `reaction` answers a find and is the one a first-visit painting brings in at
   the end; actors drawn before her are painted with the room. An actor whose every still is a solid
   rectangle, with nothing cut out, is a piece of the room that moves (the café's ceiling fan): the edge
-  fades it as it fades the plate. Nothing in the code names an actor.
+  fades it as it fades the plate. So is one the package's notes call scenery (the Merlion's water, named in
+  `PACKAGES` in `scripts/build-assets.mjs`: its stills are cut out like an actor's, so the drawings cannot
+  say). Nothing in the engine names an actor.
+  A package may have a live screen: `"camera_screen": { "source": {x, y, w, h}, "rect_by_still": { "<still>":
+  {x, y, w, h} } }` in `frames.json`. `source` is the part of the scene it shows; each rect is where the
+  screen is while the actor who holds it is on that still. The picture is drawn 2 px inside the rect, with
+  the REC dot (6 px, 500 ms on, 500 ms off; lit and still when motion is paused or reduced).
 
 **The routine vocabulary** (`routine.json`, for a clip character or each actor of a cast):
 
@@ -130,18 +137,25 @@ still of that still's own loop (the stroke of her sketching) is cut to 300 ms wh
 still on poses the routine goes through one after another, with no loop on the way back (the café's sip:
 reach, lift, sip, lift, reach, sketch), a find does not interrupt: she finishes, with any hold on the way cut
 to 300 ms, and reacts once she is back. She blinks only on a still the `blink` rule names, in a hold marked
-`blink_ok`. Only the stills the manifests show are downloaded.
+`blink_ok`. A routine that marks no hold at all with `blink_ok` (the film scene's presenter, whose holds are
+a tenth of a second) may blink on any hold of a still the rule names: in the middle of a long one, or in place
+of the first 110 ms of a short one. Only the stills the manifests show are downloaded.
 
-**A new delivery of the café** is a file swap: replace `frames/018-cafe-scene/site/` (and the line map in
-`scene/pencil/` if the plate changed), run `npm run assets` and `npm test`. `npm run assets` shrinks the
+A scene's config may say `again: 'hold'`: a mushroom found while she is still answering the last one starts
+the reaction's held look again from now (she never turns twice). Without it a reaction under way is left as
+it is.
+
+**A new delivery of the café or of the film scene** is a file swap: replace `frames/018-cafe-scene/site/` or
+`frames/020-film-scene/site/` (and the line map in `scene/pencil/` if the plate changed), run
+`npm run assets` and `npm test`. `npm run assets` shrinks the
 plate to the page's size, uses the cast at the size delivered, grows an actor's box to hold any clip patch
-that reaches outside it, and writes `src/scenes/design-cast.json`: each actor's box, the rectangle of
+that reaches outside it, and writes `src/scenes/design-cast.json` (`film-cast.json`): each actor's box, the rectangle of
 every pixel it ever covers, and which actors are pieces of the room. Inside a moving piece's box it also
 rubs out of the line map any pencil line the delivered plate does not have (a fan blade cannot be drawn in
 pencil: it would stand still). The scene's config reads that file for `keep`, and `npm test` holds the hunt to
 it (no mushroom in any actor's box), so the tests say so if new drawings cover a hiding place. If they do,
-or if the edge no longer leaves every mushroom clear, `node qa/tools/pencil.mjs pick 400 design` lists the
-edges that do.
+or if the edge no longer leaves every mushroom clear, `node qa/tools/pencil.mjs pick 400 design` (or
+`film`) lists the edges that do.
 
 A scene's character is fetched when the scene is first opened (or its tab is hovered): her stills first,
 then her clips. The files are only downloaded then. They are decoded when the scene goes on the plate, after

@@ -54,6 +54,20 @@
  },
  {
   "engine": "chrome",
+  "size": "1440x900",
+  "scene": "film",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 1,
+  "strongestPencilOverADrawing": 0,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "chrome",
   "size": "2560x1440",
   "scene": "build",
   "spots": 10,
@@ -95,6 +109,20 @@
   "boxesMovedInward": [
    "cat 0,-7px"
   ],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "chrome",
+  "size": "2560x1440",
+  "scene": "film",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 1,
+  "strongestPencilOverADrawing": 0,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [],
   "overlaps": [],
   "ok": true
  },
@@ -149,6 +177,20 @@
    "cat 0,-14px",
    "corner -11,0px"
   ],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "webkit",
+  "size": "390x844",
+  "scene": "film",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 1,
+  "strongestPencilOverADrawing": 0,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [],
   "overlaps": [],
   "ok": true
  },
@@ -209,6 +251,20 @@
  },
  {
   "engine": "webkit",
+  "size": "360x740",
+  "scene": "film",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 1,
+  "strongestPencilOverADrawing": 0,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "webkit",
   "size": "320x640",
   "scene": "build",
   "spots": 10,
@@ -259,6 +315,23 @@
    "sunlight 1,-14px",
    "cat 0,-17px",
    "corner -14,-1px"
+  ],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "webkit",
+  "size": "320x640",
+  "scene": "film",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 0.996,
+  "strongestPencilOverADrawing": 0,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [
+   "shore 3,0px",
+   "forecourt -3,0px"
   ],
   "overlaps": [],
   "ok": true

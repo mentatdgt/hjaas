@@ -1,0 +1,61 @@
+{
+ "1440x900": {
+  "tabs": [
+   "Build",
+   "Grow",
+   "Design",
+   "Film"
+  ]
+ },
+ "390x844": {
+  "plateXShownAsItOpens": [
+   663,
+   1290
+  ],
+  "shareOfThePlate": "40% to 77%",
+  "theBriefAsksForAbout": [
+   620,
+   1420
+  ],
+  "inFrameAsItOpens": {
+   "the presenter's head": "all of it",
+   "Rachel's head": "cut: plate x 1130 to 1352 against the window's 663 to 1290",
+   "Rachel's camera": "all of it"
+  },
+  "pannedLeft": [
+   0,
+   627
+  ],
+  "pannedRight": [
+   1044,
+   1671
+  ],
+  "menuFitsOnOneLine": true
+ },
+ "360x740": {
+  "plateXShownAsItOpens": [
+   662,
+   1290
+  ],
+  "shareOfThePlate": "40% to 77%",
+  "theBriefAsksForAbout": [
+   620,
+   1420
+  ],
+  "inFrameAsItOpens": {
+   "the presenter's head": "all of it",
+   "Rachel's head": "cut: plate x 1130 to 1352 against the window's 662 to 1290",
+   "Rachel's camera": "all of it"
+  },
+  "pannedLeft": [
+   0,
+   627
+  ],
+  "pannedRight": [
+   1046,
+   1673
+  ],
+  "menuFitsOnOneLine": true
+ },
+ "errors": []
+}

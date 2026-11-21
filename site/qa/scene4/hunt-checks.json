@@ -1,0 +1,411 @@
+{
+ "desktop": [
+  {
+   "id": "shore",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    11.9,
+    11.2
+   ]
+  },
+  {
+   "id": "paving",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    19.6,
+    19.9
+   ]
+  },
+  {
+   "id": "lamp",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    12.8,
+    12.4
+   ]
+  },
+  {
+   "id": "wheel",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    11.7,
+    11.8
+   ]
+  },
+  {
+   "id": "sill",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    14,
+    13.7
+   ]
+  },
+  {
+   "id": "merlion",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    13.2,
+    12.4
+   ]
+  },
+  {
+   "id": "flowers",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    14.5,
+    13.7
+   ]
+  },
+  {
+   "id": "kiosk",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    13.4,
+    12.4
+   ]
+  },
+  {
+   "id": "forecourt",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    20.5,
+    21.1
+   ]
+  },
+  {
+   "id": "steps",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    17.2,
+    17.4
+   ]
+  }
+ ],
+ "offTheCast": {
+  "layers": [
+   [
+    "water's layer",
+    402,
+    111,
+    932,
+    447
+   ],
+   [
+    "presenter's layer",
+    601,
+    254,
+    921,
+    862
+   ],
+   [
+    "rachel's layer",
+    997,
+    258,
+    1354,
+    941
+   ],
+   [
+    "the camera screen on R_A1_film",
+    1072,
+    507,
+    1116,
+    547
+   ],
+   [
+    "the camera screen on R_K0_turn",
+    1072,
+    507,
+    1116,
+    547
+   ],
+   [
+    "the camera screen on R_K1_look",
+    1053,
+    550,
+    1096,
+    589
+   ]
+  ],
+  "spots": [
+   {
+    "id": "shore",
+    "drawingPlatePx": [
+     166,
+     346,
+     186,
+     364
+    ],
+    "on": [],
+    "platePxFromTheNearestLayer": 216
+   },
+   {
+    "id": "paving",
+    "drawingPlatePx": [
+     239,
+     742,
+     271,
+     774
+    ],
+    "on": [],
+    "platePxFromTheNearestLayer": 295
+   },
+   {
+    "id": "lamp",
+    "drawingPlatePx": [
+     337,
+     439,
+     357,
+     459
+    ],
+    "on": [],
+    "platePxFromTheNearestLayer": 45
+   },
+   {
+    "id": "wheel",
+    "drawingPlatePx": [
+     575,
+     681,
+     594,
+     700
+    ],
+    "on": [],
+    "platePxFromTheNearestLayer": 7
+   },
+   {
+    "id": "sill",
+    "drawingPlatePx": [
+     949,
+     736,
+     972,
+     758
+    ],
+    "on": [],
+    "platePxFromTheNearestLayer": 25
+   },
+   {
+    "id": "merlion",
+    "drawingPlatePx": [
+     956,
+     337,
+     977,
+     357
+    ],
+    "on": [],
+    "platePxFromTheNearestLayer": 20
+   },
+   {
+    "id": "flowers",
+    "drawingPlatePx": [
+     1439,
+     371,
+     1462,
+     393
+    ],
+    "on": [],
+    "platePxFromTheNearestLayer": 85
+   },
+   {
+    "id": "kiosk",
+    "drawingPlatePx": [
+     1460,
+     227,
+     1481,
+     247
+    ],
+    "on": [],
+    "platePxFromTheNearestLayer": 106
+   },
+   {
+    "id": "forecourt",
+    "drawingPlatePx": [
+     1462,
+     710,
+     1495,
+     744
+    ],
+    "on": [],
+    "platePxFromTheNearestLayer": 108
+   },
+   {
+    "id": "steps",
+    "drawingPlatePx": [
+     1479,
+     502,
+     1506,
+     530
+    ],
+    "on": [],
+    "platePxFromTheNearestLayer": 125
+   }
+  ],
+  "noneOnAnActorOrTheScreen": true
+ },
+ "phone": [
+  {
+   "id": "shore",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    10.8,
+    10.1
+   ]
+  },
+  {
+   "id": "paving",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    17.8,
+    18
+   ]
+  },
+  {
+   "id": "lamp",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    11.6,
+    11.3
+   ]
+  },
+  {
+   "id": "wheel",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    10.6,
+    10.7
+   ]
+  },
+  {
+   "id": "sill",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    12.7,
+    12.4
+   ]
+  },
+  {
+   "id": "merlion",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    12,
+    11.3
+   ]
+  },
+  {
+   "id": "flowers",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    13.1,
+    12.4
+   ]
+  },
+  {
+   "id": "kiosk",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    12.2,
+    11.3
+   ]
+  },
+  {
+   "id": "forecourt",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    18.5,
+    19.2
+   ]
+  },
+  {
+   "id": "steps",
+   "tapBox": [
+    44,
+    44
+   ],
+   "drawingPx": [
+    15.6,
+    15.8
+   ]
+  }
+ ],
+ "tabOrder": [
+  "shore",
+  "paving",
+  "lamp",
+  "wheel",
+  "sill",
+  "merlion",
+  "flowers",
+  "kiosk",
+  "forecourt",
+  "steps"
+ ],
+ "overlapsOnThePhone": [],
+ "levels": {
+  "shore": "medium",
+  "paving": "easy",
+  "lamp": "medium",
+  "wheel": "hard",
+  "sill": "medium",
+  "merlion": "hard",
+  "flowers": "hard",
+  "kiosk": "medium",
+  "forecourt": "easy",
+  "steps": "easy"
+ },
+ "notInTheToolsTable": []
+}

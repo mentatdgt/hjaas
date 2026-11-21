@@ -1,0 +1,296 @@
+[
+ {
+  "browser": "chrome, 1440 × 900",
+  "seconds": 59.6,
+  "gestures": "M_1 > M_12 > M_2 > M_12 > M_1 > M_13 > M_3 > M_13 > M_1 > M_12 > M_2 > M_12 > M_1 > M_13 > M_3 > M_13 > M_1 > M_12 > M_2 > M_12 > M_1 > M_13 > M_3 > M_13 > M_1",
+  "timesEachPoseWasShown": {
+   "M_1_mid": 80,
+   "M_1_closed": 88,
+   "M_1": 83,
+   "M_1_blink": 12,
+   "M_12": 6,
+   "M_2": 22,
+   "M_2_closed": 22,
+   "M_13": 6,
+   "M_3": 22,
+   "M_3_closed": 22
+  },
+  "inBetweens": [
+   "M_12 100.2 ms",
+   "M_12 100 ms",
+   "M_13 99.9 ms",
+   "M_13 102.4 ms",
+   "M_12 100.2 ms",
+   "M_12 100.4 ms",
+   "M_13 100.6 ms",
+   "M_13 100.7 ms",
+   "M_12 100.1 ms",
+   "M_12 100.2 ms",
+   "M_13 100.2 ms",
+   "M_13 100.2 ms"
+  ],
+  "blinks": {
+   "count": 12,
+   "gapsMs": [
+    4533.4,
+    4616.5,
+    6015.9,
+    4350,
+    5817.8,
+    3981.5,
+    4500.9,
+    5832,
+    3851.4,
+    3248.8,
+    4966.8
+   ],
+   "shortestGapMs": 3248.8,
+   "longestGapMs": 6015.9,
+   "meanGapMs": 4701,
+   "each": [
+    {
+     "at": 5699.7,
+     "shownMs": 117.1,
+     "before": "M_1_closed",
+     "after": "M_1_mid",
+     "msSinceTheLast": null
+    },
+    {
+     "at": 10233.1,
+     "shownMs": 100,
+     "before": "M_1",
+     "after": "M_1_closed",
+     "msSinceTheLast": 4533.4
+    },
+    {
+     "at": 14849.6,
+     "shownMs": 100.2,
+     "before": "M_1_closed",
+     "after": "M_1_closed",
+     "msSinceTheLast": 4616.5
+    },
+    {
+     "at": 20865.5,
+     "shownMs": 116.9,
+     "before": "M_1",
+     "after": "M_1_closed",
+     "msSinceTheLast": 6015.9
+    },
+    {
+     "at": 25215.5,
+     "shownMs": 117.3,
+     "before": "M_1_closed",
+     "after": "M_1_mid",
+     "msSinceTheLast": 4350
+    },
+    {
+     "at": 31033.3,
+     "shownMs": 99.5,
+     "before": "M_1",
+     "after": "M_1_closed",
+     "msSinceTheLast": 5817.8
+    },
+    {
+     "at": 35014.8,
+     "shownMs": 100.4,
+     "before": "M_1",
+     "after": "M_1_closed",
+     "msSinceTheLast": 3981.5
+    },
+    {
+     "at": 39515.7,
+     "shownMs": 115.3,
+     "before": "M_1",
+     "after": "M_1_closed",
+     "msSinceTheLast": 4500.9
+    },
+    {
+     "at": 45347.7,
+     "shownMs": 100.8,
+     "before": "M_1",
+     "after": "M_1_closed",
+     "msSinceTheLast": 5832
+    },
+    {
+     "at": 49199.1,
+     "shownMs": 116.5,
+     "before": "M_1",
+     "after": "M_1_closed",
+     "msSinceTheLast": 3851.4
+    },
+    {
+     "at": 52447.9,
+     "shownMs": 100.3,
+     "before": "M_1_closed",
+     "after": "M_1",
+     "msSinceTheLast": 3248.8
+    },
+    {
+     "at": 57414.7,
+     "shownMs": 99.3,
+     "before": "M_1_closed",
+     "after": "M_1_mid",
+     "msSinceTheLast": 4966.8
+    }
+   ]
+  },
+  "longestHold": {
+   "pose": "M_1_closed",
+   "ms": 483.8
+  },
+  "lateFramesMadeUp": [],
+  "anyDissolve": false,
+  "problems": [],
+  "stepsLogged": 363,
+  "everyStep": "M_1_mid 83.3, M_1_closed 116.7, M_1 133.4, M_1_mid 100.4, M_1_closed 282.9, M_1 150.2, M_1_mid 100.3, M_1_closed 99.5, M_1 133.7, M_1_mid 66.6, M_1_closed 366.8, M_1 99.6, M_1_mid 116.7, M_1_closed 117.3, M_1 166.1, M_1_mid 67, M_1_closed 266.1, M_1 100.5, M_1_mid 83.1, M_1_closed 133.1, M_1 167, M_1_mid 66.6, M_1_closed 450.9, M_1 132.3, M_1_mid 100.4, M_1_closed 149.6, M_1 183.7, M_1_mid 84.1, M_1_closed 465.6, M_1 150, M_1_mid 66.7, M_1_closed 99.8, M_1_blink 117.1, M_1_mid 50, M_1_closed 249.8, M_12 100.2, M_2 116.8, M_2_closed 116.3, M_2 150.3, M_2_closed 466.2, M_2 133.3, M_2_closed 150, M_2 133.6, M_2_closed 316.6, M_2 99.9, M_2_closed 83.3, M_2 183.4, M_2_closed 299.9, M_2 99.9, M_2_closed 150.1, M_2 133.5, M_2_closed 233.2, M_2 134.1, M_2_closed 183.5, M_2 132.5, M_2_closed 433.4, M_12 100, M_1 166.5, M_1_blink 100, M_1_closed 150.1, M_1 183.6, M_1_mid 99.8, M_1_closed 433.6, M_1 133.3, M_1_mid 116.3, M_1_closed 200.1, M_1 133.5, M_1_mid 99.7, M_1_closed 233.4, M_1 116.8, M_1_mid 83.9, M_1_closed 166, M_1 150.1, M_1_mid 83.9, M_1_closed 482.7, M_1 133.6, M_1_mid 99.8, M_1_closed 132.6, M_1 150.9, M_1_mid 99.6, M_1_closed 367.2, M_1 99.1, M_1_mid 84, M_1_closed 83.1, M_1 100.2, M_1_mid 116.4, M_1_closed 183.2, M_1_blink 100.2, M_1_closed 150.3, M_1 133.6, M_1_mid 99.8, M_1_closed 149.6, M_1 183.3, M_1_mid 83.3, M_1_closed 466.6, M_1 133.3, M_1_mid 117.1, M_1_closed 149.7, M_1 166.8, M_1_mid 66, M_1_closed 483.8, M_13 99.9, M_3 116.3, M_3_closed 100.6, M_3 133.7, M_3_closed 281.8, M_3 134.7, M_3_closed 182.4, M_3 150, M_3_closed 400.8, M_3 149.5, M_3_closed 150.2, M_3 166.1, M_3_closed 466.3, M_3 117.3, M_3_closed 119.5, M_3 130.6, M_3_closed 432.7, M_13 102.4, M_1 97.7, M_1_blink 116.9, M_1_closed 132.9, M_1 117.2, M_1_mid 66.9, M_1_closed 333.4, M_1 133.4, M_1_mid 83.2, M_1_closed 66, M_1 118, M_1_mid 66.2, M_1_closed 250.6, M_1 149.4, M_1_mid 115.8, M_1_closed 84.2, M_1 116.5, M_1_mid 83.6, M_1_closed 349.6, M_1 133.8, M_1_mid 100.2, M_1_closed 115.6, M_1 166.8, M_1_mid 84.1, M_1_closed 433.5, M_1 132.6, M_1_mid 99.7, M_1_closed 134.1, M_1 132.9, M_1_mid 82.7, M_1_closed 350.2, M_1_blink 117.3, M_1_mid 82.6, M_1_closed 167.1, M_1 167.5, M_1_mid 99.7, M_1_closed 333.8, M_1 116.2, M_1_mid 116, M_1_closed 100, M_1 134.3, M_1_mid 82.6, M_1_closed 433.1, M_1 117.3, M_1_mid 116.8, M_1_closed 149.6, M_1 134, M_1_mid 82.8, M_1_closed 349.1, M_12 100.2, M_2 151, M_2_closed 148.8, M_2 184.8, M_2_closed 431.5, M_2 117, M_2_closed 133.8, M_2 149.1, M_2_closed 468.1, M_2 133.2, M_2_closed 149.8, M_2 116.8, M_2_closed 399.2, M_12 100.4, M_1 134.3, M_1_blink 99.5, M_1_closed 116.1, M_1 116.6, M_1_mid 82.8, M_1_closed 417.6, M_1 150.1, M_1_mid 83.3, M_1_closed 116.6, M_1 99.8, M_1_mid 100.3, M_1_closed 466.7, M_1 132.9, M_1_mid 116.3, M_1_closed 183.9, M_1 116.9, M_1_mid 116.4, M_1_closed 283.3, M_1 133.6, M_1_mid 83, M_1_closed 165.7, M_1 166.8, M_1_mid 83.2, M_1_closed 417.5, M_1 132.6, M_1_blink 100.4, M_1_closed 183.6, M_1 133.6, M_1_mid 66.6, M_1_closed 398.9, M_13 100.6, M_3 133.2, M_3_closed 150.6, M_3 166, M_3_closed 466.6, M_3 100.6, M_3_closed 83.5, M_3 133.3, M_3_closed 349.4, M_3 117.8, M_3_closed 182.8, M_3 166.6, M_3_closed 366.6, M_3 149.7, M_3_closed 101.2, M_3 148.8, M_3_closed 450.3, M_13 100.7, M_1 149.5, M_1_blink 115.3, M_1_closed 184.3, M_1 166, M_1_mid 67.4, M_1_closed 250.2, M_1 150.1, M_1_mid 83, M_1_closed 83.1, M_1 167, M_1_mid 83.3, M_1_closed 366.9, M_1 116.3, M_1_mid 100.6, M_1_closed 166.2, M_1 100, M_1_mid 83.5, M_1_closed 466.6, M_1 100.6, M_1_mid 83.3, M_1_closed 116.1, M_1 166.5, M_1_mid 82.8, M_1_closed 301.1, M_1 116.3, M_1_mid 83.5, M_1_closed 133.5, M_1 131.9, M_1_mid 84.1, M_1_closed 267, M_1 149.8, M_1_mid 84, M_1_closed 149.6, M_1 166.5, M_1_mid 65.7, M_1_closed 267.7, M_1 133.3, M_1_mid 117, M_1_closed 116.2, M_1 165.7, M_1_blink 100.8, M_1_closed 249.9, M_12 100.1, M_2 166.5, M_2_closed 150.1, M_2 116.7, M_2_closed 365.9, M_2 84, M_2_closed 133.5, M_2 133.3, M_2_closed 434.2, M_2 99.4, M_2_closed 166.5, M_2 98.9, M_2_closed 284.2, M_12 100.2, M_1 150.5, M_1_mid 83.5, M_1_closed 83.2, M_1 166.1, M_1_mid 116.3, M_1_closed 334, M_1 133.6, M_1_blink 116.5, M_1_closed 133.4, M_1 99.4, M_1_mid 100.3, M_1_closed 400.3, M_1 149.9, M_1_mid 83.1, M_1_closed 133.6, M_1 132.1, M_1_mid 67.9, M_1_closed 448.6, M_1 117.7, M_1_mid 66.9, M_1_closed 116.2, M_1 133.2, M_1_mid 99.5, M_1_closed 433.9, M_1 150.4, M_1_mid 100.1, M_1_closed 165.8, M_1_blink 100.3, M_1 66.7, M_1_mid 100.3, M_1_closed 400, M_13 100.2, M_3 116.2, M_3_closed 150.2, M_3 116.4, M_3_closed 282.6, M_3 134.3, M_3_closed 148.9, M_3 150.1, M_3_closed 334, M_3 133, M_3_closed 115.9, M_3 151.1, M_3_closed 350.2, M_13 100.2, M_1 116.2, M_1_mid 116.9, M_1_closed 100, M_1 133.1, M_1_mid 100.1, M_1_closed 382.9, M_1 133.7, M_1_mid 83.6, M_1_closed 116.3, M_1 183.7, M_1_mid 83.4, M_1_closed 366.3, M_1_blink 99.3, M_1_mid 117.3, M_1_closed 99.9, M_1 150.5, M_1_mid 83.6, M_1_closed 283, M_1 115.9, M_1_mid 83.9, M_1_closed 183.5, M_1 167.1, M_1_mid 99.6, M_1_closed 466.6, M_1 99.9, M_1_mid 83, M_1_closed 100.2, M_1 99.5, M_1_mid 100.6, M_1_closed 433.1, M_1 100.5, M_1_mid 66.3, M_1_closed 133.3, M_1 …",
+  "errors": [],
+  "ok": true
+ },
+ {
+  "browser": "webkit, iPhone 14 profile",
+  "seconds": 59.7,
+  "gestures": "M_1 > M_12 > M_2 > M_12 > M_1 > M_13 > M_3 > M_13 > M_1 > M_12 > M_2 > M_12 > M_1 > M_13 > M_3 > M_13 > M_1 > M_12 > M_2 > M_12 > M_1 > M_13 > M_3 > M_13 > M_1",
+  "timesEachPoseWasShown": {
+   "M_1_mid": 80,
+   "M_1_closed": 88,
+   "M_1": 83,
+   "M_1_blink": 12,
+   "M_12": 6,
+   "M_2": 22,
+   "M_2_closed": 22,
+   "M_13": 6,
+   "M_3": 22,
+   "M_3_closed": 22
+  },
+  "inBetweens": [
+   "M_12 100 ms",
+   "M_12 100 ms",
+   "M_13 101 ms",
+   "M_13 100 ms",
+   "M_12 99 ms",
+   "M_12 100 ms",
+   "M_13 100 ms",
+   "M_13 100 ms",
+   "M_12 100 ms",
+   "M_12 100 ms",
+   "M_13 100 ms",
+   "M_13 100 ms"
+  ],
+  "blinks": {
+   "count": 12,
+   "gapsMs": [
+    4533,
+    4617,
+    6033,
+    4350,
+    5800,
+    3985,
+    4498,
+    5833,
+    3867,
+    3234,
+    4966
+   ],
+   "shortestGapMs": 3234,
+   "longestGapMs": 6033,
+   "meanGapMs": 4701,
+   "each": [
+    {
+     "at": 5655,
+     "shownMs": 115,
+     "before": "M_1_closed",
+     "after": "M_1_mid",
+     "msSinceTheLast": null
+    },
+    {
+     "at": 10188,
+     "shownMs": 116,
+     "before": "M_1",
+     "after": "M_1_closed",
+     "msSinceTheLast": 4533
+    },
+    {
+     "at": 14805,
+     "shownMs": 116,
+     "before": "M_1_closed",
+     "after": "M_1_closed",
+     "msSinceTheLast": 4617
+    },
+    {
+     "at": 20838,
+     "shownMs": 100,
+     "before": "M_1",
+     "after": "M_1_closed",
+     "msSinceTheLast": 6033
+    },
+    {
+     "at": 25188,
+     "shownMs": 100,
+     "before": "M_1_closed",
+     "after": "M_1_mid",
+     "msSinceTheLast": 4350
+    },
+    {
+     "at": 30988,
+     "shownMs": 118,
+     "before": "M_1",
+     "after": "M_1_closed",
+     "msSinceTheLast": 5800
+    },
+    {
+     "at": 34973,
+     "shownMs": 99,
+     "before": "M_1",
+     "after": "M_1_closed",
+     "msSinceTheLast": 3985
+    },
+    {
+     "at": 39471,
+     "shownMs": 117,
+     "before": "M_1",
+     "after": "M_1_closed",
+     "msSinceTheLast": 4498
+    },
+    {
+     "at": 45304,
+     "shownMs": 117,
+     "before": "M_1",
+     "after": "M_1_closed",
+     "msSinceTheLast": 5833
+    },
+    {
+     "at": 49171,
+     "shownMs": 100,
+     "before": "M_1",
+     "after": "M_1_closed",
+     "msSinceTheLast": 3867
+    },
+    {
+     "at": 52405,
+     "shownMs": 116,
+     "before": "M_1_closed",
+     "after": "M_1",
+     "msSinceTheLast": 3234
+    },
+    {
+     "at": 57371,
+     "shownMs": 100,
+     "before": "M_1_closed",
+     "after": "M_1_mid",
+     "msSinceTheLast": 4966
+    }
+   ]
+  },
+  "longestHold": {
+   "pose": "M_1_closed",
+   "ms": 484
+  },
+  "lateFramesMadeUp": [],
+  "anyDissolve": false,
+  "problems": [],
+  "stepsLogged": 363,
+  "everyStep": "M_1_mid 101, M_1_closed 99, M_1 152, M_1_mid 100, M_1_closed 282, M_1 134, M_1_mid 100, M_1_closed 100, M_1 132, M_1_mid 68, M_1_closed 365, M_1 118, M_1_mid 115, M_1_closed 101, M_1 167, M_1_mid 83, M_1_closed 251, M_1 100, M_1_mid 82, M_1_closed 151, M_1 150, M_1_mid 66, M_1_closed 452, M_1 132, M_1_mid 99, M_1_closed 168, M_1 167, M_1_mid 99, M_1_closed 452, M_1 148, M_1_mid 67, M_1_closed 100, M_1_blink 115, M_1_mid 69, M_1_closed 232, M_12 100, M_2 116, M_2_closed 134, M_2 134, M_2_closed 468, M_2 131, M_2_closed 167, M_2 117, M_2_closed 316, M_2 101, M_2_closed 100, M_2 166, M_2_closed 300, M_2 117, M_2_closed 133, M_2 133, M_2_closed 234, M_2 133, M_2_closed 183, M_2 150, M_2_closed 434, M_12 100, M_1 150, M_1_blink 116, M_1_closed 151, M_1 167, M_1_mid 116, M_1_closed 433, M_1 133, M_1_mid 117, M_1_closed 183, M_1 151, M_1_mid 99, M_1_closed 217, M_1 134, M_1_mid 83, M_1_closed 150, M_1 150, M_1_mid 100, M_1_closed 466, M_1 134, M_1_mid 117, M_1_closed 116, M_1 151, M_1_mid 98, M_1_closed 368, M_1 117, M_1_mid 84, M_1_closed 82, M_1 100, M_1_mid 100, M_1_closed 184, M_1_blink 116, M_1_closed 134, M_1 134, M_1_mid 99, M_1_closed 167, M_1 183, M_1_mid 67, M_1_closed 483, M_1 135, M_1_mid 98, M_1_closed 152, M_1 165, M_1_mid 68, M_1_closed 482, M_13 101, M_3 133, M_3_closed 84, M_3 149, M_3_closed 267, M_3 149, M_3_closed 167, M_3 166, M_3_closed 384, M_3 166, M_3_closed 150, M_3 151, M_3_closed 466, M_3 134, M_3_closed 100, M_3 149, M_3_closed 417, M_13 100, M_1 117, M_1_blink 100, M_1_closed 150, M_1 101, M_1_mid 84, M_1_closed 333, M_1 116, M_1_mid 83, M_1_closed 83, M_1 116, M_1_mid 50, M_1_closed 251, M_1 149, M_1_mid 117, M_1_closed 101, M_1 99, M_1_mid 85, M_1_closed 349, M_1 150, M_1_mid 83, M_1_closed 116, M_1 167, M_1_mid 100, M_1_closed 417, M_1 133, M_1_mid 116, M_1_closed 117, M_1 150, M_1_mid 67, M_1_closed 367, M_1_blink 100, M_1_mid 83, M_1_closed 184, M_1 166, M_1_mid 84, M_1_closed 333, M_1 116, M_1_mid 117, M_1_closed 117, M_1 116, M_1_mid 84, M_1_closed 450, M_1 117, M_1_mid 116, M_1_closed 133, M_1 134, M_1_mid 83, M_1_closed 367, M_12 99, M_2 150, M_2_closed 134, M_2 183, M_2_closed 435, M_2 133, M_2_closed 116, M_2 167, M_2_closed 451, M_2 132, M_2_closed 150, M_2 117, M_2_closed 399, M_12 100, M_1 134, M_1_blink 118, M_1_closed 98, M_1 118, M_1_mid 84, M_1_closed 416, M_1 167, M_1_mid 82, M_1_closed 101, M_1 115, M_1_mid 84, M_1_closed 467, M_1 150, M_1_mid 99, M_1_closed 201, M_1 117, M_1_mid 99, M_1_closed 300, M_1 118, M_1_mid 99, M_1_closed 150, M_1 166, M_1_mid 84, M_1_closed 418, M_1 134, M_1_blink 99, M_1_closed 183, M_1 133, M_1_mid 68, M_1_closed 416, M_13 100, M_3 116, M_3_closed 150, M_3 166, M_3_closed 467, M_3 100, M_3_closed 100, M_3 117, M_3_closed 350, M_3 133, M_3_closed 167, M_3 167, M_3_closed 366, M_3 150, M_3_closed 117, M_3 133, M_3_closed 467, M_13 100, M_1 133, M_1_blink 117, M_1_closed 183, M_1 167, M_1_mid 67, M_1_closed 267, M_1 133, M_1_mid 83, M_1_closed 83, M_1 183, M_1_mid 67, M_1_closed 367, M_1 116, M_1_mid 100, M_1_closed 167, M_1 100, M_1_mid 83, M_1_closed 484, M_1 83, M_1_mid 83, M_1_closed 117, M_1 167, M_1_mid 100, M_1_closed 283, M_1 133, M_1_mid 67, M_1_closed 133, M_1 134, M_1_mid 83, M_1_closed 267, M_1 150, M_1_mid 83, M_1_closed 150, M_1 168, M_1_mid 65, M_1_closed 267, M_1 150, M_1_mid 100, M_1_closed 117, M_1 166, M_1_blink 117, M_1_closed 233, M_12 100, M_2 167, M_2_closed 150, M_2 133, M_2_closed 351, M_2 100, M_2_closed 134, M_2 133, M_2_closed 418, M_2 98, M_2_closed 167, M_2 118, M_2_closed 283, M_12 100, M_1 149, M_1_mid 66, M_1_closed 84, M_1 183, M_1_mid 100, M_1_closed 350, M_1 133, M_1_blink 100, M_1_closed 133, M_1 117, M_1_mid 84, M_1_closed 400, M_1 150, M_1_mid 83, M_1_closed 133, M_1 134, M_1_mid 66, M_1_closed 467, M_1 100, M_1_mid 83, M_1_closed 100, M_1 133, M_1_mid 101, M_1_closed 433, M_1 151, M_1_mid 116, M_1_closed 150, M_1_blink 116, M_1 51, M_1_mid 101, M_1_closed 398, M_13 100, M_3 116, M_3_closed 151, M_3 133, M_3_closed 283, M_3 118, M_3_closed 149, M_3 151, M_3_closed 333, M_3 133, M_3_closed 117, M_3 149, M_3_closed 367, M_13 100, M_1 117, M_1_mid 100, M_1_closed 99, M_1 151, M_1_mid 83, M_1_closed 384, M_1 133, M_1_mid 83, M_1_closed 117, M_1 183, M_1_mid 100, M_1_closed 350, M_1_blink 100, M_1_mid 133, M_1_closed 84, M_1 166, M_1_mid 67, M_1_closed 283, M_1 134, M_1_mid 66, M_1_closed 184, M_1 183, M_1_mid 83, M_1_closed 467, M_1 100, M_1_mid 100, M_1_closed 100, M_1 100, M_1_mid 83, M_1_closed 434, M_1 100, M_1_mid 66, M_1_closed 134, M_1 …",
+  "errors": [],
+  "ok": true
+ }
+]
