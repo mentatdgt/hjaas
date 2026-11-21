@@ -10,7 +10,7 @@
   "cutFromTheTakeAtS": 4.4,
   "thePointInAndOutAtS": [
    1.5,
-   5.4
+   5.3
   ],
   "handsTogetherInAndOutAtS": [
    12.3,
@@ -18,9 +18,9 @@
   ],
   "theFindAtS": 6.4,
   "theFindWas": "paving",
-  "theTurnIsInTheRecording": false,
+  "theTurnIsInTheRecording": true,
   "herTurnLookAndBackAtS": [
-   6.5,
+   6.4,
    6.5,
    8.2
   ],
@@ -36,13 +36,13 @@
   "file": "film-iphone.mp4",
   "seed": 7,
   "seconds": 20,
-  "cutFromTheTakeAtS": 4.5,
+  "cutFromTheTakeAtS": 4.6,
   "thePointInAndOutAtS": [
    1.5,
    5.4
   ],
   "handsTogetherInAndOutAtS": [
-   12.4,
+   12.3,
    15.8
   ],
   "theFindAtS": 6.4,

@@ -5,35 +5,35 @@
   "sceneAsksToHoldTheLook": "hold",
   "aFind": {
    "thenShe": [
-    "1.2 ms: R_K0_turn, shown 86.7 ms",
-    "87.9 ms: R_K1_look, shown 1900.9 ms",
-    "1988.8 ms: R_K0_turn, shown 99.1 ms",
-    "2087.9 ms: R_A1_film, shown 500 ms",
-    "2587.9 ms: R_A1_film, shown 466.9 ms",
-    "3054.8 ms: R_A1_film"
+    "1.6 ms: R_K0_turn, shown 98.4 ms",
+    "100 ms: R_K1_look, shown 1902.4 ms",
+    "2002.4 ms: R_K0_turn, shown 96.3 ms",
+    "2098.7 ms: R_A1_film, shown 501 ms",
+    "2599.7 ms: R_A1_film, shown 465.8 ms",
+    "3065.5 ms: R_A1_film"
    ],
-   "msFromTheFindToHerFirstMove": 1.2,
+   "msFromTheFindToHerFirstMove": 1.6,
    "posesSheMissed": 0,
    "asRoutineJsonSays": true,
    "shownMs": {
-    "R_K0_turn": 86.7,
-    "R_K1_look": 1900.9,
-    "R_K0_turnBack": 99.1,
-    "R_A1_film": 500
+    "R_K0_turn": 98.4,
+    "R_K1_look": 1902.4,
+    "R_K0_turnBack": 96.3,
+    "R_A1_film": 501
    }
   },
   "aSecondFindDuringTheLook": {
-   "secondFindMsIntoTheLook": 808.1,
+   "secondFindMsIntoTheLook": 806.9,
    "thenShe": [
-    "1.6 ms: R_K0_turn, shown 97.3 ms",
-    "98.9 ms: R_K1_look, shown 2435.5 ms",
-    "2534.4 ms: R_K0_turn, shown 79.3 ms",
-    "2613.7 ms: R_A1_film, shown 500 ms",
-    "3113.7 ms: R_A1_film, shown 417.3 ms",
-    "3531 ms: R_A1_film"
+    "2.3 ms: R_K0_turn, shown 92.6 ms",
+    "94.9 ms: R_K1_look, shown 2433.2 ms",
+    "2528.1 ms: R_K0_turn, shown 83.5 ms",
+    "2611.6 ms: R_A1_film, shown 498.5 ms",
+    "3110.1 ms: R_A1_film, shown 467 ms",
+    "3577.1 ms: R_A1_film"
    ],
-   "theLookWasShownMs": 2435.5,
-   "msOfLookAfterTheSecondFind": 1627.4,
+   "theLookWasShownMs": 2433.2,
+   "msOfLookAfterTheSecondFind": 1626.3,
    "turns": 2,
    "noSecondTurn": true,
    "theLookWasExtended": true
@@ -41,12 +41,12 @@
   "aFindAsSheTurnsBack": {
    "landedOn": "R_K0_turn, 0 ms into it",
    "thenShe": [
-    "6.2 ms: R_K0_turn, shown 80.6 ms",
-    "86.8 ms: R_K1_look, shown 1602.4 ms",
-    "1689.2 ms: R_K0_turn, shown 96.3 ms",
-    "1785.5 ms: R_A1_film, shown 500 ms",
-    "2285.5 ms: R_A1_film, shown 350.2 ms",
-    "2635.7 ms: R_A1_film"
+    "7.5 ms: R_K0_turn, shown 77.2 ms",
+    "84.7 ms: R_K1_look, shown 1599.8 ms",
+    "1684.5 ms: R_K0_turn, shown 100.1 ms",
+    "1784.6 ms: R_A1_film, shown 499.6 ms",
+    "2284.2 ms: R_A1_film, shown 333.3 ms",
+    "2617.5 ms: R_A1_film"
    ],
    "turns": 2,
    "looks": 1,
@@ -54,14 +54,14 @@
    "bothFindsCounted": true
   },
   "aFindInTheHoldAfter": {
-   "landedOn": "R_A1_film, 132.9 ms into it",
+   "landedOn": "R_A1_film, 132.7 ms into it",
    "thenShe": [
-    "0.8 ms: R_K0_turn, shown 83.8 ms",
-    "84.6 ms: R_K1_look, shown 1832.6 ms",
-    "1917.2 ms: R_K0_turn, shown 82.8 ms",
-    "2000 ms: R_A1_film, shown 499.9 ms",
-    "2499.9 ms: R_A1_film, shown 483.5 ms",
-    "2983.4 ms: R_A1_film"
+    "2.3 ms: R_K0_turn, shown 93 ms",
+    "95.3 ms: R_K1_look, shown 1832 ms",
+    "1927.3 ms: R_K0_turn, shown 83.1 ms",
+    "2010.4 ms: R_A1_film, shown 499.4 ms",
+    "2509.8 ms: R_A1_film, shown 384.7 ms",
+    "2894.5 ms: R_A1_film"
    ],
    "turns": 2,
    "looks": 1,
@@ -85,32 +85,32 @@
   "sceneAsksToHoldTheLook": "hold",
   "aFind": {
    "thenShe": [
-    "4 ms: R_K0_turn, shown 98 ms",
-    "102 ms: R_K1_look, shown 1899 ms",
-    "2001 ms: R_K0_turn, shown 99 ms",
-    "2100 ms: R_A1_film, shown 499 ms",
-    "2599 ms: R_A1_film, shown 385 ms",
-    "2984 ms: R_A1_film"
+    "10 ms: R_K0_turn, shown 85 ms",
+    "95 ms: R_K1_look, shown 1901 ms",
+    "1996 ms: R_K0_turn, shown 98 ms",
+    "2094 ms: R_A1_film, shown 503 ms",
+    "2597 ms: R_A1_film, shown 448 ms",
+    "3045 ms: R_A1_film"
    ],
-   "msFromTheFindToHerFirstMove": 4,
+   "msFromTheFindToHerFirstMove": 10,
    "posesSheMissed": 0,
    "asRoutineJsonSays": true,
    "shownMs": {
-    "R_K0_turn": 98,
-    "R_K1_look": 1899,
-    "R_K0_turnBack": 99,
-    "R_A1_film": 499
+    "R_K0_turn": 85,
+    "R_K1_look": 1901,
+    "R_K0_turnBack": 98,
+    "R_A1_film": 503
    }
   },
   "aSecondFindDuringTheLook": {
    "secondFindMsIntoTheLook": 809,
    "thenShe": [
-    "5 ms: R_K0_turn, shown 89 ms",
-    "94 ms: R_K1_look, shown 2433 ms",
-    "2527 ms: R_K0_turn, shown 82 ms",
-    "2609 ms: R_A1_film, shown 501 ms",
-    "3110 ms: R_A1_film, shown 383 ms",
-    "3493 ms: R_A1_film"
+    "3 ms: R_K0_turn, shown 89 ms",
+    "92 ms: R_K1_look, shown 2433 ms",
+    "2525 ms: R_K0_turn, shown 83 ms",
+    "2608 ms: R_A1_film, shown 499 ms",
+    "3107 ms: R_A1_film, shown 384 ms",
+    "3491 ms: R_A1_film"
    ],
    "theLookWasShownMs": 2433,
    "msOfLookAfterTheSecondFind": 1624,
@@ -119,14 +119,14 @@
    "theLookWasExtended": true
   },
   "aFindAsSheTurnsBack": {
-   "landedOn": "R_K0_turn, 0 ms into it",
+   "landedOn": "R_K0_turn, 1 ms into it",
    "thenShe": [
-    "20 ms: R_K0_turn, shown 80 ms",
-    "100 ms: R_K1_look, shown 1600 ms",
-    "1700 ms: R_K0_turn, shown 99 ms",
-    "1799 ms: R_A1_film, shown 500 ms",
-    "2299 ms: R_A1_film, shown 433 ms",
-    "2732 ms: R_A1_film"
+    "2 ms: R_K0_turn, shown 90 ms",
+    "92 ms: R_K1_look, shown 1601 ms",
+    "1693 ms: R_K0_turn, shown 98 ms",
+    "1791 ms: R_A1_film, shown 501 ms",
+    "2292 ms: R_A1_film, shown 367 ms",
+    "2659 ms: R_A1_film"
    ],
    "turns": 2,
    "looks": 1,
@@ -136,12 +136,12 @@
   "aFindInTheHoldAfter": {
    "landedOn": "R_A1_film, 133 ms into it",
    "thenShe": [
-    "16 ms: R_K0_turn, shown 74 ms",
-    "90 ms: R_K1_look, shown 1833 ms",
-    "1923 ms: R_K0_turn, shown 83 ms",
-    "2006 ms: R_A1_film, shown 500 ms",
-    "2506 ms: R_A1_film, shown 400 ms",
-    "2906 ms: R_A1_film"
+    "4 ms: R_K0_turn, shown 84 ms",
+    "88 ms: R_K1_look, shown 1834 ms",
+    "1922 ms: R_K0_turn, shown 82 ms",
+    "2004 ms: R_A1_film, shown 499 ms",
+    "2503 ms: R_A1_film, shown 335 ms",
+    "2838 ms: R_A1_film"
    ],
    "turns": 2,
    "looks": 1,
@@ -149,8 +149,8 @@
    "bothFindsCounted": true
   },
   "thePresenterMeanwhile": {
-   "steps": 125,
-   "seconds": 21,
+   "steps": 126,
+   "seconds": 20.9,
    "gestures": "M_1 > M_12 > M_2 > M_12 > M_1 > M_13 > M_3 > M_13 > M_1",
    "blinks": 4,
    "problems": [],
@@ -165,16 +165,16 @@
   "sceneAsksToHoldTheLook": "hold",
   "aFind": {
    "thenShe": [
-    "2.1 ms: R_K1_look, shown 1801.4 ms",
-    "1803.5 ms: R_A1_film, shown 432.1 ms",
-    "2235.6 ms: R_A1_film, shown 200 ms",
-    "2435.6 ms: R_A1_film, shown 200.3 ms",
-    "2635.9 ms: R_A1_film"
+    "3.5 ms: R_K1_look, shown 1784.2 ms",
+    "1787.7 ms: R_A1_film, shown 398.4 ms",
+    "2186.1 ms: R_A1_film, shown 199.4 ms",
+    "2385.5 ms: R_A1_film, shown 200.8 ms",
+    "2586.3 ms: R_A1_film"
    ],
-   "msFromTheFindToHerFirstMove": 2.1,
+   "msFromTheFindToHerFirstMove": 3.5,
    "posesSheMissed": 0,
    "oneHeldLook": true,
-   "theLookWasShownMs": 1801.4
+   "theLookWasShownMs": 1784.2
   },
   "theScreen": {
    "framesRead": 145,

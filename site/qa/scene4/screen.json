@@ -4,8 +4,8 @@
   "live": {
    "framesRead": 1217,
    "seconds": 20.3,
-   "poseChangesUnderIt": 287,
-   "screenChangedInTheSameFrame": 287,
+   "poseChangesUnderIt": 284,
+   "screenChangedInTheSameFrame": 284,
    "inTheNextFrame": 0,
    "later": 0,
    "laterExamples": [],
@@ -15,70 +15,74 @@
     {
      "change": "R_A1_film > R_K0_turn",
      "theScreenMoves": false,
-     "pictureChangedInThatFrame": true
+     "pictureChangedInThatFrame": false,
+     "somethingUnderItChangedInThatFrameToo": false
     },
     {
      "change": "R_K0_turn > R_K1_look",
      "theScreenMoves": true,
-     "pictureChangedInThatFrame": true
+     "pictureChangedInThatFrame": true,
+     "somethingUnderItChangedInThatFrameToo": true
     },
     {
      "change": "R_K1_look > R_K0_turn",
      "theScreenMoves": true,
-     "pictureChangedInThatFrame": true
+     "pictureChangedInThatFrame": true,
+     "somethingUnderItChangedInThatFrameToo": false
     },
     {
      "change": "R_K0_turn > R_A1_film",
      "theScreenMoves": false,
-     "pictureChangedInThatFrame": false
+     "pictureChangedInThatFrame": false,
+     "somethingUnderItChangedInThatFrameToo": false
     }
    ],
-   "ok": false
+   "ok": true
   },
   "theDot": {
    "stretches": 39,
    "litMs": [
     500,
-    499.9,
-    499.9,
-    500,
     500,
     500,
     499.9,
     500,
     500,
     499.9,
+    499.9,
+    499.9,
+    500,
+    499.9,
+    499.9,
+    500,
+    499.9,
+    500,
     500,
     500.1,
-    499.9,
     500,
-    500,
-    500,
-    500,
-    499.9,
-    500
+    499.9
    ],
    "darkMs": [
     499.9,
+    499.9,
+    500,
+    500,
+    500,
+    500,
     500,
     500.1,
     500,
     500,
-    499.9,
     500,
     500.1,
-    499.9,
     500,
-    500,
-    499.9,
     500,
     500,
     500,
     499.9,
+    499.9,
     500,
-    500,
-    500,
-    499.9
+    500.1
    ],
    "shortestMs": 499.9,
    "longestMs": 500.1,
@@ -117,7 +121,7 @@
    "hisPosesSeen": 10,
    "neverClear": true
   },
-  "aFindAt": "8.1 s into the reading",
+  "aFindAt": "8 s into the reading",
   "where": {
    "R_A1_film": {
     "wantedPlatePx": [
@@ -319,10 +323,10 @@
  {
   "browser": "webkit, iPhone 14 profile",
   "live": {
-   "framesRead": 1216,
-   "seconds": 20.2,
-   "poseChangesUnderIt": 292,
-   "screenChangedInTheSameFrame": 292,
+   "framesRead": 1215,
+   "seconds": 20.4,
+   "poseChangesUnderIt": 290,
+   "screenChangedInTheSameFrame": 290,
    "inTheNextFrame": 0,
    "later": 0,
    "laterExamples": [],
@@ -332,70 +336,74 @@
     {
      "change": "R_A1_film > R_K0_turn",
      "theScreenMoves": false,
-     "pictureChangedInThatFrame": false
+     "pictureChangedInThatFrame": true,
+     "somethingUnderItChangedInThatFrameToo": true
     },
     {
      "change": "R_K0_turn > R_K1_look",
      "theScreenMoves": true,
-     "pictureChangedInThatFrame": true
+     "pictureChangedInThatFrame": true,
+     "somethingUnderItChangedInThatFrameToo": true
     },
     {
      "change": "R_K1_look > R_K0_turn",
      "theScreenMoves": true,
-     "pictureChangedInThatFrame": true
+     "pictureChangedInThatFrame": true,
+     "somethingUnderItChangedInThatFrameToo": false
     },
     {
      "change": "R_K0_turn > R_A1_film",
      "theScreenMoves": false,
-     "pictureChangedInThatFrame": true
+     "pictureChangedInThatFrame": false,
+     "somethingUnderItChangedInThatFrameToo": false
     }
    ],
-   "ok": false
+   "ok": true
   },
   "theDot": {
    "stretches": 39,
    "litMs": [
-    504,
-    503,
     500,
-    500,
-    497,
-    501,
-    499,
-    499,
-    500,
-    500,
-    500,
-    500,
-    503,
     501,
     500,
-    502,
+    500,
+    500,
+    500,
+    501,
+    500,
+    500,
+    500,
+    500,
+    500,
+    500,
+    501,
+    500,
+    499,
     500,
     485,
-    500
+    499
    ],
    "darkMs": [
     500,
-    494,
+    499,
+    500,
+    500,
+    500,
+    500,
+    499,
+    500,
+    500,
+    500,
+    500,
+    499,
+    501,
+    499,
     500,
     500,
     501,
-    501,
-    499,
-    502,
-    500,
-    500,
-    500,
-    500,
-    498,
-    499,
-    499,
-    498,
-    500,
     515,
     500,
-    500
+    501
    ],
    "shortestMs": 485,
    "longestMs": 515,
@@ -403,11 +411,11 @@
    "even": true
   },
   "theWater": {
-   "changes": 184,
-   "shortestGapMs": 97,
+   "changes": 185,
+   "shortestGapMs": 86,
    "medianGapMs": 116,
-   "longestGapMs": 119,
-   "meanGapMs": 110,
+   "longestGapMs": 139,
+   "meanGapMs": 110.1,
    "gapsOver150": 0,
    "roundAndRound": true,
    "ok": true
@@ -423,7 +431,7 @@
      0.4216691068814056
     ]
    },
-   "framesRead": 1216,
+   "framesRead": 1215,
    "lowestAlphaUnderThePresentersPoint": 255,
    "lowestAlphaUnderRachelsPoint": 255,
    "herPosesSeen": [
@@ -434,7 +442,7 @@
    "hisPosesSeen": 10,
    "neverClear": true
   },
-  "aFindAt": "8 s into the reading",
+  "aFindAt": "8.1 s into the reading",
   "where": {
    "R_A1_film": {
     "wantedPlatePx": [

@@ -11,7 +11,7 @@
     },
     "thePencilAheadOfThePaint": {
      "furthestPlatePx": 44,
-     "readings": 2549933,
+     "readings": 2549985,
      "readingsOver110Px": 0
     },
     "pencilPoints": 10037,
@@ -20,9 +20,9 @@
      "points": 10037,
      "tenth": 37,
      "median": 113,
-     "ninetieth": 191,
+     "ninetieth": 188,
      "least": 0,
-     "most": 1258,
+     "most": 1262,
      "shareOver400": 0.029
     },
     "msFromPaintWithin70PxToThePencilHalfUp": {
@@ -37,33 +37,33 @@
    },
    {
     "engine": "webkit iPhone 14",
-    "framesRead": 1143,
+    "framesRead": 1141,
     "theVeilBeforeTheBrush": {
      "mostOverTheWholePaintingOutOf255": 0,
      "pencilPointsItCoversWhole": 10037
     },
     "thePencilAheadOfThePaint": {
      "furthestPlatePx": 45,
-     "readings": 2535416,
+     "readings": 2535350,
      "readingsOver110Px": 0
     },
     "pencilPoints": 10037,
     "pencilPointsLeftToTheWash": 0,
     "msForAPencilPointToComeUp": {
      "points": 10037,
-     "tenth": 37,
-     "median": 109,
+     "tenth": 38,
+     "median": 108,
      "ninetieth": 188,
      "least": 0,
-     "most": 1267,
-     "shareOver400": 0.029
+     "most": 1263,
+     "shareOver400": 0.028
     },
     "msFromPaintWithin70PxToThePencilHalfUp": {
      "points": 10037,
      "tenth": 17,
-     "median": 84,
+     "median": 87,
      "ninetieth": 554,
-     "least": 8,
+     "least": 4,
      "most": 1221,
      "shareOver400": 0.102
     }
@@ -71,57 +71,57 @@
   ],
   "moments": [
    {
-    "atMs": 317,
+    "atMs": 318,
     "pointsThatMustBeBarePaper": 797,
     "notPaper": 0,
     "pointsPastTheColoursEdge": 5599,
     "paintThere": 0,
     "pencilThere": 26,
     "pointsInsideThePainting": 45858,
-    "painted": 1040
+    "painted": 808
    },
    {
-    "atMs": 925,
+    "atMs": 904,
     "pointsThatMustBeBarePaper": 797,
     "notPaper": 0,
     "pointsPastTheColoursEdge": 5599,
     "paintThere": 0,
     "pencilThere": 92,
     "pointsInsideThePainting": 45858,
-    "painted": 9510
+    "painted": 9354
    },
    {
-    "atMs": 1521,
+    "atMs": 1502,
     "pointsThatMustBeBarePaper": 797,
     "notPaper": 0,
     "pointsPastTheColoursEdge": 5599,
     "paintThere": 0,
     "pencilThere": 135,
     "pointsInsideThePainting": 45858,
-    "painted": 18679
+    "painted": 18497
    },
    {
-    "atMs": 2320,
+    "atMs": 2303,
     "pointsThatMustBeBarePaper": 797,
     "notPaper": 0,
     "pointsPastTheColoursEdge": 5599,
     "paintThere": 0,
     "pencilThere": 183,
     "pointsInsideThePainting": 45858,
-    "painted": 29976
+    "painted": 29728
    },
    {
-    "atMs": 3021,
+    "atMs": 3020,
     "pointsThatMustBeBarePaper": 797,
     "notPaper": 0,
     "pointsPastTheColoursEdge": 5599,
     "paintThere": 0,
     "pencilThere": 191,
     "pointsInsideThePainting": 45858,
-    "painted": 42096
+    "painted": 42120
    },
    {
-    "atMs": 3717,
+    "atMs": 3704,
     "pointsThatMustBeBarePaper": 797,
     "notPaper": 0,
     "pointsPastTheColoursEdge": 5599,

@@ -1,7 +1,7 @@
 [
  {
   "browser": "chrome, 1440 × 900",
-  "seconds": 59.6,
+  "seconds": 59.7,
   "gestures": "M_1 > M_12 > M_2 > M_12 > M_1 > M_13 > M_3 > M_13 > M_1 > M_12 > M_2 > M_12 > M_1 > M_13 > M_3 > M_13 > M_1 > M_12 > M_2 > M_12 > M_1 > M_13 > M_3 > M_13 > M_1",
   "timesEachPoseWasShown": {
    "M_1_mid": 80,
@@ -16,133 +16,133 @@
    "M_3_closed": 22
   },
   "inBetweens": [
-   "M_12 100.2 ms",
    "M_12 100 ms",
+   "M_12 99 ms",
    "M_13 99.9 ms",
-   "M_13 102.4 ms",
-   "M_12 100.2 ms",
-   "M_12 100.4 ms",
+   "M_13 100 ms",
+   "M_12 99.7 ms",
+   "M_12 99.7 ms",
+   "M_13 99 ms",
+   "M_13 100.3 ms",
+   "M_12 97.2 ms",
+   "M_12 99.7 ms",
    "M_13 100.6 ms",
-   "M_13 100.7 ms",
-   "M_12 100.1 ms",
-   "M_12 100.2 ms",
-   "M_13 100.2 ms",
-   "M_13 100.2 ms"
+   "M_13 100.3 ms"
   ],
   "blinks": {
    "count": 12,
    "gapsMs": [
-    4533.4,
-    4616.5,
-    6015.9,
-    4350,
-    5817.8,
-    3981.5,
-    4500.9,
-    5832,
-    3851.4,
-    3248.8,
-    4966.8
+    4532.8,
+    4617.3,
+    6033.5,
+    4349.8,
+    5799.8,
+    3982.4,
+    4517.2,
+    5816.7,
+    3866.2,
+    3232.9,
+    4965.9
    ],
-   "shortestGapMs": 3248.8,
-   "longestGapMs": 6015.9,
+   "shortestGapMs": 3232.9,
+   "longestGapMs": 6033.5,
    "meanGapMs": 4701,
    "each": [
     {
-     "at": 5699.7,
-     "shownMs": 117.1,
+     "at": 5432.2,
+     "shownMs": 117.2,
      "before": "M_1_closed",
      "after": "M_1_mid",
      "msSinceTheLast": null
     },
     {
-     "at": 10233.1,
-     "shownMs": 100,
+     "at": 9965,
+     "shownMs": 117.6,
      "before": "M_1",
      "after": "M_1_closed",
-     "msSinceTheLast": 4533.4
+     "msSinceTheLast": 4532.8
     },
     {
-     "at": 14849.6,
-     "shownMs": 100.2,
+     "at": 14582.3,
+     "shownMs": 117,
      "before": "M_1_closed",
      "after": "M_1_closed",
-     "msSinceTheLast": 4616.5
+     "msSinceTheLast": 4617.3
     },
     {
-     "at": 20865.5,
-     "shownMs": 116.9,
+     "at": 20615.8,
+     "shownMs": 99.8,
      "before": "M_1",
      "after": "M_1_closed",
-     "msSinceTheLast": 6015.9
+     "msSinceTheLast": 6033.5
     },
     {
-     "at": 25215.5,
-     "shownMs": 117.3,
+     "at": 24965.6,
+     "shownMs": 100.1,
      "before": "M_1_closed",
      "after": "M_1_mid",
-     "msSinceTheLast": 4350
+     "msSinceTheLast": 4349.8
     },
     {
-     "at": 31033.3,
+     "at": 30765.4,
+     "shownMs": 116.4,
+     "before": "M_1",
+     "after": "M_1_closed",
+     "msSinceTheLast": 5799.8
+    },
+    {
+     "at": 34747.8,
+     "shownMs": 117,
+     "before": "M_1",
+     "after": "M_1_closed",
+     "msSinceTheLast": 3982.4
+    },
+    {
+     "at": 39265,
      "shownMs": 99.5,
      "before": "M_1",
      "after": "M_1_closed",
-     "msSinceTheLast": 5817.8
+     "msSinceTheLast": 4517.2
     },
     {
-     "at": 35014.8,
-     "shownMs": 100.4,
+     "at": 45081.7,
+     "shownMs": 116.6,
      "before": "M_1",
      "after": "M_1_closed",
-     "msSinceTheLast": 3981.5
+     "msSinceTheLast": 5816.7
     },
     {
-     "at": 39515.7,
-     "shownMs": 115.3,
+     "at": 48947.9,
+     "shownMs": 100,
      "before": "M_1",
      "after": "M_1_closed",
-     "msSinceTheLast": 4500.9
+     "msSinceTheLast": 3866.2
     },
     {
-     "at": 45347.7,
-     "shownMs": 100.8,
-     "before": "M_1",
-     "after": "M_1_closed",
-     "msSinceTheLast": 5832
-    },
-    {
-     "at": 49199.1,
-     "shownMs": 116.5,
-     "before": "M_1",
-     "after": "M_1_closed",
-     "msSinceTheLast": 3851.4
-    },
-    {
-     "at": 52447.9,
-     "shownMs": 100.3,
+     "at": 52180.8,
+     "shownMs": 117.4,
      "before": "M_1_closed",
      "after": "M_1",
-     "msSinceTheLast": 3248.8
+     "msSinceTheLast": 3232.9
     },
     {
-     "at": 57414.7,
-     "shownMs": 99.3,
+     "at": 57146.7,
+     "shownMs": 117.4,
      "before": "M_1_closed",
      "after": "M_1_mid",
-     "msSinceTheLast": 4966.8
+     "msSinceTheLast": 4965.9
     }
    ]
   },
   "longestHold": {
    "pose": "M_1_closed",
-   "ms": 483.8
+   "ms": 484.1
   },
   "lateFramesMadeUp": [],
   "anyDissolve": false,
   "problems": [],
   "stepsLogged": 363,
-  "everyStep": "M_1_mid 83.3, M_1_closed 116.7, M_1 133.4, M_1_mid 100.4, M_1_closed 282.9, M_1 150.2, M_1_mid 100.3, M_1_closed 99.5, M_1 133.7, M_1_mid 66.6, M_1_closed 366.8, M_1 99.6, M_1_mid 116.7, M_1_closed 117.3, M_1 166.1, M_1_mid 67, M_1_closed 266.1, M_1 100.5, M_1_mid 83.1, M_1_closed 133.1, M_1 167, M_1_mid 66.6, M_1_closed 450.9, M_1 132.3, M_1_mid 100.4, M_1_closed 149.6, M_1 183.7, M_1_mid 84.1, M_1_closed 465.6, M_1 150, M_1_mid 66.7, M_1_closed 99.8, M_1_blink 117.1, M_1_mid 50, M_1_closed 249.8, M_12 100.2, M_2 116.8, M_2_closed 116.3, M_2 150.3, M_2_closed 466.2, M_2 133.3, M_2_closed 150, M_2 133.6, M_2_closed 316.6, M_2 99.9, M_2_closed 83.3, M_2 183.4, M_2_closed 299.9, M_2 99.9, M_2_closed 150.1, M_2 133.5, M_2_closed 233.2, M_2 134.1, M_2_closed 183.5, M_2 132.5, M_2_closed 433.4, M_12 100, M_1 166.5, M_1_blink 100, M_1_closed 150.1, M_1 183.6, M_1_mid 99.8, M_1_closed 433.6, M_1 133.3, M_1_mid 116.3, M_1_closed 200.1, M_1 133.5, M_1_mid 99.7, M_1_closed 233.4, M_1 116.8, M_1_mid 83.9, M_1_closed 166, M_1 150.1, M_1_mid 83.9, M_1_closed 482.7, M_1 133.6, M_1_mid 99.8, M_1_closed 132.6, M_1 150.9, M_1_mid 99.6, M_1_closed 367.2, M_1 99.1, M_1_mid 84, M_1_closed 83.1, M_1 100.2, M_1_mid 116.4, M_1_closed 183.2, M_1_blink 100.2, M_1_closed 150.3, M_1 133.6, M_1_mid 99.8, M_1_closed 149.6, M_1 183.3, M_1_mid 83.3, M_1_closed 466.6, M_1 133.3, M_1_mid 117.1, M_1_closed 149.7, M_1 166.8, M_1_mid 66, M_1_closed 483.8, M_13 99.9, M_3 116.3, M_3_closed 100.6, M_3 133.7, M_3_closed 281.8, M_3 134.7, M_3_closed 182.4, M_3 150, M_3_closed 400.8, M_3 149.5, M_3_closed 150.2, M_3 166.1, M_3_closed 466.3, M_3 117.3, M_3_closed 119.5, M_3 130.6, M_3_closed 432.7, M_13 102.4, M_1 97.7, M_1_blink 116.9, M_1_closed 132.9, M_1 117.2, M_1_mid 66.9, M_1_closed 333.4, M_1 133.4, M_1_mid 83.2, M_1_closed 66, M_1 118, M_1_mid 66.2, M_1_closed 250.6, M_1 149.4, M_1_mid 115.8, M_1_closed 84.2, M_1 116.5, M_1_mid 83.6, M_1_closed 349.6, M_1 133.8, M_1_mid 100.2, M_1_closed 115.6, M_1 166.8, M_1_mid 84.1, M_1_closed 433.5, M_1 132.6, M_1_mid 99.7, M_1_closed 134.1, M_1 132.9, M_1_mid 82.7, M_1_closed 350.2, M_1_blink 117.3, M_1_mid 82.6, M_1_closed 167.1, M_1 167.5, M_1_mid 99.7, M_1_closed 333.8, M_1 116.2, M_1_mid 116, M_1_closed 100, M_1 134.3, M_1_mid 82.6, M_1_closed 433.1, M_1 117.3, M_1_mid 116.8, M_1_closed 149.6, M_1 134, M_1_mid 82.8, M_1_closed 349.1, M_12 100.2, M_2 151, M_2_closed 148.8, M_2 184.8, M_2_closed 431.5, M_2 117, M_2_closed 133.8, M_2 149.1, M_2_closed 468.1, M_2 133.2, M_2_closed 149.8, M_2 116.8, M_2_closed 399.2, M_12 100.4, M_1 134.3, M_1_blink 99.5, M_1_closed 116.1, M_1 116.6, M_1_mid 82.8, M_1_closed 417.6, M_1 150.1, M_1_mid 83.3, M_1_closed 116.6, M_1 99.8, M_1_mid 100.3, M_1_closed 466.7, M_1 132.9, M_1_mid 116.3, M_1_closed 183.9, M_1 116.9, M_1_mid 116.4, M_1_closed 283.3, M_1 133.6, M_1_mid 83, M_1_closed 165.7, M_1 166.8, M_1_mid 83.2, M_1_closed 417.5, M_1 132.6, M_1_blink 100.4, M_1_closed 183.6, M_1 133.6, M_1_mid 66.6, M_1_closed 398.9, M_13 100.6, M_3 133.2, M_3_closed 150.6, M_3 166, M_3_closed 466.6, M_3 100.6, M_3_closed 83.5, M_3 133.3, M_3_closed 349.4, M_3 117.8, M_3_closed 182.8, M_3 166.6, M_3_closed 366.6, M_3 149.7, M_3_closed 101.2, M_3 148.8, M_3_closed 450.3, M_13 100.7, M_1 149.5, M_1_blink 115.3, M_1_closed 184.3, M_1 166, M_1_mid 67.4, M_1_closed 250.2, M_1 150.1, M_1_mid 83, M_1_closed 83.1, M_1 167, M_1_mid 83.3, M_1_closed 366.9, M_1 116.3, M_1_mid 100.6, M_1_closed 166.2, M_1 100, M_1_mid 83.5, M_1_closed 466.6, M_1 100.6, M_1_mid 83.3, M_1_closed 116.1, M_1 166.5, M_1_mid 82.8, M_1_closed 301.1, M_1 116.3, M_1_mid 83.5, M_1_closed 133.5, M_1 131.9, M_1_mid 84.1, M_1_closed 267, M_1 149.8, M_1_mid 84, M_1_closed 149.6, M_1 166.5, M_1_mid 65.7, M_1_closed 267.7, M_1 133.3, M_1_mid 117, M_1_closed 116.2, M_1 165.7, M_1_blink 100.8, M_1_closed 249.9, M_12 100.1, M_2 166.5, M_2_closed 150.1, M_2 116.7, M_2_closed 365.9, M_2 84, M_2_closed 133.5, M_2 133.3, M_2_closed 434.2, M_2 99.4, M_2_closed 166.5, M_2 98.9, M_2_closed 284.2, M_12 100.2, M_1 150.5, M_1_mid 83.5, M_1_closed 83.2, M_1 166.1, M_1_mid 116.3, M_1_closed 334, M_1 133.6, M_1_blink 116.5, M_1_closed 133.4, M_1 99.4, M_1_mid 100.3, M_1_closed 400.3, M_1 149.9, M_1_mid 83.1, M_1_closed 133.6, M_1 132.1, M_1_mid 67.9, M_1_closed 448.6, M_1 117.7, M_1_mid 66.9, M_1_closed 116.2, M_1 133.2, M_1_mid 99.5, M_1_closed 433.9, M_1 150.4, M_1_mid 100.1, M_1_closed 165.8, M_1_blink 100.3, M_1 66.7, M_1_mid 100.3, M_1_closed 400, M_13 100.2, M_3 116.2, M_3_closed 150.2, M_3 116.4, M_3_closed 282.6, M_3 134.3, M_3_closed 148.9, M_3 150.1, M_3_closed 334, M_3 133, M_3_closed 115.9, M_3 151.1, M_3_closed 350.2, M_13 100.2, M_1 116.2, M_1_mid 116.9, M_1_closed 100, M_1 133.1, M_1_mid 100.1, M_1_closed 382.9, M_1 133.7, M_1_mid 83.6, M_1_closed 116.3, M_1 183.7, M_1_mid 83.4, M_1_closed 366.3, M_1_blink 99.3, M_1_mid 117.3, M_1_closed 99.9, M_1 150.5, M_1_mid 83.6, M_1_closed 283, M_1 115.9, M_1_mid 83.9, M_1_closed 183.5, M_1 167.1, M_1_mid 99.6, M_1_closed 466.6, M_1 99.9, M_1_mid 83, M_1_closed 100.2, M_1 99.5, M_1_mid 100.6, M_1_closed 433.1, M_1 100.5, M_1_mid 66.3, M_1_closed 133.3, M_1 …",
+  "everyStep": "M_1_mid 99.2, M_1_closed 100.7, M_1 150, M_1_mid 100, M_1_closed 283.9, M_1 132.5, M_1_mid 100.1, M_1_closed 99.9, M_1 133.6, M_1_mid 66.8, M_1_closed 366.6, M_1 116.9, M_1_mid 116.3, M_1_closed 100.4, M_1 166.2, M_1_mid 82.4, M_1_closed 251.1, M_1 99.9, M_1_mid 83, M_1_closed 150.2, M_1 150.6, M_1_mid 65.7, M_1_closed 467.1, M_1 115.7, M_1_mid 101, M_1_closed 166.5, M_1 167.2, M_1_mid 100.1, M_1_closed 449.4, M_1 150.1, M_1_mid 66.3, M_1_closed 99.9, M_1_blink 117.2, M_1_mid 66.4, M_1_closed 233.6, M_12 100, M_2 116.7, M_2_closed 133.5, M_2 132.9, M_2_closed 465.7, M_2 134.7, M_2_closed 167, M_2 116.6, M_2_closed 316, M_2 100.1, M_2_closed 100, M_2 166.7, M_2_closed 300.4, M_2 116.4, M_2_closed 148.9, M_2 117.2, M_2_closed 233.9, M_2 132.5, M_2_closed 183.3, M_2 150.6, M_2_closed 433.6, M_12 99, M_1 149.9, M_1_blink 117.6, M_1_closed 150.1, M_1 166.7, M_1_mid 116.3, M_1_closed 432.9, M_1 133.8, M_1_mid 116.7, M_1_closed 182.8, M_1 150.3, M_1_mid 99.9, M_1_closed 216.4, M_1 133.7, M_1_mid 82.8, M_1_closed 150.8, M_1 150.2, M_1_mid 100.2, M_1_closed 466.2, M_1 132.7, M_1_mid 117.4, M_1_closed 116.5, M_1 149.1, M_1_mid 100, M_1_closed 367.4, M_1 116.6, M_1_mid 83.6, M_1_closed 82.6, M_1 100.2, M_1_mid 100.5, M_1_closed 183.3, M_1_blink 117, M_1_closed 132.6, M_1 133, M_1_mid 100.9, M_1_closed 166.9, M_1 182.3, M_1_mid 66.6, M_1_closed 484.1, M_1 134, M_1_mid 100, M_1_closed 149.3, M_1 167.2, M_1_mid 66.4, M_1_closed 483.1, M_13 99.9, M_3 133.6, M_3_closed 99, M_3 134.3, M_3_closed 266.5, M_3 150.1, M_3_closed 166.9, M_3 166.4, M_3_closed 383.3, M_3 166.5, M_3_closed 150.1, M_3 150.1, M_3_closed 466.5, M_3 133.6, M_3_closed 99.8, M_3 149.9, M_3_closed 433.6, M_13 100, M_1 100, M_1_blink 99.8, M_1_closed 149.9, M_1 116.6, M_1_mid 66.6, M_1_closed 333.9, M_1 116.5, M_1_mid 82.8, M_1_closed 83.8, M_1 116.7, M_1_mid 49.9, M_1_closed 249.8, M_1 149.9, M_1_mid 116, M_1_closed 100.3, M_1 100.6, M_1_mid 83.3, M_1_closed 350, M_1 150.2, M_1_mid 83, M_1_closed 116.7, M_1 166.2, M_1_mid 100.4, M_1_closed 417.1, M_1 133, M_1_mid 116.9, M_1_closed 116.9, M_1 149.2, M_1_mid 67.1, M_1_closed 366.7, M_1_blink 100.1, M_1_mid 83.2, M_1_closed 182.4, M_1 167.2, M_1_mid 100, M_1_closed 317.2, M_1 116.4, M_1_mid 115.9, M_1_closed 118, M_1 116, M_1_mid 99, M_1_closed 434.4, M_1 116.4, M_1_mid 115.9, M_1_closed 133.4, M_1 133.8, M_1_mid 83.5, M_1_closed 367.1, M_12 99.7, M_2 149.3, M_2_closed 133.9, M_2 182.8, M_2_closed 434.2, M_2 132.5, M_2_closed 133.2, M_2 150.8, M_2_closed 466.9, M_2 116, M_2_closed 149.5, M_2 118.8, M_2_closed 398.2, M_12 99.7, M_1 134.4, M_1_blink 116.4, M_1_closed 116.6, M_1 99.9, M_1_mid 100.2, M_1_closed 399.9, M_1 166.6, M_1_mid 83, M_1_closed 101.2, M_1 115.7, M_1_mid 82.9, M_1_closed 467.1, M_1 149.5, M_1_mid 100.7, M_1_closed 200.3, M_1 115.5, M_1_mid 100.6, M_1_closed 299.5, M_1 134.4, M_1_mid 83, M_1_closed 148.9, M_1 167.2, M_1_mid 100.4, M_1_closed 400.1, M_1 132.8, M_1_blink 117, M_1_closed 166.8, M_1 133.4, M_1_mid 65.9, M_1_closed 417.5, M_13 99, M_3 134.1, M_3_closed 133.4, M_3 166, M_3_closed 467.3, M_3 100.1, M_3_closed 99.9, M_3 116.7, M_3_closed 366.3, M_3 117.2, M_3_closed 166.5, M_3 183.4, M_3_closed 349.3, M_3 150.4, M_3_closed 116.8, M_3 133.5, M_3_closed 466.7, M_13 100.3, M_1 149.7, M_1_blink 99.5, M_1_closed 183.4, M_1 167.2, M_1_mid 65.8, M_1_closed 266.5, M_1 133.5, M_1_mid 83.2, M_1_closed 84.5, M_1 182.6, M_1_mid 66.2, M_1_closed 367.5, M_1 116.1, M_1_mid 117, M_1_closed 149.5, M_1 100.7, M_1_mid 82.8, M_1_closed 483.5, M_1 100.2, M_1_mid 66.3, M_1_closed 117.1, M_1 166.9, M_1_mid 99.9, M_1_closed 283.1, M_1 133.5, M_1_mid 66.9, M_1_closed 132.3, M_1 133.4, M_1_mid 100.7, M_1_closed 249.9, M_1 150.3, M_1_mid 82.7, M_1_closed 166.4, M_1 167.1, M_1_mid 50.3, M_1_closed 266.2, M_1 150.3, M_1_mid 116.6, M_1_closed 100.2, M_1 166.9, M_1_blink 116.6, M_1_closed 252.4, M_12 97.2, M_2 150.4, M_2_closed 150.1, M_2 132.5, M_2_closed 350.4, M_2 99.9, M_2_closed 133.2, M_2 133.5, M_2_closed 417, M_2 99.7, M_2_closed 166.6, M_2 116.8, M_2_closed 283.1, M_12 99.7, M_1 150.2, M_1_mid 67.3, M_1_closed 83.2, M_1 182.4, M_1_mid 100.1, M_1_closed 350.7, M_1 133.2, M_1_blink 100, M_1_closed 132.3, M_1 117, M_1_mid 83.9, M_1_closed 416.8, M_1 148.7, M_1_mid 67.2, M_1_closed 150.4, M_1 116.8, M_1_mid 66.3, M_1_closed 467.1, M_1 106.9, M_1_mid 76.4, M_1_closed 116.5, M_1 117, M_1_mid 101.1, M_1_closed 431.6, M_1 150.5, M_1_mid 115.6, M_1_closed 150.8, M_1_blink 117.4, M_1 48.9, M_1_mid 99.9, M_1_closed 400.4, M_13 100.6, M_3 116.9, M_3_closed 149.5, M_3 134.1, M_3_closed 283, M_3 116.4, M_3_closed 150, M_3 150.3, M_3_closed 333, M_3 149.6, M_3_closed 100, M_3 166.4, M_3_closed 350.1, M_13 100.3, M_1 116.8, M_1_mid 116.7, M_1_closed 83.2, M_1 149.6, M_1_mid 84.2, M_1_closed 399.5, M_1 133.4, M_1_mid 66, M_1_closed 134.3, M_1 166.6, M_1_mid 100, M_1_closed 348.8, M_1_blink 117.4, M_1_mid 116.8, M_1_closed 82.6, M_1 167.7, M_1_mid 83.3, M_1_closed 266.4, M_1 133.7, M_1_mid 82.5, M_1_closed 166.8, M_1 183.7, M_1_mid 83.5, M_1_closed 466.5, M_1 99.7, M_1_mid 99.8, M_1_closed 99.7, M_1 99.8, M_1_mid 100.6, M_1_closed 415.9, M_1 100.1, M_1_mid 77.9, M_1_closed 122.5, M_1 …",
   "errors": [],
   "ok": true
  },
@@ -163,133 +163,133 @@
    "M_3_closed": 22
   },
   "inBetweens": [
-   "M_12 100 ms",
-   "M_12 100 ms",
-   "M_13 101 ms",
-   "M_13 100 ms",
    "M_12 99 ms",
    "M_12 100 ms",
    "M_13 100 ms",
+   "M_13 102 ms",
+   "M_12 100 ms",
+   "M_12 101 ms",
+   "M_13 103 ms",
    "M_13 100 ms",
    "M_12 100 ms",
    "M_12 100 ms",
-   "M_13 100 ms",
-   "M_13 100 ms"
+   "M_13 99 ms",
+   "M_13 101 ms"
   ],
   "blinks": {
    "count": 12,
    "gapsMs": [
-    4533,
-    4617,
-    6033,
-    4350,
-    5800,
-    3985,
-    4498,
-    5833,
-    3867,
-    3234,
-    4966
+    4532,
+    4618,
+    6017,
+    4349,
+    5817,
+    3984,
+    4501,
+    5831,
+    3851,
+    3249,
+    4967
    ],
-   "shortestGapMs": 3234,
-   "longestGapMs": 6033,
+   "shortestGapMs": 3249,
+   "longestGapMs": 6017,
    "meanGapMs": 4701,
    "each": [
     {
-     "at": 5655,
-     "shownMs": 115,
+     "at": 5745,
+     "shownMs": 116,
      "before": "M_1_closed",
      "after": "M_1_mid",
      "msSinceTheLast": null
     },
     {
-     "at": 10188,
-     "shownMs": 116,
+     "at": 10277,
+     "shownMs": 101,
      "before": "M_1",
      "after": "M_1_closed",
-     "msSinceTheLast": 4533
+     "msSinceTheLast": 4532
     },
     {
-     "at": 14805,
-     "shownMs": 116,
+     "at": 14895,
+     "shownMs": 99,
      "before": "M_1_closed",
      "after": "M_1_closed",
-     "msSinceTheLast": 4617
+     "msSinceTheLast": 4618
     },
     {
-     "at": 20838,
-     "shownMs": 100,
-     "before": "M_1",
-     "after": "M_1_closed",
-     "msSinceTheLast": 6033
-    },
-    {
-     "at": 25188,
-     "shownMs": 100,
-     "before": "M_1_closed",
-     "after": "M_1_mid",
-     "msSinceTheLast": 4350
-    },
-    {
-     "at": 30988,
+     "at": 20912,
      "shownMs": 118,
      "before": "M_1",
      "after": "M_1_closed",
-     "msSinceTheLast": 5800
+     "msSinceTheLast": 6017
     },
     {
-     "at": 34973,
-     "shownMs": 99,
-     "before": "M_1",
-     "after": "M_1_closed",
-     "msSinceTheLast": 3985
+     "at": 25261,
+     "shownMs": 116,
+     "before": "M_1_closed",
+     "after": "M_1_mid",
+     "msSinceTheLast": 4349
     },
     {
-     "at": 39471,
-     "shownMs": 117,
-     "before": "M_1",
-     "after": "M_1_closed",
-     "msSinceTheLast": 4498
-    },
-    {
-     "at": 45304,
-     "shownMs": 117,
-     "before": "M_1",
-     "after": "M_1_closed",
-     "msSinceTheLast": 5833
-    },
-    {
-     "at": 49171,
+     "at": 31078,
      "shownMs": 100,
      "before": "M_1",
      "after": "M_1_closed",
-     "msSinceTheLast": 3867
+     "msSinceTheLast": 5817
     },
     {
-     "at": 52405,
-     "shownMs": 116,
+     "at": 35062,
+     "shownMs": 100,
+     "before": "M_1",
+     "after": "M_1_closed",
+     "msSinceTheLast": 3984
+    },
+    {
+     "at": 39563,
+     "shownMs": 115,
+     "before": "M_1",
+     "after": "M_1_closed",
+     "msSinceTheLast": 4501
+    },
+    {
+     "at": 45394,
+     "shownMs": 101,
+     "before": "M_1",
+     "after": "M_1_closed",
+     "msSinceTheLast": 5831
+    },
+    {
+     "at": 49245,
+     "shownMs": 119,
+     "before": "M_1",
+     "after": "M_1_closed",
+     "msSinceTheLast": 3851
+    },
+    {
+     "at": 52494,
+     "shownMs": 101,
      "before": "M_1_closed",
      "after": "M_1",
-     "msSinceTheLast": 3234
+     "msSinceTheLast": 3249
     },
     {
-     "at": 57371,
+     "at": 57461,
      "shownMs": 100,
      "before": "M_1_closed",
      "after": "M_1_mid",
-     "msSinceTheLast": 4966
+     "msSinceTheLast": 4967
     }
    ]
   },
   "longestHold": {
    "pose": "M_1_closed",
-   "ms": 484
+   "ms": 482
   },
   "lateFramesMadeUp": [],
   "anyDissolve": false,
   "problems": [],
   "stepsLogged": 363,
-  "everyStep": "M_1_mid 101, M_1_closed 99, M_1 152, M_1_mid 100, M_1_closed 282, M_1 134, M_1_mid 100, M_1_closed 100, M_1 132, M_1_mid 68, M_1_closed 365, M_1 118, M_1_mid 115, M_1_closed 101, M_1 167, M_1_mid 83, M_1_closed 251, M_1 100, M_1_mid 82, M_1_closed 151, M_1 150, M_1_mid 66, M_1_closed 452, M_1 132, M_1_mid 99, M_1_closed 168, M_1 167, M_1_mid 99, M_1_closed 452, M_1 148, M_1_mid 67, M_1_closed 100, M_1_blink 115, M_1_mid 69, M_1_closed 232, M_12 100, M_2 116, M_2_closed 134, M_2 134, M_2_closed 468, M_2 131, M_2_closed 167, M_2 117, M_2_closed 316, M_2 101, M_2_closed 100, M_2 166, M_2_closed 300, M_2 117, M_2_closed 133, M_2 133, M_2_closed 234, M_2 133, M_2_closed 183, M_2 150, M_2_closed 434, M_12 100, M_1 150, M_1_blink 116, M_1_closed 151, M_1 167, M_1_mid 116, M_1_closed 433, M_1 133, M_1_mid 117, M_1_closed 183, M_1 151, M_1_mid 99, M_1_closed 217, M_1 134, M_1_mid 83, M_1_closed 150, M_1 150, M_1_mid 100, M_1_closed 466, M_1 134, M_1_mid 117, M_1_closed 116, M_1 151, M_1_mid 98, M_1_closed 368, M_1 117, M_1_mid 84, M_1_closed 82, M_1 100, M_1_mid 100, M_1_closed 184, M_1_blink 116, M_1_closed 134, M_1 134, M_1_mid 99, M_1_closed 167, M_1 183, M_1_mid 67, M_1_closed 483, M_1 135, M_1_mid 98, M_1_closed 152, M_1 165, M_1_mid 68, M_1_closed 482, M_13 101, M_3 133, M_3_closed 84, M_3 149, M_3_closed 267, M_3 149, M_3_closed 167, M_3 166, M_3_closed 384, M_3 166, M_3_closed 150, M_3 151, M_3_closed 466, M_3 134, M_3_closed 100, M_3 149, M_3_closed 417, M_13 100, M_1 117, M_1_blink 100, M_1_closed 150, M_1 101, M_1_mid 84, M_1_closed 333, M_1 116, M_1_mid 83, M_1_closed 83, M_1 116, M_1_mid 50, M_1_closed 251, M_1 149, M_1_mid 117, M_1_closed 101, M_1 99, M_1_mid 85, M_1_closed 349, M_1 150, M_1_mid 83, M_1_closed 116, M_1 167, M_1_mid 100, M_1_closed 417, M_1 133, M_1_mid 116, M_1_closed 117, M_1 150, M_1_mid 67, M_1_closed 367, M_1_blink 100, M_1_mid 83, M_1_closed 184, M_1 166, M_1_mid 84, M_1_closed 333, M_1 116, M_1_mid 117, M_1_closed 117, M_1 116, M_1_mid 84, M_1_closed 450, M_1 117, M_1_mid 116, M_1_closed 133, M_1 134, M_1_mid 83, M_1_closed 367, M_12 99, M_2 150, M_2_closed 134, M_2 183, M_2_closed 435, M_2 133, M_2_closed 116, M_2 167, M_2_closed 451, M_2 132, M_2_closed 150, M_2 117, M_2_closed 399, M_12 100, M_1 134, M_1_blink 118, M_1_closed 98, M_1 118, M_1_mid 84, M_1_closed 416, M_1 167, M_1_mid 82, M_1_closed 101, M_1 115, M_1_mid 84, M_1_closed 467, M_1 150, M_1_mid 99, M_1_closed 201, M_1 117, M_1_mid 99, M_1_closed 300, M_1 118, M_1_mid 99, M_1_closed 150, M_1 166, M_1_mid 84, M_1_closed 418, M_1 134, M_1_blink 99, M_1_closed 183, M_1 133, M_1_mid 68, M_1_closed 416, M_13 100, M_3 116, M_3_closed 150, M_3 166, M_3_closed 467, M_3 100, M_3_closed 100, M_3 117, M_3_closed 350, M_3 133, M_3_closed 167, M_3 167, M_3_closed 366, M_3 150, M_3_closed 117, M_3 133, M_3_closed 467, M_13 100, M_1 133, M_1_blink 117, M_1_closed 183, M_1 167, M_1_mid 67, M_1_closed 267, M_1 133, M_1_mid 83, M_1_closed 83, M_1 183, M_1_mid 67, M_1_closed 367, M_1 116, M_1_mid 100, M_1_closed 167, M_1 100, M_1_mid 83, M_1_closed 484, M_1 83, M_1_mid 83, M_1_closed 117, M_1 167, M_1_mid 100, M_1_closed 283, M_1 133, M_1_mid 67, M_1_closed 133, M_1 134, M_1_mid 83, M_1_closed 267, M_1 150, M_1_mid 83, M_1_closed 150, M_1 168, M_1_mid 65, M_1_closed 267, M_1 150, M_1_mid 100, M_1_closed 117, M_1 166, M_1_blink 117, M_1_closed 233, M_12 100, M_2 167, M_2_closed 150, M_2 133, M_2_closed 351, M_2 100, M_2_closed 134, M_2 133, M_2_closed 418, M_2 98, M_2_closed 167, M_2 118, M_2_closed 283, M_12 100, M_1 149, M_1_mid 66, M_1_closed 84, M_1 183, M_1_mid 100, M_1_closed 350, M_1 133, M_1_blink 100, M_1_closed 133, M_1 117, M_1_mid 84, M_1_closed 400, M_1 150, M_1_mid 83, M_1_closed 133, M_1 134, M_1_mid 66, M_1_closed 467, M_1 100, M_1_mid 83, M_1_closed 100, M_1 133, M_1_mid 101, M_1_closed 433, M_1 151, M_1_mid 116, M_1_closed 150, M_1_blink 116, M_1 51, M_1_mid 101, M_1_closed 398, M_13 100, M_3 116, M_3_closed 151, M_3 133, M_3_closed 283, M_3 118, M_3_closed 149, M_3 151, M_3_closed 333, M_3 133, M_3_closed 117, M_3 149, M_3_closed 367, M_13 100, M_1 117, M_1_mid 100, M_1_closed 99, M_1 151, M_1_mid 83, M_1_closed 384, M_1 133, M_1_mid 83, M_1_closed 117, M_1 183, M_1_mid 100, M_1_closed 350, M_1_blink 100, M_1_mid 133, M_1_closed 84, M_1 166, M_1_mid 67, M_1_closed 283, M_1 134, M_1_mid 66, M_1_closed 184, M_1 183, M_1_mid 83, M_1_closed 467, M_1 100, M_1_mid 100, M_1_closed 100, M_1 100, M_1_mid 83, M_1_closed 434, M_1 100, M_1_mid 66, M_1_closed 134, M_1 …",
+  "everyStep": "M_1_mid 84, M_1_closed 118, M_1 131, M_1_mid 101, M_1_closed 285, M_1 148, M_1_mid 100, M_1_closed 100, M_1 134, M_1_mid 69, M_1_closed 364, M_1 100, M_1_mid 117, M_1_closed 116, M_1 169, M_1_mid 67, M_1_closed 265, M_1 99, M_1_mid 85, M_1_closed 131, M_1 168, M_1_mid 67, M_1_closed 449, M_1 133, M_1_mid 105, M_1_closed 146, M_1 183, M_1_mid 84, M_1_closed 465, M_1 151, M_1_mid 67, M_1_closed 100, M_1_blink 116, M_1_mid 50, M_1_closed 251, M_12 99, M_2 117, M_2_closed 134, M_2 132, M_2_closed 468, M_2 133, M_2_closed 150, M_2 133, M_2_closed 316, M_2 100, M_2_closed 84, M_2 183, M_2_closed 301, M_2 99, M_2_closed 150, M_2 135, M_2_closed 233, M_2 134, M_2_closed 182, M_2 133, M_2_closed 450, M_12 100, M_1 149, M_1_blink 101, M_1_closed 166, M_1 169, M_1_mid 98, M_1_closed 450, M_1 117, M_1_mid 133, M_1_closed 184, M_1 132, M_1_mid 101, M_1_closed 233, M_1 116, M_1_mid 84, M_1_closed 167, M_1 150, M_1_mid 101, M_1_closed 466, M_1 132, M_1_mid 101, M_1_closed 132, M_1 151, M_1_mid 100, M_1_closed 367, M_1 101, M_1_mid 82, M_1_closed 83, M_1 101, M_1_mid 116, M_1_closed 184, M_1_blink 99, M_1_closed 151, M_1 132, M_1_mid 101, M_1_closed 166, M_1 167, M_1_mid 84, M_1_closed 466, M_1 134, M_1_mid 117, M_1_closed 149, M_1 167, M_1_mid 68, M_1_closed 482, M_13 100, M_3 117, M_3_closed 100, M_3 133, M_3_closed 283, M_3 153, M_3_closed 164, M_3 166, M_3_closed 385, M_3 165, M_3_closed 134, M_3 166, M_3_closed 467, M_3 118, M_3_closed 115, M_3 150, M_3_closed 417, M_13 102, M_1 99, M_1_blink 118, M_1_closed 145, M_1 103, M_1_mid 84, M_1_closed 319, M_1 130, M_1_mid 85, M_1_closed 65, M_1 123, M_1_mid 60, M_1_closed 250, M_1 150, M_1_mid 137, M_1_closed 63, M_1 121, M_1_mid 79, M_1_closed 351, M_1 136, M_1_mid 97, M_1_closed 117, M_1 166, M_1_mid 84, M_1_closed 434, M_1 132, M_1_mid 100, M_1_closed 133, M_1 134, M_1_mid 82, M_1_closed 351, M_1_blink 116, M_1_mid 84, M_1_closed 167, M_1 167, M_1_mid 99, M_1_closed 334, M_1 117, M_1_mid 117, M_1_closed 99, M_1 136, M_1_mid 82, M_1_closed 432, M_1 118, M_1_mid 117, M_1_closed 148, M_1 162, M_1_mid 55, M_1_closed 350, M_12 100, M_2 150, M_2_closed 151, M_2 182, M_2_closed 435, M_2 115, M_2_closed 135, M_2 149, M_2_closed 467, M_2 133, M_2_closed 150, M_2 117, M_2_closed 399, M_12 101, M_1 133, M_1_blink 100, M_1_closed 117, M_1 116, M_1_mid 83, M_1_closed 417, M_1 150, M_1_mid 84, M_1_closed 116, M_1 100, M_1_mid 100, M_1_closed 467, M_1 134, M_1_mid 116, M_1_closed 183, M_1 117, M_1_mid 116, M_1_closed 284, M_1 133, M_1_mid 100, M_1_closed 151, M_1 166, M_1_mid 83, M_1_closed 417, M_1 134, M_1_blink 100, M_1_closed 183, M_1 134, M_1_mid 70, M_1_closed 395, M_13 103, M_3 131, M_3_closed 150, M_3 167, M_3_closed 466, M_3 100, M_3_closed 83, M_3 134, M_3_closed 350, M_3 116, M_3_closed 184, M_3 166, M_3_closed 368, M_3 150, M_3_closed 99, M_3 150, M_3_closed 451, M_13 100, M_1 151, M_1_blink 115, M_1_closed 183, M_1 167, M_1_mid 66, M_1_closed 250, M_1 151, M_1_mid 82, M_1_closed 84, M_1 167, M_1_mid 83, M_1_closed 367, M_1 117, M_1_mid 101, M_1_closed 165, M_1 101, M_1_mid 83, M_1_closed 465, M_1 101, M_1_mid 84, M_1_closed 116, M_1 168, M_1_mid 82, M_1_closed 300, M_1 117, M_1_mid 83, M_1_closed 134, M_1 132, M_1_mid 84, M_1_closed 268, M_1 150, M_1_mid 82, M_1_closed 150, M_1 166, M_1_mid 68, M_1_closed 269, M_1 130, M_1_mid 119, M_1_closed 115, M_1 166, M_1_blink 101, M_1_closed 249, M_12 100, M_2 167, M_2_closed 150, M_2 117, M_2_closed 351, M_2 99, M_2_closed 134, M_2 133, M_2_closed 433, M_2 101, M_2_closed 166, M_2 99, M_2_closed 285, M_12 100, M_1 149, M_1_mid 83, M_1_closed 84, M_1 167, M_1_mid 117, M_1_closed 333, M_1 133, M_1_blink 119, M_1_closed 131, M_1 100, M_1_mid 100, M_1_closed 399, M_1 151, M_1_mid 83, M_1_closed 134, M_1 133, M_1_mid 66, M_1_closed 450, M_1 117, M_1_mid 67, M_1_closed 116, M_1 133, M_1_mid 101, M_1_closed 433, M_1 151, M_1_mid 99, M_1_closed 166, M_1_blink 101, M_1 66, M_1_mid 100, M_1_closed 401, M_13 99, M_3 117, M_3_closed 150, M_3 117, M_3_closed 283, M_3 133, M_3_closed 150, M_3 151, M_3_closed 386, M_3 103, M_3_closed 94, M_3 150, M_3_closed 349, M_13 101, M_1 117, M_1_mid 115, M_1_closed 101, M_1 134, M_1_mid 99, M_1_closed 384, M_1 133, M_1_mid 83, M_1_closed 117, M_1 183, M_1_mid 84, M_1_closed 366, M_1_blink 100, M_1_mid 117, M_1_closed 101, M_1 149, M_1_mid 83, M_1_closed 284, M_1 120, M_1_mid 80, M_1_closed 182, M_1 167, M_1_mid 101, M_1_closed 466, M_1 100, M_1_mid 84, M_1_closed 99, M_1 101, M_1_mid 100, M_1_closed 416, M_1 117, M_1_mid 67, M_1_closed 133, M_1 …",
   "errors": [],
   "ok": true
  }

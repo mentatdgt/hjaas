@@ -124,3 +124,19 @@ One trace, same profile, production build of `site/scene-3` at 8eec30d. Raw file
 |---|---|---|
 | café paint-in | A new visitor opens `#design` (storage cleared before the page's script runs). Window 0.7 to 6.7 s. | 360 frames begun, none dropped. Longest main-thread task 8 ms (at 4× slow-down). LCP 0.75 s. |
 | switching | Build (first visit), Grow (first visit), back to the café and to Build (the short brush). Window 8.5 to 30.6 s. | 1326 frames begun, 24 dropped: 3 as Build goes on the plate, 3 as Grow does, 10 on the way back to the café, 8 on the way back to Build. Three tasks over 50 ms: 73 ms as Build is first put on the plate, and the room's picture decoded again at the two short-brush switches (97 and 100 ms). CLS 0.02. |
+
+## Scene 4 (Film: the Merlion at night), 2026-11-21
+
+Two traces, same phone profile (`390x844x3,mobile,touch`, CPU throttling 4), production build of
+`site/scene-4`, recorded with the Chrome DevTools MCP server. Raw files, not in git:
+`s4-film-paint-in-and-find-mobile-4x.json.gz` and `s4-switching-mobile-4x.json.gz`.
+
+| Trace | Part | Result (`node qa/tools/analyze-trace.mjs <trace> <from> <to> --tasks`) |
+|---|---|---|
+| paint-in and find | Film painted for the first time (0.6 to 6.6 s after navigation): the water and the presenter painted in with the scene, then Rachel and her camera's screen. | 361 frames begun, 2 dropped. No main-thread task over 50 ms; the longest 24 ms (at 4× slow-down). LCP 0.63 s, CLS 0.00. |
+| | Film at work (6.6 to 8.6 s): the water every 110 ms, the presenter talking, the camera's screen redrawn with each. | 120 frames begun, none dropped. Longest task 6 ms. |
+| | A find (`--mark hj-qa-find --span 3500`): the mushroom's trip, Rachel's turn, her look, the screen moving with the camera, and back. | 210 frames begun, 3 dropped (within half a second of the tap). No task over 50 ms; the longest 47 ms. |
+| switching | A new visitor (storage cleared before the page's script runs) opens `#film`: its painting, 0.6 to 6.6 s. | 360 frames begun, 6 dropped, all between 0.87 and 0.96 s as the painting starts (one 60 ms task: the cast going on the plate). |
+| | Then Build, Grow and Design for the first time (full paintings), back to Film, to Build and to Film again (the short brush). 33 s. | 2007 frames begun, 63 dropped, where each scene goes on the plate: 8 (Build, first time), 4 (Grow), 5 (Design), 10 (back to Film), 29 (back to Build), 7 (back to Film). Seven tasks over 50 ms: two of 98 and 99 ms as Build and Design are first put on the plate, and at each short-brush switch the room's picture decoded again (93 to 104 ms at 4× slow-down), as in every scene since review 05. CLS 0.02. |
+
+The frame times without the tracer, in WebKit and in throttled Chrome, are in `../scene4/frames.json`.
