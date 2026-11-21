@@ -82,6 +82,9 @@ worked example), listed in `src/scenes/index.ts`. The menu shows whatever is lis
   bottom, and the fringe of her shadow 18 px). Around each rectangle the painting reaches out toward the rim, as far as it needs to; the rim
   itself stays paper, and everywhere else the edge is the ordinary one. The rule is at `KeepBox` in
   `src/engine/edge.ts`;
+  A box with a fifth value, `'hug'`, is a part of the room rather than the cast that reaches into the edge
+  (the film scene's Merlion): a few stacked boxes follow its outline, and the painting bulges out around
+  them, whole up to a few px away, fading a few dozen px beyond, its line wandering as the edge's does.
 - `lines`, the pencil lines the edge trails off in. Put the scene's line map (greyscale, the plate's size,
   made by `tools/pencil_lines.py`) in `scene/pencil/`, add it to the list in `scripts/build-assets.mjs` and
   run `npm run assets`: it cuts the map to the edge's strips. Without it the colour fades the same way,
@@ -109,9 +112,8 @@ when someone opens its address directly.
   out of step. The actor with a `reaction` answers a find and is the one a first-visit painting brings in at
   the end; actors drawn before her are painted with the room. An actor whose every still is a solid
   rectangle, with nothing cut out, is a piece of the room that moves (the café's ceiling fan): the edge
-  fades it as it fades the plate. So is one the package's notes call scenery (the Merlion's water, named in
-  `PACKAGES` in `scripts/build-assets.mjs`: its stills are cut out like an actor's, so the drawings cannot
-  say). Nothing in the engine names an actor.
+  fades it as it fades the plate. So is a layer marked `"scenery": true` (the Merlion's water). A layer's
+  stills are the ones it lists and any other still its routine names (the presenter's blink stills). Nothing in the engine names an actor.
   A package may have a live screen: `"camera_screen": { "source": {x, y, w, h}, "rect_by_still": { "<still>":
   {x, y, w, h} } }` in `frames.json`. `source` is the part of the scene it shows; each rect is where the
   screen is while the actor who holds it is on that still. The picture is drawn 2 px inside the rect, with
@@ -129,7 +131,8 @@ when someone opens its address directly.
 | `{ "clip": "name", "ms": 70 }`, with `"reverse": true` | Play a clip of patches, forwards or backwards. |
 | `{ "loop": "name", "repeat": 2, "clip": "name", "ms": 70 }` | Play a clip round and round. |
 
-`"blink"` is one rule or a list: `{ "on": "A" or ["A", "B"], "frames": [{ "still": "A_blink", "ms": 90 }], "every_ms": [3000, 6000] }`.
+`"blink"` is one rule or a list: `{ "on": "A" or ["A", "B"], "frames": [{ "still": "A_blink", "ms": 90 }], "every_ms": [3000, 6000] }`,
+or with a blink still for each still it names: `{ "on": ["A", "B"], "still_for": { "A": "A_blink", "B": "B_blink" }, "ms": 110, … }`.
 `"reaction": { "steps": [ … ] }` is a fixed list of stills (with `ms` or a range) and clips, all cuts; a held
 still may blink (`"blink_ok": true`, or `"blink": "A_blink"`). It starts from `enter_from`, or if that is left
 out from the still the routine opens on (or the base still of the reaction's first clip). A hold on another

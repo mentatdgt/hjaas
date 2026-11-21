@@ -10,6 +10,34 @@ screen, the page against the package and its new preview, the 20 s recordings, t
 all passed, and no mushroom moved. Memory, frame times and the two calm traces were measured on the first
 plate; the code and the plate's size did not change.
 
+## Round 2 (2026-11-21, after Wren's review)
+
+On `site/scene-4`, from Wren's 15:15 answers (end of `reviews/scene-4-build.md`) and her review
+(`reviews/scene-4-review-01-wren.md`), both on `main`. The package and the brief were brought from `main` by
+path; nothing was merged.
+
+| | Asked | Result | Evidence (`site/qa/…`) |
+|---|---|---|---|
+| ✅ | Blink stills for every mouth (`blink.still_for`) | He closes his eyes on whichever mouth he is holding, pointing and with his hands together too, for 110 ms, never on M_12 or M_13 and never straight out of one. 60 s in Chrome and WebKit: 13 blinks on six different mouths, 2.7 to 5.7 s apart (mean 4.4 s); the longest gap is no longer stretched by a gesture. | `scene4/presenter.json`, `film.test.ts` |
+| ✅ | `"scenery": true` on the water | Read from `frames.json`; the water is no longer named in the build. | `scripts/build-assets.mjs` |
+| ✅ | The Merlion's crown painted | The painting now hugs the statue: seven boxes trace its outline from the crown down, and the colour is whole around them and fades a few dozen px beyond, its line wandering like the rest of the edge (a new kind of keep box, `'hug'`, in `edge.ts`; the café's rule is untouched). `aPaint` ≥ 0.985 over every pixel of the statue from plate y 26 down. Its top three rows (y 23 to 25, the crown's outline) are in the rim's own 28 px fade, which keeps the plate's rim bare paper all round: 0.92, 0.95 and 0.97 there. The pencil carries on into the paper either side, and the rest of the top edge is unchanged beyond about 100 px from the statue. | `scene4/film-*.jpg`, `edge/pencil-reveal-film-*.jpg` |
+| ✅ | Every mushroom and tap box where it was | All 40 findable at three sizes; every Film drawing and tap box over 1.00 of the painting (0.996 for one tap box on a 320 px phone, as before); the rim paper all round; the presenter and Rachel above her waist still 1.00. The paint-in: the pencil never more than 45 px ahead of the colour, bare paper stays paper. | `edge/pencil-spots.json`, `pencil-find.json`, `pencil-rim.json`, `pencil-rachel.json`, `pencil-reveal-film.json` |
+| ✅ | Phone framing: both faces in (Wren's correction) | Unchanged, centred on plate x 977: his face (669 to 815) and hers (1133 to 1262) are in the window at every phone shape. A test now holds it. I did not move the window's right edge to 1370 as the 15:15 note first said, since her review corrects that answer: it would cut his face. | `scene4/film-390x844.jpg`, `scenes.test.ts` |
+| ✅ | Retake the trace (painting and a find) | Phone profile, processor slowed four times, load 4.6: the painting 1 frame dropped of 360 (longest task 20 ms), at work none of 114, a find 3 of 210 (longest 32 ms). As on the first plate. iCloud Drive was still syncing (I did not pause it). | `traces/SUMMARY.md` |
+| ✅ | Retake the WebKit short-brush run | Production build, load 4.0 to 5.3: every short-brush switch 20 to 48 ms at the longest frame in three runs, none over 50 (run 2's 62 to 124 ms frames last time did not come back). Film painted 24 to 39 ms, at work 19 to 26 ms. | `scene4/frames.json` |
+| ✅ | Screenshots and the 20 s recording again | Desktop and iPhone profile: he points at 1.5 s and is back at 5.4 s, the find at 6.4 s, her look over by 8.7 s, hands together at 12.3 s and back by 15.7 s. | `scene4/film-*.jpg`, `film-desktop.mp4`, `film-iphone.mp4` |
+
+Within budget, so not otherwise worth a mention: with the processor slowed four times in Chrome, each short
+brush back to Film has one frame of 100 to 200 ms at the tap (the others 100 to 117), as in build 01.
+Drawing Film's edge with the hug costs about 15% more (Chrome 4×: 0.30 s in all, 11 to 15 ms at one go) and
+never holds the page longer than before.
+
+Tests: 173 pass. Decisions: the hug is a new kind of keep box rather than a change to the café's rule; a
+layer's stills now also include stills its routine names that the package lists in `stills` but not under
+the layer (the six new blink stills are given that way).
+
+---
+
 **To see it**
 
 ```

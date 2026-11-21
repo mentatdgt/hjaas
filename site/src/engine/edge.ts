@@ -242,10 +242,22 @@ const HUG = {
 const HUG_REACH = HUG.margin + HUG.wobble + HUG.width * (1 + HUG.swing);
 
 const isHug = (box: KeepBox): boolean => box[4] === 'hug';
-const hugsOf = (keep: readonly KeepBox[] | undefined): KeepBox[] => (keep ?? []).filter(isHug);
+
+/** The hugged boxes, and the rectangle beyond which none of them changes anything (most of the edge is out there). */
+interface Hugs {
+  boxes: readonly KeepBox[];
+  near: readonly [number, number, number, number];
+}
+const hugsOf = (keep: readonly KeepBox[] | undefined): Hugs | null => {
+  const boxes = (keep ?? []).filter(isHug);
+  if (!boxes.length) return null;
+  const near = [Math.min(...boxes.map((b) => b[0])) - HUG_REACH, Math.min(...boxes.map((b) => b[1])) - HUG_REACH, Math.max(...boxes.map((b) => b[2])) + HUG_REACH, Math.max(...boxes.map((b) => b[3])) + HUG_REACH] as const;
+  return { boxes, near };
+};
 
 /** Raise the colour, at a point `din` inside the plate, around the hugged boxes near it. `wander`, `swing`: the ordinary edge's two noises there. */
-function hug(boxes: readonly KeepBox[], x: number, y: number, din: number, wander: number, swing: number, out: Wash): void {
+function hug({ boxes, near }: Hugs, x: number, y: number, din: number, wander: number, swing: number, out: Wash): void {
+  if (x < near[0] || y < near[1] || x > near[2] || y > near[3]) return;
   let dist = Infinity;
   for (const [left, top, right, bottom] of boxes) {
     const dx = Math.max(left - x, 0, x - right);
@@ -363,7 +375,7 @@ function pencilWash(seed: number, keep?: readonly KeepBox[]): (x: number, y: num
       const swing = swingAt(x, y);
       washFrom(din, bottomOf(y), wander, swing, out);
       if (holds.length) lift(holds, x, y, din, wander, out);
-      if (hugs.length) hug(hugs, x, y, din, wander, swing, out);
+      if (hugs) hug(hugs, x, y, din, wander, swing, out);
     }
   };
 }
@@ -448,7 +460,7 @@ export function pencilRows(seed: number, x0: number, w: number, keep?: readonly 
       for (let n = 0; n < swing.length; n++) width += (2 * swing[n].at(i) - 1) * o.widthWeights[n];
       washFrom(din, bottom, line / wanderTotal, width / swingTotal, out);
       if (holds.length) lift(holds, x0 + i + 0.5, y, din, line / wanderTotal, out);
-      if (hugs.length) hug(hugs, x0 + i + 0.5, y, din, line / wanderTotal, width / swingTotal, out);
+      if (hugs) hug(hugs, x0 + i + 0.5, y, din, line / wanderTotal, width / swingTotal, out);
     },
     breakUp: (i) => breaks.at(i),
   };

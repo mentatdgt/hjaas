@@ -7,20 +7,20 @@
   "file": "film-desktop.mp4",
   "seed": 7,
   "seconds": 20,
-  "cutFromTheTakeAtS": 4.3,
+  "cutFromTheTakeAtS": 4.4,
   "thePointInAndOutAtS": [
    1.5,
    5.4
   ],
   "handsTogetherInAndOutAtS": [
    12.3,
-   15.8
+   15.6
   ],
   "theFindAtS": 6.4,
   "theFindWas": "paving",
   "theTurnIsInTheRecording": true,
   "herTurnLookAndBackAtS": [
-   6.4,
+   6.5,
    6.5,
    8.2
   ],
@@ -36,24 +36,24 @@
   "file": "film-iphone.mp4",
   "seed": 7,
   "seconds": 20,
-  "cutFromTheTakeAtS": 4.5,
+  "cutFromTheTakeAtS": 4.6,
   "thePointInAndOutAtS": [
    1.5,
    5.4
   ],
   "handsTogetherInAndOutAtS": [
-   12.4,
-   15.8
+   12.3,
+   15.7
   ],
   "theFindAtS": 6.4,
   "theFindWas": "sill",
   "theTurnIsInTheRecording": false,
   "herTurnLookAndBackAtS": [
    6.5,
-   6.5,
-   8.2
+   6.6,
+   8.3
   ],
-  "herReactionEndsAtS": 8.7,
+  "herReactionEndsAtS": 8.8,
   "holdsOneFindAndAGestureEachWay": true,
   "stepsOfHersLogged": 6
  }

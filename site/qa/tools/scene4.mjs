@@ -167,7 +167,9 @@ const checkPresenter = (steps, routine, first = true) => {
   // may be cut by it).
   const range = {};
   for (const item of routine.routine) for (const step of item.steps ?? [item]) { const [lo, hi] = Array.isArray(step.ms) ? step.ms : [step.ms, step.ms]; range[step.still] = [Math.min(range[step.still]?.[0] ?? Infinity, lo), Math.max(range[step.still]?.[1] ?? 0, hi)]; }
-  const blink = [routine.blink ?? []].flat().flatMap((rule) => rule.frames.map((f) => f.still));
+  // (One blink for all his mouths, or since the package of 15:15 a blink still for each: `still_for`.)
+  const blink = [routine.blink ?? []].flat().flatMap((rule) => (rule.frames ? rule.frames.map((f) => f.still) : Object.values(rule.still_for ?? {})));
+  const blinkFor = Object.assign({}, ...[routine.blink ?? []].flat().map((rule) => rule.still_for ?? {}));
   const out = [];
   // A frame that came late (the machine, not the routine): one hold overruns by it and the player makes the
   // time up on the next, as it is meant to. Listed by itself.
@@ -188,10 +190,18 @@ const checkPresenter = (steps, routine, first = true) => {
   if (faded.length) problems.push(`${faded.length} step(s) carry a dissolve: ${faded.slice(0, 3).map((s) => s.pose).join(', ')}`);
   // His blinks.
   const blinks = [];
-  list.forEach((s, i) => { if (blink.includes(s.pose)) blinks.push({ at: s.at, shownMs: s.shown, before: list[i - 1]?.pose ?? null, after: list[i + 1]?.pose ?? null, msSinceTheLast: blinks.length ? r1(s.at - blinks.at(-1).at) : null }); });
+  list.forEach((s, i) => { if (blink.includes(s.pose)) blinks.push({ at: s.at, pose: s.pose, shownMs: s.shown, before: list[i - 1]?.pose ?? null, after: list[i + 1]?.pose ?? null, msSinceTheLast: blinks.length ? r1(s.at - blinks.at(-1).at) : null }); });
   const gaps = blinks.map((b) => b.msSinceTheLast).filter((g) => g !== null);
-  const badBlink = blinks.filter((b) => Math.abs(b.shownMs - 110) > 40 || (b.before && GROUP(b.before) !== 'M_1') || (b.after && !['M_1', 'M_12', 'M_13'].includes(GROUP(b.after))));
-  if (badBlink.length) problems.push(`${badBlink.length} blink(s) not 110 ms among the M_1 mouths: ${JSON.stringify(badBlink.slice(0, 3))}`);
+  // About 110 ms; straight after one of his mouths, never straight out of an in-between; and the blink of a
+  // mouth of the same gesture as the one before it (so his hands never jump), or of that very mouth.
+  const mouths = Object.keys(blinkFor);
+  const badBlink = blinks.filter((b) => {
+    if (Math.abs(b.shownMs - 110) > 40) return true;
+    if (!mouths.length) return (b.before && GROUP(b.before) !== 'M_1') || (b.after && !['M_1', 'M_12', 'M_13'].includes(GROUP(b.after)));
+    const ofMouth = mouths.find((m) => blinkFor[m] === b.pose);
+    return (b.before && !mouths.includes(b.before)) || (b.before && GROUP(b.before) !== GROUP(ofMouth));
+  });
+  if (badBlink.length) problems.push(`${badBlink.length} blink(s) not 110 ms on the mouth he holds: ${JSON.stringify(badBlink.slice(0, 3))}`);
   const longest = list.reduce((a, b) => (b.shown > (a?.shown ?? 0) ? b : a), null);
   const seen = {};
   for (const s of list) seen[s.pose] = (seen[s.pose] ?? 0) + 1;

@@ -279,11 +279,11 @@
   ],
   "mostOfThePaintingShowingOnTheDrawnEdge": {
    "0px": 0,
-   "1px": 0,
-   "2px": 0.004,
-   "4px": 0.012,
-   "8px": 0.082,
-   "14px": 0.333,
+   "1px": 0.008,
+   "2px": 0.024,
+   "4px": 0.071,
+   "8px": 0.22,
+   "14px": 0.525,
    "20px": 0.824,
    "27px": 1
   },
@@ -322,11 +322,11 @@
    },
    "1 CSS px inside it": {
     "screenPixels": 6482,
-    "furthestFromPaperOutOf255": 1
+    "furthestFromPaperOutOf255": 4
    },
    "2 CSS px inside it": {
     "screenPixels": 6466,
-    "furthestFromPaperOutOf255": 2
+    "furthestFromPaperOutOf255": 10
    }
   },
   "ok": true

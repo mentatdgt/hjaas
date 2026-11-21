@@ -148,3 +148,10 @@ One trace, same profile, production build with the new plate: `s4-film-car2-pain
 (1.4 to 7.4 s) 360 frames begun, 14 dropped, four tasks of 53 to 124 ms (layout, a garbage collection); at
 work 174 begun, 1 dropped; a find 210 begun, 8 dropped, one task of 96 ms. On the calm Mac the same parts
 dropped 2, 0 and 3.
+
+### Scene 4, round 2 (blink stills for every mouth, the Merlion hugged)
+
+`s4-film-r2-paint-in-and-find-mobile-4x.json.gz` (raw, not in git), production build, load 4.6: the painting
+(1.1 to 7.1 s) 360 frames begun, 1 dropped, longest task 20 ms; at work 114 begun, none dropped; a find 210
+begun, 3 dropped, longest task 32 ms. Before the painting starts (0.9 s, blank paper) one task of 104 ms puts
+the cast on the plate.

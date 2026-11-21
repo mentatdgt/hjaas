@@ -1,5 +1,5 @@
 {
- "machine": "12:22  up 9 days, 19:32, 2 users, load averages: 3.99 4.54 4.99",
+ "machine": "15:53  up 9 days, 23:03, 2 users, load averages: 4.00 4.16 5.71",
  "runs": [
   {
    "browser": "webkit, iPhone 14 profile",
@@ -7,40 +7,72 @@
    "stretches": [
     {
      "stretch": "Film painted for a new visitor",
-     "frames": 391,
-     "longestMs": 23,
+     "frames": 390,
+     "longestMs": 39,
      "over50": 0,
-     "over33": 0,
+     "over33": 2,
      "medianMs": 17
     },
     {
      "stretch": "Film at work, 8 s",
      "frames": 481,
-     "longestMs": 19,
+     "longestMs": 26,
      "over50": 0,
      "over33": 0,
      "medianMs": 17
     },
     {
      "stretch": "to build (first visit: its full painting)",
+     "frames": 511,
+     "longestMs": 97,
+     "over50": 3,
+     "over33": 5,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to grow (first visit: its full painting)",
+     "frames": 510,
+     "longestMs": 58,
+     "over50": 1,
+     "over33": 5,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to design (first visit: its full painting)",
      "frames": 516,
-     "longestMs": 50,
+     "longestMs": 41,
      "over50": 0,
      "over33": 2,
      "medianMs": 17
     },
     {
-     "stretch": "to grow (first visit: its full painting)",
-     "frames": 513,
-     "longestMs": 32,
+     "stretch": "to film (the short brush)",
+     "frames": 196,
+     "longestMs": 34,
+     "over50": 0,
+     "over33": 1,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to build (the short brush)",
+     "frames": 195,
+     "longestMs": 43,
+     "over50": 0,
+     "over33": 1,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to grow (the short brush)",
+     "frames": 197,
+     "longestMs": 22,
      "over50": 0,
      "over33": 0,
      "medianMs": 17
     },
     {
-     "stretch": "to design (first visit: its full painting)",
-     "frames": 512,
-     "longestMs": 38,
+     "stretch": "to design (the short brush)",
+     "frames": 198,
+     "longestMs": 44,
      "over50": 0,
      "over33": 1,
      "medianMs": 17
@@ -48,38 +80,6 @@
     {
      "stretch": "to film (the short brush)",
      "frames": 195,
-     "longestMs": 21,
-     "over50": 0,
-     "over33": 0,
-     "medianMs": 17
-    },
-    {
-     "stretch": "to build (the short brush)",
-     "frames": 195,
-     "longestMs": 21,
-     "over50": 0,
-     "over33": 0,
-     "medianMs": 17
-    },
-    {
-     "stretch": "to grow (the short brush)",
-     "frames": 195,
-     "longestMs": 24,
-     "over50": 0,
-     "over33": 0,
-     "medianMs": 17
-    },
-    {
-     "stretch": "to design (the short brush)",
-     "frames": 196,
-     "longestMs": 24,
-     "over50": 0,
-     "over33": 0,
-     "medianMs": 17
-    },
-    {
-     "stretch": "to film (the short brush)",
-     "frames": 196,
      "longestMs": 25,
      "over50": 0,
      "over33": 0,
@@ -109,7 +109,7 @@
     },
     {
      "stretch": "Film at work, 8 s",
-     "frames": 481,
+     "frames": 482,
      "longestMs": 19,
      "over50": 0,
      "over33": 0,
@@ -117,47 +117,47 @@
     },
     {
      "stretch": "to build (first visit: its full painting)",
-     "frames": 514,
-     "longestMs": 57,
-     "over50": 1,
-     "over33": 2,
+     "frames": 517,
+     "longestMs": 84,
+     "over50": 2,
+     "over33": 3,
      "medianMs": 17
     },
     {
      "stretch": "to grow (first visit: its full painting)",
-     "frames": 513,
-     "longestMs": 42,
+     "frames": 516,
+     "longestMs": 48,
      "over50": 0,
-     "over33": 1,
+     "over33": 2,
      "medianMs": 17
     },
     {
      "stretch": "to design (first visit: its full painting)",
-     "frames": 515,
-     "longestMs": 54,
+     "frames": 514,
+     "longestMs": 61,
      "over50": 1,
      "over33": 2,
      "medianMs": 17
     },
     {
      "stretch": "to film (the short brush)",
-     "frames": 198,
-     "longestMs": 62,
-     "over50": 3,
+     "frames": 195,
+     "longestMs": 46,
+     "over50": 0,
      "over33": 3,
      "medianMs": 17
     },
     {
      "stretch": "to build (the short brush)",
-     "frames": 196,
-     "longestMs": 124,
-     "over50": 2,
-     "over33": 2,
+     "frames": 195,
+     "longestMs": 20,
+     "over50": 0,
+     "over33": 0,
      "medianMs": 17
     },
     {
      "stretch": "to grow (the short brush)",
-     "frames": 197,
+     "frames": 194,
      "longestMs": 23,
      "over50": 0,
      "over33": 0,
@@ -165,24 +165,24 @@
     },
     {
      "stretch": "to design (the short brush)",
-     "frames": 196,
-     "longestMs": 22,
+     "frames": 197,
+     "longestMs": 21,
      "over50": 0,
      "over33": 0,
      "medianMs": 17
     },
     {
      "stretch": "to film (the short brush)",
-     "frames": 197,
-     "longestMs": 83,
-     "over50": 1,
-     "over33": 2,
+     "frames": 195,
+     "longestMs": 23,
+     "over50": 0,
+     "over33": 0,
      "medianMs": 17
     },
     {
      "stretch": "to build (the short brush)",
-     "frames": 196,
-     "longestMs": 22,
+     "frames": 197,
+     "longestMs": 21,
      "over50": 0,
      "over33": 0,
      "medianMs": 17
@@ -196,7 +196,7 @@
     {
      "stretch": "Film painted for a new visitor",
      "frames": 391,
-     "longestMs": 23,
+     "longestMs": 31,
      "over50": 0,
      "over33": 0,
      "medianMs": 17
@@ -212,38 +212,38 @@
     {
      "stretch": "to build (first visit: its full painting)",
      "frames": 515,
-     "longestMs": 78,
+     "longestMs": 94,
      "over50": 2,
      "over33": 2,
      "medianMs": 17
     },
     {
      "stretch": "to grow (first visit: its full painting)",
-     "frames": 514,
-     "longestMs": 46,
-     "over50": 0,
-     "over33": 3,
-     "medianMs": 17
-    },
-    {
-     "stretch": "to design (first visit: its full painting)",
-     "frames": 516,
-     "longestMs": 50,
+     "frames": 517,
+     "longestMs": 44,
      "over50": 0,
      "over33": 2,
      "medianMs": 17
     },
     {
+     "stretch": "to design (first visit: its full painting)",
+     "frames": 513,
+     "longestMs": 43,
+     "over50": 0,
+     "over33": 1,
+     "medianMs": 17
+    },
+    {
      "stretch": "to film (the short brush)",
      "frames": 198,
-     "longestMs": 41,
+     "longestMs": 48,
      "over50": 0,
      "over33": 2,
      "medianMs": 17
     },
     {
      "stretch": "to build (the short brush)",
-     "frames": 196,
+     "frames": 197,
      "longestMs": 21,
      "over50": 0,
      "over33": 0,
@@ -259,7 +259,7 @@
     },
     {
      "stretch": "to design (the short brush)",
-     "frames": 194,
+     "frames": 195,
      "longestMs": 21,
      "over50": 0,
      "over33": 0,
@@ -267,16 +267,16 @@
     },
     {
      "stretch": "to film (the short brush)",
-     "frames": 195,
-     "longestMs": 25,
+     "frames": 197,
+     "longestMs": 23,
      "over50": 0,
      "over33": 0,
      "medianMs": 17
     },
     {
      "stretch": "to build (the short brush)",
-     "frames": 195,
-     "longestMs": 20,
+     "frames": 194,
+     "longestMs": 23,
      "over50": 0,
      "over33": 0,
      "medianMs": 17
@@ -289,7 +289,7 @@
    "stretches": [
     {
      "stretch": "Film painted for a new visitor",
-     "frames": 390,
+     "frames": 391,
      "longestMs": 17,
      "over50": 0,
      "over33": 0,
@@ -297,7 +297,7 @@
     },
     {
      "stretch": "Film at work, 8 s",
-     "frames": 481,
+     "frames": 482,
      "longestMs": 17,
      "over50": 0,
      "over33": 0,
@@ -305,15 +305,15 @@
     },
     {
      "stretch": "to build (first visit: its full painting)",
-     "frames": 519,
-     "longestMs": 67,
+     "frames": 520,
+     "longestMs": 83,
      "over50": 1,
-     "over33": 1,
+     "over33": 2,
      "medianMs": 17
     },
     {
      "stretch": "to grow (first visit: its full painting)",
-     "frames": 513,
+     "frames": 517,
      "longestMs": 50,
      "over50": 0,
      "over33": 1,
@@ -321,16 +321,16 @@
     },
     {
      "stretch": "to design (first visit: its full painting)",
-     "frames": 514,
-     "longestMs": 83,
-     "over50": 2,
-     "over33": 2,
+     "frames": 515,
+     "longestMs": 50,
+     "over50": 0,
+     "over33": 1,
      "medianMs": 17
     },
     {
      "stretch": "to film (the short brush)",
-     "frames": 191,
-     "longestMs": 233,
+     "frames": 194,
+     "longestMs": 167,
      "over50": 1,
      "over33": 1,
      "medianMs": 17
@@ -345,7 +345,7 @@
     },
     {
      "stretch": "to grow (the short brush)",
-     "frames": 190,
+     "frames": 191,
      "longestMs": 100,
      "over50": 1,
      "over33": 1,
@@ -361,7 +361,7 @@
     },
     {
      "stretch": "to film (the short brush)",
-     "frames": 190,
+     "frames": 191,
      "longestMs": 100,
      "over50": 1,
      "over33": 1,
@@ -369,8 +369,8 @@
     },
     {
      "stretch": "to build (the short brush)",
-     "frames": 190,
-     "longestMs": 100,
+     "frames": 192,
+     "longestMs": 83,
      "over50": 1,
      "over33": 1,
      "medianMs": 17
@@ -391,7 +391,7 @@
     },
     {
      "stretch": "Film at work, 8 s",
-     "frames": 481,
+     "frames": 480,
      "longestMs": 17,
      "over50": 0,
      "over33": 0,
@@ -399,55 +399,55 @@
     },
     {
      "stretch": "to build (first visit: its full painting)",
-     "frames": 518,
+     "frames": 521,
      "longestMs": 83,
+     "over50": 1,
+     "over33": 2,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to grow (first visit: its full painting)",
+     "frames": 515,
+     "longestMs": 67,
      "over50": 1,
      "over33": 3,
      "medianMs": 17
     },
     {
-     "stretch": "to grow (first visit: its full painting)",
-     "frames": 512,
-     "longestMs": 33,
-     "over50": 0,
-     "over33": 0,
-     "medianMs": 17
-    },
-    {
      "stretch": "to design (first visit: its full painting)",
-     "frames": 512,
-     "longestMs": 50,
-     "over50": 0,
-     "over33": 1,
+     "frames": 516,
+     "longestMs": 67,
+     "over50": 1,
+     "over33": 2,
      "medianMs": 17
     },
     {
      "stretch": "to film (the short brush)",
-     "frames": 189,
-     "longestMs": 117,
+     "frames": 192,
+     "longestMs": 183,
      "over50": 1,
      "over33": 1,
      "medianMs": 17
     },
     {
      "stretch": "to build (the short brush)",
-     "frames": 190,
+     "frames": 191,
+     "longestMs": 117,
+     "over50": 1,
+     "over33": 2,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to grow (the short brush)",
+     "frames": 192,
      "longestMs": 100,
      "over50": 1,
      "over33": 1,
      "medianMs": 17
     },
     {
-     "stretch": "to grow (the short brush)",
-     "frames": 189,
-     "longestMs": 117,
-     "over50": 1,
-     "over33": 1,
-     "medianMs": 17
-    },
-    {
      "stretch": "to design (the short brush)",
-     "frames": 196,
+     "frames": 191,
      "longestMs": 100,
      "over50": 1,
      "over33": 1,
@@ -455,7 +455,7 @@
     },
     {
      "stretch": "to film (the short brush)",
-     "frames": 189,
+     "frames": 191,
      "longestMs": 100,
      "over50": 1,
      "over33": 1,
@@ -477,8 +477,8 @@
    "stretches": [
     {
      "stretch": "Film painted for a new visitor",
-     "frames": 390,
-     "longestMs": 33,
+     "frames": 391,
+     "longestMs": 17,
      "over50": 0,
      "over33": 0,
      "medianMs": 17
@@ -493,47 +493,47 @@
     },
     {
      "stretch": "to build (first visit: its full painting)",
-     "frames": 517,
-     "longestMs": 67,
+     "frames": 519,
+     "longestMs": 83,
      "over50": 1,
-     "over33": 2,
+     "over33": 1,
      "medianMs": 17
     },
     {
      "stretch": "to grow (first visit: its full painting)",
-     "frames": 513,
+     "frames": 516,
      "longestMs": 50,
      "over50": 0,
-     "over33": 1,
+     "over33": 2,
      "medianMs": 17
     },
     {
      "stretch": "to design (first visit: its full painting)",
-     "frames": 512,
+     "frames": 514,
      "longestMs": 50,
      "over50": 0,
-     "over33": 1,
+     "over33": 2,
      "medianMs": 17
     },
     {
      "stretch": "to film (the short brush)",
-     "frames": 190,
-     "longestMs": 133,
+     "frames": 196,
+     "longestMs": 200,
      "over50": 1,
      "over33": 1,
      "medianMs": 17
     },
     {
      "stretch": "to build (the short brush)",
-     "frames": 188,
-     "longestMs": 117,
+     "frames": 187,
+     "longestMs": 200,
      "over50": 1,
      "over33": 1,
      "medianMs": 17
     },
     {
      "stretch": "to grow (the short brush)",
-     "frames": 190,
+     "frames": 191,
      "longestMs": 100,
      "over50": 1,
      "over33": 1,
@@ -541,15 +541,15 @@
     },
     {
      "stretch": "to design (the short brush)",
-     "frames": 189,
-     "longestMs": 100,
+     "frames": 190,
+     "longestMs": 117,
      "over50": 1,
      "over33": 1,
      "medianMs": 17
     },
     {
      "stretch": "to film (the short brush)",
-     "frames": 190,
+     "frames": 191,
      "longestMs": 100,
      "over50": 1,
      "over33": 1,
@@ -558,7 +558,7 @@
     {
      "stretch": "to build (the short brush)",
      "frames": 191,
-     "longestMs": 100,
+     "longestMs": 117,
      "over50": 1,
      "over33": 1,
      "medianMs": 17
