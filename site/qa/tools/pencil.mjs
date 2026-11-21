@@ -74,11 +74,12 @@ const unionOf = async (scene) => {
       const alpha = probe.getImageData(0, 0, stills[0].width, stills[0].height).data;
       let solid = true;
       for (let i = 3; i < alpha.length && solid; i += 4) solid = alpha[i] === 255;
-      // What the drawings cannot say, from the scene's brief (reviews/scene-4-build.md, sections 4 and 6):
-      // the film scene's water is scenery too, and Rachel there is cropped by the bottom of the painting,
-      // so only what is above her waist (plate y 760) has to be whole.
-      const rules = { film: { scenery: ['water'], above: { rachel: 760 } } }[scene.id] ?? {};
-      if (solid || rules.scenery?.includes(layer.actor)) continue;
+      // A layer the package marks as scenery (the film scene's water) is faded with the plate too. And what
+      // the package cannot say, from the scene's brief (reviews/scene-4-build.md, section 6): Rachel in the
+      // film scene is cropped by the bottom of the painting, so only what is above her waist (plate y 760)
+      // has to be whole.
+      const rules = { film: { above: { rachel: 760 } } }[scene.id] ?? {};
+      if (solid || layer.scenery === true) continue;
       ctx.save();
       if (rules.above?.[layer.actor]) { ctx.beginPath(); ctx.rect(0, 0, W, rules.above[layer.actor]); ctx.clip(); }
       for (const b of stills) ctx.drawImage(b, layer.x * k, layer.y * k, b.width * k, b.height * k);

@@ -124,9 +124,29 @@ describe('every scene\'s hunt', () => {
     const [, , , presenterBottom] = filmCast.covers.presenter;
     expect(film.keep).toContainEqual(filmCast.covers.presenter);
     expect(film.keep).toContainEqual([filmCast.covers.rachel[0], filmCast.covers.rachel[1], filmCast.covers.rachel[2], 760]);
-    expect(film.keep).toHaveLength(2);
+    // And the Merlion's head, which reaches up into the top edge's reach: hugged, from its crown down.
+    const hugged = film.keep!.filter((box) => box[4] === 'hug');
+    expect(hugged.length).toBeGreaterThanOrEqual(5);
+    expect(Math.min(...hugged.map((box) => box[1]))).toBe(23);
+    expect(Math.min(...hugged.map((box) => box[0]))).toBeLessThanOrEqual(900);
+    expect(Math.max(...hugged.map((box) => box[2]))).toBeGreaterThanOrEqual(1095);
+    expect(film.keep).toHaveLength(2 + hugged.length);
     // The water is scenery: the edge fades it with the plate.
     expect(filmCast.room).toEqual(['water']);
     expect(presenterBottom).toBeLessThan(941 - 28);
+  });
+});
+
+describe('Film on a phone', () => {
+  it("opens with both faces in the window, at the tallest phone's crop as at the widest (Wren's review of build 01)", () => {
+    const film = SCENES.find((scene) => scene.id === 'film')!;
+    // Measured from the package: his face, and hers even mid-reaction (R_K1_look).
+    const faces = { presenter: [669, 815], rachel: [1133, 1262] };
+    for (const [shape, [left, right]] of Object.entries(film.phoneStart)) {
+      for (const [who, [from, to]] of Object.entries(faces)) {
+        expect(from, `${who}'s face at the ${shape} crop`).toBeGreaterThanOrEqual(left);
+        expect(to, `${who}'s face at the ${shape} crop`).toBeLessThanOrEqual(right);
+      }
+    }
   });
 });

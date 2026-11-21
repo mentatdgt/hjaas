@@ -24,7 +24,7 @@ export interface CastFrames {
   /** The canvas the scene was drawn on. The plate is the same picture, whatever size the page shows it at. */
   canvas: { w: number; h: number };
   /** The actors, bottom to top. */
-  layers: ReadonlyArray<{ actor: string; x: number; y: number; w: number; h: number; stills: readonly string[] }>;
+  layers: ReadonlyArray<{ actor: string; x: number; y: number; w: number; h: number; stills: readonly string[]; scenery?: boolean }>;
   /** Still name -> file. */
   stills: Readonly<Record<string, string>>;
   /** Clip name -> the layer it belongs to, its base still, where its patches go in the layer, and the files. */

@@ -114,11 +114,18 @@ describe("the Merlion's water", () => {
 
 describe('the presenter', () => {
   const { routine } = actor('presenter');
-  const BLINK = 'M_1_blink';
-  const MOUTHS = ['M_1', 'M_1_mid', 'M_1_closed'];
+  // Every mouth he talks with, and its blink: the same mouth with his eyes shut (package, 15:15).
+  const MOUTHS = ['M_1', 'M_1_mid', 'M_1_closed', 'M_2', 'M_2_closed', 'M_3', 'M_3_closed'];
+  const BLINK_OF = Object.fromEntries(MOUTHS.map((mouth) => [mouth, `${mouth}_blink`]));
+  const BLINKS = new Set(Object.values(BLINK_OF));
+  const isBlink = (pose: string): boolean => BLINKS.has(pose);
+  const mouthOf = (blink: string): string => blink.replace(/_blink$/, '');
   const steps = take('presenter', 12000);
   /** What he is doing in a pose: talking with his hands open, pointing, or hands together; or the in-between. */
-  const doing = (pose: string): string => (pose === BLINK || MOUTHS.includes(pose) ? 'talk 1' : pose.startsWith('M_2') ? 'talk 2' : pose.startsWith('M_3') ? 'talk 3' : pose);
+  const doing = (pose: string): string => {
+    const mouth = isBlink(pose) ? mouthOf(pose) : pose;
+    return mouth.startsWith('M_1_') || mouth === 'M_1' ? 'talk 1' : mouth.startsWith('M_2') ? 'talk 2' : mouth.startsWith('M_3') ? 'talk 3' : mouth;
+  };
   /** The widest range written for each still, over the whole routine. */
   const written = new Map<string, [number, number]>();
   for (const item of routine.routine) {
@@ -131,7 +138,9 @@ describe('the presenter', () => {
 
   it('leaves blinking to his blink rule: no hold is marked blink_ok', () => {
     expect(JSON.stringify(routines.actors.presenter)).not.toContain('blink_ok');
-    expect(routine.blink).toMatchObject({ on: MOUTHS, frames: [{ still: BLINK, ms: 110 }], every_ms: [2500, 6000] });
+    expect(routine.blink).toMatchObject({ on: MOUTHS, still_for: BLINK_OF, ms: 110, every_ms: [2500, 6000] });
+    // Never on an in-between.
+    for (const still of ['M_12', 'M_13']) expect(JSON.stringify(routine.blink)).not.toContain(`"${still}"`);
     expect(actor('presenter').reacts).toBe(false);
   });
 
@@ -151,32 +160,44 @@ describe('the presenter', () => {
 
   it('holds every pose for a time in its written range, except where a blink took part of the hold', () => {
     steps.forEach((step, i) => {
-      if (step.pose === BLINK) return;
+      if (isBlink(step.pose)) return;
       const [low, high] = written.get(step.pose)!;
       expect(step.ms, step.pose).toBeLessThanOrEqual(high);
-      const beside = steps[i - 1]?.pose === BLINK || steps[i + 1]?.pose === BLINK;
+      const beside = isBlink(steps[i - 1]?.pose ?? '') || isBlink(steps[i + 1]?.pose ?? '');
       // (Beside a blink: what was left of the hold, which is shown only if it is 50 ms or more.)
       expect(step.ms, step.pose).toBeGreaterThanOrEqual(beside ? 50 : low);
     });
   });
 
-  it('blinks for 110 ms, between two shapes of his mouth and never beside a gesture', () => {
+  it('blinks for 110 ms on the mouth he is holding, which stays as it was, and never on an in-between', () => {
     let blinks = 0;
+    let sameMouthAfter = 0;
+    const kinds = new Set<string>();
     steps.forEach((step, i) => {
-      if (step.pose !== BLINK || i === 0 || i === steps.length - 1) return;
+      if (!isBlink(step.pose) || i === 0 || i === steps.length - 1) return;
       blinks++;
+      kinds.add(step.pose);
       expect(step.ms).toBe(110);
+      // Only ever after another mouth (never straight out of an in-between), and never two blinks running.
       expect(MOUTHS, `before blink ${blinks}`).toContain(steps[i - 1].pose);
-      expect(MOUTHS, `after blink ${blinks}`).toContain(steps[i + 1].pose);
+      expect(isBlink(steps[i + 1].pose)).toBe(false);
+      // The hold it blinks in carries on, on the same mouth, if 50 ms or more of it is left.
+      if (steps[i + 1].pose === mouthOf(step.pose)) sameMouthAfter++;
+      else expect(MOUTHS.includes(steps[i + 1].pose) || ['M_12', 'M_13'].includes(steps[i + 1].pose)).toBe(true);
     });
     expect(blinks).toBeGreaterThan(100);
+    // Most of his holds are shorter than a blink and a 50 ms rest: there the blink is the whole hold, and he
+    // goes on to the next mouth from it. In the longer ones he is back on the same mouth after it.
+    expect(sameMouthAfter / blinks).toBeGreaterThan(0.25);
+    // He blinks while pointing and with his hands together too.
+    for (const kind of ['M_2_blink', 'M_2_closed_blink', 'M_3_blink', 'M_3_closed_blink', 'M_1_blink']) expect([...kinds]).toContain(kind);
   });
 
   it('blinks every few seconds: never sooner than the 2.5 s the rule asks, and on average well inside a gesture or two more', () => {
     let clock = 0;
     const at: number[] = [];
     for (const step of steps) {
-      if (step.pose === BLINK) at.push(clock);
+      if (isBlink(step.pose)) at.push(clock);
       clock += step.ms;
     }
     const gaps = at.slice(1).map((t, i) => t - at[i]);
@@ -184,12 +205,11 @@ describe('the presenter', () => {
     // to half that hold early.)
     expect(Math.min(...gaps) - 110).toBeGreaterThanOrEqual(2500 - 240);
     const mean = gaps.reduce((sum, gap) => sum + gap, 0) / gaps.length;
-    // The rule's own average is 4.25 s; a blink that falls due while he points or has his hands together
-    // waits until he is back on a pose it can replace.
-    expect(mean).toBeGreaterThan(3500);
-    expect(mean).toBeLessThan(7500);
-    // Never a long stare: the two other ways of talking last 5 s at the most.
-    expect(Math.max(...gaps)).toBeLessThan(6000 + 5200 + 1500);
+    // The rule's own average is 4.25 s. He may blink on every mouth now, so a blink that falls due waits
+    // for one hold at most (and one more after an in-between).
+    expect(mean).toBeGreaterThan(3800);
+    expect(mean).toBeLessThan(5000);
+    expect(Math.max(...gaps)).toBeLessThan(6000 + 1100);
   });
 
   it('blinks in the short holds too, by giving the blink the start of the hold', () => {
@@ -197,7 +217,7 @@ describe('the presenter', () => {
     let atTheStart = 0;
     let inTheMiddle = 0;
     steps.forEach((step, i) => {
-      if (step.pose !== BLINK || i === 0 || i === steps.length - 1) return;
+      if (!isBlink(step.pose) || i === 0 || i === steps.length - 1) return;
       const before = steps[i - 1];
       const after = steps[i + 1];
       if (before.pose === after.pose && before.ms + 110 + after.ms <= written.get(after.pose)![1] && before.ms + 110 + after.ms >= 270 && before.ms >= 80 && after.ms >= 80) inTheMiddle++;

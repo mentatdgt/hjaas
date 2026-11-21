@@ -221,7 +221,45 @@ function washFrom(din: number, bottom: number, wander: number, swing: number, ou
  *   and comes back along the lobe's shoulders (a box with 120 px or more keeps the ordinary pencil);
  * - everywhere else, the ordinary pencil edge.
  */
-export type KeepBox = readonly [number, number, number, number];
+export type KeepBox = readonly [number, number, number, number] | readonly [number, number, number, number, 'hug'];
+
+/**
+ * A box marked `'hug'` is a part of the room, not the cast, that reaches up into the edge's reach (the film
+ * scene's Merlion, whose head comes to 23 px from the top). A few such boxes, stacked, follow its outline.
+ * The painting does not reach out to the rim in a lobe there: it bulges out around the boxes and follows
+ * them, whole up to a few px from them and fading over a few dozen, its line wandering with the same noise
+ * as the ordinary edge's. Further away the ordinary edge, pencil and all, is left exactly as it is. The rim
+ * fade applies here as everywhere.
+ */
+const HUG = {
+  /** Whole this far from the boxes, give or take `wobble` with the edge's own wander; then a fade this wide, give or take `swing` of it. */
+  margin: 18,
+  wobble: 16,
+  width: 46,
+  swing: 0.5,
+} as const;
+/** Beyond this distance from every hugged box, nothing changes. */
+const HUG_REACH = HUG.margin + HUG.wobble + HUG.width * (1 + HUG.swing);
+
+const isHug = (box: KeepBox): boolean => box[4] === 'hug';
+const hugsOf = (keep: readonly KeepBox[] | undefined): KeepBox[] => (keep ?? []).filter(isHug);
+
+/** Raise the colour, at a point `din` inside the plate, around the hugged boxes near it. `wander`, `swing`: the ordinary edge's two noises there. */
+function hug(boxes: readonly KeepBox[], x: number, y: number, din: number, wander: number, swing: number, out: Wash): void {
+  let dist = Infinity;
+  for (const [left, top, right, bottom] of boxes) {
+    const dx = Math.max(left - x, 0, x - right);
+    const dy = Math.max(top - y, 0, y - bottom);
+    dist = Math.min(dist, Math.hypot(dx, dy));
+  }
+  if (dist >= HUG_REACH) return;
+  const width = HUG.width * (1 + HUG.swing * swing);
+  const line = HUG.margin + HUG.wobble * wander;
+  const paint = smooth((line + width - dist) / width) * smooth(din / PENCIL.rim);
+  if (paint > out.paint) out.paint = paint;
+  // (The pencil is never short of the colour.)
+  if (out.pencil < out.paint) out.pencil = out.paint;
+}
 
 /** One side of a box the edge has to make room for: where along that side, and how near the rim it comes. */
 interface Hold {
@@ -253,7 +291,7 @@ const HOLD = {
 
 function holdsOf(keep: readonly KeepBox[] | undefined): Hold[] {
   const holds: Hold[] = [];
-  for (const [left, top, right, bottom] of keep ?? []) {
+  for (const [left, top, right, bottom] of (keep ?? []).filter((box) => !isHug(box))) {
     // Each side of the plate the box is within the edge's reach of.
     const sides: Array<[Hold['side'], number, number, number]> = [
       ['top', left, right, top],
@@ -307,6 +345,7 @@ function pencilWash(seed: number, keep?: readonly KeepBox[]): (x: number, y: num
   const o = ORGANIC;
   const radius = o.radius * PLATE.w;
   const holds = holdsOf(keep);
+  const hugs = hugsOf(keep);
   /** Layered value noise, from about -1 to 1. */
   const layers = (cells: readonly number[], weights: readonly number[], salt: number) => (x: number, y: number): number => {
     let total = 0;
@@ -321,8 +360,10 @@ function pencilWash(seed: number, keep?: readonly KeepBox[]): (x: number, y: num
     else if (din >= PENCIL_REACH) out.paint = out.pencil = 1;
     else {
       const wander = wanderAt(x, y);
-      washFrom(din, bottomOf(y), wander, swingAt(x, y), out);
+      const swing = swingAt(x, y);
+      washFrom(din, bottomOf(y), wander, swing, out);
       if (holds.length) lift(holds, x, y, din, wander, out);
+      if (hugs.length) hug(hugs, x, y, din, wander, swing, out);
     }
   };
 }
@@ -376,6 +417,7 @@ export function pencilRows(seed: number, x0: number, w: number, keep?: readonly 
   const o = ORGANIC;
   const radius = o.radius * PLATE.w;
   const holds = holdsOf(keep);
+  const hugs = hugsOf(keep);
   const wander = o.cells.map((cell, i) => rowNoise(cell, seed + i, x0, w));
   const swing = o.widthCells.map((cell, i) => rowNoise(cell, seed + 100 + i, x0, w));
   const breaks = rowNoise(PENCIL.breakCell, seed + PENCIL.breakSalt, x0, w);
@@ -406,6 +448,7 @@ export function pencilRows(seed: number, x0: number, w: number, keep?: readonly 
       for (let n = 0; n < swing.length; n++) width += (2 * swing[n].at(i) - 1) * o.widthWeights[n];
       washFrom(din, bottom, line / wanderTotal, width / swingTotal, out);
       if (holds.length) lift(holds, x0 + i + 0.5, y, din, line / wanderTotal, out);
+      if (hugs.length) hug(hugs, x0 + i + 0.5, y, din, line / wanderTotal, width / swingTotal, out);
     },
     breakUp: (i) => breaks.at(i),
   };

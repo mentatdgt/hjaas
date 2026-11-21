@@ -83,8 +83,23 @@ const STROKES: StrokePlan[] = [
 // whole under her; below it the edge fades her legs into the paper with the rest of the bottom edge
 // (reviews/scene-4-build.md, section 6).
 const WAIST = 760;
+// The Merlion's head comes to plate y 23 (its outline; the lit stone from y 25), inside the reach of the
+// painting's top edge, which faded its crown into pencil (Wren's review of build 01). The painting now
+// hugs the statue (edge.ts, KeepBox 'hug'): these boxes follow its outline, row band by row band, as traced
+// on the plate, and the colour is whole around them and fades a few dozen px beyond, its line wandering as
+// the edge's does. The top two rows of the crown are in the rim's own 28 px fade, which keeps the plate's
+// rim bare paper all round, as everywhere: there it is as whole as the rim allows (0.92 to 0.95).
+const MERLION: KeepBox[] = [
+  [984, 23, 1020, 27, 'hug'],
+  [966, 27, 1038, 31, 'hug'],
+  [948, 31, 1060, 55, 'hug'],
+  [936, 55, 1068, 71, 'hug'],
+  [904, 71, 1082, 111, 'hug'],
+  [898, 111, 1097, 195, 'hug'],
+  [900, 195, 1090, 230, 'hug'],
+];
 const { presenter, rachel } = cast.covers;
-const KEEP: KeepBox[] = [presenter as unknown as KeepBox, [rachel[0], rachel[1], rachel[2], Math.min(rachel[3], WAIST)]];
+const KEEP: KeepBox[] = [presenter as unknown as KeepBox, [rachel[0], rachel[1], rachel[2], Math.min(rachel[3], WAIST)], ...MERLION];
 
 export const film: SceneConfig = {
   id: 'film',
@@ -99,7 +114,7 @@ export const film: SceneConfig = {
   character: { kind: 'cast', dir: 'cast/', frames: 'frames.json', routine: 'routine.json' },
   spots: SPOTS,
   // The presenter's shoes come within 80 px of the plate's bottom, so the painting is told where he is; and
-  // Rachel above her waist.
+  // Rachel above her waist; and the Merlion's head, at the top, is hugged.
   keep: KEEP,
   // Of the edges the scene could have, the first that fits the strips the edge is drawn in and leaves every
   // mushroom and tap box where it is (qa/tools/pencil.mjs pick 600 film).
@@ -108,6 +123,8 @@ export const film: SceneConfig = {
   // A second find while she is looking back holds the look longer; she never turns twice.
   again: 'hold',
   strokes: STROKES,
-  // A phone starts on the two of them: the presenter (about plate x 610-915) and Rachel (1000-1350).
+  // A phone starts on the two of them, centred on plate x 977: both faces are in at every phone shape (his,
+  // 669 to 815; hers, 1133 to 1262 even as she looks round). His open hand and the outside of her hair go
+  // past the window's sides; panning shows them (Wren's review of build 01, which keeps this framing).
   phoneStart: { wide: [601, 1353], tall: [663, 1291] },
 };

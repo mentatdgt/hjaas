@@ -27,7 +27,10 @@
 //   - Away from the rest still on poses the routine passes through one after another (reach, lift, sip, lift,
 //     reach, and back to the sketch), a waiting reaction does not interrupt: she finishes what she is doing,
 //     with any long hold on the way cut short, and reacts once she is home.
-//   - Blinks: `blink` may be a list of rules, and a rule's `on` a list of stills. A hold in the reaction
+//   - Blinks: `blink` may be a list of rules, and a rule's `on` a list of stills. Instead of one blink for
+//     all of them (`frames`), a rule may give each still its own (`still_for`: still -> its blink still,
+//     shown for `ms`): the film scene's presenter closes his eyes on whichever mouth he is holding, so the
+//     mouth never jumps. A hold in the reaction
 //     may blink too: `"blink_ok": true` (the rule for that still is used), or `"blink"` naming the blink's
 //     still or giving its frames. Times in the reaction may be ranges, rolled each time she reacts.
 //   - A routine that never says `blink_ok` at all (the film scene's presenter, who talks in holds of a tenth
@@ -66,7 +69,11 @@ type BlinkFrames = ReadonlyArray<{ still: string; ms: number }>;
 /** Where she may blink (on which stills), what the blink is, and how often. */
 interface BlinkRule {
   on: string | readonly string[];
-  frames: BlinkFrames;
+  /** The blink, whichever of the `on` stills it is in. */
+  frames?: BlinkFrames;
+  /** Or a blink still for each of them, shown for `ms`. */
+  still_for?: Readonly<Record<string, string>>;
+  ms?: number;
   every_ms?: Ms;
 }
 
@@ -89,7 +96,13 @@ const BLINK_MS = 90;
 const BRIEF_MS = 300;
 
 const blinkRules = (routine: ClipRoutine): readonly BlinkRule[] => (!routine.blink ? [] : Array.isArray(routine.blink) ? routine.blink : [routine.blink as BlinkRule]);
-const blinksOn = (rule: BlinkRule, still: string): boolean => (typeof rule.on === 'string' ? rule.on === still : rule.on.includes(still));
+/** The blink that may come in a hold of this still: the rule's one blink, or the still's own. */
+const blinkFrames = (rule: BlinkRule, still: string): BlinkFrames => {
+  if (rule.frames) return rule.frames;
+  const own = rule.still_for?.[still];
+  return own ? [{ still: own, ms: rule.ms ?? BLINK_MS }] : [];
+};
+const blinksOn = (rule: BlinkRule, still: string): boolean => (typeof rule.on === 'string' ? rule.on === still : rule.on.includes(still)) && blinkFrames(rule, still).length > 0;
 
 /**
  * The still a reaction starts from and returns to; for an actor who never reacts, the one the routine opens
@@ -156,9 +169,16 @@ export function checkClips(frames: ClipFrames, routine: ClipRoutine): string[] {
   }
   if (!holds) problems.push('The routine needs at least one still: it is all she can do until her clips have loaded.');
   for (const rule of blinkRules(routine)) {
-    for (const on of typeof rule.on === 'string' ? [rule.on] : Array.isArray(rule.on) ? rule.on : [undefined]) still(on, '"blink.on"');
-    if (!Array.isArray(rule.frames) || rule.frames.length === 0) problems.push('"blink.frames" must list the blink\'s frames.');
-    for (const frame of rule.frames ?? []) still(frame.still, '"blink.frames"');
+    const on = typeof rule.on === 'string' ? [rule.on] : Array.isArray(rule.on) ? rule.on : [undefined];
+    for (const name of on) still(name, '"blink.on"');
+    if (rule.still_for && !rule.frames) {
+      for (const name of on) if (typeof name === 'string' && !rule.still_for[name]) problems.push(`"blink.still_for" has no blink still for "${name}", which "blink.on" names.`);
+      for (const [name, blink] of Object.entries(rule.still_for)) still(blink, `"blink.still_for" (for "${name}")`);
+      if (!(typeof rule.ms === 'number' && rule.ms > 0)) problems.push('"blink.ms" must say how long a blink still is shown.');
+    } else {
+      if (!Array.isArray(rule.frames) || rule.frames.length === 0) problems.push('"blink.frames" must list the blink\'s frames (or "blink.still_for" a blink still for each still).');
+      for (const frame of rule.frames ?? []) still(frame.still, '"blink.frames"');
+    }
   }
   if (routine.reaction) {
     if (routine.reaction.enter_from !== undefined) still(routine.reaction.enter_from, '"reaction.enter_from"');
@@ -196,7 +216,8 @@ export function stillsInUse(frames: ClipFrames, routine: ClipRoutine): string[] 
   }
   for (const rule of blinkRules(routine)) {
     for (const on of typeof rule.on === 'string' ? [rule.on] : rule.on) add(on);
-    for (const frame of rule.frames) add(frame.still);
+    for (const frame of rule.frames ?? []) add(frame.still);
+    for (const blink of Object.values(rule.still_for ?? {})) add(blink);
   }
   add(routine.reaction?.enter_from);
   for (const item of routine.reaction?.steps ?? []) {
@@ -277,24 +298,25 @@ export function* clipSchedule(
     // The dissolve belongs to the start of the hold: after a blink in the middle of it, the pose is simply back.
     const fade = fadeMs !== undefined && fadeMs > 0 ? { fade: fadeMs } : {};
     const blink = (blinkOk || free) && every !== undefined ? rules.find((rule) => blinksOn(rule, pose)) : undefined;
-    const blinkMs = blink ? blink.frames.reduce((sum, frame) => sum + frame.ms, 0) : 0;
+    const frames = blink ? blinkFrames(blink, pose) : [];
+    const blinkMs = frames.reduce((sum, frame) => sum + frame.ms, 0);
     // (A blink waits for the dissolve into the pose to finish.)
     const lead = Math.max(BLINK_MARGIN_MS, fadeMs ?? 0);
     if (blink && ms >= blinkMs + lead + BLINK_MARGIN_MS && sinceBlink + ms / 2 >= nextBlink) {
       const first = lead + rnd() * (ms - blinkMs - lead - BLINK_MARGIN_MS);
       yield { step: { pose, ms: first, ...fade }, home: [] };
-      for (const frame of blink.frames) yield { step: { pose: frame.still, ms: frame.ms }, home: [] };
+      for (const frame of frames) yield { step: { pose: frame.still, ms: frame.ms }, home: [] };
       yield { step: { pose, ms: ms - first - blinkMs }, home: [] };
       sinceBlink = ms - first - blinkMs;
       nextBlink = roll(every!);
       return;
     }
     if (blink && free && !fade.fade && sinceBlink >= nextBlink && blinksOn(blink, before)) {
-      for (const frame of blink.frames) yield { step: { pose: frame.still, ms: frame.ms }, home: [] };
+      for (const frame of frames) yield { step: { pose: frame.still, ms: frame.ms }, home: [] };
       const left = ms - blinkMs;
       if (left >= BLINK_REST_MS) yield { step: { pose, ms: left }, home: [] };
       // (With nothing left of the hold, the blink itself is the step before the next one.)
-      else last = blink.frames[blink.frames.length - 1].still;
+      else last = frames[frames.length - 1].still;
       sinceBlink = left >= BLINK_REST_MS ? left : 0;
       nextBlink = roll(every!);
       return;
@@ -441,7 +463,8 @@ export function clipReaction(frames: ClipFrames, routine: ClipRoutine): ClipReac
         const ms = rnd && typeof item.ms !== 'number' ? item.ms[0] + rnd() * (item.ms[1] - item.ms[0]) : middle(item.ms);
         // A blink in the middle of the hold, if the manifest allows one here: its own, or the still's rule.
         const own = typeof item.blink === 'string' ? [{ still: item.blink, ms: BLINK_MS }] : item.blink ? (item.blink.frames ?? (item.blink.still ? [{ still: item.blink.still, ms: item.blink.ms ?? BLINK_MS }] : null)) : null;
-        const blink = own ?? (item.blink_ok ? rules.find((rule) => blinksOn(rule, item.still))?.frames : undefined);
+        const rule = item.blink_ok ? rules.find((r) => blinksOn(r, item.still)) : undefined;
+        const blink = own ?? (rule ? blinkFrames(rule, item.still) : undefined);
         const blinkMs = blink ? blink.reduce((sum, frame) => sum + frame.ms, 0) : 0;
         // (Both parts of a gesture that a blink splits are the gesture; the blink between them is not.)
         const mark = item === gesture ? { gesture: true } : {};

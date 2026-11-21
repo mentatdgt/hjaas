@@ -117,17 +117,28 @@ for (const [name, clip] of Object.entries(labFrames.clips)) {
 // plate px, rounded outward. Written further down as src/scenes/<scene>-cast.json.
 //
 // A piece of the room that moves is listed under `room`, not under `covers`: the edge fades it as it fades
-// the plate. That is an actor whose every still is a solid rectangle, with nothing cut out (the café's
-// ceiling fan), or one the package's notes call scenery (`scenery` below: the Merlion's water, whose stills
-// are cut out like an actor's, so the drawings cannot say).
+// the plate. That is a layer the package marks `"scenery": true` (the Merlion's water, whose stills are cut
+// out like an actor's), or one whose every still is a solid rectangle, with nothing cut out (the café's
+// ceiling fan, from before packages said so).
+//
+// A layer's stills are the ones it lists, and any other still its routine names that the package's `stills`
+// has and no layer lists (the film scene's blink stills for each mouth, given in its routine only).
 const PACKAGES = [
-  { dir: 'frames/018-cafe-scene/site', to: 'scene3', json: 'design-cast.json', lines: 'design-lines.png', scenery: [] },
-  { dir: 'frames/020-film-scene/site', to: 'scene4', json: 'film-cast.json', lines: 'film-lines.png', scenery: ['water'] },
+  { dir: 'frames/018-cafe-scene/site', to: 'scene3', json: 'design-cast.json', lines: 'design-lines.png' },
+  { dir: 'frames/020-film-scene/site', to: 'scene4', json: 'film-cast.json', lines: 'film-lines.png' },
 ];
+/** Every string in a routine (its stills, blink stills and the rest): what a layer's own list may have left out. */
+const namesIn = (value) => (typeof value === 'string' ? [value] : Array.isArray(value) ? value.flatMap(namesIn) : value && typeof value === 'object' ? Object.values(value).flatMap(namesIn) : []);
 const castFrame = { quality: 93, alphaQuality: 100, smartSubsample: true, effort: 6 };
 const casts = [];
 for (const pack of PACKAGES) {
   const delivered = JSON.parse(await readFile(join(repo, pack.dir, 'frames.json'), 'utf8'));
+  const routines = JSON.parse(await readFile(join(repo, pack.dir, 'routine.json'), 'utf8'));
+  const listed = new Set(delivered.layers.flatMap((layer) => layer.stills));
+  delivered.layers = delivered.layers.map((layer) => {
+    const more = [...new Set(namesIn(routines.actors?.[layer.actor] ?? {}))].filter((name) => name in delivered.stills && !listed.has(name));
+    return more.length ? { ...layer, stills: [...layer.stills, ...more] } : layer;
+  });
   // (A new delivery may drop files the last one had: the folder is made afresh, unless only other files were asked for.)
   if (!process.argv[2] || [pack.to, 'cast'].includes(process.argv[2])) await rm(join(assets, pack.to, 'cast'), { recursive: true, force: true });
   add(`${pack.dir}/${delivered.plate}`, `${pack.to}/room.webp`, plate, { width: 1672, height: 941, fit: 'fill', kernel: 'lanczos3' }, assets);
@@ -185,7 +196,7 @@ for (const pack of PACKAGES) {
         }
       }
     }
-    if (solid || pack.scenery.includes(layer.actor)) where.room.push(layer.actor);
+    if (solid || layer.scenery === true) where.room.push(layer.actor);
     else if (box[0] <= box[2]) where.covers[layer.actor] = outward(box);
   }
   casts.push({ pack, delivered, forPage, where });

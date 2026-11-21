@@ -99,3 +99,14 @@ Place them yourself, following `reviews/scene-2-hunt-difficulty.md`: **3 easy, 4
 ## 9. Not yet
 - **Sean's consent:** the presenter is an original character, but he's inspired by a real friend. The user confirms before launch. Build normally.
 - **Copy:** none for this scene yet.
+
+## Update 2026-11-21 (after build 01): new plate
+The user had the car reshaped (a shorter bonnet, a longer cabin, the door split midway between the wheels). **Re-import from `origin/main`:** `frames/020-film-scene/site/plate.png` (→ `room.webp`) and `scene/pencil/film-lines.png` (→ `pencil-lr`/`pencil-tb`), using the same checkout-by-path as in section 0. Nothing else changed: the layers, routines, wheels, sill and every mushroom spot stay valid. Rebuild, re-run the scene-4 screenshots, and push.
+
+## Update 2026-11-21 15:15 (Wren): answers to build report 01
+1. **Phone framing: favour Rachel.** She's the hero and the face of her reaction. Set `phoneStart` so the phone window's right edge sits at plate x 1370 (her hair and back fully in, clear of the edge fade). His open left hand going off the left edge is fine; panning shows it.
+2. **Blinks on every mouth (package change, on `main`).** Six new stills: `M_1_mid_blink`, `M_1_closed_blink`, `M_2_blink`, `M_2_closed_blink`, `M_3_blink`, `M_3_closed_blink`. Each is its mouth still with M_1_blink's closed eyes, and identical outside a 64×36 px eye box. `routine.json` → presenter `blink` is now `{on: [the 7 mouth stills], still_for: {still → its blink still}, ms: 110, every_ms: [2500, 6000]}`. The old `frames` field is gone. Blink on whichever still is held, never on M_12/M_13. This also fixes the gaps over 6 s during gestures.
+3. **`"scenery": true` on the water layer** in `frames.json`. Read it in place of naming the water in `build-assets.mjs`.
+4. Keep the rest as you built it: Film-only `again: 'hold'`, the `wheel` mushroom, and the pale patch under his shoes (never visible).
+5. **Retake on a calm Mac** (iCloud paused): the new-plate trace (painting and a find) and the noisy WebKit run 2. Report only if either is still over budget.
+6. Keep `/Users/dgt/hjaas-cafe` until `site/scene-3` is merged into `main`.

@@ -226,18 +226,27 @@
     "on": [
      "M_1",
      "M_1_mid",
-     "M_1_closed"
+     "M_1_closed",
+     "M_2",
+     "M_2_closed",
+     "M_3",
+     "M_3_closed"
     ],
-    "frames": [
-     {
-      "still": "M_1_blink",
-      "ms": 110
-     }
-    ],
+    "still_for": {
+     "M_1": "M_1_blink",
+     "M_1_mid": "M_1_mid_blink",
+     "M_1_closed": "M_1_closed_blink",
+     "M_2": "M_2_blink",
+     "M_2_closed": "M_2_closed_blink",
+     "M_3": "M_3_blink",
+     "M_3_closed": "M_3_closed_blink"
+    },
+    "ms": 110,
     "every_ms": [
      2500,
      6000
-    ]
+    ],
+    "note": "Blink on any talking or gesture mouth (never on the in-betweens M_12/M_13). still_for gives the blink still for the still being held: same mouth, closed eyes, so the mouth never jumps."
    },
    "note": "Talks the whole time (lip-flap: open / mid / closed with pauses). Gestures go through a 100 ms in-between (M_12, M_13). He does not react to mushroom finds."
   },
