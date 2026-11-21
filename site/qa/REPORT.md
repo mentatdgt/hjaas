@@ -1565,3 +1565,9 @@ Earlier the same night, with the Mac busier, the same checks were noisier: see `
   trace them.
 - **The copy.** The café uses the same placeholder caption lines as the other scenes.
 
+## Scene 4: Film (the Merlion at night)
+
+On `site/scene-4`, made from the tip of `site/scene-3`. Brief: `reviews/scene-4-build.md`. The report is
+`reviews/scene-4-review-01.md` (the table of what was asked, the camera screen as built, the hunt, frame
+times, decisions, the animation standards, notes for Wren). The evidence is in `qa/scene4/` (made by
+`qa/tools/scene4.mjs`), `qa/edge/pencil-*.json` (all four scenes) and `qa/traces/SUMMARY.md`.
