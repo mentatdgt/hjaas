@@ -49,7 +49,8 @@ All original characters, described in words. Never based on a real person's phot
 ## 4c. Supporting cast and set (scene 5, theatre)
 - **The backdrop fills in with the hunt:** part of the sky is bare canvas with pencil lines; each find in this scene paints one more patch; at 10/10 here it is complete (Wren cuts the stages from the finished and pencil versions).
 - **Stagehand (user 2026-11-21 17:54):** an original character: a middle-aged contractor in a grey T-shirt and jeans, tan work boots (design: `frames/022-theatre-scene/incoming/022_stagehand_sheet.png`). Every 40–70 s (random) he crosses BEHIND the backdrop, seen only as his boots and jean cuffs in the gap under the hem: right to left, walking with purpose. 10–15 s later he walks back left to right. **No glimpse of him, no peeking** (could seem creepy). Boots animated as rigid pieces that lift, swing and plant, so they never slide.
-- **Ambient:** the caged work lamp sways rigidly on its hook; dust motes drift in the floodlight beam (code); the fly ropes sway slightly. The velvet curtain stays still.
+- **Ambient:** the caged work lamp swings rigidly on its rope (built). Not built (optional, for Fable in code if wanted): dust motes drifting in the floodlight beam. The fly ropes and the velvet curtain stay still.
+- **Scene look (user 2026-11-21):** keep mock-up A's busyness: seat backs along the bottom, knotted fly ropes, dripping paint pots, paint cart.
 
 ## 5. Working rules
 - **Roles:** Wren (Claude) does art direction, QC, tasks, Higgsfield jobs and commits. Quinn (ChatGPT) draws, with read-only GitHub access. Fable (Claude Fable 5.2 in Claude Code on the Mac) builds the site. Foreman (Grok) dispatches Cursor agents for PRs into site branches. The user carries files and makes the calls.
