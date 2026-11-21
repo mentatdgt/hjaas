@@ -101,4 +101,4 @@ Place them yourself, following `reviews/scene-2-hunt-difficulty.md`: **3 easy, 4
 - **Copy:** none for this scene yet.
 
 ## Update 2026-11-21 (after build 01): new plate
-The user had the car reshaped (a shorter bonnet, a longer cabin). **Re-import from `origin/main`:** `frames/020-film-scene/site/plate.png` (→ `room.webp`) and `scene/pencil/film-lines.png` (→ `pencil-lr`/`pencil-tb`), using the same checkout-by-path as in section 0. Nothing else changed: the layers, routines, wheels, sill and every mushroom spot stay valid. Rebuild, re-run the scene-4 screenshots, and push.
+The user had the car reshaped (a shorter bonnet, a longer cabin, the door split midway between the wheels). **Re-import from `origin/main`:** `frames/020-film-scene/site/plate.png` (→ `room.webp`) and `scene/pencil/film-lines.png` (→ `pencil-lr`/`pencil-tb`), using the same checkout-by-path as in section 0. Nothing else changed: the layers, routines, wheels, sill and every mushroom spot stay valid. Rebuild, re-run the scene-4 screenshots, and push.
