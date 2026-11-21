@@ -11,7 +11,7 @@ New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a
 | 1 | Build | Contracting: Rachel hammers a box in an unfinished room | ✅ Approved, but **needs glasses removed and a restyle to the model sheet** | ✅ Built (elegant version) | ✅ Merged 2026-11-21 |
 | 2 | Grow | Mushroom lab: misting, writing, rotating the rack | ✅ Approved (task 017); later, a light restyle to the model sheet | ✅ Pencil edge done; Round 3b (pencil arrives with the colour) overnight | ✅ Merged 2026-11-21 (no phone check yet) |
 | 3 | Design | Café: Rachel sketches, sips coffee and reacts; barista, mum, child, old man, cat, ceiling fan | ✅ Art final: package v7.5 on `main` (v7.3 user OK; v7.4 shadow; v7.5 floor seam) | 🔧 Fable: v7.4 integrated on `site/scene-3`; v7.5 file swap next | — |
-| 4 | Film | Merlion at night: Rachel (from behind) films a presenter by a silver car | ✅ **Art final** (your OK 2026-11-21 14:28): cab-forward car, door split moved left; package on `main` | 🔧 Fable: re-import the new plate on `site/scene-4`, finish `reviews/scene-4-review-01.md` → Wren reviews → you phone-check | — (merges after scene 3) |
+| 4 | Film | Merlion at night: Rachel (from behind) films a presenter by a silver car | ✅ **Art final** (your OK 2026-11-21 14:28) | 🔧 Build 01 reviewed: passes. Round 2 for Fable = `scene-4-build.md` update 15:15 (blinks, scenery flag, calm-Mac retakes) + `reviews/scene-4-review-01-wren.md` (Merlion crown painted; phone framing keeps both faces) → then you phone-check | — (merges after scene 3) |
 | 5 | Travel | Lookout | ⏳ Next: new Wren chat with `HANDOVER-scene-5.md`. Backdrop only (`scene/travel-lookout.png`); location to confirm | ⏳ | — |
 
 ## Now
