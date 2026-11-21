@@ -44,6 +44,9 @@ def patches(plate, fin, W, n=10, seed=5):
     rng = np.random.default_rng(seed)
     noise = ndi.gaussian_filter(rng.standard_normal(d.shape), 28); noise /= noise.std()
     f = dist + 34 * noise
+    # never paint a pixel before everything to its left on the same row: the paint front only moves rightward,
+    # so no unpainted island can ever be left behind inside the painted part
+    fm = np.where(d, f, -1e9); fm = np.maximum.accumulate(fm, axis=1); f = np.where(d, fm, f)
     # equal shares of what a visitor can SEE: pixels behind Rachel (any pose) all go into the first patch
     rach = np.zeros(d.shape, bool)
     for pth in glob.glob(f'{W}/R_*.png'): rach |= np.asarray(Image.open(pth))[..., 3] > 0
@@ -59,6 +62,8 @@ def patches(plate, fin, W, n=10, seed=5):
         holes = ndi.binary_fill_holes(C | painted0) & ~(C | painted0) & d      # only small unpainted gaps get filled
         hl, hk = ndi.label(holes)
         if hk: hs = ndi.sum(holes, hl, range(1, hk + 1)); C |= np.isin(hl, [j + 1 for j, s_ in enumerate(hs) if s_ < 3000])
+        rest = d & ~C; rl, rn = ndi.label(rest)                         # no tiny unpainted specks left behind
+        if rn: rs = ndi.sum(rest, rl, range(1, rn + 1)); C |= np.isin(rl, [j + 1 for j, s_ in enumerate(rs) if s_ < 600])
         if i == n - 1: C = d.copy()
         m = C & ~prev; prev = C
         m = ndi.binary_dilation(m, iterations=2) & ndi.binary_dilation(d, iterations=2)

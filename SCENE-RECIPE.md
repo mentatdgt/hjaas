@@ -18,6 +18,8 @@ All at **the exact size of the approved scene** (no resizing; Wren normalises to
 4. **Poses:** edits of each anchor. Base pose, a small in-loop change, a blink, the second stage of the loop, the reaction. For the cast: 2–4 small loop poses each.
 5. A contact sheet and an honest self-check (max 3 attempts per image).
 
+**Rule (2026-11-21): never cut a character out by comparing the scene with the plate.** Wherever she matches what's behind her (navy on a blue sky, brown boots on a ladder, paint-tipped bristles) she turns see-through. Every character's outline comes from a green-screen cut-out of each pose (Quinn job, masks not regeneration), and every still passes `tools/theatre_qa.py`-style checks (full opacity inside the cut, nothing outside it, legs and face unchanged where they should be) and a 1:1 look at every distinct pose in the preview before the user sees anything.
+
 **Rule (2026-11-21): a generated pose is never used whole.** Wren builds every pose as the approved base plus only the moving part, colour-matched (`tools/cafe_build5.py`). Ask Quinn for crops of one character through the Quinn loop (`QUINN-LOOP.md`).
 
 ## 3. QC (Wren)
