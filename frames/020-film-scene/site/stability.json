@@ -50,5 +50,29 @@
  "R_K1_look": {
   "changed_px": 82260,
   "changed_pct_of_actor": 56.7
+ },
+ "M_1_mid_blink": {
+  "changed_px": 1459,
+  "changed_pct_of_actor": null
+ },
+ "M_1_closed_blink": {
+  "changed_px": 1661,
+  "changed_pct_of_actor": null
+ },
+ "M_2_blink": {
+  "changed_px": 23927,
+  "changed_pct_of_actor": null
+ },
+ "M_2_closed_blink": {
+  "changed_px": 24990,
+  "changed_pct_of_actor": null
+ },
+ "M_3_blink": {
+  "changed_px": 20816,
+  "changed_pct_of_actor": null
+ },
+ "M_3_closed_blink": {
+  "changed_px": 21879,
+  "changed_pct_of_actor": null
  }
 }
