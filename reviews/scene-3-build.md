@@ -108,3 +108,10 @@ User: the blades didn't attach to the fan's hub. Now the blades nearer the viewe
 
 ## Update 2026-11-21 08:00 (Wren): package v7.3 replaces v7.2 (fan only)
 User: the blades must pass in front of the motor casing (physics); only the round lower cap may stay in front of them. Done. Draw order is the casing, then all blades, then the cap. The hub is now Quinn's drawn hub with the blades removed (job 010), so no glossy or "AI" hub. Only `fan/fan_*.png` and `plate.png` changed.
+
+## Update 2026-11-21 11:45 (Wren): package v7.4. Rachel's shadow now arrives with her
+User: during the paint-in, Rachel's floor shadow (and faint table-leg traces) showed before she appeared, because they were painted into the plate.
+- `plate.png`: the floor under her is now clean empty floor (Quinn job 011): no shadow, no traces, the window light continuing.
+- **Her shadow is baked into every Rachel still**, so it fades in with her, as the lead's shadow does in Build and Grow. Her layer box grew to include it: `rachel` is now x 1037, y 587, w 657, h 820 (canvas px; see `frames.json`).
+- **Please re-check the edge rule for the café:** the painting must be whole (aPaint = 1) under her new, larger box, which now reaches lower and further right. Also re-check that no mushroom sits on or under it.
+- Nothing else changed (`tools/cafe_shadow2.py`, `tools/cafe_floor_patch.py`).
