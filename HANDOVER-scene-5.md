@@ -11,7 +11,7 @@ This replaces the earlier Travel handover: **the user replaced Travel with set d
 | 2 | Grow | On `main`. Light model-sheet restyle later. | later task |
 | 3 | Design (café) | Art final (package v7.5 on `main`). Fable has it on `site/scene-3`. Waiting for the user's phone check, then merge. | you (the café chat is ending) |
 | 4 | Film (Merlion) | Art final. Fable's build on `site/scene-4` (stacked on scene 3). Round 2 reviewed by the Film chat. Waiting for the phone check. Sean's consent needed before launch. | **the Film Wren chat owns Film; don't touch it** |
-| 5 | Set design (theatre) | **Preview v3 sent to the user at 19:20; waiting for their verdict.** Package `frames/022-theatre-scene/site/` committed. No Fable brief yet. | **you** |
+| 5 | Set Design (theatre) | **Art final** (v3 OK'd 21:13). Package `frames/022-theatre-scene/site/` committed. Fable brief `reviews/scene-5-build.md` written. | **you** |
 
 Merges: `site/scene-3` → `main` after the phone check, then `site/scene-4`. Never merge into `main` without Wren's review and the user's OK.
 
@@ -26,10 +26,10 @@ Rachel stands on a wooden A-frame ladder on a theatre stage, painting a huge bac
 - Stagehand: boots only, right to left, then back. No glimpse.
 - Model: the user is on Opus 5.5 and is saving Fable for site building.
 
-## 4. Open questions for the user
-1. **Verdict on preview v3** (`frames/022-theatre-scene/theatre-preview.mp4`; close-up sent in chat). The user's earlier complaints were all fixed in v3: missing feet, see-through trousers and brush, torso and face glitches, and cream islands in the backdrop. Ask what still looks off and at which second.
-2. **Tab name: "Set" or "Stage".** Not chosen yet. It replaces "Travel" in the menu and in the contact form's checkbox.
-3. Optional tweaks I offered: make the boots a little larger or brighter (they're small and dim backstage); soften any pose change that feels too abrupt.
+## 4. Answered (2026-11-21 21:13, scene-5 Wren chat)
+1. **Preview v3: "okay for now."** Art is final; no fixes asked. The optional tweaks (bigger or brighter boots, softer pose changes) were not taken up.
+2. **Tab name: "Set Design."** It replaces "Travel" in the menu and in the contact form's checkbox. Scene id and address: `set`, `#set`.
+3. Fable's brief is written: `reviews/scene-5-build.md`.
 
 ## 5. Files
 - `tasks/022-theatre-scene.md`: the task record.

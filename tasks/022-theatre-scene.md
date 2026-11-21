@@ -1,6 +1,6 @@
 ---
 id: 022-theatre-scene
-status: preview            # waiting for the user's verdict on the first preview
+status: approved           # preview v3 OK'd by the user 2026-11-21 21:13 ("okay for now"); tab name "Set Design"
 type: scene
 ---
 # 022: Scene 5, set design (theatre backdrop)

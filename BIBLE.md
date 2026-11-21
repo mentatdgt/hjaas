@@ -3,8 +3,8 @@
 What's decided. Everyone (Wren, Quinn, Fable, Foreman) follows this. If a task, review or old note disagrees, this file wins; then fix the other file. **Last updated: 2026-11-21.**
 
 ## 1. The site
-- **HJaaS: Hui Jie As a Service.** A gift for Hui Jie (English name **Rachel**), an interior designer who also does contracting, video, mushroom farming and travel. It should feel handmade, warm, playful and elegant, never like a template or a game HUD.
-- **Format:** a painting sitting on a paper page, not a full-bleed screen. Each scene is a living hand-drawn illustration with a small scene menu (Build / Grow / Design / …).
+- **HJaaS: Hui Jie As a Service.** A gift for Hui Jie (English name **Rachel**), an interior designer who also does contracting, video, mushroom farming and set design. It should feel handmade, warm, playful and elegant, never like a template or a game HUD.
+- **Format:** a painting sitting on a paper page, not a full-bleed screen. Each scene is a living hand-drawn illustration with a small scene menu: Build / Grow / Design / Film / Set Design.
 - **The hunt:** 10 hidden mushrooms per scene (user confirmed 2026-11-21, knowing it's a lot). Difficulty: 3 easy, 4 medium, 3 hard. Fair: always visible, never under UI, hit areas ≥ 44 px.
 - **Hint:** one gentle wiggle after 60 s, once per visit. No more hand-holding.
 - **Prize (changed 2026-11-21):** the contact form unlocks only when **every mushroom in every scene** is found (10 × 5 = 50). No email shortcut: the site is a fun gift, not a sales tool. Progress must be saved in the visitor's browser so they can come back and carry on.
@@ -27,7 +27,7 @@ What's decided. Everyone (Wren, Quinn, Fable, Foreman) follows this. If a task, 
 | 2 Grow | Lab: white lab coat over a dark top, olive cargos, boots (`hjaas6.png`) | Low ponytail, dark tie | Mist → write on the clipboard → rotate the rack, unhurried | Looks up, thumbs-up (may change to a peace sign) |
 | 3 Design | Outfit 1 | Loose, wavy | Sketch on the iPad ↔ sip a hot coffee, two stages | Looks up at you with a warm smile, no gesture |
 | 4 Film | Black tank, tan cargo shorts (seen from behind, cropped at the thighs) | Loose, wavy, no bandana | Holds still, filming the presenter with a DSLR; the screen shows him live and the red REC dot blinks (no head movement) | Looks back over her shoulder at you and smiles |
-| 5 Set design (tab name TBD; replaces Travel, user 2026-11-21) | White tank top, navy cargo trousers, brown boots (user 2026-11-21, for variety) | Loose, wavy | On a ladder painting a theatre backdrop: brush strokes ↔ leans back to judge it, then dips the brush in the pot hooked on the ladder | Turns her head to you, smiles, raises the brush in a little salute |
+| 5 Set Design (tab name "Set Design", user 2026-11-21; replaces Travel in the menu and the contact form) | White tank top, navy cargo trousers, brown boots (user 2026-11-21, for variety) | Loose, wavy | On a ladder painting a theatre backdrop: brush strokes ↔ leans back to judge it, then dips the brush in the pot hooked on the ladder | Turns her head to you, smiles, raises the brush in a little salute |
 
 The reaction changes per scene so the thumbs-up doesn't repeat everywhere.
 
