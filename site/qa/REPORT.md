@@ -1405,6 +1405,21 @@ visible would be gained.
 
 **Not done.** Nothing on a real phone.
 
+### Package v7.5 (2026-11-21): the floor seam fixed
+
+Wren's update of 13:00: only `plate.png` and Rachel's nine stills changed. `npm run assets`, no code change.
+(Her layer is 5 px shorter in `frames.json`: h 815, was 820.)
+
+| | Checked | Result | Evidence |
+|---|---|---|---|
+| ✅ | The floor between Rachel and the cat | No seam and no colour step to be seen, desktop and iPhone profile, with her and before she arrives. Measured on the plate either side of the old seam: the floor is 6 to 9 of 255 redder on her side, as a gradient. | `scene3/floor-v75.jpg` |
+| ✅ | Her shadow arrives with her | None on the floor before she appears; it is part of her stills and fades in with her. | `scene3/floor-v75.jpg` |
+| ✅ | No flicker | Every one of her stills is identical to the first, pixel for pixel, over the bottom 38% of her layer (legs, chair, shadow). | |
+| ✅ | The edge, the mushrooms | The painting is whole under everyone outside the rim's own fade, same edge (95); every mushroom and tap box as before. 124 tests pass. | `edge/pencil-rachel.json`, `edge/pencil-spots.json`, `scene3/shadow.json` |
+| ⚠️ | "Her shadow stays 30 px above the bottom" | It does, in the package's own pixels: that is 20 px on the plate, and the rim's bare-paper fade is 28. So the last 8 px of the shadow are still inside the rim's fade (0.26% of what she covers, was 0.31%), fading with the floor as before. It does not show. To be clear of the rim it would need 43 px in the package's pixels. | `scene3/shadow.json` |
+
+Not re-run for v7.5: the recordings, memory, frame times and traces (the files are the same size and shape).
+
 ### How to see it
 
 ```

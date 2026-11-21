@@ -4,17 +4,17 @@
   681.6,
   385.8,
   1113.4,
-  924.7
+  921.4
  ],
- "canvasPxSheEverCovers": 295548,
+ "canvasPxSheEverCovers": 295401,
  "insideTheRimsOwn28PxFade": {
-  "canvasPx": 912,
-  "shareOfAllSheCovers": 0.0031,
-  "ofThoseMoreThanHalfSolid": 461,
-  "mostItDiffersFromTheFloorUnderItOutOf255": 30,
-  "meanDifferenceOutOf255": 8.3,
-  "mostItDarkensTheFloorOutOf255": 22.7,
-  "nearestTheRimPlatePx": 17.9
+  "canvasPx": 765,
+  "shareOfAllSheCovers": 0.0026,
+  "ofThoseMoreThanHalfSolid": 329,
+  "mostItDiffersFromTheFloorUnderItOutOf255": 25,
+  "meanDifferenceOutOf255": 7.5,
+  "mostItDarkensTheFloorOutOf255": 18.7,
+  "nearestTheRimPlatePx": 20.5
  },
  "onThePage": {
   "edge": 95,
@@ -47,7 +47,7 @@
     685,
     389,
     1113,
-    924
+    921
    ],
    [
     445,
@@ -58,7 +58,7 @@
   ],
   "underHerAlongTheBottom": {
    "16 px from the rim": {
-    "thePaintingAtItsLowest": 0.606,
+    "thePaintingAtItsLowest": 0.578,
     "theMostTheRimAllows": 0.606
    },
    "18 px from the rim": {

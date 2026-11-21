@@ -51,22 +51,22 @@
    ],
    "y": [
     310,
-    922
+    920
    ]
   },
-  "pixelsChecked": 49834,
+  "pixelsChecked": 49818,
   "lowestByTheFormula": 1,
   "lowestOnTheDrawnEdge": 1,
   "strongestPencilOverHer": 0,
   "worstPoint": null,
   "fadeComesNoNearerThanPx": 2,
   "insideTheRimsOwnFade": {
-   "points": 77,
-   "lowestByTheFormula": 0.756,
-   "lowestOnTheDrawnEdge": 0.78,
+   "points": 61,
+   "lowestByTheFormula": 0.844,
+   "lowestOnTheDrawnEdge": 0.863,
    "furthestBelowWhatTheRimAllows": 0,
-   "nearestTheRimPx": 19,
-   "shareOfHerPoints": 0.0015
+   "nearestTheRimPx": 21,
+   "shareOfHerPoints": 0.0012
   },
   "ok": true
  }
