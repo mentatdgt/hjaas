@@ -25,6 +25,12 @@
    "missed": [],
    "leftOnThePage": 0
   },
+  "set": {
+   "mushrooms": 10,
+   "found": 10,
+   "missed": [],
+   "leftOnThePage": 0
+  },
   "errors": [],
   "ok": true
  },
@@ -54,6 +60,12 @@
    "missed": [],
    "leftOnThePage": 0
   },
+  "set": {
+   "mushrooms": 10,
+   "found": 10,
+   "missed": [],
+   "leftOnThePage": 0
+  },
   "errors": [],
   "ok": true
  },
@@ -78,6 +90,12 @@
    "leftOnThePage": 0
   },
   "film": {
+   "mushrooms": 10,
+   "found": 10,
+   "missed": [],
+   "leftOnThePage": 0
+  },
+  "set": {
    "mushrooms": 10,
    "found": 10,
    "missed": [],

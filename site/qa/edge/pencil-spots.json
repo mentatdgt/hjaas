@@ -68,6 +68,20 @@
  },
  {
   "engine": "chrome",
+  "size": "1440x900",
+  "scene": "set",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 1,
+  "strongestPencilOverADrawing": 0,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "chrome",
   "size": "2560x1440",
   "scene": "build",
   "spots": 10,
@@ -116,6 +130,20 @@
   "engine": "chrome",
   "size": "2560x1440",
   "scene": "film",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 1,
+  "strongestPencilOverADrawing": 0,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "chrome",
+  "size": "2560x1440",
+  "scene": "set",
   "spots": 10,
   "lowestUnderADrawing": 1,
   "lowestUnderATapBox": 1,
@@ -184,6 +212,20 @@
   "engine": "webkit",
   "size": "390x844",
   "scene": "film",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 1,
+  "strongestPencilOverADrawing": 0,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "webkit",
+  "size": "390x844",
+  "scene": "set",
   "spots": 10,
   "lowestUnderADrawing": 1,
   "lowestUnderATapBox": 1,
@@ -265,19 +307,33 @@
  },
  {
   "engine": "webkit",
+  "size": "360x740",
+  "scene": "set",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 1,
+  "strongestPencilOverADrawing": 0,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "webkit",
   "size": "320x640",
   "scene": "build",
   "spots": 10,
   "lowestUnderADrawing": 1,
-  "lowestUnderATapBox": 0.969,
+  "lowestUnderATapBox": 0.988,
   "strongestPencilOverADrawing": 0,
   "smallestBox": 44,
   "everyBoxCoversItsDrawing": true,
   "boxesMovedInward": [
-   "screed 0,-13px",
-   "tiles 0,-13px",
-   "ladder-foot -1,-7px",
-   "toolbox 0,-12px"
+   "screed 1,-14px",
+   "tiles 0,-14px",
+   "ladder-foot 0,-7px",
+   "toolbox 0,-14px"
   ],
   "overlaps": [],
   "ok": true
@@ -288,14 +344,15 @@
   "scene": "grow",
   "spots": 10,
   "lowestUnderADrawing": 1,
-  "lowestUnderATapBox": 0.984,
+  "lowestUnderATapBox": 0.965,
   "strongestPencilOverADrawing": 0,
   "smallestBox": 44,
   "everyBoxCoversItsDrawing": true,
   "boxesMovedInward": [
-   "door 3,0px",
-   "floor 0,-9px",
-   "pipe -3,18px"
+   "door 6,0px",
+   "floor 0,-12px",
+   "pipe -7,18px",
+   "drain 0,-3px"
   ],
   "overlaps": [],
   "ok": true
@@ -306,15 +363,15 @@
   "scene": "design",
   "spots": 10,
   "lowestUnderADrawing": 1,
-  "lowestUnderATapBox": 1,
+  "lowestUnderATapBox": 0.996,
   "strongestPencilOverADrawing": 0,
   "smallestBox": 44,
   "everyBoxCoversItsDrawing": true,
   "boxesMovedInward": [
-   "floor 0,-12px",
-   "sunlight 1,-14px",
-   "cat 0,-17px",
-   "corner -14,-1px"
+   "floor 2,-12px",
+   "sunlight 0,-15px",
+   "cat -1,-17px",
+   "corner -15,0px"
   ],
   "overlaps": [],
   "ok": true
@@ -330,9 +387,23 @@
   "smallestBox": 44,
   "everyBoxCoversItsDrawing": true,
   "boxesMovedInward": [
-   "shore 3,0px",
-   "forecourt -3,0px"
+   "shore 5,0px",
+   "forecourt -5,-3px"
   ],
+  "overlaps": [],
+  "ok": true
+ },
+ {
+  "engine": "webkit",
+  "size": "320x640",
+  "scene": "set",
+  "spots": 10,
+  "lowestUnderADrawing": 1,
+  "lowestUnderATapBox": 1,
+  "strongestPencilOverADrawing": 0,
+  "smallestBox": 44,
+  "everyBoxCoversItsDrawing": true,
+  "boxesMovedInward": [],
   "overlaps": [],
   "ok": true
  }

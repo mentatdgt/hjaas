@@ -90,5 +90,26 @@
   "worstPoint": null,
   "fadeComesNoNearerThanPx": 44,
   "ok": true
+ },
+ {
+  "scene": "set",
+  "edge": 0,
+  "herFramesCoverPlate": {
+   "x": [
+    708,
+    1092
+   ],
+   "y": [
+    82,
+    568
+   ]
+  },
+  "pixelsChecked": 18322,
+  "lowestByTheFormula": 1,
+  "lowestOnTheDrawnEdge": 1,
+  "strongestPencilOverHer": 0,
+  "worstPoint": null,
+  "fadeComesNoNearerThanPx": null,
+  "ok": true
  }
 ]
