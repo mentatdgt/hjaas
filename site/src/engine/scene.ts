@@ -1,6 +1,6 @@
 // One scene, built from its config: the plate, the character on it, and the ten hidden mushrooms.
 // A scene knows nothing about the page around it; site.ts puts it in the window and takes it out again.
-import { PLATE, asset, decodeBlob, fetchBlob, fetchFrame, idle, loadFrame, loadPlate, releaseFrame, unloadFrame } from './assets';
+import { PLATE, asset, decodeBlob, decodePart, fetchBlob, fetchFrame, idle, loadFrame, loadPlate, releaseFrame, unloadFrame } from './assets';
 import { leadOf, splitCast, type CastFrames, type CastRoutines, type CastScreen } from './cast';
 import { Character } from './character';
 import { edgeAlpha, edgeName, makeEdge, type Edge, type EdgeStyle } from './edge';
@@ -69,8 +69,12 @@ interface Cast {
    * kept frames would be more than the page's memory allows on a phone).
    */
   keeps: boolean;
-  /** She holds a live screen that shows the scene under her (the film scene's camera: see screen.ts). */
+  /**
+   * She holds a live screen that shows the scene under her (the film scene's camera: see screen.ts), and the
+   * part of the plate it shows, cut out once and kept.
+   */
   screen?: CastScreen;
+  backdrop?: ImageBitmap | null;
   /** QA: decoded image memory, in bytes. */
   memory?: () => Record<string, number>;
 }
@@ -201,10 +205,16 @@ async function troupe(config: SceneConfig, cast: Troupe, host: SceneHost): Promi
   const fetched = await Promise.all(
     actors.map((actor) => actorCast(`${config.id}, ${actor.name}`, actor.frames, actor.routine, host, load, { keeps: false, className: actor === lead ? 'hj-rachel' : 'hj-actor', name: actor.name })),
   );
+  // A live screen shows a part of the plate: the plate's file once more (from the browser's cache), to cut
+  // that part from when the scene goes on the plate.
+  const plate = screen ? await fetchBlob(asset(config.assets + config.plate)).catch(() => null) : null;
   return async () => {
-    const casts = await Promise.all(fetched.map((decode) => decode()));
+    const [casts, backdrop] = await Promise.all([Promise.all(fetched.map((decode) => decode())), screen && plate ? decodePart(plate, screen.source) : null]);
     const holder = screen ? actors.findIndex((actor) => actor.name === screen.actor) : -1;
-    if (screen && holder >= 0) casts[holder].screen = screen;
+    if (screen && holder >= 0) {
+      casts[holder].screen = screen;
+      casts[holder].backdrop = backdrop;
+    }
     return casts;
   };
 }
@@ -516,7 +526,7 @@ export class Scene {
     // recording dot keeps time on her player's own frames.
     const holder = casts.find((cast) => cast.screen);
     if (holder?.screen) {
-      const finder = new Viewfinder(holder.screen, holder.character, casts.slice(0, casts.indexOf(holder)).map((cast) => cast.character), this.room, this.host.still);
+      const finder = new Viewfinder(holder.screen, holder.character, casts.slice(0, casts.indexOf(holder)).map((cast) => cast.character), holder.backdrop ?? null, this.host.still);
       this.finder = finder;
       this.players.get(holder)!.onFrame = (now) => finder.frame(now);
     }

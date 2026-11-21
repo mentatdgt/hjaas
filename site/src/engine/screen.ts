@@ -1,13 +1,15 @@
 // A live screen in the picture: the back of Rachel's camera in the film scene, showing what she is filming.
 //
-// It is a small canvas on the actor who holds it. Whenever the picture under her changes (the room, or an
-// actor drawn before her: each says so as it is drawn), the part of the scene the screen shows is put
-// together again and drawn into it, scaled down, with the red recording dot over its corner. Where the
+// It is a small canvas on the actor who holds it. Whenever the picture under her changes (an actor drawn
+// before her says so as it is drawn), the part of the scene the screen shows is put together again and
+// drawn into it, scaled down, with the red recording dot over its corner. The room's share of that picture
+// is a small copy of that part of the plate, cut once and kept: the plate itself is given back whenever the
+// scene is out of sight, and drawing from it afresh made the page wait for it to be decoded (about 100 ms
+// on the way back to the scene, with the processor slowed four times). Where the
 // screen is depends on the pose she is in (she lowers the camera when she turns), so it is moved with her,
 // in the same frame.
 //
 // There is no loop of its own: the dot's blink is counted on her player's frames (player.ts, onFrame).
-import { PLATE } from './assets';
 import type { CastScreen, Rect } from './cast';
 import type { Character } from './character';
 
@@ -34,7 +36,8 @@ export class Viewfinder {
   private readonly screen: CastScreen;
   private readonly holder: Character;
   private readonly under: readonly Character[];
-  private readonly room: HTMLImageElement;
+  /** The part of the plate the screen shows (`screen.source`), at the plate's own size. Null: only the actors are shown. */
+  private readonly backdrop: ImageBitmap | null;
   /** Paused, or reduced motion: the dot stays lit. */
   private readonly still: () => boolean;
   /** The source at its own size, and the same halved and halved again on the way down to the screen's. */
@@ -46,11 +49,11 @@ export class Viewfinder {
   private asleep = false;
 
   /** `under`: the actors drawn before the one who holds the screen, bottom to top. */
-  constructor(screen: CastScreen, holder: Character, under: readonly Character[], room: HTMLImageElement, still: () => boolean) {
+  constructor(screen: CastScreen, holder: Character, under: readonly Character[], backdrop: ImageBitmap | null, still: () => boolean) {
     this.screen = screen;
     this.holder = holder;
     this.under = under;
-    this.room = room;
+    this.backdrop = backdrop;
     this.still = still;
     this.el = document.createElement('canvas');
     this.el.className = 'hj-finder';
@@ -59,7 +62,6 @@ export class Viewfinder {
     holder.el.append(this.el);
     // Anything that changes what the screen shows, or where it is, draws it again there and then.
     for (const character of [holder, ...under]) character.onDraw = () => this.draw();
-    room.addEventListener('load', () => this.draw());
     this.since = performance.now();
     this.resize();
   }
@@ -126,13 +128,8 @@ export class Viewfinder {
     // The scene under her, at the source's own size: the room, then each actor drawn before her.
     const { source } = screen;
     const full = this.step(0, Math.round(source.w), Math.round(source.h));
-    const { room } = this;
-    if (room.complete && room.naturalWidth) {
-      const k = room.naturalWidth / PLATE.w;
-      full.drawImage(room, source.x * k, source.y * k, source.w * k, source.h * k, 0, 0, full.canvas.width, full.canvas.height);
-    } else {
-      full.clearRect(0, 0, full.canvas.width, full.canvas.height);
-    }
+    if (this.backdrop) full.drawImage(this.backdrop, 0, 0, full.canvas.width, full.canvas.height);
+    else full.clearRect(0, 0, full.canvas.width, full.canvas.height);
     for (const character of this.under) character.copy(full, source, 0, 0, full.canvas.width, full.canvas.height);
 
     // Down to the screen's size by halves, then the rest in one go: each halving is an exact average, so the
@@ -166,9 +163,10 @@ export class Viewfinder {
     ctx.drawImage(this.el, r.left - origin.left, r.top - origin.top, r.width, r.height);
   }
 
-  /** What the screen's canvases take, in bytes. */
+  /** What the screen's canvases and its copy of the plate take, in bytes. */
   get bytes(): number {
-    return [this.el, ...this.steps.map((step) => step.canvas)].reduce((sum, canvas) => sum + canvas.width * canvas.height * 4, 0);
+    const kept = this.backdrop ? this.backdrop.width * this.backdrop.height * 4 : 0;
+    return [this.el, ...this.steps.map((step) => step.canvas)].reduce((sum, canvas) => sum + canvas.width * canvas.height * 4, kept);
   }
 
   /** The nth working canvas, at this size, cleared of nothing: every use draws over all of it. */

@@ -93,9 +93,9 @@ export async function fetchBlob(url: string): Promise<Blob> {
 // and is started the first time something is decoded. Where it cannot run (an old browser, or a host
 // page whose rules forbid it), decoding falls back to the page's own thread.
 const DECODER = `self.onmessage = async (event) => {
-  const { id, blob } = event.data;
+  const { id, blob, crop } = event.data;
   try {
-    const bitmap = await createImageBitmap(blob);
+    const bitmap = crop ? await createImageBitmap(blob, crop.x, crop.y, crop.w, crop.h) : await createImageBitmap(blob);
     self.postMessage({ id, bitmap }, [bitmap]);
   } catch (error) {
     self.postMessage({ id, error: String(error) });
@@ -127,15 +127,23 @@ function startDecoder(): Worker | null {
   }
 }
 
-function decodeInWorker(blob: Blob): Promise<ImageBitmap> {
+function decodeInWorker(blob: Blob, crop?: Crop): Promise<ImageBitmap> {
   if (decoder === undefined) decoder = typeof Worker === 'function' ? startDecoder() : null;
   const worker = decoder;
   if (!worker) return Promise.reject(new Error('decoder unavailable'));
   return new Promise((resolve, reject) => {
     const id = nextDecode++;
     decodes.set(id, { resolve, reject });
-    worker.postMessage({ id, blob });
+    worker.postMessage({ id, blob, crop });
   });
+}
+
+/** A rectangle of an image, in its own pixels. */
+interface Crop {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
 }
 
 /** Decode an image from its downloaded bytes. Give the pixels back with releaseFrame() when done with it. */
@@ -161,6 +169,33 @@ export async function decodeBlob(blob: Blob): Promise<Frame> {
 }
 
 /** Give a frame's pixels back to the browser. The frame must not be drawn again. */
+/**
+ * Decode only a rectangle of an image (whole pixels): a small picture cut from a large one, without the
+ * page ever holding the large one. Null where the browser cannot do it.
+ */
+export async function decodePart(blob: Blob, part: Crop): Promise<ImageBitmap | null> {
+  if (typeof createImageBitmap !== 'function') return null;
+  const crop = { x: Math.round(part.x), y: Math.round(part.y), w: Math.round(part.w), h: Math.round(part.h) };
+  try {
+    return await decodeInWorker(blob, crop);
+  } catch {
+    // Fall through to the page's own thread.
+  }
+  try {
+    return await createImageBitmap(blob, crop.x, crop.y, crop.w, crop.h);
+  } catch {
+    // Fall through: the whole image, and the part cut from that.
+  }
+  try {
+    const whole = await createImageBitmap(blob);
+    const part = await createImageBitmap(whole, crop.x, crop.y, crop.w, crop.h);
+    whole.close();
+    return part;
+  } catch {
+    return null;
+  }
+}
+
 export function releaseFrame(frame: Frame): void {
   if (!(frame instanceof HTMLImageElement)) frame.close();
 }
