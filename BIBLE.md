@@ -48,7 +48,7 @@ All original characters, described in words. Never based on a real person's phot
 
 ## 4c. Supporting cast and set (scene 5, theatre)
 - **The backdrop fills in with the hunt:** part of the sky is bare canvas with pencil lines; each find in this scene paints one more patch; at 10/10 here it is complete (Wren cuts the stages from the finished and pencil versions).
-- **Stagehand:** an original character: a middle-aged contractor in a T-shirt and jeans, work boots. Every 40–70 s (random) he crosses BEHIND the backdrop: a brief glimpse as he steps in from the left wing (carrying a plank), then only his boots and jean cuffs walk across under the backdrop's hem and exit right behind the curtain. 10–15 s later he walks back right to left (carrying something else). A drawn walk cycle moved at a steady speed, feet planted, never sliding.
+- **Stagehand (user 2026-11-21 17:54):** an original character: a middle-aged contractor in a grey T-shirt and jeans, tan work boots (design: `frames/022-theatre-scene/incoming/022_stagehand_sheet.png`). Every 40–70 s (random) he crosses BEHIND the backdrop, seen only as his boots and jean cuffs in the gap under the hem: right to left, walking with purpose. 10–15 s later he walks back left to right. **No glimpse of him, no peeking** (could seem creepy). Boots animated as rigid pieces that lift, swing and plant, so they never slide.
 - **Ambient:** the caged work lamp sways rigidly on its hook; dust motes drift in the floodlight beam (code); the fly ropes sway slightly. The velvet curtain stays still.
 
 ## 5. Working rules
