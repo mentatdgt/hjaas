@@ -170,3 +170,6 @@ Quinn (loop job 020e, a 1536×1024 crop of the plate) reshaped the car to cab-fo
 
 ### Signed off (2026-11-21 14:28)
 The user: "let's ship this". The scene-4 art is final. Remaining: Fable re-imports the plate and writes the report, Wren reviews, the user checks on a phone, then it merges after scene 3.
+
+### Phone check (2026-11-21 16:56)
+The user checked `site/scene-4` round 2 (2e19df6) on mobile: "looks good… very, very good". Scene 4 is approved; work is paused. Remaining: merge `site/scene-4` into `main` after `site/scene-3`; Sean's consent before launch.

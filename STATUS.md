@@ -11,7 +11,7 @@ New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a
 | 1 | Build | Contracting: Rachel hammers a box in an unfinished room | ✅ Approved, but **needs glasses removed and a restyle to the model sheet** | ✅ Built (elegant version) | ✅ Merged 2026-11-21 |
 | 2 | Grow | Mushroom lab: misting, writing, rotating the rack | ✅ Approved (task 017); later, a light restyle to the model sheet | ✅ Pencil edge done; Round 3b (pencil arrives with the colour) overnight | ✅ Merged 2026-11-21 (no phone check yet) |
 | 3 | Design | Café: Rachel sketches, sips coffee and reacts; barista, mum, child, old man, cat, ceiling fan | ✅ Art final: package v7.5 on `main` (v7.3 user OK; v7.4 shadow; v7.5 floor seam) | 🔧 Fable: v7.4 integrated on `site/scene-3`; v7.5 file swap next | — |
-| 4 | Film | Merlion at night: Rachel (from behind) films a presenter by a silver car | ✅ **Art final** (your OK 2026-11-21 14:28) | ✅ Round 2 reviewed by Wren (2e19df6): Merlion crown painted, blinks on every pose, both faces in on phones. **Your phone check next** (preview link in the Film chat) | — (merges after scene 3) |
+| 4 | Film | Merlion at night: Rachel (from behind) films a presenter by a silver car | ✅ **Art final** (your OK 2026-11-21 14:28) | ✅ **Approved on your phone 2026-11-21 16:56** (round 2, `site/scene-4` 2e19df6). Paused here | ⏳ Merges right after `site/scene-3` |
 | 5 | (tab TBD) | **Set design, replacing Travel** (user 2026-11-21): Rachel paints a theatre backdrop; the backdrop fills in with the hunt; a stagehand's boots cross behind it | 🔧 Mock-up A chosen (`frames/021-set-staging/`); Quinn job 021f drawing the final scene | ⏳ | — |
 
 ## Now
