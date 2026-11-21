@@ -114,3 +114,13 @@ files, not in git: `s3-v73-cafe-paint-in-mobile-4x.json.gz` and `s3-v73-switchin
 
 (A first try at the paint-in trace cleared the storage and then reloaded: the page saves its progress as it
 is left, so the reload was a return visit with the 200 ms reveal. That file was replaced.)
+
+## Scene 3, café package v7.4 (Rachel's shadow in her stills), 2026-11-21
+
+One trace, same profile, production build of `site/scene-3` at 8eec30d. Raw file, not in git:
+`s3-v74-paint-in-and-switching-mobile-4x.json.gz`.
+
+| Part | What | Result (`node qa/tools/analyze-trace.mjs <trace> <from> <to> --tasks`) |
+|---|---|---|
+| café paint-in | A new visitor opens `#design` (storage cleared before the page's script runs). Window 0.7 to 6.7 s. | 360 frames begun, none dropped. Longest main-thread task 8 ms (at 4× slow-down). LCP 0.75 s. |
+| switching | Build (first visit), Grow (first visit), back to the café and to Build (the short brush). Window 8.5 to 30.6 s. | 1326 frames begun, 24 dropped: 3 as Build goes on the plate, 3 as Grow does, 10 on the way back to the café, 8 on the way back to Build. Three tasks over 50 ms: 73 ms as Build is first put on the plate, and the room's picture decoded again at the two short-brush switches (97 and 100 ms). CLS 0.02. |

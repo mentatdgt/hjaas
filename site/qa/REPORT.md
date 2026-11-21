@@ -1360,8 +1360,8 @@ was opened for the first time, not seen in the other 11.
 ### Package v7.4 (2026-11-21): Rachel's shadow arrives with her
 
 Wren's update of 11:45: the plate's floor under Rachel is clean, and her shadow is part of every one of her
-stills, so her layer is larger (plate x 682 to 1113, y 386 to 925). Measured on v7.4; frame times and traces
-are **to be re-run by the main session** (other work was using the machine).
+stills, so her layer is larger (plate x 682 to 1113, y 386 to 925). Measured on v7.4. (The frame
+times and the trace were run afterwards, once other work had left the machine.)
 
 | | Asked for | Result | Evidence |
 |---|---|---|---|
@@ -1374,7 +1374,8 @@ are **to be re-run by the main session** (other work was using the machine).
 | ✅ | All 30 findable | 30 of 30 on desktop, the iPhone profile and a 320 px phone. | `edge/pencil-find.json` |
 | ✅ | The café checks again | Screenshots; the hunt sheets; a find mid-stroke answered in 0.30 s, the sip finished first (0.55 to 1.04 s), dissolves only inside loops; everyone drawn again within 112 to 220 ms of the tap on the way back, before the brush at 343 to 493 ms; the page against the package (every actor in place); the recordings; the café's paint-in (pencil never more than 49 px ahead of the paint). | `scene3/*.jpg`, `react.json`, `back.json`, `preview.json`, `design-film-*.mp4`, `edge/pencil-reveal-design.json` |
 | ✅ | Peak memory under 80 MB, all three scenes visited | Every order, new visitor and returning one, a find in each scene: 77.5 MB at most, and it is the lab alone, as before. The café by itself is 54 to 59 MB (her nine stills are larger: about 2.5 MB more than v7.3). | `scene3/memory.json` |
-| ⏳ | Frame times and traces | Not run here: to be re-run by the main session on a quiet machine. Her canvas is larger (657 × 820 px against 588 × 801). | |
+| ✅ | Frame times | WebKit, iPhone profile, production build, 3 runs: the café's painting 21 to 27 ms at the longest frame, the café at work 19 to 20 ms, every short-brush switch 19 to 47 ms, none over 50 ms. Build opened for the first time: 48, 58 and 98 ms (the standing exception). As v7.3: her larger canvas (657 × 820 px against 588 × 801) costs nothing that shows. Chrome slowed four times: 17 ms painting and at work, one frame of 83 to 117 ms at each short-brush switch as before; ⚠️ the last two switches of the third run had frames of about 1 s while the Mac's load jumped from 5.7 to 9.5 (something else started), not seen in the other 16 switches. | `scene3/frames.json` |
+| ✅ | Trace | Phone profile, processor slowed four times, one trace: the café's paint-in 360 frames begun, none dropped, longest task 8 ms; then Build and Grow for the first time and back to the café and to Build: 24 frames dropped of 1326 (43 with v7.3), in the same four places, with the room's picture decoded again at the two short-brush switches (97 and 100 ms tasks). | `traces/SUMMARY.md` |
 
 **The shadow and the rim, in numbers.** Of everything her stills cover, 0.31% (912 of 295,548 canvas px) lies
 inside the rim's 28 px fade: the bottom 6 px of the shadow's fringe. Those pixels differ from the floor under
@@ -1402,7 +1403,7 @@ visible would be gained.
   v7.3: by the rule, the colour's own fade there started 4 to 12 px from the rim and now starts 2 to 6 px
   from it (`shadow-close-up.jpg`).
 
-**Not done.** Frame times and traces (above). Nothing on a real phone.
+**Not done.** Nothing on a real phone.
 
 ### How to see it
 
