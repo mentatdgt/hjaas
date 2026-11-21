@@ -1,1895 +1,471 @@
 {
- "note": "Caf\u00e9 package v7.3, 2026-11-21: node qa/tools/scene3.mjs frames 3, four times in a row (12 runs in each browser). One file per time the tool ran, in order.",
- "sets": [
+ "machine": "12:32  up 9 days, 19:42, 2 users, load averages: 5.69 5.68 5.44",
+ "runs": [
   {
-   "machine": "8:15  up 9 days, 15:24, 2 users, load averages: 2.77 2.94 4.09",
-   "runs": [
+   "browser": "webkit, iPhone 14 profile",
+   "run": 1,
+   "stretches": [
     {
-     "browser": "webkit, iPhone 14 profile",
-     "run": 1,
-     "stretches": [
-      {
-       "stretch": "the caf\u00e9 painted for a new visitor",
-       "frames": 391,
-       "longestMs": 22,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "the caf\u00e9 at work, 8 s",
-       "frames": 482,
-       "longestMs": 20,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (first visit: its full painting)",
-       "frames": 516,
-       "longestMs": 65,
-       "over50": 2,
-       "over33": 2,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (first visit: its full painting)",
-       "frames": 514,
-       "longestMs": 29,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 196,
-       "longestMs": 20,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 197,
-       "longestMs": 24,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (the short brush)",
-       "frames": 195,
-       "longestMs": 22,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 194,
-       "longestMs": 22,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 195,
-       "longestMs": 22,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      }
-     ]
+     "stretch": "the café painted for a new visitor",
+     "frames": 391,
+     "longestMs": 25,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
     },
     {
-     "browser": "webkit, iPhone 14 profile",
-     "run": 2,
-     "stretches": [
-      {
-       "stretch": "the caf\u00e9 painted for a new visitor",
-       "frames": 391,
-       "longestMs": 27,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "the caf\u00e9 at work, 8 s",
-       "frames": 481,
-       "longestMs": 24,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (first visit: its full painting)",
-       "frames": 515,
-       "longestMs": 44,
-       "over50": 0,
-       "over33": 2,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (first visit: its full painting)",
-       "frames": 512,
-       "longestMs": 40,
-       "over50": 0,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 197,
-       "longestMs": 25,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 195,
-       "longestMs": 24,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (the short brush)",
-       "frames": 195,
-       "longestMs": 21,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 196,
-       "longestMs": 23,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 195,
-       "longestMs": 22,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      }
-     ]
+     "stretch": "the café at work, 8 s",
+     "frames": 481,
+     "longestMs": 19,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
     },
     {
-     "browser": "webkit, iPhone 14 profile",
-     "run": 3,
-     "stretches": [
-      {
-       "stretch": "the caf\u00e9 painted for a new visitor",
-       "frames": 391,
-       "longestMs": 32,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "the caf\u00e9 at work, 8 s",
-       "frames": 480,
-       "longestMs": 19,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (first visit: its full painting)",
-       "frames": 515,
-       "longestMs": 43,
-       "over50": 0,
-       "over33": 2,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (first visit: its full painting)",
-       "frames": 514,
-       "longestMs": 40,
-       "over50": 0,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 196,
-       "longestMs": 27,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 195,
-       "longestMs": 24,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (the short brush)",
-       "frames": 196,
-       "longestMs": 22,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 194,
-       "longestMs": 20,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 195,
-       "longestMs": 23,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      }
-     ]
+     "stretch": "to build (first visit: its full painting)",
+     "frames": 515,
+     "longestMs": 48,
+     "over50": 0,
+     "over33": 2,
+     "medianMs": 17
     },
     {
-     "browser": "chrome, phone size, processor slowed 4\u00d7",
-     "run": 1,
-     "stretches": [
-      {
-       "stretch": "the caf\u00e9 painted for a new visitor",
-       "frames": 390,
-       "longestMs": 17,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "the caf\u00e9 at work, 8 s",
-       "frames": 481,
-       "longestMs": 17,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (first visit: its full painting)",
-       "frames": 515,
-       "longestMs": 67,
-       "over50": 2,
-       "over33": 2,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (first visit: its full painting)",
-       "frames": 468,
-       "longestMs": 817,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 193,
-       "longestMs": 133,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 189,
-       "longestMs": 117,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (the short brush)",
-       "frames": 190,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 190,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 190,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      }
-     ]
+     "stretch": "to grow (first visit: its full painting)",
+     "frames": 513,
+     "longestMs": 37,
+     "over50": 0,
+     "over33": 1,
+     "medianMs": 17
     },
     {
-     "browser": "chrome, phone size, processor slowed 4\u00d7",
-     "run": 2,
-     "stretches": [
-      {
-       "stretch": "the caf\u00e9 painted for a new visitor",
-       "frames": 390,
-       "longestMs": 17,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "the caf\u00e9 at work, 8 s",
-       "frames": 480,
-       "longestMs": 17,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (first visit: its full painting)",
-       "frames": 517,
-       "longestMs": 50,
-       "over50": 0,
-       "over33": 3,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (first visit: its full painting)",
-       "frames": 512,
-       "longestMs": 67,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 192,
-       "longestMs": 117,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 190,
-       "longestMs": 117,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (the short brush)",
-       "frames": 190,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 190,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 190,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      }
-     ]
+     "stretch": "to design (the short brush)",
+     "frames": 196,
+     "longestMs": 25,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
     },
     {
-     "browser": "chrome, phone size, processor slowed 4\u00d7",
-     "run": 3,
-     "stretches": [
-      {
-       "stretch": "the caf\u00e9 painted for a new visitor",
-       "frames": 391,
-       "longestMs": 17,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "the caf\u00e9 at work, 8 s",
-       "frames": 481,
-       "longestMs": 17,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (first visit: its full painting)",
-       "frames": 515,
-       "longestMs": 67,
-       "over50": 1,
-       "over33": 2,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (first visit: its full painting)",
-       "frames": 512,
-       "longestMs": 50,
-       "over50": 0,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 187,
-       "longestMs": 150,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 189,
-       "longestMs": 117,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (the short brush)",
-       "frames": 189,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 190,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 189,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      }
-     ]
+     "stretch": "to build (the short brush)",
+     "frames": 195,
+     "longestMs": 24,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to grow (the short brush)",
+     "frames": 195,
+     "longestMs": 19,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to design (the short brush)",
+     "frames": 195,
+     "longestMs": 22,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to build (the short brush)",
+     "frames": 195,
+     "longestMs": 26,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
     }
    ]
   },
   {
-   "machine": "8:20  up 9 days, 15:30, 2 users, load averages: 3.29 3.41 3.93",
-   "runs": [
+   "browser": "webkit, iPhone 14 profile",
+   "run": 2,
+   "stretches": [
     {
-     "browser": "webkit, iPhone 14 profile",
-     "run": 1,
-     "stretches": [
-      {
-       "stretch": "the caf\u00e9 painted for a new visitor",
-       "frames": 390,
-       "longestMs": 24,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "the caf\u00e9 at work, 8 s",
-       "frames": 480,
-       "longestMs": 21,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (first visit: its full painting)",
-       "frames": 515,
-       "longestMs": 52,
-       "over50": 1,
-       "over33": 2,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (first visit: its full painting)",
-       "frames": 513,
-       "longestMs": 41,
-       "over50": 0,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 197,
-       "longestMs": 37,
-       "over50": 0,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 197,
-       "longestMs": 25,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (the short brush)",
-       "frames": 195,
-       "longestMs": 19,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 195,
-       "longestMs": 23,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 195,
-       "longestMs": 22,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      }
-     ]
+     "stretch": "the café painted for a new visitor",
+     "frames": 391,
+     "longestMs": 27,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
     },
     {
-     "browser": "webkit, iPhone 14 profile",
-     "run": 2,
-     "stretches": [
-      {
-       "stretch": "the caf\u00e9 painted for a new visitor",
-       "frames": 391,
-       "longestMs": 25,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "the caf\u00e9 at work, 8 s",
-       "frames": 481,
-       "longestMs": 19,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (first visit: its full painting)",
-       "frames": 515,
-       "longestMs": 25,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (first visit: its full painting)",
-       "frames": 513,
-       "longestMs": 31,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 196,
-       "longestMs": 23,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 196,
-       "longestMs": 26,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (the short brush)",
-       "frames": 195,
-       "longestMs": 20,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 196,
-       "longestMs": 23,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 196,
-       "longestMs": 20,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      }
-     ]
+     "stretch": "the café at work, 8 s",
+     "frames": 481,
+     "longestMs": 19,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
     },
     {
-     "browser": "webkit, iPhone 14 profile",
-     "run": 3,
-     "stretches": [
-      {
-       "stretch": "the caf\u00e9 painted for a new visitor",
-       "frames": 391,
-       "longestMs": 24,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "the caf\u00e9 at work, 8 s",
-       "frames": 481,
-       "longestMs": 19,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (first visit: its full painting)",
-       "frames": 513,
-       "longestMs": 38,
-       "over50": 0,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (first visit: its full painting)",
-       "frames": 512,
-       "longestMs": 40,
-       "over50": 0,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 196,
-       "longestMs": 24,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 195,
-       "longestMs": 21,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (the short brush)",
-       "frames": 196,
-       "longestMs": 21,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 171,
-       "longestMs": 529,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 194,
-       "longestMs": 333,
-       "over50": 4,
-       "over33": 6,
-       "medianMs": 17
-      }
-     ]
+     "stretch": "to build (first visit: its full painting)",
+     "frames": 515,
+     "longestMs": 98,
+     "over50": 2,
+     "over33": 2,
+     "medianMs": 17
     },
     {
-     "browser": "chrome, phone size, processor slowed 4\u00d7",
-     "run": 1,
-     "stretches": [
-      {
-       "stretch": "the caf\u00e9 painted for a new visitor",
-       "frames": 389,
-       "longestMs": 50,
-       "over50": 0,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "the caf\u00e9 at work, 8 s",
-       "frames": 482,
-       "longestMs": 17,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (first visit: its full painting)",
-       "frames": 524,
-       "longestMs": 67,
-       "over50": 2,
-       "over33": 2,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (first visit: its full painting)",
-       "frames": 512,
-       "longestMs": 50,
-       "over50": 0,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 190,
-       "longestMs": 133,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 189,
-       "longestMs": 117,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (the short brush)",
-       "frames": 191,
-       "longestMs": 83,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 190,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 191,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      }
-     ]
+     "stretch": "to grow (first visit: its full painting)",
+     "frames": 513,
+     "longestMs": 31,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
     },
     {
-     "browser": "chrome, phone size, processor slowed 4\u00d7",
-     "run": 2,
-     "stretches": [
-      {
-       "stretch": "the caf\u00e9 painted for a new visitor",
-       "frames": 390,
-       "longestMs": 17,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "the caf\u00e9 at work, 8 s",
-       "frames": 480,
-       "longestMs": 17,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (first visit: its full painting)",
-       "frames": 512,
-       "longestMs": 50,
-       "over50": 0,
-       "over33": 2,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (first visit: its full painting)",
-       "frames": 513,
-       "longestMs": 33,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 188,
-       "longestMs": 150,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 190,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (the short brush)",
-       "frames": 192,
-       "longestMs": 83,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 191,
-       "longestMs": 83,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 192,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      }
-     ]
+     "stretch": "to design (the short brush)",
+     "frames": 197,
+     "longestMs": 23,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
     },
     {
-     "browser": "chrome, phone size, processor slowed 4\u00d7",
-     "run": 3,
-     "stretches": [
-      {
-       "stretch": "the caf\u00e9 painted for a new visitor",
-       "frames": 390,
-       "longestMs": 17,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "the caf\u00e9 at work, 8 s",
-       "frames": 481,
-       "longestMs": 17,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (first visit: its full painting)",
-       "frames": 514,
-       "longestMs": 67,
-       "over50": 1,
-       "over33": 2,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (first visit: its full painting)",
-       "frames": 512,
-       "longestMs": 50,
-       "over50": 0,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 188,
-       "longestMs": 117,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 191,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (the short brush)",
-       "frames": 191,
-       "longestMs": 83,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 191,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 191,
-       "longestMs": 83,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      }
-     ]
+     "stretch": "to build (the short brush)",
+     "frames": 195,
+     "longestMs": 25,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to grow (the short brush)",
+     "frames": 195,
+     "longestMs": 21,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to design (the short brush)",
+     "frames": 195,
+     "longestMs": 22,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to build (the short brush)",
+     "frames": 196,
+     "longestMs": 21,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
     }
    ]
   },
   {
-   "machine": "8:26  up 9 days, 15:35, 2 users, load averages: 1.98 2.99 3.60",
-   "runs": [
+   "browser": "webkit, iPhone 14 profile",
+   "run": 3,
+   "stretches": [
     {
-     "browser": "webkit, iPhone 14 profile",
-     "run": 1,
-     "stretches": [
-      {
-       "stretch": "the caf\u00e9 painted for a new visitor",
-       "frames": 391,
-       "longestMs": 31,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "the caf\u00e9 at work, 8 s",
-       "frames": 481,
-       "longestMs": 19,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (first visit: its full painting)",
-       "frames": 515,
-       "longestMs": 46,
-       "over50": 0,
-       "over33": 2,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (first visit: its full painting)",
-       "frames": 513,
-       "longestMs": 40,
-       "over50": 0,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 196,
-       "longestMs": 22,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 194,
-       "longestMs": 23,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (the short brush)",
-       "frames": 195,
-       "longestMs": 21,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 196,
-       "longestMs": 20,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 195,
-       "longestMs": 21,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      }
-     ]
+     "stretch": "the café painted for a new visitor",
+     "frames": 391,
+     "longestMs": 21,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
     },
     {
-     "browser": "webkit, iPhone 14 profile",
-     "run": 2,
-     "stretches": [
-      {
-       "stretch": "the caf\u00e9 painted for a new visitor",
-       "frames": 391,
-       "longestMs": 24,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "the caf\u00e9 at work, 8 s",
-       "frames": 480,
-       "longestMs": 19,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (first visit: its full painting)",
-       "frames": 516,
-       "longestMs": 57,
-       "over50": 1,
-       "over33": 2,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (first visit: its full painting)",
-       "frames": 512,
-       "longestMs": 42,
-       "over50": 0,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 198,
-       "longestMs": 23,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 195,
-       "longestMs": 26,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (the short brush)",
-       "frames": 195,
-       "longestMs": 20,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 194,
-       "longestMs": 26,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 196,
-       "longestMs": 20,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      }
-     ]
+     "stretch": "the café at work, 8 s",
+     "frames": 481,
+     "longestMs": 20,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
     },
     {
-     "browser": "webkit, iPhone 14 profile",
-     "run": 3,
-     "stretches": [
-      {
-       "stretch": "the caf\u00e9 painted for a new visitor",
-       "frames": 390,
-       "longestMs": 23,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "the caf\u00e9 at work, 8 s",
-       "frames": 482,
-       "longestMs": 19,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (first visit: its full painting)",
-       "frames": 515,
-       "longestMs": 94,
-       "over50": 2,
-       "over33": 2,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (first visit: its full painting)",
-       "frames": 515,
-       "longestMs": 48,
-       "over50": 0,
-       "over33": 2,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 196,
-       "longestMs": 23,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 195,
-       "longestMs": 25,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (the short brush)",
-       "frames": 193,
-       "longestMs": 48,
-       "over50": 0,
-       "over33": 2,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 196,
-       "longestMs": 25,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 195,
-       "longestMs": 22,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      }
-     ]
+     "stretch": "to build (first visit: its full painting)",
+     "frames": 514,
+     "longestMs": 58,
+     "over50": 1,
+     "over33": 2,
+     "medianMs": 17
     },
     {
-     "browser": "chrome, phone size, processor slowed 4\u00d7",
-     "run": 1,
-     "stretches": [
-      {
-       "stretch": "the caf\u00e9 painted for a new visitor",
-       "frames": 390,
-       "longestMs": 17,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "the caf\u00e9 at work, 8 s",
-       "frames": 481,
-       "longestMs": 17,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (first visit: its full painting)",
-       "frames": 514,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 2,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (first visit: its full painting)",
-       "frames": 513,
-       "longestMs": 50,
-       "over50": 0,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 190,
-       "longestMs": 117,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 190,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (the short brush)",
-       "frames": 191,
-       "longestMs": 83,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 190,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 190,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      }
-     ]
+     "stretch": "to grow (first visit: its full painting)",
+     "frames": 514,
+     "longestMs": 32,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
     },
     {
-     "browser": "chrome, phone size, processor slowed 4\u00d7",
-     "run": 2,
-     "stretches": [
-      {
-       "stretch": "the caf\u00e9 painted for a new visitor",
-       "frames": 390,
-       "longestMs": 17,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "the caf\u00e9 at work, 8 s",
-       "frames": 480,
-       "longestMs": 17,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (first visit: its full painting)",
-       "frames": 514,
-       "longestMs": 50,
-       "over50": 0,
-       "over33": 2,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (first visit: its full painting)",
-       "frames": 512,
-       "longestMs": 33,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 191,
-       "longestMs": 117,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 190,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (the short brush)",
-       "frames": 191,
-       "longestMs": 83,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 190,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 190,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      }
-     ]
+     "stretch": "to design (the short brush)",
+     "frames": 196,
+     "longestMs": 47,
+     "over50": 0,
+     "over33": 2,
+     "medianMs": 17
     },
     {
-     "browser": "chrome, phone size, processor slowed 4\u00d7",
-     "run": 3,
-     "stretches": [
-      {
-       "stretch": "the caf\u00e9 painted for a new visitor",
-       "frames": 390,
-       "longestMs": 17,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "the caf\u00e9 at work, 8 s",
-       "frames": 480,
-       "longestMs": 17,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (first visit: its full painting)",
-       "frames": 513,
-       "longestMs": 83,
-       "over50": 1,
-       "over33": 2,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (first visit: its full painting)",
-       "frames": 512,
-       "longestMs": 50,
-       "over50": 0,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 192,
-       "longestMs": 133,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 189,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (the short brush)",
-       "frames": 191,
-       "longestMs": 83,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 190,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 190,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      }
-     ]
+     "stretch": "to build (the short brush)",
+     "frames": 197,
+     "longestMs": 31,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to grow (the short brush)",
+     "frames": 198,
+     "longestMs": 20,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to design (the short brush)",
+     "frames": 195,
+     "longestMs": 21,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to build (the short brush)",
+     "frames": 196,
+     "longestMs": 23,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
     }
    ]
   },
   {
-   "machine": "8:31  up 9 days, 15:41, 2 users, load averages: 2.28 2.71 3.31",
-   "runs": [
+   "browser": "chrome, phone size, processor slowed 4×",
+   "run": 1,
+   "stretches": [
     {
-     "browser": "webkit, iPhone 14 profile",
-     "run": 1,
-     "stretches": [
-      {
-       "stretch": "the caf\u00e9 painted for a new visitor",
-       "frames": 392,
-       "longestMs": 25,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "the caf\u00e9 at work, 8 s",
-       "frames": 480,
-       "longestMs": 19,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (first visit: its full painting)",
-       "frames": 515,
-       "longestMs": 42,
-       "over50": 0,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (first visit: its full painting)",
-       "frames": 512,
-       "longestMs": 39,
-       "over50": 0,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 196,
-       "longestMs": 22,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 194,
-       "longestMs": 25,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (the short brush)",
-       "frames": 194,
-       "longestMs": 19,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 195,
-       "longestMs": 24,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 196,
-       "longestMs": 24,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      }
-     ]
+     "stretch": "the café painted for a new visitor",
+     "frames": 390,
+     "longestMs": 17,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
     },
     {
-     "browser": "webkit, iPhone 14 profile",
-     "run": 2,
-     "stretches": [
-      {
-       "stretch": "the caf\u00e9 painted for a new visitor",
-       "frames": 391,
-       "longestMs": 20,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "the caf\u00e9 at work, 8 s",
-       "frames": 481,
-       "longestMs": 21,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (first visit: its full painting)",
-       "frames": 514,
-       "longestMs": 41,
-       "over50": 0,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (first visit: its full painting)",
-       "frames": 512,
-       "longestMs": 36,
-       "over50": 0,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 197,
-       "longestMs": 21,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 194,
-       "longestMs": 25,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (the short brush)",
-       "frames": 194,
-       "longestMs": 19,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 195,
-       "longestMs": 23,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 195,
-       "longestMs": 24,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      }
-     ]
+     "stretch": "the café at work, 8 s",
+     "frames": 480,
+     "longestMs": 17,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
     },
     {
-     "browser": "webkit, iPhone 14 profile",
-     "run": 3,
-     "stretches": [
-      {
-       "stretch": "the caf\u00e9 painted for a new visitor",
-       "frames": 391,
-       "longestMs": 30,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "the caf\u00e9 at work, 8 s",
-       "frames": 480,
-       "longestMs": 21,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (first visit: its full painting)",
-       "frames": 516,
-       "longestMs": 39,
-       "over50": 0,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (first visit: its full painting)",
-       "frames": 512,
-       "longestMs": 39,
-       "over50": 0,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 195,
-       "longestMs": 21,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 195,
-       "longestMs": 23,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (the short brush)",
-       "frames": 195,
-       "longestMs": 19,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 195,
-       "longestMs": 23,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 195,
-       "longestMs": 21,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      }
-     ]
+     "stretch": "to build (first visit: its full painting)",
+     "frames": 516,
+     "longestMs": 83,
+     "over50": 1,
+     "over33": 2,
+     "medianMs": 17
     },
     {
-     "browser": "chrome, phone size, processor slowed 4\u00d7",
-     "run": 1,
-     "stretches": [
-      {
-       "stretch": "the caf\u00e9 painted for a new visitor",
-       "frames": 390,
-       "longestMs": 17,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "the caf\u00e9 at work, 8 s",
-       "frames": 480,
-       "longestMs": 17,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (first visit: its full painting)",
-       "frames": 517,
-       "longestMs": 67,
-       "over50": 2,
-       "over33": 2,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (first visit: its full painting)",
-       "frames": 515,
-       "longestMs": 33,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 190,
-       "longestMs": 117,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 192,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (the short brush)",
-       "frames": 192,
-       "longestMs": 83,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 192,
-       "longestMs": 83,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 190,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      }
-     ]
+     "stretch": "to grow (first visit: its full painting)",
+     "frames": 512,
+     "longestMs": 33,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
     },
     {
-     "browser": "chrome, phone size, processor slowed 4\u00d7",
-     "run": 2,
-     "stretches": [
-      {
-       "stretch": "the caf\u00e9 painted for a new visitor",
-       "frames": 390,
-       "longestMs": 17,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "the caf\u00e9 at work, 8 s",
-       "frames": 480,
-       "longestMs": 17,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (first visit: its full painting)",
-       "frames": 513,
-       "longestMs": 50,
-       "over50": 0,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (first visit: its full painting)",
-       "frames": 510,
-       "longestMs": 50,
-       "over50": 0,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 191,
-       "longestMs": 133,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 190,
-       "longestMs": 117,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (the short brush)",
-       "frames": 190,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 190,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 191,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      }
-     ]
+     "stretch": "to design (the short brush)",
+     "frames": 189,
+     "longestMs": 117,
+     "over50": 1,
+     "over33": 1,
+     "medianMs": 17
     },
     {
-     "browser": "chrome, phone size, processor slowed 4\u00d7",
-     "run": 3,
-     "stretches": [
-      {
-       "stretch": "the caf\u00e9 painted for a new visitor",
-       "frames": 390,
-       "longestMs": 17,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "the caf\u00e9 at work, 8 s",
-       "frames": 480,
-       "longestMs": 17,
-       "over50": 0,
-       "over33": 0,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (first visit: its full painting)",
-       "frames": 515,
-       "longestMs": 67,
-       "over50": 2,
-       "over33": 2,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (first visit: its full painting)",
-       "frames": 511,
-       "longestMs": 50,
-       "over50": 0,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 189,
-       "longestMs": 117,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 191,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to grow (the short brush)",
-       "frames": 189,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to design (the short brush)",
-       "frames": 190,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      },
-      {
-       "stretch": "to build (the short brush)",
-       "frames": 190,
-       "longestMs": 100,
-       "over50": 1,
-       "over33": 1,
-       "medianMs": 17
-      }
-     ]
+     "stretch": "to build (the short brush)",
+     "frames": 191,
+     "longestMs": 100,
+     "over50": 1,
+     "over33": 1,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to grow (the short brush)",
+     "frames": 190,
+     "longestMs": 100,
+     "over50": 1,
+     "over33": 1,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to design (the short brush)",
+     "frames": 190,
+     "longestMs": 100,
+     "over50": 1,
+     "over33": 1,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to build (the short brush)",
+     "frames": 190,
+     "longestMs": 100,
+     "over50": 1,
+     "over33": 1,
+     "medianMs": 17
+    }
+   ]
+  },
+  {
+   "browser": "chrome, phone size, processor slowed 4×",
+   "run": 2,
+   "stretches": [
+    {
+     "stretch": "the café painted for a new visitor",
+     "frames": 390,
+     "longestMs": 17,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "the café at work, 8 s",
+     "frames": 481,
+     "longestMs": 17,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to build (first visit: its full painting)",
+     "frames": 518,
+     "longestMs": 83,
+     "over50": 1,
+     "over33": 1,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to grow (first visit: its full painting)",
+     "frames": 512,
+     "longestMs": 50,
+     "over50": 0,
+     "over33": 1,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to design (the short brush)",
+     "frames": 192,
+     "longestMs": 117,
+     "over50": 1,
+     "over33": 1,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to build (the short brush)",
+     "frames": 191,
+     "longestMs": 100,
+     "over50": 1,
+     "over33": 1,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to grow (the short brush)",
+     "frames": 192,
+     "longestMs": 83,
+     "over50": 1,
+     "over33": 1,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to design (the short brush)",
+     "frames": 190,
+     "longestMs": 100,
+     "over50": 1,
+     "over33": 1,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to build (the short brush)",
+     "frames": 189,
+     "longestMs": 100,
+     "over50": 1,
+     "over33": 1,
+     "medianMs": 17
+    }
+   ]
+  },
+  {
+   "browser": "chrome, phone size, processor slowed 4×",
+   "run": 3,
+   "stretches": [
+    {
+     "stretch": "the café painted for a new visitor",
+     "frames": 390,
+     "longestMs": 17,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "the café at work, 8 s",
+     "frames": 480,
+     "longestMs": 17,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to build (first visit: its full painting)",
+     "frames": 516,
+     "longestMs": 67,
+     "over50": 2,
+     "over33": 2,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to grow (first visit: its full painting)",
+     "frames": 511,
+     "longestMs": 50,
+     "over50": 0,
+     "over33": 1,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to design (the short brush)",
+     "frames": 189,
+     "longestMs": 117,
+     "over50": 1,
+     "over33": 1,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to build (the short brush)",
+     "frames": 190,
+     "longestMs": 100,
+     "over50": 1,
+     "over33": 1,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to grow (the short brush)",
+     "frames": 195,
+     "longestMs": 83,
+     "over50": 1,
+     "over33": 1,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to design (the short brush)",
+     "frames": 176,
+     "longestMs": 1100,
+     "over50": 10,
+     "over33": 10,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to build (the short brush)",
+     "frames": 202,
+     "longestMs": 933,
+     "over50": 5,
+     "over33": 5,
+     "medianMs": 17
     }
    ]
   }
