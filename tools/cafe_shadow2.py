@@ -33,6 +33,7 @@ subprocess.run([sys.executable, '-I', f'{REPO}/tools/cafe_floor_patch.py', P_, F
 plate = np.asarray(Image.open(f'{P_}/plate.png').convert('RGB')).astype(np.float32)
 # 2) her stills carry the shadow over the new floor
 sa = np.clip((1 - shade) / 0.06, 0, 1)                  # where there is any shadow
+yy_ = np.arange(H)[:, None]; sa *= np.clip((H - 30 - yy_) / 12, 0, 1)     # keep the shadow out of the paper rim at the bottom
 sh_rgb = plate * shade[..., None]
 patch = np.dstack([sh_rgb, sa * 255])
 ralpha_box = (L['x'], L['y'], L['x'] + L['w'], L['y'] + L['h'])

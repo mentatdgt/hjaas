@@ -115,3 +115,6 @@ User: during the paint-in, Rachel's floor shadow (and faint table-leg traces) sh
 - **Her shadow is baked into every Rachel still**, so it fades in with her, as the lead's shadow does in Build and Grow. Her layer box grew to include it: `rachel` is now x 1037, y 587, w 657, h 820 (canvas px; see `frames.json`).
 - **Please re-check the edge rule for the café:** the painting must be whole (aPaint = 1) under her new, larger box, which now reaches lower and further right. Also re-check that no mushroom sits on or under it.
 - Nothing else changed (`tools/cafe_shadow2.py`, `tools/cafe_floor_patch.py`).
+
+## Update 2026-11-21 13:00 (Wren): package v7.5 = v7.4 with the floor seam fixed
+Fable's note on v7.4: the clean floor under Rachel read more orange than the floor to its right, with a soft seam between her and the cat. The patch is now blended seamlessly: the colour difference at its border is diffused across the whole patch, and the colour is continuous across the old seam. Her shadow also stops 30 px above the bottom, outside the paper rim. Only `plate.png` and Rachel's nine stills changed (box unchanged). File swap.
