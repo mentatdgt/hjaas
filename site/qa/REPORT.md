@@ -1357,6 +1357,53 @@ was opened for the first time, not seen in the other 11.
 - The two long-frame runs above were not reproduced and not traced.
 - `site/scene-2` still decodes a new scene's frames early (decision 15); fixed on this branch only.
 
+### Package v7.4 (2026-11-21): Rachel's shadow arrives with her
+
+Wren's update of 11:45: the plate's floor under Rachel is clean, and her shadow is part of every one of her
+stills, so her layer is larger (plate x 682 to 1113, y 386 to 925). Measured on v7.4; frame times and traces
+are **to be re-run by the main session** (other work was using the machine).
+
+| | Asked for | Result | Evidence |
+|---|---|---|---|
+| ✅ | Pull main, rebuild the assets | Merged; `npm run assets` with no change to the build or the scene's data. Only the plate and Rachel's nine stills changed. 124 tests pass. | `public/assets/scene3/`, `src/scenes/design-cast.json` |
+| ✅ | Her shadow arrives with her | The floor under her is clean while the room is painted, and the shadow fades in with her at the end. | `scene3/design-film-desktop-stills-arrival.jpg`, `shadow-close-up-before-she-arrives.jpg` |
+| ✅ | The painting whole under her figure | 1.00 under every point of the cast outside the rim's own fade (49,757 points), with the same edge (95). Her figure's lowest point (a boot) is 33 px from the plate's bottom, as before. No pencil over anyone. | `edge/pencil-rachel.json` |
+| ⚠️ | The painting whole under her whole new box | Whole from 28 px in. The last few px of the shadow's outer fringe reach to 18 px from the bottom, inside the rim's own 28 px fade, where nothing is ever whole (the rim stays bare paper: Wren's guardrail). There the painting is exactly as whole as the rim allows (0.71 at 18 px, 0.95 at 24 px). See below: it does not show. | `scene3/shadow.json`, `shadow-close-up.jpg`, `edge.test.ts` |
+| ✅ | The rim, and no straight cut | Paper all the way round, on the formula, on the edge as drawn and on the screen. | `edge/pencil-rim.json` |
+| ✅ | No mushroom on or under her new box | None is in it (the nearest, `counter`, is 58 px to its right). Every drawing and tap box over 1.00 of the painting at five sizes, tap boxes 44 px, none overlapping. **None moved.** | `scenes.test.ts`, `edge/pencil-spots.json`, `scene3/hunt-checks.json` |
+| ✅ | All 30 findable | 30 of 30 on desktop, the iPhone profile and a 320 px phone. | `edge/pencil-find.json` |
+| ✅ | The café checks again | Screenshots; the hunt sheets; a find mid-stroke answered in 0.30 s, the sip finished first (0.55 to 1.04 s), dissolves only inside loops; everyone drawn again within 112 to 220 ms of the tap on the way back, before the brush at 343 to 493 ms; the page against the package (every actor in place); the recordings; the café's paint-in (pencil never more than 49 px ahead of the paint). | `scene3/*.jpg`, `react.json`, `back.json`, `preview.json`, `design-film-*.mp4`, `edge/pencil-reveal-design.json` |
+| ✅ | Peak memory under 80 MB, all three scenes visited | Every order, new visitor and returning one, a find in each scene: 77.5 MB at most, and it is the lab alone, as before. The café by itself is 54 to 59 MB (her nine stills are larger: about 2.5 MB more than v7.3). | `scene3/memory.json` |
+| ⏳ | Frame times and traces | Not run here: to be re-run by the main session on a quiet machine. Her canvas is larger (657 × 820 px against 588 × 801). | |
+
+**The shadow and the rim, in numbers.** Of everything her stills cover, 0.31% (912 of 295,548 canvas px) lies
+inside the rim's 28 px fade: the bottom 6 px of the shadow's fringe. Those pixels differ from the floor under
+them by 8 of 255 on average and 30 at most (they darken it by 23 at most). Measured against the v7.3 stills,
+that is 2.8% of the shadow's area and 0.4% of its darkness: 28 px from the bottom the shadow is at about a
+tenth of its full darkness, and it is at full darkness from about 48 px, all under whole painting. In `shadow-close-up.jpg` (twice the plate's size) the shadow
+ends well above where the colour starts to fade.
+
+**The edge decision.** Nothing in the engine or the build changed. The build already lists her whole layer
+(every pixel over alpha 8) as what she covers, and the edge already makes the painting as whole under a box
+as the rim allows. What changed is what is checked: "whole under every pixel the cast covers" is now "whole
+from the rim's fade inward, and inside that fade exactly what the rim allows" in `edge.test.ts`, in
+`pencil.mjs rachel` (which reports the two apart) and in `pencil.mjs pick`. I did not weaken the rim, and I
+did not trim her box to the figure: that would need a rule for telling figure from shadow, and nothing
+visible would be gained.
+
+**For Wren.**
+- If the shadow should have no pixel at all in the rim's fade, the art needs its bottom 10 px or so of
+  clear floor back: the shadow's fringe ends 18 px from the plate's bottom and would have to end at 28.
+  I do not think it is worth it: nothing visible is lost.
+- The new clean floor (plate x 689 to 1133, y 670 to 941) reads a little more orange and more densely
+  speckled than the floor to its right; there is a soft seam at about x 1133, between Rachel and the cat
+  (`shadow-close-up-before-she-arrives.jpg`). Art, not code.
+- Under her the bottom edge is now the rim's own 28 px fade for about 430 px, a little straighter than with
+  v7.3: by the rule, the colour's own fade there started 4 to 12 px from the rim and now starts 2 to 6 px
+  from it (`shadow-close-up.jpg`).
+
+**Not done.** Frame times and traces (above). Nothing on a real phone.
+
 ### How to see it
 
 ```

@@ -8,15 +8,15 @@ New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a
 
 | # | Tab | Scene | Art | Site build | On `main`? |
 |---|---|---|---|---|---|
-| 1 | Build | Contracting: Rachel hammers a box in an unfinished room | ✅ Approved, but **needs glasses removed and a restyle to the model sheet** | ✅ Built (elegant version) | ❌ Waiting to merge |
-| 2 | Grow | Mushroom lab: misting, writing, rotating the rack | ✅ Approved (task 017); later, a light restyle to the model sheet | ✅ Pencil edge done; Round 3b (pencil arrives with the colour) overnight | ❌ Waiting for your phone check, then merge |
+| 1 | Build | Contracting: Rachel hammers a box in an unfinished room | ✅ Approved, but **needs glasses removed and a restyle to the model sheet** | ✅ Built (elegant version) | ✅ Merged 2026-11-21 |
+| 2 | Grow | Mushroom lab: misting, writing, rotating the rack | ✅ Approved (task 017); later, a light restyle to the model sheet | ✅ Pencil edge done; Round 3b (pencil arrives with the colour) overnight | ✅ Merged 2026-11-21 (no phone check yet) |
 | 3 | Design | Café: Rachel sketches, sips coffee and reacts; barista, mum, child, old man, cat, ceiling fan | ✅ Art final: package v7.3 (user OK 2026-11-21) | 🔧 Fable: swap in v7.3 on `site/scene-3`, re-run QA | — |
 | 4 | Film | Merlion at night: Rachel (from behind) films a presenter by a silver car | ✅ Art done, preview v2 approved by you. ✅ Package `frames/020-film-scene/site/` + pencil map + Fable brief (`reviews/scene-4-build.md`). No AI video, 0 credits | ⏳ Fable builds on `site/scene-4` once the café is merged into `main` | — |
 | 5 | Travel | Lookout | ⏳ Backdrop only (`scene/travel-lookout.png`); location to confirm | ⏳ | — |
 
 ## Now
 - **Fable:** swap café package v7.3 into `site/scene-3`, re-run the café QA, report.
-- **You:** phone-check scene 2, then say "merge". Then check scene 3 on the phone once Fable reports.
+- **You:** scenes 1–2 are merged into `main` (not yet phone-checked). Check scene 3 on your phone once Fable reports; then it merges too.
 - **Quinn loop:** idle for the café (the Film chat may use it).
 - **Film chat:** scene 4 is packaged; it waits for the café merge.
 
@@ -28,7 +28,7 @@ New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a
 ## Branches
 | Branch | Holds |
 |---|---|
-| `main` | Art pipeline (tasks, frames, references, tools) and these docs. The site joins it once scene 2 is approved. |
+| `main` | Art pipeline, docs, and the site with scenes 1–2 (merged 2026-11-21). |
 | `site/scene-1` → `site/scene-1-elegant` → `site/scene-2` → `site/scene-3` | Site builds, stacked. Each includes the ones before. Merge in order. |
 | `pr1`, `pr2` | Merged Foreman/Cursor PRs. Safe to delete. |
 

@@ -1,0 +1,98 @@
+{
+ "lead": "rachel",
+ "herLayerOnThePlate": [
+  681.6,
+  385.8,
+  1113.4,
+  924.7
+ ],
+ "canvasPxSheEverCovers": 295548,
+ "insideTheRimsOwn28PxFade": {
+  "canvasPx": 912,
+  "shareOfAllSheCovers": 0.0031,
+  "ofThoseMoreThanHalfSolid": 461,
+  "mostItDiffersFromTheFloorUnderItOutOf255": 30,
+  "meanDifferenceOutOf255": 8.3,
+  "mostItDarkensTheFloorOutOf255": 22.7,
+  "nearestTheRimPlatePx": 17.9
+ },
+ "onThePage": {
+  "edge": 95,
+  "keep": [
+   [
+    1216,
+    814,
+    1371,
+    900
+   ],
+   [
+    197,
+    435,
+    308,
+    672
+   ],
+   [
+    1434,
+    406,
+    1612,
+    769
+   ],
+   [
+    1081,
+    310,
+    1201,
+    487
+   ],
+   [
+    685,
+    389,
+    1113,
+    924
+   ],
+   [
+    445,
+    393,
+    497,
+    430
+   ]
+  ],
+  "underHerAlongTheBottom": {
+   "16 px from the rim": {
+    "thePaintingAtItsLowest": 0.606,
+    "theMostTheRimAllows": 0.606
+   },
+   "18 px from the rim": {
+    "thePaintingAtItsLowest": 0.708,
+    "theMostTheRimAllows": 0.708
+   },
+   "20 px from the rim": {
+    "thePaintingAtItsLowest": 0.802,
+    "theMostTheRimAllows": 0.802
+   },
+   "22 px from the rim": {
+    "thePaintingAtItsLowest": 0.882,
+    "theMostTheRimAllows": 0.882
+   },
+   "24 px from the rim": {
+    "thePaintingAtItsLowest": 0.945,
+    "theMostTheRimAllows": 0.945
+   },
+   "26 px from the rim": {
+    "thePaintingAtItsLowest": 0.985,
+    "theMostTheRimAllows": 0.985
+   },
+   "28 px from the rim": {
+    "thePaintingAtItsLowest": 1,
+    "theMostTheRimAllows": 1
+   },
+   "30 px from the rim": {
+    "thePaintingAtItsLowest": 1,
+    "theMostTheRimAllows": 1
+   },
+   "34 px from the rim": {
+    "thePaintingAtItsLowest": 1,
+    "theMostTheRimAllows": 1
+   }
+  }
+ }
+}

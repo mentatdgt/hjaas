@@ -339,10 +339,22 @@ describe('a cast near the rim (the café)', () => {
     expect(faded).toBeGreaterThan(20);
   });
 
-  it('is whole under every pixel of every box', () => {
+  it('is whole under every pixel of every box, down to the rim\'s own fade; inside that, as whole as the rim allows', () => {
+    // (Rachel's shadow, which comes with her since package v7.4, reaches about 18 px from the plate's bottom.)
+    let inTheRimsFade = 0;
     for (const [l, t, r, b] of scene.keep!) {
-      for (let y = t; y <= b; y += 1) for (let x = l; x <= r; x += x === l || y === t || y === b ? 1 : 3) expect(paint(x, y), `(${x}, ${y})`).toBe(1);
+      for (let y = t; y <= b; y += 1) for (let x = l; x <= r; x += x === l || y === t || y === b ? 1 : 3) {
+        const d = din(x, y);
+        if (d >= 28) expect(paint(x, y), `(${x}, ${y})`).toBe(1);
+        else {
+          inTheRimsFade++;
+          expect(paint(x, y), `(${x}, ${y})`).toBeCloseTo(rim(d), 9);
+        }
+      }
     }
+    // Only the last few rows of one box: nobody stands in the rim's fade.
+    expect(inTheRimsFade).toBeGreaterThan(0);
+    for (const [l, t, r, b] of scene.keep!) expect(Math.min(l, t, PLATE.w - r, PLATE.h - b), 'a box no nearer the rim than 15 px').toBeGreaterThanOrEqual(15);
   });
 
   it('still leaves the rim bare paper, and nothing above the 28 px fade', () => {

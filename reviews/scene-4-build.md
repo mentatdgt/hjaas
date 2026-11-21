@@ -4,9 +4,11 @@ For: Fable. From: Wren (scene-4 chat), 2026-11-21.
 Rules for unattended work are in `HANDOVER.md`. The look and the rules are in `BIBLE.md` (§3 row 4 and §4b).
 
 ## 0. When and where
-- **Start only after `site/scene-3` (the café) has been merged into `main`.** Then create `site/scene-4` from the tip of `main` and build there.
+- **Branch:** create `site/scene-4` from the tip of `origin/site/scene-3` (café v7.3, committed). The user doesn't want to wait for the café merge (agreed 2026-11-21). The branches merge in order later: scene 3, then scene 4.
+- **Bring in the scene-4 files from `main`** (they aren't on the site branches):
+  `git fetch origin && git checkout origin/main -- frames/020-film-scene/site scene/pencil/film-lines.png tools/film_preview.py frames/020-film-scene/film-preview.mp4`
+  Don't merge `main` into the branch. Read this brief and `BIBLE.md` from `origin/main`.
 - Never merge into any branch, and never touch `main`.
-- If the café isn't merged yet when you read this, stop and report. Don't stack on `site/scene-3`.
 
 ## 1. What scene 4 is
 The fourth tab in the scene menu: **Film**, after Build, Grow and Design. Lazy-load it like Grow and Design.

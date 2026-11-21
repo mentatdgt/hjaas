@@ -6,7 +6,7 @@
     {
      "scene": "build",
      "peakMB": 67.3,
-     "at": "build, pose frame_01",
+     "at": "build, pose frame_02",
      "partsMB": {
       "sprites": 0.9,
       "logo": 0.7,
@@ -290,14 +290,14 @@
    "stages": [
     {
      "scene": "design",
-     "peakMB": 55.8,
+     "peakMB": 58.5,
      "at": "design, during a painting or a switch, pose R_A1_sketch",
      "partsMB": {
       "sprites": 0.9,
       "logo": 0.7,
       "sheet": 4.8,
-      "design.frames": 33.6,
-      "design.canvases": 6.9,
+      "design.frames": 36.1,
+      "design.canvases": 7.2,
       "design.room": 6.3,
       "design.edge": 2.6
      },
@@ -307,7 +307,7 @@
     {
      "scene": "build",
      "peakMB": 67.3,
-     "at": "build, pose frame_01",
+     "at": "build, pose frame_04",
      "partsMB": {
       "sprites": 0.9,
       "logo": 0.7,
@@ -361,14 +361,14 @@
    "stages": [
     {
      "scene": "design",
-     "peakMB": 55.8,
+     "peakMB": 58.5,
      "at": "design, during a painting or a switch, pose R_A1_sketch",
      "partsMB": {
       "sprites": 0.9,
       "logo": 0.7,
       "sheet": 4.8,
-      "design.frames": 33.6,
-      "design.canvases": 6.9,
+      "design.frames": 36.1,
+      "design.canvases": 7.2,
       "design.room": 6.3,
       "design.edge": 2.6
      },
@@ -435,7 +435,7 @@
     {
      "scene": "build",
      "peakMB": 62.5,
-     "at": "build, pose frame_02",
+     "at": "build, pose frame_01",
      "partsMB": {
       "sprites": 0.9,
       "logo": 0.7,
@@ -484,7 +484,7 @@
     {
      "scene": "build again",
      "peakMB": 68.5,
-     "at": "build, during a painting or a switch, pose frame_01",
+     "at": "build, during a painting or a switch, pose blink_closed",
      "partsMB": {
       "sprites": 0.9,
       "logo": 0.7,
@@ -506,7 +506,7 @@
     {
      "scene": "build",
      "peakMB": 62.5,
-     "at": "build, pose frame_02",
+     "at": "build, pose frame_01",
      "partsMB": {
       "sprites": 0.9,
       "logo": 0.7,
@@ -717,13 +717,13 @@
    "stages": [
     {
      "scene": "design",
-     "peakMB": 51,
+     "peakMB": 53.7,
      "at": "design, during a painting or a switch, pose R_A1_sketch",
      "partsMB": {
       "sprites": 0.9,
       "logo": 0.7,
-      "design.frames": 33.6,
-      "design.canvases": 6.9,
+      "design.frames": 36.1,
+      "design.canvases": 7.2,
       "design.room": 6.3,
       "design.edge": 2.6
      },
@@ -787,13 +787,13 @@
    "stages": [
     {
      "scene": "design",
-     "peakMB": 51,
+     "peakMB": 53.7,
      "at": "design, during a painting or a switch, pose R_A1_sketch",
      "partsMB": {
       "sprites": 0.9,
       "logo": 0.7,
-      "design.frames": 33.6,
-      "design.canvases": 6.9,
+      "design.frames": 36.1,
+      "design.canvases": 7.2,
       "design.room": 6.3,
       "design.edge": 2.6
      },

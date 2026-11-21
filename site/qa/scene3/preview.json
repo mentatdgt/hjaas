@@ -14,41 +14,41 @@
   ],
   "theRoom": {
    "screenshotOffsetPx": [
-    -0.9,
-    0
+    -0.8,
+    -0.1
    ],
-   "meanDifferenceOutOf255": 2.65
+   "meanDifferenceOutOf255": 2.85
   },
   "actors": {
    "fan": "a piece of the room, faded with it at the edge: not compared",
    "cat": {
     "screenPxFromWhereThePackagePutsIt": [
-     -0.6,
-     -0.1
+     -0.7,
+     0
     ],
     "meanDifferenceOutOf255": 5.52,
     "inPlace": true
    },
    "child": {
     "screenPxFromWhereThePackagePutsIt": [
-     0,
-     -0.2
+     -0.1,
+     -0.1
     ],
     "meanDifferenceOutOf255": 5.63,
     "inPlace": true
    },
    "oldman": {
     "screenPxFromWhereThePackagePutsIt": [
-     -0.5,
-     -0.6
+     -0.6,
+     -0.5
     ],
     "meanDifferenceOutOf255": 4.55,
     "inPlace": true
    },
    "barista": {
     "screenPxFromWhereThePackagePutsIt": [
-     0.2,
-     -0.6
+     0.1,
+     -0.5
     ],
     "meanDifferenceOutOf255": 5.27,
     "inPlace": true
@@ -58,7 +58,7 @@
      0,
      -0.1
     ],
-    "meanDifferenceOutOf255": 3.32,
+    "meanDifferenceOutOf255": 4.5,
     "inPlace": true
    }
   },
@@ -80,51 +80,51 @@
   ],
   "theRoom": {
    "screenshotOffsetPx": [
-    -0.9,
-    0
+    -0.8,
+    -0.1
    ],
-   "meanDifferenceOutOf255": 2.66
+   "meanDifferenceOutOf255": 2.85
   },
   "actors": {
    "fan": "a piece of the room, faded with it at the edge: not compared",
    "cat": {
     "screenPxFromWhereThePackagePutsIt": [
-     -0.6,
-     -0.1
+     -0.7,
+     0
     ],
     "meanDifferenceOutOf255": 5.74,
     "inPlace": true
    },
    "child": {
     "screenPxFromWhereThePackagePutsIt": [
-     0,
-     -0.1
+     -0.1,
+     0
     ],
     "meanDifferenceOutOf255": 6.54,
     "inPlace": true
    },
    "oldman": {
     "screenPxFromWhereThePackagePutsIt": [
-     -0.5,
-     -0.6
+     -0.6,
+     -0.5
     ],
     "meanDifferenceOutOf255": 5.08,
     "inPlace": true
    },
    "barista": {
     "screenPxFromWhereThePackagePutsIt": [
-     0.2,
-     -0.6
+     0.1,
+     -0.5
     ],
     "meanDifferenceOutOf255": 5.28,
     "inPlace": true
    },
    "rachel": {
     "screenPxFromWhereThePackagePutsIt": [
-     0,
+     0.1,
      -0.1
     ],
-    "meanDifferenceOutOf255": 3.3,
+    "meanDifferenceOutOf255": 4.48,
     "inPlace": true
    },
    "mum": {
@@ -149,41 +149,41 @@
   ],
   "theRoom": {
    "screenshotOffsetPx": [
-    -0.9,
-    0
+    -0.8,
+    -0.1
    ],
-   "meanDifferenceOutOf255": 2.64
+   "meanDifferenceOutOf255": 2.83
   },
   "actors": {
    "fan": "a piece of the room, faded with it at the edge: not compared",
    "cat": {
     "screenPxFromWhereThePackagePutsIt": [
-     -1.1,
-     -0.1
+     -1.2,
+     0
     ],
     "meanDifferenceOutOf255": 5.99,
     "inPlace": true
    },
    "child": {
     "screenPxFromWhereThePackagePutsIt": [
-     0,
-     -0.2
+     -0.1,
+     -0.1
     ],
     "meanDifferenceOutOf255": 5.88,
     "inPlace": true
    },
    "oldman": {
     "screenPxFromWhereThePackagePutsIt": [
-     -1.1,
-     -0.5
+     -1.2,
+     -0.4
     ],
     "meanDifferenceOutOf255": 5.06,
     "inPlace": true
    },
    "barista": {
     "screenPxFromWhereThePackagePutsIt": [
-     0.2,
-     -0.6
+     0.1,
+     -0.5
     ],
     "meanDifferenceOutOf255": 5.29,
     "inPlace": true
@@ -193,7 +193,7 @@
      0,
      -0.1
     ],
-    "meanDifferenceOutOf255": 3.25,
+    "meanDifferenceOutOf255": 4.43,
     "inPlace": true
    }
   },
@@ -214,51 +214,51 @@
   ],
   "theRoom": {
    "screenshotOffsetPx": [
-    -0.9,
-    0
+    -0.8,
+    -0.1
    ],
-   "meanDifferenceOutOf255": 2.67
+   "meanDifferenceOutOf255": 2.88
   },
   "actors": {
    "fan": "a piece of the room, faded with it at the edge: not compared",
    "cat": {
     "screenPxFromWhereThePackagePutsIt": [
-     -0.6,
-     -0.1
+     -0.7,
+     0
     ],
     "meanDifferenceOutOf255": 5.52,
     "inPlace": true
    },
    "child": {
     "screenPxFromWhereThePackagePutsIt": [
-     0,
-     -0.2
+     -0.1,
+     -0.1
     ],
     "meanDifferenceOutOf255": 5.63,
     "inPlace": true
    },
    "oldman": {
     "screenPxFromWhereThePackagePutsIt": [
-     -0.5,
-     -0.6
+     -0.6,
+     -0.5
     ],
     "meanDifferenceOutOf255": 4.55,
     "inPlace": true
    },
    "barista": {
     "screenPxFromWhereThePackagePutsIt": [
-     0.2,
-     -0.6
+     0.1,
+     -0.5
     ],
     "meanDifferenceOutOf255": 5.53,
     "inPlace": true
    },
    "rachel": {
     "screenPxFromWhereThePackagePutsIt": [
-     0,
+     0.1,
      -0.1
     ],
-    "meanDifferenceOutOf255": 3.49,
+    "meanDifferenceOutOf255": 4.73,
     "inPlace": true
    }
   },

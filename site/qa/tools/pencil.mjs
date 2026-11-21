@@ -385,7 +385,7 @@ run.spots = async () => {
 };
 
 // Rachel must be fully opaque in every pose: the colour's edge, by the formula and as drawn on the page,
-// under every pixel any of her frames ever covers, in both scenes.
+// under every pixel any of her frames ever covers, in every scene. (Down to the rim's own fade: see below.)
 run.rachel = async () => {
   const report = [];
   const browser = await chromium.launch({ channel: 'chrome' });
@@ -407,11 +407,26 @@ run.rachel = async () => {
       const alpha = edgeAlpha('pencil', edgeSeed(edgeName(scene)), scene.keep);
       const edge = window.__readEdge();
       let formula = 1; let drawn = 1; let pencil = 0; let worst = null;
+      // The plate's rim is bare paper, and the painting comes up over its first 28 px: nothing can be whole
+      // there. A point of hers inside that fade (the café: the faint outer fringe of Rachel's shadow) is
+      // held to the most the rim allows, and counted apart.
+      const RIM = 28;
+      const rim = (x, y) => { const t = Math.min(1, Math.max(0, Math.min(x, 1672 - x, y, 941 - y) / RIM)); return t * t * (3 - 2 * t); };
+      const fringe = { points: 0, lowestByTheFormula: 1, lowestOnTheDrawnEdge: 1, furthestBelowWhatTheRimAllows: 0, nearestTheRimPx: Infinity };
       for (const [x, y] of hers.points) {
         const a = alpha(x, y);
+        const din = Math.min(x, 1672 - x, y, 941 - y);
+        pencil = Math.max(pencil, edge.pencil(x, y) * (1 - edge.shows(x, y)));
+        if (din < RIM) {
+          fringe.points++;
+          fringe.lowestByTheFormula = Math.min(fringe.lowestByTheFormula, Math.round(a * 1000) / 1000);
+          fringe.lowestOnTheDrawnEdge = Math.min(fringe.lowestOnTheDrawnEdge, Math.round(edge.shows(x, y) * 1000) / 1000);
+          fringe.furthestBelowWhatTheRimAllows = Math.max(fringe.furthestBelowWhatTheRimAllows, Math.round((rim(x, y) - a) * 1e6) / 1e6);
+          fringe.nearestTheRimPx = Math.min(fringe.nearestTheRimPx, din);
+          continue;
+        }
         if (a < formula) { formula = a; worst = [x, y]; }
         drawn = Math.min(drawn, edge.shows(x, y));
-        pencil = Math.max(pencil, edge.pencil(x, y) * (1 - edge.shows(x, y)));
       }
       // How close the fade comes: the nearest point of the plate, to her, where the painting is under 0.999.
       let nearest = Infinity;
@@ -419,9 +434,10 @@ run.rachel = async () => {
         if (y < hers.box[3] - 40 && x > hers.box[0] + 40 && x < hers.box[2] - 40) continue;
         for (let d = 2; d < nearest; d += 2) { if (alpha(x, y + d) < 0.999 || alpha(x - d, y) < 0.999 || alpha(x + d, y) < 0.999) { nearest = d; break; } if (d > 120) break; }
       }
-      return { scene: id, edge: scene.edge ?? 0, herFramesCoverPlate: { x: [hers.box[0], hers.box[2]], y: [hers.box[1], hers.box[3]] }, pixelsChecked: hers.points.length, lowestByTheFormula: formula, lowestOnTheDrawnEdge: Math.round(drawn * 1000) / 1000, strongestPencilOverHer: Math.round(pencil * 1000) / 1000, worstPoint: worst, fadeComesNoNearerThanPx: nearest };
+      return { scene: id, edge: scene.edge ?? 0, herFramesCoverPlate: { x: [hers.box[0], hers.box[2]], y: [hers.box[1], hers.box[3]] }, pixelsChecked: hers.points.length, lowestByTheFormula: formula, lowestOnTheDrawnEdge: Math.round(drawn * 1000) / 1000, strongestPencilOverHer: Math.round(pencil * 1000) / 1000, worstPoint: worst, fadeComesNoNearerThanPx: nearest, ...(fringe.points ? { insideTheRimsOwnFade: { ...fringe, shareOfHerPoints: Math.round((fringe.points / hers.points.length) * 10000) / 10000 } } : {}) };
     }, { id, buildBox });
-    row.ok = row.lowestByTheFormula === 1 && row.lowestOnTheDrawnEdge === 1 && row.strongestPencilOverHer === 0;
+    // Whole everywhere the rim lets the painting be whole; inside the rim's fade, exactly what the rim allows.
+    row.ok = row.lowestByTheFormula === 1 && row.lowestOnTheDrawnEdge === 1 && row.strongestPencilOverHer === 0 && (row.insideTheRimsOwnFade?.furthestBelowWhatTheRimAllows ?? 0) < 1e-6;
     report.push(row);
     say(id, row);
   }
@@ -720,7 +736,9 @@ run.pick = async () => {
       let solidUnderHer = 0;
       for (let n = 0; n < tries; n++) {
         const alpha = edgeAlpha('pencil', edgeSeed(n ? `${scene.id}:${n}` : scene.id), scene.keep);
-        if (near.some(([x, y]) => alpha(x, y) < 1)) continue;
+        // (Whole, or inside the rim's own 28 px fade as whole as the rim allows.)
+        const rim = (x, y) => { const t = Math.min(1, Math.max(0, Math.min(x, W - x, y, H - y) / 28)); return t * t * (3 - 2 * t); };
+        if (near.some(([x, y]) => alpha(x, y) < rim(x, y) - 1e-9)) continue;
         solidUnderHer++;
         // Inside the strips the painting must be whole: along their inner sides is where it would first fail.
         let fits = true;
