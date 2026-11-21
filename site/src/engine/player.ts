@@ -95,15 +95,16 @@ export class Player {
 
   /**
    * Play a reaction. Resolves when she is back on the contact frame. If she is already reacting,
-   * resolves at once and the running reaction is left alone.
+   * resolves at once and the running reaction is left alone. `now`: it cuts straight in from whatever pose
+   * she is in (the theatre: she turns to the visitor mid-stroke), instead of waiting for her rest pose.
    */
-  react(steps: Step[]): Promise<void> {
+  react(steps: Step[], now = false): Promise<void> {
     if (this.reacting || steps.length === 0) return Promise.resolve();
     return new Promise((resolve) => {
       this.reactionDone = resolve;
       this.queued = steps;
       // On the contact frame already: go now. Otherwise the swing finishes first, so the hammer never teleports.
-      if (this.step.pose === this.rest) {
+      if (this.step.pose === this.rest || now) {
         this.elapsed = 0;
         this.beginReaction();
       } else if (this.step.brief !== undefined) {

@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { SCENES } from '.';
 import cast from './design-cast.json';
 import filmCast from './film-cast.json';
+import setCast from './set-cast.json';
 
 /** The area of a `polygon(x% y%, ...)` clip-path, as a share of the drawing's box. */
 function shareKept(tuck: string): number {
@@ -147,6 +148,69 @@ describe('Film on a phone', () => {
         expect(from, `${who}'s face at the ${shape} crop`).toBeGreaterThanOrEqual(left);
         expect(to, `${who}'s face at the ${shape} crop`).toBeLessThanOrEqual(right);
       }
+    }
+  });
+});
+
+describe('Set Design', () => {
+  const scene = SCENES.find((s) => s.id === 'set')!;
+  // (Widest drawing: 166 px to 154 of height.)
+  const widest = 166 / 154;
+  const boxOf = (spot: (typeof scene.spots)[number]) => [spot.x - (spot.h * widest) / 2, spot.y - spot.h, spot.x + (spot.h * widest) / 2, spot.y] as const;
+  const apart = ([l, t, r, b]: readonly number[], [L, T, R, B]: readonly number[]) => r < L || l > R || b < T || t > B;
+
+  it('is the fifth tab, "Set Design", at #set', () => {
+    expect(SCENES.map((s) => s.id)).toEqual(['build', 'grow', 'design', 'film', 'set']);
+    expect(scene.label).toBe('Set Design');
+  });
+
+  it('keeps every mushroom off Rachel, the backdrop\'s swaths, the lamp and the gap the boots walk in (brief section 5)', () => {
+    const forbidden: Record<string, readonly number[]> = {
+      "Rachel's layer": [702, 75, 1096, 575],
+      'the backdrop': [929, 0, 1529, 562],
+      "the lamp's layer": [1327, 0, 1427, 101],
+      // The gap under the hem is y 554 to 636 where the mask is set; no mushroom is anywhere in that band.
+      'the gap under the hem': [0, 554, 1672, 636],
+    };
+    for (const spot of scene.spots) for (const [what, area] of Object.entries(forbidden)) expect(apart(boxOf(spot), area), `${spot.id} is on ${what}`).toBe(true);
+    // And the package agrees about where Rachel and the lamp are.
+    expect(setCast.boxes.rachel).toEqual([702, 75, 1096, 575]);
+    expect(setCast.boxes.lamp).toEqual([1327, 0, 1427, 101]);
+  });
+
+  it('has three easy finds, four medium and three hard, spread across the stage, left to right', () => {
+    expect(scene.spots).toHaveLength(10);
+    const thirds = [0, 1, 2].map((n) => scene.spots.filter((spot) => Math.min(2, Math.floor(spot.x / (1672 / 3))) === n).length);
+    for (const count of thirds) expect(count).toBeGreaterThanOrEqual(3);
+    const easy = scene.spots.filter((spot) => ['boards', 'drop-cloth', 'cart-front'].includes(spot.id));
+    expect(easy).toHaveLength(3);
+    for (const spot of easy) {
+      expect([1, 2, 3], spot.id).toContain(spot.art);
+      expect(spot.h, spot.id).toBeGreaterThanOrEqual(28);
+    }
+    // The hard ones are hidden by likeness: yellow by the yellow tripod, pale caps by the pale pots and cloth.
+    const hard = Object.fromEntries(scene.spots.filter((spot) => ['coil', 'pots', 'paint-pail'].includes(spot.id)).map((spot) => [spot.id, spot.art]));
+    expect(hard).toEqual({ coil: 7, pots: 4, 'paint-pail': 4 });
+    for (const spot of scene.spots) expect(spot.h, spot.id).toBeGreaterThanOrEqual(18);
+    expect(scene.spots.some((spot) => spot.art === 5)).toBe(false);
+    expect(scene.spots.map((spot) => spot.x)).toEqual([...scene.spots.map((spot) => spot.x)].sort((a, b) => a - b));
+  });
+
+  it('keeps the painting whole under Rachel and around the lamp\'s cage; she answers at once, and a second find holds her salute', () => {
+    expect(scene.keep).toContainEqual(setCast.covers.rachel);
+    const hugged = scene.keep!.filter((box) => box[4] === 'hug');
+    expect(hugged.length).toBeGreaterThanOrEqual(3);
+    for (const [l, t, r, b] of hugged) expect(l >= 1327 && r <= 1427 && t >= 20 && b <= 101).toBe(true);
+    expect(setCast.room).toEqual(expect.arrayContaining(['lamp', 'backdrop_01', 'backdrop_10']));
+    expect(scene.answer).toBe('at-once');
+    expect(scene.again).toBe('hold');
+  });
+
+  it('opens on a phone with all of Rachel\'s layer and the start of the bare canvas in view', () => {
+    expect(scene.phoneStart).toEqual({ wide: [554, 1306], tall: [617, 1243] });
+    for (const [left, right] of Object.values(scene.phoneStart)) {
+      expect(left).toBeLessThanOrEqual(702);
+      expect(right).toBeGreaterThanOrEqual(1096);
     }
   });
 });

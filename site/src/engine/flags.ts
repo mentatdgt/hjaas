@@ -2,12 +2,14 @@
 //   ?seed=7        repeatable hammer rhythm and brush strokes
 //   ?intro=full    force the first-visit painting   (quick: the 200 ms reveal of a return visit | off: no intro)
 //   ?reset         forget saved progress before starting
-//   ?found=9       start with this many mushrooms already found (not saved)
+//   ?found=9       start with this many mushrooms already found in the opening scene (not saved)
+//   ?all=49        start with this many found across the whole site, scene by scene in menu order (not saved).
+//                  With both, ?all wins. `?all=49#set` leaves only Set Design's last mushroom to find.
 //   ?hint=5        seconds before the hint wiggle (default 60)
 //   ?slow=5        play the UI motion (GSAP) this many times slower, for frame-by-frame review
 //   ?edge=organic  the painting's edge: pencil (the one that ships) | organic | a-round | a | b | c, for comparison
 //   ?debug         outline mushroom hit areas and expose window.__hj
-// Production builds ignore them all: `?found=10` would otherwise skip the hunt and open the form.
+// Production builds ignore them all: `?all=50` would otherwise skip the hunt and open the form.
 
 const params = new URLSearchParams(import.meta.env.DEV && typeof location !== 'undefined' ? location.search : '');
 
@@ -23,6 +25,7 @@ export const flags = {
   intro: params.get('intro') as 'full' | 'quick' | 'off' | null,
   reset: params.has('reset'),
   found: num('found'),
+  all: num('all'),
   hintSeconds: num('hint'),
   slow: num('slow'),
   edge: params.get('edge'),

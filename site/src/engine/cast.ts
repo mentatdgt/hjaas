@@ -15,6 +15,15 @@
 // holds it is on that still. It belongs to the layer those stills are from, and shows the plate and the
 // layers drawn before that one (screen.ts draws it).
 //
+// And two kinds of layer that are not actors (the theatre, scene 5):
+//
+//   "hunt_progress": k   a still shown once k mushrooms of the scene are found (the backdrop, painted swath
+//                        by swath as the visitor hunts). The fade's length is the routine entry `backdrop`'s
+//                        `fade_ms`, if the package has one.
+//   "sprite_track"       no stills: a track of frames (two sprites each, placed and turned), the sprites, and
+//                        a mask the drawing is kept inside (the stagehand's boots, in the gap under the
+//                        backdrop's hem). Its routine entry says when it walks (walker.ts).
+//
 // Nothing here knows who the actors are. This file only takes the package apart: each actor becomes a pair
 // of manifests in the form clips.ts already plays, as if it were alone on the plate. So a new delivery in
 // the same layout, with other actors, stills, clips or routines, is played without any code changing.
@@ -24,7 +33,20 @@ export interface CastFrames {
   /** The canvas the scene was drawn on. The plate is the same picture, whatever size the page shows it at. */
   canvas: { w: number; h: number };
   /** The actors, bottom to top. */
-  layers: ReadonlyArray<{ actor: string; x: number; y: number; w: number; h: number; stills: readonly string[]; scenery?: boolean }>;
+  layers: ReadonlyArray<{
+    actor: string;
+    x: number;
+    y: number;
+    w: number;
+    h: number;
+    /** (A sprite-track layer has none: npm run assets writes an empty list for it.) */
+    stills: readonly string[];
+    scenery?: boolean;
+    hunt_progress?: number;
+    sprite_track?: string;
+    sprites?: Readonly<Record<string, string>>;
+    mask?: string;
+  }>;
   /** Still name -> file. */
   stills: Readonly<Record<string, string>>;
   /** Clip name -> the layer it belongs to, its base still, where its patches go in the layer, and the files. */
@@ -48,7 +70,34 @@ export interface CastScreen {
 }
 
 export interface CastRoutines {
-  actors: Readonly<Record<string, ClipRoutine>>;
+  actors: Readonly<Record<string, ClipRoutine | WalkRoutine | { fade_ms?: number }>>;
+}
+
+/** When a sprite-track layer walks: the first time, how long until it comes back, how long until the next time; and its tracks in order. */
+export interface WalkRoutine {
+  first_ms: readonly [number, number];
+  return_after_ms: readonly [number, number];
+  every_ms: readonly [number, number];
+  sequence: readonly string[];
+}
+
+/** A still shown once this many mushrooms of the scene are found, at its place on the plate (plate px). */
+export interface ProgressPiece {
+  at: number;
+  name: string;
+  file: string;
+  box: Rect;
+}
+
+/** A sprite-track layer, in the package's own files and plate px: what walk.ts needs to play it. */
+export interface Walker {
+  name: string;
+  track: string;
+  sprites: Readonly<Record<string, string>>;
+  mask?: string;
+  routine: WalkRoutine;
+  /** Plate px per canvas px. */
+  scale: number;
 }
 
 export interface Actor {
@@ -63,16 +112,35 @@ export interface Actor {
  * The package, one actor at a time, bottom to top, and everything wrong with it in plain words (an empty
  * list means it can be played). `plateWidth` is the page's plate, in the px its scenes are laid out in.
  */
-export function splitCast(frames: CastFrames, routines: CastRoutines, plateWidth: number): { actors: Actor[]; problems: string[]; screen: CastScreen | null } {
+export interface SplitCast {
+  actors: Actor[];
+  problems: string[];
+  screen: CastScreen | null;
+  /** The hunt's progress pieces, in the order they are shown (empty for a scene without). */
+  progress: ProgressPiece[];
+  /** How long a progress piece takes to fade in, in ms. */
+  progressFade: number;
+  walkers: Walker[];
+}
+
+/** A progress piece fades in over this long when the package does not say. */
+const PROGRESS_FADE_MS = 700;
+
+export function splitCast(frames: CastFrames, routines: CastRoutines, plateWidth: number): SplitCast {
   const problems: string[] = [];
   const actors: Actor[] = [];
+  const progress: ProgressPiece[] = [];
+  const walkers: Walker[] = [];
+  const empty = (problem: string): SplitCast => ({ actors, problems: [problem], screen: null, progress, progressFade: PROGRESS_FADE_MS, walkers });
   const canvas = frames?.canvas;
-  if (!canvas || !(canvas.w > 0 && canvas.h > 0)) return { actors, problems: ['frames.json needs a "canvas" with its size.'], screen: null };
-  if (!Array.isArray(frames.layers) || frames.layers.length === 0) return { actors, problems: ['frames.json needs "layers": the actors, bottom to top.'], screen: null };
+  if (!canvas || !(canvas.w > 0 && canvas.h > 0)) return empty('frames.json needs a "canvas" with its size.');
+  if (!Array.isArray(frames.layers) || frames.layers.length === 0) return empty('frames.json needs "layers": the actors, bottom to top.');
   const k = plateWidth / canvas.w;
   const names = new Set(frames.layers.map((layer) => layer.actor));
+  // The progress pieces share one routine entry, named after them without their number (backdrop_01: backdrop).
+  const progressEntries = new Set(frames.layers.filter((layer) => layer.hunt_progress !== undefined).map((layer) => layer.actor.replace(/[_-]?\d+$/, '')));
   for (const name of Object.keys(routines?.actors ?? {})) {
-    if (!names.has(name)) problems.push(`routine.json has a routine for "${name}", who has no layer in frames.json.`);
+    if (!names.has(name) && !progressEntries.has(name)) problems.push(`routine.json has a routine for "${name}", who has no layer in frames.json.`);
   }
   for (const [name, clip] of Object.entries(frames.clips ?? {})) {
     if (!names.has(clip.layer)) problems.push(`The clip "${name}" belongs to the layer "${clip.layer}", which frames.json does not have.`);
@@ -80,6 +148,25 @@ export function splitCast(frames: CastFrames, routines: CastRoutines, plateWidth
   for (const layer of frames.layers) {
     if (!(layer.w > 0 && layer.h > 0)) {
       problems.push(`The layer "${layer.actor}" needs its box: x, y, w and h.`);
+      continue;
+    }
+    if (layer.hunt_progress !== undefined) {
+      const still = layer.stills?.[0];
+      if (!Number.isInteger(layer.hunt_progress) || layer.hunt_progress < 1) problems.push(`The layer "${layer.actor}" needs a "hunt_progress" of 1 or more.`);
+      else if (!still || !frames.stills?.[still]) problems.push(`The layer "${layer.actor}" needs one still, which "stills" has.`);
+      else progress.push({ at: layer.hunt_progress, name: still, file: frames.stills[still], box: { x: layer.x * k, y: layer.y * k, w: layer.w * k, h: layer.h * k } });
+      continue;
+    }
+    if (layer.sprite_track) {
+      const routine = routines?.actors?.[layer.actor] as WalkRoutine | undefined;
+      const range = (r: unknown): boolean => Array.isArray(r) && r.length === 2 && r.every((n) => typeof n === 'number' && n >= 0) && r[0] <= r[1];
+      if (!routine || !range(routine.first_ms) || !range(routine.return_after_ms) || !range(routine.every_ms) || !Array.isArray(routine.sequence) || routine.sequence.length === 0) {
+        problems.push(`routine.json needs, for "${layer.actor}", "first_ms", "return_after_ms" and "every_ms" (each [least, most]) and a "sequence" of tracks.`);
+      } else if (!layer.sprites || Object.keys(layer.sprites).length === 0) {
+        problems.push(`The layer "${layer.actor}" needs its "sprites".`);
+      } else {
+        walkers.push({ name: layer.actor, track: layer.sprite_track, sprites: layer.sprites, mask: layer.mask, routine, scale: k });
+      }
       continue;
     }
     const stills: Record<string, string> = {};
@@ -98,11 +185,14 @@ export function splitCast(frames: CastFrames, routines: CastRoutines, plateWidth
     };
     // An actor nobody wrote a routine for simply stands there.
     const first = layer.stills?.[0];
-    const routine: ClipRoutine = routines?.actors?.[layer.actor] ?? { routine: [{ still: first ?? null, ms: 1000 }] };
+    const routine: ClipRoutine = (routines?.actors?.[layer.actor] as ClipRoutine | undefined) ?? { routine: [{ still: first ?? null, ms: 1000 }] };
     for (const problem of checkClips(own, routine)) problems.push(`${layer.actor}: ${problem}`);
     actors.push({ name: layer.actor, frames: own, routine, reacts: routine.reaction !== undefined });
   }
-  return { actors, problems, screen: screenOf(frames, k, problems) };
+  progress.sort((a, b) => a.at - b.at);
+  for (let i = 0; i < progress.length; i++) if (progress[i].at !== i + 1) problems.push(`The "hunt_progress" layers must be numbered 1 to ${progress.length}, one each.`);
+  const fade = progressEntries.size ? (routines?.actors?.[[...progressEntries][0]] as { fade_ms?: number } | undefined)?.fade_ms : undefined;
+  return { actors, problems, screen: screenOf(frames, k, problems), progress, progressFade: typeof fade === 'number' && fade >= 0 ? fade : PROGRESS_FADE_MS, walkers };
 }
 
 /** The package's live screen in plate px, or null when it has none (or it cannot be drawn: `problems` says why). */

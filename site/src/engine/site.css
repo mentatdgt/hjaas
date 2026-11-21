@@ -170,12 +170,18 @@
   position: relative;
 }
 
-/* The window onto the room. Wide screens show the whole plate. Unpainted, it is the bare page. */
+
+/* The window onto the room. Wide screens show the whole plate. Unpainted, it is the bare page.
+   The plate's top and bottom rows are paper (the edge's rim). Where the window sits at a fraction of a pixel
+   (a phone whose menu wraps onto two rows), WebKit snaps the room's picture to the screen's pixels and not
+   the edge, and the room's own top row showed as a hairline: the window leaves out its top and bottom pixel.
+   (Not its sides: on a phone they cut through the middle of the room.) */
 .hj-viewport {
   position: relative;
   width: var(--pic-w);
   aspect-ratio: 1672 / 941;
   overflow: hidden;
+  clip-path: inset(1px 0);
 }
 
 /* The plate is the scene's coordinate system: children are placed in percentages of 1672 × 941. */
@@ -253,6 +259,15 @@
   height: 100%;
 }
 
+/* The hunt's progress in the picture (the theatre's backdrop), a piece fading in over it, and a walker's
+   canvas (the stagehand's boots): placed by progress.ts and walk.ts, painted with the room. */
+.hj-progress,
+.hj-walk {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+}
+
 /* A live screen she holds (the back of the camera in the film scene): placed and sized by screen.ts. */
 .hj-rachel canvas.hj-finder,
 .hj-actor canvas.hj-finder {
@@ -264,6 +279,8 @@
 .hj-scene.is-pre .hj-shadow,
 .hj-scene.is-pre .hj-rachel,
 .hj-scene.is-pre .hj-actor,
+.hj-scene.is-pre .hj-progress,
+.hj-scene.is-pre .hj-walk,
 .hj-scene.is-pre .hj-mushrooms,
 .hj-scene.is-pre .hj-edge,
 .hj-scene.is-pre .hj-caption-main {
@@ -1245,6 +1262,29 @@ a.hj-logo:active {
 
     .hj-page:has(.hj-menu) {
       --menu-h: 42px;
+    }
+
+    /* Five tabs: on the narrower phones the tabs close up to stay on one row, and on the narrowest the menu
+       wraps onto a second row, both rows centred. Never cut short, never scrolled: "Set Design" is said in
+       full. */
+    @container (max-width: 373px) {
+      .hj-menu {
+        gap: 20px;
+      }
+    }
+
+    @container (max-width: 349px) {
+      .hj-menu {
+        flex-wrap: wrap;
+        justify-content: center;
+        column-gap: 22px;
+        row-gap: 0;
+        overflow-x: visible;
+      }
+
+      .hj-page:has(.hj-menu) {
+        --menu-h: 86px;
+      }
     }
 
     .hj-tagline {

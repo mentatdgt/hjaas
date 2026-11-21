@@ -1,6 +1,6 @@
 // The hunt's caption under the picture: "3 of 10 found" beside a small mushroom, and a line saying what
 // the hunt is for. Plain text on the page, with one quick, quiet update per find. Each scene has its own
-// count. The first time any scene reaches 10 of 10, the "Contact Hui Jie" button joins the caption, and
+// count. Once every mushroom of every scene is found, the "Contact Hui Jie" button joins the caption, and
 // from then on it stays, in every scene.
 import { CSS_EASE_OUT, reducedMotion } from './motion';
 

@@ -66,7 +66,9 @@ const unionOf = async (scene) => {
     const layers = Object.fromEntries(frames.layers.map((layer) => [layer.actor, layer]));
     for (const layer of frames.layers) {
       const stills = [];
-      for (const still of layer.stills) stills.push(await bitmap(dir + frames.stills[still].replace('.png', '.webp')));
+      for (const still of layer.stills ?? []) stills.push(await bitmap(dir + frames.stills[still].replace('.png', '.webp')));
+      // (A layer with no stills, the theatre's stagehand, is his boots in the gap: never near the edge.)
+      if (!stills.length) continue;
       // A layer of solid rectangles, with nothing cut out, is a piece of the room that moves (the café's
       // fan), not an actor: the edge fades it as it fades the plate.
       const probe = new OffscreenCanvas(stills[0].width, stills[0].height).getContext('2d', { willReadFrequently: true });
@@ -279,7 +281,7 @@ run.rim = async () => {
   const report = [];
   const browser = await chromium.launch({ channel: 'chrome' });
   const corners = [];
-  for (const scene of ['build', 'grow', 'design', 'film']) {
+  for (const scene of ['build', 'grow', 'design', 'film', 'set']) {
     const page = await (await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 2 })).newPage();
     await page.goto(`${base}?debug&reset&intro=off&seed=7#${scene}`);
     await ready(page);
@@ -337,7 +339,7 @@ run.rim = async () => {
     await page.close();
   }
   await browser.close();
-  await sheetOf(['build', 'grow', 'design', 'film'].map((scene) => [`${scene[0].toUpperCase() + scene.slice(1)}: the four corners at 1440 × 900, at twice the size (top left, top right, bottom left, bottom right), each with the paper beyond the plate's rim`, corners.filter((corner) => corner.scene === scene).map((corner) => corner.image)]), `${out}pencil-corners.jpg`);
+  await sheetOf(['build', 'grow', 'design', 'film', 'set'].map((scene) => [`${scene[0].toUpperCase() + scene.slice(1)}: the four corners at 1440 × 900, at twice the size (top left, top right, bottom left, bottom right), each with the paper beyond the plate's rim`, corners.filter((corner) => corner.scene === scene).map((corner) => corner.image)]), `${out}pencil-corners.jpg`);
   await save('pencil-rim.json', report);
   console.log(report.every((r) => r.ok) ? 'NO STRAIGHT CUT: the rim is paper all the way round, in every scene' : 'THE RIM IS NOT ALL PAPER');
 };
@@ -350,7 +352,7 @@ run.spots = async () => {
     const browser = engine === 'webkit' ? await webkit.launch() : await chromium.launch({ channel: 'chrome' });
     const context = await browser.newContext(phone ? { ...devices['iPhone 14'], viewport: { width, height } } : { viewport: { width, height } });
     const page = await context.newPage();
-    for (const scene of ['build', 'grow', 'design', 'film']) {
+    for (const scene of ['build', 'grow', 'design', 'film', 'set']) {
       await page.goto(`${base}?debug&reset&intro=off&seed=7#${scene}`);
       await page.reload();
       await ready(page);
@@ -392,7 +394,7 @@ run.rachel = async () => {
   const browser = await chromium.launch({ channel: 'chrome' });
   const page = await (await browser.newContext({ viewport: { width: 1440, height: 900 } })).newPage();
   let buildBox = null;
-  for (const id of ['build', 'grow', 'design', 'film']) {
+  for (const id of ['build', 'grow', 'design', 'film', 'set']) {
     await page.goto(`${base}?debug&reset&intro=off&seed=7#${id}`);
     await page.reload();
     await ready(page);
@@ -614,7 +616,7 @@ run.reveal = async () => {
       await page.close();
     }
     // The same three moments on the phone (Build only: the stills are for looking at).
-    if (id === 'build' || id === 'design' || id === 'film') {
+    if (id === 'build' || id === 'design' || id === 'film' || id === 'set') {
       const context = await safari.newContext({ ...devices['iPhone 14'] });
       const page = await context.newPage();
       errors.push(...errorsOf(page));
@@ -985,7 +987,7 @@ run.find = async () => {
     const browser = await engine.launch(engine === chromium ? { channel: 'chrome' } : {});
     const errors = [];
     const row = { browser: name };
-    for (const scene of ['build', 'grow', 'design', 'film']) {
+    for (const scene of ['build', 'grow', 'design', 'film', 'set']) {
       // A page of its own for each scene: leaving a page mid-download logs errors that are not the site's.
       const page = await (await browser.newContext(options)).newPage();
       const seen = errorsOf(page);
@@ -1010,7 +1012,7 @@ run.find = async () => {
       errors.push(...seen);
     }
     row.errors = errors;
-    row.ok = ['build', 'grow', 'design', 'film'].every((scene) => row[scene].mushrooms === 10 && row[scene].found === 10 && row[scene].leftOnThePage === 0) && errors.length === 0;
+    row.ok = ['build', 'grow', 'design', 'film', 'set'].every((scene) => row[scene].mushrooms === 10 && row[scene].found === 10 && row[scene].leftOnThePage === 0) && errors.length === 0;
     report.push(row);
     say(name, row);
     await browser.close();

@@ -17,7 +17,11 @@ export interface SceneProgress {
 export interface Progress {
   /** By scene id. */
   scenes: Record<string, SceneProgress>;
-  /** Some scene has reached 10 of 10: the Contact button is theirs, in every scene, for good. */
+  /**
+   * Every mushroom of every scene is found: the Contact button is theirs. Never trusted when read back: the
+   * page works it out from the finds (unlockedBy) and only ever saves what that says. (Before scene 5 it was
+   * set by the first scene to reach 10 of 10; a saved `true` from then means nothing now.)
+   */
   unlocked: boolean;
   /** The visitor has panned a room on a phone, so the swipe hint is not shown again. */
   panned: boolean;
@@ -65,4 +69,63 @@ export function saveProgress(progress: Progress): void {
   } catch {
     // Private mode or a full disk: carry on without saving.
   }
+}
+
+// ---- The hunt across the whole site. Pure, so the rules can be checked without a page. ----
+
+/** A scene as the hunt sees it: its id, and its hiding spots in order. */
+export interface HuntScene {
+  id: string;
+  spots: ReadonlyArray<{ id: string }>;
+}
+
+/** How many mushrooms the site has, and how many of them are found. `found` gives a scene's finds by its id. */
+export function siteCount(scenes: readonly HuntScene[], found: (id: string) => ReadonlySet<string>): { found: number; total: number } {
+  let count = 0;
+  let total = 0;
+  for (const scene of scenes) {
+    const mine = found(scene.id);
+    total += scene.spots.length;
+    count += scene.spots.filter((spot) => mine.has(spot.id)).length;
+  }
+  return { found: count, total };
+}
+
+/** The Contact button is earned once every mushroom in every scene is found (BIBLE section 1, 2026-11-21). */
+export function unlockedBy(scenes: readonly HuntScene[], found: (id: string) => ReadonlySet<string>): boolean {
+  const { found: count, total } = siteCount(scenes, found);
+  return total > 0 && count === total;
+}
+
+/**
+ * QA (`?all=N`): the first N hiding spots of the whole site, scene by scene in menu order, each scene's in
+ * its own order. N is held to 0 and the site's total.
+ */
+export function presetAll(scenes: readonly HuntScene[], n: number): Record<string, string[]> {
+  let left = Math.max(0, Math.floor(n));
+  const out: Record<string, string[]> = {};
+  for (const scene of scenes) {
+    const take = Math.min(left, scene.spots.length);
+    out[scene.id] = scene.spots.slice(0, take).map((spot) => spot.id);
+    left -= take;
+  }
+  return out;
+}
+
+/** The words the line beside the count is made from (the copy itself lives in site.ts). */
+export interface NoteCopy {
+  /** Nothing found here yet: what to look for. */
+  prompt: (here: number) => string;
+  /** Some found here: what the hunt is for, counting the whole site. */
+  prize: (site: number) => string;
+  /** All found here, some still to find elsewhere: how many, and where. */
+  doneHere: (here: number, elsewhere: number) => string;
+  /** Every mushroom of the site found. */
+  done: (here: number) => string;
+}
+
+/** The line beside a scene's count, from this scene's finds and the whole site's. */
+export function noteFor(copy: NoteCopy, count: number, of: number, site: { found: number; total: number }): string {
+  if (count >= of) return site.found >= site.total ? copy.done(of) : copy.doneHere(of, site.total - site.found);
+  return count === 0 ? copy.prompt(of) : copy.prize(site.total);
 }

@@ -155,6 +155,11 @@ export interface SceneConfig {
    * she looks for as long after the second find as after the first. She never starts the reaction over.
    */
   again?: 'hold';
+  /**
+   * When she answers a find. Left out: from her rest pose, finishing what she is doing first (the hammer's
+   * swing, the coffee sip). `at-once`: the reaction cuts straight in from whatever pose she is in.
+   */
+  answer?: 'at-once';
   /** The first-visit painting. The same strokes, played quickly, brush the scene in over another one. */
   strokes: readonly StrokePlan[];
   /**

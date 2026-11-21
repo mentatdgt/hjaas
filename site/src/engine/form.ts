@@ -3,7 +3,7 @@
 import { MUSHROOM_ICON } from './caption';
 import { SendError, canSend, submitContact, type ContactPayload } from './submit';
 
-const NEEDS = ['Build', 'Design', 'Film', 'Grow', 'Travel', 'Something else'] as const;
+const NEEDS = ['Build', 'Design', 'Film', 'Grow', 'Set Design', 'Something else'] as const;
 
 const CLOSE_ICON = `<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.5 3.5l9 9m0-9l-9 9"/></svg>`;
 const TICK_ICON = `<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.6 8.4l2.9 2.9 5.9-6.2"/></svg>`;

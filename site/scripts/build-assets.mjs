@@ -98,8 +98,8 @@ for (const [name, clip] of Object.entries(labFrames.clips)) {
   }
 }
 
-// Scenes delivered as a whole cast in one package (frames/NNN-…/site/): scene 3, the café (task 018), and
-// scene 4, the film shoot at the Merlion (task 020). A package is read through its own frames.json, so a new
+// Scenes delivered as a whole cast in one package (frames/NNN-…/site/): scene 3, the café (task 018),
+// scene 4, the film shoot at the Merlion (task 020), and scene 5, the theatre backdrop (task 022). A package is read through its own frames.json, so a new
 // delivery with the same layout (other stills, other clips, other boxes) needs nothing changed here.
 //
 // - A plate drawn larger than the page's plates (the café's, 2544 x 1432) is shrunk to their size.
@@ -123,10 +123,18 @@ for (const [name, clip] of Object.entries(labFrames.clips)) {
 //
 // A layer's stills are the ones it lists, and any other still its routine names that the package's `stills`
 // has and no layer lists (the film scene's blink stills for each mouth, given in its routine only).
+//
+// Two kinds of layer are not actors (cast.ts):
+// - `"hunt_progress": k` (the theatre's backdrop patches, shown as the hunt goes on). Their stills are kept
+//   lossless: they are drawn over one another and over the plate, and must meet them with no seam.
+// - `"sprite_track"` (the stagehand's boots): no stills, but a track (copied as delivered), sprites (WebP as
+//   usual) and a mask, kept lossless: a lossy mask would let the boots bleed onto the stage floor.
 const PACKAGES = [
   { dir: 'frames/018-cafe-scene/site', to: 'scene3', json: 'design-cast.json', lines: 'design-lines.png' },
   { dir: 'frames/020-film-scene/site', to: 'scene4', json: 'film-cast.json', lines: 'film-lines.png' },
+  { dir: 'frames/022-theatre-scene/site', to: 'scene5', json: 'set-cast.json', lines: 'set-lines.png' },
 ];
+const exact = { lossless: true, effort: 6 };
 /** Every string in a routine (its stills, blink stills and the rest): what a layer's own list may have left out. */
 const namesIn = (value) => (typeof value === 'string' ? [value] : Array.isArray(value) ? value.flatMap(namesIn) : value && typeof value === 'object' ? Object.values(value).flatMap(namesIn) : []);
 const castFrame = { quality: 93, alphaQuality: 100, smartSubsample: true, effort: 6 };
@@ -134,10 +142,10 @@ const casts = [];
 for (const pack of PACKAGES) {
   const delivered = JSON.parse(await readFile(join(repo, pack.dir, 'frames.json'), 'utf8'));
   const routines = JSON.parse(await readFile(join(repo, pack.dir, 'routine.json'), 'utf8'));
-  const listed = new Set(delivered.layers.flatMap((layer) => layer.stills));
+  const listed = new Set(delivered.layers.flatMap((layer) => layer.stills ?? []));
   delivered.layers = delivered.layers.map((layer) => {
     const more = [...new Set(namesIn(routines.actors?.[layer.actor] ?? {}))].filter((name) => name in delivered.stills && !listed.has(name));
-    return more.length ? { ...layer, stills: [...layer.stills, ...more] } : layer;
+    return more.length ? { ...layer, stills: [...(layer.stills ?? []), ...more] } : { ...layer, stills: layer.stills ?? [] };
   });
   // (A new delivery may drop files the last one had: the folder is made afresh, unless only other files were asked for.)
   if (!process.argv[2] || [pack.to, 'cast'].includes(process.argv[2])) await rm(join(assets, pack.to, 'cast'), { recursive: true, force: true });
@@ -160,7 +168,19 @@ for (const pack of PACKAGES) {
       grow.bottom = Math.max(grow.bottom, clip.y + size.height - layer.h);
     }
     const grown = Object.values(grow).some((px) => px > 0);
-    forPage.layers.push({ ...layer, x: layer.x - grow.left, y: layer.y - grow.top, w: layer.w + grow.left + grow.right, h: layer.h + grow.top + grow.bottom });
+    const page = { ...layer, x: layer.x - grow.left, y: layer.y - grow.top, w: layer.w + grow.left + grow.right, h: layer.h + grow.top + grow.bottom };
+    if (layer.sprite_track) {
+      // The boots: WebP sprites, the mask lossless; the track is copied as delivered, further down.
+      const webp = (file) => file.replace(/\.png$/, '.webp');
+      page.sprites = Object.fromEntries(Object.entries(layer.sprites ?? {}).map(([name, file]) => [name, webp(file)]));
+      for (const file of Object.values(layer.sprites ?? {})) add(`${pack.dir}/${file}`, `${pack.to}/cast/${webp(file)}`, castFrame, undefined, assets);
+      if (layer.mask) {
+        page.mask = webp(layer.mask);
+        add(`${pack.dir}/${layer.mask}`, `${pack.to}/cast/${page.mask}`, exact, undefined, assets);
+      }
+    }
+    forPage.layers.push(page);
+    const stillFrame = layer.hunt_progress !== undefined ? exact : castFrame;
     for (const [name, clip] of clips) {
       forPage.clips[name] = { ...clip, x: clip.x + grow.left, y: clip.y + grow.top, w: sizes.get(name).width, h: sizes.get(name).height };
       // (A clip may name a frame twice, to hold it.)
@@ -169,8 +189,8 @@ for (const pack of PACKAGES) {
     for (const still of layer.stills) {
       const file = delivered.stills[still];
       const to = `${pack.to}/cast/${file.replace(/\.png$/, '.webp')}`;
-      if (grown) addMade(() => sharp(join(repo, pack.dir, file)).ensureAlpha().extend({ ...grow, background: { r: 0, g: 0, b: 0, alpha: 0 } }), to, castFrame);
-      else add(`${pack.dir}/${file}`, to, castFrame, undefined, assets);
+      if (grown) addMade(() => sharp(join(repo, pack.dir, file)).ensureAlpha().extend({ ...grow, background: { r: 0, g: 0, b: 0, alpha: 0 } }), to, stillFrame);
+      else add(`${pack.dir}/${file}`, to, stillFrame, undefined, assets);
     }
   }
 
@@ -196,6 +216,7 @@ for (const pack of PACKAGES) {
         }
       }
     }
+    if (!pieces.length) continue; // (a layer with no stills: the stagehand's boots, in their gap)
     if (solid || layer.scenery === true) where.room.push(layer.actor);
     else if (box[0] <= box[2]) where.covers[layer.actor] = outward(box);
   }
@@ -346,7 +367,12 @@ const work = async () => {
 };
 await Promise.all(Array.from({ length: Math.max(2, Math.min(8, availableParallelism() - 2)) }, work));
 
-for (const { pack, forPage, where } of casts) {
+for (const { pack, forPage, where, delivered } of casts) {
+  for (const layer of delivered.layers) {
+    if (!layer.sprite_track) continue;
+    await mkdir(dirname(join(assets, pack.to, 'cast', layer.sprite_track)), { recursive: true });
+    await copyFile(join(repo, pack.dir, layer.sprite_track), join(assets, pack.to, 'cast', layer.sprite_track));
+  }
   await writeFile(join(site, 'src/scenes', pack.json), `${JSON.stringify(where, null, 1)}\n`);
   await mkdir(join(assets, pack.to, 'cast'), { recursive: true });
   await writeFile(join(assets, pack.to, 'cast/frames.json'), `${JSON.stringify(forPage, null, 1)}\n`);

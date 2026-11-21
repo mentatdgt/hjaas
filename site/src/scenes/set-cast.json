@@ -1,0 +1,104 @@
+{
+ "note": "Made by npm run assets from frames/022-theatre-scene/site/frames.json. Do not edit.",
+ "boxes": {
+  "backdrop_01": [
+   929,
+   0,
+   1289,
+   562
+  ],
+  "backdrop_02": [
+   978,
+   0,
+   1308,
+   562
+  ],
+  "backdrop_03": [
+   997,
+   0,
+   1334,
+   560
+  ],
+  "backdrop_04": [
+   1019,
+   0,
+   1433,
+   562
+  ],
+  "backdrop_05": [
+   1129,
+   0,
+   1495,
+   548
+  ],
+  "backdrop_06": [
+   1145,
+   0,
+   1501,
+   492
+  ],
+  "backdrop_07": [
+   1163,
+   26,
+   1505,
+   512
+  ],
+  "backdrop_08": [
+   1252,
+   48,
+   1509,
+   561
+  ],
+  "backdrop_09": [
+   1305,
+   62,
+   1529,
+   561
+  ],
+  "backdrop_10": [
+   1350,
+   230,
+   1529,
+   553
+  ],
+  "stagehand": [
+   0,
+   0,
+   1672,
+   941
+  ],
+  "lamp": [
+   1327,
+   0,
+   1427,
+   101
+  ],
+  "rachel": [
+   702,
+   75,
+   1096,
+   575
+  ]
+ },
+ "covers": {
+  "rachel": [
+   707,
+   80,
+   1094,
+   570
+  ]
+ },
+ "room": [
+  "backdrop_01",
+  "backdrop_02",
+  "backdrop_03",
+  "backdrop_04",
+  "backdrop_05",
+  "backdrop_06",
+  "backdrop_07",
+  "backdrop_08",
+  "backdrop_09",
+  "backdrop_10",
+  "lamp"
+ ]
+}

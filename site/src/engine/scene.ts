@@ -10,6 +10,8 @@ import { Player, type Schedule } from './player';
 import { Reel } from './reel';
 import { loadReaction, type Reaction } from './reaction';
 import { Viewfinder } from './screen';
+import { Progress } from './progress';
+import { Walk, decodeWalk, type TrackFile } from './walk';
 import { checkRoutine, routineFrames, routineSchedule, type RoutineManifest } from './routine';
 import { holdSchedule, type Rng, type Step } from './steps';
 import type { ClipCast, FrameCast, SceneConfig, Spot, Troupe } from './types';
@@ -78,6 +80,12 @@ interface Cast {
   /** QA: decoded image memory, in bytes. */
   memory?: () => Record<string, number>;
 }
+
+/**
+ * A whole cast, and what else its package puts in the picture: the hunt's progress pieces (the theatre's
+ * backdrop) and its walkers (the stagehand's boots). Painted with the room, under the cast.
+ */
+type CastList = Cast[] & { progress?: Progress; walks?: Walk[] };
 
 const json = async <T>(path: string): Promise<T> => {
   const response = await fetch(asset(path));
@@ -195,10 +203,10 @@ async function clipCast(config: SceneConfig, cast: ClipCast, host: SceneHost): P
  * A whole cast delivered in one package (scene 3; see cast.ts): every actor is played by the same code as the
  * lab's Rachel, each from its own share of the two manifests. Bottom to top.
  */
-async function troupe(config: SceneConfig, cast: Troupe, host: SceneHost): Promise<Decode<Cast[]>> {
+async function troupe(config: SceneConfig, cast: Troupe, host: SceneHost): Promise<Decode<CastList>> {
   const dir = config.assets + cast.dir;
   const [frames, routines] = await Promise.all([json<CastFrames>(dir + cast.frames), json<CastRoutines>(dir + cast.routine)]);
-  const { actors, problems, screen } = splitCast(frames, routines, PLATE.w);
+  const { actors, problems, screen, progress, progressFade, walkers } = splitCast(frames, routines, PLATE.w);
   if (problems.length) throw new Error(`${config.id}: ${problems.join(' ')}`);
   const lead = leadOf(actors);
   const load = (file: string): Promise<Blob> => fetchBlob(asset(dir + webp(file)));
@@ -208,13 +216,35 @@ async function troupe(config: SceneConfig, cast: Troupe, host: SceneHost): Promi
   // A live screen shows a part of the plate: the plate's file once more (from the browser's cache), to cut
   // that part from when the scene goes on the plate.
   const plate = screen ? await fetchBlob(asset(config.assets + config.plate)).catch(() => null) : null;
+  // The hunt's progress pieces and the walkers' files: downloaded now, decoded when the scene goes on.
+  const pieceFiles = await Promise.all(progress.map((piece) => load(piece.file)));
+  const walkFiles = await Promise.all(
+    walkers.map(async (walker) => ({
+      walker,
+      track: await json<TrackFile>(dir + walker.track),
+      sprites: new Map(await Promise.all(Object.entries(walker.sprites).map(async ([name, file]) => [name, await load(file)] as const))),
+      mask: walker.mask ? await load(walker.mask) : null,
+    })),
+  );
   return async () => {
-    const [casts, backdrop] = await Promise.all([Promise.all(fetched.map((decode) => decode())), screen && plate ? decodePart(plate, screen.source) : null]);
+    const [casts, backdrop, walks] = await Promise.all([
+      Promise.all(fetched.map((decode) => decode())) as Promise<CastList>,
+      screen && plate ? decodePart(plate, screen.source) : null,
+      Promise.all(
+        walkFiles.map(async ({ walker, track, sprites, mask }) => {
+          const decoded = await decodeWalk(sprites, mask);
+          const size = decoded.mask ? { w: decoded.mask.width, h: decoded.mask.height } : { w: frames.canvas.w, h: frames.canvas.h };
+          return new Walk(walker, track, decoded.sprites, decoded.mask, size, host.rnd, host.still);
+        }),
+      ),
+    ]);
     const holder = screen ? actors.findIndex((actor) => actor.name === screen.actor) : -1;
     if (screen && holder >= 0) {
       casts[holder].screen = screen;
       casts[holder].backdrop = backdrop;
     }
+    if (progress.length) casts.progress = new Progress(progress, pieceFiles, progressFade, () => host.found.size);
+    if (walks.length) casts.walks = walks;
     return casts;
   };
 }
@@ -372,7 +402,11 @@ export class Scene {
   /** The live screen one of the cast holds, if the scene has one. */
   private finder: Viewfinder | null = null;
   /** Their first frames' files being fetched. (They are decoded when the scene goes on the plate: see Decode.) */
-  private casting: Promise<Decode<Cast[]> | null> | null = null;
+  private casting: Promise<Decode<CastList> | null> | null = null;
+  /** The hunt's progress, shown in the picture (the theatre's backdrop), if the scene has it. */
+  private progress: Progress | null = null;
+  /** Its walkers (the stagehand's boots), if it has any. */
+  private walks: Walk[] = [];
   /** She is being put on the plate. */
   private entering: Promise<void> | null = null;
   private soft = false;
@@ -426,6 +460,7 @@ export class Scene {
     await room.decode().catch(() => {});
     plate.append(room);
 
+    let made: Scene | undefined;
     const hunt = await Hunt.create({
       spots: config.spots,
       edge: edgeAlpha(host.edge.style, host.edge.seed(edgeName(config)), config.keep),
@@ -433,22 +468,36 @@ export class Scene {
       flyLayer: host.flyLayer,
       found: host.found,
       target: host.target,
-      onFind: host.onFind,
+      // The host counts the find first; then the picture shows the hunt's progress (the backdrop's next swath,
+      // fading in as she answers).
+      onFind: (spot: Spot) => {
+        host.onFind(spot);
+        made?.progressed();
+      },
       onLand: host.onLand,
     });
     const scene = new Scene(config, host, plate, room, hunt);
+    made = scene;
     // The opening scene's edge is needed at once; any other scene's is made when it is opened (see dress()).
     const [ready] = await Promise.all([cast, withCharacter ? scene.dress() : null]);
-    if (ready) scene.attach(ready);
+    if (ready) {
+      scene.attach(ready);
+      await scene.progress?.wake();
+    }
     return scene;
   }
 
-  private static async castFor(config: SceneConfig, host: SceneHost): Promise<Decode<Cast[]> | null> {
+  private static async castFor(config: SceneConfig, host: SceneHost): Promise<Decode<CastList> | null> {
     const cast = config.character;
     if (!cast) return null;
     if (cast.kind === 'cast') return troupe(config, cast, host);
     const one = await (cast.kind === 'clips' ? clipCast(config, cast, host) : frameCast(config, cast, host));
     return async () => [await one()];
+  }
+
+  /** A mushroom of this scene was found (the host has counted it): the picture shows the hunt's progress. */
+  private progressed(): void {
+    this.progress?.reach();
   }
 
   /**
@@ -474,13 +523,16 @@ export class Scene {
   enter(options: { hidden?: boolean } = {}): Promise<void> {
     // A scene come back to: its frames are decoded again while the brush is still at work. (A cast that kept
     // nothing can be drawn again once each actor's rest frame is back.)
-    const back = Promise.all(this.casts.map((cast) => cast.wake())).then(() => {});
+    for (const walk of this.walks) walk.wake();
+    const back = Promise.all([...this.casts.map((cast) => cast.wake()), this.progress?.wake()]).then(() => {});
     if (this.character || !this.config.character) return back;
     this.preload();
     this.entering ??= this.casting!
       .then((decode) => decode?.() ?? null)
-      .then((casts) => {
+      .then(async (casts) => {
         if (casts && !this.character) this.attach(casts, options.hidden === true);
+        // The progress pieces the hunt has reached are drawn before the scene shows.
+        await this.progress?.wake();
       });
     return this.entering;
   }
@@ -497,13 +549,24 @@ export class Scene {
     this.soft = true;
   }
 
-  private attach(casts: Cast[], hidden = false): void {
+  private attach(casts: CastList, hidden = false): void {
     const lead = leadOf(casts);
     if (!lead) return;
     this.casts = casts;
     this.cast = lead;
     this.character = lead.character;
     const leadAt = casts.indexOf(lead);
+    // The hunt's progress lies on the room, under the mushrooms; the walkers over it, under the cast. Both are
+    // painted with the room.
+    if (casts.progress) {
+      this.progress = casts.progress;
+      this.plate.insertBefore(casts.progress.el, this.hunt.el);
+    }
+    for (const walk of casts.walks ?? []) {
+      this.walks.push(walk);
+      this.plate.insertBefore(walk.el, this.mark);
+      walk.wake();
+    }
     casts.forEach((cast, i) => {
       const { character } = cast;
       // The lead, and whoever is drawn over her, stay above a painting's sheet; the rest are painted with the room.
@@ -522,6 +585,13 @@ export class Scene {
     });
     this.player = this.players.get(lead)!;
     if (this.host.onPose) this.player.onPose = this.host.onPose;
+    // The walkers keep time on the lead's player's frames.
+    if (this.walks.length) {
+      const walks = this.walks;
+      this.player.onFrame = (now) => {
+        for (const walk of walks) walk.frame(now);
+      };
+    }
     // A live screen: it shows the room and whoever is drawn before the actor who holds it, and its
     // recording dot keeps time on her player's own frames.
     const holder = casts.find((cast) => cast.screen);
@@ -579,6 +649,8 @@ export class Scene {
       cast.sleep();
     }
     this.finder?.sleep();
+    this.progress?.sleep();
+    for (const walk of this.walks) walk.sleep();
     this.stagger();
     this.room.removeAttribute('src');
     this.edge.release();
@@ -641,7 +713,7 @@ export class Scene {
       for (const key of ['stills', 'canvases', 'clipFrames', 'clipFramesPeak'] as const) hers[key] += m[key] ?? 0;
       if (cast === this.cast) hers.canvasWidth = m.canvasWidth ?? 0;
     }
-    hers.canvases += this.finder?.bytes ?? 0;
+    hers.canvases += (this.finder?.bytes ?? 0) + (this.progress?.bytes ?? 0) + this.walks.reduce((sum, walk) => sum + walk.bytes, 0);
     return { ...hers, room: this.room.getAttribute('src') ? PLATE.w * PLATE.h * 4 : 0, edge: this.edge.bytes };
   }
 
@@ -677,7 +749,8 @@ export class Scene {
     // find, without the head and arm travel.
     const steps = reaction && !this.host.still() ? (reaction.roll?.(this.host.rnd) ?? reaction.steps) : (reaction?.still ?? this.cast.still);
     if (steps.length === 0) return Promise.resolve();
-    this.reacting = this.player.react(steps);
+    // A scene may have her answer at once, from whatever pose she is in (`answer` in its config).
+    this.reacting = this.player.react(steps, this.config.answer === 'at-once');
     return this.reacting;
   }
 
@@ -706,6 +779,12 @@ export class Scene {
     const r = this.plate.getBoundingClientRect();
     ctx.imageSmoothingQuality = 'high';
     ctx.drawImage(room, r.left - origin.left, r.top - origin.top, r.width, r.height);
+    this.progress?.sketch(ctx, origin);
+    for (const walk of this.walks) {
+      if (!walk.el.width) continue;
+      const w = walk.el.getBoundingClientRect();
+      ctx.drawImage(walk.el, w.left - origin.left, w.top - origin.top, w.width, w.height);
+    }
     this.hunt.sketch(ctx, origin);
     for (const cast of this.casts) cast.character.sketch(ctx, origin);
     this.finder?.sketch(ctx, origin);

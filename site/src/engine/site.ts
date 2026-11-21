@@ -10,7 +10,7 @@ import { Logo } from './logo';
 import { onReducedMotionChange, reducedMotion } from './motion';
 import { Pan } from './pan';
 import { Scene } from './scene';
-import { freshScene, loadProgress, saveProgress, type SceneProgress } from './state';
+import { freshScene, loadProgress, noteFor as noteText, presetAll, saveProgress, siteCount, unlockedBy, type SceneProgress } from './state';
 import { seeded } from './steps';
 import { Transition } from './transition';
 import type { SceneConfig, Spot } from './types';
@@ -42,9 +42,12 @@ const COPY = {
   pause: 'Pause animation',
   play: 'Play animation',
   replay: 'Replay painting',
-  prompt: (total: number) => `Find the ${total} hidden mushrooms`,
-  prize: (total: number) => `Find all ${total} to reach Hui Jie`,
-  done: (total: number) => `You found all ${total}`,
+  prompt: (here: number) => `Find the ${here} hidden mushrooms`,
+  /** Counts the whole site: the Contact button waits for every mushroom in every scene. */
+  prize: (site: number) => `Find all ${site} to reach Hui Jie`,
+  doneHere: (here: number, elsewhere: number) => `You found all ${here} here. ${elsewhere} more in the other scenes`,
+  done: (here: number) => `You found all ${here}`,
+  unlock: (site: number) => `All ${site} mushrooms found. The Contact Hui Jie button is now available.`,
 };
 
 /**
@@ -139,18 +142,24 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     const now = state.found.map((id) => scene.replaced?.[id] ?? id);
     state.found = [...new Set(now)].filter((id) => scene.spots.some((spot) => spot.id === id));
   }
-  if (flags.found !== undefined) {
-    // A QA preset: the opening scene starts with this many found.
+  // QA presets. `?all=N`: the first N mushrooms of the whole site, scene by scene in menu order (it wins over
+  // `?found`). `?found=N`: the opening scene starts with this many found.
+  const preset = flags.all !== undefined || flags.found !== undefined;
+  if (flags.all !== undefined) {
+    const finds = presetAll(scenes, flags.all);
+    for (const scene of scenes) stateOf(scene.id).found = finds[scene.id];
+  } else if (flags.found !== undefined) {
     stateOf(first.id).found = first.spots.slice(0, Math.max(0, Math.min(first.spots.length, flags.found))).map((spot) => spot.id);
-    if (flags.found >= first.spots.length) progress.unlocked = true;
   }
-  // Progress saved before the unlock was shared between scenes.
-  if (scenes.some((scene) => stateOf(scene.id).found.length >= scene.spots.length)) progress.unlocked = true;
   const save = (): void => {
-    if (flags.found !== undefined) return; // a QA preset is never written back
+    if (preset) return; // a QA preset is never written back
     saveProgress(progress);
   };
   const foundIn = new Map<string, Set<string>>(scenes.map((scene) => [scene.id, new Set(stateOf(scene.id).found)]));
+  const findsOf = (id: string): ReadonlySet<string> => foundIn.get(id) ?? new Set();
+  // The Contact button is earned by every mushroom of every scene, and worked out from the finds themselves:
+  // a saved flag is never trusted (one saved by the old rule, the first scene to reach 10, means nothing now).
+  progress.unlocked = unlockedBy(scenes, findsOf);
 
   // QA: with ?debug, every frame that arrives late is logged (start time and length, in ms).
   const jank: Array<[number, number]> = [];
@@ -216,9 +225,11 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   const caption = new Caption(total);
   captionRow.prepend(caption.el);
   if (flags.debug) (window as unknown as { __hj: { caption: Caption } }).__hj.caption = caption;
-  /** The line beside the count: what to look for, then what the hunt is for, then that this scene is done. */
-  const noteFor = (count: number, of: number): string =>
-    count >= of ? COPY.done(of) : progress.unlocked ? '' : count === 0 ? COPY.prompt(of) : COPY.prize(of);
+  /**
+   * The line beside the count: what to look for, then what the hunt is for (every mushroom of the site), then
+   * that this scene is done and how many are still to find in the others.
+   */
+  const noteFor = (count: number, of: number): string => noteText(COPY, count, of, siteCount(scenes, findsOf));
   const captionFor = (config: SceneConfig): [number, string, boolean] => {
     const count = foundIn.get(config.id)!.size;
     return [count, noteFor(count, config.spots.length), progress.unlocked];
@@ -326,10 +337,13 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   }, 1000);
   cleanup.push(() => window.clearInterval(hintClock));
 
-  /** A scene's tenth mushroom has landed. The first scene to get there earns the Contact button, for good. */
+  /**
+   * A scene's tenth mushroom has landed: the scene is done. Only the find that completes the whole site (the
+   * 50th, in whichever scene) earns the Contact button, for good.
+   */
   const finish = (scene: Scene): void => {
-    const earned = !progress.unlocked;
-    progress.unlocked = true;
+    const earned = unlockEarned;
+    unlockEarned = false;
     save();
     const calm = reducedMotion();
     const of = scene.total;
@@ -337,7 +351,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     window.setTimeout(
       () => {
         if (scene !== current) return;
-        caption.change(of, COPY.done(of), true, earned ? `All ${of} mushrooms found. The Contact Hui Jie button is now available.` : '');
+        caption.change(of, noteFor(of, of), progress.unlocked, earned ? COPY.unlock(siteCount(scenes, findsOf).total) : '');
         if (!earned) return;
         // Keyboard and screen-reader users land on the prize, and it is brought on screen if it was not.
         window.setTimeout(
@@ -351,6 +365,9 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       calm ? 0 : 900,
     );
   };
+
+  /** The find that completed the whole site has been made; its mushroom has not landed yet. */
+  let unlockEarned = false;
 
   const loading = new Map<string, Promise<Scene>>();
   const scenesLoaded = new Map<string, Scene>();
@@ -375,6 +392,10 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
         quietSeconds = 0;
         found.add(spot.id);
         stateOf(config.id).found = [...found];
+        // Worked out again after every find: this one may have been the last of the whole site.
+        const was = progress.unlocked;
+        progress.unlocked = unlockedBy(scenes, findsOf);
+        if (progress.unlocked && !was) unlockEarned = true;
         save();
         if (!self) return;
         const wasReacting = self.reactingNow;
@@ -387,7 +408,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
         if (!self || self !== current) return;
         const next = Math.min(of, caption.current + 1);
         const firstFind = next === 1;
-        caption.land(next, firstFind && next < of && !progress.unlocked ? COPY.prize(of) : '');
+        caption.land(next, firstFind && next < of && !progress.unlocked ? COPY.prize(siteCount(scenes, findsOf).total) : '');
         // The prompt has done its job: from the first find on, the caption says what the hunt is for.
         if (next < of) caption.say(noteFor(next, of));
         else finish(self);
