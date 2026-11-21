@@ -96,7 +96,7 @@ export interface ClipCast {
 
 /**
  * A whole cast delivered in one package: several actors, each with its own layer, stills and routine, all in
- * two manifests (scene 3; the format is described in cast.ts). Who they are, where they stand, what they do
+ * two manifests (scenes 3 and 4; the format is described in cast.ts). Who they are, where they stand, what they do
  * and which of them answers a find all come from the two files.
  */
 export interface Troupe {
@@ -149,6 +149,12 @@ export interface SceneConfig {
    * of the edge by the choice of `edge` alone.
    */
   keep?: readonly KeepBox[];
+  /**
+   * A mushroom found while she is still answering the last one. Left out: her answer carries on as it is.
+   * `hold`: if she is in the held pose of her reaction (or about to be), that hold starts again from now, so
+   * she looks for as long after the second find as after the first. She never starts the reaction over.
+   */
+  again?: 'hold';
   /** The first-visit painting. The same strokes, played quickly, brush the scene in over another one. */
   strokes: readonly StrokePlan[];
   /**

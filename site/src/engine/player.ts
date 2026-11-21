@@ -35,6 +35,11 @@ export class Player {
   onPose: ((pose: string, at: number) => void) | null = null;
   /** Called as each step begins: a step may say which poses to have ready next (steps.ts, `soon`). */
   onStep: ((step: Step) => void) | null = null;
+  /**
+   * Called once at the end of every frame she is running, with the frame's time: for whatever else in the
+   * scene has to keep time with her without a loop of its own (the film scene's camera: its REC dot).
+   */
+  onFrame: ((now: number) => void) | null = null;
 
   constructor(character: Character, loop: Schedule) {
     this.rachel = character;
@@ -108,6 +113,23 @@ export class Player {
     });
   }
 
+  /**
+   * A second find while she is reacting: if she is holding the reaction's gesture (steps.ts, `gesture`),
+   * she holds it afresh from now. The reaction is not started again, and nothing is queued. True if the
+   * find is answered by the reaction under way: the gesture is being held, or is still to come. False if
+   * she is not reacting, or is already on her way back.
+   */
+  prolong(): boolean {
+    const steps = this.reaction ?? this.queued;
+    if (!steps) return false;
+    if (this.reaction && this.step.gesture) {
+      this.elapsed = 0;
+      return true;
+    }
+    const at = this.reaction ? this.reactionIndex : -1;
+    return steps.some((step, i) => i > at && step.gesture === true);
+  }
+
   private tick = (now: number): void => {
     if (!this.running) return;
     this.elapsed += Math.min(now - this.last, MAX_CATCH_UP_MS);
@@ -117,6 +139,7 @@ export class Player {
       this.advance();
     }
     this.blend();
+    this.onFrame?.(now);
     this.raf = requestAnimationFrame(this.tick);
   };
 

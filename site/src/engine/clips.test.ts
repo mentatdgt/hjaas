@@ -303,7 +303,7 @@ describe('clipReaction', () => {
   });
 
   it('has the thumbs-up as its one held pose, for paused or reduced motion', () => {
-    expect(reaction.still).toEqual([{ pose: 'K2_thumbs', ms: 1100 }]);
+    expect(reaction.still).toEqual([{ pose: 'K2_thumbs', ms: 1100, gesture: true }]);
   });
 });
 

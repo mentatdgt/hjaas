@@ -442,11 +442,11 @@ describe('a cast member with clips (made up: the café has none for now)', () =>
     expect(poses(reaction.steps)).toEqual(['look', 'smile', 'sketch']);
     expect(reaction.steps.find((step) => step.pose === 'look')).toEqual({ pose: 'look', ms: 600 });
     // (The made-up manifest asks for a dissolve into the smile. A reaction is all cuts, so it gets none.)
-    expect(reaction.steps.find((step) => step.pose === 'smile')).toEqual({ pose: 'smile', ms: 1400 });
+    expect(reaction.steps.find((step) => step.pose === 'smile')).toEqual({ pose: 'smile', ms: 1400, gesture: true });
     const back = reaction.steps.filter((step) => step.pose.startsWith('sip#')).map((step) => step.pose);
     expect(back[0]).toBe('sip#11');
     expect(back.at(-1)).toBe('sip#0');
-    expect(reaction.still).toEqual([{ pose: 'smile', ms: 1400 }]);
+    expect(reaction.still).toEqual([{ pose: 'smile', ms: 1400, gesture: true }]);
   });
 
   for (const [how, extra, rules] of [

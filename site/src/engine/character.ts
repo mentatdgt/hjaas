@@ -99,6 +99,8 @@ export class Character {
   private pose: string;
   /** QA: how many times she was asked for a pose that was not in memory (she stays on the one before). */
   missed = 0;
+  /** Called whenever her canvas has been drawn afresh (a live screen that shows her listens: screen.ts). */
+  onDraw: (() => void) | null = null;
   /** The whole-canvas frame now on the canvas (under any patch). */
   private drawn = '';
   /** The rectangle of that frame now covered by a patch ('' when it is clean). */
@@ -304,6 +306,26 @@ export class Character {
     this.drawn = '';
     this.patched = '';
     this.mixed = true;
+    this.onDraw?.();
+  }
+
+  /**
+   * Copy the part of her that lies in a rectangle of the plate (plate px) onto another canvas, where the
+   * whole rectangle fills dx, dy, dw, dh. For a picture of the scene inside the scene (screen.ts).
+   */
+  copy(ctx: CanvasRenderingContext2D, region: { x: number; y: number; w: number; h: number }, dx: number, dy: number, dw: number, dh: number): void {
+    const { canvas, placement: p } = this;
+    if (!canvas.width) return;
+    const left = Math.max(region.x, p.left);
+    const top = Math.max(region.y, p.top);
+    const right = Math.min(region.x + region.w, p.left + p.width);
+    const bottom = Math.min(region.y + region.h, p.top + p.height);
+    if (right <= left || bottom <= top) return;
+    const sx = canvas.width / p.width;
+    const sy = canvas.height / p.height;
+    const kx = dw / region.w;
+    const ky = dh / region.h;
+    ctx.drawImage(canvas, (left - p.left) * sx, (top - p.top) * sy, (right - left) * sx, (bottom - top) * sy, dx + (left - region.x) * kx, dy + (top - region.y) * ky, (right - left) * kx, (bottom - top) * ky);
   }
 
   /**
@@ -361,8 +383,13 @@ export class Character {
   }
 
   private draw(): void {
+    if (!this.canvas.width) return;
+    this.paint();
+    this.onDraw?.();
+  }
+
+  private paint(): void {
     const { ctx, canvas } = this;
-    if (!canvas.width) return;
     const mixed = this.mixed;
     this.mixed = false;
     if (this.pose === NOTHING) {

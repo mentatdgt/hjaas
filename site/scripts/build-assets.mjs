@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 // Copies the approved art into site/public/assets/ as WebP: scene1/ for scene 1's own art, shared/ for
 // the mushrooms and the logo, which every scene uses, scene2/ for the lab (Rachel's frames twice: as
-// delivered, and a lighter set for narrow screens), scene3/ for the café (its plate, and its whole cast as
-// delivered). Each scene also gets the pencil lines of its edge.
+// delivered, and a lighter set for narrow screens), scene3/ for the café and scene4/ for the film shoot
+// (each its plate, and its whole cast as delivered). Each scene also gets the pencil lines of its edge.
 // The originals in frames/, scene/ and assets/ are only read, never changed.
 // Re-run with `npm run assets` whenever Wren swaps a file; nothing else needs editing.
 import { createHash } from 'node:crypto';
@@ -98,78 +98,85 @@ for (const [name, clip] of Object.entries(labFrames.clips)) {
   }
 }
 
-// Scene 3, the café: the plate and a cast of several actors, as delivered by task 018
-// (frames/018-cafe-scene/site/). The package is read through its own frames.json, so a new delivery with
-// the same layout (other stills, other clips, other boxes) needs nothing changed here.
+// Scenes delivered as a whole cast in one package (frames/NNN-…/site/): scene 3, the café (task 018), and
+// scene 4, the film shoot at the Merlion (task 020). A package is read through its own frames.json, so a new
+// delivery with the same layout (other stills, other clips, other boxes) needs nothing changed here.
 //
-// - The plate is drawn larger than the page's plates (2544 x 1432): it is shrunk to their size.
-// - The cast is used at the size delivered, about 1.5x the plate: the sharpest there is, and what a phone
-//   needs. Nothing is enlarged.
-// - A clip's patches may reach outside their actor's box (the café's `sip` starts 13 px above Rachel's).
-//   The page draws an actor on a canvas the size of the box, so here the box is grown to hold every patch
-//   and the actor's stills are padded with clear pixels to match. The frames.json the page reads is written
-//   further down with the grown boxes; routine.json is copied as delivered.
-const cafe = 'frames/018-cafe-scene/site';
-const cafeFrames = JSON.parse(await readFile(join(repo, cafe, 'frames.json'), 'utf8'));
-// (A new delivery may drop files the last one had: the folder is made afresh, unless only other files were asked for.)
-if (!process.argv[2] || ['scene3', 'cast'].includes(process.argv[2])) await rm(join(assets, 'scene3/cast'), { recursive: true, force: true });
-add(`${cafe}/${cafeFrames.plate}`, 'scene3/room.webp', plate, { width: 1672, height: 941, fit: 'fill', kernel: 'lanczos3' }, assets);
-const cafeFrame = { quality: 93, alphaQuality: 100, smartSubsample: true, effort: 6 };
-const cafeOut = { ...cafeFrames, layers: [], clips: {} };
-cafeOut.canvas = { w: cafeFrames.canvas.w, h: cafeFrames.canvas.h };
-cafeOut.note = `Made by npm run assets from ${cafe}/frames.json: the same cast, with each actor's box grown to hold its clips' patches. Do not edit; edit the delivered file and run npm run assets.`;
-delete cafeOut.plate;
-for (const layer of cafeFrames.layers) {
-  // How far the layer's clips reach past its box, on each side.
-  const grow = { left: 0, top: 0, right: 0, bottom: 0 };
-  const clips = Object.entries(cafeFrames.clips ?? {}).filter(([, clip]) => clip.layer === layer.actor);
-  const sizes = new Map();
-  for (const [name, clip] of clips) {
-    const size = await sharp(join(repo, cafe, clip.frames[0])).metadata();
-    sizes.set(name, size);
-    grow.left = Math.max(grow.left, -clip.x);
-    grow.top = Math.max(grow.top, -clip.y);
-    grow.right = Math.max(grow.right, clip.x + size.width - layer.w);
-    grow.bottom = Math.max(grow.bottom, clip.y + size.height - layer.h);
+// - A plate drawn larger than the page's plates (the café's, 2544 x 1432) is shrunk to their size.
+// - The cast is used at the size delivered: the café's is about 1.5x the plate, the sharpest there is and
+//   what a phone needs; the film scene's is the plate's own size and there is no larger master. Nothing is
+//   enlarged.
+// - A clip's patches may reach outside their actor's box (the café's first `sip` started 13 px above
+//   Rachel's). The page draws an actor on a canvas the size of the box, so here the box is grown to hold
+//   every patch and the actor's stills are padded with clear pixels to match. The frames.json the page
+//   reads is written further down with the grown boxes; routine.json is copied as delivered.
+//
+// Where each cast is on the plate is also worked out here, for the scene's own file (src/scenes/*.ts) to
+// read: each actor's box (nothing of the hunt may be put in one), and the smaller rectangle that holds every
+// pixel the actor ever covers, stills and clips together (the painting's edge keeps clear of those). In
+// plate px, rounded outward. Written further down as src/scenes/<scene>-cast.json.
+//
+// A piece of the room that moves is listed under `room`, not under `covers`: the edge fades it as it fades
+// the plate. That is an actor whose every still is a solid rectangle, with nothing cut out (the café's
+// ceiling fan), or one the package's notes call scenery (`scenery` below: the Merlion's water, whose stills
+// are cut out like an actor's, so the drawings cannot say).
+const PACKAGES = [
+  { dir: 'frames/018-cafe-scene/site', to: 'scene3', json: 'design-cast.json', lines: 'design-lines.png', scenery: [] },
+  { dir: 'frames/020-film-scene/site', to: 'scene4', json: 'film-cast.json', lines: 'film-lines.png', scenery: ['water'] },
+];
+const castFrame = { quality: 93, alphaQuality: 100, smartSubsample: true, effort: 6 };
+const casts = [];
+for (const pack of PACKAGES) {
+  const delivered = JSON.parse(await readFile(join(repo, pack.dir, 'frames.json'), 'utf8'));
+  // (A new delivery may drop files the last one had: the folder is made afresh, unless only other files were asked for.)
+  if (!process.argv[2] || [pack.to, 'cast'].includes(process.argv[2])) await rm(join(assets, pack.to, 'cast'), { recursive: true, force: true });
+  add(`${pack.dir}/${delivered.plate}`, `${pack.to}/room.webp`, plate, { width: 1672, height: 941, fit: 'fill', kernel: 'lanczos3' }, assets);
+  const forPage = { ...delivered, layers: [], clips: {} };
+  forPage.canvas = { w: delivered.canvas.w, h: delivered.canvas.h };
+  forPage.note = `Made by npm run assets from ${pack.dir}/frames.json: the same cast, with each actor's box grown to hold its clips' patches. Do not edit; edit the delivered file and run npm run assets.`;
+  delete forPage.plate;
+  for (const layer of delivered.layers) {
+    // How far the layer's clips reach past its box, on each side.
+    const grow = { left: 0, top: 0, right: 0, bottom: 0 };
+    const clips = Object.entries(delivered.clips ?? {}).filter(([, clip]) => clip.layer === layer.actor);
+    const sizes = new Map();
+    for (const [name, clip] of clips) {
+      const size = await sharp(join(repo, pack.dir, clip.frames[0])).metadata();
+      sizes.set(name, size);
+      grow.left = Math.max(grow.left, -clip.x);
+      grow.top = Math.max(grow.top, -clip.y);
+      grow.right = Math.max(grow.right, clip.x + size.width - layer.w);
+      grow.bottom = Math.max(grow.bottom, clip.y + size.height - layer.h);
+    }
+    const grown = Object.values(grow).some((px) => px > 0);
+    forPage.layers.push({ ...layer, x: layer.x - grow.left, y: layer.y - grow.top, w: layer.w + grow.left + grow.right, h: layer.h + grow.top + grow.bottom });
+    for (const [name, clip] of clips) {
+      forPage.clips[name] = { ...clip, x: clip.x + grow.left, y: clip.y + grow.top, w: sizes.get(name).width, h: sizes.get(name).height };
+      // (A clip may name a frame twice, to hold it.)
+      for (const file of new Set(clip.frames)) add(`${pack.dir}/${file}`, `${pack.to}/cast/${file.replace(/\.png$/, '.webp')}`, castFrame, undefined, assets);
+    }
+    for (const still of layer.stills) {
+      const file = delivered.stills[still];
+      const to = `${pack.to}/cast/${file.replace(/\.png$/, '.webp')}`;
+      if (grown) addMade(() => sharp(join(repo, pack.dir, file)).ensureAlpha().extend({ ...grow, background: { r: 0, g: 0, b: 0, alpha: 0 } }), to, castFrame);
+      else add(`${pack.dir}/${file}`, to, castFrame, undefined, assets);
+    }
   }
-  const grown = Object.values(grow).some((px) => px > 0);
-  cafeOut.layers.push({ ...layer, x: layer.x - grow.left, y: layer.y - grow.top, w: layer.w + grow.left + grow.right, h: layer.h + grow.top + grow.bottom });
-  for (const [name, clip] of clips) {
-    cafeOut.clips[name] = { ...clip, x: clip.x + grow.left, y: clip.y + grow.top, w: sizes.get(name).width, h: sizes.get(name).height };
-    // (A clip may name a frame twice, to hold it.)
-    for (const file of new Set(clip.frames)) add(`${cafe}/${file}`, `scene3/cast/${file.replace(/\.png$/, '.webp')}`, cafeFrame, undefined, assets);
-  }
-  for (const still of layer.stills) {
-    const file = cafeFrames.stills[still];
-    const to = `scene3/cast/${file.replace(/\.png$/, '.webp')}`;
-    if (grown) addMade(() => sharp(join(repo, cafe, file)).ensureAlpha().extend({ ...grow, background: { r: 0, g: 0, b: 0, alpha: 0 } }), to, cafeFrame);
-    else add(`${cafe}/${file}`, to, cafeFrame, undefined, assets);
-  }
-}
 
-// Where the café's cast is on the plate, for the scene's own file (src/scenes/design.ts) to read: each
-// actor's box (nothing of the hunt may be put in one), and the smaller rectangle that holds every pixel
-// the actor ever covers, stills and clips together (the painting's edge keeps clear of those). In plate px,
-// rounded outward. Written further down as src/scenes/design-cast.json.
-//
-// An actor whose every still is a solid rectangle, with nothing cut out, is a piece of the room that moves
-// (the café's ceiling fan): the edge fades it as it fades the plate, so it is listed under `room`, not
-// under `covers`.
-const cafeCast = { note: `Made by npm run assets from ${cafe}/frames.json. Do not edit.`, boxes: {}, covers: {}, room: [] };
-{
-  const k = 1672 / cafeFrames.canvas.w;
+  const where = { note: `Made by npm run assets from ${pack.dir}/frames.json. Do not edit.`, boxes: {}, covers: {}, room: [] };
+  const k = 1672 / delivered.canvas.w;
   const outward = ([l, t, r, b]) => [Math.floor(l * k), Math.floor(t * k), Math.ceil(r * k), Math.ceil(b * k)];
-  for (const layer of cafeOut.layers) {
-    cafeCast.boxes[layer.actor] = outward([layer.x, layer.y, layer.x + layer.w, layer.y + layer.h]);
-    const original = cafeFrames.layers.find((l) => l.actor === layer.actor);
+  for (const layer of forPage.layers) {
+    where.boxes[layer.actor] = outward([layer.x, layer.y, layer.x + layer.w, layer.y + layer.h]);
+    const original = delivered.layers.find((l) => l.actor === layer.actor);
     const pieces = [
-      ...original.stills.map((still) => ({ file: cafeFrames.stills[still], x: original.x, y: original.y })),
-      ...Object.values(cafeFrames.clips ?? {}).filter((clip) => clip.layer === layer.actor).flatMap((clip) => [...new Set(clip.frames)].map((file) => ({ file, x: original.x + clip.x, y: original.y + clip.y }))),
+      ...original.stills.map((still) => ({ file: delivered.stills[still], x: original.x, y: original.y })),
+      ...Object.values(delivered.clips ?? {}).filter((clip) => clip.layer === layer.actor).flatMap((clip) => [...new Set(clip.frames)].map((file) => ({ file, x: original.x + clip.x, y: original.y + clip.y }))),
     ];
     let box = [Infinity, Infinity, -Infinity, -Infinity];
     let solid = true;
     for (const piece of pieces) {
-      const { data, info } = await sharp(join(repo, cafe, piece.file)).ensureAlpha().extractChannel(3).raw().toBuffer({ resolveWithObject: true });
+      const { data, info } = await sharp(join(repo, pack.dir, piece.file)).ensureAlpha().extractChannel(3).raw().toBuffer({ resolveWithObject: true });
       for (let y = 0; y < info.height; y++) {
         for (let x = 0; x < info.width; x++) {
           if (data[y * info.width + x] < 255) solid = false;
@@ -178,9 +185,10 @@ const cafeCast = { note: `Made by npm run assets from ${cafe}/frames.json. Do no
         }
       }
     }
-    if (solid) cafeCast.room.push(layer.actor);
-    else if (box[0] <= box[2]) cafeCast.covers[layer.actor] = outward(box);
+    if (solid || pack.scenery.includes(layer.actor)) where.room.push(layer.actor);
+    else if (box[0] <= box[2]) where.covers[layer.actor] = outward(box);
   }
+  casts.push({ pack, delivered, forPage, where });
 }
 
 // The pencil lines of each scene's edge (scene/pencil/, made by tools/pencil_lines.py from the plates):
@@ -230,8 +238,8 @@ async function withoutMovingLines(data, info, plateFile, boxes) {
   return data;
 }
 // (The café's map is the size of its own, larger plate: it is shrunk with it.)
-const cafeMoving = { plate: join(repo, cafe, cafeFrames.plate), canvas: cafeFrames.canvas, boxes: cafeFrames.layers.filter((layer) => cafeCast.room.includes(layer.actor)) };
-for (const [map, dir, moving] of [['build-lines.png', 'scene1'], ['grow-lines.png', 'scene2'], ['design-lines.png', 'scene3', cafeMoving]]) {
+const castLines = casts.map(({ pack, delivered, where }) => [pack.lines, pack.to, { plate: join(repo, pack.dir, delivered.plate), canvas: delivered.canvas, boxes: delivered.layers.filter((layer) => where.room.includes(layer.actor)) }]);
+for (const [map, dir, moving] of [['build-lines.png', 'scene1'], ['grow-lines.png', 'scene2'], ...castLines]) {
   const lines = (async () => {
     const file = sharp(join(repo, 'scene/pencil', map));
     const size = await file.metadata();
@@ -327,10 +335,12 @@ const work = async () => {
 };
 await Promise.all(Array.from({ length: Math.max(2, Math.min(8, availableParallelism() - 2)) }, work));
 
-await writeFile(join(site, 'src/scenes/design-cast.json'), `${JSON.stringify(cafeCast, null, 1)}\n`);
-await mkdir(join(assets, 'scene3/cast'), { recursive: true });
-await writeFile(join(assets, 'scene3/cast/frames.json'), `${JSON.stringify(cafeOut, null, 1)}\n`);
-await copyFile(join(repo, cafe, 'routine.json'), join(assets, 'scene3/cast/routine.json'));
+for (const { pack, forPage, where } of casts) {
+  await writeFile(join(site, 'src/scenes', pack.json), `${JSON.stringify(where, null, 1)}\n`);
+  await mkdir(join(assets, pack.to, 'cast'), { recursive: true });
+  await writeFile(join(assets, pack.to, 'cast/frames.json'), `${JSON.stringify(forPage, null, 1)}\n`);
+  await copyFile(join(repo, pack.dir, 'routine.json'), join(assets, pack.to, 'cast/routine.json'));
+}
 await copyFile(join(repo, lab, 'frames.json'), join(assets, 'scene2/rachel/frames.json'));
 await copyFile(join(repo, lab, 'routine.json'), join(assets, 'scene2/rachel/routine.json'));
 await writeFile(join(assets, smallDir, 'frames.json'), `${JSON.stringify(smallFrames, null, 1)}\n`);

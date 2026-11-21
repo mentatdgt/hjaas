@@ -1,7 +1,7 @@
 // One scene, built from its config: the plate, the character on it, and the ten hidden mushrooms.
 // A scene knows nothing about the page around it; site.ts puts it in the window and takes it out again.
 import { PLATE, asset, decodeBlob, fetchBlob, fetchFrame, idle, loadFrame, loadPlate, releaseFrame, unloadFrame } from './assets';
-import { leadOf, splitCast, type CastFrames, type CastRoutines } from './cast';
+import { leadOf, splitCast, type CastFrames, type CastRoutines, type CastScreen } from './cast';
 import { Character } from './character';
 import { edgeAlpha, edgeName, makeEdge, type Edge, type EdgeStyle } from './edge';
 import { checkClips, clipPose, clipReaction, clipSchedule, clipsInUse, restOf, stillsInUse, type ClipFrames, type ClipRoutine } from './clips';
@@ -9,6 +9,7 @@ import { Hunt } from './mushrooms';
 import { Player, type Schedule } from './player';
 import { Reel } from './reel';
 import { loadReaction, type Reaction } from './reaction';
+import { Viewfinder } from './screen';
 import { checkRoutine, routineFrames, routineSchedule, type RoutineManifest } from './routine';
 import { holdSchedule, type Rng, type Step } from './steps';
 import type { ClipCast, FrameCast, SceneConfig, Spot, Troupe } from './types';
@@ -68,6 +69,8 @@ interface Cast {
    * kept frames would be more than the page's memory allows on a phone).
    */
   keeps: boolean;
+  /** She holds a live screen that shows the scene under her (the film scene's camera: see screen.ts). */
+  screen?: CastScreen;
   /** QA: decoded image memory, in bytes. */
   memory?: () => Record<string, number>;
 }
@@ -191,14 +194,19 @@ async function clipCast(config: SceneConfig, cast: ClipCast, host: SceneHost): P
 async function troupe(config: SceneConfig, cast: Troupe, host: SceneHost): Promise<Decode<Cast[]>> {
   const dir = config.assets + cast.dir;
   const [frames, routines] = await Promise.all([json<CastFrames>(dir + cast.frames), json<CastRoutines>(dir + cast.routine)]);
-  const { actors, problems } = splitCast(frames, routines, PLATE.w);
+  const { actors, problems, screen } = splitCast(frames, routines, PLATE.w);
   if (problems.length) throw new Error(`${config.id}: ${problems.join(' ')}`);
   const lead = leadOf(actors);
   const load = (file: string): Promise<Blob> => fetchBlob(asset(dir + webp(file)));
   const fetched = await Promise.all(
     actors.map((actor) => actorCast(`${config.id}, ${actor.name}`, actor.frames, actor.routine, host, load, { keeps: false, className: actor === lead ? 'hj-rachel' : 'hj-actor', name: actor.name })),
   );
-  return () => Promise.all(fetched.map((decode) => decode()));
+  return async () => {
+    const casts = await Promise.all(fetched.map((decode) => decode()));
+    const holder = screen ? actors.findIndex((actor) => actor.name === screen.actor) : -1;
+    if (screen && holder >= 0) casts[holder].screen = screen;
+    return casts;
+  };
 }
 
 /** One actor from her two manifests: her stills' files now, her clips' when asked. */
@@ -351,6 +359,8 @@ export class Scene {
   private casts: Cast[] = [];
   private readonly players = new Map<Cast, Player>();
   private cast: Cast | null = null;
+  /** The live screen one of the cast holds, if the scene has one. */
+  private finder: Viewfinder | null = null;
   /** Their first frames' files being fetched. (They are decoded when the scene goes on the plate: see Decode.) */
   private casting: Promise<Decode<Cast[]> | null> | null = null;
   /** She is being put on the plate. */
@@ -377,6 +387,7 @@ export class Scene {
       plate.style.setProperty('--u', `${plate.clientWidth / PLATE.w}px`);
       hunt.layout(plate.clientWidth / PLATE.w);
       for (const cast of this.casts) cast.character.resize();
+      this.finder?.resize();
       host.onLayout();
     });
     this.layout.observe(plate);
@@ -501,6 +512,14 @@ export class Scene {
     });
     this.player = this.players.get(lead)!;
     if (this.host.onPose) this.player.onPose = this.host.onPose;
+    // A live screen: it shows the room and whoever is drawn before the actor who holds it, and its
+    // recording dot keeps time on her player's own frames.
+    const holder = casts.find((cast) => cast.screen);
+    if (holder?.screen) {
+      const finder = new Viewfinder(holder.screen, holder.character, casts.slice(0, casts.indexOf(holder)).map((cast) => cast.character), this.room, this.host.still);
+      this.finder = finder;
+      this.players.get(holder)!.onFrame = (now) => finder.frame(now);
+    }
     this.stagger();
     // The scene was set to work before she arrived.
     if (this.working) this.work();
@@ -549,6 +568,7 @@ export class Scene {
       if (!cast.keeps) this.restart(cast);
       cast.sleep();
     }
+    this.finder?.sleep();
     this.stagger();
     this.room.removeAttribute('src');
     this.edge.release();
@@ -611,6 +631,7 @@ export class Scene {
       for (const key of ['stills', 'canvases', 'clipFrames', 'clipFramesPeak'] as const) hers[key] += m[key] ?? 0;
       if (cast === this.cast) hers.canvasWidth = m.canvasWidth ?? 0;
     }
+    hers.canvases += this.finder?.bytes ?? 0;
     return { ...hers, room: this.room.getAttribute('src') ? PLATE.w * PLATE.h * 4 : 0, edge: this.edge.bytes };
   }
 
@@ -626,15 +647,21 @@ export class Scene {
   /** Pause, play, or a change of the reduced-motion setting: takes effect at each one's next step. */
   refresh(): void {
     for (const [cast, player] of this.players) player.setLoop(this.rhythm(cast));
+    this.finder?.draw();
   }
 
   /**
    * A mushroom was found: she reacts, if this scene has a reaction and it has loaded. If she is already
-   * reacting, that reaction carries on and its promise is returned.
+   * reacting, that reaction carries on and its promise is returned (a scene may ask for the held look to be
+   * held again from now: `again` in its config).
    */
   react(): Promise<void> {
     if (!this.player || !this.cast) return Promise.resolve();
-    if (this.player.reacting) return this.reacting;
+    if (this.player.reacting) {
+      // A second find while she is still answering the first: she holds the look a while longer.
+      if (this.config.again === 'hold') this.player.prolong();
+      return this.reacting;
+    }
     const reaction = this.cast.reaction();
     // Still (paused, reduced motion, or the reaction's frames not here yet): one held pose acknowledges the
     // find, without the head and arm travel.
@@ -671,6 +698,7 @@ export class Scene {
     ctx.drawImage(room, r.left - origin.left, r.top - origin.top, r.width, r.height);
     this.hunt.sketch(ctx, origin);
     for (const cast of this.casts) cast.character.sketch(ctx, origin);
+    this.finder?.sketch(ctx, origin);
     // A pixel wider all round, so no sliver of the room shows where the two drawings' rims meet.
     this.edge.draw(ctx, r.left - origin.left - 1, r.top - origin.top - 1, r.width + 2, r.height + 2);
   }

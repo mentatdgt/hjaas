@@ -7,6 +7,14 @@
 //   routine.json  one routine per actor ("actors"), in the vocabulary of clips.ts. Each runs by itself and
 //                 out of step with the others. An actor with a "reaction" answers a mushroom find.
 //
+// A package may also have a live screen in its picture (the film scene: the back of Rachel's camera):
+//
+//   "camera_screen": { "source": { x, y, w, h }, "rect_by_still": { "<still>": { x, y, w, h }, … } }
+//
+// `source` is the part of the scene the screen shows; each rect is where the screen is when the actor who
+// holds it is on that still. It belongs to the layer those stills are from, and shows the plate and the
+// layers drawn before that one (screen.ts draws it).
+//
 // Nothing here knows who the actors are. This file only takes the package apart: each actor becomes a pair
 // of manifests in the form clips.ts already plays, as if it were alone on the plate. So a new delivery in
 // the same layout, with other actors, stills, clips or routines, is played without any code changing.
@@ -21,6 +29,22 @@ export interface CastFrames {
   stills: Readonly<Record<string, string>>;
   /** Clip name -> the layer it belongs to, its base still, where its patches go in the layer, and the files. */
   clips?: Readonly<Record<string, { layer: string; base: string; x: number; y: number; frames: readonly string[] }>>;
+  /** A live screen in the picture, in the canvas's px (see the top of this file). */
+  camera_screen?: { source: Rect; rect_by_still: Readonly<Record<string, Rect>> };
+}
+
+export interface Rect {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+
+/** A package's live screen, in plate px: who holds it, what it shows, and where it is on each of her stills. */
+export interface CastScreen {
+  actor: string;
+  source: Rect;
+  rects: Readonly<Record<string, Rect>>;
 }
 
 export interface CastRoutines {
@@ -39,12 +63,12 @@ export interface Actor {
  * The package, one actor at a time, bottom to top, and everything wrong with it in plain words (an empty
  * list means it can be played). `plateWidth` is the page's plate, in the px its scenes are laid out in.
  */
-export function splitCast(frames: CastFrames, routines: CastRoutines, plateWidth: number): { actors: Actor[]; problems: string[] } {
+export function splitCast(frames: CastFrames, routines: CastRoutines, plateWidth: number): { actors: Actor[]; problems: string[]; screen: CastScreen | null } {
   const problems: string[] = [];
   const actors: Actor[] = [];
   const canvas = frames?.canvas;
-  if (!canvas || !(canvas.w > 0 && canvas.h > 0)) return { actors, problems: ['frames.json needs a "canvas" with its size.'] };
-  if (!Array.isArray(frames.layers) || frames.layers.length === 0) return { actors, problems: ['frames.json needs "layers": the actors, bottom to top.'] };
+  if (!canvas || !(canvas.w > 0 && canvas.h > 0)) return { actors, problems: ['frames.json needs a "canvas" with its size.'], screen: null };
+  if (!Array.isArray(frames.layers) || frames.layers.length === 0) return { actors, problems: ['frames.json needs "layers": the actors, bottom to top.'], screen: null };
   const k = plateWidth / canvas.w;
   const names = new Set(frames.layers.map((layer) => layer.actor));
   for (const name of Object.keys(routines?.actors ?? {})) {
@@ -78,7 +102,27 @@ export function splitCast(frames: CastFrames, routines: CastRoutines, plateWidth
     for (const problem of checkClips(own, routine)) problems.push(`${layer.actor}: ${problem}`);
     actors.push({ name: layer.actor, frames: own, routine, reacts: routine.reaction !== undefined });
   }
-  return { actors, problems };
+  return { actors, problems, screen: screenOf(frames, k, problems) };
+}
+
+/** The package's live screen in plate px, or null when it has none (or it cannot be drawn: `problems` says why). */
+function screenOf(frames: CastFrames, k: number, problems: string[]): CastScreen | null {
+  const spec = frames.camera_screen;
+  if (!spec) return null;
+  const whole = (r: Rect | undefined): r is Rect => !!r && [r.x, r.y, r.w, r.h].every(Number.isFinite) && r.w > 0 && r.h > 0;
+  const stills = Object.keys(spec.rect_by_still ?? {});
+  if (!whole(spec.source) || stills.length === 0 || !stills.every((still) => whole(spec.rect_by_still[still]))) {
+    problems.push('"camera_screen" needs a "source" and a "rect_by_still", each rectangle with x, y, w and h.');
+    return null;
+  }
+  // It is held by the layer its stills are from.
+  const holder = frames.layers.find((layer) => stills.every((still) => layer.stills?.includes(still)));
+  if (!holder) {
+    problems.push(`"camera_screen" is placed by the stills ${stills.map((still) => `"${still}"`).join(', ')}, which no one layer has.`);
+    return null;
+  }
+  const scaled = (r: Rect): Rect => ({ x: r.x * k, y: r.y * k, w: r.w * k, h: r.h * k });
+  return { actor: holder.actor, source: scaled(spec.source), rects: Object.fromEntries(stills.map((still) => [still, scaled(spec.rect_by_still[still])])) };
 }
 
 /** The actor a find is answered by, and the picture is about: the first one with a reaction, or else the top one. */

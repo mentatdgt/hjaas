@@ -3,6 +3,7 @@
 import { describe, expect, it } from 'vitest';
 import { SCENES } from '.';
 import cast from './design-cast.json';
+import filmCast from './film-cast.json';
 
 /** The area of a `polygon(x% y%, ...)` clip-path, as a share of the drawing's box. */
 function shareKept(tuck: string): number {
@@ -80,5 +81,52 @@ describe('every scene\'s hunt', () => {
     expect(easy).toHaveLength(3);
     for (const spot of easy) expect([1, 2, 3], spot.id).toContain(spot.art);
     expect(design.spots.some((spot) => spot.art === 5)).toBe(false);
+  });
+  it('Film keeps every mushroom off its cast: none is on, behind or inside the box of the water, the presenter or Rachel', () => {
+    const film = SCENES.find((scene) => scene.id === 'film')!;
+    expect(Object.keys(filmCast.boxes).sort()).toEqual(['presenter', 'rachel', 'water']);
+    // (Widest drawing: 166 px to 154 of height.)
+    const widest = 166 / 154;
+    for (const spot of film.spots) {
+      const left = spot.x - (spot.h * widest) / 2;
+      const right = spot.x + (spot.h * widest) / 2;
+      for (const [actor, [l, t, r, b]] of Object.entries(filmCast.boxes)) {
+        const apart = right < l || left > r || spot.y < t || spot.y - spot.h > b;
+        expect(apart, `${spot.id} is in ${actor}'s box`).toBe(true);
+      }
+    }
+  });
+
+  it('Film has three easy finds, four medium and three hard, and they are spread across the scene', () => {
+    const film = SCENES.find((scene) => scene.id === 'film')!;
+    expect(film.spots).toHaveLength(10);
+    const thirds = [0, 1, 2].map((n) => film.spots.filter((spot) => Math.min(2, Math.floor(spot.x / (1672 / 3))) === n).length);
+    for (const count of thirds) expect(count).toBeGreaterThanOrEqual(3);
+    // The hard ones are the colour of what they stand beside: red by the red brake calipers, cream on the
+    // Merlion's cream scales, the chanterelle among the orange flowers.
+    const hard = Object.fromEntries(film.spots.filter((spot) => ['wheel', 'merlion', 'flowers'].includes(spot.id)).map((spot) => [spot.id, spot.art]));
+    expect(hard).toEqual({ wheel: 1, merlion: 4, flowers: 8 });
+    // The easy ones are red, on open ground, and the biggest.
+    const easy = film.spots.filter((spot) => ['paving', 'forecourt', 'steps'].includes(spot.id));
+    expect(easy).toHaveLength(3);
+    for (const spot of easy) {
+      expect([1, 2, 3], spot.id).toContain(spot.art);
+      expect(spot.h, spot.id).toBeGreaterThanOrEqual(28);
+    }
+    for (const spot of film.spots) expect(spot.h, spot.id).toBeGreaterThanOrEqual(18);
+    expect(film.spots.some((spot) => spot.art === 5)).toBe(false);
+    // Left to right, which is the Tab order.
+    expect(film.spots.map((spot) => spot.x)).toEqual([...film.spots.map((spot) => spot.x)].sort((a, b) => a - b));
+  });
+
+  it('Film keeps the painting whole under the presenter, and under Rachel above her waist only', () => {
+    const film = SCENES.find((scene) => scene.id === 'film')!;
+    const [, , , presenterBottom] = filmCast.covers.presenter;
+    expect(film.keep).toContainEqual(filmCast.covers.presenter);
+    expect(film.keep).toContainEqual([filmCast.covers.rachel[0], filmCast.covers.rachel[1], filmCast.covers.rachel[2], 760]);
+    expect(film.keep).toHaveLength(2);
+    // The water is scenery: the edge fades it with the plate.
+    expect(filmCast.room).toEqual(['water']);
+    expect(presenterBottom).toBeLessThan(941 - 28);
   });
 });

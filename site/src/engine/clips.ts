@@ -30,6 +30,10 @@
 //   - Blinks: `blink` may be a list of rules, and a rule's `on` a list of stills. A hold in the reaction
 //     may blink too: `"blink_ok": true` (the rule for that still is used), or `"blink"` naming the blink's
 //     still or giving its frames. Times in the reaction may be ranges, rolled each time she reacts.
+//   - A routine that never says `blink_ok` at all (the film scene's presenter, who talks in holds of a tenth
+//     of a second) may blink on any still its blink rule names: see `hold` in clipSchedule.
+//   - The reaction's longest hold is its gesture (the look back, the smile): its steps are marked
+//     (steps.ts, `gesture`), for a scene where a second find holds it afresh.
 //   - `"fade_ms"` on a still of a loop: the still is dissolved in from the pose before it over that long, at
 //     the start of its hold (a true cross-dissolve: character.ts). Only between two stills of the same loop:
 //     coming into the loop, and anywhere else (a hold by itself, a blink, the whole reaction), the pose
@@ -109,6 +113,8 @@ export const clipPose = (clip: string, index: number): string => `${clip}#${inde
 
 /** A hold must leave at least this long before and after a blink. */
 const BLINK_MARGIN_MS = 80;
+/** A blink that takes the start of a short hold: what is left of the hold is shown if it is at least this long. */
+const BLINK_REST_MS = 50;
 
 /**
  * How many steps ahead clip frames are asked for. A clip always follows a hold or another clip, so the first
@@ -242,6 +248,11 @@ export function* clipSchedule(
   const every = rules.find((rule) => rule.every_ms !== undefined)?.every_ms;
   let sinceBlink = 0;
   let nextBlink = every !== undefined ? roll(every) : Infinity;
+  // A routine that marks no hold `blink_ok` leaves the choice to its blink rule: any hold on a still the
+  // rule names may blink. One that marks any hold blinks in the marked holds only.
+  const free = !routine.routine.some((item) => ('steps' in item ? item.steps.some((step) => step.blink_ok !== undefined) : 'still' in item && item.blink_ok !== undefined));
+  /** The pose of the step before the one being rolled. */
+  let last = '';
 
   /** A moment of the routine: the step to show, and the steps that lead from it back to the rest still. */
   interface Moment {
@@ -253,21 +264,38 @@ export function* clipSchedule(
    * One hold of a still, with a blink slipped into the middle when one is due, allowed and fits. `home` is
    * the way back to the rest still from a hold somewhere else (see wayBack): such a hold may be cut short.
    * `fadeMs` is for a still of a loop that follows another still of the same loop, and for nothing else.
+   *
+   * Where the routine leaves blinking to its rule (`free`), a hold too short to blink in the middle of gives
+   * the blink its start: the blink is shown in place of the pose, and the pose for what is left of the
+   * hold. Only when the blink is due, and only after another pose the rule names: someone talking blinks
+   * between two shapes of his mouth, never on the frame he comes out of a gesture.
    */
   function* hold(still: string | null, ms: number, blinkOk: boolean, home: Step[] | null = null, fadeMs?: number): Generator<Moment> {
     const pose = still ?? NOTHING;
+    const before = last;
+    last = pose;
     // The dissolve belongs to the start of the hold: after a blink in the middle of it, the pose is simply back.
     const fade = fadeMs !== undefined && fadeMs > 0 ? { fade: fadeMs } : {};
-    const blink = blinkOk && every !== undefined ? rules.find((rule) => blinksOn(rule, pose)) : undefined;
+    const blink = (blinkOk || free) && every !== undefined ? rules.find((rule) => blinksOn(rule, pose)) : undefined;
     const blinkMs = blink ? blink.frames.reduce((sum, frame) => sum + frame.ms, 0) : 0;
     // (A blink waits for the dissolve into the pose to finish.)
     const lead = Math.max(BLINK_MARGIN_MS, fadeMs ?? 0);
     if (blink && ms >= blinkMs + lead + BLINK_MARGIN_MS && sinceBlink + ms / 2 >= nextBlink) {
-      const before = lead + rnd() * (ms - blinkMs - lead - BLINK_MARGIN_MS);
-      yield { step: { pose, ms: before, ...fade }, home: [] };
+      const first = lead + rnd() * (ms - blinkMs - lead - BLINK_MARGIN_MS);
+      yield { step: { pose, ms: first, ...fade }, home: [] };
       for (const frame of blink.frames) yield { step: { pose: frame.still, ms: frame.ms }, home: [] };
-      yield { step: { pose, ms: ms - before - blinkMs }, home: [] };
-      sinceBlink = ms - before - blinkMs;
+      yield { step: { pose, ms: ms - first - blinkMs }, home: [] };
+      sinceBlink = ms - first - blinkMs;
+      nextBlink = roll(every!);
+      return;
+    }
+    if (blink && free && !fade.fade && sinceBlink >= nextBlink && blinksOn(blink, before)) {
+      for (const frame of blink.frames) yield { step: { pose: frame.still, ms: frame.ms }, home: [] };
+      const left = ms - blinkMs;
+      if (left >= BLINK_REST_MS) yield { step: { pose, ms: left }, home: [] };
+      // (With nothing left of the hold, the blink itself is the step before the next one.)
+      else last = blink.frames[blink.frames.length - 1].still;
+      sinceBlink = left >= BLINK_REST_MS ? left : 0;
       nextBlink = roll(every!);
       return;
     }
@@ -317,6 +345,7 @@ export function* clipSchedule(
         for (let n = Math.max(1, count(item.repeat)); n > 0; n--) {
           for (const step of clipSteps(frames, item.clip, item.ms)) {
             sinceBlink += step.ms;
+            last = step.pose;
             yield { step, home };
           }
         }
@@ -326,6 +355,7 @@ export function* clipSchedule(
         const forwards = clipSteps(frames, item.clip, item.ms);
         for (let i = 0; i < steps.length; i++) {
           sinceBlink += steps[i].ms;
+          last = steps[i].pose;
           // Part-way through a transition, the way home is back along it to its first frame: what is left of
           // it when it is already running backwards, what has been played, reversed, when it runs forwards.
           const played = item.reverse ? steps.slice(i + 1) : forwards.slice(0, i).reverse();
@@ -393,6 +423,9 @@ export function clipReaction(frames: ClipFrames, routine: ClipRoutine): ClipReac
   const rest = restOf(frames, routine);
   const rules = blinkRules(routine);
   const middle = (ms: Ms): number => (typeof ms === 'number' ? ms : (ms[0] + ms[1]) / 2);
+  // The still held longest is the gesture itself.
+  const held = reaction.steps.filter((item): item is Extract<ReactionItem, { still: string }> => 'still' in item && item.still !== rest);
+  const gesture = held.reduce<Extract<ReactionItem, { still: string }> | null>((a, b) => (!a || middle(b.ms) > middle(a.ms) ? b : a), null);
   const build = (rnd: Rng | null): Step[] => {
     const steps: Step[] = [];
     for (const item of reaction.steps) {
@@ -410,18 +443,17 @@ export function clipReaction(frames: ClipFrames, routine: ClipRoutine): ClipReac
         const own = typeof item.blink === 'string' ? [{ still: item.blink, ms: BLINK_MS }] : item.blink ? (item.blink.frames ?? (item.blink.still ? [{ still: item.blink.still, ms: item.blink.ms ?? BLINK_MS }] : null)) : null;
         const blink = own ?? (item.blink_ok ? rules.find((rule) => blinksOn(rule, item.still))?.frames : undefined);
         const blinkMs = blink ? blink.reduce((sum, frame) => sum + frame.ms, 0) : 0;
+        // (Both parts of a gesture that a blink splits are the gesture; the blink between them is not.)
+        const mark = item === gesture ? { gesture: true } : {};
         if (rnd && blink && ms >= blinkMs + 6 * BLINK_MARGIN_MS && rnd() < 0.7) {
           const before = 3 * BLINK_MARGIN_MS + rnd() * (ms - blinkMs - 6 * BLINK_MARGIN_MS);
-          steps.push({ pose: item.still, ms: before }, ...blink.map((frame) => ({ pose: frame.still, ms: frame.ms })), { pose: item.still, ms: ms - before - blinkMs });
+          steps.push({ pose: item.still, ms: before, ...mark }, ...blink.map((frame) => ({ pose: frame.still, ms: frame.ms })), { pose: item.still, ms: ms - before - blinkMs, ...mark });
         } else {
-          steps.push({ pose: item.still, ms });
+          steps.push({ pose: item.still, ms, ...mark });
         }
       }
     }
     return steps;
   };
-  // The still held longest is the gesture itself.
-  const held = reaction.steps.filter((item): item is Extract<ReactionItem, { still: string }> => 'still' in item && item.still !== rest);
-  const longest = held.reduce<{ still: string; ms: number } | null>((a, b) => (!a || middle(b.ms) > a.ms ? { still: b.still, ms: middle(b.ms) } : a), null);
-  return { steps: build(null), roll: (rnd = Math.random) => build(rnd), still: longest ? [{ pose: longest.still, ms: longest.ms }] : [] };
+  return { steps: build(null), roll: (rnd = Math.random) => build(rnd), still: gesture ? [{ pose: gesture.still, ms: middle(gesture.ms), gesture: true }] : [] };
 }

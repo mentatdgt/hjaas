@@ -1,0 +1,281 @@
+{
+ "note": "Scene 4 (Film) routines. Holds in ms; [a,b] = random in range. Actors run independently. Every change is an instant cut (no fade_ms anywhere in this scene). Within a layer every still is pixel-identical to the first outside the part that moves, so cuts never flicker.",
+ "actors": {
+  "water": {
+   "routine": [
+    {
+     "loop": "flow",
+     "repeat": [
+      1000,
+      1000
+     ],
+     "steps": [
+      {
+       "still": "W_1",
+       "ms": 110
+      },
+      {
+       "still": "W_2",
+       "ms": 110
+      },
+      {
+       "still": "W_3",
+       "ms": 110
+      }
+     ]
+    }
+   ],
+   "note": "The Merlion spout: a hand-drawn boil loop, forever. Part of the scenery: let the edge treat it like the plate."
+  },
+  "presenter": {
+   "routine": [
+    {
+     "loop": "talk_M_1",
+     "repeat": [
+      4,
+      8
+     ],
+     "steps": [
+      {
+       "still": "M_1",
+       "ms": [
+        90,
+        160
+       ]
+      },
+      {
+       "still": "M_1_mid",
+       "ms": [
+        70,
+        120
+       ]
+      },
+      {
+       "still": "M_1_closed",
+       "ms": [
+        80,
+        190
+       ]
+      },
+      {
+       "still": "M_1",
+       "ms": [
+        100,
+        180
+       ]
+      },
+      {
+       "still": "M_1_mid",
+       "ms": [
+        60,
+        110
+       ]
+      },
+      {
+       "still": "M_1_closed",
+       "ms": [
+        220,
+        480
+       ]
+      }
+     ]
+    },
+    {
+     "still": "M_12",
+     "ms": 100
+    },
+    {
+     "loop": "talk_M_2",
+     "repeat": [
+      3,
+      5
+     ],
+     "steps": [
+      {
+       "still": "M_2",
+       "ms": [
+        90,
+        160
+       ]
+      },
+      {
+       "still": "M_2_closed",
+       "ms": [
+        80,
+        190
+       ]
+      },
+      {
+       "still": "M_2",
+       "ms": [
+        100,
+        180
+       ]
+      },
+      {
+       "still": "M_2_closed",
+       "ms": [
+        220,
+        480
+       ]
+      }
+     ]
+    },
+    {
+     "still": "M_12",
+     "ms": 100
+    },
+    {
+     "loop": "talk_M_1",
+     "repeat": [
+      4,
+      8
+     ],
+     "steps": [
+      {
+       "still": "M_1",
+       "ms": [
+        90,
+        160
+       ]
+      },
+      {
+       "still": "M_1_mid",
+       "ms": [
+        70,
+        120
+       ]
+      },
+      {
+       "still": "M_1_closed",
+       "ms": [
+        80,
+        190
+       ]
+      },
+      {
+       "still": "M_1",
+       "ms": [
+        100,
+        180
+       ]
+      },
+      {
+       "still": "M_1_mid",
+       "ms": [
+        60,
+        110
+       ]
+      },
+      {
+       "still": "M_1_closed",
+       "ms": [
+        220,
+        480
+       ]
+      }
+     ]
+    },
+    {
+     "still": "M_13",
+     "ms": 100
+    },
+    {
+     "loop": "talk_M_3",
+     "repeat": [
+      3,
+      5
+     ],
+     "steps": [
+      {
+       "still": "M_3",
+       "ms": [
+        90,
+        160
+       ]
+      },
+      {
+       "still": "M_3_closed",
+       "ms": [
+        80,
+        190
+       ]
+      },
+      {
+       "still": "M_3",
+       "ms": [
+        100,
+        180
+       ]
+      },
+      {
+       "still": "M_3_closed",
+       "ms": [
+        220,
+        480
+       ]
+      }
+     ]
+    },
+    {
+     "still": "M_13",
+     "ms": 100
+    }
+   ],
+   "blink": {
+    "on": [
+     "M_1",
+     "M_1_mid",
+     "M_1_closed"
+    ],
+    "frames": [
+     {
+      "still": "M_1_blink",
+      "ms": 110
+     }
+    ],
+    "every_ms": [
+     2500,
+     6000
+    ]
+   },
+   "note": "Talks the whole time (lip-flap: open / mid / closed with pauses). Gestures go through a 100 ms in-between (M_12, M_13). He does not react to mushroom finds."
+  },
+  "rachel": {
+   "routine": [
+    {
+     "still": "R_A1_film",
+     "ms": [
+      60000,
+      60000
+     ]
+    }
+   ],
+   "reaction": {
+    "note": "On a mushroom find: she turns to look back over her shoulder at the viewer and smiles, then goes back to filming. Two-step turn through a profile still.",
+    "steps": [
+     {
+      "still": "R_K0_turn",
+      "ms": 90
+     },
+     {
+      "still": "R_K1_look",
+      "ms": [
+       1600,
+       2000
+      ]
+     },
+     {
+      "still": "R_K0_turn",
+      "ms": 90
+     },
+     {
+      "still": "R_A1_film",
+      "ms": 500
+     }
+    ]
+   },
+   "note": "Holds still, filming (the user dropped the head-tip glance: it looked choppy). Life comes from the live camera screen and the REC dot (frames.json camera_screen)."
+  }
+ }
+}

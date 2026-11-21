@@ -1,0 +1,40 @@
+{
+ "note": "Made by npm run assets from frames/020-film-scene/site/frames.json. Do not edit.",
+ "boxes": {
+  "water": [
+   402,
+   111,
+   932,
+   447
+  ],
+  "presenter": [
+   601,
+   254,
+   921,
+   862
+  ],
+  "rachel": [
+   997,
+   258,
+   1354,
+   941
+  ]
+ },
+ "covers": {
+  "presenter": [
+   602,
+   255,
+   920,
+   861
+  ],
+  "rachel": [
+   998,
+   259,
+   1353,
+   941
+  ]
+ },
+ "room": [
+  "water"
+ ]
+}

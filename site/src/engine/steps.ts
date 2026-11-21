@@ -19,6 +19,11 @@ export interface Step {
    * cross-dissolve of the two drawings (routine.json's `fade_ms`). Left out: an instant cut.
    */
   fade?: number;
+  /**
+   * The held pose a reaction is for (the look and the smile; clips.ts marks the reaction's longest hold). A
+   * second find while it is held holds it afresh, in a scene that asks for that (player.ts, prolong).
+   */
+  gesture?: boolean;
 }
 
 export type Rng = () => number;
