@@ -1,0 +1,124 @@
+{
+ "new visitor (full paintings)": {
+  "Build → Grow → Design → Film": {
+   "highestMB": 77.5,
+   "stages": [
+    {
+     "scene": "build",
+     "peakMB": 67.3,
+     "at": "build, pose frame_01",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "build.frames": 47.3,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "filmHoldsMB": 0
+    },
+    {
+     "scene": "grow",
+     "peakMB": 77.5,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "build.frames": 2.4,
+      "grow.frames": 61.6,
+      "grow.canvases": 3,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "filmHoldsMB": 0
+    },
+    {
+     "scene": "design",
+     "peakMB": 74.4,
+     "at": "design, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "build.frames": 2.4,
+      "grow.frames": 47.4,
+      "grow.canvases": 3,
+      "grow.room": 6.3,
+      "grow.edge": 2.6,
+      "design.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "filmHoldsMB": 0
+    },
+    {
+     "scene": "film",
+     "peakMB": 64.4,
+     "at": "film, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "build.frames": 2.4,
+      "grow.frames": 3,
+      "design.frames": 33.6,
+      "design.canvases": 3.8,
+      "design.room": 6.3,
+      "design.edge": 2.6,
+      "film.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "build again",
+     "peakMB": 68.5,
+     "at": "build, during a painting or a switch, pose frame_01",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "build.frames": 47.3,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6,
+      "grow.frames": 3
+     },
+     "framesSheSkipped": 0,
+     "filmHoldsMB": 0
+    }
+   ],
+   "errors": []
+  }
+ },
+ "summary": {
+  "ordersRun": 1,
+  "highestMB": 77.5,
+  "budgetMB": 80,
+  "underTheBudget": true,
+  "highestWasIn": "grow, pose mist_to_write#3",
+  "filmItself": {
+   "peakMB": 64.4,
+   "at": "film, during a painting or a switch, pose -",
+   "partsMB": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "sheet": 4.8,
+    "build.frames": 2.4,
+    "grow.frames": 3,
+    "design.frames": 33.6,
+    "design.canvases": 3.8,
+    "design.room": 6.3,
+    "design.edge": 2.6,
+    "film.room": 6.3
+   }
+  },
+  "filmHoldsWhenAwayMB": 0,
+  "everyReactionInFull": true
+ }
+}

@@ -908,7 +908,7 @@ run.memory = async () => {
       report[visitor][name] = { highestMB: Math.max(...stages.map((s) => s.peakMB)), stages, errors };
       say(`${visitor} / ${name}`, { highestMB: report[visitor][name].highestMB, byStage: stages.map((s) => `${s.scene} ${s.peakMB}`), fullReactions: stages.map((s) => s.fullReaction), filmHoldsWhenAwayMB: stages.filter((s) => 'filmHoldsMB' in s).map((s) => s.filmHoldsMB), skipped: stages.at(-1).framesSheSkipped, errors });
       await browser.close();
-      const rows = Object.values(report).flatMap((r) => Object.values(r));
+      const rows = Object.entries(report).filter(([kind]) => kind !== 'summary').flatMap(([, r]) => Object.values(r));
       const film = filmAlone.reduce((a, b) => (b.peakMB > (a?.peakMB ?? 0) ? b : a), null);
       report.summary = {
         ordersRun: rows.length, highestMB: Math.max(...rows.map((r) => r.highestMB)), budgetMB: 80, underTheBudget: rows.every((r) => r.highestMB < 80),
