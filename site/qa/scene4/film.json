@@ -1,7 +1,7 @@
 {
  "desktop, the painting": {
   "file": "film-desktop-painting.mp4",
-  "paintingTakesS": 4.8
+  "paintingTakesS": 4.9
  },
  "desktop": {
   "file": "film-desktop.mp4",
@@ -10,7 +10,7 @@
   "cutFromTheTakeAtS": 4.4,
   "thePointInAndOutAtS": [
    1.5,
-   5.3
+   5.4
   ],
   "handsTogetherInAndOutAtS": [
    12.3,
