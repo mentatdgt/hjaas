@@ -1,0 +1,147 @@
+{
+ "at rest": {
+  "platePxOnTheScreen": [
+   1662,
+   936
+  ],
+  "theRoom": {
+   "screenshotOffsetPx": [
+    -0.7,
+    0
+   ],
+   "meanDifferenceOutOf255": 1.7
+  },
+  "actors": {
+   "rachel": {
+    "pose": "R_A1",
+    "screenPxFromWhereThePackagePutsIt": [
+     -0.8,
+     -0.7
+    ],
+    "meanDifferenceOutOf255": 5.42,
+    "inPlace": true
+   },
+   "lamp": {
+    "pose": "L_00",
+    "screenPxFromWhereThePackagePutsIt": [
+     -0.2,
+     -0.1
+    ],
+    "meanDifferenceOutOf255": 9.21,
+    "inPlace": true
+   }
+  },
+  "everyActorIsInPlace": true
+ },
+ "a stroke, the lamp swung": {
+  "platePxOnTheScreen": [
+   1662,
+   936
+  ],
+  "theRoom": {
+   "screenshotOffsetPx": [
+    -0.7,
+    0
+   ],
+   "meanDifferenceOutOf255": 1.7
+  },
+  "actors": {
+   "rachel": {
+    "pose": "R_A3_stroke_out",
+    "screenPxFromWhereThePackagePutsIt": [
+     -0.8,
+     -0.7
+    ],
+    "meanDifferenceOutOf255": 5.39,
+    "inPlace": true
+   },
+   "lamp": {
+    "pose": "L_27",
+    "screenPxFromWhereThePackagePutsIt": [
+     -0.2,
+     -0.1
+    ],
+    "meanDifferenceOutOf255": 8.41,
+    "inPlace": true
+   }
+  },
+  "everyActorIsInPlace": true
+ },
+ "her salute": {
+  "platePxOnTheScreen": [
+   1662,
+   936
+  ],
+  "theRoom": {
+   "screenshotOffsetPx": [
+    -0.7,
+    0
+   ],
+   "meanDifferenceOutOf255": 1.7
+  },
+  "actors": {
+   "rachel": {
+    "pose": "R_K1_salute",
+    "screenPxFromWhereThePackagePutsIt": [
+     -0.8,
+     -0.7
+    ],
+    "meanDifferenceOutOf255": 5.94,
+    "inPlace": true
+   },
+   "lamp": {
+    "pose": "L_09",
+    "screenPxFromWhereThePackagePutsIt": [
+     -0.2,
+     -0.1
+    ],
+    "meanDifferenceOutOf255": 9.22,
+    "inPlace": true
+   }
+  },
+  "everyActorIsInPlace": true
+ },
+ "a boot frame (rtl 70), as in the preview at 5.33 s": {
+  "platePxOnTheScreen": [
+   1662,
+   936
+  ],
+  "theRoom": {
+   "screenshotOffsetPx": [
+    -0.7,
+    0
+   ],
+   "meanDifferenceOutOf255": 1.7
+  },
+  "actors": {
+   "rachel": {
+    "pose": "R_A1",
+    "screenPxFromWhereThePackagePutsIt": [
+     -0.8,
+     -0.7
+    ],
+    "meanDifferenceOutOf255": 5.42,
+    "inPlace": true
+   },
+   "lamp": {
+    "pose": "L_00",
+    "screenPxFromWhereThePackagePutsIt": [
+     -0.2,
+     -0.1
+    ],
+    "meanDifferenceOutOf255": 9.21,
+    "inPlace": true
+   },
+   "boots": {
+    "frame": 70,
+    "screenPxFromWhereThePackagePutsThem": [
+     -0.5,
+     0.1
+    ],
+    "inPlace": true
+   }
+  },
+  "everyActorIsInPlace": true
+ },
+ "errors": []
+}

@@ -1,0 +1,166 @@
+{
+ "desktop": {
+  "45s": {
+   "file": "set-desktop-45s.mp4",
+   "seed": 7,
+   "seconds": 45,
+   "rtl": [
+    9.8,
+    14.4
+   ],
+   "ltr": [
+    27.5,
+    32.1
+   ],
+   "findsS": [
+    6,
+    22.3
+   ],
+   "leanS": 12.1,
+   "dipS": 15.4
+  },
+  "10th": {
+   "file": "set-desktop-10th.mp4",
+   "seconds": 6.5,
+   "spot": "splatter",
+   "findAtS": 1,
+   "saluteAtS": 1.2,
+   "after": {
+    "progress": {
+     "shown": 10,
+     "baked": 10,
+     "fading": 0
+    },
+    "note": "You found all 10 here. 40 more in the other scenes",
+    "contactShown": false,
+    "tally": true
+   },
+   "showsDoneWithoutTheContactButton": true
+  },
+  "tenOfTenWithoutTheUnlock": {
+   "contactShown": false,
+   "note": "You found all 10 here. 40 more in the other scenes"
+  },
+  "unlock": {
+   "file": "set-desktop-unlock.mp4",
+   "seconds": 5.7,
+   "spot": "splatter",
+   "before": {
+    "contactShown": false,
+    "left": 1
+   },
+   "findAtS": 1,
+   "contactButtonAtS": 2.7,
+   "after": {
+    "contactShown": true,
+    "note": "You found all 10",
+    "focused": true,
+    "live": [
+     "All 50 mushrooms found. The Contact Hui Jie button is now available."
+    ]
+   },
+   "unlocked": true
+  },
+  "reduced": {
+   "file": "set-desktop-reduced.mp4",
+   "seconds": 10,
+   "findsS": [
+    2.5,
+    6.7
+   ],
+   "framesWithAWalk": 0,
+   "framesWithAFade": 0,
+   "lampPoses": [
+    "L_00"
+   ],
+   "progress": {
+    "shown": 2,
+    "baked": 2,
+    "fading": 0
+   },
+   "ok": true
+  }
+ },
+ "iphone": {
+  "45s": {
+   "file": "set-iphone-45s.mp4",
+   "seed": 7,
+   "seconds": 45,
+   "rtl": [
+    9.8,
+    14.4
+   ],
+   "ltr": [
+    27.5,
+    32
+   ],
+   "findsS": [
+    6,
+    22.3
+   ],
+   "leanS": 12.1,
+   "dipS": 15.4
+  },
+  "10th": {
+   "file": "set-iphone-10th.mp4",
+   "seconds": 6.5,
+   "spot": "splatter",
+   "findAtS": 1,
+   "saluteAtS": 1.2,
+   "after": {
+    "progress": {
+     "shown": 10,
+     "baked": 10,
+     "fading": 0
+    },
+    "note": "You found all 10 here. 40 more in the other scenes",
+    "contactShown": false,
+    "tally": true
+   },
+   "showsDoneWithoutTheContactButton": true
+  },
+  "tenOfTenWithoutTheUnlock": {
+   "contactShown": false,
+   "note": "You found all 10 here. 40 more in the other scenes"
+  },
+  "unlock": {
+   "file": "set-iphone-unlock.mp4",
+   "seconds": 5.6,
+   "spot": "splatter",
+   "before": {
+    "contactShown": false,
+    "left": 1
+   },
+   "findAtS": 1,
+   "contactButtonAtS": 2.7,
+   "after": {
+    "contactShown": true,
+    "note": "You found all 10",
+    "focused": true,
+    "live": [
+     "All 50 mushrooms found. The Contact Hui Jie button is now available."
+    ]
+   },
+   "unlocked": true
+  },
+  "reduced": {
+   "file": "set-iphone-reduced.mp4",
+   "seconds": 10,
+   "findsS": [
+    2.5,
+    6.7
+   ],
+   "framesWithAWalk": 0,
+   "framesWithAFade": 0,
+   "lampPoses": [
+    "L_00"
+   ],
+   "progress": {
+    "shown": 2,
+    "baked": 2,
+    "fading": 0
+   },
+   "ok": true
+  }
+ }
+}

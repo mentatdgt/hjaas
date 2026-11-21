@@ -1,0 +1,258 @@
+{
+ "machine": "23:30  up 10 days,  6:40, 2 users, load averages: 2.93 3.02 2.99",
+ "url": "http://localhost:5173/",
+ "runs": [
+  {
+   "browser": "webkit, iPhone 14 profile",
+   "run": 1,
+   "stretches": [
+    {
+     "stretch": "Set Design painted for a new visitor",
+     "frames": 391,
+     "longestMs": 22,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "Set Design at work, 3 s",
+     "frames": 180,
+     "longestMs": 19,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "a find, its swath fading in (1.2 s)",
+     "frames": 75,
+     "longestMs": 18,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "a walk (4.6 s from the boots first showing)",
+     "frames": 283,
+     "longestMs": 21,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to build (first visit: its full painting)",
+     "frames": 515,
+     "longestMs": 43,
+     "over50": 0,
+     "over33": 2,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to grow (first visit: its full painting)",
+     "frames": 513,
+     "longestMs": 38,
+     "over50": 0,
+     "over33": 1,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to design (first visit: its full painting)",
+     "frames": 516,
+     "longestMs": 49,
+     "over50": 0,
+     "over33": 1,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to film (first visit: its full painting)",
+     "frames": 515,
+     "longestMs": 30,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to set (the short brush)",
+     "frames": 198,
+     "longestMs": 32,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to build (the short brush)",
+     "frames": 195,
+     "longestMs": 22,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to grow (the short brush)",
+     "frames": 195,
+     "longestMs": 21,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to design (the short brush)",
+     "frames": 194,
+     "longestMs": 23,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to film (the short brush)",
+     "frames": 195,
+     "longestMs": 22,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to set (the short brush)",
+     "frames": 195,
+     "longestMs": 22,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to build (the short brush)",
+     "frames": 195,
+     "longestMs": 23,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    }
+   ]
+  },
+  {
+   "browser": "chrome, phone size, processor slowed 4×",
+   "run": 1,
+   "stretches": [
+    {
+     "stretch": "Set Design painted for a new visitor",
+     "frames": 390,
+     "longestMs": 17,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "Set Design at work, 3 s",
+     "frames": 180,
+     "longestMs": 17,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "a find, its swath fading in (1.2 s)",
+     "frames": 79,
+     "longestMs": 17,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "a walk (4.6 s from the boots first showing)",
+     "frames": 282,
+     "longestMs": 17,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to build (first visit: its full painting)",
+     "frames": 515,
+     "longestMs": 50,
+     "over50": 0,
+     "over33": 1,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to grow (first visit: its full painting)",
+     "frames": 515,
+     "longestMs": 50,
+     "over50": 0,
+     "over33": 1,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to design (first visit: its full painting)",
+     "frames": 515,
+     "longestMs": 33,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to film (first visit: its full painting)",
+     "frames": 516,
+     "longestMs": 17,
+     "over50": 0,
+     "over33": 0,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to set (the short brush)",
+     "frames": 193,
+     "longestMs": 100,
+     "over50": 1,
+     "over33": 1,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to build (the short brush)",
+     "frames": 189,
+     "longestMs": 117,
+     "over50": 1,
+     "over33": 1,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to grow (the short brush)",
+     "frames": 191,
+     "longestMs": 83,
+     "over50": 1,
+     "over33": 1,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to design (the short brush)",
+     "frames": 191,
+     "longestMs": 83,
+     "over50": 1,
+     "over33": 1,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to film (the short brush)",
+     "frames": 190,
+     "longestMs": 100,
+     "over50": 1,
+     "over33": 1,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to set (the short brush)",
+     "frames": 190,
+     "longestMs": 100,
+     "over50": 1,
+     "over33": 1,
+     "medianMs": 17
+    },
+    {
+     "stretch": "to build (the short brush)",
+     "frames": 191,
+     "longestMs": 83,
+     "over50": 1,
+     "over33": 1,
+     "medianMs": 17
+    }
+   ]
+  }
+ ]
+}

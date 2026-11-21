@@ -1,0 +1,112 @@
+[
+ {
+  "browser": "chrome, 1440 × 900",
+  "findAt": 1817.5,
+  "saluteAt": 1819.1,
+  "overlayFirstSeenMsAfterTheFind": 12.7,
+  "overlayFirstSeenMsAfterHerSalute": 11.1,
+  "startsWithinAFrameOfHerSalute": true,
+  "fadeShownMs": 716.6,
+  "lasts700msGiveOrTakeAFrame": true,
+  "easing": {
+   "at25": {
+    "atMs": 166.7,
+    "opacity": 0.76,
+    "curve": 0.76
+   },
+   "at50": {
+    "atMs": 350,
+    "opacity": 0.97,
+    "curve": 0.97
+   },
+   "at75": {
+    "atMs": 533.3,
+    "opacity": 1,
+    "curve": 1
+   }
+  },
+  "easesOut": true,
+  "neverDropsBack": true,
+  "firstOpacities": [
+   0,
+   0.1,
+   0.2,
+   0.29,
+   0.38,
+   0.46,
+   0.54,
+   0.6
+  ],
+  "bakedAfter": 3,
+  "theBake": {
+   "meanDifferenceOutOf255": 0.07,
+   "largest": 14,
+   "noPop": true,
+   "stateAfter": {
+    "shown": 4,
+    "baked": 4,
+    "fading": 0
+   }
+  },
+  "errors": []
+ },
+ {
+  "browser": "webkit, iPhone 14 profile",
+  "findAt": 1988,
+  "saluteAt": 1990,
+  "overlayFirstSeenMsAfterTheFind": 12,
+  "overlayFirstSeenMsAfterHerSalute": 10,
+  "startsWithinAFrameOfHerSalute": true,
+  "fadeShownMs": 700,
+  "lasts700msGiveOrTakeAFrame": true,
+  "easing": {
+   "at25": {
+    "atMs": 168,
+    "opacity": 0.76,
+    "curve": 0.76
+   },
+   "at50": {
+    "atMs": 350,
+    "opacity": 0.97,
+    "curve": 0.97
+   },
+   "at75": {
+    "atMs": 532,
+    "opacity": 1,
+    "curve": 1
+   }
+  },
+  "easesOut": true,
+  "neverDropsBack": true,
+  "firstOpacities": [
+   0,
+   0.12,
+   0.2,
+   0.29,
+   0.38,
+   0.46,
+   0.54,
+   0.6
+  ],
+  "bakedAfter": 3,
+  "theBake": {
+   "meanDifferenceOutOf255": 0.17,
+   "largest": 72.3,
+   "noPop": true,
+   "stateAfter": {
+    "shown": 4,
+    "baked": 4,
+    "fading": 0
+   }
+  },
+  "errors": []
+ },
+ {
+  "browser": "chrome, reduced motion",
+  "findAt": 1805.6,
+  "saluteAt": 1806.8,
+  "noFade": true,
+  "swathBakedMsAfterTheFind": 13.2,
+  "errors": []
+ }
+]

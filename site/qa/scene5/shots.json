@@ -1,0 +1,102 @@
+{
+ "1440x900": {
+  "tabs": [
+   "Build",
+   "Grow",
+   "Design",
+   "Film",
+   "Set Design"
+  ]
+ },
+ "390x844": {
+  "plateXShownAsItOpens": [
+   615,
+   1242
+  ],
+  "theBriefAsks": "centred on x 930: wide [554, 1306], tall [617, 1243]",
+  "allOfRachelsLayerIn": true,
+  "pannedLeft": [
+   0,
+   627
+  ],
+  "pannedRight": [
+   1044,
+   1671
+  ]
+ },
+ "360x740": {
+  "plateXShownAsItOpens": [
+   616,
+   1243
+  ],
+  "theBriefAsks": "centred on x 930: wide [554, 1306], tall [617, 1243]",
+  "allOfRachelsLayerIn": true,
+  "pannedLeft": [
+   0,
+   627
+  ],
+  "pannedRight": [
+   1046,
+   1673
+  ]
+ },
+ "320x640 menu": {
+  "rows": 2,
+  "tabs": [
+   {
+    "tab": "Build",
+    "left": 49,
+    "right": 86,
+    "top": 106,
+    "heightPx": 44,
+    "linesOfText": 1,
+    "cut": false
+   },
+   {
+    "tab": "Grow",
+    "left": 108,
+    "right": 146,
+    "top": 106,
+    "heightPx": 44,
+    "linesOfText": 1,
+    "cut": false
+   },
+   {
+    "tab": "Design",
+    "left": 168,
+    "right": 218,
+    "top": 106,
+    "heightPx": 44,
+    "linesOfText": 1,
+    "cut": false
+   },
+   {
+    "tab": "Film",
+    "left": 240,
+    "right": 271,
+    "top": 106,
+    "heightPx": 44,
+    "linesOfText": 1,
+    "cut": false
+   },
+   {
+    "tab": "Set Design",
+    "left": 121,
+    "right": 199,
+    "top": 150,
+    "heightPx": 44,
+    "linesOfText": 1,
+    "cut": false
+   }
+  ],
+  "leftMinusRightSpaceEachRowPx": [
+   0,
+   0
+  ],
+  "menuScrollsSideways": false,
+  "pageScrollsSideways": false,
+  "menuHeightPx": 88,
+  "ok": true
+ },
+ "errors": []
+}

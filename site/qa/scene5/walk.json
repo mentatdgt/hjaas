@@ -1,0 +1,270 @@
+{
+ "schedule": {
+  "firstWalkSAfterTheSceneStartedWorking": 9.8,
+  "firstWaitRolledMs": 9788,
+  "rtlLastsMs": 4583.1,
+  "waitBeforeLtrRolledMs": 10101,
+  "ltrStartsSAfterRtlEnds": 10.1,
+  "ltrLastsMs": 4583.1,
+  "waitAfterLtrRolledMs": 69025,
+  "trackMs": 4566.7,
+  "routine": {
+   "first_ms": [
+    8000,
+    15000
+   ],
+   "return_after_ms": [
+    10000,
+    15000
+   ],
+   "every_ms": [
+    40000,
+    70000
+   ]
+  },
+  "ok": true
+ },
+ "timing": {
+  "rtl": {
+   "pageFrames": 275,
+   "trackFramesSeen": 137,
+   "skippedTrackFrames": 0,
+   "mostPageFramesOnOneTrackFrame": 3,
+   "mostFramesOffTheClock": 0
+  },
+  "ltr": {
+   "pageFrames": 275,
+   "trackFramesSeen": 137,
+   "skippedTrackFrames": 0,
+   "mostPageFramesOnOneTrackFrame": 3,
+   "mostFramesOffTheClock": 0
+  }
+ },
+ "pause": {
+  "atPause": {
+   "walking": "rtl",
+   "frame": 32
+  },
+  "after1500msPaused": {
+   "walking": "rtl",
+   "frame": 32
+  },
+  "after300msPlaying": {
+   "walking": "rtl",
+   "frame": 41
+  },
+  "holds": true,
+  "carriesOn": true
+ },
+ "awayAndBack": {
+  "now": {
+   "waiting": 11568
+  },
+  "canvasEmpty": true,
+  "startsAgainFromTheFirstWait": true
+ },
+ "reducedMotion": {
+  "framesRead": 1252,
+  "framesWalking": 0,
+  "canvasEmptyEvenWhenAWalkIsAskedFor": true,
+  "ok": true
+ },
+ "atOneToOne": {
+  "rtl frame 10": {
+   "pageCentre": [
+    1537.5,
+    20.7,
+    1650.1
+   ],
+   "packageCentre": [
+    1537.7,
+    20.7,
+    1636.3
+   ],
+   "offPlatePx": [
+    -0.3,
+    0
+   ],
+   "meanDifferenceOverTheBoots": 8.8,
+   "withinAPixel": true
+  },
+  "rtl frame 40": {
+   "pageCentre": [
+    1214.3,
+    33.1,
+    327.4
+   ],
+   "packageCentre": [
+    1215.1,
+    33.1,
+    329.1
+   ],
+   "offPlatePx": [
+    -0.7,
+    0
+   ],
+   "meanDifferenceOverTheBoots": 15,
+   "withinAPixel": true
+  },
+  "rtl frame 70": {
+   "pageCentre": [
+    947.1,
+    14.7,
+    729.7
+   ],
+   "packageCentre": [
+    947.6,
+    14.6,
+    733.3
+   ],
+   "offPlatePx": [
+    -0.5,
+    0.1
+   ],
+   "meanDifferenceOverTheBoots": 13.6,
+   "withinAPixel": true
+  },
+  "rtl frame 100": {
+   "pageCentre": [
+    640.5,
+    21.5,
+    2660.2
+   ],
+   "packageCentre": [
+    640.5,
+    21.5,
+    2664.5
+   ],
+   "offPlatePx": [
+    0,
+    0
+   ],
+   "meanDifferenceOverTheBoots": 12.7,
+   "withinAPixel": true
+  },
+  "rtl frame 130": {
+   "pageCentre": [
+    398.7,
+    16.4,
+    923.3
+   ],
+   "packageCentre": [
+    399.5,
+    16.3,
+    918.2
+   ],
+   "offPlatePx": [
+    -0.8,
+    0.1
+   ],
+   "meanDifferenceOverTheBoots": 14.8,
+   "withinAPixel": true
+  },
+  "ltr frame 10": {
+   "pageCentre": [
+    268.7,
+    22.2,
+    285.8
+   ],
+   "packageCentre": [
+    268.7,
+    22.2,
+    285.1
+   ],
+   "offPlatePx": [
+    0,
+    0
+   ],
+   "meanDifferenceOverTheBoots": 22,
+   "withinAPixel": true
+  },
+  "ltr frame 40": {
+   "pageCentre": [
+    585.8,
+    20.2,
+    2444
+   ],
+   "packageCentre": [
+    585.9,
+    20.3,
+    2470.2
+   ],
+   "offPlatePx": [
+    0,
+    -0.2
+   ],
+   "meanDifferenceOverTheBoots": 16,
+   "withinAPixel": true
+  },
+  "ltr frame 70": {
+   "pageCentre": [
+    899.5,
+    16.5,
+    743.3
+   ],
+   "packageCentre": [
+    900.5,
+    16.1,
+    730.8
+   ],
+   "offPlatePx": [
+    -1,
+    0.3
+   ],
+   "meanDifferenceOverTheBoots": 16.4,
+   "withinAPixel": true
+  },
+  "ltr frame 100": {
+   "pageCentre": [
+    1136.9,
+    23.3,
+    1612.5
+   ],
+   "packageCentre": [
+    1136.4,
+    23.5,
+    1624.7
+   ],
+   "offPlatePx": [
+    0.5,
+    -0.2
+   ],
+   "meanDifferenceOverTheBoots": 9,
+   "withinAPixel": true
+  },
+  "ltr frame 130": {
+   "pageCentre": [
+    1595.1,
+    24.2,
+    505.9
+   ],
+   "packageCentre": [
+    1595.7,
+    24.3,
+    512.2
+   ],
+   "offPlatePx": [
+    -0.6,
+    0
+   ],
+   "meanDifferenceOverTheBoots": 19.7,
+   "withinAPixel": true
+  }
+ },
+ "neverOutsideTheGap": {
+  "canvas": {
+   "frames": 534,
+   "bootPixels": 968096,
+   "outsideTheMask": 0,
+   "worstOutside": 0
+  },
+  "pageMaskAgainstThePackagesLargestDifference": 0,
+  "onScreen": {
+   "screenPixelsCheckedWhereTheMaskIsNotSet": 230484,
+   "changedDuringAWalk": 44,
+   "largestChange": 3
+  },
+  "ok": true
+ },
+ "errors": []
+}
