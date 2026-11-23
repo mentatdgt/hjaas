@@ -147,7 +147,7 @@ def track(direction, anchors, W, body=None):
     # the switch must fall where boots and drawing agree: only allow a change of mode at a moment's middle
     return {'fps': FPS, 'frames': frames}
 
-def key_body(body_dir, layout):
+def key_body(body_dir, layout, lean=None):
     """Quinn's full-body walk (jobs 022j/022k): B01..B16 on green, 1024x1536, boots placed by body_inputs at scale DS.
     Returns sprites (L_Bnn, R_Bnn mirrored) at the boots' scale, and each drawing's offset from its near boot."""
     L = json.load(open(layout)); Q2C = L['Q2C']; FLOOR = L['FLOOR']
@@ -155,9 +155,35 @@ def key_body(body_dir, layout):
     for k, p in enumerate(L['poses']):
         a = np.asarray(Image.open(f"{body_dir}/{p['tag']}.png").convert('RGB')).astype(np.float32)
         r, g, b = a[..., 0], a[..., 1], a[..., 2]
-        al = 1 - np.clip((g - np.maximum(r, b) - 40) / 120, 0, 1); al = ndi.gaussian_filter(al, 0.7)
-        edge = ndi.binary_dilation(al < 0.99, iterations=3); cap = np.maximum(r, b) * 1.05 + 10
-        a[..., 1] = np.where(edge & (g > cap), cap, g)
+        al = 1 - np.clip((g - np.maximum(r, b) - 40) / 120, 0, 1)
+        # green flecks INSIDE him (where Quinn's paint met the locked boots at the shins) are not background:
+        # fill those small holes and repaint them from the denim around them
+        solid = al > 0.5; filled = ndi.binary_fill_holes(solid)
+        lab, n = ndi.label(filled & ~solid); sizes = ndi.sum(np.ones_like(al), lab, range(1, n + 1))
+        holes = np.isin(lab, 1 + np.where(sizes < 400)[0])
+        near_ok = ndi.binary_dilation(holes, iterations=4) & solid & ~holes
+        for _ in range(6):                                                     # grow the surrounding colour inward
+            wsum = ndi.uniform_filter(near_ok.astype(np.float32), 5)
+            for c in range(3):
+                fillc = ndi.uniform_filter(a[..., c] * near_ok, 5) / np.maximum(wsum, 1e-6)
+                a[..., c] = np.where(holes & (wsum > 0), fillc, a[..., c])
+            near_ok = near_ok | (holes & (wsum > 0))
+        al = np.where(holes, 1.0, al)
+        # and the green that is left at the seam's edge pixels
+        g = a[..., 1]; cap0 = np.maximum(a[..., 0], a[..., 2]) * 1.05 + 10
+        a[..., 1] = np.where(filled & (g > cap0), cap0, g)
+        al = ndi.gaussian_filter(al, 0.7)
+        edge = ndi.binary_dilation(al < 0.99, iterations=3); cap = np.maximum(a[..., 0], a[..., 2]) * 1.05 + 10
+        a[..., 1] = np.where(edge & (a[..., 1] > cap), cap, a[..., 1])
+        if lean is not None and abs(lean[k]) > 0.05:
+            # steady hips: Quinn drew him centred between his feet, but while both feet are down that midpoint stands still
+            # and while one swings it races ahead. Lean the legs (nothing at the cuffs, full at the hips) so his body moves
+            # at a steady pace while the boots stay exactly where they are.
+            sh = lean[k] * Q2C; hgt = FLOOR - np.arange(al.shape[0])
+            ramp = np.clip((hgt - 200) / (760 - 200), 0, 1) * sh                  # px to move each row
+            yy, xx = np.mgrid[0:al.shape[0], 0:al.shape[1]].astype(np.float32); src = xx - ramp[:, None]
+            a = np.dstack([ndi.map_coordinates(a[..., c], [yy, src], order=1, mode='constant', cval=0) for c in range(3)])
+            al = ndi.map_coordinates(al, [yy, src], order=1, mode='constant', cval=0)
         H, Wd = al.shape; w = round(Wd / Q2C); h = round(FLOOR / Q2C)        # keep the full width; bottom edge = the floor
         sh = np.interp(np.arange(FLOOR), [FLOOR - 0.75 * FLOOR, FLOOR - 230], [BODY_SHADE[1], BODY_SHADE[0]])[:, None, None]   # floor-level light
         im = Image.fromarray(np.dstack([a[:FLOOR] * sh, al[:FLOOR] * 255]).clip(0, 255).astype(np.uint8)).resize((w, h), Image.LANCZOS)
@@ -194,7 +220,15 @@ if __name__ == '__main__':
     gm = gap_mask(plate)
     body = None
     if body_dir:
-        bs, near_dx = key_body(body_dir, f'{body_dir}/body_layout.json'); sprites.update(bs)
+        # how far each drawing's feet-midpoint is from steady hips (walking left), at its own moment
+        period = STRIDE / SPEED; mo = [c[2] for c in CYCLE] + [1.0]
+        ts = np.linspace(0, period * 4, 2000); lin = lambda t: X_RIGHT - SPEED * t
+        cst = np.mean([sum(x for _, x, _ in feet('rtl', anchors, W, t)) / 2 - lin(t) for t in ts])
+        lean = []
+        for k in range(len(CYCLE)):
+            t = (((mo[k] + mo[k + 1]) / 2 - 0.5) % 1.0) * period + period * 2
+            f_, n_ = feet('rtl', anchors, W, t); lean.append(-((f_[1] + n_[1]) / 2 - (lin(t) + cst)))
+        bs, near_dx = key_body(body_dir, f'{body_dir}/body_layout.json', lean); sprites.update(bs)
         sm = slot_mask(plate)
         Image.fromarray((np.maximum(sm, gm) * 255).astype(np.uint8)).save(f'{out}/body_mask.png')   # where he's seen whole: slot + gap
         # he is "in the slot zone" while his drawing could overlap the slot (half his width either side of it)

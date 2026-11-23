@@ -9,7 +9,7 @@ Round 1 (`reviews/scene-5-build.md`, your report `scene-5-review-01.md`) passed 
   `git fetch origin && git rm -r -q frames/022-theatre-scene/site && git checkout origin/main -- frames/022-theatre-scene/site frames/022-theatre-scene/theatre-preview.mp4 tools/theatre_preview.py`
   Then `npm run assets`.
 - Read this brief and `BIBLE.md` §4c from `origin/main`.
-- **Interim art:** the full-body drawings `L_B09` … `L_B16` are being redrawn by Quinn (job 022l). When Wren says so, run the same two commands again and re-run your checks. File names, sizes and data format stay exactly the same, so no code change should be needed for the swap.
+- **Art:** all 16 full-body drawings are final (2026-11-23 20:30; an earlier commit had interim B09–B16). If you brought the package in before that, run the same two commands again and re-run your checks; names, sizes and format are unchanged.
 
 ## 1. What changed, in the user's words and decisions (2026-11-22/23)
 - **The boots walk on a drawn walk cycle.** 16 hand-drawn poses of the boot (heel strike, roll, heel rise, toe-off, swing), mirrored for the walk back. The track is now **60 fps** (299 frames, about 5 s per crossing), and the planted heel or toe never slides.

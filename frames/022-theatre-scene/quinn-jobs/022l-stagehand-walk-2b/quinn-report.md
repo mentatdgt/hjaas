@@ -1,0 +1,9 @@
+- **B09.png** — Boots and protected pixels identical. Near arm forward, far arm back, hands at belt level. Crown y=103, 9 px lower than B13.
+- **B10.png** — Boots and protected pixels identical. Near arm forward, far arm back, hands low. Crown y=119, 25 px lower than B13.
+- **B11.png** — Boots and protected pixels identical. Near arm still forward, far arm back, hands low. Crown y=117, 23 px lower than B13.
+- **B12.png** — Boots and protected pixels identical. Near arm hanging down, hands low. Crown y=106, 12 px lower than B13.
+- **B13.png** — Boots and protected pixels identical. Near arm hanging down, hands low. Crown y=94, the height reference.
+- **B14.png** — Boots and protected pixels identical. Near arm starts back, far hand comes forward, both hands low. Crown y=81, 13 px higher than B13.
+- **B15.png** — Boots and protected pixels identical. Near arm back, far arm forward, hands low. Crown y=70, 24 px higher than B13.
+- **B16.png** — Boots and protected pixels identical. Near arm back, far arm forward, hands low. Crown y=69, 25 px higher than B13.
+- **B_contact_sheet.png** — All eight frames in order, left to right across two rows. Small green flecks visible at the shin joins are pixels locked by the supplied masks.

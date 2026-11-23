@@ -11,7 +11,7 @@ This replaces the earlier Travel handover: **the user replaced Travel with set d
 | 2 | Grow | On `main`. Light model-sheet restyle later. | later task |
 | 3 | Design (café) | Art final (package v7.5 on `main`). Fable has it on `site/scene-3`. Waiting for the user's phone check, then merge. | you (the café chat is ending) |
 | 4 | Film (Merlion) | Art final. Fable's build on `site/scene-4` (stacked on scene 3). Round 2 reviewed by the Film chat. Waiting for the phone check. Sean's consent needed before launch. | **the Film Wren chat owns Film; don't touch it** |
-| 5 | Set Design (theatre) | Round 1 built by Fable (`site/scene-5`). 2026-11-23: the stagehand redone (drawn boot walk at 60 fps; the whole man seen in the slot by the curtain, from his character sheet; backdrop unchanged). Fable round 2 from `reviews/scene-5-build-round2.md`; B09–B16 body drawings interim until Quinn 022l passes. | **you** |
+| 5 | Set Design (theatre) | Round 1 built by Fable (`site/scene-5`). 2026-11-23: the stagehand redone (drawn boot walk at 60 fps; the whole man seen in the slot by the curtain, from his character sheet; backdrop unchanged). Fable round 2 from `reviews/scene-5-build-round2.md`; all 16 body drawings final (022l passed); Fable to swap them in. | **you** |
 
 Merges: `site/scene-3` → `main` after the phone check, then `site/scene-4`. Never merge into `main` without Wren's review and the user's OK.
 
