@@ -12,7 +12,7 @@ New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a
 | 2 | Grow | Mushroom lab: misting, writing, rotating the rack | ✅ Approved (task 017); later, a light restyle to the model sheet | ✅ Pencil edge done; Round 3b (pencil arrives with the colour) overnight | ✅ Merged 2026-11-21 (no phone check yet) |
 | 3 | Design | Café: Rachel sketches, sips coffee and reacts; barista, mum, child, old man, cat, ceiling fan | ✅ Art final: package v7.5 on `main` (v7.3 user OK; v7.4 shadow; v7.5 floor seam) | 🔧 Fable: v7.4 integrated on `site/scene-3`; v7.5 file swap next | — |
 | 4 | Film | Merlion at night: Rachel (from behind) films a presenter by a silver car | ✅ **Art final** (your OK 2026-11-21 14:28) | ✅ **Approved on your phone 2026-11-21 16:56** (round 2, `site/scene-4` 2e19df6). Paused here | ⏳ Merges right after `site/scene-3` |
-| 5 | Set Design | **Set design, replacing Travel**: Rachel paints a theatre backdrop; the backdrop fills in with the hunt; a stagehand's boots cross behind it; the lamp swings | ✅ **Art final** (preview v3, your OK 2026-11-21 21:13: "okay for now") | ✅ Built on `site/scene-5` (report 01, Wren's review passed 2026-11-22); one mask fix to pick up, then your phone check | — |
+| 5 | Set Design | **Set design, replacing Travel**: Rachel paints a theatre backdrop; the backdrop fills in with the hunt; a stagehand's boots cross behind it; the lamp swings | ✅ **Art final** (preview v3, your OK 2026-11-21 21:13: "okay for now") | 🔧 Round 2 (the stagehand) for Fable: `reviews/scene-5-build-round2.md` | — |
 
 ## Now
 - **Fable:** swap café v7.5 into `site/scene-3`, then merge into `site/scene-4`; finish the scene-4 report.

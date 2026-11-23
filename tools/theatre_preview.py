@@ -58,6 +58,7 @@ finds = [6500, 12500, 19500, 26000]
 tl = {'rachel': timeline('rachel', total, finds), 'lamp': timeline('lamp', total)}
 walk = json.load(open(f'{P}/stagehand/walk.json'))
 gx, gy = walk['gap_mask_xy']; gmask = np.asarray(Image.open(f'{P}/stagehand/gap_mask.png')).astype(np.float32) / 255
+bxy = walk.get('body_mask_xy'); bmask = np.asarray(Image.open(f'{P}/stagehand/body_mask.png')).astype(np.float32) / 255 if bxy else None
 spr = {k: Image.open(f'{P}/stagehand/{k}.png').convert('RGBA') for k in walk['sprites']}
 walks = [(3000, 'rtl'), (3000 + len(walk['rtl']['frames']) * 1000 / walk['rtl']['fps'] + 11000, 'ltr')]
 plate = Image.open(f'{P}/plate.png').convert('RGBA')
@@ -72,12 +73,16 @@ def boots_layer(t):
             for b in tr['frames'][i]:
                 s = spr[b['s']]
                 im = s if not b['far'] else Image.fromarray((np.asarray(s).astype(np.float32) * [0.85, 0.85, 0.85, 1]).astype(np.uint8))
+                body = b.get('body', False)
+                if b.get('flip'): im = im.transpose(Image.FLIP_LEFT_RIGHT)
                 # rotate about the bottom-centre: pad so that point is the centre, rotate, then place
                 w, h = im.size; pad = Image.new('RGBA', (w, 2 * h), (0, 0, 0, 0)); pad.paste(im, (0, 0))
                 rot = pad.rotate(-b['rot'], resample=Image.BICUBIC, center=(w / 2, h))
                 lay.alpha_composite(rot, (int(round(b['x'] - w / 2)), int(round(b['y'] - h))))
             a = np.asarray(lay).astype(np.float32); mk = np.zeros(a.shape[:2], np.float32)
-            mk[gy:gy + gmask.shape[0], gx:gx + gmask.shape[1]] = gmask; a[..., 3] *= mk
+            if body: mk[bxy[1]:bxy[1] + bmask.shape[0], :bmask.shape[1]] = bmask
+            else: mk[gy:gy + gmask.shape[0], gx:gx + gmask.shape[1]] = gmask
+            a[..., 3] *= mk
             return Image.fromarray(a.astype(np.uint8))
     return None
 

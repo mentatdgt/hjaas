@@ -1,0 +1,9 @@
+- **B01.png** Same stagehand as B05. Both legs meet their original cuffs, with a faint line across the forward shin. Boots and all black-mask pixels are unchanged.
+- **B02.png** Same stagehand as B05. Both legs meet their original cuffs, with small green marks at the protected denim edges. Boots and all black-mask pixels are unchanged.
+- **B03.png** Same stagehand as B05. Both legs meet their original cuffs, with a faint join on the far shin. Boots and all black-mask pixels are unchanged.
+- **B04.png** Same stagehand as B05. Both legs meet their original cuffs, with a small texture shift above the lifted boot. Boots and all black-mask pixels are unchanged.
+- **B05.png** Master stagehand, matched to the character sheet. Both legs meet their original cuffs, with thin green marks at the protected edges above the cuffs. Boots and all black-mask pixels are unchanged.
+- **B06.png** Same stagehand as B05. Both legs reach the correct cuffs, though the denim joins are most visible in this frame. Boots and all black-mask pixels are unchanged.
+- **B07.png** Same stagehand as B05. Both legs meet their original cuffs, with a slight contour step above the forward boot. Boots and all black-mask pixels are unchanged.
+- **B08.png** Same stagehand as B05. Both legs meet their original cuffs, with faint join marks above them. Boots and all black-mask pixels are unchanged.
+- **B_contact_sheet.png** All eight verified frames appear side by side in order, at their original resolution.

@@ -10,7 +10,7 @@
    "actor": "backdrop_01",
    "x": 929,
    "y": 0,
-   "w": 363,
+   "w": 360,
    "h": 562,
    "stills": [
     "P_01"
@@ -20,9 +20,9 @@
   },
   {
    "actor": "backdrop_02",
-   "x": 980,
+   "x": 978,
    "y": 0,
-   "w": 334,
+   "w": 330,
    "h": 562,
    "stills": [
     "P_02"
@@ -32,10 +32,10 @@
   },
   {
    "actor": "backdrop_03",
-   "x": 1001,
+   "x": 997,
    "y": 0,
    "w": 337,
-   "h": 559,
+   "h": 560,
    "stills": [
     "P_03"
    ],
@@ -44,9 +44,9 @@
   },
   {
    "actor": "backdrop_04",
-   "x": 1027,
+   "x": 1019,
    "y": 0,
-   "w": 450,
+   "w": 414,
    "h": 562,
    "stills": [
     "P_04"
@@ -56,10 +56,10 @@
   },
   {
    "actor": "backdrop_05",
-   "x": 1136,
+   "x": 1129,
    "y": 0,
-   "w": 364,
-   "h": 523,
+   "w": 366,
+   "h": 548,
    "stills": [
     "P_05"
    ],
@@ -68,10 +68,10 @@
   },
   {
    "actor": "backdrop_06",
-   "x": 1154,
-   "y": 17,
-   "w": 349,
-   "h": 495,
+   "x": 1145,
+   "y": 0,
+   "w": 356,
+   "h": 492,
    "stills": [
     "P_06"
    ],
@@ -80,10 +80,10 @@
   },
   {
    "actor": "backdrop_07",
-   "x": 1211,
-   "y": 38,
-   "w": 297,
-   "h": 473,
+   "x": 1163,
+   "y": 26,
+   "w": 342,
+   "h": 486,
    "stills": [
     "P_07"
    ],
@@ -92,10 +92,10 @@
   },
   {
    "actor": "backdrop_08",
-   "x": 1289,
-   "y": 58,
-   "w": 287,
-   "h": 504,
+   "x": 1252,
+   "y": 48,
+   "w": 257,
+   "h": 513,
    "stills": [
     "P_08"
    ],
@@ -104,10 +104,10 @@
   },
   {
    "actor": "backdrop_09",
-   "x": 1339,
-   "y": 160,
-   "w": 242,
-   "h": 397,
+   "x": 1305,
+   "y": 62,
+   "w": 224,
+   "h": 499,
    "stills": [
     "P_09"
    ],
@@ -116,10 +116,10 @@
   },
   {
    "actor": "backdrop_10",
-   "x": 1407,
-   "y": 199,
-   "w": 207,
-   "h": 354,
+   "x": 1350,
+   "y": 230,
+   "w": 179,
+   "h": 323,
    "stills": [
     "P_10"
    ],
@@ -135,6 +135,22 @@
    "stills": [],
    "sprite_track": "stagehand/walk.json",
    "sprites": {
+    "L_B01": "stagehand/L_B01.png",
+    "L_B02": "stagehand/L_B02.png",
+    "L_B03": "stagehand/L_B03.png",
+    "L_B04": "stagehand/L_B04.png",
+    "L_B05": "stagehand/L_B05.png",
+    "L_B06": "stagehand/L_B06.png",
+    "L_B07": "stagehand/L_B07.png",
+    "L_B08": "stagehand/L_B08.png",
+    "L_B09": "stagehand/L_B09.png",
+    "L_B10": "stagehand/L_B10.png",
+    "L_B11": "stagehand/L_B11.png",
+    "L_B12": "stagehand/L_B12.png",
+    "L_B13": "stagehand/L_B13.png",
+    "L_B14": "stagehand/L_B14.png",
+    "L_B15": "stagehand/L_B15.png",
+    "L_B16": "stagehand/L_B16.png",
     "L_W01": "stagehand/L_W01.png",
     "L_W01b": "stagehand/L_W01b.png",
     "L_W02": "stagehand/L_W02.png",
@@ -168,7 +184,8 @@
     "R_W08": "stagehand/R_W08.png",
     "R_W08b": "stagehand/R_W08b.png"
    },
-   "mask": "stagehand/gap_mask.png"
+   "mask": "stagehand/gap_mask.png",
+   "body_mask": "stagehand/body_mask.png"
   },
   {
    "actor": "lamp",

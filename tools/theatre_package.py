@@ -93,13 +93,19 @@ if __name__ == '__main__':
     for dr in ('rtl', 'ltr'):
         for fr in w[dr]['frames']:
             for b in fr: b['x'] = round(b['x'] * S, 1); b['y'] = round((b['y'] - Y0) * S, 1)
-    w['note'] = ('Site canvas coords. Each frame: two boots (far first; draw the far one 15% darker); s = which sprite (a drawing of the '
-                 'walk cycle), x,y = bottom-centre of that sprite, rot = 0. Draw the boots clipped to stagehand/gap_mask.png placed at gap_mask_xy, '
-                 'so they only show in the dark gap under the backdrop (ladder, pots and cart stay in front).')
+    w['note'] = ('Site canvas coords. Each frame: a list of sprites, drawn in order. Usually two boots (far first; draw the far one 15% darker); '
+                 's = which sprite (a drawing of the walk cycle), x,y = bottom-centre of that sprite, rot = 0. Draw the boots clipped to '
+                 'stagehand/gap_mask.png placed at gap_mask_xy, so they only show in the dark gap under the backdrop (ladder, pots and cart stay in front).')
     w['gap_mask_xy'] = [gx0, gy0]
+    if os.path.exists(f'{W}/walk/body_mask.png'):   # where he is seen whole (the open slot by the curtain, plus the gap)
+        bm = to_canvas(Image.open(f'{W}/walk/body_mask.png').convert('L')); _, by0, _, by1 = Image.fromarray((np.asarray(bm) > 0).astype(np.uint8) * 255).getbbox()
+        bm.crop((0, by0, bm.width, by1)).save(f'{out}/stagehand/body_mask.png'); w['body_mask_xy'] = [0, by0]
+        w['note'] += (' Entries with body=true are his whole body (one drawing, by the curtain): draw them NOT darkened, mirrored '
+                      'left-right if flip=true, clipped to stagehand/body_mask.png placed at body_mask_xy, instead of the gap mask.')
     json.dump(w, open(f'{out}/stagehand/walk.json', 'w'))
     m['layers'].append({'actor': 'stagehand', 'x': 0, 'y': 0, 'w': CW, 'h': CH, 'stills': [], 'sprite_track': 'stagehand/walk.json',
-                        'sprites': {k: f'stagehand/{k}.png' for k in w['sprites']}, 'mask': 'stagehand/gap_mask.png'})
+                        'sprites': {k: f'stagehand/{k}.png' for k in w['sprites']}, 'mask': 'stagehand/gap_mask.png',
+                        **({'body_mask': 'stagehand/body_mask.png'} if 'body_mask_xy' in w else {})})
     # 3. the lamp: a rigid pendulum swing
     lamp = {f'L_{i:02d}': Image.open(p) for i, p in enumerate(sorted(glob.glob(f'{W}/lamp/L_*.png')))}
     add_layer(m, out, 'lamp', lamp, {'scenery': True})

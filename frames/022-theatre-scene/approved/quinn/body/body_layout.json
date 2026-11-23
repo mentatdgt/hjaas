@@ -1,0 +1,135 @@
+{
+ "DS": 0.34,
+ "Q2C": 3.533939393939394,
+ "FLOOR": 1490,
+ "poses": [
+  {
+   "tag": "B01",
+   "near": "L_W01",
+   "far": "L_W04b",
+   "near_phase": 0.018,
+   "hip_minus_near_quinn": 65.1,
+   "near_cx_offset": -229.88
+  },
+  {
+   "tag": "B02",
+   "near": "L_W01b",
+   "far": "L_W05",
+   "near_phase": 0.053,
+   "hip_minus_near_quinn": 60.4,
+   "near_cx_offset": -213.63
+  },
+  {
+   "tag": "B03",
+   "near": "L_W02",
+   "far": "L_W05",
+   "near_phase": 0.103,
+   "hip_minus_near_quinn": 62.9,
+   "near_cx_offset": -222.46
+  },
+  {
+   "tag": "B04",
+   "near": "L_W02b",
+   "far": "L_W06",
+   "near_phase": 0.168,
+   "hip_minus_near_quinn": 57.6,
+   "near_cx_offset": -203.55
+  },
+  {
+   "tag": "B05",
+   "near": "L_W03",
+   "far": "L_W06b",
+   "near_phase": 0.25,
+   "hip_minus_near_quinn": 27.5,
+   "near_cx_offset": -97.18
+  },
+  {
+   "tag": "B06",
+   "near": "L_W03b",
+   "far": "L_W07b",
+   "near_phase": 0.35,
+   "hip_minus_near_quinn": -27.9,
+   "near_cx_offset": 98.6
+  },
+  {
+   "tag": "B07",
+   "near": "L_W04",
+   "far": "L_W08",
+   "near_phase": 0.432,
+   "hip_minus_near_quinn": -57.1,
+   "near_cx_offset": 201.96
+  },
+  {
+   "tag": "B08",
+   "near": "L_W04b",
+   "far": "L_W08b",
+   "near_phase": 0.498,
+   "hip_minus_near_quinn": -64.8,
+   "near_cx_offset": 228.82
+  },
+  {
+   "tag": "B09",
+   "near": "L_W05",
+   "far": "L_W01b",
+   "near_phase": 0.565,
+   "hip_minus_near_quinn": -60.5,
+   "near_cx_offset": 213.63
+  },
+  {
+   "tag": "B10",
+   "near": "L_W05b",
+   "far": "L_W02",
+   "near_phase": 0.62,
+   "hip_minus_near_quinn": -63.2,
+   "near_cx_offset": 223.52
+  },
+  {
+   "tag": "B11",
+   "near": "L_W06",
+   "far": "L_W02b",
+   "near_phase": 0.67,
+   "hip_minus_near_quinn": -55.1,
+   "near_cx_offset": 194.54
+  },
+  {
+   "tag": "B12",
+   "near": "L_W06b",
+   "far": "L_W03",
+   "near_phase": 0.73,
+   "hip_minus_near_quinn": -30.6,
+   "near_cx_offset": 108.14
+  },
+  {
+   "tag": "B13",
+   "near": "L_W07",
+   "far": "L_W03",
+   "near_phase": 0.79,
+   "hip_minus_near_quinn": -7.5,
+   "near_cx_offset": 26.68
+  },
+  {
+   "tag": "B14",
+   "near": "L_W07b",
+   "far": "L_W03b",
+   "near_phase": 0.85,
+   "hip_minus_near_quinn": 24.6,
+   "near_cx_offset": -87.11
+  },
+  {
+   "tag": "B15",
+   "near": "L_W08",
+   "far": "L_W04",
+   "near_phase": 0.91,
+   "hip_minus_near_quinn": 49.5,
+   "near_cx_offset": -175.11
+  },
+  {
+   "tag": "B16",
+   "near": "L_W08b",
+   "far": "L_W04b",
+   "near_phase": 0.97,
+   "hip_minus_near_quinn": 62.7,
+   "near_cx_offset": -221.58
+  }
+ ]
+}

@@ -48,7 +48,12 @@ All original characters, described in words. Never based on a real person's phot
 
 ## 4c. Supporting cast and set (scene 5, theatre)
 - **The backdrop fills in with the hunt:** part of the sky is bare canvas with pencil lines; each find in this scene paints one more patch; at 10/10 here it is complete (Wren cuts the stages from the finished and pencil versions).
-- **Stagehand (user 2026-11-21 17:54):** an original character: a middle-aged contractor in a grey T-shirt and jeans, tan work boots (design: `frames/022-theatre-scene/incoming/022_stagehand_sheet.png`). Every 40–70 s (random) he crosses BEHIND the backdrop, seen only as his boots and jean cuffs in the gap under the hem: right to left, walking with purpose. 10–15 s later he walks back left to right. **No glimpse of him, no peeking** (could seem creepy). Boots animated as rigid pieces that lift, swing and plant, so they never slide.
+- **Stagehand (user 2026-11-21 17:54):** an original character: a middle-aged contractor in a grey T-shirt and jeans, tan work boots (design: `frames/022-theatre-scene/incoming/022_stagehand_sheet.png`). Every 40–70 s (random) he crosses BEHIND the backdrop, right to left, walking with purpose; 10–15 s later he walks back left to right. **He is seen only where he really would be (user, 2026-11-23):**
+  - under the hem, only his boots;
+  - in the open dark slot between the backdrop's right edge and the curtain, the whole man, from his character sheet, in dim backstage light;
+  - walking left, he goes out of sight behind the leaning flat.
+
+  **No peeking:** he never looks out or stops. The backdrop is not altered to hide him. Boots and body are hand-drawn walk cycles by Quinn (jobs 022g/022h boots, 022j/022l body), planted feet never slide, 60 fps.
 - **Ambient:** the caged work lamp swings rigidly on its rope (built). Not built (optional, for Fable in code if wanted): dust motes drifting in the floodlight beam. The fly ropes and the velvet curtain stay still.
 - **Scene look (user 2026-11-21):** keep mock-up A's busyness: seat backs along the bottom, knotted fly ropes, dripping paint pots, paint cart.
 
