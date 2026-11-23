@@ -198,11 +198,18 @@ describe('Set Design', () => {
     expect(scene.spots.map((spot) => spot.x)).toEqual([...scene.spots.map((spot) => spot.x)].sort((a, b) => a - b));
   });
 
-  it('keeps the painting whole under Rachel and around the lamp\'s cage; she answers at once, and a second find holds her salute', () => {
+  it('keeps the painting whole under Rachel and around the lamp\'s cage and the slot by the curtain; she answers at once, and a second find holds her salute', () => {
     expect(scene.keep).toContainEqual(setCast.covers.rachel);
     const hugged = scene.keep!.filter((box) => box[4] === 'hug');
     expect(hugged.length).toBeGreaterThanOrEqual(3);
-    for (const [l, t, r, b] of hugged) expect(l >= 1327 && r <= 1427 && t >= 20 && b <= 101).toBe(true);
+    const inLamp = ([l, t, r, b]: readonly unknown[]) => Number(l) >= 1327 && Number(r) <= 1427 && Number(t) >= 20 && Number(b) <= 101;
+    const inSlot = ([l, t, r, b]: readonly unknown[]) => Number(l) >= 1500 && Number(r) <= 1609 && Number(t) >= 101 && Number(b) <= 637;
+    for (const box of hugged) expect(inLamp(box) !== inSlot(box), box.join()).toBe(true);
+    expect(hugged.filter(inLamp)).toHaveLength(5);
+    // The slot's boxes follow one another without a break, from above the stagehand's head to the foot of the gap.
+    const slot = hugged.filter(inSlot).map((box) => [Number(box[1]), Number(box[3])]);
+    expect([slot[0][0], slot.at(-1)![1]]).toEqual([125, 637]);
+    for (let i = 1; i < slot.length; i++) expect(slot[i][0]).toBe(slot[i - 1][1]);
     expect(setCast.room).toEqual(expect.arrayContaining(['lamp', 'backdrop_01', 'backdrop_10']));
     expect(scene.answer).toBe('at-once');
     expect(scene.again).toBe('hold');

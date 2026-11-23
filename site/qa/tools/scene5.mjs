@@ -7,6 +7,7 @@
 //   node qa/tools/scene5.mjs react      her salute from whatever pose, a second find, a minute of her routine and her blinks, the lamp's swing; reduced motion
 //   node qa/tools/scene5.mjs walk       the stagehand: the schedule, pause, leaving and coming back, even timing, the drawing at 1:1, never outside the masks
 //   node qa/tools/scene5.mjs strips     the stagehand frame by frame at 1:1 beside theatre-preview.mp4: the slot both ways, the hand-over, the left end
+//   node qa/tools/scene5.mjs film60     one whole crossing, out and back, on the routine's own schedule, recorded at 60 fps
 //   node qa/tools/scene5.mjs film       recordings: 45 s at work, the 10th find, the unlock (and a 10/10 scene without it), reduced motion
 //   node qa/tools/scene5.mjs preview    the page against the package's own picture (as tools/theatre_preview.py draws it): Rachel, the lamp, the boots
 //   node qa/tools/scene5.mjs memory [new|return] [scene | a,b,c,d,e]   peak decoded-image memory on the phone profile, five scenes in many orders
@@ -907,13 +908,94 @@ run.strips = async () => {
       shows[track].push(await page.evaluate(() => { const c = window.__hj.scene.walks[0].el; const copy = (window.__copy ??= Object.assign(document.createElement('canvas'), { width: c.width, height: c.height })); const x = copy.getContext('2d', { willReadFrequently: true }); x.globalCompositeOperation = 'copy'; x.drawImage(c, 0, 0); const d = x.getImageData(0, 0, c.width, c.height).data; let n = 0; let lo = 1e9; let hi = -1; for (let i = 3; i < d.length; i += 4) if (d[i] > 8) { n++; const px = ((i - 3) / 4) % c.width; if (px < lo) lo = px; if (px > hi) hi = px; } return n ? [n, lo, hi] : [0, null, null]; }));
     }
   }
+  // The hand-over in numbers: how many of the plate's px change (by more than 24 levels over his own dark) from each
+  // track frame to the next, around it, against every other step of the boots.
+  const steps = {};
+  for (const track of ['rtl', 'ltr']) {
+    steps[track] = await page.evaluate((track) => {
+      const w = window.__hj.scene.walks[0]; const c = w.el; const t = w.tracks[track];
+      const copy = document.createElement('canvas'); copy.width = c.width; copy.height = 83;
+      const x = copy.getContext('2d', { willReadFrequently: true });
+      const rows = []; let before = null;
+      for (let i = 0; i < t.frames.length; i++) {
+        w.draw(t, i);
+        x.globalCompositeOperation = 'source-over'; x.fillStyle = 'rgb(25,22,22)'; x.fillRect(0, 0, c.width, 83); x.drawImage(c, 0, -453);
+        const d = x.getImageData(0, 0, c.width, 83).data;
+        let n = 0;
+        if (before) for (let p = 0; p < d.length; p += 4) if (Math.max(Math.abs(d[p] - before[p]), Math.abs(d[p + 1] - before[p + 1]), Math.abs(d[p + 2] - before[p + 2])) > 24) n++;
+        rows.push(n); before = d;
+      }
+      w.clear();
+      return rows;
+    }, track);
+  }
+  const handover = Object.fromEntries([['rtl', 74], ['ltr', 216]].map(([t, at]) => { const other = steps[t].filter((_, i) => i && i !== at).sort((a, b) => a - b); return [t, { switchesAtFrame: at, platePxThatChangeThere: steps[t][at], around: steps[t].slice(at - 4, at + 5), everyOtherStepMedian: other[other.length >> 1], everyOtherStepMost: other.at(-1), stepsThatChangeMore: other.filter((n) => n > steps[t][at]).length, of: other.length }]; }));
   const all = (t) => shows[t].map(([n, lo, hi], f) => ({ f, n, lo, hi }));
   const report = Object.fromEntries(['rtl', 'ltr'].map((t) => { const seen = all(t).filter((x) => x.n); return [t, { firstFrameWithAnythingShowing: seen[0].f, lastFrameWithAnythingShowing: seen.at(-1).f, leftmostPixel: Math.min(...seen.map((x) => x.lo)), rightmostPixel: Math.max(...seen.map((x) => x.hi)), framesShowingNothing: all(t).filter((x) => !x.n).map((x) => x.f) }]; }));
   const errorsSeen = errors;
   await browser.close();
   await rm(dir, { recursive: true, force: true });
   say('what shows', report);
-  await save('strips.json', { scale: u, starts, ...report, errors: errorsSeen });
+  say('the hand-over', handover);
+  await save('strips.json', { scale: u, starts, ...report, handover, errors: errorsSeen });
+};
+
+// A whole crossing at 60 fps, desktop Chrome through Playwright (its own video is 25 fps, so the frames are taken
+// from the browser's screencast, each with its own time, and put together at 60): out, the wait, and back, on the
+// routine's own schedule. set-desktop-crossing-60fps.mp4: from 1 s before he starts out to 1 s after he is back.
+// And set-desktop-slot-60fps.mp4: the right-hand end alone, out and back, at 1:1, without the wait between.
+run.film60 = async () => {
+  const { execFileSync } = await import('node:child_process');
+  const dir = `${out}film60-take/`;
+  await rm(dir, { recursive: true, force: true }); await mkdir(dir, { recursive: true });
+  const { browser, context, page, errors } = await open(chromium, { viewport: { width: 1280, height: 800 } }, '?debug&reset&intro=off&seed=7');
+  await clean(page);
+  await page.evaluate(() => { const s = (window.__w = []); const tick = () => { const w = window.__hj.scene?.walks?.[0]; if (w) s.push([performance.timeOrigin + performance.now(), w.now.walking ?? null, w.drawn]); requestAnimationFrame(tick); }; requestAnimationFrame(tick); });
+  const cdp = await context.newCDPSession(page);
+  const frames = [];
+  const writes = [];
+  cdp.on('Page.screencastFrame', ({ data, metadata, sessionId }) => {
+    const file = `${dir}${String(frames.length).padStart(5, '0')}.jpg`;
+    frames.push({ at: metadata.timestamp * 1000, file });
+    writes.push(writeFile(file, Buffer.from(data, 'base64')));
+    void cdp.send('Page.screencastFrameAck', { sessionId }).catch(() => {});
+  });
+  await cdp.send('Page.startScreencast', { format: 'jpeg', quality: 92, everyNthFrame: 1 });
+  await page.waitForFunction(() => { const i = window.__w.findIndex((r) => r[1] === 'ltr'); return i >= 0 && window.__w.slice(i).some((r) => r[1] === null); }, null, { timeout: 80000 });
+  await page.waitForTimeout(1200);
+  await cdp.send('Page.stopScreencast');
+  await Promise.all(writes);
+  const rows = await page.evaluate(() => window.__w);
+  const box = await page.locator('.hj-plate[data-scene="set"]').boundingBox();
+  await browser.close();
+  const span = (d) => { const r = rows.filter((x) => x[1] === d); return [r[0][0], r.at(-1)[0]]; };
+  const [rtl, ltr] = [span('rtl'), span('ltr')];
+  const build = async (from, to, name, crop) => {
+    const part = frames.filter((f) => f.at >= from && f.at <= to);
+    const list = part.map((f, i) => `file '${f.file}'\nduration ${(((part[i + 1]?.at ?? f.at + 16.7) - f.at) / 1000).toFixed(6)}`).join('\n');
+    await writeFile(`${dir}${name}.txt`, `ffconcat version 1.0\n${list}\n`);
+    execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', `${dir}${name}.txt`, '-vf', `${crop ? `crop=${crop},` : ''}fps=60,scale=trunc(iw/2)*2:trunc(ih/2)*2`, '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '18', '-movflags', '+faststart', `${dir}${name}.mp4`]);
+  };
+  await build(rtl[0] - 1000, ltr[1] + 1000, 'crossing');
+  await rm(`${out}set-desktop-crossing-60fps.mp4`, { force: true });
+  execFileSync('cp', [`${dir}crossing.mp4`, `${out}set-desktop-crossing-60fps.mp4`]);
+  const crop = `${Math.round(box.width * 0.26)}:${Math.round(box.height * 0.7)}:${Math.round(box.x + box.width * 0.74)}:${Math.round(box.y + box.height * 0.06)}`;
+  await build(rtl[0] - 200, rtl[0] + 1900, 'a', crop);
+  await build(ltr[0] + 3400, ltr[1] + 200, 'b', crop);
+  await writeFile(`${dir}ab.txt`, `ffconcat version 1.0\nfile '${dir}a.mp4'\nfile '${dir}b.mp4'\n`);
+  execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', `${dir}ab.txt`, '-c', 'copy', '-movflags', '+faststart', `${out}set-desktop-slot-60fps.mp4`]);
+  const about = ([from, to]) => {
+    const r = rows.filter((x) => x[0] >= from && x[0] <= to && x[2] >= 0);
+    let skipped = 0; let repeated = 0;
+    for (let i = 1; i < r.length; i++) { if (r[i][2] - r[i - 1][2] > 1) skipped += r[i][2] - r[i - 1][2] - 1; if (r[i][2] === r[i - 1][2]) repeated++; }
+    const cast = frames.filter((f) => f.at >= from && f.at <= to);
+    const gaps = cast.slice(1).map((f, i) => f.at - cast[i].at).sort((a, b) => a - b);
+    return { seconds: r1((to - from) / 1000), pageFrames: r.length, trackFramesSkipped: skipped, pageFramesThatRepeatATrackFrame: repeated, recordedFrames: cast.length, recordedGapMsMedian: r1(gaps[gaps.length >> 1]), recordedGapMs99: r1(gaps[Math.floor(gaps.length * 0.99)]), longestRecordedGapMs: r1(gaps.at(-1)), recordedGapsOver25ms: gaps.filter((g) => g > 25).length };
+  };
+  const report = { out: about(rtl), back: about(ltr), waitBetweenS: r1((ltr[0] - rtl[1]) / 1000), files: ['set-desktop-crossing-60fps.mp4', 'set-desktop-slot-60fps.mp4'], errors };
+  await rm(dir, { recursive: true, force: true });
+  say('60 fps', report);
+  await save('film60.json', report);
 };
 
 // Recordings for the review, desktop Chrome (1280 × 800) and the iPhone profile in WebKit. Needs ffmpeg.

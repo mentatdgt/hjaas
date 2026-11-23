@@ -67,7 +67,15 @@ const unionOf = async (scene) => {
     for (const layer of frames.layers) {
       const stills = [];
       for (const still of layer.stills ?? []) stills.push(await bitmap(dir + frames.stills[still].replace('.png', '.webp')));
-      // (A layer with no stills, the theatre's stagehand, is his boots in the gap: never near the edge.)
+      // A layer with no stills, the theatre's stagehand: everywhere he is ever seen is inside his body mask (below
+      // the top of his head, plate y 135).
+      if (!stills.length && layer.body_mask) {
+        const mask = await bitmap(dir + layer.body_mask.replace('.png', '.webp'));
+        const track = await (await fetch(dir + layer.sprite_track)).json();
+        ctx.save(); ctx.beginPath(); ctx.rect(0, 135 * k, W, H); ctx.clip();
+        ctx.drawImage(mask, track.body_mask_xy[0] * k, track.body_mask_xy[1] * k, mask.width * k, mask.height * k);
+        ctx.restore();
+      }
       if (!stills.length) continue;
       // A layer of solid rectangles, with nothing cut out, is a piece of the room that moves (the café's
       // fan), not an actor: the edge fades it as it fades the plate.

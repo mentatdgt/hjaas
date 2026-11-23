@@ -85,6 +85,31 @@ const LAMP_CAGE: KeepBox[] = [
   [1347, 86, 1404, 97, 'hug'],
 ];
 
+// The stagehand crosses the dark slot between the backdrop and the curtain, and is seen whole there: the painting
+// hugs the slot's right-hand outline (the body mask's, band by band, from just above his head, plate y 125, to
+// the foot of the gap). Without it the right edge's paper took his arm and his belt.
+const SLOT: KeepBox[] = [
+  [1503, 125, 1522, 149, 'hug'],
+  [1503, 149, 1530, 173, 'hug'],
+  [1503, 173, 1539, 197, 'hug'],
+  [1503, 197, 1548, 221, 'hug'],
+  [1503, 221, 1559, 245, 'hug'],
+  [1503, 245, 1570, 269, 'hug'],
+  [1503, 269, 1579, 293, 'hug'],
+  [1503, 293, 1594, 317, 'hug'],
+  [1503, 317, 1604, 341, 'hug'],
+  [1503, 341, 1608, 389, 'hug'],
+  [1503, 389, 1600, 413, 'hug'],
+  [1503, 413, 1594, 437, 'hug'],
+  [1503, 437, 1588, 461, 'hug'],
+  [1503, 461, 1584, 485, 'hug'],
+  [1503, 485, 1578, 509, 'hug'],
+  [1503, 509, 1575, 533, 'hug'],
+  [1503, 533, 1571, 557, 'hug'],
+  [1503, 557, 1565, 581, 'hug'],
+  [1503, 581, 1562, 637, 'hug'],
+];
+
 export const set: SceneConfig = {
   id: 'set',
   label: 'Set Design',
@@ -97,8 +122,8 @@ export const set: SceneConfig = {
   // stagehand walks.
   character: { kind: 'cast', dir: 'cast/', frames: 'frames.json', routine: 'routine.json' },
   spots: SPOTS,
-  // The painting is whole under every pixel Rachel ever covers; and the lamp's cage.
-  keep: [cast.covers.rachel as unknown as KeepBox, ...LAMP_CAGE],
+  // The painting is whole under every pixel Rachel ever covers; the lamp's cage; and the slot the stagehand crosses.
+  keep: [cast.covers.rachel as unknown as KeepBox, ...LAMP_CAGE, ...SLOT],
   // (No `edge`: the scene's first edge already fits the strips the edge is drawn in and leaves every mushroom
   // and tap box where it is: qa/tools/pencil.mjs pick 800 set.)
   lines: 'pencil',
