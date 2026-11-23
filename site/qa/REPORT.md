@@ -1577,3 +1577,5 @@ times, decisions, the animation standards, notes for Wren). The evidence is in `
 On `site/scene-5`, made from the tip of `site/scene-4`. Brief: `reviews/scene-5-build.md`. The report is
 `reviews/scene-5-review-01.md`. Evidence in `qa/scene5/` (made by `qa/tools/scene5.mjs`),
 `qa/edge/pencil-*.json` (all five scenes) and `qa/traces/SUMMARY.md`.
+
+Round 2 (the stagehand): brief `reviews/scene-5-build-round2.md`, report `reviews/scene-5-review-02.md`.

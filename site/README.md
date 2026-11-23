@@ -118,8 +118,8 @@ when someone opens its address directly.
   stills are the ones it lists and any other still its routine names (the presenter's blink stills). Nothing in the engine names an actor.
   Two kinds of layer are not actors: `"hunt_progress": k` (a still shown once k mushrooms of the scene are
   found; fades in over the routine entry's `fade_ms`, 700 ms if none) and `"sprite_track"` (no stills: a
-  track, `sprites` and a `mask`; its routine entry has `first_ms`, `return_after_ms`, `every_ms` and a
-  `sequence` of tracks). `npm run assets` keeps the swaths and the mask lossless.
+  track, `sprites`, a `mask` for the boots and a `body_mask` for the whole man; its routine entry has `first_ms`, `return_after_ms`, `every_ms` and a
+  `sequence` of tracks). `npm run assets` keeps the swaths and the masks lossless (the masks as alpha).
   A package may have a live screen: `"camera_screen": { "source": {x, y, w, h}, "rect_by_still": { "<still>":
   {x, y, w, h} } }` in `frames.json`. `source` is the part of the scene it shows; each rect is where the
   screen is while the actor who holds it is on that still. The picture is drawn 2 px inside the rect, with
