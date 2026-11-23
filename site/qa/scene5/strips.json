@@ -5,7 +5,7 @@
   "ltr": 18983.333333333332
  },
  "rtl": {
-  "firstFrameWithAnythingShowing": 17,
+  "firstFrameWithAnythingShowing": 7,
   "lastFrameWithAnythingShowing": 271,
   "leftmostPixel": 368,
   "rightmostPixel": 1607,
@@ -17,8 +17,6 @@
    4,
    5,
    6,
-   7,
-   8,
    9,
    10,
    11,
@@ -58,7 +56,7 @@
  },
  "ltr": {
   "firstFrameWithAnythingShowing": 20,
-  "lastFrameWithAnythingShowing": 284,
+  "lastFrameWithAnythingShowing": 286,
   "leftmostPixel": 368,
   "rightmostPixel": 1607,
   "framesShowingNothing": [
@@ -82,8 +80,10 @@
    17,
    18,
    19,
-   285,
-   286,
+   281,
+   282,
+   283,
+   284,
    287,
    288,
    289,
@@ -101,40 +101,40 @@
  "handover": {
   "rtl": {
    "switchesAtFrame": 74,
-   "platePxThatChangeThere": 137,
+   "platePxThatChangeThere": 134,
    "around": [
-    362,
+    364,
     0,
     226,
     0,
-    137,
+    134,
     96,
     217,
     98,
     123
    ],
    "everyOtherStepMedian": 180,
-   "everyOtherStepMost": 2172,
-   "stepsThatChangeMore": 157,
+   "everyOtherStepMost": 2168,
+   "stepsThatChangeMore": 158,
    "of": 297
   },
   "ltr": {
    "switchesAtFrame": 216,
-   "platePxThatChangeThere": 170,
+   "platePxThatChangeThere": 117,
    "around": [
     68,
     85,
     168,
     262,
-    170,
+    117,
     0,
-    854,
+    760,
     0,
     0
    ],
    "everyOtherStepMedian": 168,
    "everyOtherStepMost": 2038,
-   "stepsThatChangeMore": 148,
+   "stepsThatChangeMore": 154,
    "of": 297
   }
  },

@@ -842,8 +842,8 @@ run.walk = async () => {
 };
 
 // The stagehand frame by frame at 1:1 (device scale 1, the plate 1672 px wide on the screen), the page over the
-// package's own preview: theatre-preview.mp4 is 30 fps and its walks start at 3 s and 18.983 s, so its picture
-// n/30 s in shows track frame floor((n/30 − start) × 60); the page is put on that very frame. Its edge is the
+// package's own preview: theatre-preview.mp4's walks start at 3 s and 18.983 s, so its picture n, at its own
+// rate, shows track frame floor((n/fps − start) × 60); the page is put on that very frame. Its edge is the
 // site's own; the preview's Rachel and lamp are on their own timelines. And every one of the 60 fps frames
 // around the hand-over from body to boots, the page over the package drawn as the preview draws it.
 run.strips = async () => {
@@ -864,11 +864,13 @@ run.strips = async () => {
     return sharp(await page.screenshot({ clip })).resize({ width: r - l, height: b - t, fit: 'fill' }).png().toBuffer();
   };
   const starts = { rtl: 3000, ltr: 3000 + (walk.rtl.frames.length * 1000) / walk.rtl.fps + 11000 };
+  const previewFps = Number(execFileSync('ffprobe', ['-v', 'error', '-select_streams', 'v', '-show_entries', 'stream=r_frame_rate', '-of', 'csv=p=0', `${pkg}theatre-preview.mp4`]).toString().trim().split('/').reduce((a, b) => a / b));
   const previewAt = async (track, f, [l, t, r, b]) => {
     // The preview's picture that shows this track frame: n as the preview counts them.
-    let n = Math.floor((starts[track] + (f * 1000) / 60) / (1000 / 30)) - 2;
-    while (Math.floor((((n * 1000) / 30 - starts[track]) / 1000) * 60) < f) n++;
-    const shows = Math.floor((((n * 1000) / 30 - starts[track]) / 1000) * 60);
+    const of = (n) => Math.floor((((n * 1000) / previewFps - starts[track]) / 1000) * 60 + 1e-6);
+    let n = Math.floor(((starts[track] + (f * 1000) / 60) / 1000) * previewFps) - 2;
+    while (of(n) < f) n++;
+    const shows = of(n);
     const file = `${dir}${track}-${f}.png`;
     execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', `${pkg}theatre-preview.mp4`, '-vf', `select=eq(n\\,${n})`, '-frames:v', '1', file]);
     return { shows, picture: await sharp(await sharp(file).resize(PLATE.w, PLATE.h, { fit: 'fill' }).png().toBuffer()).extract({ left: l, top: t, width: r - l, height: b - t }).png().toBuffer() };

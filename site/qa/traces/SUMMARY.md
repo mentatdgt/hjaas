@@ -177,5 +177,5 @@ in git: `s5r2-crossing-mobile-4x.json.gz`.
 
 | Part | Result |
 |---|---|
-| Out (`--mark hj-qa-walk --span 5000`): the whole man in the slot, then the boots. | 300 begun, none dropped. Longest task 2 ms. |
-| Back (`--mark hj-qa-back --span 5000`): the boots, then the whole man. | 299 begun, none dropped. Longest task 3 ms. |
+| Out (`--mark hj-qa-walk --span 5000`): the whole man in the slot, then the boots. | 300 begun, none dropped. Longest task 5 ms. |
+| Back (`--mark hj-qa-back --span 5000`): the boots, then the whole man. | 300 begun, none dropped. Longest task 2 ms. |
