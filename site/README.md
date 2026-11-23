@@ -51,7 +51,7 @@ Inside `src/engine/`:
 | `clips.ts` | Reads Wren's delivered format (`frames.json` + `routine.json`): stills, clips of patches, the routine, blinks, dissolves (`fade_ms`), the reaction and its entry rule. |
 | `cast.ts` | Takes a package with a whole cast apart (scenes 3 and 4): each actor becomes a pair of manifests that `clips.ts` plays as if it were alone on the plate. Also reads the package's live screen, if it has one. |
 | `progress.ts` | The hunt's progress in the picture (scene 5: the backdrop, one more swath per find): every swath reached drawn once on one canvas, a new one fading in over it and drawn in when the fade ends. |
-| `walk.ts` | A sprite-track layer (scene 5: the stagehand's boots): two sprites placed and turned frame by frame from a track, the far one darker, kept inside a mask; when it walks, from its routine entry. |
+| `walk.ts` | A sprite-track layer (scene 5: the stagehand): frame by frame from a track, a list of sprites placed, turned and perhaps mirrored; the far boot darker; kept inside the gap mask (boots) or the body mask (the whole man); when it walks, from its routine entry. Its pictures are decoded only while the scene shows. |
 | `screen.ts` | A live screen in the picture (scene 4: the back of Rachel's camera): a small canvas on the actor who holds it, showing the room and the actors drawn before her, redrawn whenever one of them is, moved with her pose, with the blinking REC dot. |
 | `reel.ts` | Keeps a clip character's memory down: her patches stay as downloaded and are decoded only a few frames ahead of being shown, then given back. |
 | `routine.ts` | A simpler loop manifest for whole-frame characters: loops, cycles, transitions, blinks. |

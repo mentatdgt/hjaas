@@ -164,13 +164,15 @@ describe('Set Design', () => {
     expect(scene.label).toBe('Set Design');
   });
 
-  it('keeps every mushroom off Rachel, the backdrop\'s swaths, the lamp and the gap the boots walk in (brief section 5)', () => {
+  it('keeps every mushroom off Rachel, the backdrop\'s swaths, the lamp, and the gap and the slot the stagehand walks in (brief section 5, round 2 section 4)', () => {
     const forbidden: Record<string, readonly number[]> = {
       "Rachel's layer": [702, 75, 1096, 575],
       'the backdrop': [929, 0, 1529, 562],
       "the lamp's layer": [1327, 0, 1427, 101],
       // The gap under the hem is y 554 to 636 where the mask is set; no mushroom is anywhere in that band.
       'the gap under the hem': [0, 554, 1672, 636],
+      // Between the backdrop and the curtain the stagehand is seen whole (round 2, section 4; the mask as delivered).
+      'the slot by the curtain': [1502, 101, 1609, 553],
     };
     for (const spot of scene.spots) for (const [what, area] of Object.entries(forbidden)) expect(apart(boxOf(spot), area), `${spot.id} is on ${what}`).toBe(true);
     // And the package agrees about where Rachel and the lamp are.

@@ -11,7 +11,7 @@ import { Reel } from './reel';
 import { loadReaction, type Reaction } from './reaction';
 import { Viewfinder } from './screen';
 import { Progress } from './progress';
-import { Walk, decodeWalk, type TrackFile } from './walk';
+import { Walk, type TrackFile } from './walk';
 import { checkRoutine, routineFrames, routineSchedule, type RoutineManifest } from './routine';
 import { holdSchedule, type Rng, type Step } from './steps';
 import type { ClipCast, FrameCast, SceneConfig, Spot, Troupe } from './types';
@@ -83,7 +83,7 @@ interface Cast {
 
 /**
  * A whole cast, and what else its package puts in the picture: the hunt's progress pieces (the theatre's
- * backdrop) and its walkers (the stagehand's boots). Painted with the room, under the cast.
+ * backdrop) and its walkers (the stagehand). Painted with the room, under the cast.
  */
 type CastList = Cast[] & { progress?: Progress; walks?: Walk[] };
 
@@ -222,21 +222,17 @@ async function troupe(config: SceneConfig, cast: Troupe, host: SceneHost): Promi
     walkers.map(async (walker) => ({
       walker,
       track: await json<TrackFile>(dir + walker.track),
-      sprites: new Map(await Promise.all(Object.entries(walker.sprites).map(async ([name, file]) => [name, await load(file)] as const))),
-      mask: walker.mask ? await load(walker.mask) : null,
+      files: {
+        sprites: new Map(await Promise.all(Object.entries(walker.sprites).map(async ([name, file]) => [name, await load(file)] as const))),
+        mask: walker.mask ? await load(walker.mask) : null,
+        bodyMask: walker.bodyMask ? await load(walker.bodyMask) : null,
+      },
     })),
   );
   return async () => {
-    const [casts, backdrop, walks] = await Promise.all([
+    const [casts, backdrop] = await Promise.all([
       Promise.all(fetched.map((decode) => decode())) as Promise<CastList>,
       screen && plate ? decodePart(plate, screen.source) : null,
-      Promise.all(
-        walkFiles.map(async ({ walker, track, sprites, mask }) => {
-          const decoded = await decodeWalk(sprites, mask);
-          const size = decoded.mask ? { w: decoded.mask.width, h: decoded.mask.height } : { w: frames.canvas.w, h: frames.canvas.h };
-          return new Walk(walker, track, decoded.sprites, decoded.mask, size, host.rnd, host.still);
-        }),
-      ),
     ]);
     const holder = screen ? actors.findIndex((actor) => actor.name === screen.actor) : -1;
     if (screen && holder >= 0) {
@@ -244,7 +240,7 @@ async function troupe(config: SceneConfig, cast: Troupe, host: SceneHost): Promi
       casts[holder].backdrop = backdrop;
     }
     if (progress.length) casts.progress = new Progress(progress, pieceFiles, progressFade, () => host.found.size);
-    if (walks.length) casts.walks = walks;
+    if (walkFiles.length) casts.walks = walkFiles.map(({ walker, track, files }) => new Walk(walker, track, files, frames.canvas, host.rnd, host.still));
     return casts;
   };
 }
@@ -405,7 +401,7 @@ export class Scene {
   private casting: Promise<Decode<CastList> | null> | null = null;
   /** The hunt's progress, shown in the picture (the theatre's backdrop), if the scene has it. */
   private progress: Progress | null = null;
-  /** Its walkers (the stagehand's boots), if it has any. */
+  /** Its walkers (the stagehand), if it has any. */
   private walks: Walk[] = [];
   /** She is being put on the plate. */
   private entering: Promise<void> | null = null;
@@ -523,16 +519,15 @@ export class Scene {
   enter(options: { hidden?: boolean } = {}): Promise<void> {
     // A scene come back to: its frames are decoded again while the brush is still at work. (A cast that kept
     // nothing can be drawn again once each actor's rest frame is back.)
-    for (const walk of this.walks) walk.wake();
-    const back = Promise.all([...this.casts.map((cast) => cast.wake()), this.progress?.wake()]).then(() => {});
+    const back = Promise.all([...this.casts.map((cast) => cast.wake()), this.progress?.wake(), ...this.walks.map((walk) => walk.wake())]).then(() => {});
     if (this.character || !this.config.character) return back;
     this.preload();
     this.entering ??= this.casting!
       .then((decode) => decode?.() ?? null)
       .then(async (casts) => {
         if (casts && !this.character) this.attach(casts, options.hidden === true);
-        // The progress pieces the hunt has reached are drawn before the scene shows.
-        await this.progress?.wake();
+        // The progress pieces the hunt has reached are drawn before the scene shows, and the walkers' pictures decoded.
+        await Promise.all([this.progress?.wake(), ...this.walks.map((walk) => walk.wake())]);
       });
     return this.entering;
   }
@@ -565,7 +560,7 @@ export class Scene {
     for (const walk of casts.walks ?? []) {
       this.walks.push(walk);
       this.plate.insertBefore(walk.el, this.mark);
-      walk.wake();
+      void walk.wake();
     }
     casts.forEach((cast, i) => {
       const { character } = cast;

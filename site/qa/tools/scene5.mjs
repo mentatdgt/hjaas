@@ -5,7 +5,8 @@
 //   node qa/tools/scene5.mjs stages     the backdrop at 0…10 found against plate.png + P_01…P_k from the package; and the ten stages by finding, one page
 //   node qa/tools/scene5.mjs fade       one find's swath fading in: when it starts, how long, how it eases, and no pop when it is baked; reduced motion
 //   node qa/tools/scene5.mjs react      her salute from whatever pose, a second find, a minute of her routine and her blinks, the lamp's swing; reduced motion
-//   node qa/tools/scene5.mjs walk       the stagehand's boots: the schedule, pause, leaving and coming back, even timing, the boots at 1:1, never outside the gap
+//   node qa/tools/scene5.mjs walk       the stagehand: the schedule, pause, leaving and coming back, even timing, the drawing at 1:1, never outside the masks
+//   node qa/tools/scene5.mjs strips     the stagehand frame by frame at 1:1 beside theatre-preview.mp4: the slot both ways, the hand-over, the left end
 //   node qa/tools/scene5.mjs film       recordings: 45 s at work, the 10th find, the unlock (and a 10/10 scene without it), reduced motion
 //   node qa/tools/scene5.mjs preview    the page against the package's own picture (as tools/theatre_preview.py draws it): Rachel, the lamp, the boots
 //   node qa/tools/scene5.mjs memory [new|return] [scene | a,b,c,d,e]   peak decoded-image memory on the phone profile, five scenes in many orders
@@ -187,31 +188,32 @@ const darker = async (file) => {
   return sharp(data, { raw: info }).png().toBuffer();
 };
 /**
- * The boots of one frame of a track, as a layer the size of the plate (RGBA, raw), kept inside the gap mask:
- * each sprite turned `rot` degrees clockwise about its bottom-centre, which is put at x, y; far boot first.
+ * One frame of a track, as a layer the size of the plate (RGBA, raw), as theatre_preview.py puts it together:
+ * each entry's sprite (darker if far, mirrored if flip) with its bottom-centre at x, y; kept inside the body
+ * mask if an entry is a body, else the gap mask.
  */
-const packageBoots = async (track, index) => {
+const masks = {};
+const maskOf = async (name) => (masks[name] ??= await sharp(`${pkg}site/stagehand/${name}.png`).greyscale().raw().toBuffer({ resolveWithObject: true }));
+const packageMan = async (track, index) => {
   const walk = await walkOf();
-  const t = walk[track];
-  const sprite = `${pkg}site/stagehand/${t.sprite}.png`;
-  const meta = await sharp(sprite).metadata();
+  const entries = walk[track].frames[index];
   const parts = [];
-  for (const boot of [...t.frames[index]].sort((a, b) => Number(b.far) - Number(a.far))) {
-    const img = boot.far ? await darker(sprite) : await sharp(sprite).ensureAlpha().png().toBuffer();
-    // Padded so the bottom-centre is the middle, then turned about the middle (the canvas grows, the middle stays).
-    const padded = await sharp({ create: { width: meta.width, height: meta.height * 2, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } } }).composite([{ input: img, left: 0, top: 0 }]).png().toBuffer();
-    const turned = await sharp(padded).rotate(boot.rot, { background: { r: 0, g: 0, b: 0, alpha: 0 } }).png().toBuffer();
-    const tm = await sharp(turned).metadata();
-    parts.push({ input: turned, left: Math.round(boot.x - tm.width / 2), top: Math.round(boot.y - tm.height / 2) });
+  for (const entry of entries) {
+    if (entry.rot) throw new Error('a turned sprite: not expected in this package');
+    const file = `${pkg}site/stagehand/${entry.s}.png`;
+    const meta = await sharp(file).metadata();
+    let img = entry.far ? await darker(file) : await sharp(file).ensureAlpha().png().toBuffer();
+    if (entry.flip) img = await sharp(img).flop().png().toBuffer();
+    parts.push({ input: img, left: Math.round(entry.x - meta.width / 2), top: Math.round(entry.y - meta.height) });
   }
-  // Composite onto a margin-padded canvas (boots start off the plate), then cut the plate out.
-  const M = 200;
+  const M = 400;
   // (In two steps: sharp crops before it composites when both are asked of one pipeline.)
   const padded = await sharp({ create: { width: PLATE.w + 2 * M, height: PLATE.h + 2 * M, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } } })
     .composite(parts.map((p) => ({ ...p, left: p.left + M, top: p.top + M }))).png().toBuffer();
   const layer = await sharp(padded).extract({ left: M, top: M, width: PLATE.w, height: PLATE.h }).raw().toBuffer();
-  const [gx, gy] = walk.gap_mask_xy;
-  const mask = await sharp(`${pkg}site/stagehand/gap_mask.png`).greyscale().raw().toBuffer({ resolveWithObject: true });
+  const body = entries.some((entry) => entry.body);
+  const [gx, gy] = body ? walk.body_mask_xy : walk.gap_mask_xy;
+  const mask = await maskOf(body ? 'body_mask' : 'gap_mask');
   for (let y = 0; y < PLATE.h; y++) for (let x = 0; x < PLATE.w; x++) {
     const my = y - gy; const mx = x - gx;
     const m = my >= 0 && my < mask.info.height && mx >= 0 && mx < mask.info.width ? mask.data[my * mask.info.width + mx] / 255 : 0;
@@ -219,6 +221,24 @@ const packageBoots = async (track, index) => {
   }
   return layer;
 };
+/** In the page: put the stagehand on one frame of a track and hold the scene there. Returns the frame drawn. */
+const putAt = (page, dir, f) => page.evaluate(async ({ dir, f }) => {
+  const scene = window.__hj.scene; scene.work();
+  const w = scene.walks[0]; w.walkNow(dir);
+  // (Past its start by exactly f frames: w.last cleared, so the next frame adds no time, and the one after that is held off.)
+  w.state.ms = ((f + 0.5) * 1000) / w.tracks[dir].fps; w.last = 0;
+  await new Promise((resolve) => { const on = scene.player.onFrame; scene.player.onFrame = (now) => { w.last = 0; on(now); scene.player.onFrame = on; scene.hold(); resolve(); }; });
+  return w.drawn;
+}, { dir, f });
+/** In the page: the stagehand's canvas (RGBA), read through a copy so the canvas itself stays as it is. */
+const canvasOf = (page) => page.evaluate(() => {
+  const c = window.__hj.scene.walks[0].el;
+  const copy = document.createElement('canvas'); copy.width = c.width; copy.height = c.height;
+  const x = copy.getContext('2d', { willReadFrequently: true }); x.drawImage(c, 0, 0);
+  const d = x.getImageData(0, 0, c.width, c.height).data;
+  let bytes = ''; for (let i = 0; i < d.length; i += 32768) bytes += String.fromCharCode(...d.subarray(i, i + 32768));
+  return { w: c.width, h: c.height, data: btoa(bytes) };
+}).then(({ w, h, data }) => ({ w, h, data: Buffer.from(data, 'base64') }));
 /** Alpha-weighted centre of an RGBA layer, inside a rectangle. */
 const centroid = (data, width, [l, t, r, b]) => {
   let sx = 0; let sy = 0; let s = 0;
@@ -642,17 +662,17 @@ run.react = async () => {
   await save('react.json', report);
 };
 
-// The stagehand's boots.
+// The stagehand.
 //   1. The schedule, with the routine's own timing: the first walk 8 to 15 s after the scene starts working,
-//      rtl (137 frames at 30 fps), a wait of 10 to 15 s, ltr, then a wait of 40 to 70 s. Paused mid-walk the
+//      rtl (299 frames at 60 fps), a wait of 10 to 15 s, ltr, then a wait of 40 to 70 s. Paused mid-walk the
 //      frame holds and carries on from it; switching away and back starts again from the first wait; with
 //      reduced motion there is no walk.
 //   2. Timing: the track frame against the time since the walk began, every page frame.
-//   3. At 1:1: frames 10, 40, 70, 100, 130 of each walk, the walk's canvas read back against the same frame
+//   3. At 1:1: twelve frames of each walk, body and boots, the walk's canvas read back against the same frame
 //      put together from the package as theatre_preview.py does; and on screen at device scale 1 and 2.
-//   4. Never outside the gap: every frame of a whole rtl and ltr walk, every boot pixel of the canvas is where
-//      the gap mask is set; and on screen, the pixels the mask leaves out of the gap band (the ladder's feet,
-//      the pots, the cart) are the same during a walk as without it.
+//   4. Never outside the masks: all 598 frames, every pixel of the canvas is where that frame's mask is set (the
+//      body mask for a body frame, the gap mask for the boots); and on screen, over the whole plate, the pixels
+//      the masks leave out are the same during a walk as without it.
 run.walk = async () => {
   const walk = await walkOf();
   const routine = (await routineOf()).actors.stagehand;
@@ -701,7 +721,7 @@ run.walk = async () => {
     await page.getByRole('button', { name: 'Play animation' }).click();
     await page.waitForTimeout(300);
     const p2 = await page.evaluate(() => window.__hj.scene.walks[0].now);
-    report.pause = { atPause: p0, after1500msPaused: p1, after300msPlaying: p2, holds: p0.frame === p1.frame, carriesOn: p2.walking === 'rtl' && p2.frame > p1.frame && p2.frame - p1.frame <= 12 };
+    report.pause = { atPause: p0, after1500msPaused: p1, after300msPlaying: p2, holds: p0.frame === p1.frame, carriesOn: p2.walking === 'rtl' && p2.frame > p1.frame && p2.frame - p1.frame <= 30 };
     // Away and back.
     await page.locator('.hj-tab[data-scene="build"]').click();
     await arrived(page, 'build');
@@ -729,118 +749,171 @@ run.walk = async () => {
     await browser.close();
   }
   // 3 and 4.
-  const mask = await sharp(`${pkg}site/stagehand/gap_mask.png`).greyscale().raw().toBuffer({ resolveWithObject: true });
-  const [gx, gy] = walk.gap_mask_xy;
+  const [bx, by] = walk.body_mask_xy;
+  const [, gy] = walk.gap_mask_xy;
+  const bodyMask = await maskOf('body_mask');
+  const gapMask = await maskOf('gap_mask');
+  // Each mask on the walk's own canvas.
+  const onCanvas = { body: bodyMask.data, gap: Buffer.alloc(bodyMask.data.length) };
+  gapMask.data.copy(onCanvas.gap, (gy - by) * bodyMask.info.width);
   report.atOneToOne = {};
-  for (const dpr of [1, 2]) {
-    const { browser, page, errors: e } = await open(chromium, { viewport: { width: 1440, height: 900 }, deviceScaleFactor: dpr }, '?debug&reset&intro=off&seed=7&found=3');
+  {
+    const { browser, page, errors: e } = await open(chromium, { viewport: { width: 1440, height: 900 } }, '?debug&reset&intro=off&seed=7&found=3');
     errors.push(...e);
     await clean(page);
     await page.waitForTimeout(500);
-    const pics = []; const labels = [];
     for (const dir of ['rtl', 'ltr']) {
-      for (const f of [10, 40, 70, 100, 130]) {
-        // Into the walk at that frame (its clock restarted, so no time is added for the frames it was held), one
-        // page frame to draw it, then held.
-        const drawn = await page.evaluate(async ({ dir, f }) => {
-          const scene = window.__hj.scene; scene.work();
-          const w = scene.walks[0]; w.walkNow(dir); w.state.ms = (f * 1000) / 30 + 1; w.last = 0;
-          await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
-          scene.hold();
-          const c = w.el;
-          return { frame: w.drawn, w: c.width, h: c.height, data: dir && c.width ? [...c.getContext('2d').getImageData(0, 0, c.width, c.height).data] : [] };
-        }, { dir, f });
-        const theirs = await packageBoots(dir, drawn.frame);
-        // The page's canvas: 1672 × 83 at the gap's place, in plate px.
-        const mineC = centroid(Uint8Array.from(drawn.data), drawn.w, [0, 0, drawn.w, drawn.h]);
-        const band = Buffer.alloc(PLATE.w * mask.info.height * 4);
-        theirs.copy(band, 0, gy * PLATE.w * 4, (gy + mask.info.height) * PLATE.w * 4);
-        const theirsC = centroid(band, PLATE.w, [0, 0, PLATE.w, mask.info.height]);
+      for (const f of [4, 20, 36, 44, 60, 72, 73, 74, 75, 110, 150, 200, 215, 216, 217, 225, 240, 252, 262, 270, 290]) {
+        const frame = await putAt(page, dir, f);
+        const drawn = await canvasOf(page);
+        const whole = await packageMan(dir, f);
+        const theirs = Buffer.alloc(drawn.w * drawn.h * 4);
+        for (let y = 0; y < drawn.h; y++) whole.copy(theirs, y * drawn.w * 4, ((y + by) * PLATE.w + bx) * 4, ((y + by) * PLATE.w + bx + drawn.w) * 4);
+        const mineC = centroid(drawn.data, drawn.w, [0, 0, drawn.w, drawn.h]);
+        const theirsC = centroid(theirs, drawn.w, [0, 0, drawn.w, drawn.h]);
         let diff = 0; let n = 0;
-        for (let i = 0; i < band.length; i += 4) { if (!band[i + 3] && !drawn.data[i + 3]) continue; for (let c = 0; c < 4; c++) diff += Math.abs(band[i + c] - drawn.data[i + c]); n += 4; }
-        const key = `${dir} frame ${drawn.frame}`;
-        if (dpr === 1) {
-          report.atOneToOne[key] = { pageCentre: mineC && mineC.map(r1), packageCentre: theirsC && theirsC.map(r1), offPlatePx: mineC && theirsC ? [r1(mineC[0] - theirsC[0]), r1(mineC[1] - theirsC[1])] : null, meanDifferenceOverTheBoots: n ? r1(diff / n) : 0 };
-          report.atOneToOne[key].withinAPixel = report.atOneToOne[key].offPlatePx ? report.atOneToOne[key].offPlatePx.every((d) => Math.abs(d) <= 1) : mineC === theirsC;
-        }
-        // On screen, around the boots (or the gap's middle when none are in view), beside the package's picture.
-        const cx = mineC ? mineC[0] : 836;
-        const plateBox = await page.locator('.hj-plate[data-scene="set"]').boundingBox();
-        const u = plateBox.width / PLATE.w;
-        const x0 = Math.max(0, Math.min(PLATE.w - 260, Math.round(cx - 130)));
-        const clip = { x: plateBox.x + x0 * u, y: plateBox.y + (gy - 20) * u, width: 260 * u, height: 120 * u };
-        const screen = await sharp(await page.screenshot({ clip })).resize({ height: 240, kernel: 'nearest' }).png().toBuffer();
-        const pk = await sharp(await packageScene(3, [{ input: await sharp(theirs, { raw: { width: PLATE.w, height: PLATE.h, channels: 4 } }).png().toBuffer(), left: 0, top: 0 }])).extract({ left: x0, top: gy - 20, width: 260, height: 120 }).resize({ height: 240, kernel: 'nearest' }).png().toBuffer();
-        pics.push(screen, pk);
-        labels.push(`${key}: the page`, `${key}: the package`);
+        for (let i = 0; i < theirs.length; i += 4) { if (!theirs[i + 3] && !drawn.data[i + 3]) continue; for (let c = 0; c < 3; c++) diff += Math.abs(theirs[i + c] * theirs[i + 3] - drawn.data[i + c] * drawn.data[i + 3]) / 255; n += 3; }
+        const off = mineC && theirsC ? [r1(mineC[0] - theirsC[0]), r1(mineC[1] - theirsC[1])] : null;
+        report.atOneToOne[`${dir} frame ${f}`] = { drew: frame, what: walk[dir].frames[f].map((x) => x.s).join(' + '), pixels: mineC ? r1(mineC[2]) : 0, offPlatePx: off, meanDifference: n ? r1(diff / n) : 0, ok: frame === f && (off ? off.every((d) => Math.abs(d) <= 1) : !mineC && !theirsC) };
       }
     }
-    // Each frame a row: the page | the package. One picture per direction.
-    for (let i = 0; i < pics.length; i += 10) {
-      const rowsOf = [];
-      for (let j = i; j < i + 10; j += 2) {
-        const [a, b] = await Promise.all([sharp(pics[j]).metadata(), sharp(pics[j + 1]).metadata()]);
-        rowsOf.push(await sharp({ create: { width: a.width + b.width + 8, height: Math.max(a.height, b.height), channels: 3, background: '#d9d6cf' } }).composite([{ input: pics[j], left: 0, top: 0 }, { input: pics[j + 1], left: a.width + 8, top: 0 }]).png().toBuffer());
-      }
-      await column(`Device scale ${dpr}, ${i ? 'ltr' : 'rtl'}: each row the page | the package as theatre_preview.py draws it`, rowsOf, labels.filter((_, n) => n >= i && n < i + 10 && n % 2 === 0).map((l) => l.replace(': the page', '')), `${out}walk-boots-${i ? 'ltr' : 'rtl'}-x${dpr}.jpg`);
-    }
-    if (dpr === 1) {
-      // 4. Never outside the gap: every frame of a whole rtl and ltr walk.
-      const inside = await page.evaluate(async () => {
-        const scene = window.__hj.scene; scene.work();
-        const w = scene.walks[0];
-        const m = w.mask.getContext('2d').getImageData(0, 0, w.mask.width, w.mask.height).data;
-        const out = { frames: 0, bootPixels: 0, outsideTheMask: 0, worstOutside: 0 };
-        for (const dir of ['rtl', 'ltr']) {
-          w.walkNow(dir);
-          await new Promise((resolve) => {
-            const tick = () => {
-              const now = w.now;
-              if (now.walking !== dir) { resolve(); return; }
-              const d = w.el.getContext('2d').getImageData(0, 0, w.el.width, w.el.height).data;
-              out.frames++;
-              for (let i = 3; i < d.length; i += 4) if (d[i]) { out.bootPixels++; if (m[i] === 0) { out.outsideTheMask++; out.worstOutside = Math.max(out.worstOutside, d[i]); } }
-              requestAnimationFrame(tick);
-            };
-            requestAnimationFrame(tick);
-          });
+    // 4. Never outside the masks: every frame of both walks, drawn in turn.
+    const inside = { frames: 0, bodyFrames: 0, pixels: 0, outsideTheMask: 0, worstOutside: 0, leftFromAnEarlierFrame: 0 };
+    for (const dir of ['rtl', 'ltr']) {
+      const counts = await page.evaluate(async ({ dir, gap, body }) => {
+        const bytes = (b) => Uint8Array.from(atob(b), (c) => c.charCodeAt(0));
+        const M = { gap: bytes(gap), body: bytes(body) };
+        const w = window.__hj.scene.walks[0]; const t = w.tracks[dir]; const c = w.el;
+        const copy = document.createElement('canvas'); copy.width = c.width; copy.height = c.height;
+        const x = copy.getContext('2d', { willReadFrequently: true });
+        const out = { frames: 0, bodyFrames: 0, pixels: 0, outsideTheMask: 0, worstOutside: 0, leftFromAnEarlierFrame: 0 };
+        for (let i = 0; i < t.frames.length; i++) {
+          w.draw(t, i);
+          x.globalCompositeOperation = 'copy'; x.drawImage(c, 0, 0);
+          const d = x.getImageData(0, 0, c.width, c.height).data;
+          const isBody = t.frames[i].some((e) => e.body); const m = isBody ? M.body : M.gap;
+          const box = w.marked ?? { x: 0, y: 0, w: 0, h: 0 };
+          out.frames++; if (isBody) out.bodyFrames++;
+          for (let p = 0; p < m.length; p++) { const a = d[p * 4 + 3]; if (!a) continue; out.pixels++; if (!m[p]) { out.outsideTheMask++; out.worstOutside = Math.max(out.worstOutside, a); } const px = p % c.width; const py = (p - px) / c.width; if (px < box.x || px >= box.x + box.w || py < box.y || py >= box.y + box.h) out.leftFromAnEarlierFrame++; }
         }
+        w.clear();
         return out;
-      });
-      // And the page's mask against the package's.
-      const pageMask = await page.evaluate(() => { const w = window.__hj.scene.walks[0]; const d = w.mask.getContext('2d').getImageData(0, 0, w.mask.width, w.mask.height).data; const a = []; for (let i = 3; i < d.length; i += 4) a.push(d[i]); return a; });
-      let maskDiff = 0; for (let i = 0; i < pageMask.length; i++) maskDiff = Math.max(maskDiff, Math.abs(pageMask[i] - mask.data[i]));
-      // On screen: the band's pixels the mask leaves out, during the walk's frames, against no walk.
-      const plateBox = await page.locator('.hj-plate[data-scene="set"]').boundingBox();
-      const u = plateBox.width / PLATE.w;
-      const clip = { x: plateBox.x, y: plateBox.y + gy * u, width: plateBox.width, height: mask.info.height * u };
-      const shotAt = async (dir, f) => { await page.evaluate(async ({ dir, f }) => { const scene = window.__hj.scene; scene.work(); const w = scene.walks[0]; if (dir) { w.walkNow(dir); w.state.ms = (f * 1000) / 30 + 1; w.last = 0; } else { w.sleep(); w.wake(); } await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))); scene.hold(); }, { dir, f }); return sharp(await page.screenshot({ clip })).removeAlpha().raw().toBuffer({ resolveWithObject: true }); };
-      const none = await shotAt(null, 0);
-      const W = none.info.width; const H = none.info.height;
-      let checked = 0; let changed = 0; let worst = 0;
-      for (const dir of ['rtl', 'ltr']) for (const f of [20, 45, 60, 75, 90, 110]) {
-        const s = await shotAt(dir, f);
-        for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
-          // The mask under this screen pixel, a plate pixel around: left out everywhere there.
-          const mx = Math.floor(x / u); const my = Math.floor(y / u);
-          let anyIn = false;
-          for (let dy = -1; dy <= 1 && !anyIn; dy++) for (let dx = -1; dx <= 1 && !anyIn; dx++) { const yy = my + dy; const xx = mx + dx; if (yy >= 0 && yy < mask.info.height && xx >= 0 && xx < mask.info.width && mask.data[yy * mask.info.width + xx] > 0) anyIn = true; }
-          if (anyIn) continue;
-          const i = (y * W + x) * 3; checked++;
-          const d = Math.max(Math.abs(s.data[i] - none.data[i]), Math.abs(s.data[i + 1] - none.data[i + 1]), Math.abs(s.data[i + 2] - none.data[i + 2]));
-          if (d > 0) { changed++; worst = Math.max(worst, d); }
-        }
-      }
-      // (On screen the walk's canvas is scaled from plate px to the screen's, so a boot pixel at the mask's very
-      // edge can tint its neighbour by a level or two: anything over 4 levels would be the boots showing.)
-      report.neverOutsideTheGap = { canvas: inside, pageMaskAgainstThePackagesLargestDifference: maskDiff, onScreen: { screenPixelsCheckedWhereTheMaskIsNotSet: checked, changedDuringAWalk: changed, largestChange: worst }, ok: inside.outsideTheMask === 0 && worst <= 4 && maskDiff <= 1 };
-      say('never outside the gap', report.neverOutsideTheGap);
+      }, { dir, gap: onCanvas.gap.toString('base64'), body: onCanvas.body.toString('base64') });
+      for (const k of Object.keys(inside)) inside[k] = k === 'worstOutside' ? Math.max(inside[k], counts[k]) : inside[k] + counts[k];
     }
+    // On screen, over the whole plate: what both masks leave out, during the walk's frames, against no walk.
+    const plateBox = await page.locator('.hj-plate[data-scene="set"]').boundingBox();
+    const u = plateBox.width / PLATE.w;
+    // (The room alone changes nothing else: Rachel and the lamp are put on one still each time.)
+    const shotAt = async (dir, f) => {
+      if (dir) await putAt(page, dir, f);
+      await page.evaluate((off) => { const scene = window.__hj.scene; if (off) { scene.hold(); scene.walks[0].clear(); } for (const cast of scene.casts) cast.character.show({ rachel: 'R_A1', lamp: 'L_00' }[cast.character.el.dataset.actor]); }, !dir);
+      await page.waitForTimeout(120);
+      return sharp(await page.screenshot({ clip: plateBox })).removeAlpha().raw().toBuffer({ resolveWithObject: true });
+    };
+    const none = await shotAt(null, 0);
+    const W = none.info.width; const H = none.info.height;
+    const open2 = new Uint8Array(W * H);
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      const mx = Math.floor(x / u) - bx; const my = Math.floor(y / u) - by;
+      for (let dy = -2; dy <= 2 && !open2[y * W + x]; dy++) for (let dx = -2; dx <= 2; dx++) { const yy = my + dy; const xx = mx + dx; if (yy >= 0 && yy < bodyMask.info.height && xx >= 0 && xx < bodyMask.info.width && (bodyMask.data[yy * bodyMask.info.width + xx] || onCanvas.gap[yy * bodyMask.info.width + xx])) { open2[y * W + x] = 1; break; } }
+    }
+    let checked = 0; let changed = 0; let worst = 0;
+    for (const dir of ['rtl', 'ltr']) for (const f of [30, 45, 60, 72, 74, 100, 150, 200, 225, 255, 265, 280]) {
+      const s = await shotAt(dir, f);
+      for (let i = 0; i < W * H; i++) { if (open2[i]) continue; checked++; const d = Math.max(...[0, 1, 2].map((c) => Math.abs(s.data[i * 3 + c] - none.data[i * 3 + c]))); if (d) { changed++; worst = Math.max(worst, d); } }
+    }
+    report.neverOutsideTheMasks = { canvas: inside, onScreen: { screenPixelsChecked: checked, changedDuringAWalk: changed, largestChange: worst }, ok: inside.outsideTheMask === 0 && inside.leftFromAnEarlierFrame === 0 && worst <= 4 };
+    say('never outside the masks', report.neverOutsideTheMasks);
     await browser.close();
   }
-  say('at 1:1', Object.fromEntries(Object.entries(report.atOneToOne).map(([k, v]) => [k, `${JSON.stringify(v.offPlatePx)} px, ${v.meanDifferenceOverTheBoots} mean`])));
+  say('at 1:1', Object.fromEntries(Object.entries(report.atOneToOne).map(([k, v]) => [k, `${v.ok ? 'ok' : 'NOT OK'} ${JSON.stringify(v.offPlatePx)} px, ${v.meanDifference} mean`])));
   report.errors = errors;
   await save('walk.json', report);
+};
+
+// The stagehand frame by frame at 1:1 (device scale 1, the plate 1672 px wide on the screen), the page over the
+// package's own preview: theatre-preview.mp4 is 30 fps and its walks start at 3 s and 18.983 s, so its picture
+// n/30 s in shows track frame floor((n/30 − start) × 60); the page is put on that very frame. Its edge is the
+// site's own; the preview's Rachel and lamp are on their own timelines. And every one of the 60 fps frames
+// around the hand-over from body to boots, the page over the package drawn as the preview draws it.
+run.strips = async () => {
+  const { execFileSync } = await import('node:child_process');
+  const walk = await walkOf();
+  const dir = `${out}strips-take/`;
+  await rm(dir, { recursive: true, force: true }); await mkdir(dir, { recursive: true });
+  // (The plate at exactly 1672 css px: a window wide and tall enough, and the plate's own width set.)
+  const { browser, page, errors } = await open(chromium, { viewport: { width: 1800, height: 1100 } }, '?debug&reset&intro=off&seed=7');
+  await clean(page);
+  await page.evaluate(() => { document.querySelectorAll('.hj-mushrooms').forEach((el) => { el.style.visibility = 'hidden'; }); });
+  await page.waitForTimeout(600);
+  const at = await page.locator('.hj-plate[data-scene="set"]').boundingBox();
+  const u = at.width / PLATE.w;
+  const shot = async (track, f, [l, t, r, b]) => {
+    await putAt(page, track, f);
+    const clip = { x: at.x + l * u, y: at.y + t * u, width: (r - l) * u, height: (b - t) * u };
+    return sharp(await page.screenshot({ clip })).resize({ width: r - l, height: b - t, fit: 'fill' }).png().toBuffer();
+  };
+  const starts = { rtl: 3000, ltr: 3000 + (walk.rtl.frames.length * 1000) / walk.rtl.fps + 11000 };
+  const previewAt = async (track, f, [l, t, r, b]) => {
+    // The preview's picture that shows this track frame: n as the preview counts them.
+    let n = Math.floor((starts[track] + (f * 1000) / 60) / (1000 / 30)) - 2;
+    while (Math.floor((((n * 1000) / 30 - starts[track]) / 1000) * 60) < f) n++;
+    const shows = Math.floor((((n * 1000) / 30 - starts[track]) / 1000) * 60);
+    const file = `${dir}${track}-${f}.png`;
+    execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', `${pkg}theatre-preview.mp4`, '-vf', `select=eq(n\\,${n})`, '-frames:v', '1', file]);
+    return { shows, picture: await sharp(await sharp(file).resize(PLATE.w, PLATE.h, { fit: 'fill' }).png().toBuffer()).extract({ left: l, top: t, width: r - l, height: b - t }).png().toBuffer() };
+  };
+  const pack = async (track, f, [l, t, r, b]) => sharp(await packageScene(0, [{ input: await sharp(await packageMan(track, f), { raw: { width: PLATE.w, height: PLATE.h, channels: 4 } }).png().toBuffer(), left: 0, top: 0 }])).extract({ left: l, top: t, width: r - l, height: b - t }).png().toBuffer();
+  /** Pairs (top: the page, bottom: theirs) in a row, each with its frame number; several rows to a picture. */
+  const sheet = async (title, pairs, perRow, file) => {
+    const { width, height } = await sharp(pairs[0].mine).metadata();
+    const g = 6; const rowH = 2 * height + 30 + g;
+    const rows = Math.ceil(pairs.length / perRow);
+    const W = Math.max(700, perRow * (width + g) + g);
+    const parts = [{ input: text(title, W, 15), left: 0, top: 2 }];
+    pairs.forEach((p, i) => {
+      const x = g + (i % perRow) * (width + g); const y = 34 + Math.floor(i / perRow) * rowH;
+      parts.push({ input: text(p.label, Math.max(width, 30), 13), left: x, top: y }, { input: p.mine, left: x, top: y + 24 }, { input: p.theirs, left: x, top: y + 26 + height });
+    });
+    await sharp({ create: { width: W, height: 34 + rows * rowH + g, channels: 3, background: '#d9d6cf' } }).composite(parts).jpeg({ quality: 88 }).toFile(file);
+  };
+  const SLOT = [1430, 95, 1640, 645];
+  const strip = async (track, frames, area, title, perRow, file) => {
+    const pairs = [];
+    for (const f of frames) { const theirs = await previewAt(track, f, area); pairs.push({ mine: await shot(track, theirs.shows, area), theirs: theirs.picture, label: `${track} ${theirs.shows}` }); }
+    await sheet(title, pairs, perRow, file);
+  };
+  // He is in the slot about rtl 10 to 62 and ltr 245 to 298.
+  await strip('rtl', [10, 14, 18, 22, 26, 30, 34, 38, 42, 46, 50, 54, 58, 62, 66, 70], SLOT, 'Walking out (rtl): from behind the curtain, across the slot, behind the backdrop. Top: the page. Bottom: theatre-preview.mp4.', 8, `${out}strip-slot-rtl.jpg`);
+  await strip('ltr', [226, 230, 234, 238, 242, 246, 250, 254, 258, 262, 266, 270, 274, 278, 284, 290], SLOT, 'Walking back (ltr): from behind the backdrop, across the slot, behind the curtain. Top: the page. Bottom: theatre-preview.mp4.', 8, `${out}strip-slot-ltr.jpg`);
+  // The hand-over: every 60 fps frame around it, over the package as the preview draws it.
+  const HAND = [1190, 520, 1570, 645];
+  for (const [track, frames] of [['rtl', [68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79]], ['ltr', [210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221]]]) {
+    const pairs = [];
+    for (const f of frames) pairs.push({ mine: await shot(track, f, HAND), theirs: await pack(track, f, HAND), label: `${track} ${f}: ${walk[track].frames[f].map((e) => e.s).join(' + ')}` });
+    await sheet(`The hand-over (${track}), every 60 fps frame. Top: the page. Bottom: the package, drawn as theatre_preview.py does.`, pairs, 4, `${out}strip-handover-${track}.jpg`);
+  }
+  // The left end: his boots go out of sight at the leaning flat.
+  const LEFT = [150, 540, 560, 645];
+  await strip('rtl', [214, 222, 230, 238, 246, 254, 262, 270, 278, 286, 294, 298], LEFT, 'The left end (rtl): out of sight at the leaning flat. Top: the page. Bottom: theatre-preview.mp4.', 4, `${out}strip-left-rtl.jpg`);
+  await strip('ltr', [0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88], LEFT, 'The left end (ltr): into sight from the leaning flat. Top: the page. Bottom: theatre-preview.mp4.', 4, `${out}strip-left-ltr.jpg`);
+  // How much shows, frame by frame, and where: nothing left of the gap's own left end.
+  const shows = {};
+  for (const track of ['rtl', 'ltr']) {
+    shows[track] = [];
+    for (let f = 0; f < walk[track].frames.length; f++) {
+      await page.evaluate(({ track, f }) => { const w = window.__hj.scene.walks[0]; w.draw(w.tracks[track], f); }, { track, f });
+      shows[track].push(await page.evaluate(() => { const c = window.__hj.scene.walks[0].el; const copy = (window.__copy ??= Object.assign(document.createElement('canvas'), { width: c.width, height: c.height })); const x = copy.getContext('2d', { willReadFrequently: true }); x.globalCompositeOperation = 'copy'; x.drawImage(c, 0, 0); const d = x.getImageData(0, 0, c.width, c.height).data; let n = 0; let lo = 1e9; let hi = -1; for (let i = 3; i < d.length; i += 4) if (d[i] > 8) { n++; const px = ((i - 3) / 4) % c.width; if (px < lo) lo = px; if (px > hi) hi = px; } return n ? [n, lo, hi] : [0, null, null]; }));
+    }
+  }
+  const all = (t) => shows[t].map(([n, lo, hi], f) => ({ f, n, lo, hi }));
+  const report = Object.fromEntries(['rtl', 'ltr'].map((t) => { const seen = all(t).filter((x) => x.n); return [t, { firstFrameWithAnythingShowing: seen[0].f, lastFrameWithAnythingShowing: seen.at(-1).f, leftmostPixel: Math.min(...seen.map((x) => x.lo)), rightmostPixel: Math.max(...seen.map((x) => x.hi)), framesShowingNothing: all(t).filter((x) => !x.n).map((x) => x.f) }]; }));
+  const errorsSeen = errors;
+  await browser.close();
+  await rm(dir, { recursive: true, force: true });
+  say('what shows', report);
+  await save('strips.json', { scale: u, starts, ...report, errors: errorsSeen });
 };
 
 // Recordings for the review, desktop Chrome (1280 × 800) and the iPhone profile in WebKit. Needs ffmpeg.
@@ -915,7 +988,7 @@ run.film = async () => {
         const track = await walkOf();
         const gap = await sharp(`${pkg}site/stagehand/gap_mask.png`).greyscale().raw().toBuffer({ resolveWithObject: true });
         const open = (x) => { let n = 0; for (let y = 0; y < gap.info.height; y++) for (let xx = Math.max(0, x - 50); xx < Math.min(gap.info.width, x + 50); xx++) if (gap.data[y * gap.info.width + xx] > 128) n++; return n; };
-        const nearest = (dir, x) => track[dir].frames.reduce((best, f, i) => { const d = Math.abs((f[0].x + f[1].x) / 2 - x); return d < best[1] ? [i, d] : best; }, [0, Infinity])[0] / track[dir].fps;
+        const nearest = (dir, x) => track[dir].frames.reduce((best, f, i) => { const d = Math.abs(f.reduce((sum, e) => sum + e.x, 0) / f.length - x); return d < best[1] ? [i, d] : best; }, [0, Infinity])[0] / track[dir].fps;
         const best = (at) => { const r = walks.find((x) => x[0] >= at); const a = Math.max(60, r[3] + 60); const b = Math.min(1612, r[4] - 60); let x = a; for (let c = a; c <= b; c += 10) if (open(c) > open(x)) x = c; return [x, x + 120 <= b ? x + 120 : x - 120]; };
         const [r1x, r2x] = best(rtl); const [l1x, l2x] = best(ltr);
         const walkAt = [sec(rtl) + nearest('rtl', Math.max(r1x, r2x)), sec(rtl) + nearest('rtl', Math.min(r1x, r2x)), sec(ltr) + nearest('ltr', Math.min(l1x, l2x)), sec(ltr) + nearest('ltr', Math.max(l1x, l2x))];
@@ -1028,8 +1101,8 @@ run.preview = async () => {
     'at rest': { rachel: 'R_A1', lamp: 'L_00' },
     'a stroke, the lamp swung': { rachel: 'R_A3_stroke_out', lamp: 'L_27' },
     'her salute': { rachel: 'R_K1_salute', lamp: 'L_09' },
-    // The preview's first walk starts at 3.0 s; its frame 70 is at about 5.33 s.
-    'a boot frame (rtl 70), as in the preview at 5.33 s': { rachel: null, lamp: null, walk: ['rtl', 70] },
+    // The preview's first walk starts at 3.0 s; its frame 45 is at 3.75 s.
+    'in the slot (rtl 45), as in the preview at 3.75 s': { rachel: null, lamp: null, walk: ['rtl', 45] },
   };
   const browser = await launch(chromium);
   const page = await (await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1.6 })).newPage();
@@ -1041,18 +1114,13 @@ run.preview = async () => {
   const report = {};
   let pair = null;
   for (const [label, poses] of Object.entries(SETS)) {
-    // The preview at 5.33 s: what its seeded timelines show then.
-    const want = poses.walk ? await (async () => { const p = `${out}preview-frame.png`; execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-ss', '5.333', '-i', `${pkg}theatre-preview.mp4`, '-frames:v', '1', p]); return p; })() : null;
+    // The preview at 3.75 s: what its seeded timelines show then.
+    const want = poses.walk ? await (async () => { const p = `${out}preview-frame.png`; execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-ss', '3.75', '-i', `${pkg}theatre-preview.mp4`, '-frames:v', '1', p]); return p; })() : null;
     const used = { rachel: poses.rachel ?? 'R_A1', lamp: poses.lamp ?? 'L_00' };
-    const drawn = await page.evaluate(async ({ used, walk }) => {
-      const scene = window.__hj.scene;
-      for (const cast of scene.casts) cast.character.show(used[cast.character.el.dataset.actor]);
-      const w = scene.walks[0];
-      if (walk) { scene.work(); w.walkNow(walk[0]); w.state.ms = (walk[1] * 1000) / 30 + 1; w.last = 0; await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))); scene.hold(); for (const cast of scene.casts) cast.character.show(used[cast.character.el.dataset.actor]); }
-      else { w.sleep(); w.wake(); }
-      const c = w.el;
-      return { frame: w.drawn, data: walk && c.width ? [...c.getContext('2d').getImageData(0, 0, c.width, c.height).data] : [], w: c.width, h: c.height };
-    }, { used, walk: poses.walk ?? null });
+    let drawn = null;
+    if (poses.walk) { const frame = await putAt(page, ...poses.walk); drawn = { frame, ...(await canvasOf(page)) }; }
+    else await page.evaluate(() => window.__hj.scene.walks[0].clear());
+    await page.evaluate((used) => { for (const cast of window.__hj.scene.casts) cast.character.show(used[cast.character.el.dataset.actor]); }, used);
     await page.waitForTimeout(150);
     const box = await page.locator('.hj-plate[data-scene="set"]').boundingBox();
     const shot = sharp(await page.screenshot({ clip: box }));
@@ -1061,7 +1129,7 @@ run.preview = async () => {
     const layer = (actor) => frames.layers.find((l) => l.actor === actor);
     const extra = [];
     let bootsLayer = null;
-    if (poses.walk) { bootsLayer = await packageBoots(poses.walk[0], drawn.frame); extra.push({ input: await sharp(bootsLayer, { raw: { width: PLATE.w, height: PLATE.h, channels: 4 } }).png().toBuffer(), left: 0, top: 0 }); }
+    if (poses.walk) { bootsLayer = await packageMan(poses.walk[0], drawn.frame); extra.push({ input: await sharp(bootsLayer, { raw: { width: PLATE.w, height: PLATE.h, channels: 4 } }).png().toBuffer(), left: 0, top: 0 }); }
     for (const actor of ['lamp', 'rachel']) extra.push({ input: `${pkg}site/${frames.stills[used[actor]]}`, left: layer(actor).x, top: layer(actor).y });
     const whole = await packageScene(0, extra);
     const theirs = await sharp(whole).resize(width, height, { fit: 'fill', kernel: 'lanczos3' }).removeAlpha().raw().toBuffer();
@@ -1105,13 +1173,13 @@ run.preview = async () => {
       actors[actor] = { pose: used[actor], screenPxFromWhereThePackagePutsIt: off, meanDifferenceOutOf255: at.mean, inPlace: Math.abs(off[0]) < 1.5 && Math.abs(off[1]) < 1.5 };
     }
     if (poses.walk) {
-      const [, gy] = (await walkOf()).gap_mask_xy;
+      const [, by] = (await walkOf()).body_mask_xy;
       const band = Buffer.alloc(PLATE.w * drawn.h * 4);
-      bootsLayer.copy(band, 0, gy * PLATE.w * 4, (gy + drawn.h) * PLATE.w * 4);
-      const a = centroid(Uint8Array.from(drawn.data), drawn.w, [0, 0, drawn.w, drawn.h]);
+      bootsLayer.copy(band, 0, by * PLATE.w * 4, (by + drawn.h) * PLATE.w * 4);
+      const a = centroid(drawn.data, drawn.w, [0, 0, drawn.w, drawn.h]);
       const b = centroid(band, PLATE.w, [0, 0, PLATE.w, drawn.h]);
       const off = a && b ? [r1((a[0] - b[0]) * k), r1((a[1] - b[1]) * k)] : null;
-      actors.boots = { frame: drawn.frame, screenPxFromWhereThePackagePutsThem: off, inPlace: off ? off.every((d) => Math.abs(d) < 1.5) : false };
+      actors.stagehand = { frame: drawn.frame, screenPxFromWhereThePackagePutsThem: off, inPlace: off ? off.every((d) => Math.abs(d) < 1.5) : false };
     }
     report[label] = { platePxOnTheScreen: [width, height], theRoom: { screenshotOffsetPx: room.shift, meanDifferenceOutOf255: room.mean }, actors, everyActorIsInPlace: Object.values(actors).every((a) => a.inPlace) };
     say(label, report[label]);
@@ -1121,7 +1189,7 @@ run.preview = async () => {
     }
   }
   await browser.close();
-  if (pair) await row("theatre-preview.mp4 at 5.33 s (the first walk, frame 70)  |  the package drawn as the preview draws it  |  the page on the same frame (its edge is the site's own; the preview's Rachel and lamp are on their own seeded timelines)", pair, `${out}preview-compare.jpg`);
+  if (pair) await row("theatre-preview.mp4 at 3.75 s (the first walk, frame 45)  |  the package drawn as the preview draws it  |  the page on the same frame (its edge is the site's own; the preview's Rachel and lamp are on their own seeded timelines)", pair, `${out}preview-compare.jpg`);
   report.errors = errors;
   await save('preview.json', report);
 };
@@ -1212,7 +1280,7 @@ run.memory = async () => {
 // visitor opens Set Design (its painting), watches it work, finds a mushroom (its swath fades in), sees a
 // walk, then goes Build → Grow → Design → Film → Set Design → Build and round once more. Production builds
 // have no ?debug, so the walk is the one the routine starts (the first comes 8 to 15 s after the scene starts
-// working: the tool waits for the canvas to show boots) and the find is a tap on the spot.
+// working: the tool waits for the canvas to show him) and the find is a tap on the spot.
 run.frames = async () => {
   const prod = process.env.HJ_PROD ?? 'http://localhost:4173/';
   const { execSync } = await import('node:child_process');
@@ -1248,8 +1316,10 @@ run.frames = async () => {
       await page.waitForTimeout(1200);
       rows.push(await stretch('a find, its swath fading in (1.2 s)', from, await now()));
       // A walk: wait for the boots to show, then the next 4.6 s.
-      const walkAt = await page.waitForFunction(() => { const c = document.querySelector('.hj-walk'); if (!c?.width) return false; const d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data; for (let i = 3; i < d.length; i += 64) if (d[i]) return performance.now(); return false; }, null, { timeout: 30000, polling: 100 }).then((h) => h.jsonValue()).catch(() => null);
-      if (walkAt) { await page.waitForTimeout(4600); rows.push(await stretch('a walk (4.6 s from the boots first showing)', walkAt - 100, await now())); }
+      // (A walk starts with the whole man in the slot: the slot's part of his canvas, shrunk onto a small copy, so
+      // that his own canvas is never read back.)
+      const walkAt = await page.waitForFunction(() => { const c = document.querySelector('.hj-walk'); if (!c?.width) return false; const s = (window.__small ??= Object.assign(document.createElement('canvas'), { width: 12, height: 40 }).getContext('2d', { willReadFrequently: true })); s.globalCompositeOperation = 'copy'; s.drawImage(c, 1500, 0, 110, 440, 0, 0, 12, 40); const d = s.getImageData(0, 0, 12, 40).data; for (let i = 3; i < d.length; i += 4) if (d[i]) return performance.now(); return false; }, null, { timeout: 30000, polling: 100 }).then((h) => h.jsonValue()).catch(() => null);
+      if (walkAt) { await page.waitForTimeout(4900); rows.push(await stretch('a walk (4.9 s from his first showing: the body in the slot, then the boots)', walkAt - 100, await now())); }
       else rows.push({ stretch: 'a walk', note: 'no walk within 30 s' });
       const seen = new Set([ID]);
       for (const id of ['build', 'grow', 'design', 'film', 'set', 'build', 'grow', 'design', 'film', 'set', 'build']) {

@@ -260,7 +260,7 @@
 }
 
 /* The hunt's progress in the picture (the theatre's backdrop), a piece fading in over it, and a walker's
-   canvas (the stagehand's boots): placed by progress.ts and walk.ts, painted with the room. */
+   canvas (the stagehand): placed by progress.ts and walk.ts, painted with the room. */
 .hj-progress,
 .hj-walk {
   position: absolute;

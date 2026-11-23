@@ -1,8 +1,9 @@
 // Scene 5, "Set Design": a theatre stage, lit warm from the floodlight on the left. Rachel, on a wooden
 // A-frame ladder, paints a huge backdrop; its right part is still bare canvas with pencil lines, and each
-// mushroom found here paints one more swath of it. A stagehand crosses behind it now and then (only his boots
-// show, in the gap under its hem), and a caged work lamp swings on its rope. Everything here is data for the
-// engine in src/engine/; nothing in this file draws or moves anything.
+// mushroom found here paints one more swath of it. A stagehand crosses behind it now and then (seen whole in the
+// dark slot by the curtain, and from there on only his boots, in the gap under its hem), and a caged work lamp
+// swings on its rope. Everything here is data for the engine in src/engine/; nothing in this file draws or
+// moves anything.
 import type { KeepBox } from '../engine/edge';
 import type { SceneConfig, Spot, StrokePlan } from '../engine/types';
 // Where each actor is on the plate, worked out from the package by npm run assets.
@@ -29,8 +30,8 @@ const DIM = 'brightness(0.82) saturate(0.85) sepia(0.12)';
 //           on the pale cloth beside the paint pail.
 //
 // None is on, behind or inside Rachel's layer, the backdrop's swaths (they would paint over it), the lamp's
-// swing or the dark gap under the backdrop's hem where the stagehand's boots walk (the test holds them to
-// it). Every one is at least 19 px tall and in full view.
+// swing, the dark gap under the backdrop's hem where the stagehand's boots walk, or the slot by the curtain
+// where he is seen whole (the test holds them to it). Every one is at least 19 px tall and in full view.
 const SPOTS: Spot[] = [
   // Hard. Yellow, inside the coiled cable at the floodlight's foot, beside the yellow tripod.
   { id: 'coil', art: 7, x: 240, y: 748, h: 22, tint: GLOW, grounded: true },
@@ -91,7 +92,7 @@ export const set: SceneConfig = {
   assets: 'scene5/',
   plate: 'room.webp',
   // The whole cast as delivered by task 022 (frames/022-theatre-scene/site/): frames.json has the backdrop's
-  // ten swaths (shown as the hunt goes on), the stagehand's boots (a track, two sprites and the gap they show
+  // ten swaths (shown as the hunt goes on), the stagehand (a track, his drawings and the two masks he shows
   // in), the lamp and Rachel; routine.json has the lamp's swing, her routine, blink and reaction, and when the
   // stagehand walks.
   character: { kind: 'cast', dir: 'cast/', frames: 'frames.json', routine: 'routine.json' },

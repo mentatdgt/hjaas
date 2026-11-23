@@ -20,9 +20,10 @@
 //   "hunt_progress": k   a still shown once k mushrooms of the scene are found (the backdrop, painted swath
 //                        by swath as the visitor hunts). The fade's length is the routine entry `backdrop`'s
 //                        `fade_ms`, if the package has one.
-//   "sprite_track"       no stills: a track of frames (two sprites each, placed and turned), the sprites, and
-//                        a mask the drawing is kept inside (the stagehand's boots, in the gap under the
-//                        backdrop's hem). Its routine entry says when it walks (walker.ts).
+//   "sprite_track"       no stills: a track of frames (a list of sprites each, placed and turned), the sprites,
+//                        and the masks the drawing is kept inside: `mask` (the stagehand's boots, in the gap
+//                        under the backdrop's hem) and `body_mask` (the whole man, in the slot beside it). Its
+//                        routine entry says when it walks (walk.ts).
 //
 // Nothing here knows who the actors are. This file only takes the package apart: each actor becomes a pair
 // of manifests in the form clips.ts already plays, as if it were alone on the plate. So a new delivery in
@@ -46,6 +47,7 @@ export interface CastFrames {
     sprite_track?: string;
     sprites?: Readonly<Record<string, string>>;
     mask?: string;
+    body_mask?: string;
   }>;
   /** Still name -> file. */
   stills: Readonly<Record<string, string>>;
@@ -95,6 +97,7 @@ export interface Walker {
   track: string;
   sprites: Readonly<Record<string, string>>;
   mask?: string;
+  bodyMask?: string;
   routine: WalkRoutine;
   /** Plate px per canvas px. */
   scale: number;
@@ -165,7 +168,7 @@ export function splitCast(frames: CastFrames, routines: CastRoutines, plateWidth
       } else if (!layer.sprites || Object.keys(layer.sprites).length === 0) {
         problems.push(`The layer "${layer.actor}" needs its "sprites".`);
       } else {
-        walkers.push({ name: layer.actor, track: layer.sprite_track, sprites: layer.sprites, mask: layer.mask, routine, scale: k });
+        walkers.push({ name: layer.actor, track: layer.sprite_track, sprites: layer.sprites, mask: layer.mask, bodyMask: layer.body_mask, routine, scale: k });
       }
       continue;
     }

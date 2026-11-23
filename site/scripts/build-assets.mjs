@@ -127,8 +127,9 @@ for (const [name, clip] of Object.entries(labFrames.clips)) {
 // Two kinds of layer are not actors (cast.ts):
 // - `"hunt_progress": k` (the theatre's backdrop patches, shown as the hunt goes on). Their stills are kept
 //   lossless: they are drawn over one another and over the plate, and must meet them with no seam.
-// - `"sprite_track"` (the stagehand's boots): no stills, but a track (copied as delivered), sprites (WebP as
-//   usual) and a mask, kept lossless: a lossy mask would let the boots bleed onto the stage floor.
+// - `"sprite_track"` (the stagehand): no stills, but a track (copied as delivered), sprites (WebP as usual) and
+//   masks, kept lossless: a lossy mask would let the boots bleed onto the stage floor. The masks arrive as
+//   grey (255 shows) and are shipped as alpha, so the page has nothing to work out when it decodes them.
 const PACKAGES = [
   { dir: 'frames/018-cafe-scene/site', to: 'scene3', json: 'design-cast.json', lines: 'design-lines.png' },
   { dir: 'frames/020-film-scene/site', to: 'scene4', json: 'film-cast.json', lines: 'film-lines.png' },
@@ -137,6 +138,13 @@ const PACKAGES = [
 const exact = { lossless: true, effort: 6 };
 /** Every string in a routine (its stills, blink stills and the rest): what a layer's own list may have left out. */
 const namesIn = (value) => (typeof value === 'string' ? [value] : Array.isArray(value) ? value.flatMap(namesIn) : value && typeof value === 'object' ? Object.values(value).flatMap(namesIn) : []);
+/** A grey mask as black with that alpha. */
+const alphaMask = async (file) => {
+  const { data, info } = await sharp(file).greyscale().raw().toBuffer({ resolveWithObject: true });
+  const rgba = Buffer.alloc(info.width * info.height * 4);
+  for (let i = 0; i < info.width * info.height; i++) rgba[i * 4 + 3] = data[i * info.channels];
+  return sharp(rgba, { raw: { width: info.width, height: info.height, channels: 4 } });
+};
 const castFrame = { quality: 93, alphaQuality: 100, smartSubsample: true, effort: 6 };
 const casts = [];
 for (const pack of PACKAGES) {
@@ -170,13 +178,14 @@ for (const pack of PACKAGES) {
     const grown = Object.values(grow).some((px) => px > 0);
     const page = { ...layer, x: layer.x - grow.left, y: layer.y - grow.top, w: layer.w + grow.left + grow.right, h: layer.h + grow.top + grow.bottom };
     if (layer.sprite_track) {
-      // The boots: WebP sprites, the mask lossless; the track is copied as delivered, further down.
+      // The stagehand: WebP sprites, the masks lossless; the track is copied as delivered, further down.
       const webp = (file) => file.replace(/\.png$/, '.webp');
       page.sprites = Object.fromEntries(Object.entries(layer.sprites ?? {}).map(([name, file]) => [name, webp(file)]));
       for (const file of Object.values(layer.sprites ?? {})) add(`${pack.dir}/${file}`, `${pack.to}/cast/${webp(file)}`, castFrame, undefined, assets);
-      if (layer.mask) {
-        page.mask = webp(layer.mask);
-        add(`${pack.dir}/${layer.mask}`, `${pack.to}/cast/${page.mask}`, exact, undefined, assets);
+      for (const key of ['mask', 'body_mask']) {
+        if (!layer[key]) continue;
+        page[key] = webp(layer[key]);
+        addMade(() => alphaMask(join(repo, pack.dir, layer[key])), `${pack.to}/cast/${page[key]}`, exact);
       }
     }
     forPage.layers.push(page);
@@ -216,7 +225,7 @@ for (const pack of PACKAGES) {
         }
       }
     }
-    if (!pieces.length) continue; // (a layer with no stills: the stagehand's boots, in their gap)
+    if (!pieces.length) continue; // (a layer with no stills: the stagehand, behind the backdrop)
     if (solid || layer.scenery === true) where.room.push(layer.actor);
     else if (box[0] <= box[2]) where.covers[layer.actor] = outward(box);
   }
