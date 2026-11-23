@@ -6,7 +6,7 @@ import sys, os, json, random, subprocess, tempfile, numpy as np
 from PIL import Image
 
 P, OUT = sys.argv[1], sys.argv[2]; SECS = float(sys.argv[3]) if len(sys.argv) > 3 else 32.0
-FPS = 30
+FPS = int(os.environ.get("PREVIEW_FPS", "30"))   # 60 for judging motion (the site runs at 60)
 m = json.load(open(f'{P}/frames.json')); r = json.load(open(f'{P}/routine.json'))['actors']
 L = {l['actor']: l for l in m['layers']}
 cache = {}
@@ -58,7 +58,7 @@ finds = [6500, 12500, 19500, 26000]
 tl = {'rachel': timeline('rachel', total, finds), 'lamp': timeline('lamp', total)}
 walk = json.load(open(f'{P}/stagehand/walk.json'))
 gx, gy = walk['gap_mask_xy']; gmask = np.asarray(Image.open(f'{P}/stagehand/gap_mask.png')).astype(np.float32) / 255
-spr = {k: Image.open(f'{P}/stagehand/{k}.png').convert('RGBA') for k in ('boot_L', 'boot_R')}
+spr = {k: Image.open(f'{P}/stagehand/{k}.png').convert('RGBA') for k in walk['sprites']}
 walks = [(3000, 'rtl'), (3000 + len(walk['rtl']['frames']) * 1000 / walk['rtl']['fps'] + 11000, 'ltr')]
 plate = Image.open(f'{P}/plate.png').convert('RGBA')
 patches = sorted([l for l in m['layers'] if l['actor'].startswith('backdrop_')], key=lambda l: l['hunt_progress'])
@@ -68,8 +68,9 @@ def boots_layer(t):
     for t0, d in walks:
         tr = walk[d]; i = int((t - t0) / 1000 * tr['fps'])
         if 0 <= i < len(tr['frames']):
-            lay = Image.new('RGBA', plate.size, (0, 0, 0, 0)); s = spr[tr['sprite']]
+            lay = Image.new('RGBA', plate.size, (0, 0, 0, 0))
             for b in tr['frames'][i]:
+                s = spr[b['s']]
                 im = s if not b['far'] else Image.fromarray((np.asarray(s).astype(np.float32) * [0.85, 0.85, 0.85, 1]).astype(np.uint8))
                 # rotate about the bottom-centre: pad so that point is the centre, rotate, then place
                 w, h = im.size; pad = Image.new('RGBA', (w, 2 * h), (0, 0, 0, 0)); pad.paste(im, (0, 0))

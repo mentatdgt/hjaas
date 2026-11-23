@@ -1,0 +1,2 @@
+`plate_ext.png` — Extended the cream canvas, pencil contours, and hem to the curtain. The upper join shows a tonal step. Verified 1536×1024 with zero pixel changes outside the mask or below the hem.
+`plate_finished_ext.png` — Extended the painted sky, clouds, hills, trees, and hem to the curtain. A faint join remains visible in the foliage. Verified 1536×1024 with zero pixel changes outside the mask or below the hem.

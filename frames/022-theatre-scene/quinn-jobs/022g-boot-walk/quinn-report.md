@@ -1,0 +1,9 @@
+- **W01_contact.png** — Heel alone contacts y=880, with the shin leaning back and the toe up about 13° against the 15° guide. The boot closely matches the approved design, with small changes in the tread cuts.
+- **W02_flat.png** — Forefoot and heel both contact y=880, with a slight backward lean through the shin and cuff. The boot closely matches the approved design, with a straighter tread edge.
+- **W03_midstance.png** — Both ends of the sole contact y=880 and the shin is upright. The boot closely matches the approved design, with minor changes to the denim folds and tread cuts.
+- **W04_heel_rise.png** — Toe and ball reach y=880, the leather visibly creases at the ball, and the shin leans forward. The heel rise is about 18° against the 14° guide, and the tread bends more sharply at the ball than in the guide. The boot retains the approved leather, eyelets, stitching, and cuff.
+- **W05_toe_off.png** — Only the left toe tip reaches y=880, with the sole near 40° and the shin leaning well forward. The design stays recognizable, with a rounder arch notch and a shorter visible denim section.
+- **W06_early_swing.png** — The sole clears the floor by 60 px and the shin leans slightly forward. The toe points down about 14° against the 20° guide. The boot closely matches the approved design, with minor changes to the sole contour.
+- **W07_mid_swing.png** — The nearly level sole clears the floor by 80 px and the shin is upright. The boot closely matches the approved design, with small changes to the tread cuts and cuff folds.
+- **W08_late_swing.png** — The heel clears the floor by 30 px, the toe is up about 9°, and the shin leans back. The boot closely matches the approved design, with minor changes to the heel and tread contours.
+- **W_contact_sheet.png** — The eight delivered poses run left to right on green at full frame size, with a one-pixel grey guide at y=880.

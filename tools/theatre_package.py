@@ -1,7 +1,7 @@
 """Scene 5 (theatre): package for the site, in the café format (frames.json + routine.json), plus extras.
 Quinn space (1536x1024) -> site canvas 1672x941: crop y 120..984, scale 1672/1536.
 Usage: python3 -I tools/theatre_package.py <work_dir> <plate_finished_nolamp.png> <out_site_dir>
-work_dir holds plate_nolamp.png, R_*.png, lamp/L_*.png, walk/{boot_L,boot_R,gap_mask}.png, walk/walk.json."""
+work_dir holds plate_nolamp.png, R_*.png, lamp/L_*.png, walk/{L_W0*,R_W0*,gap_mask}.png, walk/walk.json."""
 import sys, os, json, glob, numpy as np
 from PIL import Image
 from scipy import ndimage as ndi
@@ -84,22 +84,22 @@ if __name__ == '__main__':
                   {'scenery': True, 'hunt_progress': i + 1})
     # 2. the stagehand's boots: sprites drawn from a track, clipped to the gap under the hem
     os.makedirs(f'{out}/stagehand', exist_ok=True)
-    for k in ('boot_L', 'boot_R'):
+    w = json.load(open(f'{W}/walk/walk.json'))
+    for k in w['sprites']:                     # Quinn's drawn walk cycle: L_W01..L_W08 (facing left), R_W01..R_W08 (mirrored)
         im = Image.open(f'{W}/walk/{k}.png'); im.resize((round(im.width * S), round(im.height * S)), Image.LANCZOS).save(f'{out}/stagehand/{k}.png')
     gm = to_canvas(Image.open(f'{W}/walk/gap_mask.png').convert('L')); _, gy0, _, gy1 = Image.fromarray((np.asarray(gm) > 0).astype(np.uint8) * 255).getbbox()
     gx0, gx1 = 0, gm.width                     # always the full canvas width (the site's boots canvas is 1672 wide)
     gm.crop((gx0, gy0, gx1, gy1)).save(f'{out}/stagehand/gap_mask.png')
-    w = json.load(open(f'{W}/walk/walk.json'))
     for dr in ('rtl', 'ltr'):
         for fr in w[dr]['frames']:
             for b in fr: b['x'] = round(b['x'] * S, 1); b['y'] = round((b['y'] - Y0) * S, 1)
-    w['note'] = ('Site canvas coords. Each frame: two boots (far first; draw the far one 15% darker), x,y = bottom-centre of the sprite, '
-                 'rot = degrees clockwise about that point. Draw the boots clipped to stagehand/gap_mask.png placed at gap_mask_xy, '
+    w['note'] = ('Site canvas coords. Each frame: two boots (far first; draw the far one 15% darker); s = which sprite (a drawing of the '
+                 'walk cycle), x,y = bottom-centre of that sprite, rot = 0. Draw the boots clipped to stagehand/gap_mask.png placed at gap_mask_xy, '
                  'so they only show in the dark gap under the backdrop (ladder, pots and cart stay in front).')
     w['gap_mask_xy'] = [gx0, gy0]
     json.dump(w, open(f'{out}/stagehand/walk.json', 'w'))
     m['layers'].append({'actor': 'stagehand', 'x': 0, 'y': 0, 'w': CW, 'h': CH, 'stills': [], 'sprite_track': 'stagehand/walk.json',
-                        'sprites': {'boot_L': 'stagehand/boot_L.png', 'boot_R': 'stagehand/boot_R.png'}, 'mask': 'stagehand/gap_mask.png'})
+                        'sprites': {k: f'stagehand/{k}.png' for k in w['sprites']}, 'mask': 'stagehand/gap_mask.png'})
     # 3. the lamp: a rigid pendulum swing
     lamp = {f'L_{i:02d}': Image.open(p) for i, p in enumerate(sorted(glob.glob(f'{W}/lamp/L_*.png')))}
     add_layer(m, out, 'lamp', lamp, {'scenery': True})

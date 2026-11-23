@@ -1,0 +1,9 @@
+- `W01b.png` — Approximate midpoint. The heel touches y=880 and the toe is up about 8–9°. The shin still leans a little closer to W01. The boot and denim match closely.
+- `W02b.png` — Close midpoint. The sole is flat at y=880, with about 5° of backward shin lean and a gentler cuff slope. The boot and denim match closely.
+- `W03b.png` — Approximate midpoint. The sole stays flat at y=880 and the ball crease just starts. The cuff is between the keys, while the shin is a little more upright than the requested 9°. The boot and denim match closely.
+- `W04b.png` — Approximate midpoint. The toe touches y=880, the heel is raised and the ball crease is deeper. The jeans cut sits higher than the midpoint between the keys. The boot matches closely, with slight differences around the flexed toe and tread.
+- `W05b.png` — Close midpoint. The toe clears the floor by 15 px and the boot is steep with the shin leaning forward. The boot matches closely, with slight differences in the eased ball crease and lace curves.
+- `W06b.png` — Approximate midpoint. The boot clears the floor by 70 px. It sits closer to level than the requested 8° toe-down pitch. The boot and denim match closely.
+- `W07b.png` — Close midpoint. The heel clears the floor by 55 px, the toe is up about 5°, and the shin has started to lean back. The boot matches closely, with slight changes to the upper lace and denim folds.
+- `W08b.png` — Close midpoint. The heel clears the floor by 12 px, the toe is up about 13°, and the shin leans back. The boot and denim match closely, with a slightly different ankle fold.
+- `W16_contact_sheet.png` — Verified all 16 drawings in cycle order on a 4 × 4 grid at full size. Each tile has a one-pixel grey guide at local y=880.
