@@ -98,5 +98,45 @@
    298
   ]
  },
+ "handover": {
+  "rtl": {
+   "switchesAtFrame": 74,
+   "platePxThatChangeThere": 137,
+   "around": [
+    362,
+    0,
+    226,
+    0,
+    137,
+    96,
+    217,
+    98,
+    123
+   ],
+   "everyOtherStepMedian": 180,
+   "everyOtherStepMost": 2172,
+   "stepsThatChangeMore": 157,
+   "of": 297
+  },
+  "ltr": {
+   "switchesAtFrame": 216,
+   "platePxThatChangeThere": 170,
+   "around": [
+    68,
+    85,
+    168,
+    262,
+    170,
+    0,
+    854,
+    0,
+    0
+   ],
+   "everyOtherStepMedian": 168,
+   "everyOtherStepMost": 2038,
+   "stepsThatChangeMore": 148,
+   "of": 297
+  }
+ },
  "errors": []
 }

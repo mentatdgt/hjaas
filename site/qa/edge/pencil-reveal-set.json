@@ -4,144 +4,144 @@
   "theSheetAndTheVeilFrameByFrame": [
    {
     "engine": "chrome 1440x900",
-    "framesRead": 1143,
+    "framesRead": 1142,
     "theVeilBeforeTheBrush": {
      "mostOverTheWholePaintingOutOf255": 5,
-     "pencilPointsItCoversWhole": 8457
+     "pencilPointsItCoversWhole": 7661
     },
     "thePencilAheadOfThePaint": {
      "furthestPlatePx": 50,
-     "readings": 2424503,
+     "readings": 2306316,
      "readingsOver110Px": 0
     },
-    "pencilPoints": 8457,
+    "pencilPoints": 7661,
     "pencilPointsLeftToTheWash": 0,
     "msForAPencilPointToComeUp": {
-     "points": 8457,
-     "tenth": 54,
+     "points": 7661,
+     "tenth": 50,
      "median": 175,
-     "ninetieth": 200,
+     "ninetieth": 208,
      "least": 0,
-     "most": 2050,
-     "shareOver400": 0.087
+     "most": 2054,
+     "shareOver400": 0.089
     },
     "msFromPaintWithin70PxToThePencilHalfUp": {
-     "points": 8457,
+     "points": 7661,
      "tenth": 12,
-     "median": 83,
-     "ninetieth": 533,
+     "median": 92,
+     "ninetieth": 525,
      "least": 4,
      "most": 1996,
-     "shareOver400": 0.171
+     "shareOver400": 0.172
     }
    },
    {
     "engine": "webkit iPhone 14",
-    "framesRead": 1141,
+    "framesRead": 1142,
     "theVeilBeforeTheBrush": {
      "mostOverTheWholePaintingOutOf255": 1,
-     "pencilPointsItCoversWhole": 8457
+     "pencilPointsItCoversWhole": 7661
     },
     "thePencilAheadOfThePaint": {
      "furthestPlatePx": 51,
-     "readings": 2447128,
+     "readings": 2325243,
      "readingsOver110Px": 0
     },
-    "pencilPoints": 8457,
+    "pencilPoints": 7661,
     "pencilPointsLeftToTheWash": 0,
     "msForAPencilPointToComeUp": {
-     "points": 8457,
-     "tenth": 54,
+     "points": 7661,
+     "tenth": 42,
      "median": 175,
-     "ninetieth": 283,
+     "ninetieth": 358,
      "least": 0,
      "most": 2046,
-     "shareOver400": 0.092
+     "shareOver400": 0.091
     },
     "msFromPaintWithin70PxToThePencilHalfUp": {
-     "points": 8457,
-     "tenth": 13,
-     "median": 83,
-     "ninetieth": 533,
+     "points": 7661,
+     "tenth": 9,
+     "median": 92,
+     "ninetieth": 525,
      "least": 4,
      "most": 2000,
-     "shareOver400": 0.172
+     "shareOver400": 0.173
     }
    }
   ],
   "moments": [
    {
-    "atMs": 302,
-    "pointsThatMustBeBarePaper": 810,
+    "atMs": 316,
+    "pointsThatMustBeBarePaper": 808,
     "notPaper": 0,
-    "pointsPastTheColoursEdge": 4579,
+    "pointsPastTheColoursEdge": 4114,
     "paintThere": 0,
-    "pencilThere": 133,
-    "pointsInsideThePainting": 46931,
-    "painted": 1470
+    "pencilThere": 134,
+    "pointsInsideThePainting": 47688,
+    "painted": 1606
    },
    {
     "atMs": 903,
-    "pointsThatMustBeBarePaper": 810,
+    "pointsThatMustBeBarePaper": 808,
     "notPaper": 0,
-    "pointsPastTheColoursEdge": 4579,
+    "pointsPastTheColoursEdge": 4114,
     "paintThere": 0,
-    "pencilThere": 205,
-    "pointsInsideThePainting": 46931,
-    "painted": 22024
+    "pencilThere": 197,
+    "pointsInsideThePainting": 47688,
+    "painted": 22156
    },
    {
-    "atMs": 1508,
-    "pointsThatMustBeBarePaper": 810,
+    "atMs": 1504,
+    "pointsThatMustBeBarePaper": 808,
     "notPaper": 0,
-    "pointsPastTheColoursEdge": 4579,
+    "pointsPastTheColoursEdge": 4114,
     "paintThere": 0,
-    "pencilThere": 295,
-    "pointsInsideThePainting": 46931,
-    "painted": 26818
+    "pencilThere": 278,
+    "pointsInsideThePainting": 47688,
+    "painted": 27120
    },
    {
-    "atMs": 2304,
-    "pointsThatMustBeBarePaper": 810,
+    "atMs": 2303,
+    "pointsThatMustBeBarePaper": 808,
     "notPaper": 0,
-    "pointsPastTheColoursEdge": 4579,
+    "pointsPastTheColoursEdge": 4114,
     "paintThere": 0,
-    "pencilThere": 352,
-    "pointsInsideThePainting": 46931,
-    "painted": 35709
+    "pencilThere": 296,
+    "pointsInsideThePainting": 47688,
+    "painted": 36499
    },
    {
-    "atMs": 3004,
-    "pointsThatMustBeBarePaper": 810,
+    "atMs": 3019,
+    "pointsThatMustBeBarePaper": 808,
     "notPaper": 0,
-    "pointsPastTheColoursEdge": 4579,
+    "pointsPastTheColoursEdge": 4114,
     "paintThere": 0,
-    "pencilThere": 352,
-    "pointsInsideThePainting": 46931,
-    "painted": 43692
+    "pencilThere": 296,
+    "pointsInsideThePainting": 47688,
+    "painted": 44996
    },
    {
-    "atMs": 3721,
-    "pointsThatMustBeBarePaper": 810,
+    "atMs": 3719,
+    "pointsThatMustBeBarePaper": 808,
     "notPaper": 0,
-    "pointsPastTheColoursEdge": 4579,
+    "pointsPastTheColoursEdge": 4114,
     "paintThere": 0,
-    "pencilThere": 352,
-    "pointsInsideThePainting": 46931,
-    "painted": 46900
+    "pencilThere": 296,
+    "pointsInsideThePainting": 47688,
+    "painted": 47657
    }
   ],
   "theShortRevealWithReducedMotion": {
    "screenshots": 19,
-   "screenshotsPartWay": 1,
-   "pointChecks": 102391,
+   "screenshotsPartWay": 0,
+   "pointChecks": 93518,
    "barePaperPointsNotPaper": 0,
    "pointsPastTheColourWithPaint": 0,
-   "pencilAheadOfTheColourAtMost": 0.001,
+   "pencilAheadOfTheColourAtMost": 0,
    "pencilBehindTheColourAtMost": 0,
    "pointsAsked": {
-    "colour": 6477,
-    "pencil": 92
+    "colour": 6595,
+    "pencil": 85
    }
   },
   "ok": true,

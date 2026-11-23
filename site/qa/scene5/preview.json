@@ -101,7 +101,7 @@
   },
   "everyActorIsInPlace": true
  },
- "a boot frame (rtl 70), as in the preview at 5.33 s": {
+ "in the slot (rtl 45), as in the preview at 3.75 s": {
   "platePxOnTheScreen": [
    1662,
    936
@@ -132,11 +132,11 @@
     "meanDifferenceOutOf255": 9.21,
     "inPlace": true
    },
-   "boots": {
-    "frame": 70,
+   "stagehand": {
+    "frame": 45,
     "screenPxFromWhereThePackagePutsThem": [
-     -0.5,
-     0.1
+     -0.1,
+     0.4
     ],
     "inPlace": true
    }

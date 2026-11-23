@@ -1,0 +1,32 @@
+{
+ "out": {
+  "seconds": 5,
+  "pageFrames": 299,
+  "newPicturesInTheTrack": 223,
+  "trackFramesSkipped": 0,
+  "pageFramesThatRepeatATrackFrame": 0,
+  "recordedFrames": 256,
+  "recordedGapMsMedian": 16.7,
+  "recordedGapMs99": 33.3,
+  "longestRecordedGapMs": 50,
+  "recordedGapsOver25ms": 41
+ },
+ "back": {
+  "seconds": 5,
+  "pageFrames": 299,
+  "newPicturesInTheTrack": 216,
+  "trackFramesSkipped": 0,
+  "pageFramesThatRepeatATrackFrame": 0,
+  "recordedFrames": 269,
+  "recordedGapMsMedian": 16.7,
+  "recordedGapMs99": 33.3,
+  "longestRecordedGapMs": 233.3,
+  "recordedGapsOver25ms": 16
+ },
+ "waitBetweenS": 10.1,
+ "files": [
+  "set-desktop-crossing-60fps.mp4",
+  "set-desktop-slot-60fps.mp4"
+ ],
+ "errors": []
+}

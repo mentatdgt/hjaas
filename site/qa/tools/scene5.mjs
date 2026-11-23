@@ -774,8 +774,16 @@ run.walk = async () => {
         const theirsC = centroid(theirs, drawn.w, [0, 0, drawn.w, drawn.h]);
         let diff = 0; let n = 0;
         for (let i = 0; i < theirs.length; i += 4) { if (!theirs[i + 3] && !drawn.data[i + 3]) continue; for (let c = 0; c < 3; c++) diff += Math.abs(theirs[i + c] * theirs[i + 3] - drawn.data[i + c] * drawn.data[i + 3]) / 255; n += 3; }
-        const off = mineC && theirsC ? [r1(mineC[0] - theirsC[0]), r1(mineC[1] - theirsC[1])] : null;
-        report.atOneToOne[`${dir} frame ${f}`] = { drew: frame, what: walk[dir].frames[f].map((x) => x.s).join(' + '), pixels: mineC ? r1(mineC[2]) : 0, offPlatePx: off, meanDifference: n ? r1(diff / n) : 0, ok: frame === f && (off ? off.every((d) => Math.abs(d) <= 1) : !mineC && !theirsC) };
+        // Where it fits best: the whole-pixel shift of the package's picture with the least difference (colour × alpha),
+        // refined to a tenth of a px. (The package rounds each sprite to a whole px; the page draws it where the track says.)
+        const at = (dx, dy) => { let sum = 0; let m = 0; for (let y = 4; y < drawn.h - 4; y++) for (let x = 4; x < drawn.w - 4; x++) { const i = (y * drawn.w + x) * 4; const j = ((y + dy) * drawn.w + x + dx) * 4; const p = drawn.data[i + 3]; const q = theirs[j + 3]; if (!p && !q) continue; m++; for (let c = 0; c < 3; c++) sum += Math.abs(drawn.data[i + c] * p - theirs[j + c] * q) / 255; sum += Math.abs(p - q); } return m ? sum / m / 4 : 0; };
+        let off = null;
+        if (mineC && theirsC) {
+          let best = [0, 0, at(0, 0)];
+          for (let dy = -2; dy <= 2; dy++) for (let dx = -3; dx <= 3; dx++) { const v = at(dx, dy); if (v < best[2]) best = [dx, dy, v]; }
+          off = [best[0], best[1]];
+        }
+        report.atOneToOne[`${dir} frame ${f}`] = { drew: frame, what: walk[dir].frames[f].map((x) => x.s).join(' + '), pixels: mineC ? r1(mineC[2]) : 0, bestFitShiftPx: off, meanDifference: n ? r1(diff / n) : 0, ok: frame === f && (off ? off.every((d) => d === 0) : !mineC && !theirsC) };
       }
     }
     // 4. Never outside the masks: every frame of both walks, drawn in turn.
@@ -828,7 +836,7 @@ run.walk = async () => {
     say('never outside the masks', report.neverOutsideTheMasks);
     await browser.close();
   }
-  say('at 1:1', Object.fromEntries(Object.entries(report.atOneToOne).map(([k, v]) => [k, `${v.ok ? 'ok' : 'NOT OK'} ${JSON.stringify(v.offPlatePx)} px, ${v.meanDifference} mean`])));
+  say('at 1:1', Object.fromEntries(Object.entries(report.atOneToOne).map(([k, v]) => [k, `${v.ok ? 'ok' : 'NOT OK'} shift ${JSON.stringify(v.bestFitShiftPx)}, ${v.pixels} px, ${v.meanDifference} mean`])));
   report.errors = errors;
   await save('walk.json', report);
 };
@@ -984,15 +992,19 @@ run.film60 = async () => {
   await build(ltr[0] + 3400, ltr[1] + 200, 'b', crop);
   await writeFile(`${dir}ab.txt`, `ffconcat version 1.0\nfile '${dir}a.mp4'\nfile '${dir}b.mp4'\n`);
   execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', `${dir}ab.txt`, '-c', 'copy', '-movflags', '+faststart', `${out}set-desktop-slot-60fps.mp4`]);
-  const about = ([from, to]) => {
+  // Not every track frame is a new picture (a drawing is held for two or three): how many are, for the recording to show.
+  const walk = await walkOf();
+  const about = ([from, to], track) => {
+    const key = (f) => JSON.stringify(walk[track].frames[f]);
+    const pictures = walk[track].frames.filter((_, f) => f && key(f) !== key(f - 1)).length;
     const r = rows.filter((x) => x[0] >= from && x[0] <= to && x[2] >= 0);
     let skipped = 0; let repeated = 0;
     for (let i = 1; i < r.length; i++) { if (r[i][2] - r[i - 1][2] > 1) skipped += r[i][2] - r[i - 1][2] - 1; if (r[i][2] === r[i - 1][2]) repeated++; }
     const cast = frames.filter((f) => f.at >= from && f.at <= to);
     const gaps = cast.slice(1).map((f, i) => f.at - cast[i].at).sort((a, b) => a - b);
-    return { seconds: r1((to - from) / 1000), pageFrames: r.length, trackFramesSkipped: skipped, pageFramesThatRepeatATrackFrame: repeated, recordedFrames: cast.length, recordedGapMsMedian: r1(gaps[gaps.length >> 1]), recordedGapMs99: r1(gaps[Math.floor(gaps.length * 0.99)]), longestRecordedGapMs: r1(gaps.at(-1)), recordedGapsOver25ms: gaps.filter((g) => g > 25).length };
+    return { seconds: r1((to - from) / 1000), pageFrames: r.length, newPicturesInTheTrack: pictures, trackFramesSkipped: skipped, pageFramesThatRepeatATrackFrame: repeated, recordedFrames: cast.length, recordedGapMsMedian: r1(gaps[gaps.length >> 1]), recordedGapMs99: r1(gaps[Math.floor(gaps.length * 0.99)]), longestRecordedGapMs: r1(gaps.at(-1)), recordedGapsOver25ms: gaps.filter((g) => g > 25).length };
   };
-  const report = { out: about(rtl), back: about(ltr), waitBetweenS: r1((ltr[0] - rtl[1]) / 1000), files: ['set-desktop-crossing-60fps.mp4', 'set-desktop-slot-60fps.mp4'], errors };
+  const report = { out: about(rtl, 'rtl'), back: about(ltr, 'ltr'), waitBetweenS: r1((ltr[0] - rtl[1]) / 1000), files: ['set-desktop-crossing-60fps.mp4', 'set-desktop-slot-60fps.mp4'], errors };
   await rm(dir, { recursive: true, force: true });
   say('60 fps', report);
   await save('film60.json', report);
