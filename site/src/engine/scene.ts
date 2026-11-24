@@ -4,7 +4,7 @@ import { PLATE, asset, decodeBlob, decodePart, fetchBlob, fetchFrame, idle, load
 import { leadOf, splitCast, type CastFrames, type CastRoutines, type CastScreen } from './cast';
 import { Character } from './character';
 import { edgeAlpha, edgeName, makeEdge, type Edge, type EdgeStyle } from './edge';
-import { checkClips, clipPose, clipReaction, clipSchedule, clipsInUse, restOf, stillsInUse, type ClipFrames, type ClipRoutine } from './clips';
+import { checkClips, clipEntry, clipPose, clipReaction, clipSchedule, clipsInUse, restOf, stillsInUse, type ClipFrames, type ClipRoutine, type Entry } from './clips';
 import { Hunt } from './mushrooms';
 import { Player, type Schedule } from './player';
 import { Reel } from './reel';
@@ -51,6 +51,8 @@ interface Cast {
    */
   reaction: () => (Pick<Reaction, 'steps' | 'still'> & { roll?: (rnd?: Rng) => Step[] }) | null;
   still: Reaction['still'];
+  /** How her reaction is come into from the middle of her routine, if her package says (clips.ts, Entry). */
+  entry?: Entry | null;
   /**
    * Fetches what the first showing did not need (clips, reaction frames), one image at a time in quiet
    * moments. `reactions: false` leaves out what only a reaction uses.
@@ -312,6 +314,7 @@ async function actorCast(
           ? full
           : null,
       still: full?.still ?? [],
+      entry: clipEntry(routine),
       more: async (reactions) => {
         for (const name of inUse.routine) await fetchClip(name).catch(() => {});
         if (!reactions || !full) return;
@@ -574,6 +577,7 @@ export class Scene {
       this.plate.insertBefore(character.el, front ? this.edge.el : this.mark);
       const player = new Player(character, this.rhythm(cast));
       player.onStep = (step) => cast.ahead?.(step.soon ?? []);
+      player.entry = cast.entry ?? null;
       this.players.set(cast, player);
       character.resize();
       if (this.soft) character.el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 280, easing: 'ease-out' });
@@ -742,10 +746,11 @@ export class Scene {
     const reaction = this.cast.reaction();
     // Still (paused, reduced motion, or the reaction's frames not here yet): one held pose acknowledges the
     // find, without the head and arm travel.
-    const steps = reaction && !this.host.still() ? (reaction.roll?.(this.host.rnd) ?? reaction.steps) : (reaction?.still ?? this.cast.still);
+    const full = reaction !== null && !this.host.still();
+    const steps = full ? (reaction.roll?.(this.host.rnd) ?? reaction.steps) : (reaction?.still ?? this.cast.still);
     if (steps.length === 0) return Promise.resolve();
     // A scene may have her answer at once, from whatever pose she is in (`answer` in its config).
-    this.reacting = this.player.react(steps, this.config.answer === 'at-once');
+    this.reacting = this.player.react(steps, this.config.answer === 'at-once', full);
     return this.reacting;
   }
 

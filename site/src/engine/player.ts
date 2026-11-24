@@ -1,4 +1,5 @@
 import type { Character } from './character';
+import type { Entry } from './clips';
 import type { Step } from './steps';
 
 /** A routine. It is told, each time it is asked for a step, whether a reaction is waiting (clips.ts uses that). */
@@ -7,6 +8,10 @@ export type Schedule = Iterator<Step, unknown, 'react' | undefined>;
 // A frame that arrives late is absorbed: time accumulates and the schedule catches up,
 // so one slow frame never shifts the rhythm. After a real stall we don't fast-forward further than this.
 const MAX_CATCH_UP_MS = 250;
+/** A step no longer than this is a drawing a move passes through, not a hold (see Player.entry). */
+const PASSING_MS = 60;
+/** How far through a routine to look for its next rest step. */
+const MAX_LOOK = 2000;
 
 /**
  * Plays a character's poses from a schedule, on requestAnimationFrame with accumulated time.
@@ -26,7 +31,14 @@ export class Player {
   /** A dissolve under way: the pose it started from. (The step being played says how long it takes.) */
   private fadingFrom: string | null = null;
 
+  /** How long the pose on show has been on show, in ms: over several steps, if they hold the same pose. */
+  private shown = 0;
+  /** The length of a frame of this screen, in ms: the last one that was not late. */
+  private frame = 1000 / 60;
+
   private queued: Step[] | null = null;
+  /** The queued reaction waits only for the pose on show to have been shown long enough (see `entry`). */
+  private settling = false;
   private reaction: Step[] | null = null;
   private reactionIndex = 0;
   private reactionDone: (() => void) | null = null;
@@ -40,6 +52,19 @@ export class Player {
    * scene has to keep time with her without a loop of its own (the film scene's camera: its REC dot).
    */
   onFrame: ((now: number) => void) | null = null;
+
+  /**
+   * How a reaction that cuts in is come into, for a routine drawn through in-betweens (clips.ts, Entry). With it:
+   *
+   *   - the pose on show is first shown as long as the entry asks, and the reaction begins with the entry's way
+   *     back to rest from that pose;
+   *   - after the reaction the routine is picked up at its next rest step, never in the middle of a move;
+   *   - the drawings a move passes through are never skipped, and are shown evenly: 50 ms is three frames of
+   *     a 60 Hz screen each time. (A late frame holds the move up; it does not cut a drawing out of it. And a
+   *     move starts half a frame in: started on the frame's edge, the screen's and the browser's rounding
+   *     would give one drawing four frames and the next two.)
+   */
+  entry: Entry | null = null;
 
   constructor(character: Character, loop: Schedule) {
     this.rachel = character;
@@ -78,10 +103,12 @@ export class Player {
   settle(): void {
     this.stop();
     this.queued = null;
+    this.settling = false;
     this.reaction = null;
     this.reactionDone?.();
     this.reactionDone = null;
     this.elapsed = 0;
+    this.shown = 0;
     this.fadingFrom = null;
     this.step = { pose: this.rest, ms: 0 };
     this.rachel.show(this.rest);
@@ -97,12 +124,18 @@ export class Player {
    * Play a reaction. Resolves when she is back on the contact frame. If she is already reacting,
    * resolves at once and the running reaction is left alone. `now`: it cuts straight in from whatever pose
    * she is in (the theatre: she turns to the visitor mid-stroke), instead of waiting for her rest pose.
+   * `led`: by way of the entry, if she has one (see `entry`).
    */
-  react(steps: Step[], now = false): Promise<void> {
+  react(steps: Step[], now = false, led = true): Promise<void> {
     if (this.reacting || steps.length === 0) return Promise.resolve();
     return new Promise((resolve) => {
       this.reactionDone = resolve;
       this.queued = steps;
+      if (now && led && this.entry) {
+        this.settling = true;
+        this.whenShown();
+        return;
+      }
       // On the contact frame already: go now. Otherwise the swing finishes first, so the hammer never teleports.
       if (this.step.pose === this.rest || now) {
         this.elapsed = 0;
@@ -133,16 +166,42 @@ export class Player {
 
   private tick = (now: number): void => {
     if (!this.running) return;
-    this.elapsed += Math.min(now - this.last, MAX_CATCH_UP_MS);
+    const passed = Math.min(now - this.last, MAX_CATCH_UP_MS);
+    this.elapsed += passed;
+    this.shown += passed;
     this.last = now;
-    while (this.elapsed >= this.step.ms) {
-      this.elapsed -= this.step.ms;
-      this.advance();
-    }
+    if (passed > 4 && passed < 20) this.frame = passed;
+    if (this.entry) this.keepEven();
+    else
+      while (this.elapsed >= this.step.ms) {
+        this.elapsed -= this.step.ms;
+        this.advance();
+      }
     this.blend();
     this.onFrame?.(now);
     this.raf = requestAnimationFrame(this.tick);
   };
+
+  /** One step at most a frame: the drawings of a move are never skipped, and are shown evenly (see `entry`). */
+  private keepEven(): void {
+    if (this.settling && this.whenShown()) return;
+    const { ms } = this.step;
+    if (this.elapsed < ms) return;
+    this.elapsed -= ms;
+    this.advance();
+    // A move begins half a frame in, and begins so again after a late frame: no drawing is cut short to catch up.
+    if (this.step.ms <= PASSING_MS && (ms > PASSING_MS || this.elapsed > this.frame)) this.elapsed = this.frame / 2;
+  }
+
+  /** A reaction is waiting for the pose on show to have been shown long enough: start it, if it has. */
+  private whenShown(): boolean {
+    const least = this.entry?.minShow(this.step.pose) ?? 0;
+    if (this.shown < least && this.elapsed < this.step.ms) return false;
+    this.elapsed = this.frame / 2;
+    this.queued = [...(this.entry?.leadIn(this.step.pose) ?? []), ...this.queued!];
+    this.beginReaction();
+    return true;
+  }
 
   private advance(): void {
     if (this.reaction) {
@@ -155,7 +214,7 @@ export class Player {
       this.reaction = null;
       this.reactionDone?.();
       this.reactionDone = null;
-      this.enter({ pose: this.rest, ms: 320 + Math.random() * 160 });
+      this.enter(this.entry ? this.nextRest() : { pose: this.rest, ms: 320 + Math.random() * 160 });
       return;
     }
     const next = this.nextLoopStep();
@@ -170,6 +229,7 @@ export class Player {
   private beginReaction(): void {
     this.reaction = this.queued;
     this.queued = null;
+    this.settling = false;
     this.reactionIndex = 0;
     this.enter(this.reaction![0]);
   }
@@ -182,8 +242,18 @@ export class Player {
     }
   }
 
+  /** The routine's next step at rest, passing over what comes before it. */
+  private nextRest(): Step {
+    for (let i = 0; i < MAX_LOOK; i++) {
+      const step = this.nextLoopStep();
+      if (step.pose === this.rest) return step;
+    }
+    return { pose: this.rest, ms: 400 };
+  }
+
   private enter(step: Step): void {
     const from = this.rachel.current;
+    if (step.pose !== this.step.pose) this.shown = 0;
     this.step = step;
     // A step may dissolve in from the pose before it (steps.ts, `fade`); blend() carries it on each frame.
     this.fadingFrom = step.fade && step.fade > 0 && from !== step.pose ? from : null;

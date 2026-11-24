@@ -127,7 +127,8 @@ export const set: SceneConfig = {
   // (No `edge`: the scene's first edge already fits the strips the edge is drawn in and leaves every mushroom
   // and tap box where it is: qa/tools/pencil.mjs pick 800 set.)
   lines: 'pencil',
-  // She turns to the visitor at once, from whatever pose she is in; a second find holds her salute longer.
+  // She answers at once, from whatever pose she is in: her arm goes back to rest through the in-betweens
+  // (routine.json, reaction.lead_in), then up into the salute. A second find holds the salute longer.
   answer: 'at-once',
   again: 'hold',
   strokes: STROKES,

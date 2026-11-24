@@ -41,6 +41,11 @@
 //     the start of its hold (a true cross-dissolve: character.ts). Only between two stills of the same loop:
 //     coming into the loop, and anywhere else (a hold by itself, a blink, the whole reaction), the pose
 //     changes at once whatever the manifest says. A dissolved head turn is a ghost with two faces.
+//   - A reaction may say how it is come into from whatever she is doing (the theatre, whose moves are all drawn
+//     through in-betweens): `"lead_in"`, still -> the steps that lead from it back to rest, played before the
+//     reaction's own; and `"min_show_ms"` (`"min_show_by_still"` for one still), how long the still on screen
+//     is shown before it is left. After such a reaction she picks the routine up at its next rest step. See
+//     `Entry` below; the player does the rest.
 //
 // Clip frames are large, so they are not all kept decoded (reel.ts). Each step of the routine therefore says
 // which clip frames may be shown soon after it (`soon`): the next few if nothing interrupts, and the first
@@ -85,7 +90,21 @@ type ReactionItem =
 export interface ClipRoutine {
   routine: readonly RoutineItem[];
   blink?: BlinkRule | readonly BlinkRule[];
-  reaction?: { enter_from?: string; steps: readonly ReactionItem[] };
+  reaction?: {
+    enter_from?: string;
+    steps: readonly ReactionItem[];
+    lead_in?: Readonly<Record<string, ReadonlyArray<{ still: string; ms: Ms }>>>;
+    min_show_ms?: number;
+    min_show_by_still?: Readonly<Record<string, number>>;
+  };
+}
+
+/** How a reaction is come into, and left, from the middle of a routine drawn through in-betweens (the player plays it). */
+export interface Entry {
+  /** From the pose she is in, the steps back to rest, played before the reaction's own. None: it starts straight away. */
+  leadIn: (pose: string) => readonly Step[];
+  /** The pose on screen is shown at least this long (or for its own planned time, if that is shorter) before it is left. */
+  minShow: (pose: string) => number;
 }
 
 /** The pose of an actor who is not drawn at all (`"still": null`). */
@@ -191,6 +210,19 @@ export function checkClips(frames: ClipFrames, routine: ClipRoutine): string[] {
         else if (blink) for (const frame of blink.frames ?? (blink.still !== undefined ? [{ still: blink.still }] : [])) still(frame.still, 'A blink in the reaction');
       }
     }
+    const { lead_in: leadIn, min_show_ms: least, min_show_by_still: leastBy } = routine.reaction;
+    const time = (ms: unknown): boolean => (Array.isArray(ms) ? ms.length === 2 && ms.every((n) => typeof n === 'number' && n > 0) && ms[0] <= ms[1] : typeof ms === 'number' && ms > 0);
+    for (const [name, steps] of Object.entries(leadIn ?? {})) {
+      still(name, '"reaction.lead_in"');
+      if (!Array.isArray(steps)) problems.push(`"reaction.lead_in" needs a list of steps for "${name}".`);
+      else
+        for (const step of steps) {
+          still(step.still, `"reaction.lead_in" (from "${name}")`);
+          if (!time(step.ms)) problems.push(`"reaction.lead_in" (from "${name}") needs a time for "${String(step.still)}".`);
+        }
+    }
+    for (const name of Object.keys(leastBy ?? {})) still(name, '"reaction.min_show_by_still"');
+    if ([least, ...Object.values(leastBy ?? {})].some((ms) => ms !== undefined && !(typeof ms === 'number' && ms >= 0))) problems.push('"reaction.min_show_ms" and "reaction.min_show_by_still" must be times in ms.');
   }
   return problems;
 }
@@ -220,6 +252,7 @@ export function stillsInUse(frames: ClipFrames, routine: ClipRoutine): string[] 
     for (const blink of Object.values(rule.still_for ?? {})) add(blink);
   }
   add(routine.reaction?.enter_from);
+  for (const steps of Object.values(routine.reaction?.lead_in ?? {})) for (const step of steps) add(step.still);
   for (const item of routine.reaction?.steps ?? []) {
     if ('clip' in item) clipBase(item.clip);
     else if ('still' in item) {
@@ -479,4 +512,13 @@ export function clipReaction(frames: ClipFrames, routine: ClipRoutine): ClipReac
     return steps;
   };
   return { steps: build(null), roll: (rnd = Math.random) => build(rnd), still: gesture ? [{ pose: gesture.still, ms: middle(gesture.ms), gesture: true }] : [] };
+}
+
+/** How this routine's reaction is come into, when it says so (see Entry). Null: as it always was. */
+export function clipEntry(routine: ClipRoutine): Entry | null {
+  const { reaction } = routine;
+  if (!reaction || (reaction.lead_in === undefined && reaction.min_show_ms === undefined && reaction.min_show_by_still === undefined)) return null;
+  const leads = new Map(Object.entries(reaction.lead_in ?? {}).map(([from, steps]) => [from, steps.map((step): Step => ({ pose: step.still, ms: typeof step.ms === 'number' ? step.ms : (step.ms[0] + step.ms[1]) / 2 }))]));
+  const least = new Map(Object.entries(reaction.min_show_by_still ?? {}));
+  return { leadIn: (pose) => leads.get(pose) ?? [], minShow: (pose) => least.get(pose) ?? reaction.min_show_ms ?? 0 };
 }

@@ -150,8 +150,20 @@ to 300 ms, and reacts once she is back. She blinks only on a still the `blink` r
 a tenth of a second) may blink on any hold of a still the rule names: in the middle of a long one, or in place
 of the first 110 ms of a short one. Only the stills the manifests show are downloaded.
 
+A reaction may also say how it is come into from the middle of a routine (scene 5, whose moves are drawn
+through in-betweens), in a scene that answers `at-once`:
+
+| In `reaction` | What it does |
+|---|---|
+| `"lead_in": { "A": [{ "still": "B", "ms": 33 }, … ] }` | The steps from still A back to rest, played before the reaction's own. Not listed: the reaction starts straight away. A second find never replays it. |
+| `"min_show_ms": 120`, `"min_show_by_still": { "A": 500 }` | The still on screen when the find comes is first shown at least this long, or for its own time if that is shorter. |
+
+With either of them she picks the routine up after the reaction at its next rest step (never in the middle of
+a move), and the drawings a move passes through (60 ms or less) are shown evenly and never skipped: a late
+frame holds the move up instead. Paused or reduced, the one held pose comes at once, with none of this.
+
 A scene's config may say `answer: 'at-once'`: the reaction cuts straight in from whatever pose she is in,
-instead of waiting for her rest pose (scene 5). And `again: 'hold'`: a mushroom found while she is still answering the last one starts
+instead of waiting for her rest pose (scene 5; with the two above it goes by way of them). And `again: 'hold'`: a mushroom found while she is still answering the last one starts
 the reaction's held look again from now (she never turns twice). Without it a reaction under way is left as
 it is.
 

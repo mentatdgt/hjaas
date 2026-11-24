@@ -177,25 +177,65 @@
        "blink_ok": true
       },
       {
-       "still": "R_A2_stroke_low",
-       "ms": [
-        300,
-        500
-       ]
+       "still": "R_T_A1_A2_1",
+       "ms": 50
       },
       {
-       "still": "R_A3_stroke_out",
-       "ms": [
-        300,
-        550
-       ]
+       "still": "R_T_A1_A2_2",
+       "ms": 50
       },
       {
        "still": "R_A2_stroke_low",
        "ms": [
         250,
-        400
+        450
        ]
+      },
+      {
+       "still": "R_T_A2_A3_1",
+       "ms": 50
+      },
+      {
+       "still": "R_T_A2_A3_2",
+       "ms": 50
+      },
+      {
+       "still": "R_T_A2_A3_3",
+       "ms": 50
+      },
+      {
+       "still": "R_A3_stroke_out",
+       "ms": [
+        250,
+        500
+       ]
+      },
+      {
+       "still": "R_T_A2_A3_3",
+       "ms": 50
+      },
+      {
+       "still": "R_T_A2_A3_2",
+       "ms": 50
+      },
+      {
+       "still": "R_T_A2_A3_1",
+       "ms": 50
+      },
+      {
+       "still": "R_A2_stroke_low",
+       "ms": [
+        200,
+        350
+       ]
+      },
+      {
+       "still": "R_T_A1_A2_2",
+       "ms": 50
+      },
+      {
+       "still": "R_T_A1_A2_1",
+       "ms": 50
       }
      ]
     },
@@ -222,11 +262,51 @@
      ]
     },
     {
+     "still": "R_T_A1_B2_0",
+     "ms": 50
+    },
+    {
+     "still": "R_T_A1_B2_1",
+     "ms": 50
+    },
+    {
+     "still": "R_T_A1_B2_2",
+     "ms": 50
+    },
+    {
+     "still": "R_T_A1_B2_2b",
+     "ms": 50
+    },
+    {
+     "still": "R_T_A1_B2_3",
+     "ms": 50
+    },
+    {
      "still": "R_B2_dip",
      "ms": [
       800,
       1100
      ]
+    },
+    {
+     "still": "R_T_A1_B2_3",
+     "ms": 50
+    },
+    {
+     "still": "R_T_A1_B2_2b",
+     "ms": 50
+    },
+    {
+     "still": "R_T_A1_B2_2",
+     "ms": 50
+    },
+    {
+     "still": "R_T_A1_B2_1",
+     "ms": 50
+    },
+    {
+     "still": "R_T_A1_B2_0",
+     "ms": 50
     },
     {
      "still": "R_A1",
@@ -251,22 +331,232 @@
     ]
    },
    "reaction": {
-    "note": "On a mushroom find: she turns her head to you, smiles and raises the brush in a little salute, then goes back to painting. Cut straight in from whatever pose she is in.",
+    "note": "On a mushroom find: from whatever pose she is in, her arm first goes back to rest through her in-betweens (lead_in, 33 ms each; none from rest), then she raises the brush through the salute in-betweens, turns her head to you and smiles, and lowers it again. A second find during the salute extends the hold (again: hold).",
     "steps": [
+     {
+      "still": "R_T_A1_K1_1",
+      "ms": 50
+     },
+     {
+      "still": "R_T_A1_K1_1b",
+      "ms": 50
+     },
+     {
+      "still": "R_T_A1_K1_2",
+      "ms": 50
+     },
+     {
+      "still": "R_T_A1_K1_3",
+      "ms": 50
+     },
      {
       "still": "R_K1_salute",
       "ms": [
-       1700,
-       2100
+       1600,
+       2000
       ]
+     },
+     {
+      "still": "R_T_A1_K1_3",
+      "ms": 50
+     },
+     {
+      "still": "R_T_A1_K1_2",
+      "ms": 50
+     },
+     {
+      "still": "R_T_A1_K1_1b",
+      "ms": 50
+     },
+     {
+      "still": "R_T_A1_K1_1",
+      "ms": 50
      },
      {
       "still": "R_A1",
       "ms": 400
      }
-    ]
+    ],
+    "lead_in": {
+     "R_B1_lean": [
+      {
+       "still": "R_A1",
+       "ms": 100
+      }
+     ],
+     "R_T_A1_A2_2": [
+      {
+       "still": "R_T_A1_A2_1",
+       "ms": 33
+      }
+     ],
+     "R_A2_stroke_low": [
+      {
+       "still": "R_T_A1_A2_2",
+       "ms": 33
+      },
+      {
+       "still": "R_T_A1_A2_1",
+       "ms": 33
+      }
+     ],
+     "R_T_A2_A3_1": [
+      {
+       "still": "R_A2_stroke_low",
+       "ms": 33
+      },
+      {
+       "still": "R_T_A1_A2_2",
+       "ms": 33
+      },
+      {
+       "still": "R_T_A1_A2_1",
+       "ms": 33
+      }
+     ],
+     "R_T_A2_A3_2": [
+      {
+       "still": "R_T_A2_A3_1",
+       "ms": 33
+      },
+      {
+       "still": "R_A2_stroke_low",
+       "ms": 33
+      },
+      {
+       "still": "R_T_A1_A2_2",
+       "ms": 33
+      },
+      {
+       "still": "R_T_A1_A2_1",
+       "ms": 33
+      }
+     ],
+     "R_T_A2_A3_3": [
+      {
+       "still": "R_T_A2_A3_2",
+       "ms": 33
+      },
+      {
+       "still": "R_T_A2_A3_1",
+       "ms": 33
+      },
+      {
+       "still": "R_A2_stroke_low",
+       "ms": 33
+      },
+      {
+       "still": "R_T_A1_A2_2",
+       "ms": 33
+      },
+      {
+       "still": "R_T_A1_A2_1",
+       "ms": 33
+      }
+     ],
+     "R_A3_stroke_out": [
+      {
+       "still": "R_T_A2_A3_3",
+       "ms": 33
+      },
+      {
+       "still": "R_T_A2_A3_2",
+       "ms": 33
+      },
+      {
+       "still": "R_T_A2_A3_1",
+       "ms": 33
+      },
+      {
+       "still": "R_A2_stroke_low",
+       "ms": 33
+      },
+      {
+       "still": "R_T_A1_A2_2",
+       "ms": 33
+      },
+      {
+       "still": "R_T_A1_A2_1",
+       "ms": 33
+      }
+     ],
+     "R_T_A1_B2_1": [
+      {
+       "still": "R_T_A1_B2_0",
+       "ms": 33
+      }
+     ],
+     "R_T_A1_B2_2": [
+      {
+       "still": "R_T_A1_B2_1",
+       "ms": 33
+      },
+      {
+       "still": "R_T_A1_B2_0",
+       "ms": 33
+      }
+     ],
+     "R_T_A1_B2_2b": [
+      {
+       "still": "R_T_A1_B2_2",
+       "ms": 33
+      },
+      {
+       "still": "R_T_A1_B2_1",
+       "ms": 33
+      },
+      {
+       "still": "R_T_A1_B2_0",
+       "ms": 33
+      }
+     ],
+     "R_T_A1_B2_3": [
+      {
+       "still": "R_T_A1_B2_2b",
+       "ms": 33
+      },
+      {
+       "still": "R_T_A1_B2_2",
+       "ms": 33
+      },
+      {
+       "still": "R_T_A1_B2_1",
+       "ms": 33
+      },
+      {
+       "still": "R_T_A1_B2_0",
+       "ms": 33
+      }
+     ],
+     "R_B2_dip": [
+      {
+       "still": "R_T_A1_B2_3",
+       "ms": 33
+      },
+      {
+       "still": "R_T_A1_B2_2b",
+       "ms": 33
+      },
+      {
+       "still": "R_T_A1_B2_2",
+       "ms": 33
+      },
+      {
+       "still": "R_T_A1_B2_1",
+       "ms": 33
+      },
+      {
+       "still": "R_T_A1_B2_0",
+       "ms": 33
+      }
+     ]
+    },
+    "min_show_ms": 120,
+    "min_show_by_still": {
+     "R_B1_lean": 500
+    }
    },
-   "note": "Paints in short strokes (A1 > A2 > A3 > A2), now and then leans back to judge it (B1), then dips the brush in the pot on the ladder (B2)."
+   "note": "Paints in short strokes (A1 > A2 > A3 > A2), every move drawn through in-betweens (R_T_*, 50 ms each, jobs 022m/022n); now and then leans back to judge it (B1, a cut), then dips the brush in the pot on the ladder (B2) through in-betweens."
   },
   "stagehand": {
    "note": "Boots only, behind the backdrop, clipped to the gap mask. First crossing 8-15 s after the scene starts; then every 40-70 s: walk 'rtl' (right to left), wait 10-15 s, walk 'ltr' (left to right). Each walk plays its track once at its fps. Paused / reduced motion: no walking. He never reacts to finds.",
