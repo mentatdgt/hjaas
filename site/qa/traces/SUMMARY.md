@@ -179,3 +179,17 @@ in git: `s5r2-crossing-mobile-4x.json.gz`.
 |---|---|
 | Out (`--mark hj-qa-walk --span 5000`): the whole man in the slot, then the boots. | 300 begun, none dropped. Longest task 5 ms. |
 | Back (`--mark hj-qa-back --span 5000`): the boots, then the whole man. | 300 begun, none dropped. Longest task 2 ms. |
+
+### Scene 5, round 3 (Rachel's in-betweens), 2026-11-24
+
+One trace, same profile, production build of `site/scene-5`: a new visitor (storage cleared before the page's
+script), then three finds. Load 3.9 when it ended. Raw file, not in git: `s5r3-moves-mobile-4x.json.gz`.
+"Dropped" counts `droppedAffectingSmoothness`.
+
+| Part | Result |
+|---|---|
+| The painting (1.0 to 7.0 s) | 360 begun, 6 dropped, all between 1.0 and 1.1 s, where one task of 52 ms puts the cast on the plate (blank paper, before the brush moves). None after that. |
+| At work, 5 s (`--mark hj-qa-work --span 5000`): her strokes through the in-betweens | 300 begun, 1 dropped. Longest task 17 ms. |
+| Three finds (`--mark hj-qa-find1`, `2`, `3`, `--span 3500`): lead-in, salute, back, with the swath's fade | 210 begun each; 1, 0 and 0 dropped. Longest task 27, 34 and 11 ms. |
+
+The two builds measured in turn without the tracer: `../scene5/frames-r3-vs-r2.json`.

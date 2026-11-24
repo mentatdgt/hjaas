@@ -1,0 +1,361 @@
+{
+ "what": "The production builds of round 2 (fb6901e) and round 3 (ee1d43f), in turn on the same Mac, phone profile. 5 pages each, 6 finds a page, 4.5 s from each find. Longest frames in ms. Load 5 to 7, 23:11 to 23:25, nothing else of ours running.",
+ "chrome, slowed 4 times": {
+  "round2": {
+   "painting": [
+    33,
+    17,
+    33,
+    17,
+    33
+   ],
+   "longestFrameOfEachFind": [
+    17,
+    17,
+    17,
+    17,
+    17,
+    17,
+    17,
+    17,
+    17,
+    17,
+    17,
+    17,
+    17,
+    33,
+    33,
+    33,
+    33,
+    50,
+    50,
+    67,
+    67,
+    67,
+    84,
+    100,
+    117,
+    117,
+    117,
+    117,
+    183,
+    350
+   ],
+   "median": 33,
+   "framesOver25msPerFind": 1.07
+  },
+  "round3": {
+   "painting": [
+    33,
+    17,
+    33,
+    17,
+    17
+   ],
+   "longestFrameOfEachFind": [
+    17,
+    17,
+    17,
+    17,
+    17,
+    17,
+    17,
+    17,
+    17,
+    17,
+    17,
+    33,
+    33,
+    33,
+    33,
+    33,
+    33,
+    33,
+    33,
+    50,
+    50,
+    50,
+    67,
+    83,
+    83,
+    83,
+    100,
+    117,
+    150,
+    367
+   ],
+   "median": 33,
+   "framesOver25msPerFind": 1.17
+  }
+ },
+ "webkit, iPhone 14 profile": {
+  "round2": {
+   "painting": [
+    290,
+    42,
+    62,
+    43,
+    149
+   ],
+   "longestFrameOfEachFind": [
+    19,
+    19,
+    19,
+    19,
+    21,
+    22,
+    22,
+    25,
+    25,
+    27,
+    29,
+    30,
+    31,
+    33,
+    35,
+    36,
+    36,
+    38,
+    49,
+    60,
+    62,
+    64,
+    64,
+    69,
+    69,
+    122,
+    130,
+    165,
+    272,
+    315
+   ],
+   "median": 36,
+   "framesOver25msPerFind": 2.3
+  },
+  "round3": {
+   "painting": [
+    21,
+    31,
+    39,
+    44,
+    36
+   ],
+   "longestFrameOfEachFind": [
+    18,
+    18,
+    18,
+    22,
+    22,
+    22,
+    23,
+    24,
+    24,
+    24,
+    24,
+    25,
+    25,
+    27,
+    27,
+    28,
+    29,
+    31,
+    31,
+    35,
+    41,
+    51,
+    79,
+    90,
+    96,
+    100,
+    104,
+    118,
+    147,
+    233
+   ],
+   "median": 28,
+   "framesOver25msPerFind": 1.23
+  }
+ },
+ "an earlier tour, tapped finds and switches, 6 pages each, 22:35 to 22:51 (longest frame, ms)": {
+  "chrome painting": {
+   "round2": [
+    33,
+    50,
+    33,
+    17,
+    33,
+    33
+   ],
+   "round3": [
+    33,
+    33,
+    17,
+    17,
+    33,
+    50
+   ]
+  },
+  "chrome to Set, short brush": {
+   "round2": [
+    133,
+    200,
+    117,
+    150,
+    183,
+    200
+   ],
+   "round3": [
+    167,
+    133,
+    100,
+    167,
+    150,
+    250
+   ]
+  },
+  "webkit painting": {
+   "round2": [
+    39,
+    43,
+    34,
+    202,
+    497,
+    49
+   ],
+   "round3": [
+    39,
+    42,
+    24,
+    36,
+    26,
+    52
+   ]
+  },
+  "webkit find boards": {
+   "round2": [
+    24,
+    41,
+    20,
+    22,
+    101,
+    54
+   ],
+   "round3": [
+    42,
+    32,
+    34,
+    21,
+    31,
+    42
+   ]
+  },
+  "webkit find drop-cloth": {
+   "round2": [
+    18,
+    49,
+    18,
+    18,
+    49,
+    20
+   ],
+   "round3": [
+    18,
+    95,
+    18,
+    18,
+    62,
+    61
+   ]
+  },
+  "webkit find ladder": {
+   "round2": [
+    46,
+    18,
+    19,
+    23,
+    68,
+    24
+   ],
+   "round3": [
+    47,
+    72,
+    18,
+    20,
+    54,
+    121
+   ]
+  },
+  "webkit to Set, short brush": {
+   "round2": [
+    55,
+    53,
+    32,
+    56,
+    56,
+    56
+   ],
+   "round3": [
+    69,
+    65,
+    24,
+    469,
+    50,
+    58
+   ]
+  },
+  "chrome find boards": {
+   "round2": [
+    100,
+    50,
+    67,
+    67,
+    50,
+    33
+   ],
+   "round3": [
+    67,
+    167,
+    33,
+    133,
+    50,
+    117
+   ]
+  },
+  "chrome find drop-cloth": {
+   "round2": [
+    83,
+    17,
+    117,
+    17,
+    33,
+    17
+   ],
+   "round3": [
+    117,
+    133,
+    17,
+    67,
+    67,
+    217
+   ]
+  },
+  "chrome find ladder": {
+   "round2": [
+    17,
+    33,
+    17,
+    17,
+    100,
+    17
+   ],
+   "round3": [
+    117,
+    133,
+    33,
+    17,
+    50,
+    183
+   ]
+  }
+ }
+}
