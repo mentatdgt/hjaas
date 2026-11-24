@@ -45,3 +45,31 @@ it('restores the portrait centre after landscape clamps the scroller', () => {
   expect(viewport.scrollLeft).toBeCloseTo(610);
   expect(pan.view.x + pan.view.width / 2).toBeCloseTo(portraitCentre);
 });
+
+it('does not take a crop moved part way through a rotation for a pan', () => {
+  const viewport = new Viewport();
+  const plate = { clientWidth: 1000 };
+  const save = vi.fn();
+  const pan = new Pan(viewport as unknown as HTMLElement, false, save);
+  pan.use(plate as HTMLElement, 836, null);
+  frames.splice(0).forEach((frame) => frame(0));
+  viewport.scrollLeft = 610;
+  viewport.dispatchEvent(new Event('scroll'));
+  expect(save).toHaveBeenCalledOnce();
+
+  // WebKit: wider, still overflowing, the scroller clamped, and the scroll told of before any layout().
+  viewport.clientWidth = 700;
+  viewport.scrollLeft = 300;
+  viewport.dispatchEvent(new Event('scroll'));
+  frames.splice(0).forEach((frame) => frame(0));
+  expect(save).toHaveBeenCalledOnce();
+
+  viewport.clientWidth = 390;
+  pan.layout();
+  expect(viewport.scrollLeft).toBeCloseTo(610);
+  frames.splice(0).forEach((frame) => frame(0));
+  // And a pan is a pan again.
+  viewport.scrollLeft = 200;
+  viewport.dispatchEvent(new Event('scroll'));
+  expect(save).toHaveBeenCalledTimes(2);
+});

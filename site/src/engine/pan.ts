@@ -27,6 +27,8 @@ export class Pan {
   private glide = 0;
   private drifting: Animation | null = null;
   private settingScroll = false;
+  /** The window's and the plate's widths the scroll position was last set or read for. */
+  private shape = '';
   private readonly onPan: (centreX: number) => void;
   private panned: boolean;
 
@@ -72,12 +74,17 @@ export class Pan {
 
   /** Keep the same part of the room in the middle when the layout changes. */
   layout(): void {
+    this.shape = this.shapeNow();
     if (!this.plate || !this.active) return;
     const u = this.plate.clientWidth / PLATE.w;
     if (!u) return;
     this.stopDrift();
     const centre = this.centreX ?? this.focusX;
     this.scrollTo(centre * u - this.viewport.clientWidth / 2);
+  }
+
+  private shapeNow(): string {
+    return `${this.viewport.clientWidth} ${this.plate?.clientWidth ?? 0}`;
   }
 
   /** A scroll of the page's own, which is not a pan. */
@@ -141,6 +148,12 @@ export class Pan {
   private onScroll = (): void => {
     const u = this.plate ? this.plate.clientWidth / PLATE.w : 0;
     if (!this.active || !u || this.settingScroll) return;
+    // Part way through a rotation (WebKit tells of the scroll before the new layout has settled): the browser
+    // has moved the crop to fit its new window. That is not a pan either.
+    if (this.shape !== this.shapeNow()) {
+      this.layout();
+      return;
+    }
     this.centreX = (this.viewport.scrollLeft + this.viewport.clientWidth / 2) / u;
     this.panned = true;
     this.onPan(this.centreX);
