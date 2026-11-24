@@ -4,6 +4,8 @@
 
 Pipeline and roles: see README.md. Quinn = ChatGPT (read-only GitHub access; the user uploads its images).
 
+If you were started by the Fable bridge (a job from `wren-inbox/quinn/fable-jobs/`), follow `FABLE-LOOP.md` and the rules appended to your prompt: no questions, never touch main, push your branch, end with a short report.
+
 ## Building the website
 Start with `HANDOVER.md`: scope, assets, placement, timing, QA and how to report.
 
