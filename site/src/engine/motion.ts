@@ -15,15 +15,22 @@ export const CSS_EASE_OUT = 'cubic-bezier(0.23, 1, 0.32, 1)';
 
 const query = typeof matchMedia === 'function' ? matchMedia('(prefers-reduced-motion: reduce)') : null;
 
+// Kept, and changed only by the event. Chrome sends no event for a change that `matches` has already been asked
+// about, and the stagehand's walk and the live screen ask on every frame: the change would go by unnoticed.
+let reduced = query?.matches ?? false;
+const listeners = new Set<(reduced: boolean) => void>();
+query?.addEventListener('change', (event) => {
+  reduced = event.matches;
+  for (const listener of listeners) listener(reduced);
+});
+
 export function reducedMotion(): boolean {
-  return query?.matches ?? false;
+  return reduced;
 }
 
 export function onReducedMotionChange(listener: (reduced: boolean) => void): () => void {
-  if (!query) return () => {};
-  const handler = (event: MediaQueryListEvent): void => listener(event.matches);
-  query.addEventListener('change', handler);
-  return () => query.removeEventListener('change', handler);
+  listeners.add(listener);
+  return () => void listeners.delete(listener);
 }
 
 export { gsap };

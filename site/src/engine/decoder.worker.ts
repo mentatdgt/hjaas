@@ -20,5 +20,3 @@ decoder.onmessage = async (event) => {
     decoder.postMessage({ id, error: String(error) });
   }
 };
-
-export {};
