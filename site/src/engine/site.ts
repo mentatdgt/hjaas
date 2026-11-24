@@ -10,7 +10,7 @@ import { Logo } from './logo';
 import { onReducedMotionChange, reducedMotion } from './motion';
 import { Pan } from './pan';
 import { Scene } from './scene';
-import { freshScene, huntView, loadProgress, presetAll, saveProgress, type HuntView, type SceneProgress } from './state';
+import { freshScene, huntView, isProgressKey, loadProgress, presetAll, resetProgress, saveFind, savePan, saveSeen, type HuntView, type SceneProgress } from './state';
 import { seeded } from './steps';
 import { Transition } from './transition';
 import type { SceneConfig, Spot } from './types';
@@ -146,17 +146,12 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
 
   // ---- Progress: each scene has its own found mushrooms and pan position; the unlock is shared. ----
 
-  const progress = loadProgress();
+  if (flags.reset) resetProgress();
+  const progress = loadProgress(scenes);
   const stateOf = (id: string): SceneProgress => (progress.scenes[id] ??= freshScene());
   const first = sceneInAddress();
   /** Nothing has been painted for this visitor before: their first visit. */
   const newcomer = Object.values(progress.scenes).every((scene) => !scene.seen);
-  for (const scene of scenes) {
-    const state = stateOf(scene.id);
-    // A find of a hiding spot that has since been replaced counts for the spot that took its place.
-    const now = state.found.map((id) => scene.replaced?.[id] ?? id);
-    state.found = [...new Set(now)].filter((id) => scene.spots.some((spot) => spot.id === id));
-  }
   // QA presets. `?all=N`: the first N mushrooms of the whole site, scene by scene in menu order (it wins over
   // `?found`). `?found=N`: the opening scene starts with this many found.
   const preset = flags.all !== undefined || flags.found !== undefined;
@@ -166,10 +161,6 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   } else if (flags.found !== undefined) {
     stateOf(first.id).found = first.spots.slice(0, Math.max(0, Math.min(first.spots.length, flags.found))).map((spot) => spot.id);
   }
-  const save = (): void => {
-    if (preset) return; // a QA preset is never written back
-    saveProgress(progress);
-  };
   const foundIn = new Map<string, Set<string>>(scenes.map((scene) => [scene.id, new Set(stateOf(scene.id).found)]));
   const findsOf = (id: string): ReadonlySet<string> => foundIn.get(id) ?? new Set();
   // The Contact button is earned by every mushroom of every scene, and worked out from the finds themselves:
@@ -266,12 +257,27 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
 
   // Where a phone visitor leaves a room is where they find it next time.
   let panSave = 0;
+  const pendingPan = new Map<string, number>();
+  const flushPan = (): void => {
+    window.clearTimeout(panSave);
+    for (const [id, x] of pendingPan) savePan(id, x);
+    pendingPan.clear();
+  };
+  window.addEventListener('pagehide', flushPan);
+  cleanup.push(() => {
+    window.removeEventListener('pagehide', flushPan);
+    flushPan();
+  });
   const pan = new Pan(viewport, progress.panned, (centreX) => {
     if (!current) return;
     progress.panned = true;
-    stateOf(current.config.id).panX = Math.round(centreX);
+    const id = current.config.id;
+    const x = Math.round(centreX);
+    stateOf(id).panX = x;
+    if (preset) return;
+    pendingPan.set(id, x);
     window.clearTimeout(panSave);
-    panSave = window.setTimeout(save, 300);
+    panSave = window.setTimeout(flushPan, 300);
   });
   cleanup.push(() => pan.destroy());
 
@@ -392,7 +398,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
         const was = progress.unlocked;
         progress.unlocked = viewOf(config).unlocked;
         if (progress.unlocked && !was) unlockEarned = true;
-        save();
+        if (!preset) saveFind(config.id, spot.id);
         if (!self) return;
         const wasReacting = self.reactingNow;
         const done = self.react();
@@ -414,6 +420,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       !current,
     ).then((loaded) => {
       self = loaded;
+      loaded.syncFinds();
       scenesLoaded.set(config.id, loaded);
       return loaded;
     });
@@ -421,6 +428,36 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     void scene.catch(() => loading.delete(config.id));
     return scene;
   };
+
+  const syncProgress = (event: StorageEvent): void => {
+    if (preset || event.storageArea !== localStorage || !isProgressKey(event.key)) return;
+    const saved = loadProgress(scenes);
+    progress.panned ||= saved.panned;
+    if (progress.panned) pan.markPanned();
+    let changed = false;
+    for (const { id } of scenes) {
+      const theirs = saved.scenes[id];
+      const mine = stateOf(id);
+      mine.seen ||= theirs.seen;
+      if (!pendingPan.has(id) && theirs.panX !== null) mine.panX = theirs.panX;
+      const found = foundIn.get(id)!;
+      const before = found.size;
+      for (const spot of theirs.found) found.add(spot);
+      if (found.size === before) continue;
+      mine.found = [...found];
+      scenesLoaded.get(id)?.syncFinds();
+      changed = true;
+    }
+    if (changed) {
+      const view = viewOf(current?.config ?? first);
+      progress.unlocked = view.unlocked;
+      unlockEarned = false;
+      caption.set(view);
+      markTabs();
+    }
+  };
+  window.addEventListener('storage', syncProgress);
+  cleanup.push(() => window.removeEventListener('storage', syncProgress));
 
   /** Put a scene in the window: its plate, its pan position, its name. */
   const place = (scene: Scene): void => {
@@ -438,7 +475,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     const state = stateOf(scene.config.id);
     if (state.seen) return;
     state.seen = true;
-    save();
+    if (!preset) saveSeen(scene.config.id);
   };
 
   // ---- Moving between scenes. ----

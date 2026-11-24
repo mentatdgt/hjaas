@@ -1,8 +1,8 @@
 // Per-visitor progress, kept in localStorage. Storage can be blocked or full, so every access is guarded
 // and the site works the same without it (progress just lasts for the visit).
-import { flags } from './flags';
 
 const KEY = 'hjaas:site:v2';
+const PREFIX = 'hjaas:site:v3:';
 /** Scene 1 on its own, before there were scenes to move between. Read once, to carry progress over. */
 const KEY_V1 = 'hjaas:scene1:v1';
 
@@ -19,7 +19,7 @@ export interface Progress {
   scenes: Record<string, SceneProgress>;
   /**
    * Every mushroom of every scene is found: the Contact button is theirs. Never trusted when read back: the
-   * page works it out from the finds (unlockedBy) and only ever saves what that says. (Before scene 5 it was
+   * page works it out from the finds (unlockedBy). (Before scene 5 it was
    * set by the first scene to reach 10 of 10; a saved `true` from then means nothing now.)
    */
   unlocked: boolean;
@@ -28,48 +28,97 @@ export interface Progress {
 }
 
 export const freshScene = (): SceneProgress => ({ found: [], seen: false, panX: null });
-const empty = (): Progress => ({ scenes: {}, unlocked: false, panned: false });
+const empty = (): Progress => ({ scenes: Object.create(null), unlocked: false, panned: false });
 
 const strings = (value: unknown): string[] =>
   Array.isArray(value) ? value.filter((id): id is string => typeof id === 'string') : [];
 const position = (value: unknown): number | null => (typeof value === 'number' && Number.isFinite(value) ? value : null);
 
-export function loadProgress(): Progress {
+function readLegacy(): Progress {
+  const value = localStorage.getItem(KEY);
+  if (value) {
+    const data = JSON.parse(value) as Partial<Progress>;
+    const scenes: Record<string, SceneProgress> = Object.create(null);
+    for (const [id, scene] of Object.entries(data.scenes ?? {})) {
+      scenes[id] = { found: strings(scene?.found), seen: scene?.seen === true, panX: position(scene?.panX) };
+    }
+    return { scenes, unlocked: false, panned: data.panned === true };
+  }
+  const old = localStorage.getItem(KEY_V1);
+  if (!old) return empty();
+  const v1 = JSON.parse(old) as Record<string, unknown>;
+  return {
+    scenes: { build: { found: strings(v1.found), seen: v1.seenIntro === true, panX: position(v1.panX) } },
+    unlocked: false,
+    panned: v1.panned === true,
+  };
+}
+
+const sceneKey = (id: string, kind: 'found' | 'pan' | 'seen'): string =>
+  `${PREFIX}${kind}:${encodeURIComponent(id)}`;
+const findKey = (scene: string, spot: string): string => `${sceneKey(scene, 'found')}:${encodeURIComponent(spot)}`;
+
+export function resetProgress(): void {
   try {
-    if (flags.reset) {
-      localStorage.removeItem(KEY);
-      localStorage.removeItem(KEY_V1);
+    localStorage.removeItem(KEY);
+    localStorage.removeItem(KEY_V1);
+    for (let i = localStorage.length - 1; i >= 0; i--) {
+      const key = localStorage.key(i);
+      if (key?.startsWith(PREFIX)) localStorage.removeItem(key);
     }
-    const raw = localStorage.getItem(KEY);
-    if (raw) {
-      const data = JSON.parse(raw) as Partial<Progress>;
-      const scenes: Record<string, SceneProgress> = {};
-      for (const [id, scene] of Object.entries(data.scenes ?? {})) {
-        scenes[id] = { found: strings(scene?.found), seen: scene?.seen === true, panX: position(scene?.panX) };
-      }
-      return { scenes, unlocked: data.unlocked === true, panned: data.panned === true };
-    }
-    // Progress from before the scene menu belongs to scene 1 ("build").
-    const old = localStorage.getItem(KEY_V1);
-    if (!old) return empty();
-    const v1 = JSON.parse(old) as Record<string, unknown>;
-    return {
-      scenes: { build: { found: strings(v1.found), seen: v1.seenIntro === true, panX: position(v1.panX) } },
-      unlocked: v1.unlocked === true,
-      panned: v1.panned === true,
-    };
   } catch {
-    return empty();
+    // Storage is optional.
   }
 }
 
-export function saveProgress(progress: Progress): void {
+export function isProgressKey(key: string | null): boolean {
+  return key === null || key === KEY || key === KEY_V1 || key.startsWith(PREFIX);
+}
+
+export function loadProgress(scenes: readonly HuntScene[]): Progress {
+  let progress = empty();
   try {
-    localStorage.setItem(KEY, JSON.stringify(progress));
+    progress = readLegacy();
+  } catch {
+    // A damaged legacy snapshot does not affect the new records.
+  }
+  for (const scene of scenes) {
+    const state = Object.hasOwn(progress.scenes, scene.id) ? progress.scenes[scene.id] : freshScene();
+    const valid = new Set(scene.spots.map((spot) => spot.id));
+    const renamed = (id: string): string => scene.replaced && Object.hasOwn(scene.replaced, id) ? scene.replaced[id] : id;
+    const finds = new Set(state.found.map(renamed).filter((id) => valid.has(id)));
+    try {
+      for (const id of [...valid, ...Object.keys(scene.replaced ?? {})]) {
+        if (valid.has(renamed(id)) && localStorage.getItem(findKey(scene.id, id)) === '1') finds.add(renamed(id));
+      }
+      state.seen ||= localStorage.getItem(sceneKey(scene.id, 'seen')) === '1';
+      const pan = localStorage.getItem(sceneKey(scene.id, 'pan'));
+      if (pan !== null && Number.isFinite(Number(pan))) {
+        state.panX = Number(pan);
+        progress.panned = true;
+      }
+    } catch {
+      // The legacy state, or progress held by the caller, is still usable.
+    }
+    state.found = [...finds];
+    progress.scenes[scene.id] = state;
+  }
+  progress.unlocked = unlockedBy(scenes, (id) => new Set(progress.scenes[id]?.found));
+  return progress;
+}
+
+function write(key: string, value: string): void {
+  try {
+    localStorage.setItem(key, value);
   } catch {
     // Private mode or a full disk: carry on without saving.
   }
 }
+
+// Each find is its own atomic write. Two tabs can save different mushrooms concurrently.
+export const saveFind = (scene: string, spot: string): void => write(findKey(scene, spot), '1');
+export const saveSeen = (scene: string): void => write(sceneKey(scene, 'seen'), '1');
+export const savePan = (scene: string, centreX: number): void => write(sceneKey(scene, 'pan'), String(centreX));
 
 // ---- The hunt across the whole site. Pure, so the rules can be checked without a page. ----
 
@@ -77,6 +126,7 @@ export function saveProgress(progress: Progress): void {
 export interface HuntScene {
   id: string;
   spots: ReadonlyArray<{ id: string }>;
+  replaced?: Readonly<Record<string, string>>;
 }
 
 /** How many mushrooms the site has, and how many of them are found. `found` gives a scene's finds by its id. */

@@ -497,6 +497,11 @@ export class Scene {
     return async () => [await one()];
   }
 
+  syncFinds(): void {
+    this.hunt.syncFinds();
+    this.progressed();
+  }
+
   /** A mushroom of this scene was found (the host has counted it): the picture shows the hunt's progress. */
   private progressed(): void {
     this.progress?.reach();

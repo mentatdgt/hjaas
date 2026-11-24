@@ -95,6 +95,13 @@ export class Hunt {
     return new Hunt(options, aspect);
   }
 
+  syncFinds(): void {
+    for (const id of this.options.found) {
+      this.buttons.get(id)?.remove();
+      this.buttons.delete(id);
+    }
+  }
+
   get remaining(): number {
     return this.buttons.size;
   }

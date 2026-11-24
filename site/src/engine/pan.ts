@@ -52,6 +52,10 @@ export class Pan {
     this.layout();
   }
 
+  markPanned(): void {
+    this.panned = true;
+  }
+
   /** The plate x at the window's left edge, and how many plate px the window shows. */
   get view(): { x: number; width: number } {
     const u = this.plate ? this.plate.clientWidth / PLATE.w : 0;
