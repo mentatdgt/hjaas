@@ -1,7 +1,7 @@
 // The prize for finding all fifty: a contact form that opens from the caption-turned-button.
 // TODO(copy): the form's words (labels, choices, messages) are placeholders.
 import { MUSHROOM_ICON } from './caption';
-import { SendError, canSend, submitContact, type ContactPayload } from './submit';
+import { CONTACT_LIMITS, SendError, canSend, needsLength, submitContact, type ContactPayload } from './submit';
 
 const NEEDS = ['Build', 'Design', 'Film', 'Grow', 'Set Design', 'Something else'] as const;
 
@@ -40,6 +40,8 @@ export class ContactForm {
   private readonly shown = new Set<FieldName>();
   private closing = 0;
   private sending = false;
+  private submission = 0;
+  private pending: AbortController | null = null;
   private prepared = false;
 
   constructor(host: HTMLElement, trigger: HTMLElement) {
@@ -58,12 +60,12 @@ export class ContactForm {
             <p class="hj-alert hj-notice" role="status" hidden></p>
             <div class="hj-field">
               <label for="hj-name">Your name</label>
-              <input id="hj-name" name="name" type="text" autocomplete="name" autocapitalize="words" required aria-describedby="hj-name-err" />
+              <input id="hj-name" name="name" type="text" autocomplete="name" autocapitalize="words" maxlength="${CONTACT_LIMITS.name}" required aria-describedby="hj-name-err" />
               <p class="hj-err" id="hj-name-err" aria-live="polite" hidden></p>
             </div>
             <div class="hj-field">
               <label for="hj-email">Email</label>
-              <input id="hj-email" name="email" type="email" autocomplete="email" inputmode="email" spellcheck="false" required aria-describedby="hj-email-err" />
+              <input id="hj-email" name="email" type="email" autocomplete="email" inputmode="email" spellcheck="false" maxlength="${CONTACT_LIMITS.email}" required aria-describedby="hj-email-err" />
               <p class="hj-err" id="hj-email-err" aria-live="polite" hidden></p>
             </div>
             <fieldset class="hj-field hj-needs">
@@ -74,7 +76,7 @@ export class ContactForm {
             </fieldset>
             <div class="hj-field">
               <label for="hj-message">Message</label>
-              <textarea id="hj-message" name="message" rows="4" required aria-describedby="hj-message-err"></textarea>
+              <textarea id="hj-message" name="message" rows="4" maxlength="${CONTACT_LIMITS.message}" required aria-describedby="hj-message-err"></textarea>
               <p class="hj-err" id="hj-message-err" aria-live="polite" hidden></p>
             </div>
             <p class="hj-alert hj-failure" role="alert" hidden></p>
@@ -144,6 +146,7 @@ export class ContactForm {
   };
 
   destroy(): void {
+    this.cancelSubmission();
     window.removeEventListener('resize', this.onResize);
     window.clearTimeout(this.closing);
     this.dialog.remove();
@@ -164,6 +167,7 @@ export class ContactForm {
   /** Opens the sheet from the button. `instant` skips the entrance (keyboard-initiated opens). */
   open(instant = false): void {
     window.clearTimeout(this.closing);
+    this.closing = 0;
     // Measure where the button is before anything is changed, so the measurement forces no restyle.
     if (!this.dialog.open) this.anchor();
     this.dialog.classList.toggle('is-instant', instant);
@@ -176,7 +180,9 @@ export class ContactForm {
     this.body.scrollTop = 0;
     if (instant) this.dialog.classList.add('is-open');
     // Next frame, so the entrance transition has a starting state to move from.
-    else requestAnimationFrame(() => this.dialog.classList.add('is-open'));
+    else requestAnimationFrame(() => {
+      if (this.dialog.open && !this.closing) this.dialog.classList.add('is-open');
+    });
 
     if (!this.sent.hidden) return;
     // With a mouse or keyboard, start typing straight away. On touch, focusing a field would raise the
@@ -187,9 +193,12 @@ export class ContactForm {
 
   close(instant = false): void {
     if (!this.dialog.open) return;
+    this.cancelSubmission();
+    window.clearTimeout(this.closing);
     this.dialog.classList.toggle('is-instant', instant);
     this.dialog.classList.remove('is-open');
     const finish = (): void => {
+      this.closing = 0;
       this.dialog.close();
       // A sent message is done: the next opening starts with an empty form.
       if (!this.sent.hidden) this.reset();
@@ -216,7 +225,8 @@ export class ContactForm {
   /** Validates one field and shows or clears its message. Returns true when the field is fine. */
   private check(name: FieldName): boolean {
     const input = this.field(name);
-    const message = RULES[name](input.value.trim());
+    const max = CONTACT_LIMITS[name];
+    const message = input.value.length > max ? `Use ${max} characters or fewer.` : RULES[name](input.value.trim());
     const error = this.dialog.querySelector<HTMLElement>(`#hj-${name}-err`)!;
     error.textContent = message;
     error.hidden = !message;
@@ -227,7 +237,7 @@ export class ContactForm {
   }
 
   private async submit(): Promise<void> {
-    if (this.sending || !canSend) return;
+    if (this.sending || !canSend || !this.dialog.open || this.closing) return;
     const names = Object.keys(RULES) as FieldName[];
     const invalid = names.filter((name) => !this.check(name));
     if (invalid.length) {
@@ -242,18 +252,39 @@ export class ContactForm {
       message: String(data.get('message') ?? '').trim(),
     };
 
+    if (needsLength(payload.needs) > CONTACT_LIMITS.needs) {
+      this.alert.textContent = `Use ${CONTACT_LIMITS.needs} characters or fewer for your selections.`;
+      this.alert.hidden = false;
+      return;
+    }
+
     this.alert.hidden = true;
+    const id = ++this.submission;
+    const request = new AbortController();
+    this.pending = request;
     this.setSending(true);
     try {
-      const result = await submitContact(payload);
+      const result = await submitContact(payload, request.signal);
+      if (id !== this.submission || !this.dialog.open) return;
       this.showSent(payload.email, result === 'test');
     } catch (error) {
+      if (id !== this.submission || !this.dialog.open) return;
       this.alert.textContent = error instanceof SendError && error.reason === 'not-connected' ? COPY.notSent : COPY.failed;
       this.alert.hidden = false;
       // Focus never left the Send button, so "try again" is one key press away.
     } finally {
-      this.setSending(false);
+      if (id === this.submission) {
+        this.pending = null;
+        this.setSending(false);
+      }
     }
+  }
+
+  private cancelSubmission(): void {
+    this.submission++;
+    this.pending?.abort();
+    this.pending = null;
+    if (this.sending) this.setSending(false);
   }
 
   private setSending(sending: boolean): void {
