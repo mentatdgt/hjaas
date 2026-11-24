@@ -56,3 +56,22 @@ No mushroom or tap box inside the slot, where he now appears: canvas x 1505–16
 - **Memory:** your 30 orders again.
 - **The standards check** (`.claude/skills/review-animations/STANDARDS.md`) for the walk.
 - Then Wren reviews and the user does the phone check.
+
+## Round 3 (2026-11-24): Rachel's in-betweens
+The user found Rachel's hand movements jerky. The package now has 14 more Rachel stills (`R_T_*`, arm-only in-betweens by Quinn, jobs 022m/022n). `routine.json` plays them for 50 ms each between her poses: in the strokes, the dip and the salute. They are ordinary stills and steps, so no data change is needed for those.
+
+**One engine addition: `reaction.lead_in`.** It maps a still to a list of steps. When a find starts her reaction, look up the still she is showing at that moment:
+- if it's in `lead_in`, play those steps first (33 ms each: the quick way back to rest), then the reaction's `steps`;
+- if it isn't (she's at rest, blinking, or nearly at rest), start the reaction's `steps` straight away;
+- a second find during the reaction still uses `again: 'hold'` and never replays the lead-in;
+- **`reaction.min_show_ms` (120):** before starting the reaction, let the still on screen finish showing for at least this long, or for its own planned time if that's shorter. Otherwise a pose the routine has just cut to (for example the lean) flashes for a single frame. `reaction.min_show_by_still` overrides it per still (`R_B1_lean`: 500 ms, so the lean is never just a twitch).
+- **After the reaction:** pick the routine up again at its next `R_A1` step (the start of the next stroke cycle, from rest), never in the middle of a move. The reaction ends at rest, so resuming mid-move makes her jump.
+
+This stops the salute starting with a jump when she's mid-stroke or mid-dip. Wren's independent frame check found jumps of up to 77 px there before.
+
+Bring the package in again as in section 0, run `npm run assets`, and check:
+- **60 fps recordings** of: a stroke cycle, a dip, a find while she's at rest, a find while her arm is stretched out (A3), and a find during the dip. The hand moves through the in-betweens with no pops.
+- **Timing:** each in-between is held about 3 frames (50 ms; lead-in 2 frames) and is never skipped on the throttled phone.
+- **Memory:** Rachel's decoded stills grow by about 11 MB on Set Design, and are released when it's hidden like the rest. The whole page stays under 80 MB.
+
+Add the results to your report as `reviews/scene-5-review-03.md`.

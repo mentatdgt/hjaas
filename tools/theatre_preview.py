@@ -39,10 +39,25 @@ def timeline(actor, total_ms, finds=()):
     for f in finds:
         steps = a.get('reaction', {}).get('steps', [])
         if not steps: continue
+        # lead-in: from whatever pose she is in, back to rest through her in-betweens first (routine.json reaction.lead_in)
+        cur = [x for x in seq if x[0] <= f]
+        if cur:                           # never cut a drawing after a single frame: let it show for min_show_ms (or its own time)
+            st = cur[-1][0]; nxt = [x[0] for x in seq if x[0] > st]; own = (nxt[0] - st) if nxt else 10**9
+            ms_min = a['reaction'].get('min_show_by_still', {}).get(cur[-1][1], a['reaction'].get('min_show_ms', 0))
+            f = max(f, st + min(ms_min, own))
+            cur = [x for x in seq if x[0] <= f]
+        cur = cur[-1][1] if cur else None
+        steps = a['reaction'].get('lead_in', {}).get(cur, []) + steps
         dur = sum(pick(s['ms']) for s in steps)
-        before = [x for x in seq if x[0] < f]; after = [x for x in seq if x[0] >= f + dur]
+        before = [x for x in seq if x[0] < f]
         rt = f; react = []
         for s in steps: react.append((rt, s['still'])); rt += pick(s['ms'])
+        # afterwards she picks the routine up again at rest (its next R_A1 step), never in the middle of a move
+        rest = [x for x in seq if x[0] >= f and x[1] == 'R_A1']
+        if rest:
+            shift = rt - rest[0][0]; after = [(x[0] + shift, x[1]) for x in seq if x[0] >= rest[0][0]]
+        else:
+            after = [x for x in seq if x[0] >= rt]
         seq = before + react + after
     return sorted(seq)
 

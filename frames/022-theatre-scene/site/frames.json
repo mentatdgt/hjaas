@@ -10,7 +10,7 @@
    "actor": "backdrop_01",
    "x": 929,
    "y": 0,
-   "w": 360,
+   "w": 367,
    "h": 562,
    "stills": [
     "P_01"
@@ -20,9 +20,9 @@
   },
   {
    "actor": "backdrop_02",
-   "x": 978,
+   "x": 982,
    "y": 0,
-   "w": 330,
+   "w": 332,
    "h": 562,
    "stills": [
     "P_02"
@@ -32,10 +32,10 @@
   },
   {
    "actor": "backdrop_03",
-   "x": 997,
+   "x": 1001,
    "y": 0,
-   "w": 337,
-   "h": 560,
+   "w": 336,
+   "h": 558,
    "stills": [
     "P_03"
    ],
@@ -44,9 +44,9 @@
   },
   {
    "actor": "backdrop_04",
-   "x": 1019,
+   "x": 1024,
    "y": 0,
-   "w": 414,
+   "w": 450,
    "h": 562,
    "stills": [
     "P_04"
@@ -56,10 +56,10 @@
   },
   {
    "actor": "backdrop_05",
-   "x": 1129,
+   "x": 1133,
    "y": 0,
-   "w": 366,
-   "h": 548,
+   "w": 364,
+   "h": 534,
    "stills": [
     "P_05"
    ],
@@ -68,9 +68,9 @@
   },
   {
    "actor": "backdrop_06",
-   "x": 1145,
+   "x": 1147,
    "y": 0,
-   "w": 356,
+   "w": 354,
    "h": 492,
    "stills": [
     "P_06"
@@ -80,10 +80,10 @@
   },
   {
    "actor": "backdrop_07",
-   "x": 1163,
-   "y": 26,
-   "w": 342,
-   "h": 486,
+   "x": 1166,
+   "y": 28,
+   "w": 339,
+   "h": 484,
    "stills": [
     "P_07"
    ],
@@ -92,10 +92,10 @@
   },
   {
    "actor": "backdrop_08",
-   "x": 1252,
-   "y": 48,
-   "w": 257,
-   "h": 513,
+   "x": 1256,
+   "y": 49,
+   "w": 253,
+   "h": 512,
    "stills": [
     "P_08"
    ],
@@ -104,9 +104,9 @@
   },
   {
    "actor": "backdrop_09",
-   "x": 1305,
+   "x": 1307,
    "y": 62,
-   "w": 224,
+   "w": 222,
    "h": 499,
    "stills": [
     "P_09"
@@ -116,10 +116,10 @@
   },
   {
    "actor": "backdrop_10",
-   "x": 1350,
-   "y": 230,
-   "w": 179,
-   "h": 323,
+   "x": 1351,
+   "y": 231,
+   "w": 178,
+   "h": 322,
    "stills": [
     "P_10"
    ],
@@ -246,7 +246,21 @@
     "R_A1_blink",
     "R_B1_lean",
     "R_B2_dip",
-    "R_K1_salute"
+    "R_K1_salute",
+    "R_T_A1_A2_1",
+    "R_T_A1_A2_2",
+    "R_T_A1_B2_0",
+    "R_T_A1_B2_1",
+    "R_T_A1_B2_2",
+    "R_T_A1_B2_2b",
+    "R_T_A1_B2_3",
+    "R_T_A1_K1_1",
+    "R_T_A1_K1_1b",
+    "R_T_A1_K1_2",
+    "R_T_A1_K1_3",
+    "R_T_A2_A3_1",
+    "R_T_A2_A3_2",
+    "R_T_A2_A3_3"
    ]
   }
  ],
@@ -303,7 +317,21 @@
   "R_A1_blink": "rachel/R_A1_blink.png",
   "R_B1_lean": "rachel/R_B1_lean.png",
   "R_B2_dip": "rachel/R_B2_dip.png",
-  "R_K1_salute": "rachel/R_K1_salute.png"
+  "R_K1_salute": "rachel/R_K1_salute.png",
+  "R_T_A1_A2_1": "rachel/R_T_A1_A2_1.png",
+  "R_T_A1_A2_2": "rachel/R_T_A1_A2_2.png",
+  "R_T_A1_B2_0": "rachel/R_T_A1_B2_0.png",
+  "R_T_A1_B2_1": "rachel/R_T_A1_B2_1.png",
+  "R_T_A1_B2_2": "rachel/R_T_A1_B2_2.png",
+  "R_T_A1_B2_2b": "rachel/R_T_A1_B2_2b.png",
+  "R_T_A1_B2_3": "rachel/R_T_A1_B2_3.png",
+  "R_T_A1_K1_1": "rachel/R_T_A1_K1_1.png",
+  "R_T_A1_K1_1b": "rachel/R_T_A1_K1_1b.png",
+  "R_T_A1_K1_2": "rachel/R_T_A1_K1_2.png",
+  "R_T_A1_K1_3": "rachel/R_T_A1_K1_3.png",
+  "R_T_A2_A3_1": "rachel/R_T_A2_A3_1.png",
+  "R_T_A2_A3_2": "rachel/R_T_A2_A3_2.png",
+  "R_T_A2_A3_3": "rachel/R_T_A2_A3_3.png"
  },
  "clips": {}
 }

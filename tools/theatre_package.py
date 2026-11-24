@@ -110,7 +110,8 @@ if __name__ == '__main__':
     lamp = {f'L_{i:02d}': Image.open(p) for i, p in enumerate(sorted(glob.glob(f'{W}/lamp/L_*.png')))}
     add_layer(m, out, 'lamp', lamp, {'scenery': True})
     # 4. Rachel
-    names = ['A1', 'A2_stroke_low', 'A3_stroke_out', 'A1_blink', 'B1_lean', 'B2_dip', 'K1_salute']
+    names = ['A1', 'A2_stroke_low', 'A3_stroke_out', 'A1_blink', 'B1_lean', 'B2_dip', 'K1_salute'] + \
+            sorted(os.path.basename(p)[2:-4] for p in glob.glob(f'{W}/R_T_*.png'))   # arm in-betweens (job 022m)
     add_layer(m, out, 'rachel', {f'R_{n}': Image.open(f'{W}/R_{n}.png') for n in names})
     json.dump(m, open(f'{out}/frames.json', 'w'), indent=1)
     print('layers', [l['actor'] for l in m['layers']])

@@ -1,0 +1,3 @@
+- `T_A1_B2_0.png` — Approximate midpoint from A1 to B2_1. The built-in ImageGen edit lowers the wrist and brings the brush nearly level. Composited onto A1 and verified at 1024 × 1024 with no changes outside the arm and brush edit area.
+- `T_A1_B2_2b.png` — Approximate midpoint from B2_2 to B2_3. The built-in ImageGen edit lowers the hand and turns the brush about 60° down and to the right. Composited onto A1 and verified at 1024 × 1024 with no changes outside the arm and brush edit area.
+- `T_A1_K1_1b.png` — Approximate midpoint from K1_1 to K1_2. The built-in ImageGen edit brings the grip inward and turns the brush up toward the salute. Composited onto A1 and verified at 1024 × 1024 with no changes outside the arm and brush edit area.

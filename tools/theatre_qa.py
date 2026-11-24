@@ -12,21 +12,23 @@ from PIL import Image
 
 W, G, SHEET = sys.argv[1:4]
 CX = 330
-names = ['A1', 'A2_stroke_low', 'A3_stroke_out', 'A1_blink', 'B1_lean', 'B2_dip', 'K1_salute']
+import glob, os
+names = ['A1', 'A2_stroke_low', 'A3_stroke_out', 'A1_blink', 'B1_lean', 'B2_dip', 'K1_salute'] + \
+        sorted(os.path.basename(p)[2:-4] for p in glob.glob(f'{W}/R_T_*.png'))   # the arm in-betweens (job 022m)
 def pmul(a): return np.dstack([a[..., :3] * a[..., 3:] / 255.0, a[..., 3]])
 base = pmul(np.asarray(Image.open(f'{W}/R_A1.png')).astype(float))
 H, Wd = base.shape[:2]; yy, xx = np.mgrid[0:H, 0:Wd]
 ok = True
 for n in names:
     raw = np.asarray(Image.open(f'{W}/R_{n}.png')).astype(int); s = pmul(raw.astype(float))
-    g = np.asarray(Image.open(f'{G}/green_{n}.png').convert('RGB')).astype(int)
+    g = np.asarray(Image.open(f'{W}/green_{n}.png' if n.startswith('T_') else f'{G}/green_{n}.png').convert('RGB')).astype(int)
     fg = ~((g[..., 1] > 150) & (g[..., 1] - np.maximum(g[..., 0], g[..., 2]) > 70))
     from scipy import ndimage as ndi
     inner = np.zeros((H, Wd), bool); inner[:, CX:CX + 1024] = ndi.binary_erosion(fg, iterations=2)
     outer = np.zeros((H, Wd), bool); outer[:, CX:CX + 1024] = ~ndi.binary_dilation(fg, iterations=2)
     under = int((inner & (raw[..., 3] < 250)).sum()); stray = int((outer & (raw[..., 3] > 5)).sum())
     legs = int(((np.abs(s - base).max(-1) > 2) & (yy >= 460) & (xx < 800)).sum())
-    face = int(((np.abs(s - base).max(-1) > 2) & (xx >= 690) & (xx <= 806) & (yy >= 195) & (yy <= 305)).sum()) if 'stroke' in n else -1
+    face = int(((np.abs(s - base).max(-1) > 2) & (xx >= 690) & (xx <= 806) & (yy >= 195) & (yy <= 305)).sum()) if ('stroke' in n or n.startswith('T_')) else -1
     bad = under > 30 or stray > 30 or legs > 0 or face > 0
     ok &= not bad
     print(f'{n:15s} under-opaque {under:5d}  stray {stray:5d}  legs-changed {legs:4d}  face-changed {face:5d}  {"FAIL" if bad else "ok"}')

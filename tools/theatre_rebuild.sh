@@ -10,12 +10,13 @@ set -e
 W=${1:?work dir}; A=frames/022-theatre-scene/approved
 mkdir -p "$W"
 python3 -I tools/theatre_lamp.py  $A/quinn/plate.png "$W" $A/quinn/plate_finished.png
-python3 -I tools/theatre_build.py "$W" $A/quinn $A/green A2_stroke_low A3_stroke_out A1_blink B1_lean B2_dip K1_salute
+python3 -I tools/theatre_build.py "$W" $A/quinn $A/green A2_stroke_low A3_stroke_out A1_blink B1_lean B2_dip K1_salute --inbetweens $A/quinn/arm
 python3 -I tools/theatre_walk.py  "$W/plate_nolamp.png" $A/quinn/walk "$W/walk" $A/quinn/body
 python3 -I tools/theatre_qa.py    "$W" $A/green "$W/qa_sheet.jpg"
 cp frames/022-theatre-scene/site/routine.json /tmp/theatre_routine.json
 rm -rf "$W/site"
 python3 -I tools/theatre_package.py "$W" "$W/plate_finished_nolamp.png" "$W/site"
 cp /tmp/theatre_routine.json "$W/site/routine.json"
+python3 -I tools/theatre_routine.py "$W/site/routine.json" "$W"     # Rachel's routine from her in-between chains (+ reaction lead-in)
 if [ "$2" = "--preview" ]; then PREVIEW_FPS=${PREVIEW_FPS:-30} python3 -I tools/theatre_preview.py "$W/site" "$W/theatre-preview.mp4" 32; fi
 echo "built $W/site  (copy it to frames/022-theatre-scene/site when happy)"
