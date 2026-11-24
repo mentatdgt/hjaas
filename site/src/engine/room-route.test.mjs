@@ -5,6 +5,14 @@ import { SCENES } from '../scenes';
 
 const script = readFileSync(new URL('../../public/room-route.js', import.meta.url), 'utf8');
 
+function run(fragment) {
+  const window = { location: { hash: fragment } };
+  const preload = { setAttribute() {} };
+  const document = { createElement: () => preload, head: { appendChild() {} } };
+  runInNewContext(script, { window, document });
+  return { window, preload };
+}
+
 it.each([
   ['', 'build', 'scene1'],
   ['#unknown', 'build', 'scene1'],
@@ -13,14 +21,13 @@ it.each([
   ['#%E0%A4%A', 'build', 'scene1'],
   ['#%67r%6fw', 'grow', 'scene2'],
 ])('normalises %j to %s for the router and preload', (fragment, id, folder) => {
-  const window = {};
-  runInNewContext(script, { window });
+  const { window, preload } = run(fragment);
   expect(window.hjaasRoom(fragment)).toEqual({ id, folder });
+  expect(preload.href).toBe(`./assets/${folder}/room.webp`);
 });
 
 it('keeps every route aligned with its scene plate', () => {
-  const window = {};
-  runInNewContext(script, { window });
+  const { window } = run('');
   for (const scene of SCENES) {
     expect(window.hjaasRoom(`#${scene.id}`)).toEqual({ id: scene.id, folder: scene.assets.replace(/\/$/, '') });
   }

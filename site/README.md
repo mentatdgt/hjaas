@@ -219,6 +219,11 @@ if the service wants a different shape. Until then:
 - `npm run dev`: the form shows its success state in **test mode** and says nothing was sent.
 - A production build: the form shows an error and never claims a message was sent.
 
+When publishing `site/dist/` to Netlify or Cloudflare Pages, the build includes `_headers`. Set
+`VITE_FORM_ENDPOINT` in the build environment or in `site/.env` before `npm run build`. The build adds
+the URL's origin to `connect-src` for an external HTTP(S) endpoint. A relative path such as `/api/contact`
+uses the existing same-origin allowance. Rebuild after changing the endpoint.
+
 ## URL switches (for review, not for visitors)
 
 They only work on `npm run dev`. A production build (`npm run build`, `npm run preview`, the live site)

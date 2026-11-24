@@ -45,7 +45,7 @@ function mushroom(kind: 'cream' | 'red', part: 'whole' | 'fill' | 'line' = 'whol
  * on top. A cover shrinks upward (scaleY), so the fill comes up from the bottom, spots and all. The covers and
  * the glint are boxes of the page, cut to the drawing's shape, so the compositor moves them.
  */
-const counter = (kind: 'cream' | 'red'): string => `<span class="hj-m">${mushroom(kind, 'fill')}<span class="hj-m-clip" style="clip-path:path('${STEM}')"><span class="hj-m-cover" data-part="stem"></span></span><span class="hj-m-clip" style="clip-path:path('${CAP}')"><span class="hj-m-cover" data-part="cap"></span><span class="hj-m-glint"></span></span>${mushroom(kind, 'line')}</span>`;
+const counter = (kind: 'cream' | 'red'): string => `<span class="hj-m">${mushroom(kind, 'fill')}<span class="hj-m-clip"><span class="hj-m-cover" data-part="stem"></span></span><span class="hj-m-clip"><span class="hj-m-cover" data-part="cap"></span><span class="hj-m-glint"></span></span>${mushroom(kind, 'line')}</span>`;
 
 /** The red mushroom, full: the Contact button's icon, and the form's. */
 export const MUSHROOM_ICON = mushroom('red');
@@ -92,6 +92,8 @@ class Row {
     this.of = q('.hj-num-of');
     this.label = q('.hj-label');
     this.covers = { stem: q('[data-part="stem"]'), cap: q('[data-part="cap"]') };
+    this.covers.stem.parentElement!.style.clipPath = `path('${STEM}')`;
+    this.covers.cap.parentElement!.style.clipPath = `path('${CAP}')`;
     this.shine = q('.hj-m-glint');
   }
 

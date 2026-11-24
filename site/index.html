@@ -20,24 +20,8 @@
     <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png" />
     <!-- The opening scene's plate is the first thing the page needs: it is fetched while the script is still
          downloading. Matches loadPlate()'s request. -->
-    <script src="./room-route.js"></script>
-    <script>
-      (function () {
-        var link = document.createElement('link');
-        link.rel = 'preload';
-        link.as = 'image';
-        link.type = 'image/webp';
-        link.setAttribute('fetchpriority', 'high');
-        link.href = './assets/' + window.hjaasRoom(location.hash).folder + '/room.webp';
-        document.head.appendChild(link);
-      })();
-    </script>
-    <style>
-      /* A paper page. The scene is as tall as its content, so the page scrolls when it has to. */
-      html, body { margin: 0; background: #f6f3ec; }
-      html { scrollbar-color: #bdb6a6 #f6f3ec; }
-      #site { display: flex; flex-direction: column; min-height: 100vh; min-height: 100dvh; }
-    </style>
+    <script src="/room-route.js"></script>
+    <link rel="stylesheet" href="/shell.css" />
   </head>
   <body>
     <main id="site"></main>

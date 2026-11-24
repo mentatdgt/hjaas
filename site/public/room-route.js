@@ -12,4 +12,12 @@
     if (!Object.hasOwn(rooms, id)) id = 'build';
     return { id, folder: rooms[id] };
   };
+
+  const link = document.createElement('link');
+  link.rel = 'preload';
+  link.as = 'image';
+  link.type = 'image/webp';
+  link.setAttribute('fetchpriority', 'high');
+  link.href = './assets/' + window.hjaasRoom(window.location.hash).folder + '/room.webp';
+  document.head.appendChild(link);
 })();

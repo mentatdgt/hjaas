@@ -119,22 +119,8 @@ export async function fetchBlob(url: string, priority?: RequestInit['priority'])
   return response.blob();
 }
 
-// Decoding happens in a worker, so the page never waits for it. (Measured in WebKit, review 04: decoding
-// one of Rachel's lab frames on the page's own thread took about 11 ms and made frames of about 30 ms; in a
-// worker the page's frames stayed at 16 to 18 ms.) The worker is one small script, made from the text below,
-// and is started the first time something is decoded. Where it cannot run (an old browser, or a host
-// page whose rules forbid it), decoding falls back to the page's own thread.
-const DECODER = `self.onmessage = async (event) => {
-  const { id, blob, crop } = event.data;
-  try {
-    const bitmap = crop ? await createImageBitmap(blob, crop.x, crop.y, crop.w, crop.h) : await createImageBitmap(blob);
-    self.postMessage({ id, bitmap }, [bitmap]);
-  } catch (error) {
-    self.postMessage({ id, error: String(error) });
-  }
-};`;
+// Decode off the main thread. Browsers that cannot run the worker decode on the page instead.
 let decoder: Worker | null | undefined;
-let decoderUrl: string | undefined;
 let assetUsers = 0;
 export function retainAssets(): () => void {
   assetUsers++;
@@ -149,8 +135,6 @@ export function retainAssets(): () => void {
 function stopDecoder(): void {
   decoder?.terminate();
   decoder = null;
-  if (decoderUrl) URL.revokeObjectURL(decoderUrl);
-  decoderUrl = undefined;
   for (const waiting of decodes.values()) waiting.reject(new Error('decoder unavailable'));
   decodes.clear();
 }
@@ -159,8 +143,7 @@ const decodes = new Map<number, { resolve: (bitmap: ImageBitmap) => void; reject
 
 function startDecoder(): Worker | null {
   try {
-    decoderUrl = URL.createObjectURL(new Blob([DECODER], { type: 'text/javascript' }));
-    const worker = new Worker(decoderUrl);
+    const worker = new Worker(new URL('./decoder.worker.ts', import.meta.url));
     worker.onmessage = (event: MessageEvent<{ id: number; bitmap?: ImageBitmap; error?: string }>) => {
       const waiting = decodes.get(event.data.id);
       decodes.delete(event.data.id);

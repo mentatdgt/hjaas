@@ -1,0 +1,17 @@
+/* The scene is as tall as its content, so the paper page scrolls when it has to. */
+html,
+body {
+  margin: 0;
+  background: #f6f3ec;
+}
+
+html {
+  scrollbar-color: #bdb6a6 #f6f3ec;
+}
+
+#site {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
