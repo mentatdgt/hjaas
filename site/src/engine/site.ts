@@ -98,6 +98,21 @@ function waitForFrames(signal: AbortSignal, calmMs = 130, minimum = 2, limitMs =
   });
 }
 
+/** Resolves once the tab is in front (at once if it is), or the signal is aborted. */
+function whenVisible(signal: AbortSignal): Promise<void> {
+  if (signal.aborted || !document.hidden) return Promise.resolve();
+  return new Promise((resolve) => {
+    const check = (): void => {
+      if (document.hidden && !signal.aborted) return;
+      document.removeEventListener('visibilitychange', check);
+      signal.removeEventListener('abort', check);
+      resolve();
+    };
+    document.addEventListener('visibilitychange', check);
+    signal.addEventListener('abort', check);
+  });
+}
+
 /**
  * Mounts the site into `host`: a paper page with one framed picture, and a small menu to move between the
  * scenes. Everything it needs lives under `.hj-scene`: markup, styles, state and assets. It takes its
@@ -399,6 +414,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   // Time only counts while the tab is visible and nothing is being painted.
   let quietSeconds = 0;
   const hintAfter = flags.hintSeconds ?? HINT_AFTER_S;
+  let begun = false; // the opening's painting (or reveal) has started
   let settled = false; // the opening has finished
   const hintClock = window.setInterval(() => {
     if (document.hidden || !settled || busy || !current || current.hunt.remaining === 0) return;
@@ -749,8 +765,9 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   });
 
   const onVisibility = (): void => {
-    if (document.hidden) settleMotion(false);
-    else startLogoIdle();
+    // (Before the opening there is no motion to settle: its painting waits for the tab to be looked at.)
+    if (!document.hidden) startLogoIdle();
+    else if (begun) settleMotion(false);
     current?.visibility();
   };
   document.addEventListener('visibilitychange', onVisibility);
@@ -800,7 +817,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     caption.prepare(scenes.map((each) => each.label), viewOf(first).site.total);
     await breath();
     if (destroyed) return;
-    const painting = opening === 'paint' && !rush(signal);
+    const painting = opening === 'paint' && !signal.aborted;
     if (painting) {
       transition.prepare(scene);
       await frame1(signal);
@@ -809,7 +826,13 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     // Let the setup above reach the screen before any motion starts. Before a painting that includes the
     // whole picture being drawn for the first time, under the blank sheet: wait until frames arrive on time.
     await waitForFrames(signal, painting ? 130 : 0);
+    // Opened in a background tab, or left while it loads: the first visit's painting is kept for when it is seen.
+    while (painting && document.hidden && !signal.aborted && !destroyed) {
+      await whenVisible(signal);
+      await waitForFrames(signal);
+    }
     if (destroyed) return;
+    begun = true;
     marks.introStart = Math.round(performance.now());
     if (rush(signal)) transition.finish(scene);
     else if (painting) await transition.paint(scene);
