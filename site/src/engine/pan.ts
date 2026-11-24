@@ -129,7 +129,7 @@ export class Pan {
 
   private onScroll = (): void => {
     const u = this.plate ? this.plate.clientWidth / PLATE.w : 0;
-    if (!u || this.settingScroll) return;
+    if (!this.active || !u || this.settingScroll) return;
     this.centreX = (this.viewport.scrollLeft + this.viewport.clientWidth / 2) / u;
     this.panned = true;
     this.onPan(this.centreX);
