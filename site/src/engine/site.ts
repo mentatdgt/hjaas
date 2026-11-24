@@ -1,7 +1,7 @@
 import '@fontsource-variable/bricolage-grotesque';
 import '@fontsource/spectral/latin-400.css';
 import './site.css';
-import { retainAssets, setAssetBase } from './assets';
+import { retainAssets, setAssetBase, warmPlate } from './assets';
 import { Caption, type CaptionCopy } from './caption';
 import { DEFAULT_EDGE, EDGE_STYLES, edgeSeed, type EdgeStyle } from './edge';
 import { flags } from './flags';
@@ -575,8 +575,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     const old = current!;
     const next = await sceneFor(config);
     if (destroyed) return;
-    // Her first frames, the first time the scene is opened: fetched and decoded from here on, off the
-    // page's thread. (Usually they are on their way already: see the menu's pointer listeners.)
+    // Fetch her first frames once this room has been requested.
     next.preload();
     // A scene out of sight holds no decoded picture: its room is decoded again here, from the browser's
     // own copy of the file, before anything is put on the page.
@@ -718,17 +717,6 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       else if (tab.hash === location.hash) onAddress();
     });
   }
-  for (const link of [...tabs, caption.next]) {
-    // The pointer on a tab (or on "Next"), a finger going down on it, or keyboard focus: the scene will probably
-    // be opened. Its character's first frames start downloading and decoding now, a moment ahead of the click.
-    // (Not while a painting is under way: nothing may compete with the brush for the page's time.)
-    const soon = (): void => {
-      const config = sceneById(link.hash.slice(1));
-      if (config && !busy) void sceneFor(config).then((scene) => scene.preload(), () => {});
-    };
-    for (const type of ['pointerenter', 'pointerdown', 'focus'] as const) link.addEventListener(type, soon, { passive: true });
-  }
-
   // "Replay painting": she stops, the picture clears to a blank sheet, and it is painted again.
   replay.addEventListener('click', () => {
     const scene = current;
@@ -842,17 +830,15 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     // A scene asked for while the opening was being painted.
     if (wanted.id !== scene.config.id) void go(wanted);
 
-    // The reaction frames (and any clips) are not needed for the first seconds, so they load once the
-    // opening is over and nothing else is competing for the frame. Then the other scenes' plates, so that
-    // moving to one does not wait for its picture; their characters are fetched when they are first opened.
+    const nextId = viewOf(config).next?.id;
+    const likelyNext = nextId && sceneById(nextId);
+    if (likelyNext) {
+      void warmPlate(likelyNext.assets + likelyNext.plate, () =>
+        !destroyed && !busy && !document.hidden && current === scene,
+      );
+    }
     await scene.loadMore();
     ready = true;
-    for (const other of scenes) {
-      if (destroyed) return;
-      const loaded = await sceneFor(other).catch((error) => void console.warn(`[hjaas] ${other.id}: could not be loaded`, error));
-      // Downloaded and checked, but not kept decoded while it is out of sight (unless it is on its way in).
-      if (loaded && loaded !== current && wanted.id !== other.id) loaded.rest();
-    }
   };
   retry.addEventListener('click', () => {
     if (current) void go(wanted);

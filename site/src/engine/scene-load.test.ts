@@ -1,5 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { loadPlate } from './assets';
+import { loadPlate, warmPlate } from './assets';
+import growFrames from '../../public/assets/scene2/rachel/frames.json';
+import growRoutine from '../../public/assets/scene2/rachel/routine.json';
 import { Scene } from './scene';
 import { SCENES } from '../scenes';
 
@@ -40,12 +42,12 @@ class Element {
   replaceChildren() {}
   remove() {}
   addEventListener() {}
-  setAttribute() {}
+  setAttribute(_name: string, _value: string) {}
   removeAttribute() { this.src = ''; }
   decode() { return decode(this.src); }
 }
 
-const load = () => Scene.load(config, {
+const load = (room = config) => Scene.load(room, {
   flyLayer: new Element() as unknown as HTMLElement,
   found: new Set(),
   target: () => new DOMRect(),
@@ -142,6 +144,60 @@ describe('recoverable room assets', () => {
     await scene.enter();
     expect(scene.character).toBeNull();
     expect(stills).toHaveLength(decodedCount);
+  });
+
+  it('waits for idle to warm a room at low priority and skips a departed opening room', async () => {
+    const callbacks: Array<() => void> = [];
+    const priorities: string[] = [];
+    vi.stubGlobal('requestIdleCallback', (fn: () => void) => callbacks.push(fn));
+    vi.stubGlobal('Image', class extends Element {
+      setAttribute(name: string, value: string) {
+        if (name === 'fetchpriority') priorities.push(value);
+      }
+    });
+    const active = warmPlate('scene2/room.webp', () => true);
+    const departed = warmPlate('scene3/room.webp', () => false);
+    expect(decode).not.toHaveBeenCalled();
+    callbacks.splice(0).forEach((fn) => fn());
+    await Promise.all([active, departed]);
+    expect(decode).toHaveBeenCalledExactlyOnceWith(expect.stringContaining('scene2/room.webp'));
+    expect(priorities).toEqual(['low']);
+  });
+
+  it('parks the clip queue of a departed room and restarts it on return', async () => {
+    const requested: string[] = [];
+    let nextRequest!: (url: string) => void;
+    let finish!: (response: Response) => void;
+    const awaitRequest = () => new Promise<string>((resolve) => { nextRequest = resolve; });
+    vi.stubGlobal('requestIdleCallback', (fn: () => void) => queueMicrotask(fn));
+    vi.stubGlobal('createImageBitmap', async () => ({ width: 100, height: 100, close() {} }));
+    vi.stubGlobal('fetch', vi.fn(async (url: string, init?: RequestInit) => {
+      if (url.endsWith('/frames.json')) return new Response(JSON.stringify(growFrames));
+      if (url.endsWith('/routine.json')) return new Response(JSON.stringify(growRoutine));
+      if (init?.priority !== 'low') return new Response(url);
+      requested.push(url);
+      nextRequest(url);
+      return new Promise<Response>((resolve) => { finish = resolve; });
+    }));
+    const scene = await load(SCENES[1]);
+    expect(scene.character).not.toBeNull();
+    const firstRequest = awaitRequest();
+    const firstQueue = scene.loadMore();
+    const first = await firstRequest;
+    scene.rest();
+    finish(new Response(first));
+    await firstQueue;
+    expect(requested).toEqual([first]);
+
+    await scene.enter();
+    const resumedRequest = awaitRequest();
+    const resumedQueue = scene.loadMore();
+    expect(await resumedRequest).toBe(first);
+    scene.rest();
+    finish(new Response(first));
+    await resumedQueue;
+    expect(requested).toEqual([first, first]);
+    scene.destroy();
   });
 
   it('expires a stalled room after two attempts, and a fresh load can succeed', async () => {

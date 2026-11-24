@@ -107,9 +107,8 @@ const json = async <T>(path: string): Promise<T> => {
 const webp = (file: string): string => file.replace(/\.png$/i, '.webp');
 
 /**
- * A cast whose files are here but not yet decoded. A scene's files are fetched as soon as it looks as if it
- * will be opened, while another scene is still on show; they are decoded only when the scene goes on the
- * plate, after the one being left has given its own decoded frames back. The two sets are never in memory
+ * A cast whose files are here but not yet decoded. The destination's files can download while another scene
+ * is still on show. They are decoded once the scene goes on the plate and the old scene has rested. The two sets are never in memory
  * together: that is what keeps the page inside a phone's budget.
  */
 type Decode<T> = () => Promise<T>;
@@ -223,7 +222,7 @@ async function clipCast(config: SceneConfig, cast: ClipCast, host: SceneHost): P
   ]);
   const problems = checkClips(frames, routine);
   if (problems.length) throw new Error(`${config.id}: ${problems.join(' ')}`);
-  return actorCast(config.id, frames, routine, host, (file) => fetchBlob(asset(art + webp(file))), { keeps: true });
+  return actorCast(config.id, frames, routine, host, (file, priority) => fetchBlob(asset(art + webp(file)), priority), { keeps: true });
 }
 
 /**
@@ -236,7 +235,7 @@ async function troupe(config: SceneConfig, cast: Troupe, host: SceneHost): Promi
   const { actors, problems, screen, progress, progressFade, walkers } = splitCast(frames, routines, PLATE.w);
   if (problems.length) throw new Error(`${config.id}: ${problems.join(' ')}`);
   const lead = leadOf(actors);
-  const load = (file: string): Promise<Blob> => fetchBlob(asset(dir + webp(file)));
+  const load = (file: string, priority?: RequestInit['priority']): Promise<Blob> => fetchBlob(asset(dir + webp(file)), priority);
   const fetched = await Promise.all(
     actors.map((actor) => actorCast(`${config.id}, ${actor.name}`, actor.frames, actor.routine, host, load, { keeps: false, className: actor === lead ? 'hj-rachel' : 'hj-actor', name: actor.name })),
   );
@@ -289,7 +288,7 @@ async function actorCast(
   frames: ClipFrames,
   routine: ClipRoutine,
   host: SceneHost,
-  load: (file: string) => Promise<Blob>,
+  load: (file: string, priority?: RequestInit['priority']) => Promise<Blob>,
   options: { keeps: boolean; className?: string; name?: string },
 ): Promise<Decode<Cast>> {
   // The stills first: they are all she needs to start her routine, and they stay decoded while the scene
@@ -324,24 +323,30 @@ async function actorCast(
     const loaded = new Set<string>();
     const inUse = clipsInUse(routine);
     const fetching = new Map<string, Promise<void>>();
-    const fetchClip = (name: string): Promise<void> => {
-      let pending = fetching.get(name);
-      if (!pending) {
-        pending = (async () => {
-          const clip = frames.clips[name];
-          for (let i = 0; i < clip.frames.length; i++) {
-            await idle();
-            reel.add(clipPose(name, i), { blob: await load(clip.frames[i]), base: clip.base, x: clip.x, y: clip.y });
-          }
-          loaded.add(name);
-        })();
-        fetching.set(name, pending);
-        pending.catch((error) => {
-          fetching.delete(name);
-          console.warn(`[hjaas] ${id}: the clip "${name}" could not be loaded; she keeps to her stills`, error);
-        });
-      }
-      return pending;
+    const offsets = new Map<string, number>();
+    const fetchClip = (name: string, active: () => boolean): Promise<void> => {
+      if (loaded.has(name)) return Promise.resolve();
+      const pending = fetching.get(name);
+      if (pending) return pending;
+      const clip = frames.clips[name];
+      const task = (async () => {
+        for (let i = offsets.get(name) ?? 0; i < clip.frames.length; i++) {
+          await idle();
+          if (!active()) return;
+          const blob = await load(clip.frames[i], 'low');
+          if (!active()) return;
+          reel.add(clipPose(name, i), { blob, base: clip.base, x: clip.x, y: clip.y });
+          offsets.set(name, i + 1);
+        }
+        loaded.add(name);
+      })();
+      const handled = task.catch((error) => {
+        if (active()) console.warn(`[hjaas] ${id}: the clip "${name}" could not be loaded; she keeps to her stills`, error);
+      }).finally(() => {
+        if (fetching.get(name) === handled) fetching.delete(name);
+      });
+      fetching.set(name, handled);
+      return handled;
     };
     const full = clipReaction(frames, routine);
     // A reaction can start at any moment, so its clip frames stay decoded while the scene is on show.
@@ -359,15 +364,24 @@ async function actorCast(
       still: full?.still ?? [],
       entry: clipEntry(routine),
       more: async (reactions) => {
-        for (const name of inUse.routine) await fetchClip(name).catch(() => {});
-        if (!reactions || !full) return;
+        const at = generation;
+        const active = (): boolean => awake && at === generation;
+        for (const name of inUse.routine) {
+          if (!active()) return;
+          await fetchClip(name, active);
+        }
+        if (!active() || !reactions || !full) return;
         reel.pin(reactionFrames);
-        for (const name of inUse.reaction) await fetchClip(name).catch(() => {});
+        for (const name of inUse.reaction) {
+          if (!active()) return;
+          await fetchClip(name, active);
+        }
       },
       ahead: (poses) => reel.want(poses),
       sleep: (keepShown = true) => {
         awake = false;
         generation++;
+        fetching.clear();
         if (keepShown) reel.sleep();
         else reel.release();
         const keep = new Set(keepShown && options.keeps ? character.showing : []);
@@ -568,9 +582,7 @@ export class Scene {
   }
 
   /**
-   * Start fetching her first frames' files, without decoding them or putting her on the plate: called as
-   * soon as it looks as if the scene will be opened (the pointer is on its tab), so the wait at the tap is
-   * short.
+   * Fetch her first frames once the visitor asks for this scene, while the current picture can stay up.
    */
   preload(): void {
     if (this.cast || this.casting || !this.config.character) return;
@@ -852,10 +864,16 @@ export class Scene {
    * reacts, so the reaction's frames are not fetched for it.)
    */
   async loadMore(): Promise<void> {
+    const at = this.generation;
+    if (!this.cast) await this.entering?.catch(() => {});
+    if (at !== this.generation) return;
     // The lead's first: hers are the clips that matter.
     const reactions = this.hunt.remaining > 0;
     await this.cast?.more(reactions);
-    for (const cast of this.casts) if (cast !== this.cast) await cast.more(reactions);
+    for (const cast of this.casts) {
+      if (at !== this.generation) return;
+      if (cast !== this.cast) await cast.more(reactions);
+    }
   }
 
   /**

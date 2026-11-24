@@ -113,8 +113,8 @@ async function decodeFrame(url: string): Promise<Frame> {
 }
 
 /** A file's bytes, as downloaded: an image kept this way takes a fraction of its decoded size. */
-export async function fetchBlob(url: string): Promise<Blob> {
-  const response = await fetch(url, { signal: assetSignal() });
+export async function fetchBlob(url: string, priority?: RequestInit['priority']): Promise<Blob> {
+  const response = await fetch(url, { signal: assetSignal(), priority });
   if (!response.ok) throw new Error(`${url}: ${response.status}`);
   return response.blob();
 }
@@ -267,6 +267,15 @@ export function loadPlate(path: string): Promise<HTMLImageElement> {
     img.setAttribute('fetchpriority', 'high');
     return loadImage(asset(path), img);
   });
+}
+
+/** Warm a single likely room when the browser has time and the opening room is still on show. */
+export async function warmPlate(path: string, stillHere: () => boolean): Promise<void> {
+  await idle();
+  if (!stillHere()) return;
+  const img = new Image();
+  img.setAttribute('fetchpriority', 'low');
+  await loadImage(asset(path), img).catch(() => {});
 }
 
 /** Resolves when the browser has a quiet moment (or soon enough anyway). */
