@@ -26,6 +26,7 @@ export interface HuntOptions {
 export class Hunt {
   readonly el: HTMLDivElement;
   private readonly options: HuntOptions;
+  private readonly motion = new Set<gsap.core.Animation>();
   private readonly buttons = new Map<string, HTMLButtonElement>();
   /** Each drawing's centre and size, in plate px. */
   private readonly art = new Map<string, { cx: number; cy: number; w: number; h: number }>();
@@ -96,9 +97,14 @@ export class Hunt {
   }
 
   destroy(): void {
+    this.finishMotion();
     this.buttons.clear();
     this.art.clear();
     this.el.replaceChildren();
+  }
+
+  finishMotion(): void {
+    for (const animation of this.motion) animation.progress(1);
   }
 
   syncFinds(): void {
@@ -167,18 +173,18 @@ export class Hunt {
     const visible = [...this.buttons.values()].map((button) => button.querySelector<HTMLElement>('.hj-shroom-art')!).filter(inView);
     if (visible.length === 0) return false;
     const art = visible[Math.floor(Math.random() * visible.length)];
+    const hint = gsap.timeline({ defaults: { ease: 'sine.inOut' }, onComplete: () => this.motion.delete(hint) });
+    this.motion.add(hint);
     if (reducedMotion()) {
       // No movement: a brief dip in opacity instead.
-      gsap.timeline().to(art, { opacity: 0.45, duration: 0.14, ease: 'none' }).to(art, { opacity: 1, duration: 0.2, ease: 'none' });
-      return true;
+      hint.to(art, { opacity: 0.45, duration: 0.14, ease: 'none' }).to(art, { opacity: 1, duration: 0.2, ease: 'none' });
+    } else {
+      // A few degrees, pivoting on the base, under 400 ms, once.
+      hint.to(art, { rotation: 7, duration: 0.09 })
+        .to(art, { rotation: -5, duration: 0.11 })
+        .to(art, { rotation: 2.5, duration: 0.09 })
+        .to(art, { rotation: 0, duration: 0.08 });
     }
-    // A few degrees, pivoting on the base, under 400 ms, once.
-    gsap
-      .timeline({ defaults: { ease: 'sine.inOut' } })
-      .to(art, { rotation: 7, duration: 0.09 })
-      .to(art, { rotation: -5, duration: 0.11 })
-      .to(art, { rotation: 2.5, duration: 0.09 })
-      .to(art, { rotation: 0, duration: 0.08 });
     return true;
   }
 
@@ -216,16 +222,14 @@ export class Hunt {
     button.remove();
     onFind(spot);
 
-    const done = (): void => {
-      onLand(spot);
-      // It has faded out by now. It is taken off the page later, not in the counter's first frame.
-      window.setTimeout(() => flyer.remove(), 800);
-    };
-
     if (reducedMotion()) {
       // No flight: the count changes at once and the mushroom fades where it stood.
       onLand(spot);
-      gsap.to(flyer, { opacity: 0, duration: 0.2, ease: 'none', onComplete: () => flyer.remove() });
+      const fade = gsap.to(flyer, { opacity: 0, duration: 0.2, ease: 'none', onComplete: () => {
+        this.motion.delete(fade);
+        flyer.remove();
+      } });
+      this.motion.add(fade);
       return;
     }
 
@@ -252,8 +256,14 @@ export class Hunt {
     const cy = sy + vy * 0.45 + ny * bulge;
 
     const flight = { t: 0 };
-    gsap
-      .timeline({ onComplete: done })
+    const timeline = gsap.timeline({ onComplete: () => {
+      if (!this.motion.delete(timeline)) return;
+      onLand(spot);
+      // It has faded out by now. It is taken off the page later, not in the counter's first frame.
+      window.setTimeout(() => flyer.remove(), 800);
+    } });
+    this.motion.add(timeline);
+    timeline
       // It comes free of its hiding spot with a small lift.
       .to(flyer, { y: sy, scale: popScale, duration: 0.09, ease: EASE_OUT })
       // Then straight to the caption: 300 ms, no spin, fading as it arrives so it never lands on the words.

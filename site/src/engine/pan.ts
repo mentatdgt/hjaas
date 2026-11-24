@@ -24,6 +24,7 @@ export class Pan {
   private focusX = PLATE.w / 2;
   /** Plate x at the middle of the crop, once the visitor has panned. Until then the scene's own focus applies. */
   private centreX: number | null = null;
+  private glide = 0;
   private drifting: Animation | null = null;
   private settingScroll = false;
   private readonly onPan: (centreX: number) => void;
@@ -46,6 +47,7 @@ export class Pan {
    */
   use(plate: HTMLElement, focusX: number, savedX: number | null): void {
     this.stopDrift();
+    cancelAnimationFrame(this.glide);
     this.plate = plate;
     this.focusX = focusX;
     this.centreX = savedX;
@@ -121,8 +123,17 @@ export class Pan {
     this.scrollTo(this.viewport.scrollLeft - x);
   };
 
+  finishMotion(): void {
+    cancelAnimationFrame(this.glide);
+    if (this.drifting) {
+      this.drifting.onfinish = null;
+      this.drifting.cancel();
+      this.drifting = null;
+    }
+  }
+
   destroy(): void {
-    this.drifting?.cancel();
+    this.finishMotion();
     this.viewport.removeEventListener('scroll', this.onScroll);
     for (const type of TOUCHES) this.viewport.removeEventListener(type, this.stopDrift);
   }
@@ -145,7 +156,6 @@ export class Pan {
     let lastX = 0;
     let lastT = 0;
     let velocity = 0; // px per ms
-    let glide = 0;
 
     const onMove = (event: PointerEvent): void => {
       if (event.pointerId !== pointerId) return;
@@ -175,7 +185,7 @@ export class Pan {
       viewport.addEventListener('click', swallow, { capture: true, once: true });
       window.setTimeout(() => viewport.removeEventListener('click', swallow, { capture: true }), 0);
       // Carry on with the hand's speed and ease to a stop.
-      if (performance.now() - lastT > 80 || reducedMotion()) return;
+      if (performance.now() - lastT > 80 || reducedMotion() || document.hidden) return;
       let v = velocity;
       let previous = performance.now();
       const step = (now: number): void => {
@@ -183,14 +193,14 @@ export class Pan {
         previous = now;
         viewport.scrollLeft -= v * dt;
         v *= Math.pow(0.996, dt);
-        if (Math.abs(v) > 0.02) glide = requestAnimationFrame(step);
+        if (Math.abs(v) > 0.02) this.glide = requestAnimationFrame(step);
       };
-      glide = requestAnimationFrame(step);
+      this.glide = requestAnimationFrame(step);
     };
 
     viewport.addEventListener('pointerdown', (event) => {
       if (event.pointerType !== 'mouse' || event.button !== 0 || !this.active) return;
-      cancelAnimationFrame(glide);
+      cancelAnimationFrame(this.glide);
       pointerId = event.pointerId;
       startX = lastX = event.clientX;
       startScroll = viewport.scrollLeft;

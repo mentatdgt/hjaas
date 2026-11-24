@@ -76,12 +76,17 @@ export class Logo {
 
   stop(): void {
     window.clearInterval(this.timer);
-    this.sweep?.kill();
+    if (this.sweep) {
+      this.sweep.kill();
+      this.sweep = null;
+      this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
   }
 
   /** One sweep, 650 ms, quick through the middle. A sweep already running is left to finish. */
   glint(): void {
-    if (reducedMotion() || this.sweep?.isActive()) return;
+    if (document.hidden || reducedMotion() || this.sweep?.isActive()) return;
     const cssW = this.el.clientWidth;
     const cssH = this.el.clientHeight;
     if (!cssW) return;
@@ -123,6 +128,7 @@ export class Logo {
         ctx.drawImage(image, 0, 0, w, h);
       },
       onComplete: () => {
+        this.sweep = null;
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.globalCompositeOperation = 'source-over';
         ctx.clearRect(0, 0, w, h);

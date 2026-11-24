@@ -175,3 +175,21 @@ describe('the hook for whatever keeps time with her (onFrame)', () => {
     expect(times.length).toBe(30);
   });
 });
+
+it('finishes a reaction at rest and resolves it once when motion is settled', async () => {
+  const her = standIn();
+  const player = new Player(her, swinging());
+  player.start();
+  const done = vi.fn();
+  void player.react(REACTION, true).then(done);
+  expect(player.reacting).toBe(true);
+  expect(her.current).toBe('turn');
+
+  player.finishMotion(holdSchedule('film'), true, true);
+  expect(player.reacting).toBe(false);
+  expect(her.current).toBe('film');
+  run(500);
+  await Promise.resolve();
+  expect(done).toHaveBeenCalledOnce();
+  expect(her.current).toBe('film');
+});

@@ -98,6 +98,7 @@ class Row {
   /** Simply so: no roll, no fill. */
   set(found: number, total: number, label: string, spoken: string): void {
     this.still();
+    for (const animation of this.shine.getAnimations()) animation.cancel();
     this.el.classList.remove('is-filling');
     write(this.now, String(found));
     this.of.textContent = `/${total}`;
@@ -262,12 +263,18 @@ export class Caption {
     this.turn(view.unlocked);
   }
 
+  settle(view: HuntView, justEarned: boolean): void {
+    const announce = view.unlocked && (justEarned || !this.button);
+    this.set(view);
+    if (announce) this.status.textContent = this.copy.unlock(view.site.total);
+  }
+
   /** Another scene's state, as one short fade of the whole caption: out, change, in. */
-  change(view: HuntView, announce = ''): void {
+  change(view: HuntView, announce = '', instant = false): void {
     if (announce) this.status.textContent = announce;
     // The button is the same in every scene: nothing to change.
     const same = this.button && view.unlocked;
-    if (same || reducedMotion() || !this.el.isConnected) {
+    if (same || instant || reducedMotion() || !this.el.isConnected) {
       this.set(view);
       return;
     }
@@ -276,7 +283,7 @@ export class Caption {
     this.running.push(leave);
     leave.onfinish = () => {
       this.set(view);
-      this.el.animate([{ opacity: 0, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }], { duration: 260, easing: CSS_EASE_OUT });
+      this.running.push(this.el.animate([{ opacity: 0, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }], { duration: 260, easing: CSS_EASE_OUT }));
     };
   }
 

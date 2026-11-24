@@ -802,6 +802,17 @@ export class Scene {
     }
   }
 
+  finishMotion(resetRoutine: boolean): void {
+    for (const [cast, player] of this.players) {
+      if (resetRoutine || player.reacting) player.finishMotion(this.rhythm(cast), resetRoutine, this.working && !document.hidden);
+    }
+    this.progress?.finishMotion();
+    if (resetRoutine) {
+      for (const walk of this.walks) walk.frame(performance.now());
+      this.finder?.frame(performance.now());
+    }
+  }
+
   /** Pause, play, or a change of the reduced-motion setting: takes effect at each one's next step. */
   refresh(): void {
     for (const [cast, player] of this.players) player.setLoop(this.rhythm(cast));
@@ -814,7 +825,7 @@ export class Scene {
    * held again from now: `again` in its config).
    */
   react(): Promise<void> {
-    if (!this.player || !this.cast) return Promise.resolve();
+    if (!this.player || !this.cast || document.hidden) return Promise.resolve();
     if (this.player.reacting) {
       // A second find while she is still answering the first: she holds the look a while longer.
       if (this.config.again === 'hold') this.player.prolong();

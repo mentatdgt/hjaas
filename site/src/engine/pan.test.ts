@@ -14,6 +14,7 @@ class Viewport extends EventTarget {
 let frames: FrameRequestCallback[];
 beforeEach(() => {
   frames = [];
+  vi.stubGlobal('cancelAnimationFrame', () => {});
   vi.stubGlobal('requestAnimationFrame', (callback: FrameRequestCallback) => frames.push(callback));
 });
 afterEach(() => vi.unstubAllGlobals());

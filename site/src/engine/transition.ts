@@ -69,6 +69,7 @@ export class Transition {
   private fade: Animation | null = null;
   private finishFade: ((show: boolean) => void) | null = null;
   private brushCrop: { x: number; width: number; w: number; h: number } | null = null;
+  private finishBrush: (() => void) | null = null;
   private timeline: gsap.core.Timeline | null = null;
   private painter: Painter | null = null;
   /** Over the edge's pencil while a first-visit painting has not reached it. */
@@ -101,6 +102,21 @@ export class Transition {
     // caption, and runs the callbacks, exactly as if it had played through.
     this.timeline?.progress(1);
     this.finishFade?.(true);
+  }
+
+  /** Finish a prepared picture even if its animation clock has not started. */
+  finish(scene: Scene): void {
+    if (this.running) {
+      this.skip();
+      return;
+    }
+    if (this.veil) {
+      const edge = scene.plate.querySelector<HTMLElement>('.hj-edge');
+      if (edge) gsap.set(edge, { clearProps: 'opacity' });
+      if (this.withCaption) gsap.set(this.stage.caption, { clearProps: 'opacity,transform' });
+    }
+    this.clear();
+    this.show(scene);
   }
 
   /** Move on promptly when the crop under the short brush no longer matches its sampled geometry. */
@@ -359,6 +375,8 @@ export class Transition {
     this.stage.caption.style.willChange = '';
     this.timeline?.kill();
     this.timeline = null;
+    this.finishBrush?.();
+    this.finishBrush = null;
     this.painter?.canvas.remove();
     this.painter = null;
     this.veil?.canvas.remove();
@@ -375,6 +393,7 @@ export class Transition {
         // where it is. (In WebKit, changing the plate's layers in this frame repainted all of it at once:
         // review 02 measured 55–60 ms.) It is taken away a little later, when only the character is moving.
         this.timeline = null;
+        this.finishBrush = null;
         this.brushCrop = null;
         this.tidy = window.setTimeout(() => {
           if (this.painter !== painter || this.timeline) return;
@@ -388,6 +407,7 @@ export class Transition {
       },
     });
     this.timeline = timeline;
+    this.finishBrush = done;
     return timeline;
   }
 }

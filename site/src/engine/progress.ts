@@ -101,10 +101,16 @@ export class Progress {
           if (frame) releaseFrame(frame);
           return;
         }
-        if (reducedMotion() || this.fadeMs <= 0) this.bake(index, frame);
+        if (document.hidden || reducedMotion() || this.fadeMs <= 0) this.bake(index, frame);
         else this.fade(index, frame);
         this.prepare();
       });
+    }
+  }
+
+  finishMotion(): void {
+    for (const { overlay } of this.fading.values()) {
+      for (const animation of overlay.getAnimations()) animation.finish();
     }
   }
 

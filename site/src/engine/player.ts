@@ -115,6 +115,14 @@ export class Player {
     this.onStep?.(this.step);
   }
 
+  /** Complete active motion and restart the rhythm only if the scene is still playing. */
+  finishMotion(loop: Schedule, resetRoutine: boolean, resume: boolean): void {
+    if (!resetRoutine && !this.reacting) return;
+    this.loop = loop;
+    this.settle();
+    if (resume) this.start();
+  }
+
   /** Swap the rhythm (reduced motion on or off). Takes effect at the next step. */
   setLoop(loop: Schedule): void {
     this.loop = loop;

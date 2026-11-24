@@ -74,19 +74,27 @@ const COUNTER: CaptionCopy = {
  * never later than `limitMs`). Whatever was set up just before has then been drawn, so the motion that
  * follows does not start with a stalled frame.
  */
-function steadyFrames(calmMs = 130, limitMs = 1500): Promise<void> {
+function waitForFrames(signal: AbortSignal, calmMs = 130, minimum = 2, limitMs = 1500): Promise<void> {
+  if (signal.aborted || document.hidden) return Promise.resolve();
   return new Promise((resolve) => {
     const start = performance.now();
     let last = start;
     let calmSince = start;
     let frames = 0;
+    let raf = 0;
+    const done = (): void => {
+      cancelAnimationFrame(raf);
+      signal.removeEventListener('abort', done);
+      resolve();
+    };
+    signal.addEventListener('abort', done, { once: true });
     const tick = (now: number): void => {
       if (now - last > 30) calmSince = now;
       last = now;
-      if (++frames >= 2 && (now - calmSince >= calmMs || now - start >= limitMs)) resolve();
-      else requestAnimationFrame(tick);
+      if (++frames >= minimum && (now - calmSince >= calmMs || now - start >= limitMs)) done();
+      else raf = requestAnimationFrame(tick);
     };
-    requestAnimationFrame(tick);
+    raf = requestAnimationFrame(tick);
   });
 }
 
@@ -314,7 +322,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     pause.textContent = paused ? COPY.play : COPY.pause;
     current?.refresh();
     if (paused) logo?.stop();
-    else logo?.startIdle();
+    else startLogoIdle();
   });
 
   const transition = new Transition({ root, window: frame, viewport, caption: caption.el, seed: flags.seed });
@@ -339,12 +347,35 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     if (focused === skip && !shown(skip) && shown(replay)) replay.focus({ preventScroll: true });
     if (focused === replay && !shown(replay) && shown(skip)) skip.focus({ preventScroll: true });
   };
-  cleanup.push(
-    onReducedMotionChange(() => {
-      showControls(transition.running);
-      current?.refresh();
-    }),
-  );
+  let paintWait = new AbortController();
+  let leaving: Animation | undefined;
+  const rush = (signal: AbortSignal): boolean => signal.aborted || document.hidden;
+  const finishTransition = (): void => {
+    paintWait.abort();
+    paintWait = new AbortController();
+    leaving?.finish();
+    transition.skip();
+  };
+  const startLogoIdle = (): void => {
+    if (!paused && !reducedMotion() && !document.hidden) logo?.startIdle();
+  };
+  const settleMotion = (resetRoutine: boolean): void => {
+    finishTransition();
+    pan.finishMotion();
+    logo?.stop();
+    const justEarned = unlockEarned;
+    for (const scene of scenesLoaded.values()) scene.hunt.finishMotion();
+    current?.finishMotion(resetRoutine);
+    const view = viewOf(current?.config ?? first);
+    caption.settle(view, justEarned);
+    unlockEarned = false;
+    markTabs();
+    showControls(false);
+  };
+  cleanup.push(onReducedMotionChange(() => {
+    settleMotion(true);
+    startLogoIdle();
+  }));
 
   // How the opening scene arrives. A first visit gets the painting. A return visit, or reduced motion,
   // gets the edge's pencil and then everything else together, in 300 ms.
@@ -359,12 +390,8 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
             ? 'reveal'
             : 'paint';
   // "Skip" is there from the first moment of a painting, even while the art is still loading.
-  let skipped = false;
   show(skip, opening === 'paint');
-  skip.addEventListener('click', () => {
-    skipped = true;
-    transition.skip();
-  });
+  skip.addEventListener('click', finishTransition);
 
   // ---- The hunt. ----
 
@@ -419,11 +446,16 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
         const wasReacting = self.reactingNow;
         const done = self.react();
         // The last find always gets its own reaction, even if she was still busy with the one before.
-        if (found.size === of && wasReacting) void done.then(() => self?.react());
+        if (found.size === of && wasReacting) {
+          const signal = paintWait.signal;
+          void done.then(() => {
+            if (!rush(signal) && current === self) return self?.react();
+          });
+        }
       },
       onLand: () => {
         // (A mushroom still in the air when the visitor changes scene has been counted; the caption has moved on.)
-        if (!self || self !== current) return;
+        if (destroyed || !self || self !== current) return;
         unlockEarned = false;
         caption.land(viewOf(config));
       },
@@ -522,7 +554,12 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     show(skip, false);
   };
 
-  const frame1 = (): Promise<void> => new Promise((resolve) => requestAnimationFrame(() => resolve()));
+  const frame1 = (signal: AbortSignal): Promise<void> => waitForFrames(signal, 0, 1);
+  const leaveRoom = (plate: HTMLElement, signal: AbortSignal): Animation | undefined => {
+    if (rush(signal)) return;
+    leaving = plate.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 160, easing: 'ease', fill: 'forwards' });
+    return leaving;
+  };
   const warn = (config: SceneConfig) => (error: unknown) => console.warn(`[hjaas] ${config.id}: the character could not be loaded; the room is shown without her`, error);
   const WAIT_TO_DRAW_MS = 1500;
   /**
@@ -534,6 +571,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   const WAIT_FOR_HER_MS = 600;
 
   const switchTo = async (config: SceneConfig): Promise<void> => {
+    const signal = paintWait.signal;
     const old = current!;
     const next = await sceneFor(config);
     if (destroyed) return;
@@ -545,7 +583,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     await next.ready();
     if (destroyed) return;
     const firstVisit = !stateOf(config.id).seen && flags.intro !== 'quick';
-    const calm = reducedMotion() || flags.intro === 'off';
+    const calm = reducedMotion() || flags.intro === 'off' || rush(signal);
     /** The caption for the scene arrived at. Its state is read as it goes up: a find may land meanwhile. */
     const retitle = (): void => {
       const view = viewOf(config);
@@ -555,7 +593,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       unlockEarned = false;
       // Keyboard focus on a link that is about to go moves to the tab it led to.
       if (document.activeElement === caption.next) tabs.find((tab) => tab.dataset.scene === config.id)?.focus({ preventScroll: true });
-      caption.change(view, arriving);
+      caption.change(view, arriving, rush(signal));
       markTabs();
     };
     // The new scene's parts are drawn for the first time one frame after another, under the old picture
@@ -574,23 +612,27 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       if (destroyed) return;
       marks.switchStart = Math.round(performance.now());
       old.hold();
-      const leave = old.plate.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 160, easing: 'ease', fill: 'forwards' });
-      await leave.finished;
+      const leave = leaveRoom(old.plate, signal);
+      await leave?.finished;
+      leaving = undefined;
+      if (destroyed) return;
       place(next);
-      leave.cancel();
+      leave?.cancel();
       transition.prepare(next);
       retitle();
-      showControls(true);
-      await frame1();
+      if (!rush(signal)) showControls(true);
+      await frame1(signal);
       // The scene just left is off the page: it gives its decoded images back now, before the new scene's
       // arrive, so the two sets are never in memory together. (A frame of its own: not in the tap's.)
       old.rest();
-      await frame1();
+      await frame1(signal);
       // Its own edge is drawn now that the other scene's has been given back, under the blank sheet.
       await Promise.all([her(), dress()]);
       await allDrawn(next);
-      await steadyFrames();
-      await transition.paint(next, false);
+      await waitForFrames(signal);
+      if (destroyed) return;
+      if (rush(signal)) transition.finish(next);
+      else await transition.paint(next, false);
     } else {
       marks.switchStart = Math.round(performance.now());
       old.hold();
@@ -599,12 +641,12 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       place(next);
       retitle();
       if (!calm) showControls(true);
-      await frame1();
+      await frame1(signal);
       // The old picture is on the sheet now, as a copy: the scene itself gives its decoded images back
       // before the new scene's arrive, so the two sets are never in memory together. (A frame of its own:
       // not in the tap's.)
       old.rest();
-      await frame1();
+      await frame1(signal);
       // Her frames are usually decoded by now. If the network is slow the brush does not wait for long:
       // she fades in when she arrives.
       // The new scene's edge is drawn meanwhile, now that the old one's has been given back: nothing of the
@@ -614,13 +656,17 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       if (!inTime) next.arriveSoftly();
       await dressed;
       if (destroyed) return;
-      if (calm) {
+      if (rush(signal)) {
+        transition.finish(next);
+      } else if (calm) {
         // No brushwork: the old picture fades off the new one in 200 ms.
         await transition.fadeOver(next);
       } else {
         // A scene seen before is brushed in over the one being left.
-        await steadyFrames(70);
-        await transition.brushOver(next, pan.view);
+        await waitForFrames(signal, 70);
+        if (destroyed) return;
+        if (rush(signal)) transition.finish(next);
+        else await transition.brushOver(next, pan.view);
       }
     }
     if (destroyed) return;
@@ -635,7 +681,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   const go = async (config: SceneConfig): Promise<void> => {
     wanted = config;
     if (busy) {
-      transition.skip();
+      finishTransition();
       return;
     }
     busy = true;
@@ -668,7 +714,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   for (const tab of tabs) {
     // Clicking again while the brush is at work skips to the finished picture.
     tab.addEventListener('click', () => {
-      if (busy) transition.skip();
+      if (busy) finishTransition();
       else if (tab.hash === location.hash) onAddress();
     });
   }
@@ -688,26 +734,37 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     const scene = current;
     if (!scene || busy) return;
     busy = true;
+    const signal = paintWait.signal;
     scene.settle();
-    const leave = scene.plate.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 160, easing: 'ease', fill: 'forwards' });
-    void leave.finished.then(async () => {
+    const leave = leaveRoom(scene.plate, signal);
+    void (async () => {
+      await leave?.finished;
+      leaving = undefined;
       if (destroyed) return;
-      transition.prepare(scene);
-      leave.cancel();
-      showControls(true);
-      await allDrawn(scene);
-      await steadyFrames(70);
-      await transition.paint(scene);
+      leave?.cancel();
+      if (rush(signal)) transition.finish(scene);
+      else {
+        transition.prepare(scene);
+        showControls(true);
+        await allDrawn(scene);
+        await waitForFrames(signal, 70);
+        if (destroyed) return;
+        if (rush(signal)) transition.finish(scene);
+        else await transition.paint(scene);
+      }
       if (destroyed) return;
       showControls(false);
       busy = false;
       // A scene asked for while this one was being painted.
       if (wanted.id !== scene.config.id) void go(wanted);
-    });
+    })();
   });
 
-  // Nothing runs while the tab is hidden; she picks up on the same pose when it comes back.
-  const onVisibility = (): void => current?.visibility();
+  const onVisibility = (): void => {
+    if (document.hidden) settleMotion(false);
+    else startLogoIdle();
+    current?.visibility();
+  };
   document.addEventListener('visibilitychange', onVisibility);
   cleanup.push(() => document.removeEventListener('visibilitychange', onVisibility));
 
@@ -715,6 +772,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
 
   const open = async (config: SceneConfig): Promise<void> => {
     busy = true;
+    const signal = paintWait.signal;
     retry.hidden = true;
     wanted = config;
     let scene: Scene;
@@ -732,7 +790,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     if (destroyed) return;
     place(scene);
     // Before a painting each part of the setting up gets a frame to itself, not one long task for all of it.
-    const breath = opening === 'paint' && !skipped ? frame1 : (): Promise<void> => Promise.resolve();
+    const breath = (): Promise<void> => opening === 'paint' ? frame1(signal) : Promise.resolve();
     await breath();
     if (destroyed) return;
     logo = theLogo;
@@ -741,7 +799,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       page.style.setProperty('--logo-ratio', theLogo.el.style.aspectRatio);
       logoSlot.append(theLogo.el);
       theLogo.prepare();
-      if (!paused) theLogo.startIdle();
+      startLogoIdle();
       cleanup.push(() => theLogo?.stop());
     }
     caption.set(viewOf(config));
@@ -754,23 +812,20 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     caption.prepare(scenes.map((each) => each.label), viewOf(first).site.total);
     await breath();
     if (destroyed) return;
-    const painting = opening === 'paint' && !skipped;
+    const painting = opening === 'paint' && !rush(signal);
     if (painting) {
       transition.prepare(scene);
-      await frame1();
+      await frame1(signal);
       await allDrawn(scene);
     }
     // Let the setup above reach the screen before any motion starts. Before a painting that includes the
     // whole picture being drawn for the first time, under the blank sheet: wait until frames arrive on time.
-    await (painting ? steadyFrames() : steadyFrames(0));
+    await waitForFrames(signal, painting ? 130 : 0);
     if (destroyed) return;
     marks.introStart = Math.round(performance.now());
-    if (painting) {
-      const painted = transition.paint(scene);
-      // Skip pressed while the art was still loading: the finished picture, at once.
-      if (skipped) transition.skip();
-      await painted;
-    } else if (opening === 'reveal' && !skipped) await transition.reveal(scene);
+    if (rush(signal)) transition.finish(scene);
+    else if (painting) await transition.paint(scene);
+    else if (opening === 'reveal') await transition.reveal(scene);
     else transition.show(scene);
     if (destroyed) return;
     marks.introEnd = Math.round(performance.now());
@@ -779,7 +834,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     // A new visitor on a phone sees, once, that the room can be panned: a moment after the paint is dry.
     if (painting && newcomer) {
       window.setTimeout(() => {
-        if (!destroyed && !busy && !paused && current === scene && !document.hidden) pan.drift();
+        if (!destroyed && !busy && !paused && current === scene && !rush(signal)) pan.drift();
       }, DRIFT_AFTER_MS);
     }
     seen(scene);
@@ -809,6 +864,8 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     destroy() {
       if (destroyed) return;
       destroyed = true;
+      paintWait.abort();
+      leaving?.finish();
       transition.clear();
       cleanup.forEach((fn) => fn());
       for (const scene of scenesLoaded.values()) scene.destroy();
