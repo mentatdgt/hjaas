@@ -39,6 +39,7 @@ export class Progress {
   /** Fades under way, each with its piece's picture, baked in order as they end. */
   private readonly fading = new Map<number, { frame: Frame; overlay: HTMLCanvasElement; done: boolean }>();
   private awake = false;
+  private generation = 0;
   private work: Promise<void> = Promise.resolve();
 
   constructor(pieces: readonly ProgressPiece[], files: readonly Blob[], fadeMs: number, found: () => number) {
@@ -62,14 +63,16 @@ export class Progress {
   wake(): Promise<void> {
     if (this.awake) return this.work;
     this.awake = true;
+    const at = this.generation;
     this.work = this.work.then(async () => {
+      if (at !== this.generation) return;
       this.el.width = this.area.w;
       this.el.height = this.area.h;
       this.baked = 0;
       const want = Math.min(this.pieces.length, this.found());
       for (let i = 0; i < want; i++) {
         const frame = await this.decode(i);
-        if (!this.awake) {
+        if (at !== this.generation) {
           if (frame) releaseFrame(frame);
           return;
         }
@@ -86,12 +89,15 @@ export class Progress {
    * over the package's fade_ms, ease-out), or at once with reduced motion or out of sight.
    */
   reach(): void {
+    if (!this.awake) return;
+    const at = this.generation;
     const want = Math.min(this.pieces.length, this.found());
     while (this.shown < want) {
       const index = this.shown++;
       this.work = this.work.then(async () => {
+        if (at !== this.generation) return;
         const frame = await this.decode(index);
-        if (!frame || !this.awake) {
+        if (!frame || at !== this.generation) {
           if (frame) releaseFrame(frame);
           return;
         }
@@ -105,6 +111,7 @@ export class Progress {
   /** Out of sight: give the canvas back, and any picture held for the next piece. A fade under way ends at once. */
   sleep(): void {
     this.awake = false;
+    this.generation++;
     for (const [, fade] of this.fading) {
       fade.overlay.getAnimations().forEach((a) => a.cancel());
       fade.overlay.remove();

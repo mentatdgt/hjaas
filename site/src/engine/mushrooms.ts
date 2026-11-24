@@ -95,6 +95,12 @@ export class Hunt {
     return new Hunt(options, aspect);
   }
 
+  destroy(): void {
+    this.buttons.clear();
+    this.art.clear();
+    this.el.replaceChildren();
+  }
+
   syncFinds(): void {
     for (const id of this.options.found) {
       this.buttons.get(id)?.remove();

@@ -29,6 +29,7 @@ export class Reel {
   private pinned: readonly string[] = [];
   private awake = false;
   private decoding = false;
+  private released = false;
   /** The most the decoded patches have taken at one time, in bytes. */
   peak = 0;
 
@@ -38,6 +39,7 @@ export class Reel {
 
   /** A patch has been downloaded. */
   add(pose: string, source: PatchSource): void {
+    if (this.released) return;
     this.sources.set(pose, source);
     void this.pump();
   }
@@ -72,6 +74,14 @@ export class Reel {
   sleep(): void {
     this.awake = false;
     this.tidy();
+  }
+
+  release(): void {
+    this.released = true;
+    this.awake = false;
+    for (const pose of this.decoded.keys()) this.character.dropPatch(pose, true);
+    this.decoded.clear();
+    this.sources.clear();
   }
 
   /** What the decoded patches take now, in bytes. */

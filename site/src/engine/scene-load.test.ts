@@ -6,7 +6,23 @@ import { SCENES } from '../scenes';
 vi.mock('./edge', () => ({
   edgeAlpha: () => () => 1,
   edgeName: () => 'build',
-  makeEdge: () => ({ el: {}, make: async () => {} }),
+  makeEdge: () => ({ el: {}, make: async () => {}, release() {} }),
+}));
+
+vi.mock('./character', () => ({
+  Character: class {
+    readonly el = new Element();
+    readonly shadow = null;
+    readonly rest: string;
+    constructor(private frames: Map<string, unknown>, setup: { rest: string }) { this.rest = setup.rest; }
+    get showing() { return [this.rest]; }
+    has(name: string) { return this.frames.has(name); }
+    add(name: string, frame: unknown) { this.frames.set(name, frame); }
+    drop(name: string) { this.frames.delete(name); }
+    resize() {}
+    sleep() {}
+    show() {}
+  },
 }));
 
 const decode = vi.fn<(src: string) => Promise<void>>();
@@ -20,6 +36,9 @@ class Element {
   naturalWidth = 166;
   naturalHeight = 154;
   append() {}
+  insertBefore() {}
+  replaceChildren() {}
+  remove() {}
   addEventListener() {}
   setAttribute() {}
   removeAttribute() { this.src = ''; }
@@ -43,8 +62,9 @@ describe('recoverable room assets', () => {
   beforeEach(() => {
     decode.mockReset().mockResolvedValue();
     vi.stubGlobal('Image', Element);
+    vi.stubGlobal('cancelAnimationFrame', () => {});
     vi.stubGlobal('document', { createElement: () => new Element(), createComment: () => ({}) });
-    vi.stubGlobal('ResizeObserver', class { observe() {} });
+    vi.stubGlobal('ResizeObserver', class { observe() {} disconnect() {} });
     // A denied cast download must still leave the room and hunt intact.
     vi.stubGlobal('fetch', vi.fn(async () => new Response(null, { status: 404 })));
     vi.spyOn(console, 'warn').mockImplementation(() => {});
@@ -79,6 +99,49 @@ describe('recoverable room assets', () => {
     expect(requested.some((url) => url.endsWith('.webp'))).toBe(true);
     expect(scene.character).toBeNull();
     expect(scene.hunt.remaining).toBe(config.spots.length);
+  });
+
+  it('closes a reaction bitmap that finishes after its scene is left and releases the held frame on destroy', async () => {
+    const frame = () => ({ width: 100, height: 100, close: vi.fn() });
+    const stills: Array<ReturnType<typeof frame>> = [];
+    const late = frame();
+    let complete!: (bitmap: ReturnType<typeof frame>) => void;
+    let decodingStarted!: () => void;
+    const started = new Promise<void>((resolve) => { decodingStarted = resolve; });
+    const decoding = new Promise<ReturnType<typeof frame>>((resolve) => { complete = resolve; });
+    vi.stubGlobal('requestIdleCallback', (fn: () => void) => queueMicrotask(fn));
+    vi.stubGlobal('fetch', vi.fn(async (url: string) => {
+      if (url.endsWith('/reaction.json')) return new Response(JSON.stringify({ frames: [{ file: 'late.png', ms: 100 }] }));
+      if (url.endsWith('/shared.json')) return new Response('{}');
+      return new Response(url);
+    }));
+    vi.stubGlobal('createImageBitmap', async (blob: Blob) => {
+      if ((await blob.text()).endsWith('/late.webp')) {
+        decodingStarted();
+        return decoding;
+      }
+      const bitmap = frame();
+      stills.push(bitmap);
+      return bitmap;
+    });
+    const scene = await load();
+    expect(scene.character).not.toBeNull();
+    const reaction = scene.loadMore();
+    await started;
+    scene.rest();
+    complete(late);
+    await reaction;
+    expect(late.close).toHaveBeenCalledOnce();
+    expect(scene.character?.has('reaction/late.png')).toBe(false);
+    expect(stills.some((bitmap) => bitmap.close.mock.calls.length === 0)).toBe(true);
+    scene.destroy();
+    await Promise.resolve();
+
+    expect(stills.every((bitmap) => bitmap.close.mock.calls.length === 1)).toBe(true);
+    const decodedCount = stills.length;
+    await scene.enter();
+    expect(scene.character).toBeNull();
+    expect(stills).toHaveLength(decodedCount);
   });
 
   it('expires a stalled room after two attempts, and a fresh load can succeed', async () => {

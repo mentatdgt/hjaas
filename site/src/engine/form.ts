@@ -136,9 +136,17 @@ export class ContactForm {
     });
 
     // The sheet hangs from the button; keep it there if the window changes while it is open.
-    window.addEventListener('resize', () => {
-      if (this.dialog.open) this.anchor();
-    });
+    window.addEventListener('resize', this.onResize);
+  }
+
+  private onResize = (): void => {
+    if (this.dialog.open) this.anchor();
+  };
+
+  destroy(): void {
+    window.removeEventListener('resize', this.onResize);
+    window.clearTimeout(this.closing);
+    this.dialog.remove();
   }
 
   /**

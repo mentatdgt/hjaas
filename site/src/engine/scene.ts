@@ -1,6 +1,6 @@
 // One scene, built from its config: the plate, the character on it, and the ten hidden mushrooms.
 // A scene knows nothing about the page around it; site.ts puts it in the window and takes it out again.
-import { PLATE, asset, assetSignal, decodeBlob, decodePart, fetchBlob, fetchFrame, idle, loadFrame, loadImage, loadPlate, releaseFrame, requiredAsset, unloadFrame } from './assets';
+import { FrameStore, PLATE, type Frame, asset, assetSignal, decodeBlob, decodePart, fetchBlob, fetchFrame, idle, loadImage, loadPlate, releaseFrame, requiredAsset } from './assets';
 import { leadOf, splitCast, type CastFrames, type CastRoutines, type CastScreen } from './cast';
 import { Character } from './character';
 import { edgeAlpha, edgeName, makeEdge, type Edge, type EdgeStyle } from './edge';
@@ -65,7 +65,7 @@ interface Cast {
    * see `keeps`). The downloaded files are kept, so wake() brings the frames back by decoding alone, while
    * the brush is at work. wake() resolves when she can be drawn again: at once if her canvas's frame was kept.
    */
-  sleep: () => void;
+  sleep: (keepShown?: boolean) => void;
   wake: () => Promise<void>;
   /**
    * Out of sight she keeps the frame on her canvas, and carries on from it when the scene comes back. False:
@@ -88,6 +88,15 @@ interface Cast {
  * backdrop) and its walkers (the stagehand). Painted with the room, under the cast.
  */
 type CastList = Cast[] & { progress?: Progress; walks?: Walk[] };
+
+function releaseCastList(casts: CastList): void {
+  for (const actor of casts) {
+    actor.sleep(false);
+    actor.backdrop?.close();
+  }
+  casts.progress?.sleep();
+  for (const walk of casts.walks ?? []) walk.sleep();
+}
 
 const json = async <T>(path: string): Promise<T> => {
   const response = await fetch(asset(path), { signal: assetSignal() });
@@ -129,11 +138,24 @@ async function frameCast(config: SceneConfig, cast: FrameCast, host: SceneHost):
   // Every pose's file, routine first: the order they are brought back in after a sleep.
   const files = new Map(names.map((name) => [name, asset(`${config.assets}${dir}${name}.webp`)]));
   return async () => {
-    const frames = await Promise.all(names.map((name) => loadFrame(files.get(name)!)));
-    const character = new Character(new Map(names.map((name, i) => [name, frames[i]])), cast);
+    const decoded = new FrameStore();
+    let character: Character;
+    try {
+      const poses = await Promise.all(names.map(async (name) => [name, await decoded.load(files.get(name)!)] as const));
+      character = new Character(new Map(poses), cast);
+    } catch (error) {
+      decoded.releaseExcept(new Set());
+      throw error;
+    }
     let reaction: Reaction | null = null;
     let loading: Promise<void> | null = null;
     let awake = true;
+    let generation = 0;
+    const loadPose = async (pose: string, url: string, at: number): Promise<void> => {
+      files.set(pose, url);
+      const frame = await decoded.load(url);
+      if (at === generation && awake) character.add(pose, frame);
+    };
     return {
       character,
       routine,
@@ -143,36 +165,39 @@ async function frameCast(config: SceneConfig, cast: FrameCast, host: SceneHost):
       reaction: () => (reaction && reaction.steps.every((step) => character.has(step.pose)) ? reaction : null),
       still: [],
       more: (reactions) => {
-        if (!cast.reaction || !reactions) return Promise.resolve();
-        loading ??= loadReaction(character, config.assets, dir + cast.reaction).then(
-          (ready) => {
-            reaction = ready;
-            for (const [pose, url] of ready.files) files.set(pose, url);
-          },
-          (error) => console.warn(`[hjaas] ${config.id}: reaction frames unavailable; finds still count`, error),
-        );
+        if (!cast.reaction || !reactions || !awake || reaction) return Promise.resolve();
+        const at = generation;
+        const active = (): boolean => awake && generation === at;
+        loading ??= loadReaction(config.assets, dir + cast.reaction, active, (pose, url) => loadPose(pose, url, at))
+          .then((ready) => {
+            if (active() && ready) reaction = ready;
+          }, (error) => {
+            if (active()) console.warn(`[hjaas] ${config.id}: reaction frames unavailable; finds still count`, error);
+          })
+          .finally(() => {
+            if (active()) loading = null;
+          });
         return loading;
       },
-      sleep: () => {
+      sleep: (keepShown = true) => {
         awake = false;
-        const keep = new Set(character.showing);
-        const kept = new Set([...keep].map((name) => files.get(name)));
+        generation++;
+        loading = null;
+        const keep = new Set(keepShown ? character.showing : []);
+        const kept = new Set([...keep].map((name) => files.get(name)).filter((url): url is string => url !== undefined));
         for (const name of files.keys()) if (!keep.has(name)) character.drop(name);
-        // One file can stand for two poses (a reaction frame that is also a routine frame).
-        for (const url of new Set(files.values())) if (!kept.has(url)) unloadFrame(url);
+        decoded.releaseExcept(kept);
         character.sleep();
       },
       wake: () => {
         if (awake) return Promise.resolve();
         awake = true;
+        const at = generation;
         void (async () => {
           for (const [name, url] of files) {
-            if (!awake) return;
+            if (at !== generation) return;
             if (character.has(name)) continue;
-            const frame = await loadFrame(url).catch(() => null);
-            // She went out of sight again while this one was being decoded: sleep() has dealt with it.
-            if (!awake) return;
-            if (frame) character.add(name, frame);
+            await loadPose(name, url, at).catch(() => {});
           }
         })();
         return Promise.resolve();
@@ -232,15 +257,26 @@ async function troupe(config: SceneConfig, cast: Troupe, host: SceneHost): Promi
     })),
   );
   return async () => {
-    const [casts, backdrop] = await Promise.all([
-      Promise.all(fetched.map((decode) => decode())) as Promise<CastList>,
+    const [results, backdrop] = await Promise.all([
+      Promise.allSettled(fetched.map((decode) => decode())),
       screen && plate ? decodePart(plate, screen.source) : null,
     ]);
+    const casts: CastList = [];
+    let failure: PromiseRejectedResult | undefined;
+    for (const result of results) {
+      if (result.status === 'fulfilled') casts.push(result.value);
+      else failure ??= result;
+    }
+    if (failure) {
+      for (const actor of casts) actor.sleep(false);
+      backdrop?.close();
+      throw failure.reason;
+    }
     const holder = screen ? actors.findIndex((actor) => actor.name === screen.actor) : -1;
     if (screen && holder >= 0) {
       casts[holder].screen = screen;
       casts[holder].backdrop = backdrop;
-    }
+    } else backdrop?.close();
     if (progress.length) casts.progress = new Progress(progress, pieceFiles, progressFade, () => host.found.size);
     if (walkFiles.length) casts.walks = walkFiles.map(({ walker, track, files }) => new Walk(walker, track, files, frames.canvas, host.rnd, host.still));
     return casts;
@@ -262,10 +298,16 @@ async function actorCast(
   const names = stillsInUse(frames, routine);
   const stillFiles = await Promise.all(names.map((name) => load(frames.stills[name])));
   return async () => {
-    const stills = await Promise.all(stillFiles.map(decodeBlob));
+    const results = await Promise.allSettled(stillFiles.map(decodeBlob));
+    const stills: Array<Frame | null> = results.map((result) => result.status === 'fulfilled' ? result.value : null);
+    for (const result of results) {
+      if (result.status === 'fulfilled') continue;
+      for (const frame of stills) if (frame) releaseFrame(frame);
+      throw result.reason;
+    }
     const c = frames.canvas;
     const rest = restOf(frames, routine);
-    const character = new Character(new Map(names.map((name, i) => [name, stills[i]])), {
+    const character = new Character(new Map(names.map((name, i) => [name, stills[i]!])), {
       rest,
       placement: { kind: 'box', x: c.plate_x, y: c.plate_y, width: c.plate_w, height: c.plate_h },
       size: { w: c.w, h: c.h },
@@ -278,6 +320,7 @@ async function actorCast(
     const reel = new Reel(character);
     reel.wake();
     let awake = true;
+    let generation = 0;
     const loaded = new Set<string>();
     const inUse = clipsInUse(routine);
     const fetching = new Map<string, Promise<void>>();
@@ -322,20 +365,25 @@ async function actorCast(
         for (const name of inUse.reaction) await fetchClip(name).catch(() => {});
       },
       ahead: (poses) => reel.want(poses),
-      sleep: () => {
+      sleep: (keepShown = true) => {
         awake = false;
-        reel.sleep();
-        const keep = new Set(options.keeps ? character.showing : []);
+        generation++;
+        if (keepShown) reel.sleep();
+        else reel.release();
+        const keep = new Set(keepShown && options.keeps ? character.showing : []);
         names.forEach((name, i) => {
           if (keep.has(name) || !character.has(name)) return;
           character.drop(name);
-          releaseFrame(stills[i]);
+          const frame = stills[i];
+          if (frame) releaseFrame(frame);
+          stills[i] = null;
         });
         character.sleep();
       },
       wake: () => {
         if (awake) return Promise.resolve();
         awake = true;
+        const at = generation;
         // The frame her canvas needs comes back first: until it has, she cannot be drawn.
         const order = [...names.keys()].sort((a, b) => Number(names[b] === character.current) - Number(names[a] === character.current));
         let shown: () => void = () => {};
@@ -343,12 +391,12 @@ async function actorCast(
         void (async () => {
           try {
             for (const i of order) {
-              if (!awake) return;
+              if (at !== generation) return;
               if (!character.has(names[i])) {
                 const frame = await decodeBlob(stillFiles[i]).catch(() => null);
                 if (!frame) continue;
                 // She went out of sight again while this one was being decoded.
-                if (!awake) {
+                if (at !== generation) {
                   releaseFrame(frame);
                   return;
                 }
@@ -357,7 +405,7 @@ async function actorCast(
               }
               if (i === order[0]) shown();
             }
-            if (awake) reel.wake();
+            if (at === generation) reel.wake();
           } finally {
             shown();
           }
@@ -411,6 +459,8 @@ export class Scene {
   private soft = false;
   private reacting: Promise<void> = Promise.resolve();
   private working = false;
+  private generation = 0;
+  private destroyed = false;
 
   private constructor(config: SceneConfig, host: SceneHost, plate: HTMLDivElement, room: HTMLImageElement, hunt: Hunt) {
     this.config = config;
@@ -454,7 +504,13 @@ export class Scene {
     const plate = document.createElement('div');
     plate.className = 'hj-plate';
     plate.dataset.scene = config.id;
-    const room = await roomImage;
+    const discardCast = (): void => {
+      void cast?.then((ready) => { if (ready) releaseCastList(ready); });
+    };
+    const room = await roomImage.catch((error) => {
+      discardCast();
+      throw error;
+    });
     room.className = 'hj-room';
     room.alt = '';
     room.draggable = false;
@@ -477,6 +533,10 @@ export class Scene {
         made?.progressed();
       },
       onLand: host.onLand,
+    }).catch((error) => {
+      room.removeAttribute('src');
+      discardCast();
+      throw error;
     });
     const scene = new Scene(config, host, plate, room, hunt);
     made = scene;
@@ -529,20 +589,28 @@ export class Scene {
    * and she goes under it.)
    */
   enter(): Promise<void> {
+    if (this.destroyed) return Promise.resolve();
     // A scene come back to: its frames are decoded again while the brush is still at work. (A cast that kept
     // nothing can be drawn again once each actor's rest frame is back.)
     const back = Promise.all([...this.casts.map((cast) => cast.wake()), this.progress?.wake(), ...this.walks.map((walk) => walk.wake())]).then(() => {});
     if (this.character || !this.config.character) return back;
     this.preload();
+    const at = this.generation;
     this.entering ??= this.casting!
       .then((decode) => decode?.() ?? null)
       .then(async (casts) => {
+        if (at !== this.generation) {
+          if (casts) releaseCastList(casts);
+          return;
+        }
         if (casts && !this.character) this.attach(casts);
         // The progress pieces the hunt has reached are drawn before the scene shows, and the walkers' pictures decoded.
         await Promise.all([this.progress?.wake(), ...this.walks.map((walk) => walk.wake())]);
       }).catch((error) => {
-        this.entering = null;
-        this.casting = null;
+        if (at === this.generation) {
+          this.entering = null;
+          this.casting = null;
+        }
         throw error;
       });
     return this.entering;
@@ -630,6 +698,7 @@ export class Scene {
 
   /** Start, or carry on with, the idle routine. Nothing runs while the tab is hidden. */
   work(): void {
+    if (this.destroyed) return;
     this.working = true;
     for (const cast of this.casts) void cast.wake();
     if (!document.hidden) for (const player of this.players.values()) player.start();
@@ -648,6 +717,9 @@ export class Scene {
    * dress(), her frames from enter() on. All from files already downloaded.
    */
   rest(): void {
+    if (this.destroyed) return;
+    this.generation++;
+    this.entering = null;
     for (const cast of this.casts) {
       // An actor who keeps nothing while out of sight goes back to her rest pose, and starts afresh from it.
       if (!cast.keeps) this.restart(cast);
@@ -674,7 +746,7 @@ export class Scene {
    * before anything of this one can be seen: until its edge is drawn, a plate shows right to its rim.
    */
   dress(): Promise<void> {
-    return this.edge.make();
+    return this.destroyed ? Promise.resolve() : this.edge.make();
   }
 
   /**
@@ -798,9 +870,29 @@ export class Scene {
   }
 
   destroy(): void {
-    for (const player of this.players.values()) player.stop();
+    if (this.destroyed) return;
+    this.destroyed = true;
+    this.generation++;
+    this.working = false;
     this.layout.disconnect();
+    for (const player of this.players.values()) player.settle();
+    for (const actor of this.casts) {
+      actor.sleep(false);
+      actor.backdrop?.close();
+    }
+    this.finder?.sleep();
+    this.progress?.sleep();
+    for (const walk of this.walks) walk.sleep();
+    this.room.removeAttribute('src');
+    this.edge.release();
+    this.hunt.destroy();
     this.plate.remove();
+    this.plate.replaceChildren();
+    this.casts = [];
+    this.walks = [];
+    this.players.clear();
+    this.character = this.cast = this.player = this.finder = this.progress = null;
+    this.casting = this.entering = null;
   }
 
   private rhythm(cast: Cast): Schedule {

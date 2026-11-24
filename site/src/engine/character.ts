@@ -181,6 +181,7 @@ export class Character {
    * scene is back on the page.
    */
   sleep(): void {
+    window.clearTimeout(this.scratchIdle);
     this.canvas.width = 0;
     this.canvas.height = 0;
     if (this.scratch) {
@@ -204,9 +205,9 @@ export class Character {
    * Take a clip frame away again and give its pixels back (reel.ts decides when). The frame she is showing
    * is never taken: her canvas may have to be drawn again, after a resize.
    */
-  dropPatch(name: string): void {
+  dropPatch(name: string, force = false): void {
     const patch = this.patches.get(name);
-    if (!patch || name === this.pose) return;
+    if (!patch || (!force && name === this.pose)) return;
     this.patches.delete(name);
     releaseFrame(patch.frame);
   }

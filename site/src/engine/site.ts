@@ -1,7 +1,7 @@
 import '@fontsource-variable/bricolage-grotesque';
 import '@fontsource/spectral/latin-400.css';
 import './site.css';
-import { setAssetBase } from './assets';
+import { retainAssets, setAssetBase } from './assets';
 import { Caption, type CaptionCopy } from './caption';
 import { DEFAULT_EDGE, EDGE_STYLES, edgeSeed, type EdgeStyle } from './edge';
 import { flags } from './flags';
@@ -149,7 +149,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   let logo: Logo | undefined;
   /** The scene in the window. */
   let current: Scene | undefined;
-  const cleanup: Array<() => void> = [];
+  const cleanup: Array<() => void> = [retainAssets()];
 
   // ---- Progress: each scene has its own found mushrooms and pan position; the unlock is shared. ----
 
@@ -259,6 +259,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   markTabs();
 
   const form = new ContactForm(root, caption.action);
+  cleanup.push(() => form.destroy());
   // A click with detail 0 came from the keyboard: keyboard actions open at once, with no entrance.
   caption.action.addEventListener('click', (event) => form.open(event.detail === 0));
 
@@ -437,6 +438,10 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       },
       !current,
     ).then((loaded) => {
+      if (destroyed) {
+        loaded.destroy();
+        return loaded;
+      }
       self = loaded;
       loaded.syncFinds();
       scenesLoaded.set(config.id, loaded);
@@ -802,10 +807,13 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
 
   return {
     destroy() {
+      if (destroyed) return;
       destroyed = true;
       transition.clear();
       cleanup.forEach((fn) => fn());
-      for (const scene of loading.values()) void scene.then((loaded) => loaded.destroy(), () => {});
+      for (const scene of scenesLoaded.values()) scene.destroy();
+      loading.clear();
+      scenesLoaded.clear();
       root.remove();
     },
   };

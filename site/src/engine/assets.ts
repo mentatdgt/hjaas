@@ -53,52 +53,54 @@ export function assetSignal(): AbortSignal {
   return AbortSignal.timeout(ASSET_DEADLINE_MS);
 }
 
-const frameCache = new Map<string, Promise<Frame>>();
-/** Each frame's file as downloaded, kept so that a frame given back can be decoded again without the network. */
+/** Compressed bytes can be reused across rooms and are evicted least-recently used. */
+const BLOB_CACHE_LIMIT = 192;
 const blobCache = new Map<string, Promise<Blob>>();
 
 function blobOf(url: string): Promise<Blob> {
   let blob = blobCache.get(url);
-  if (!blob) {
+  if (blob) blobCache.delete(url);
+  else {
     blob = fetchBlob(url);
-    blobCache.set(url, blob);
-    blob.catch(() => blobCache.delete(url));
+    const pending = blob;
+    void pending.catch(() => {
+      if (blobCache.get(url) === pending) blobCache.delete(url);
+    });
   }
+  blobCache.set(url, blob);
+  if (blobCache.size > BLOB_CACHE_LIMIT) blobCache.delete(blobCache.keys().next().value!);
   return blob;
 }
 
-/**
- * A decoded frame. An ImageBitmap made from the file's bytes is decoded in a worker and keeps its pixels in
- * memory, so loading never stalls an animation and the browser can't evict a pose mid-loop.
- * Each URL is fetched once and decoded once; asking again returns the same frame, until unloadFrame().
- */
-export function loadFrame(url: string): Promise<Frame> {
-  let frame = frameCache.get(url);
-  if (!frame) {
-    frame = decodeFrame(url);
-    frameCache.set(url, frame);
-    frame.catch(() => frameCache.delete(url));
+/** One cast owns its decoded frames. Several poses may use the same file. */
+export class FrameStore {
+  private readonly frames = new Map<string, Promise<Frame>>();
+
+  load(url: string): Promise<Frame> {
+    let frame = this.frames.get(url);
+    if (!frame) {
+      const pending = decodeFrame(url);
+      this.frames.set(url, pending);
+      void pending.catch(() => {
+        if (this.frames.get(url) === pending) this.frames.delete(url);
+      });
+      frame = pending;
+    }
+    return frame;
   }
-  return frame;
+
+  releaseExcept(keep: ReadonlySet<string>): void {
+    for (const [url, frame] of this.frames) {
+      if (keep.has(url)) continue;
+      this.frames.delete(url);
+      void frame.then(releaseFrame, () => {});
+    }
+  }
 }
 
-/**
- * Download a frame's file without decoding it: loadFrame() then only has to decode. (A scene's frames are
- * fetched while the scene before it is still on show, and decoded once that one has given its own back.)
- */
+/** Download a frame without decoding it. */
 export function fetchFrame(url: string): Promise<void> {
   return blobOf(url).then(() => {});
-}
-
-/**
- * Give a frame's pixels back (a scene out of sight keeps none). Its downloaded bytes stay, so loadFrame()
- * brings it back by decoding alone. The frame must not be drawn again.
- */
-export function unloadFrame(url: string): void {
-  const frame = frameCache.get(url);
-  if (!frame) return;
-  frameCache.delete(url);
-  void frame.then(releaseFrame, () => {});
 }
 
 async function decodeFrame(url: string): Promise<Frame> {
@@ -132,39 +134,64 @@ const DECODER = `self.onmessage = async (event) => {
   }
 };`;
 let decoder: Worker | null | undefined;
+let decoderUrl: string | undefined;
+let assetUsers = 0;
+export function retainAssets(): () => void {
+  assetUsers++;
+  return () => {
+    if (--assetUsers > 0) return;
+    stopDecoder();
+    decoder = undefined;
+    blobCache.clear();
+  };
+}
+
+function stopDecoder(): void {
+  decoder?.terminate();
+  decoder = null;
+  if (decoderUrl) URL.revokeObjectURL(decoderUrl);
+  decoderUrl = undefined;
+  for (const waiting of decodes.values()) waiting.reject(new Error('decoder unavailable'));
+  decodes.clear();
+}
 let nextDecode = 0;
 const decodes = new Map<number, { resolve: (bitmap: ImageBitmap) => void; reject: (reason: unknown) => void }>();
 
 function startDecoder(): Worker | null {
   try {
-    const url = URL.createObjectURL(new Blob([DECODER], { type: 'text/javascript' }));
-    const worker = new Worker(url);
+    decoderUrl = URL.createObjectURL(new Blob([DECODER], { type: 'text/javascript' }));
+    const worker = new Worker(decoderUrl);
     worker.onmessage = (event: MessageEvent<{ id: number; bitmap?: ImageBitmap; error?: string }>) => {
       const waiting = decodes.get(event.data.id);
       decodes.delete(event.data.id);
-      if (event.data.bitmap) waiting?.resolve(event.data.bitmap);
+      if (event.data.bitmap) {
+        if (waiting) waiting.resolve(event.data.bitmap);
+        else event.data.bitmap.close();
+      }
       else waiting?.reject(new Error(event.data.error));
     };
-    worker.onerror = () => {
-      // It could not start, or it broke: everything waiting, and everything after, is decoded on the page.
-      decoder = null;
-      for (const waiting of decodes.values()) waiting.reject(new Error('decoder unavailable'));
-      decodes.clear();
-    };
+    worker.onerror = () => { if (decoder === worker) stopDecoder(); };
     return worker;
   } catch {
+    stopDecoder();
     return null;
   }
 }
 
 function decodeInWorker(blob: Blob, crop?: Crop): Promise<ImageBitmap> {
+  if (assetUsers === 0) return Promise.reject(new Error('decoder unavailable'));
   if (decoder === undefined) decoder = typeof Worker === 'function' ? startDecoder() : null;
   const worker = decoder;
   if (!worker) return Promise.reject(new Error('decoder unavailable'));
-  return new Promise((resolve, reject) => {
-    const id = nextDecode++;
+  const id = nextDecode++;
+  let timeout: ReturnType<typeof setTimeout> | undefined;
+  return new Promise<ImageBitmap>((resolve, reject) => {
     decodes.set(id, { resolve, reject });
+    timeout = setTimeout(() => reject(new Error('decode deadline exceeded')), ASSET_DEADLINE_MS);
     worker.postMessage({ id, blob, crop });
+  }).finally(() => {
+    clearTimeout(timeout);
+    decodes.delete(id);
   });
 }
 
@@ -218,16 +245,18 @@ export async function decodePart(blob: Blob, part: Crop): Promise<ImageBitmap | 
   }
   try {
     const whole = await createImageBitmap(blob);
-    const part = await createImageBitmap(whole, crop.x, crop.y, crop.w, crop.h);
-    whole.close();
-    return part;
+    try {
+      return await createImageBitmap(whole, crop.x, crop.y, crop.w, crop.h);
+    } finally {
+      whole.close();
+    }
   } catch {
     return null;
   }
 }
 
 export function releaseFrame(frame: Frame): void {
-  if (!(frame instanceof HTMLImageElement)) frame.close();
+  if ('close' in frame) frame.close();
 }
 
 /** A scene's plate, downloaded and decoded. Resolves with the address to give the scene's <img>. */
@@ -252,10 +281,4 @@ export function frameSize(frame: Frame): { w: number; h: number } {
   return frame instanceof HTMLImageElement
     ? { w: frame.naturalWidth, h: frame.naturalHeight }
     : { w: frame.width, h: frame.height };
-}
-
-/** Decodes the named frames in `dir` (a folder under the assets root, with a trailing slash). */
-export async function loadFrames(dir: string, names: readonly string[]): Promise<Map<string, Frame>> {
-  const frames = await Promise.all(names.map((name) => loadFrame(asset(`${dir}${name}.webp`))));
-  return new Map(names.map((name, i) => [name, frames[i]]));
 }
