@@ -456,6 +456,12 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
 
   const frame1 = (): Promise<void> => new Promise((resolve) => requestAnimationFrame(() => resolve()));
   const warn = (config: SceneConfig) => (error: unknown) => console.warn(`[hjaas] ${config.id}: the character could not be loaded; the room is shown without her`, error);
+  const WAIT_TO_DRAW_MS = 1500;
+  /**
+   * Everything a painting will uncover, drawn once under its sheet before its clock starts. It never waits for
+   * long: a painting that starts a little roughly is better than a page that stays blank.
+   */
+  const allDrawn = (scene: Scene): Promise<void> => Promise.race([scene.drawn().catch(() => {}), new Promise<void>((resolve) => window.setTimeout(resolve, WAIT_TO_DRAW_MS))]);
   /** How long a switch waits, under the old picture, for the new scene's character before going on without her. */
   const WAIT_FOR_HER_MS = 600;
 
@@ -477,7 +483,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     const arriving = `${config.label}. ${state[0]} of ${config.spots.length} mushrooms found.`;
     // The new scene's parts are drawn for the first time one frame after another, under the old picture
     // (or the blank sheet), not all in the frame of the tap: the room first, then her.
-    const her = (hidden: boolean): Promise<void> => next.enter({ hidden }).catch(warn(config));
+    const her = (): Promise<void> => next.enter().catch(warn(config));
     /** The new scene's edge, drawn. (QA: how long that took.) */
     const dress = (): Promise<void> => {
       const from = performance.now();
@@ -485,7 +491,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     };
 
     if (firstVisit && !calm) {
-      // A scene never seen before gets its full painting, from a blank sheet. The painting brings her in,
+      // A scene never seen before gets its full painting, from a blank sheet. She is painted with the room,
       // so it waits for her frames; the picture being left stays up until they are here.
       await next.loaded().catch(warn(config));
       if (destroyed) return;
@@ -504,7 +510,8 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       old.rest();
       await frame1();
       // Its own edge is drawn now that the other scene's has been given back, under the blank sheet.
-      await Promise.all([her(true), dress()]);
+      await Promise.all([her(), dress()]);
+      await allDrawn(next);
       await steadyFrames();
       await transition.paint(next);
     } else {
@@ -526,7 +533,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       // The new scene's edge is drawn meanwhile, now that the old one's has been given back: nothing of the
       // new picture shows until it is complete.
       const dressed = dress();
-      const inTime = await Promise.race([her(false).then(() => true), new Promise<boolean>((resolve) => window.setTimeout(() => resolve(false), WAIT_FOR_HER_MS))]);
+      const inTime = await Promise.race([her().then(() => true), new Promise<boolean>((resolve) => window.setTimeout(() => resolve(false), WAIT_FOR_HER_MS))]);
       if (!inTime) next.arriveSoftly();
       await dressed;
       if (destroyed) return;
@@ -592,6 +599,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       transition.prepare(scene);
       leave.cancel();
       showControls(true);
+      await allDrawn(scene);
       await steadyFrames(70);
       await transition.paint(scene);
       if (destroyed) return;
@@ -613,6 +621,10 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     const [scene, theLogo] = await Promise.all([sceneFor(first), Logo.create(options.homeHref)]);
     if (destroyed) return;
     place(scene);
+    // Before a painting each part of the setting up gets a frame to itself, not one long task for all of it.
+    const breath = opening === 'paint' && !skipped ? frame1 : (): Promise<void> => Promise.resolve();
+    await breath();
+    if (destroyed) return;
     logo = theLogo;
     // The logo keeps its own proportions; the page reserves exactly that space for it.
     page.style.setProperty('--logo-ratio', theLogo.el.style.aspectRatio);
@@ -624,9 +636,16 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     // While nothing is on screen yet: lay the contact sheet out once (with its real font), so that
     // opening it later never costs a frame of the character's routine, and get the brush ready.
     await document.fonts?.ready;
+    await breath();
     form.prepare();
+    await breath();
+    if (destroyed) return;
     const painting = opening === 'paint' && !skipped;
-    if (painting) transition.prepare(scene);
+    if (painting) {
+      transition.prepare(scene);
+      await frame1();
+      await allDrawn(scene);
+    }
     // Let the setup above reach the screen before any motion starts. Before a painting that includes the
     // whole picture being drawn for the first time, under the blank sheet: wait until frames arrive on time.
     await (painting ? steadyFrames() : steadyFrames(0));

@@ -382,9 +382,9 @@ export class Scene {
   character: Character | null = null;
   player: Player | null = null;
   /**
-   * Where a first-visit painting's sheet of paper goes: straight after this. Under the sheet, and so painted
-   * with the room: the room, the mushrooms and the actors of a cast drawn before its lead. Over it: the lead
-   * and whoever is drawn after her, who come in when the painting is done.
+   * Where a first-visit painting's sheet of paper goes: straight after this. Everything in the picture is under
+   * it, and so painted together: the room, the mushrooms, the character and the rest of her cast. Over it: only
+   * the painting's edge.
    */
   readonly mark: Comment = document.createComment('sheet');
   private readonly host: SceneHost;
@@ -419,8 +419,8 @@ export class Scene {
     this.room = room;
     this.roomSrc = room.src;
     this.hunt = hunt;
-    // Bottom to top: the room, her shadow, the mushrooms, (the actors of a cast drawn before its lead,
-    // a first-visit painting's sheet of paper,) the character, and over them all the painting's edge.
+    // Bottom to top: the room, her shadow, the mushrooms, the character (or her cast), a first-visit painting's
+    // sheet of paper, and over them all the painting's edge.
     this.edge = makeEdge(host.edge.style, host.edge.seed(edgeName(config)), host.edge.paper, config.lines && config.assets + config.lines, config.keep);
     plate.append(hunt.el, this.mark, this.edge.el);
 
@@ -517,9 +517,10 @@ export class Scene {
   /**
    * The scene is on the page, or about to be: put the character on the plate as soon as her first frames
    * are decoded. Resolves when she is there. The first time this fetches them (unless preload() already
-   * has); after that it resolves at once. `hidden` puts her there unseen, for a painting to bring her in.
+   * has); after that it resolves at once. (Before a first-visit painting the sheet is on the plate already,
+   * and she goes under it.)
    */
-  enter(options: { hidden?: boolean } = {}): Promise<void> {
+  enter(): Promise<void> {
     // A scene come back to: its frames are decoded again while the brush is still at work. (A cast that kept
     // nothing can be drawn again once each actor's rest frame is back.)
     const back = Promise.all([...this.casts.map((cast) => cast.wake()), this.progress?.wake(), ...this.walks.map((walk) => walk.wake())]).then(() => {});
@@ -528,7 +529,7 @@ export class Scene {
     this.entering ??= this.casting!
       .then((decode) => decode?.() ?? null)
       .then(async (casts) => {
-        if (casts && !this.character) this.attach(casts, options.hidden === true);
+        if (casts && !this.character) this.attach(casts);
         // The progress pieces the hunt has reached are drawn before the scene shows, and the walkers' pictures decoded.
         await Promise.all([this.progress?.wake(), ...this.walks.map((walk) => walk.wake())]);
       });
@@ -547,15 +548,13 @@ export class Scene {
     this.soft = true;
   }
 
-  private attach(casts: CastList, hidden = false): void {
+  private attach(casts: CastList): void {
     const lead = leadOf(casts);
     if (!lead) return;
     this.casts = casts;
     this.cast = lead;
     this.character = lead.character;
-    const leadAt = casts.indexOf(lead);
-    // The hunt's progress lies on the room, under the mushrooms; the walkers over it, under the cast. Both are
-    // painted with the room.
+    // The hunt's progress lies on the room, under the mushrooms; the walkers over it, under the cast.
     if (casts.progress) {
       this.progress = casts.progress;
       this.plate.insertBefore(casts.progress.el, this.hunt.el);
@@ -565,16 +564,10 @@ export class Scene {
       this.plate.insertBefore(walk.el, this.mark);
       void walk.wake();
     }
-    casts.forEach((cast, i) => {
+    casts.forEach((cast) => {
       const { character } = cast;
-      // The lead, and whoever is drawn over her, stay above a painting's sheet; the rest are painted with the room.
-      const front = i >= leadAt;
-      if (hidden && front) {
-        character.el.style.opacity = '0';
-        if (character.shadow) character.shadow.style.opacity = '0';
-      }
       if (character.shadow) this.plate.insertBefore(character.shadow, this.hunt.el);
-      this.plate.insertBefore(character.el, front ? this.edge.el : this.mark);
+      this.plate.insertBefore(character.el, this.mark);
       const player = new Player(character, this.rhythm(cast));
       player.onStep = (step) => cast.ahead?.(step.soon ?? []);
       player.entry = cast.entry ?? null;
@@ -610,12 +603,13 @@ export class Scene {
   }
 
   /**
-   * What a first-visit painting brings in when it is done: the lead, her shadow, and anyone drawn over her.
-   * (The rest of a cast is under the sheet, and painted with the room.)
+   * Everything the scene is about to show has been drawn once: every still of every actor, the hunt's progress
+   * and the walkers' pictures. Await it under the blank sheet, before a first-visit painting's clock starts, so
+   * that none of it is left to be done in the painting's own frames. (The scene must be on the page.)
    */
-  get entrance(): HTMLElement[] {
-    const from = this.cast ? this.casts.indexOf(this.cast) : 0;
-    return this.casts.slice(from).flatMap(({ character }) => (character.shadow ? [character.el, character.shadow] : [character.el]));
+  async drawn(): Promise<void> {
+    await Promise.all([this.progress?.wake(), ...this.walks.map((walk) => walk.wake())]);
+    for (const cast of this.casts) await cast.character.rehearse();
   }
 
   get total(): number {

@@ -36,6 +36,8 @@ const SHADOW_STOPS: ReadonlyArray<readonly [number, number]> = [
 // The most pixels her canvas may have. Scene 1's cut-out frames are well under it; full-plate frames
 // (scene 2) are held to it so a pose change stays one cheap draw on a phone.
 const MAX_PIXELS = 2_600_000;
+/** How long a frame spends rehearsing stills before a painting, in ms (see Character.rehearse). */
+const REHEARSE_MS = 6;
 
 export interface Box {
   left: number;
@@ -109,6 +111,8 @@ export class Character {
   private mixed = false;
   private scratch: CanvasRenderingContext2D | null = null;
   private scratchIdle = 0;
+  /** Stills not yet rehearsed at her canvas's real size (see resize() and rehearse()). */
+  private unrehearsed: string[] = [];
 
   constructor(frames: Map<string, Frame>, config: CharacterSetup) {
     this.frames = frames;
@@ -183,6 +187,7 @@ export class Character {
       this.scratch.canvas.width = 0;
       this.scratch.canvas.height = 0;
     }
+    this.unrehearsed = [];
     this.drawn = '';
     this.patched = '';
     this.mixed = false;
@@ -251,15 +256,47 @@ export class Character {
     // Frames added before the canvas had a size were rehearsed too small: once more, at the real size.
     // One at a time, in quiet moments: together they took a whole frame (measured in WebKit: about 60 ms
     // for scene 2's seven stills), which showed as a hitch when the lab was first opened.
+    // (Before a first-visit painting they are not left to the quiet moments: see rehearse().)
     if (first) {
-      const frames = [...this.frames.values()];
+      const alone = this.unrehearsed.length === 0;
+      this.unrehearsed = [...this.frames.keys()];
+      if (!alone) return;
       void (async () => {
-        for (const frame of frames) {
+        while (this.unrehearsed.length) {
           await idle();
-          this.warm(frame);
+          this.rehearseNext();
         }
       })();
     }
+  }
+
+  /** The next still waiting to be rehearsed, if it is still in memory. */
+  private rehearseNext(): void {
+    const frame = this.frames.get(this.unrehearsed.shift() ?? '');
+    if (frame) this.warm(frame);
+  }
+
+  /**
+   * Rehearse every still that is waiting, a few milliseconds at a time, one batch to a frame: nothing is on show,
+   * and a painting is about to start. Resolves when the last has been drawn and the rehearsal canvas given back.
+   */
+  async rehearse(): Promise<void> {
+    const frame = (): Promise<void> => new Promise((resolve) => requestAnimationFrame(() => resolve()));
+    // (Nothing waiting, and no rehearsal canvas to give back.)
+    if (!this.unrehearsed.length && !this.scratch?.canvas.width) return;
+    while (this.unrehearsed.length) {
+      await frame();
+      const until = performance.now() + REHEARSE_MS;
+      do this.rehearseNext();
+      while (this.unrehearsed.length && performance.now() < until);
+    }
+    // (Two frames on, the last of them has reached the screen's side: only then can its canvas go.)
+    await frame();
+    await frame();
+    if (this.unrehearsed.length || !this.scratch) return;
+    window.clearTimeout(this.scratchIdle);
+    this.scratch.canvas.width = 0;
+    this.scratch.canvas.height = 0;
   }
 
   /** Switch pose. One draw call on one canvas: there is never a frame with two poses or none. */

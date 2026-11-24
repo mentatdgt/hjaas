@@ -5,11 +5,11 @@
 //   Element             Role        Starts    Lasts    Motion                      Relationship
 //   Brush strokes       Lead        0         4.32 s   paint, region by region     uneven and overlapping
 //   The edge's pencil   Support     -         -        sketched in beside each stroke   with the paint, never before it
-//   The wash            Support     4.06 s    0.42 s   the rest of the room fades up   overlaps the last strokes
+//   The wash            Support     4.06 s    0.42 s   the rest of the picture fades up   overlaps the last strokes
 //   Mushrooms           Decoration  -         -        painted with the room       usable from the wash on
-//   Character + shadow  Lead        4.40 s    0.28 s   fade + 4 px settle          as the wash lands
-//   Caption             Support     4.56 s    0.20 s   fade + 4 px rise            just behind her (first showing only)
-//   Idle routine        -           4.74 s    -        first move at about 5.0 s   after a brief still moment
+//   Character + shadow  Lead        -         -        painted with the room       at her first frame, quite still
+//   Caption             Support     4.56 s    0.20 s   fade + 4 px rise            just behind the wash (first showing only)
+//   Idle routine        -           4.74 s    -        first move at about 5.0 s   0.26 s after the wash: the paint is dry
 //
 // 2. A switch to a scene already seen: the new picture is brushed in over the old one with the same
 //    strokes, played quickly: about 1.2 s of brush and a 0.25 s wash, 1.45 s in all.
@@ -18,11 +18,14 @@
 //    the pencil of the edge alike: a blank sheet fades off the finished picture.
 //
 // What stays still, and why: the page, the logo and the frame never move (the picture is the only event);
-// the mushrooms have no entrance of their own (they belong to the room, and the brush paints them with it).
+// neither the mushrooms nor the character has an entrance of its own. They are painted by the same strokes as
+// the room around them, so at no moment is the room there and she not: a mushroom beside the place she was
+// still to fill would give itself away (review: scene-5-build-round4.md).
 //
 // How it is built: the finished picture is on the page from the start, under a sheet that the brush rubs
-// away (paint.ts): blank paper for a first visit, a copy of the picture being left for a switch. The
-// picture's one-off cost of being drawn is paid before the clock starts, and nothing is swapped or cleared
+// away (paint.ts): blank paper for a first visit, a copy of the picture being left for a switch. She is under
+// it too, drawn once and not again until it is gone, so a frame of painting costs only its strokes. The
+// picture's one-off cost of being drawn is paid before the clock starts (site.ts, Scene.drawn()), and nothing is swapped or cleared
 // when the brush stops: the sheet, by then clear, is taken away a little later.
 //
 // The pencil of the edge lies over that sheet (the edge is what stops the paint at the painting's shape),
@@ -137,7 +140,7 @@ export class Transition {
 
   /**
    * Set the page up for a first-visit painting about to start: a blank sheet over the finished picture, the
-   * character out of sight. Call it a moment before paint(), so the picture under the sheet is drawn before
+   * character and all. Call it a moment before paint(), so the picture under the sheet is drawn before
    * the clock starts and not in the painting's first frame.
    */
   prepare(scene: Scene): void {
@@ -158,8 +161,8 @@ export class Transition {
       strokes: scene.config.strokes,
       seed: this.stage.seed,
     });
-    // Over the room, her shadow and the mushrooms (and those of a cast who are painted with the room); under
-    // the character, who is not painted, and under the painting's soft edge, so the brush never paints past it.
+    // Over the room, the mushrooms, the character and the rest of her cast (whoever is put on the plate later
+    // goes under it too: Scene.mark); under the painting's soft edge, so the brush never paints past it.
     scene.mark.after(this.painter.canvas);
     // The edge's pencil would be there before any paint, so it gets a veil of the same paper, which the
     // same strokes take away as they pass. On top of the plate; it goes on the page now, empty, and takes
@@ -181,8 +184,11 @@ export class Transition {
     const hidden: HTMLElement[] = [];
     const edge = plate.querySelector<HTMLElement>('.hj-edge');
     if (edge && !this.veiled) hidden.push(edge);
-    hidden.push(...scene.entrance);
-    if (first) hidden.push(caption);
+    if (first) {
+      hidden.push(caption);
+      // Its layer is made now: made as it fades in, it cost WebKit a frame of 35 ms.
+      caption.style.willChange = 'opacity, transform';
+    }
     if (hidden.length) gsap.set(hidden, { opacity: 0 });
     // Unpainted mushrooms can't be found yet, by pointer or by keyboard.
     hunt.el.inert = true;
@@ -205,8 +211,7 @@ export class Transition {
   /** The first-visit painting. Resolves when everything is settled. */
   paint(scene: Scene): Promise<void> {
     const { caption } = this.stage;
-    const { character, hunt } = scene;
-    const parts = scene.entrance;
+    const { hunt } = scene;
     if (!this.painter?.fresh) this.prepare(scene);
     const painter = this.painter!;
     const veil = this.veil;
@@ -218,14 +223,16 @@ export class Transition {
       if (edge) gsap.set(edge, { clearProps: 'opacity' });
     }
 
+    // (QA: where a trace of the production build finds the painting.)
+    performance.mark('hj-paint');
     return new Promise((resolve) => {
       const clock = { t: 0 };
       const wash = painter.seconds - 0.26;
-      const characterAt = wash + 0.34;
+      const workAt = wash + 0.68;
       const captionAt = wash + 0.5;
       const timeline = this.clock(painter, resolve);
 
-      // The strokes. GSAP's ticker is the clock, so the paint, the wash and the entrances cannot drift apart.
+      // The strokes. GSAP's ticker is the clock, so the paint, the wash and what follows cannot drift apart.
       // Each takes the sheet off the room and, in the same frame, the veil off the pencil around it.
       const stroke = (): void => {
         painter.paintTo(clock.t);
@@ -233,24 +240,21 @@ export class Transition {
       };
       timeline.to(clock, { t: painter.seconds, duration: painter.seconds, ease: 'none', onUpdate: stroke }, 0);
 
-      // The wash: whatever the brush missed comes up evenly. From here the mushrooms can be found.
-      // (What is left of the veil goes twice as fast: it is over her too, and she comes in as the wash ends.)
+      // The wash: whatever the brush missed comes up evenly, the edge's pencil along with the picture, so the
+      // two finish together. From here the mushrooms can be found.
       const washed = { amount: 0 };
       const rinse = (): void => {
         painter.wash(washed.amount);
-        veil?.wash(Math.min(1, washed.amount * 2));
+        veil?.wash(washed.amount);
       };
       timeline.call(() => void (hunt.el.inert = false), undefined, wash);
       timeline.to(washed, { amount: 1, duration: 0.42, ease: 'power1.inOut', onUpdate: rinse }, wash);
 
-      // The character: no paint on her. A short fade and a small settle, a still moment, then she gets to work.
-      if (character) {
-        timeline.fromTo(parts, { opacity: 0 }, { opacity: 1, duration: 0.28, ease: 'power1.out' }, characterAt);
-        timeline.fromTo(character.el, { y: -4 }, { y: 0, duration: 0.28, ease: EASE_OUT }, characterAt);
-      }
-      timeline.call(() => scene.work(), undefined, characterAt + 0.34);
+      // She has been painted with the room, at her first frame. A still moment (0.26 s) once the last of the
+      // sheet has gone, so she never moves under paint, then she gets to work.
+      timeline.call(() => scene.work(), undefined, workAt);
 
-      // The caption, just behind her.
+      // The caption, as the wash ends.
       if (this.withCaption) {
         timeline.fromTo(caption, { opacity: 0, y: 4 }, { opacity: 1, y: 0, duration: 0.2, ease: EASE_OUT }, captionAt);
       } else {
@@ -325,6 +329,7 @@ export class Transition {
   /** Take any sheet off the page now. */
   clear(): void {
     window.clearTimeout(this.tidy);
+    this.stage.caption.style.willChange = '';
     this.timeline?.kill();
     this.timeline = null;
     this.painter?.canvas.remove();
@@ -349,6 +354,7 @@ export class Transition {
           this.painter = null;
           this.veil?.canvas.remove();
           this.veil = null;
+          this.stage.caption.style.willChange = '';
         }, TIDY_MS);
         done();
       },
