@@ -6,7 +6,8 @@ ROOT="$(cd "$(dirname "$0")" && pwd)"            # ~/hjaas/wren-inbox/quinn
 REPO="$(cd "$ROOT/../.." && pwd)"                 # ~/hjaas
 JOBS="$ROOT/fable-jobs"
 LIMIT="${FABLE_LIMIT:-10800}"                     # 3 hours per job
-MODEL="${FABLE_MODEL:-fable}"
+MODEL="${FABLE_MODEL:-}"                          # empty = your Claude Code default model (Opus 5.5)
+MODEL_ARGS=(); [ -n "$MODEL" ] && MODEL_ARGS=(--model "$MODEL")
 mkdir -p "$JOBS"
 
 command -v claude >/dev/null 2>&1 || { echo "Claude Code not found (the 'claude' command). Install or update it, then start this again."; exit 1; }
@@ -39,7 +40,7 @@ notify_wren() {   # $1 = message. Queues it into Wren's chat; Wren's chat ID is 
     && echo "   told Wren" || echo "   couldn't tell Wren (see $ROOT/.last-notify.txt)"
 }
 
-echo "Fable loop running in $REPO, model $MODEL. Watching $JOBS  (Ctrl+C to stop)"
+echo "Fable loop running in $REPO, model ${MODEL:-default}. Watching $JOBS  (Ctrl+C to stop)"
 while true; do
   for job in "$JOBS"/*/; do
     [ -f "$job/job.md" ] || continue
@@ -50,7 +51,7 @@ while true; do
     echo "$(date '+%H:%M:%S')  start  $name"
     date > "$job/RUNNING"
     ( cd "$REPO" && FABLE_JOB="$name" caffeinate -i perl -e 'alarm shift; exec @ARGV' "$LIMIT" \
-        claude -p --model "$MODEL" \
+        claude -p "${MODEL_ARGS[@]}" \
           --permission-mode acceptEdits \
           --allowedTools "Bash,mcp__playwright__*,mcp__chrome-devtools__*" \
           --append-system-prompt-file "$ROOT/fable_rules.md" \

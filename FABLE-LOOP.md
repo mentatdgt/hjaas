@@ -1,11 +1,11 @@
 # The Fable loop: Wren ↔ Fable without the user pasting prompts
 
-**Status: built 2026-11-24, waiting for its smoke test (job 000-smoke).** Fable is Claude Code on the user's Mac, run headless (`claude -p`) in `~/hjaas` with the Fable model. It mirrors the Quinn loop (`QUINN-LOOP.md`).
+**Status: built 2026-11-24, smoke test passed the same day (Opus 5.5, report delivered into Wren's chat).** Fable is Claude Code on the user's Mac, run headless (`claude -p`) in `~/hjaas` with the default Claude Code model (Opus 5.5; set `FABLE_MODEL=fable` to use Fable). It mirrors the Quinn loop (`QUINN-LOOP.md`).
 
 ## How it works
 1. **Wren writes a job** into `~/hjaas/wren-inbox/quinn/fable-jobs/NNN-name/job.md` on the Mac (over the device bridge). A job is a complete, self-contained instruction: which branch, which brief to read (`git show origin/main:reviews/...`), what to build, what to check, where to write the report. It's what Wren used to give the user to paste.
 2. **The watcher** (`fable_watch.sh`, in `wren-inbox/quinn/`; source in `tools/fable/`) runs each new job once, one at a time, 3-hour limit:
-   `claude -p --model fable --permission-mode acceptEdits --allowedTools "Bash,mcp__playwright__*,mcp__chrome-devtools__*" --append-system-prompt-file fable_rules.md < job.md`
+   `claude -p [--model $FABLE_MODEL] --permission-mode acceptEdits --allowedTools "Bash,mcp__playwright__*,mcp__chrome-devtools__*" --append-system-prompt-file fable_rules.md < job.md`
    in `~/hjaas`, under `caffeinate -i` so the Mac doesn't idle-sleep mid-job. Fable's final message goes to `report.md`, errors to `log.txt`, then `DONE` or `FAILED`.
 3. **The watcher tells Wren** by queuing a message into Wren's chat: `claude -p --cloud <session-id>` with the job name, status and the start of the report. The chat ID is in `wren-inbox/quinn/wren-session.txt`; a new Wren chat replaces that one line.
 4. **Wren reviews** the pushed branch and evidence. If it isn't right, Wren writes the next round as a new job (max 3 rounds per piece, then Wren reports to the user). If it is, Wren tells the user it's ready for their phone check.
@@ -20,7 +20,7 @@
 ## Conditions
 - The Mac is awake and online; the **Claude desktop app is open** (Wren's bridge to the folder).
 - The watcher is running in its own Terminal window: `bash ~/hjaas/wren-inbox/quinn/fable_watch.sh`. It runs next to `quinn_watch.sh`; each has its own window.
-- Claude Code is installed and signed in (`claude auth login`) with the user's Claude account; `fable` is available on the plan.
+- Claude Code is installed and signed in (`claude auth login`) with the user's Claude account.
 - While the loop is on, the user leaves the interactive Claude Code session in `~/hjaas` idle, so two Fables don't edit the same checkout at once.
 - Wren can't start the watcher itself: its shell on the Mac is a sandbox that can't run Mac apps.
 
