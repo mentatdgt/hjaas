@@ -411,13 +411,14 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       onPose: flags.debug ? (pose, at) => poses.push([pose, Math.round(at)]) : undefined,
       edge: { style: edgeStyle, seed: edgeSeed, paper },
       },
-      config.id === first.id,
+      !current,
     ).then((loaded) => {
       self = loaded;
       scenesLoaded.set(config.id, loaded);
       return loaded;
     });
     loading.set(config.id, scene);
+    void scene.catch(() => loading.delete(config.id));
     return scene;
   };
 
@@ -445,6 +446,20 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   /** A painting or a switch is under way. A click on the menu, or Skip, finishes it at once. */
   let busy = true;
   let wanted = first;
+  const retry = document.createElement('button');
+  retry.type = 'button';
+  retry.className = 'hj-link';
+  retry.hidden = true;
+  retry.textContent = 'Retry room';
+  captionRow.append(retry);
+
+  const roomFailed = (config: SceneConfig, error: unknown): void => {
+    console.warn(`[hjaas] ${config.id}: the room could not be loaded`, error);
+    if (destroyed) return;
+    retry.hidden = false;
+    retry.setAttribute('aria-label', `Retry ${config.label}`);
+    show(skip, false);
+  };
 
   const frame1 = (): Promise<void> => new Promise((resolve) => requestAnimationFrame(() => resolve()));
   const warn = (config: SceneConfig) => (error: unknown) => console.warn(`[hjaas] ${config.id}: the character could not be loaded; the room is shown without her`, error);
@@ -488,7 +503,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     /** The new scene's edge, drawn. (QA: how long that took.) */
     const dress = (): Promise<void> => {
       const from = performance.now();
-      return next.dress().then(() => void (marks.dressMs = Math.round(performance.now() - from)));
+      return next.dress().catch(warn(config)).then(() => void (marks.dressMs = Math.round(performance.now() - from)));
     };
 
     if (firstVisit && !calm) {
@@ -563,19 +578,37 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       return;
     }
     busy = true;
-    while (!destroyed && current && wanted.id !== current.config.id) await switchTo(wanted);
-    busy = false;
+    retry.hidden = true;
+    try {
+      while (!destroyed && current && wanted.id !== current.config.id) {
+        const requested = wanted;
+        try {
+          await switchTo(requested);
+        } catch (error) {
+          if (wanted !== requested) continue;
+          roomFailed(requested, error);
+          break;
+        }
+      }
+    } finally {
+      busy = false;
+    }
   };
 
   // The address names the scene (#grow), so links and the back button work. A click on the menu changes
   // the address; the address changing is what moves the picture.
-  const onAddress = (): void => void go(sceneInAddress());
+  const onAddress = (): void => {
+    const config = sceneInAddress();
+    if (!current && !busy) void open(config);
+    else void go(config);
+  };
   window.addEventListener('hashchange', onAddress);
   cleanup.push(() => window.removeEventListener('hashchange', onAddress));
   for (const tab of tabs) {
     // Clicking again while the brush is at work skips to the finished picture.
     tab.addEventListener('click', () => {
       if (busy) transition.skip();
+      else if (tab.hash === location.hash) onAddress();
     });
   }
   for (const link of [...tabs, caption.next]) {
@@ -619,8 +652,22 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
 
   // ---- The opening. ----
 
-  void (async () => {
-    const [scene, theLogo] = await Promise.all([sceneFor(first), Logo.create(options.homeHref)]);
+  const open = async (config: SceneConfig): Promise<void> => {
+    busy = true;
+    retry.hidden = true;
+    wanted = config;
+    let scene: Scene;
+    let theLogo: Logo | undefined;
+    try {
+      [scene, theLogo] = await Promise.all([
+        sceneFor(config),
+        Logo.create(options.homeHref).catch(() => undefined),
+      ]);
+    } catch (error) {
+      busy = false;
+      roomFailed(config, error);
+      return;
+    }
     if (destroyed) return;
     place(scene);
     // Before a painting each part of the setting up gets a frame to itself, not one long task for all of it.
@@ -629,11 +676,14 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     if (destroyed) return;
     logo = theLogo;
     // The logo keeps its own proportions; the page reserves exactly that space for it.
-    page.style.setProperty('--logo-ratio', theLogo.el.style.aspectRatio);
-    logoSlot.append(theLogo.el);
-    theLogo.prepare();
-    if (!paused) theLogo.startIdle();
-    cleanup.push(() => theLogo.stop());
+    if (theLogo) {
+      page.style.setProperty('--logo-ratio', theLogo.el.style.aspectRatio);
+      logoSlot.append(theLogo.el);
+      theLogo.prepare();
+      if (!paused) theLogo.startIdle();
+      cleanup.push(() => theLogo?.stop());
+    }
+    caption.set(viewOf(config));
 
     // While nothing is on screen yet: lay the contact sheet out once (with its real font), so that
     // opening it later never costs a frame of the character's routine, and get the brush ready.
@@ -687,14 +737,19 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       // Downloaded and checked, but not kept decoded while it is out of sight (unless it is on its way in).
       if (loaded && loaded !== current && wanted.id !== other.id) loaded.rest();
     }
-  })();
+  };
+  retry.addEventListener('click', () => {
+    if (current) void go(wanted);
+    else void open(wanted);
+  });
+  void open(first);
 
   return {
     destroy() {
       destroyed = true;
       transition.clear();
       cleanup.forEach((fn) => fn());
-      for (const scene of loading.values()) void scene.then((loaded) => loaded.destroy());
+      for (const scene of loading.values()) void scene.then((loaded) => loaded.destroy(), () => {});
       root.remove();
     },
   };

@@ -15,12 +15,42 @@ export function asset(path: string): string {
   return base + path;
 }
 
-export async function loadImage(url: string): Promise<HTMLImageElement> {
-  const img = new Image();
+const ASSET_DEADLINE_MS = 8000;
+
+/** Required art gets one fresh attempt before the visitor is offered a retry. */
+export async function requiredAsset<T>(load: () => Promise<T>): Promise<T> {
+  try {
+    return await load();
+  } catch {
+    return load();
+  }
+}
+
+export async function loadImage(url: string, img = new Image()): Promise<HTMLImageElement> {
   img.decoding = 'async';
   img.src = url;
-  await img.decode();
-  return img;
+  let timeout: ReturnType<typeof setTimeout> | undefined;
+  try {
+    await Promise.race([
+      img.decode(),
+      new Promise<never>((_, reject) => {
+        timeout = setTimeout(() => {
+          img.removeAttribute('src');
+          reject(new Error(`${url}: image deadline exceeded`));
+        }, ASSET_DEADLINE_MS);
+      }),
+    ]);
+    return img;
+  } catch (error) {
+    img.removeAttribute('src');
+    throw error;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+export function assetSignal(): AbortSignal {
+  return AbortSignal.timeout(ASSET_DEADLINE_MS);
 }
 
 const frameCache = new Map<string, Promise<Frame>>();
@@ -82,7 +112,7 @@ async function decodeFrame(url: string): Promise<Frame> {
 
 /** A file's bytes, as downloaded: an image kept this way takes a fraction of its decoded size. */
 export async function fetchBlob(url: string): Promise<Blob> {
-  const response = await fetch(url);
+  const response = await fetch(url, { signal: assetSignal() });
   if (!response.ok) throw new Error(`${url}: ${response.status}`);
   return response.blob();
 }
@@ -201,15 +231,13 @@ export function releaseFrame(frame: Frame): void {
 }
 
 /** A scene's plate, downloaded and decoded. Resolves with the address to give the scene's <img>. */
-export async function loadPlate(path: string): Promise<string> {
-  // An <img> request, not fetch(): it is the only kind WebKit matches to the image preload in index.html
-  // (a fetch() downloaded the room a second time).
-  const img = new Image();
-  img.setAttribute('fetchpriority', 'high');
-  img.decoding = 'async';
-  img.src = asset(path);
-  await img.decode();
-  return img.src;
+export function loadPlate(path: string): Promise<HTMLImageElement> {
+  // An <img> request is the only kind WebKit matches to the document's image preload.
+  return requiredAsset(() => {
+    const img = new Image();
+    img.setAttribute('fetchpriority', 'high');
+    return loadImage(asset(path), img);
+  });
 }
 
 /** Resolves when the browser has a quiet moment (or soon enough anyway). */

@@ -1,5 +1,5 @@
 // The hunt: a scene's ten tiny mushrooms, hidden around its room.
-import { asset, loadImage } from './assets';
+import { asset, loadImage, requiredAsset } from './assets';
 import { tapBox } from './edge';
 import { flags } from './flags';
 import { EASE_OUT, gsap, reducedMotion } from './motion';
@@ -90,7 +90,7 @@ export class Hunt {
   /** Decodes the drawings first, so sizes are known and nothing pops in. */
   static async create(options: HuntOptions): Promise<Hunt> {
     const arts = [...new Set(options.spots.map((spot) => spot.art))];
-    const images = await Promise.all(arts.map((art) => loadImage(artUrl(art))));
+    const images = await Promise.all(arts.map((art) => requiredAsset(() => loadImage(artUrl(art)))));
     const aspect = new Map(arts.map((art, i) => [art, images[i].naturalWidth / images[i].naturalHeight]));
     return new Hunt(options, aspect);
   }

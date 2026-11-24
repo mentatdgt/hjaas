@@ -1,6 +1,6 @@
 // One scene, built from its config: the plate, the character on it, and the ten hidden mushrooms.
 // A scene knows nothing about the page around it; site.ts puts it in the window and takes it out again.
-import { PLATE, asset, decodeBlob, decodePart, fetchBlob, fetchFrame, idle, loadFrame, loadPlate, releaseFrame, unloadFrame } from './assets';
+import { PLATE, asset, assetSignal, decodeBlob, decodePart, fetchBlob, fetchFrame, idle, loadFrame, loadImage, loadPlate, releaseFrame, requiredAsset, unloadFrame } from './assets';
 import { leadOf, splitCast, type CastFrames, type CastRoutines, type CastScreen } from './cast';
 import { Character } from './character';
 import { edgeAlpha, edgeName, makeEdge, type Edge, type EdgeStyle } from './edge';
@@ -90,7 +90,7 @@ interface Cast {
 type CastList = Cast[] & { progress?: Progress; walks?: Walk[] };
 
 const json = async <T>(path: string): Promise<T> => {
-  const response = await fetch(asset(path));
+  const response = await fetch(asset(path), { signal: assetSignal() });
   if (!response.ok) throw new Error(`${path}: ${response.status}`);
   return (await response.json()) as T;
 };
@@ -442,21 +442,24 @@ export class Scene {
    * scene nobody has visited yet costs only its plate.
    */
   static async load(config: SceneConfig, host: SceneHost, withCharacter: boolean): Promise<Scene> {
-    const plateSrc = loadPlate(config.assets + config.plate);
+    const roomImage = loadPlate(config.assets + config.plate);
     // (The opening scene: nothing else is on show, so its frames are decoded as soon as they are here.)
-    const cast = withCharacter ? Scene.castFor(config, host).then((decode) => decode?.() ?? null) : null;
+    const cast = withCharacter
+      ? Scene.castFor(config, host).then((decode) => decode?.() ?? null).catch((error) => {
+          console.warn(`[hjaas] ${config.id}: the character could not be loaded; the room is shown without her`, error);
+          return null;
+        })
+      : null;
 
     const plate = document.createElement('div');
     plate.className = 'hj-plate';
     plate.dataset.scene = config.id;
-    const room = document.createElement('img');
+    const room = await roomImage;
     room.className = 'hj-room';
     room.alt = '';
     room.draggable = false;
     room.width = PLATE.w;
     room.height = PLATE.h;
-    room.src = await plateSrc;
-    await room.decode().catch(() => {});
     plate.append(room);
 
     let made: Scene | undefined;
@@ -478,10 +481,10 @@ export class Scene {
     const scene = new Scene(config, host, plate, room, hunt);
     made = scene;
     // The opening scene's edge is needed at once; any other scene's is made when it is opened (see dress()).
-    const [ready] = await Promise.all([cast, withCharacter ? scene.dress() : null]);
+    const [ready] = await Promise.all([cast, withCharacter ? scene.dress().catch(() => {}) : null]);
     if (ready) {
       scene.attach(ready);
-      await scene.progress?.wake();
+      await scene.progress?.wake().catch(() => {});
     }
     return scene;
   }
@@ -532,6 +535,10 @@ export class Scene {
         if (casts && !this.character) this.attach(casts);
         // The progress pieces the hunt has reached are drawn before the scene shows, and the walkers' pictures decoded.
         await Promise.all([this.progress?.wake(), ...this.walks.map((walk) => walk.wake())]);
+      }).catch((error) => {
+        this.entering = null;
+        this.casting = null;
+        throw error;
       });
     return this.entering;
   }
@@ -652,8 +659,7 @@ export class Scene {
   /** The scene is about to go on the page: resolves when its room's picture is decoded again. */
   async ready(): Promise<void> {
     if (this.room.getAttribute('src')) return;
-    this.room.src = this.roomSrc;
-    await this.room.decode().catch(() => {});
+    await requiredAsset(() => loadImage(this.roomSrc, this.room));
   }
 
   /**
