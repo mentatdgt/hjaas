@@ -31,7 +31,8 @@ while true; do
       "${extra[@]}" -C "$job" "${imgargs[@]}" -o "$job/quinn-report.md" "$(cat "$job/job.md")" > "$job/log.txt" 2>&1
     rc=$?
     # Codex keeps generated images in its own folder; copy any from this run so nothing is lost
-    find "$HOME/.codex/generated_images" -type f -newer "$job/RUNNING" \( -name '*.png' -o -name '*.webp' -o -name '*.jpg' \) -exec cp {} "$job/out/_generated/" \; 2>/dev/null
+    # (image jobs only, never overwriting; Quinn review S5: other Codex sessions write to the same folder)
+    grep -q 'imagegen' "$job/job.md" && find "$HOME/.codex/generated_images" -type f -newer "$job/RUNNING" \( -name '*.png' -o -name '*.webp' -o -name '*.jpg' \) -exec cp -n {} "$job/out/_generated/" \; 2>/dev/null
     rm -f "$job/RUNNING"
     # Done = Codex succeeded and left an image, or (review/text jobs) out/report.md
     if [ $rc -eq 0 ] && { [ -f "$job/out/report.md" ] || [ -n "$(find "$job/out" -type f \( -name '*.png' -o -name '*.webp' -o -name '*.jpg' \) | head -1)" ]; }; then
