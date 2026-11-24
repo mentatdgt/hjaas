@@ -381,6 +381,9 @@ run.states = async () => {
 
 // ---- The phone: every scene's opening frame. --------------------------------------------------------------------
 const HER = { build: [610, 912], grow: [845, 1145], design: [780, 1005], film: [1025, 1351], set: [738, 1050] };
+// Two scenes do not open centred on her (round 2): what must be in view there, in plate px. Film: the two faces
+// (hers even as she looks round) and her camera. Build: Rachel and the whole of her box.
+const MUST_SHOW = { film: [[669, 815], [1133, 1262], [1025, 1140]], build: [[610, 912], [834, 1199]] };
 run.phone = async () => {
   const report = { portrait: {}, landscape: {}, problems: [] };
   const browser = await chromium.launch({ channel: 'chrome' });
@@ -393,14 +396,14 @@ run.phone = async () => {
       await page.goto(`${base}?debug&reset&intro=off&seed=7&all=17#${id}`); await ready(page);
       await page.addStyleTag({ content: '.hj-mushrooms.is-debug .hj-shroom { outline: none !important; background: none !important; }' });
       await wait(300);
-      const row = await page.evaluate(({ her, id }) => {
+      const row = await page.evaluate(({ her, must, id }) => {
         const r = (s) => { const b = document.querySelector(s).getBoundingClientRect(); return { l: b.left, t: b.top, r: b.right, b: b.bottom }; };
         const view = document.querySelector('.hj-viewport'); const v = r('.hj-viewport'); const plate = r('.hj-plate'); const u = (plate.r - plate.l) / 1672;
         const hers = [plate.l + her[0] * u, plate.l + her[1] * u];
         const boxes = [...document.querySelectorAll('.hj-shroom')].map((b) => { const x = b.getBoundingClientRect(); return [x.width, x.height]; });
-        return { windowPx: [Math.round(v.r - v.l), Math.round(v.b - v.t)], windowPctOfScreen: Math.round((1000 * (v.b - v.t)) / innerHeight) / 10, roomSeenPct: Math.round((100 * (v.r - v.l)) / (plate.r - plate.l)), herCentreOffPx: Math.round(((hers[0] + hers[1]) / 2 - (v.l + v.r) / 2) * 10) / 10, herInView: hers[0] >= v.l && hers[1] <= v.r, countersEnd: Math.round(r('.hj-row.is-red').b), controlsEnd: Math.round(r('.hj-controls').b), screen: innerHeight, pageTall: document.documentElement.scrollHeight, overlap: r('.hj-caption').t < v.b - 0.5, sideways: document.documentElement.scrollWidth - innerWidth, smallestTapBox: Math.min(...boxes.flat()), scrollbar: view.offsetHeight - view.clientHeight, touchAction: getComputedStyle(view).touchAction, id };
-      }, { her: HER[id], id });
-      const ok = row.controlsEnd <= row.screen && row.pageTall <= row.screen && !row.overlap && row.sideways <= 0 && (side ? row.roomSeenPct >= 100 : row.windowPctOfScreen >= 55 && row.windowPctOfScreen <= 65 && Math.abs(row.herCentreOffPx) <= 20 && row.herInView && (row.smallestTapBox >= 44 || row.smallestTapBox === Infinity)) && !errors.length;
+        return { windowPx: [Math.round(v.r - v.l), Math.round(v.b - v.t)], windowPctOfScreen: Math.round((1000 * (v.b - v.t)) / innerHeight) / 10, roomSeenPct: Math.round((100 * (v.r - v.l)) / (plate.r - plate.l)), herCentreOffPx: Math.round(((hers[0] + hers[1]) / 2 - (v.l + v.r) / 2) * 10) / 10, herInView: hers[0] >= v.l && hers[1] <= v.r, mustShowClearancePx: must && must.map(([a, b]) => [plate.l + a * u - v.l, v.r - plate.l - b * u].map((n) => Math.round(n * 10) / 10)), openedAtPlateX: Math.round(((v.l + v.r) / 2 - plate.l) / u), countersEnd: Math.round(r('.hj-row.is-red').b), controlsEnd: Math.round(r('.hj-controls').b), screen: innerHeight, pageTall: document.documentElement.scrollHeight, overlap: r('.hj-caption').t < v.b - 0.5, sideways: document.documentElement.scrollWidth - innerWidth, smallestTapBox: Math.min(...boxes.flat()), scrollbar: view.offsetHeight - view.clientHeight, touchAction: getComputedStyle(view).touchAction, id };
+      }, { her: HER[id], must: MUST_SHOW[id], id });
+      const ok = row.controlsEnd <= row.screen && row.pageTall <= row.screen && !row.overlap && row.sideways <= 0 && (side ? row.roomSeenPct >= 100 : row.windowPctOfScreen >= 55 && row.windowPctOfScreen <= 65 && (MUST_SHOW[id] ? row.mustShowClearancePx.flat().every((n) => n >= 0) : Math.abs(row.herCentreOffPx) <= 20 && row.herInView) && (row.smallestTapBox >= 44 || row.smallestTapBox === Infinity)) && !errors.length;
       if (!ok) report.problems.push({ w, h, ...row, errors });
       (report[side ? 'landscape' : 'portrait'][`${w}x${h}`] ??= {})[id] = row;
       const buf = await page.screenshot({ type: 'jpeg', quality: 88 });
@@ -410,7 +413,7 @@ run.phone = async () => {
     }
     const m = await sharp(cells[0]).metadata(); const cols = side ? 2 : 5;
     await sharp({ create: { width: cols * (m.width + 10), height: Math.ceil(5 / cols) * (m.height + 10), channels: 3, background: '#888888' } }).composite(cells.map((input, i) => ({ input, left: (i % cols) * (m.width + 10), top: Math.floor(i / cols) * (m.height + 10) }))).jpeg({ quality: 88 }).toFile(`${out}open-${w}x${h}.jpg`);
-    say(`${w}x${h}`, Object.values(report[side ? 'landscape' : 'portrait'][`${w}x${h}`]).map((x) => [x.id, x.windowPctOfScreen, x.roomSeenPct, x.herCentreOffPx, x.controlsEnd, x.smallestTapBox]));
+    say(`${w}x${h}`, Object.values(report[side ? 'landscape' : 'portrait'][`${w}x${h}`]).map((x) => [x.id, x.windowPctOfScreen, x.roomSeenPct, x.openedAtPlateX, x.mustShowClearancePx ?? x.herCentreOffPx, x.controlsEnd, x.smallestTapBox]));
   }
   await browser.close(); await save('phone.json', report); say('PROBLEMS', report.problems);
 };

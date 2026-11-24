@@ -123,7 +123,8 @@ export const film: SceneConfig = {
   // A second find while she is looking back holds the look longer; she never turns twice.
   again: 'hold',
   strokes: STROKES,
-  // Rachel and her camera (1025 to 1351): between the middle of her body and the middle of her reach. The presenter is
-  // a swipe to the left (hunt-counter-build.md section 3; it was 977, with both faces in view).
-  focusX: 1195,
+  // The one scene that does not open centred on Rachel: the framing the user approved on a phone, with the
+  // presenter's face, her camera and Rachel all in view (reviews/hunt-counter-review-01.md, round 2). Centred on
+  // her, he would be down to a hand.
+  focusX: 977,
 };
