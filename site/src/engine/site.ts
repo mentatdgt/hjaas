@@ -15,6 +15,12 @@ import { seeded } from './steps';
 import { Transition } from './transition';
 import type { SceneConfig, Spot } from './types';
 
+declare global {
+  interface Window {
+    hjaasRoom(fragment: string): { id: string; folder: string };
+  }
+}
+
 export interface SiteOptions {
   /** The scenes that exist, in menu order. The first is the one a plain address opens. */
   scenes: readonly SceneConfig[];
@@ -93,8 +99,9 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   if (options.assetBase) setAssetBase(options.assetBase);
   const scenes = options.scenes;
   const sceneById = (id: string): SceneConfig | undefined => scenes.find((scene) => scene.id === id);
-  /** The scene the address asks for: `#grow`. A plain address, or an unknown name, is the first scene. */
-  const sceneInAddress = (): SceneConfig => sceneById(decodeURIComponent(location.hash.slice(1))) ?? scenes[0];
+  /** Resolve the same room as the early image preload, falling back to Build. */
+  const sceneInAddress = (): SceneConfig =>
+    sceneById(window.hjaasRoom(location.hash).id) ?? sceneById('build') ?? scenes[0];
 
   const root = document.createElement('div');
   root.className = 'hj-scene is-pre';

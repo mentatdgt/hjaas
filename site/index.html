@@ -19,16 +19,16 @@
     <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png" />
     <!-- The opening scene's plate is the first thing the page needs: it is fetched while the script is still
-         downloading. Matches loadPlate()'s request. Keep the list in step with src/scenes/ (id: assets folder). -->
+         downloading. Matches loadPlate()'s request. -->
+    <script src="./room-route.js"></script>
     <script>
       (function () {
-        var folders = { build: 'scene1', grow: 'scene2', design: 'scene3', film: 'scene4', set: 'scene5' };
         var link = document.createElement('link');
         link.rel = 'preload';
         link.as = 'image';
         link.type = 'image/webp';
         link.setAttribute('fetchpriority', 'high');
-        link.href = './assets/' + (folders[location.hash.slice(1)] || 'scene1') + '/room.webp';
+        link.href = './assets/' + window.hjaasRoom(location.hash).folder + '/room.webp';
         document.head.appendChild(link);
       })();
     </script>
