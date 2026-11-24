@@ -1,6 +1,6 @@
 # HJaaS: status
 
-Where everything stands. Update this whenever a scene changes state. **Last updated: 2026-11-25 03:45 (Wren, main chat: scene 5 rounds 3–4 and the counter round 1 reviewed; counter round 2 running on the Fable bridge).**
+Where everything stands. Update this whenever a scene changes state. **Last updated: 2026-11-25 08:30 (Wren: counter round 2 passed; Quinn review 030 and fixes 031; Fable applied and checked them on `site/review-fixes`).**
 
 New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a scene gets made) and the handover for your scene: `HANDOVER-scene-3.md` (café, finishing in the original Wren chat) `HANDOVER-next-scene.md` (scene 4, Film) or `HANDOVER-scene-5.md` (scene 5, set design). For the counter and the phone crop: `HANDOVER-hunt-counter.md`. For sending Fable build jobs without the user pasting: `FABLE-LOOP.md`.
 
@@ -23,18 +23,19 @@ New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a
 | **Phone crop:** portrait shows a zoomed scene that pans sideways, opening on Rachel; landscape shows the whole scene | ✅ Built with the counter (58–63% of the screen height; drift instead of the "Swipe sideways" text) | Your phone check. Landscape is small (465×262 on a 844×390 phone) |
 
 ## Now
-- **Fable bridge:** job 004 (counter round 2) running. Wren reviews its report.
-- **You:** one phone check of `site/counter` (it carries all five scenes, round 4 and the counter): the portrait crop and panning, the counter, a scene completing, the paint-in.
+- **You:** one phone check of **`site/review-fixes`** (699c8c0). It carries all five scenes, round 4, the counter (round 2) and Quinn's 11 code/security fixes (checked by Fable in Chrome and WebKit: `reviews/review-fixes-01.md`). Phone preview: `npm run build && npm run preview:lan` in `site/`.
+- **You:** decide on Quinn's UI/UX findings (`reviews/quinn-site-review-030.md`, U1–U9). Wren suggests U1, U5, U6, U7, U9 as one small round (plus the failed-opening message and pausing the paint-in when the tab is hidden); U2, U3, U4 need your call; U8 waits for the form service.
+- **Launch blocker:** the contact form needs a host and form service (S1).
 
 ## Next
-1. After your phone check: merge in order `site/scene-3` → `site/scene-4` → `site/scene-5` → `site/counter` into `main` (each needs Wren's review and your OK).
+1. After your phone check: merge in order `site/scene-3` → `site/scene-4` → `site/scene-5` → `site/counter` → `site/review-fixes` into `main` (each needs Wren's review and your OK).
 2. Model-sheet pass on scenes 1–2 (scene 1 loses its glasses).
 
 ## Branches
 | Branch | Holds |
 |---|---|
 | `main` | Art pipeline, docs, and the site with scenes 1–2 (merged 2026-11-21). |
-| `site/scene-1` → `site/scene-1-elegant` → `site/scene-2` → `site/scene-3` → `site/scene-4` → `site/scene-5` → `site/counter` | Site builds, stacked. Each includes the ones before. Merge in order. |
+| `site/scene-1` → `site/scene-1-elegant` → `site/scene-2` → `site/scene-3` → `site/scene-4` → `site/scene-5` → `site/counter` → `site/review-fixes` | Site builds, stacked. Each includes the ones before. Merge in order. |
 | `pr1`, `pr2` | Merged Foreman/Cursor PRs. Safe to delete. |
 
 ## Open decisions and launch list
