@@ -91,6 +91,17 @@ describe('recoverable room assets', () => {
     expect(failed.size).toBeGreaterThan(0);
   });
 
+  it('stands another drawing in for a lost sprite, and fails only when all are lost', async () => {
+    decode.mockImplementation(async (src) => {
+      if (src.includes(`mushroom_${String(config.spots[0].art).padStart(2, '0')}`)) throw new Error('sprite unavailable');
+    });
+    expect((await load()).hunt.remaining).toBe(config.spots.length);
+    decode.mockImplementation(async (src) => {
+      if (src.includes('/mushrooms/')) throw new Error('sprites unavailable');
+    });
+    await expect(load()).rejects.toThrow('sprites unavailable');
+  });
+
   it('keeps a playable hunt when a cast frame fails', async () => {
     const requested: string[] = [];
     vi.stubGlobal('fetch', vi.fn(async (url: string) => {

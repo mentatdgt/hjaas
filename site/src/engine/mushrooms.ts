@@ -31,7 +31,8 @@ export class Hunt {
   /** Each drawing's centre and size, in plate px. */
   private readonly art = new Map<string, { cx: number; cy: number; w: number; h: number }>();
 
-  private constructor(options: HuntOptions, aspect: Map<number, number>) {
+  /** `drawn`: for each mushroom drawing, the one shown for it and its shape (its own, unless its file is lost). */
+  private constructor(options: HuntOptions, drawn: Map<number, { art: number; aspect: number }>) {
     this.options = options;
     this.el = document.createElement('div');
     this.el.className = 'hj-mushrooms';
@@ -39,7 +40,8 @@ export class Hunt {
 
     for (const spot of options.spots) {
       if (options.found.has(spot.id)) continue;
-      const w = spot.h * (aspect.get(spot.art) ?? 1);
+      const { art: shown, aspect } = drawn.get(spot.art)!;
+      const w = spot.h * aspect;
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'hj-shroom';
@@ -58,7 +60,7 @@ export class Hunt {
       if (spot.tint) art.style.filter = spot.tint;
       if (spot.tuck) art.style.clipPath = spot.tuck;
       const img = document.createElement('img');
-      img.src = artUrl(spot.art);
+      img.src = artUrl(shown);
       img.alt = '';
       img.draggable = false;
       if (spot.flip) img.classList.add('is-flipped');
@@ -88,12 +90,25 @@ export class Hunt {
     }
   }
 
-  /** Decodes the drawings first, so sizes are known and nothing pops in. */
+  /**
+   * Decodes the drawings first, so sizes are known and nothing pops in. A drawing that cannot be had is stood in
+   * for by another of the scene's, so its mushroom is still there to find; with none at all there is no hunt.
+   */
   static async create(options: HuntOptions): Promise<Hunt> {
     const arts = [...new Set(options.spots.map((spot) => spot.art))];
-    const images = await Promise.all(arts.map((art) => requiredAsset(() => loadImage(artUrl(art)))));
-    const aspect = new Map(arts.map((art, i) => [art, images[i].naturalWidth / images[i].naturalHeight]));
-    return new Hunt(options, aspect);
+    const images = await Promise.allSettled(arts.map((art) => requiredAsset(() => loadImage(artUrl(art)))));
+    const drawn = new Map<number, { art: number; aspect: number }>();
+    images.forEach((image, i) => {
+      if (image.status === 'fulfilled') drawn.set(arts[i], { art: arts[i], aspect: image.value.naturalWidth / image.value.naturalHeight });
+    });
+    const [standIn] = drawn.values();
+    images.forEach((image, i) => {
+      if (image.status === 'fulfilled') return;
+      if (!standIn) throw image.reason;
+      console.warn('[hjaas] a mushroom drawing could not be loaded; another stands in for it', image.reason);
+      drawn.set(arts[i], standIn);
+    });
+    return new Hunt(options, drawn);
   }
 
   destroy(): void {
