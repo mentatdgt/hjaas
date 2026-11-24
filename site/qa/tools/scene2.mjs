@@ -12,6 +12,7 @@ import { chromium, webkit, devices } from 'playwright';
 import { execFileSync } from 'node:child_process';
 import { mkdir, readdir, rm, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { CAPTION } from './caption-state.mjs';
 
 const base = process.env.HJ_URL ?? 'http://localhost:5173/';
 const out = process.env.HJ_OUT ? new URL(`../../${process.env.HJ_OUT.replace(/\/?$/, '/')}`, import.meta.url).pathname : new URL('../scene-2/', import.meta.url).pathname;
@@ -30,12 +31,14 @@ const clean = (page) => page.evaluate(() => document.querySelectorAll('.hj-mushr
 const say = (label, value) => console.log(`${label}: ${typeof value === 'string' ? value : JSON.stringify(value)}`);
 const save = (name, data) => writeFile(`${out}${name}.json`, `${JSON.stringify(data, null, 1)}\n`);
 const tab = (page, id) => page.locator(`.hj-tab[data-scene="${id}"]`);
-const state = (page) => page.evaluate(() => ({
+const state = async (page) => {
+  const c = await page.evaluate(CAPTION);
+  return { ...(await scene(page)), caption: c.text, here: c.here, site: c.site, next: c.next, dots: c.dots, button: c.contactShown };
+};
+const scene = (page) => page.evaluate(() => ({
   address: location.hash,
   scene: window.__hj.scene.config.id,
   current: document.querySelector('.hj-tab[aria-current="page"]')?.textContent,
-  caption: document.querySelector('.hj-caption-main').innerText.replace(/\s+/g, ' ').trim(),
-  button: getComputedStyle(document.querySelector('.hj-contact')).visibility === 'visible',
   pan: Math.round(document.querySelector('.hj-viewport').scrollLeft),
 }));
 
@@ -165,11 +168,11 @@ const run = {
         return { found: counted.filter(Boolean).length, tapBoxes: list.length, smallestBox: Math.min(...list.map((b) => Math.min(b.w, b.h))), allInsidePicture: list.every((b) => b.inside), drawingsInsideBoxes: list.every((b) => b.artInBox), smallestDrawingPx: Math.min(...list.map((b) => b.art)), overlaps, after: await state(page) };
       };
 
-      // Scene 1 first: its tenth mushroom earns the Contact button.
+      // Scene 1 first: its tenth mushroom brings the dot on its tab and Next; the button takes all 50.
       const before = await state(page);
       row.scenes.build = await findAll('build');
       await jpg(page, `hunt-${engine}-${width}-1-build-done`);
-      // Scene 2: its own count, starting from nought, with the button already there.
+      // Scene 2: its own count, starting from nought; the red one goes on from 10.
       if (phone) await tab(page, 'grow').tap(); else await tab(page, 'grow').click();
       await arrived(page, 'grow');
       await page.waitForTimeout(600);
@@ -189,14 +192,14 @@ const run = {
       row.afterReloadBuild = await state(page);
       row.saved = await page.evaluate(() => { const s = JSON.parse(localStorage.getItem('hjaas:site:v2')); return { unlocked: s.unlocked, build: s.scenes.build.found.length, grow: s.scenes.grow.found.length }; });
       row.errors = errors;
-      row.ok = row.scenes.build.found === 10 && row.scenes.grow.found === 10 && row.scenes.build.after.button && arriving.button && /^0 of 10/.test(arriving.caption.replace('Contact Hui Jie ', ''))
-        && row.afterReload.scene === 'grow' && row.afterReload.button && row.saved.build === 10 && row.saved.grow === 10 && row.scenes.grow.overlaps.length === 0 && row.scenes.grow.allInsidePicture && errors.length === 0;
+      row.ok = row.scenes.build.found === 10 && row.scenes.grow.found === 10 && row.scenes.build.after.dots.join() === 'build' && row.scenes.build.after.next === '#grow' && !row.scenes.build.after.button && arriving.here === '0/10' && arriving.site === '10/50' && !arriving.next
+        && row.afterReload.scene === 'grow' && row.afterReload.here === '10/10' && row.afterReload.site === '20/50' && row.afterReload.dots.join() === 'build,grow' && !row.afterReload.button && row.afterReloadBuild.here === '10/10' && row.saved.build === 10 && row.saved.grow === 10 && row.scenes.grow.overlaps.length === 0 && row.scenes.grow.allInsidePicture && errors.length === 0;
       report.push(row);
       say(`${engine} ${width}x${height}`, row);
       await browser.close();
     }
 
-    // The unlock is earned by whichever scene is finished first: here the lab, with scene 1 untouched.
+    // Whichever scene is finished first has its dot and Next, and only that: here the lab, with scene 1 untouched.
     {
       const browser = await chrome();
       const page = await (await browser.newContext({ viewport: { width: 1440, height: 900 } })).newPage();
@@ -213,7 +216,7 @@ const run = {
       await page.waitForTimeout(500);
       const buildAfter = await state(page);
       // A phone's pan position is kept per scene.
-      report.push({ check: 'lab first', start, lab, buildAfter, ok: !start.button && lab.button && buildAfter.button && buildAfter.caption.includes('0 of 10') });
+      report.push({ check: 'lab first', start, lab, buildAfter, ok: !start.button && lab.here === '10/10' && lab.dots.join() === 'grow' && lab.next === '#design' && !lab.button && buildAfter.here === '0/10' && buildAfter.site === '10/50' && !buildAfter.button });
       say('lab first', report.at(-1));
       await browser.close();
     }

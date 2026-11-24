@@ -376,7 +376,7 @@
    ],
    "said": true,
    "moved": [
-    "screed"
+    "drape"
    ]
   },
   {
@@ -402,7 +402,7 @@
    ],
    "said": true,
    "moved": [
-    "socket"
+    "conduit"
    ]
   },
   {
@@ -417,7 +417,7 @@
    ],
    "said": true,
    "moved": [
-    "ladder-step"
+    "conduit"
    ]
   },
   {
@@ -432,8 +432,8 @@
    ],
    "said": true,
    "moved": [
-    "ladder-foot",
-    "toolbox"
+    "conduit",
+    "ladder-foot"
    ]
   },
   {
@@ -445,19 +445,19 @@
  ],
  "drift": {
   "first visit": {
-   "startsAt": 249,
+   "startsAt": 331,
    "furthest": 40,
-   "endsAt": 249,
-   "firstMoveMsAfterTheBrushStarted": 5498,
-   "lastMove": 7882,
+   "endsAt": 331,
+   "firstMoveMsAfterTheBrushStarted": 5500,
+   "lastMove": 7883,
    "biggestStepPx": 0.9,
    "savedPanned": false,
    "savedPanX": null
   },
   "reduced motion": {
-   "startsAt": 249,
+   "startsAt": 331,
    "furthest": 0,
-   "endsAt": 249,
+   "endsAt": 331,
    "firstMoveMsAfterTheBrushStarted": null,
    "lastMove": null,
    "biggestStepPx": 0,
@@ -465,9 +465,9 @@
    "savedPanX": null
   },
   "return visit": {
-   "startsAt": 249,
+   "startsAt": 331,
    "furthest": 0,
-   "endsAt": 249,
+   "endsAt": 331,
    "firstMoveMsAfterTheBrushStarted": null,
    "lastMove": null,
    "biggestStepPx": 0,
@@ -475,9 +475,9 @@
    "savedPanX": null
   },
   "another scene seen before": {
-   "startsAt": 249,
+   "startsAt": 331,
    "furthest": 0,
-   "endsAt": 249,
+   "endsAt": 331,
    "firstMoveMsAfterTheBrushStarted": null,
    "lastMove": null,
    "biggestStepPx": 0,
@@ -485,12 +485,18 @@
    "savedPanX": null
   },
   "landscape": {
+   "startsAt": 18,
    "furthest": 0,
-   "none": "Cannot read properties of undefined (reading '1')"
+   "endsAt": 18,
+   "firstMoveMsAfterTheBrushStarted": null,
+   "lastMove": null,
+   "biggestStepPx": 0,
+   "savedPanned": true,
+   "savedPanX": 836
   },
   "touched": {
-   "stoppedAt": 265.5,
-   "later": 265
+   "stoppedAt": 315.4,
+   "later": 315
   }
  }
 }

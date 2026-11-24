@@ -75,14 +75,14 @@ const run = {
     await shot('after-60s');
   },
   async finale() {
-    await page.goto(`${base}?debug&reset&intro=off&found=9&seed=5`);
+    await page.goto(`${base}?debug&reset&intro=off&all=49&seed=5#set`);
     await ready();
-    await page.waitForTimeout(1200); await shot('a-nine');
-    await tap('toolbox');
-    await page.waitForTimeout(900); await shot('b-ten');
-    await page.waitForTimeout(1300); await shot('c-shower');
-    await page.waitForTimeout(2600); await shot('d-button');
-    const button = page.locator('.hj-pin-action');
+    await page.waitForTimeout(1200); await shot('a-forty-nine');
+    await tap(await page.evaluate(() => document.querySelector('.hj-shroom').dataset.spot));
+    await page.waitForTimeout(900); await shot('b-fifty');
+    await page.waitForTimeout(900); await shot('c-glint');
+    await page.waitForTimeout(3000); await shot('d-button');
+    const button = page.locator('.hj-contact');
     if (isPhone) await button.tap(); else await button.click();
     await page.waitForTimeout(1200); await shot('e-form');
   },

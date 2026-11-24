@@ -1,4 +1,4 @@
-// The counter as a mushroom lands in it: the pin photographed as fast as the browser allows, at 3x.
+// The counter as a mushroom lands in it: the cream counter photographed as fast as the browser allows, at 3x.
 //   node qa/tools/counter-landing.mjs out.jpg
 import { chromium } from 'playwright';
 import sharp from 'sharp';
@@ -8,8 +8,8 @@ const page = await browser.newPage({ viewport: { width: 1440, height: 900 }, dev
 await page.goto('http://localhost:5173/?debug&reset&intro=off&found=2');
 await page.waitForFunction(() => window.__hj?.ready === true);
 await page.waitForTimeout(800);
-const box = await page.locator('.hj-pin').boundingBox();
-const clip = { x: box.x + box.width - 150, y: box.y - 10, width: 160, height: 64 };
+const box = await page.locator('.hj-row.is-cream').boundingBox();
+const clip = { x: box.x - 8, y: box.y - 10, width: 260, height: 64 };
 await page.evaluate(() => { window.__t0 = performance.now(); document.querySelector('[data-spot="conduit"]').click(); });
 const tiles = [];
 while (tiles.length < 40) {

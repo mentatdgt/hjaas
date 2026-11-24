@@ -6,6 +6,7 @@
 import { chromium, webkit, devices } from 'playwright';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import sharp from 'sharp';
+import { CAPTION } from './caption-state.mjs';
 
 const base = process.env.HJ_URL ?? 'http://localhost:5173/';
 const out = new URL('../hunt/', import.meta.url).pathname;
@@ -181,7 +182,8 @@ const run = {
       const p = await context.newPage();
       await p.goto(`${base}?debug&intro=off&seed=4#grow`);
       await ready(p);
-      report.rules.savedProgress = await p.evaluate(() => ({ caption: document.querySelector('.hj-caption-main').innerText.replace(/\s+/g, ' ').trim(), stillHidden: [...document.querySelectorAll('.hj-shroom')].map((el) => el.dataset.spot) }));
+      report.rules.savedProgress = await p.evaluate(() => ({ stillHidden: [...document.querySelectorAll('.hj-shroom')].map((el) => el.dataset.spot) }));
+      report.rules.savedProgress.caption = (await p.evaluate(CAPTION)).text;
       say('saved progress (had found door, bench-corner, humidifier, rack)', report.rules.savedProgress);
       await b.close();
     }

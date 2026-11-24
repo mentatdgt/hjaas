@@ -12,6 +12,7 @@ import { execFileSync } from 'node:child_process';
 import { mkdir, readdir, rename, rm, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import sharp from 'sharp';
+import { CAPTION } from './caption-state.mjs';
 
 const base = process.env.HJ_URL ?? 'http://localhost:5173/';
 // HJ_OUT=qa/scene-2/ writes somewhere else (a later round re-running these checks keeps review 03's evidence as it was).
@@ -100,6 +101,12 @@ const run = {
       await page.waitForTimeout(600);
       await jpg(page, `state-${tag}-4-tenth-found-reaction`);
       await page.waitForTimeout(2600);
+      await jpg(page, `state-${tag}-5-scene-finished`);
+      // The button takes all 50.
+      await page.goto(`${base}?debug&intro=off&seed=7&all=50`);
+      await settled(page);
+      await clean(page);
+      await page.waitForTimeout(600);
       await jpg(page, `state-${tag}-5-contact-button`);
       await page.locator('.hj-contact').click();
       await page.waitForTimeout(800);
@@ -301,10 +308,10 @@ const run = {
           const visible = points.filter(([x]) => x > win.left && x < win.right);
           return { tested: visible.length, hit: visible.filter(([x, y]) => document.elementFromPoint(x, y)?.closest('.hj-shroom') === el).length };
         });
-        const before = await page.locator('.hj-tally-n').textContent();
+        const before = await page.locator('.hj-row.is-cream .hj-num-now').textContent();
         await button.tap();
         await page.waitForTimeout(1000);
-        const after = await page.locator('.hj-tally-n').textContent();
+        const after = await page.locator('.hj-row.is-cream .hj-num-now').textContent();
         const box = boxes.find((entry) => entry.id === id);
         rows.push({
           id, box: `${Math.round(box.w)}x${Math.round(box.h)}`, clearBelow: Math.round(box.clearBelow * 10) / 10, clearAbove: Math.round(box.clearAbove * 10) / 10,
@@ -313,11 +320,13 @@ const run = {
         });
       }
       await page.waitForTimeout(2500);
-      const unlocked = await page.locator('.hj-contact').isVisible();
+      // A finished scene: its counter full, the dot on its tab, Next beside it; the button only at 50 of 50.
+      const c = await page.evaluate(CAPTION);
+      const finished = c.here === '10/10' && c.dots.includes('build') && c.next === '#grow' && !c.contactShown;
       await jpg(page, `phone-${width}x${height}-all-ten-found`);
-      const ok = rows.every((r) => r.counted && r.ringInside && r.artInsideBox && r.edgesTappable.split('/')[0] === r.edgesTappable.split('/')[1]) && overlaps.length === 0 && unlocked;
-      report.sizes.push({ size: `${width}x${height}`, engine: 'webkit', ok, unlocked, overlaps, errors, rows });
-      say(`${width}x${height} all ten`, { ok, unlocked, overlaps, errors });
+      const ok = rows.every((r) => r.counted && r.ringInside && r.artInsideBox && r.edgesTappable.split('/')[0] === r.edgesTappable.split('/')[1]) && overlaps.length === 0 && finished;
+      report.sizes.push({ size: `${width}x${height}`, engine: 'webkit', ok, finished, caption: c.text, overlaps, errors, rows });
+      say(`${width}x${height} all ten`, { ok, finished, overlaps, errors });
       for (const r of rows) say(`  ${r.id}`, r);
       await browser.close();
     }
@@ -373,7 +382,7 @@ const run = {
       await cdp.send('Input.synthesizeScrollGesture', { x: spot.x + spot.width / 2, y: spot.y + spot.height / 2, yDistance: -60, gestureSourceType: 'touch', speed: 600 });
       await pg.waitForTimeout(400);
       const s3 = await read2();
-      const count = await pg.locator('.hj-tally-n').textContent();
+      const count = await pg.locator('.hj-row.is-cream .hj-num-now').textContent();
       const row2 = { size: `${width}x${height}`, engine: 'chrome, touch gestures', start: s0, afterDragUp: s1, afterDragLeft: s2,
         pageScrolls: s1.y > s0.y && s1.x === s0.x, roomPans: s2.x > s1.x && s2.y === s1.y, dragFromMushroomScrolls: s3.y > s3a.y, nothingCollectedByDrag: count === '0' };
       report.scroll.push(row2);
@@ -396,13 +405,12 @@ const run = {
       return { context, page, errors };
     };
     const links = (page) => page.evaluate(() => [...document.querySelectorAll('.hj-link')].filter((b) => getComputedStyle(b).visibility === 'visible').map((b) => b.textContent));
-    const state = (page) => page.evaluate(() => ({
+    const state = async (page) => ({ ...(await page.evaluate(() => ({
       caption: getComputedStyle(document.querySelector('.hj-caption-main')).opacity,
       rachel: getComputedStyle(document.querySelector('.hj-rachel')).opacity,
       mushroomsFindable: !document.querySelector('.hj-mushrooms').inert,
       paperSheets: document.querySelectorAll('.hj-paint').length,
-      count: document.querySelector('.hj-tally')?.textContent.trim().replace(/\s+/g, ' '),
-    }));
+    }))), count: (await page.evaluate(CAPTION)).here });
 
     // Skip: there before the art has loaded, and it finishes the picture at once.
     {
@@ -415,7 +423,7 @@ const run = {
       const spot = await page.locator('[data-spot="toolbox"]').boundingBox();
       await page.mouse.click(spot.x + spot.width / 2, spot.y + spot.height / 2);
       await page.waitForTimeout(300);
-      const clickable = (await state(page)).count !== '0 of 10 found';
+      const clickable = (await state(page)).count !== '0/10';
       await page.getByRole('button', { name: 'Skip' }).click();
       await page.waitForTimeout(80);
       const after = await state(page);
@@ -472,7 +480,7 @@ const run = {
         return { revealMs: start && end ? end[0] - start[0] : null, framesInBetween: rising.length };
       });
       const leftAfter = await page.evaluate(() => document.querySelector('.hj-viewport').scrollLeft);
-      report.returnVisit = { firstVisitPainted: firstVisit, secondVisit: second, ...reveal, panBefore: Math.round(left), panAfter: Math.round(leftAfter), links: await links(page), swipeHintShownAgain: await page.locator('.hj-swipe').count() };
+      report.returnVisit = { firstVisitPainted: firstVisit, secondVisit: second, ...reveal, panBefore: Math.round(left), panAfter: Math.round(leftAfter), links: await links(page) };
       say('return visit', report.returnVisit);
       await context.close();
     }

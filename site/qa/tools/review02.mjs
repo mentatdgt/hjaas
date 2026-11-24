@@ -119,7 +119,7 @@ if (item === 'sprites') {
     const context = await browser.newContext({ viewport: { width: 2560, height: 1440 }, deviceScaleFactor: 2 });
     const page = await context.newPage();
     await page.goto(url);
-    await page.waitForFunction(() => document.querySelector('.hj-note.is-on'), null, { timeout: 30000 });
+    await page.waitForFunction(() => { const c = document.querySelector('.hj-caption-main'); return c && getComputedStyle(c).opacity === '1' && !document.querySelector('.hj-paint'); }, null, { timeout: 30000 });
     await page.waitForTimeout(1500);
     const box = async (selector, pad) => {
       const b = await page.locator(selector).boundingBox();

@@ -17,6 +17,7 @@
 import { chromium, webkit, devices } from 'playwright';
 import { mkdir, writeFile, readFile, rm, readdir } from 'node:fs/promises';
 import sharp from 'sharp';
+import { CAPTION, CONTACT_SHOWN } from './caption-state.mjs';
 
 const base = process.env.HJ_URL ?? 'http://localhost:5173/';
 const out = new URL('../scene5/', import.meta.url).pathname;
@@ -1321,7 +1322,7 @@ run.film = async () => {
       const findAt = t.clock() - from;
       await tap(page, spot);
       await page.waitForTimeout(4500);
-      const state = await page.evaluate(() => ({ progress: window.__hj.scene.progress.state, note: document.querySelector('.hj-note')?.textContent.trim(), contactShown: !document.querySelector('.hj-contact').classList.contains('is-waiting'), tally: document.querySelector('.hj-tally')?.hidden }));
+      const state = { progress: await page.evaluate(() => window.__hj.scene.progress.state), ...(await page.evaluate(CAPTION)) };
       const hers = await stepsOf(page, 'rachel');
       const webm = await finish(t);
       const mp4 = `${out}set-${name}-10th.mp4`;
@@ -1341,14 +1342,14 @@ run.film = async () => {
       await ready(page); await SCENE.set.loaded(page); await clean(page);
       await page.waitForTimeout(1500);
       const from = t.clock() - 1.0;
-      const before = await page.evaluate(() => ({ contactShown: !document.querySelector('.hj-contact').classList.contains('is-waiting'), left: window.__hj.hunt.remaining }));
+      const before = { ...(await page.evaluate(CAPTION)), left: await page.evaluate(() => window.__hj.hunt.remaining) };
       const spot = (await unfound(page))[0];
       const findAt = t.clock() - from;
       await tap(page, spot);
-      await page.waitForFunction(() => !document.querySelector('.hj-contact').classList.contains('is-waiting'), null, { timeout: 10000 }).catch(() => {});
+      await page.waitForFunction(CONTACT_SHOWN, null, { timeout: 10000 }).catch(() => {});
       const shownAt = t.clock() - from;
       await page.waitForTimeout(2500);
-      const after = await page.evaluate(() => ({ contactShown: !document.querySelector('.hj-contact').classList.contains('is-waiting'), note: document.querySelector('.hj-note')?.textContent.trim(), focused: document.activeElement?.classList.contains('hj-contact'), live: [...document.querySelectorAll('[aria-live]')].map((e) => e.textContent.trim()).filter(Boolean) }));
+      const after = { ...(await page.evaluate(CAPTION)), ...(await page.evaluate(() => ({ focused: document.activeElement?.classList.contains('hj-contact'), live: [...document.querySelectorAll('[aria-live]')].map((e) => e.textContent.trim()).filter(Boolean) }))) };
       const webm = await finish(t);
       const mp4 = `${out}set-${name}-unlock.mp4`;
       const length = cut(webm, from, shownAt + 3, mp4);
@@ -1362,7 +1363,7 @@ run.film = async () => {
         await p2.goto(`${base}?debug&intro=off&seed=7&found=10#${ID}`);
         await ready(p2); await SCENE.set.loaded(p2); await clean(p2); await p2.waitForTimeout(800);
         await sharp(await p2.screenshot()).jpeg({ quality: 88 }).toFile(`${out}set-${name}-10of10-no-unlock.jpg`);
-        report[name].tenOfTenWithoutTheUnlock = await p2.evaluate(() => ({ contactShown: !document.querySelector('.hj-contact').classList.contains('is-waiting'), note: document.querySelector('.hj-note')?.textContent.trim() }));
+        report[name].tenOfTenWithoutTheUnlock = await p2.evaluate(CAPTION);
         await b2.close();
       }
       report[name].unlock = { file: `set-${name}-unlock.mp4`, seconds: r1(length), spot, before, findAtS: r1(findAt), contactButtonAtS: r1(shownAt), after, unlocked: !before.contactShown && after.contactShown };

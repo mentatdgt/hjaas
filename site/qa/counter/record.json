@@ -1,7 +1,7 @@
 {
  "find-desktop": {
-  "frames": 77,
-  "seconds": 2.9,
+  "frames": 76,
+  "seconds": 2.8,
   "movingFrames": 44,
   "longestGapWhileMovingMs": 16.7,
   "gapsOver34": [],
@@ -27,34 +27,34 @@
  "unlock-desktop": {
   "frames": 192,
   "seconds": 5.3,
-  "movingFrames": 137,
+  "movingFrames": 136,
   "longestGapWhileMovingMs": 50,
   "gapsOver34": [
    [
-    1631,
+    1630,
     50
    ],
    [
-    1681,
+    1680,
     50
    ],
    [
-    1731,
+    1730,
     50
    ]
   ],
   "errors": []
  },
  "return-desktop": {
-  "frames": 62,
-  "seconds": 3.6,
+  "frames": 55,
+  "seconds": 3.5,
   "movingFrames": 0,
   "longestGapWhileMovingMs": null,
   "gapsOver34": [],
   "errors": []
  },
  "find-portrait": {
-  "frames": 78,
+  "frames": 77,
   "seconds": 2.9,
   "movingFrames": 44,
   "longestGapWhileMovingMs": 16.7,
@@ -68,7 +68,7 @@
   "longestGapWhileMovingMs": 83.3,
   "gapsOver34": [
    [
-    1181,
+    1182,
     83
    ],
    [
@@ -79,28 +79,28 @@
   "errors": []
  },
  "unlock-portrait": {
-  "frames": 193,
+  "frames": 194,
   "seconds": 5.3,
   "movingFrames": 137,
   "longestGapWhileMovingMs": 50,
   "gapsOver34": [
    [
-    1631,
+    1614,
     50
    ],
    [
-    1681,
+    1664,
     50
    ],
    [
-    1731,
+    1714,
     50
    ]
   ],
   "errors": []
  },
  "return-portrait": {
-  "frames": 34,
+  "frames": 36,
   "seconds": 3.6,
   "movingFrames": 0,
   "longestGapWhileMovingMs": null,
@@ -133,36 +133,36 @@
   "errors": []
  },
  "unlock-landscape": {
-  "frames": 195,
+  "frames": 191,
   "seconds": 5.3,
-  "movingFrames": 137,
+  "movingFrames": 136,
   "longestGapWhileMovingMs": 50,
   "gapsOver34": [
    [
-    1614,
+    1598,
     50
    ],
    [
-    1664,
+    1648,
     50
    ],
    [
-    1714,
+    1698,
     50
    ]
   ],
   "errors": []
  },
  "return-landscape": {
-  "frames": 60,
-  "seconds": 3.6,
+  "frames": 58,
+  "seconds": 3.5,
   "movingFrames": 0,
   "longestGapWhileMovingMs": null,
   "gapsOver34": [],
   "errors": []
  },
  "find-desktop-reduced": {
-  "frames": 8,
+  "frames": 15,
   "seconds": 1.6,
   "movingFrames": 0,
   "longestGapWhileMovingMs": null,
@@ -170,7 +170,7 @@
   "errors": []
  },
  "complete-desktop-reduced": {
-  "frames": 44,
+  "frames": 43,
   "seconds": 1.6,
   "movingFrames": 0,
   "longestGapWhileMovingMs": null,

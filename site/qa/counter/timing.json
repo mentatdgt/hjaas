@@ -2,19 +2,19 @@
  "find": {
   "cream": {
    "oldNumberOnScreen": [
-    19,
-    165
+    17,
+    166
    ],
    "oldRisesTo": -8,
    "newNumberMoves": [
-    19,
-    150
+    17,
+    149
    ],
    "newComesFrom": 8,
    "numberBecomes": "7",
    "fillMoves": [
-    33,
-    332
+    31,
+    334
    ],
    "fillEnds": {
     "stem": 1,
@@ -22,11 +22,11 @@
    },
    "labels": [
     [
-     19,
+     17,
      "4 more in Grow"
     ],
     [
-     150,
+     149,
      "3 more in Grow"
     ]
    ],
@@ -37,19 +37,19 @@
   },
   "red": {
    "oldNumberOnScreen": [
-    116,
-    265
+    100,
+    249
    ],
    "oldRisesTo": -8,
    "newNumberMoves": [
-    116,
-    249
+    100,
+    231
    ],
    "newComesFrom": 8,
    "numberBecomes": "17",
    "fillMoves": [
-    132,
-    319
+    115,
+    299
    ],
    "fillEnds": {
     "stem": 1,
@@ -57,7 +57,7 @@
    },
    "labels": [
     [
-     19,
+     17,
      "find all 50 to contact Hui Jie"
     ]
    ],
@@ -77,30 +77,30 @@
   "crossfade": {
    "from": null,
    "buttonWhole": null,
-   "counterGone": 2797,
+   "counterGone": 2799,
    "counterRisesTo": 0,
    "buttonComesFrom": 0
   },
-  "longestFrameMs": 21.1,
+  "longestFrameMs": 18.9,
   "focused": "hj-shroom",
   "said": "7 of 10 found in Grow. 3 more in Grow."
  },
  "complete": {
   "cream": {
    "oldNumberOnScreen": [
-    17,
-    168
+    20,
+    167
    ],
    "oldRisesTo": -8,
    "newNumberMoves": [
-    17,
-    152
+    20,
+    151
    ],
    "newComesFrom": 8,
    "numberBecomes": "10",
    "fillMoves": [
-    35,
-    332
+    33,
+    333
    ],
    "fillEnds": {
     "stem": 1,
@@ -108,11 +108,11 @@
    },
    "labels": [
     [
-     17,
+     20,
      "1 more in Grow"
     ],
     [
-     152,
+     151,
      "Grow complete"
     ]
    ],
@@ -123,19 +123,19 @@
   },
   "red": {
    "oldNumberOnScreen": [
-    102,
-    251
+    118,
+    266
    ],
    "oldRisesTo": -8,
    "newNumberMoves": [
-    102,
-    233
+    118,
+    250
    ],
    "newComesFrom": 8,
    "numberBecomes": "20",
    "fillMoves": [
-    118,
-    301
+    134,
+    317
    ],
    "fillEnds": {
     "stem": 1,
@@ -143,7 +143,7 @@
    },
    "labels": [
     [
-     17,
+     20,
      "find all 50 to contact Hui Jie"
     ]
    ],
@@ -153,12 +153,12 @@
    ]
   },
   "tabDot": {
-   "appears": 484,
-   "whole": 683
+   "appears": 482,
+   "whole": 681
   },
   "next": {
-   "appears": 683,
-   "whole": 915
+   "appears": 681,
+   "whole": 917
   },
   "crossfade": {
    "from": null,
@@ -167,20 +167,20 @@
    "counterRisesTo": 0,
    "buttonComesFrom": 0
   },
-  "longestFrameMs": 18.9,
+  "longestFrameMs": 19.4,
   "focused": "",
   "said": "10 of 10 found in Grow. Grow complete."
  },
  "unlock": {
   "cream": {
    "oldNumberOnScreen": [
-    19,
+    16,
     168
    ],
    "oldRisesTo": -8,
    "newNumberMoves": [
-    19,
-    150
+    16,
+    151
    ],
    "newComesFrom": 8,
    "numberBecomes": "10",
@@ -194,23 +194,23 @@
    },
    "labels": [
     [
-     19,
+     16,
      "1 more in Set Design"
     ],
     [
-     150,
+     151,
      "Set Design complete"
     ]
    ],
    "glint": [
-    469,
-    1366
+    467,
+    1367
    ]
   },
   "red": {
    "oldNumberOnScreen": [
     101,
-    250
+    251
    ],
    "oldRisesTo": -8,
    "newNumberMoves": [
@@ -220,8 +220,8 @@
    "newComesFrom": 8,
    "numberBecomes": "50",
    "fillMoves": [
-    117,
-    302
+    118,
+    301
    ],
    "fillEnds": {
     "stem": 1,
@@ -229,21 +229,21 @@
    },
    "labels": [
     [
-     19,
+     16,
      "1 more to contact Hui Jie"
     ],
     [
-     250,
+     251,
      "You found all 50"
     ]
    ],
    "glint": [
-    917,
-    1818
+    915,
+    1816
    ]
   },
   "tabDot": {
-   "appears": 484,
+   "appears": 482,
    "whole": 684
   },
   "next": {
@@ -251,13 +251,13 @@
    "whole": null
   },
   "crossfade": {
-   "from": 2033,
-   "buttonWhole": 2384,
-   "counterGone": 2468,
+   "from": 2034,
+   "buttonWhole": 2383,
+   "counterGone": 2448,
    "counterRisesTo": -4,
    "buttonComesFrom": 4
   },
-  "longestFrameMs": 19.6,
+  "longestFrameMs": 21.4,
   "focused": "hj-contact",
   "said": "All 50 mushrooms found. The Contact Hui Jie button is now available."
  },
@@ -281,7 +281,7 @@
    },
    "labels": [
     [
-     27,
+     22,
      "3 more in Grow"
     ]
    ],
@@ -309,7 +309,7 @@
    },
    "labels": [
     [
-     27,
+     22,
      "find all 50 to contact Hui Jie"
     ]
    ],
@@ -329,7 +329,7 @@
   "crossfade": {
    "from": null,
    "buttonWhole": null,
-   "counterGone": 3198,
+   "counterGone": 3197,
    "counterRisesTo": 0,
    "buttonComesFrom": 0
   },
@@ -357,7 +357,7 @@
    },
    "labels": [
     [
-     25,
+     22,
      "Grow complete"
     ]
    ],
@@ -385,7 +385,7 @@
    },
    "labels": [
     [
-     25,
+     22,
      "find all 50 to contact Hui Jie"
     ]
    ],
@@ -395,21 +395,21 @@
    ]
   },
   "tabDot": {
-   "appears": 481,
-   "whole": 716
+   "appears": 479,
+   "whole": 714
   },
   "next": {
-   "appears": 682,
-   "whole": 916
+   "appears": 681,
+   "whole": 913
   },
   "crossfade": {
    "from": null,
    "buttonWhole": null,
-   "counterGone": 3598,
+   "counterGone": 3597,
    "counterRisesTo": 0,
    "buttonComesFrom": 0
   },
-  "longestFrameMs": 19.4,
+  "longestFrameMs": 18.7,
   "focused": "",
   "said": "10 of 10 found in Grow. Grow complete."
  },
@@ -433,7 +433,7 @@
    },
    "labels": [
     [
-     45,
+     23,
      "Set Design complete"
     ]
    ],
@@ -461,7 +461,7 @@
    },
    "labels": [
     [
-     45,
+     23,
      "You found all 50"
     ]
    ],
@@ -471,21 +471,21 @@
    ]
   },
   "tabDot": {
-   "appears": 479,
-   "whole": 712
+   "appears": 473,
+   "whole": 707
   },
   "next": {
    "appears": null,
    "whole": null
   },
   "crossfade": {
-   "from": 2029,
-   "buttonWhole": 2465,
-   "counterGone": 2446,
+   "from": 2022,
+   "buttonWhole": 2457,
+   "counterGone": 2457,
    "counterRisesTo": 0,
    "buttonComesFrom": 0
   },
-  "longestFrameMs": 19.3,
+  "longestFrameMs": 21.2,
   "focused": "hj-contact",
   "said": "All 50 mushrooms found. The Contact Hui Jie button is now available."
  }

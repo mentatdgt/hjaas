@@ -28,9 +28,9 @@ async function run(name, launch, contextOptions, extra = () => {}) {
   await page.waitForTimeout(900); await shot('03-mid-hunt');
   await page.keyboard.press('Tab'); await page.keyboard.press('Tab'); await page.keyboard.press('Tab');
   await page.waitForTimeout(300); await shot('04-keyboard-focus-on-mushroom');
-  await open('found=10');
+  await open('all=50');
   await page.waitForTimeout(600); await shot('05-unlocked');
-  await press('.hj-pin-action');
+  await press('.hj-contact');
   await page.waitForTimeout(700); await shot('06-form-open');
   await page.evaluate(() => document.querySelector('.hj-form').requestSubmit());
   await page.waitForTimeout(300); await shot('07-form-validation');

@@ -1,7 +1,8 @@
 // Evidence for Wren's review 01. Needs `npm run dev` (5173) and, for item 3, `npm run build && npm run preview` (4173).
-//   node qa/tools/review01.mjs flags     item 3: ?found=10 on dev vs production
+//   node qa/tools/review01.mjs flags     item 3: ?all=50 on dev vs production
 import { chromium } from 'playwright';
 import sharp from 'sharp';
+import { CAPTION } from './caption-state.mjs';
 
 const item = process.argv[2];
 const browser = await chromium.launch();
@@ -14,10 +15,8 @@ async function shot(url, viewport, wait, settle = 1500) {
   await wait(page);
   await page.waitForTimeout(settle);
   const png = await page.screenshot();
-  const info = await page.evaluate(() => ({
-    counter: document.querySelector('.hj-pin')?.textContent?.replace(/\s+/g, ' ').trim(),
-    action: !document.querySelector('.hj-pin-action')?.hidden,
-  }));
+  const c = await page.evaluate(CAPTION);
+  const info = { counter: c.text, action: c.contactShown };
   await page.close();
   return { png, info, errors };
 }
@@ -40,9 +39,9 @@ async function sideBySide(out, a, b, labels) {
 
 if (item === 'flags') {
   const viewport = { width: 1280, height: 760 };
-  const wait = (page) => page.waitForSelector('.hj-pin');
-  const dev = await shot('http://localhost:5173/?intro=off&found=10', viewport, wait, 2500);
-  const prod = await shot('http://localhost:4173/?intro=off&found=10&debug', viewport, wait, 11000);
+  const wait = (page) => page.waitForSelector('.hj-caption-main');
+  const dev = await shot('http://localhost:5173/?intro=off&all=50', viewport, wait, 2500);
+  const prod = await shot('http://localhost:4173/?intro=off&all=50&debug', viewport, wait, 11000);
   const prodDebug = await (async () => {
     const page = await browser.newPage({ viewport });
     await page.goto('http://localhost:4173/?debug');
@@ -51,7 +50,7 @@ if (item === 'flags') {
     await page.close();
     return r;
   })();
-  await sideBySide('qa/review-01/03-flags-dev-vs-prod.jpg', dev.png, prod.png, ['npm run dev  ?intro=off&found=10', 'production build  ?intro=off&found=10&debug']);
+  await sideBySide('qa/review-01/03-flags-dev-vs-prod.jpg', dev.png, prod.png, ['npm run dev  ?intro=off&all=50', 'production build  ?intro=off&all=50&debug']);
   console.log(JSON.stringify({ dev: dev.info, prod: prod.info, prodDebug, errors: [...dev.errors, ...prod.errors] }, null, 1));
 }
 
@@ -324,7 +323,6 @@ if (item === 'phones') {
         pageScrolls: se.scrollHeight > innerHeight || se.scrollWidth > innerWidth,
         distinctStageBoxes: [...new Set(window.__boxes)],
         layoutShifts: window.__shifts,
-        swipeHint: !!document.querySelector('.hj-swipe'),
       };
     });
     // Try to scroll the page itself; it must not move.

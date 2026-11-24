@@ -5,7 +5,8 @@
 //
 // "Before" is any checkout of the commit to compare with, served on another port, for example:
 //   git worktree add /tmp/before <commit> && cd /tmp/before/site && npx vite --port 5199 --strictPort
-// Rachel is paused and the hammer rhythm seeded, so both pages show the same pose.
+// Rachel is paused and the hammer rhythm seeded, so both pages show the same pose. (The button is earned by all 50
+// finds. Against a build from before the two-mushroom counter, the caption itself differs.)
 import { chromium } from 'playwright';
 import sharp from 'sharp';
 import { writeFile } from 'node:fs/promises';
@@ -18,8 +19,9 @@ const shots = [
   ['first screen', 'reset&intro=off&seed=7', []],
   ['one found', 'reset&intro=off&seed=7', ['find:conduit']],
   ['nine found', 'reset&intro=off&seed=7&found=9', []],
-  ['ten found, button', 'reset&intro=off&seed=7&found=9', ['find:toolbox']],
-  ['form open', 'reset&intro=off&seed=7&found=10', ['form']],
+  ['ten found', 'reset&intro=off&seed=7&found=9', ['find:toolbox']],
+  ['all fifty, button', 'reset&intro=off&seed=7&all=50', []],
+  ['form open', 'reset&intro=off&seed=7&all=50', ['form']],
 ];
 const sizes = [[1440, 900], [390, 844], [360, 740]];
 

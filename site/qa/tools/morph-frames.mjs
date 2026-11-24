@@ -1,4 +1,4 @@
-// The counter-to-button morph, frozen at five points, at 3x. node qa/tools/morph-frames.mjs out.png [desktop|iphone]
+// The counter-to-button morph, frozen at six points, at 3x. node qa/tools/morph-frames.mjs out.png [desktop|iphone]
 import { chromium, webkit, devices } from 'playwright';
 import sharp from 'sharp';
 const out = process.argv[2] ?? 'qa/morph-frames.png';
@@ -8,19 +8,19 @@ const context = await browser.newContext(phone ? { ...devices['iPhone 14'] } : {
 const page = await context.newPage();
 const tiles = [];
 for (const at of [0, 0.2, 0.4, 0.6, 0.8, 1]) {
-  await page.goto('http://localhost:5173/?debug&reset&intro=off&found=9');
+  await page.goto('about:blank');
+  await page.goto('http://localhost:5173/?debug&reset&intro=off&all=49#set');
   await page.waitForFunction(() => window.__hj?.ready === true);
-  // Freeze the morph at one point: start it, then pause every CSS transition at the same moment.
+  // Freeze the cross-fade at one point: the fiftieth find, then both blocks' animations paused as it starts.
+  await page.waitForTimeout(500);
   await page.evaluate(async (at) => {
-    const counter = window.__hj.counter;
-    counter.land(10);
-    await new Promise((r) => setTimeout(r, 900));
-    counter.unlock(true);
-    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
-    for (const a of document.querySelector('.hj-counter').getAnimations({ subtree: true })) { a.pause(); a.currentTime = at * 500; }
+    document.querySelector('.hj-shroom').click();
+    const counter = document.querySelector('.hj-counter');
+    while (!counter.classList.contains('is-leaving')) await new Promise(requestAnimationFrame);
+    for (const el of [counter, document.querySelector('.hj-prize')]) for (const a of el.getAnimations()) { a.pause(); a.currentTime = at * 449; }
   }, at);
   await page.waitForTimeout(150);
-  const box = await page.locator('.hj-pin').boundingBox();
+  const box = await page.locator('.hj-caption-main').boundingBox();
   tiles.push(await page.screenshot({ clip: { x: box.x - 14, y: box.y - 12, width: box.width + 28, height: box.height + 26 } }));
 }
 await browser.close();

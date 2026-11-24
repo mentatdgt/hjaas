@@ -5,68 +5,17 @@
    "framesBegun": 81,
    "dropped": {
     "theFlight": [
-     -436,
-     -385,
-     -370,
-     -353
-    ],
-    "landingAndRolls": [
-     15
-    ],
-    "theRest": []
-   },
-   "longestTaskMs": {
-    "tapAndFlight": 56.1,
-    "landingAndRolls": 27.1,
-    "theRest": 1.4
-   },
-   "window": [
-    -450,
-    900
-   ],
-   "errors": []
-  },
-  {
-   "shown": "7",
-   "framesBegun": 81,
-   "dropped": {
-    "theFlight": [
-     -385
-    ],
-    "landingAndRolls": [],
-    "theRest": []
-   },
-   "longestTaskMs": {
-    "tapAndFlight": 26.1,
-    "landingAndRolls": 4,
-    "theRest": 1.1
-   },
-   "window": [
-    -450,
-    900
-   ],
-   "errors": []
-  },
-  {
-   "shown": "7",
-   "framesBegun": 82,
-   "dropped": {
-    "theFlight": [
-     -450,
-     -433,
-     -417,
      -400,
-     -385
+     -383,
+     -366
     ],
-    "landingAndRolls": [
-     17
-    ],
+    "landingAndRolls": [],
     "theRest": []
    },
    "longestTaskMs": {
-    "tapAndFlight": 37,
-    "landingAndRolls": 37,
-    "theRest": 1.2
+    "tapAndFlight": 39.9,
+    "landingAndRolls": 21.8,
+    "theRest": 1
    },
    "window": [
     -450,
@@ -79,16 +28,15 @@
    "framesBegun": 82,
    "dropped": {
     "theFlight": [
-     -402,
-     -383
+     -382
     ],
     "landingAndRolls": [],
     "theRest": []
    },
    "longestTaskMs": {
-    "tapAndFlight": 37.9,
-    "landingAndRolls": 4,
-    "theRest": 1.2
+    "tapAndFlight": 22.7,
+    "landingAndRolls": 6.4,
+    "theRest": 1
    },
    "window": [
     -450,
@@ -101,188 +49,102 @@
    "framesBegun": 81,
    "dropped": {
     "theFlight": [
-     -384,
-     -369,
-     -352,
-     -336
-    ],
-    "landingAndRolls": [],
-    "theRest": []
-   },
-   "longestTaskMs": {
-    "tapAndFlight": 64.4,
-    "landingAndRolls": 5.4,
-    "theRest": 1.2
-   },
-   "window": [
-    -450,
-    900
-   ],
-   "errors": []
-  },
-  {
-   "shown": "7",
-   "framesBegun": 81,
-   "dropped": {
-    "theFlight": [
-     -385,
-     -370
-    ],
-    "landingAndRolls": [],
-    "theRest": []
-   },
-   "longestTaskMs": {
-    "tapAndFlight": 34.9,
-    "landingAndRolls": 5.1,
-    "theRest": 1.2
-   },
-   "window": [
-    -450,
-    900
-   ],
-   "errors": []
-  }
- ],
- "complete": [
-  {
-   "shown": "10",
-   "framesBegun": 123,
-   "dropped": {
-    "theFlight": [
-     -450,
      -435,
-     -417,
-     -400,
-     -385,
-     -368
-    ],
-    "landingAndRolls": [],
-    "theRest": []
-   },
-   "longestTaskMs": {
-    "tapAndFlight": 37.9,
-    "landingAndRolls": 37.9,
-    "theRest": 4.5
-   },
-   "window": [
-    -450,
-    1600
-   ],
-   "errors": []
-  },
-  {
-   "shown": "10",
-   "framesBegun": 123,
-   "dropped": {
-    "theFlight": [
-     -402
-    ],
-    "landingAndRolls": [],
-    "theRest": []
-   },
-   "longestTaskMs": {
-    "tapAndFlight": 20.1,
-    "landingAndRolls": 8.9,
-    "theRest": 3.6
-   },
-   "window": [
-    -450,
-    1600
-   ],
-   "errors": []
-  },
-  {
-   "shown": "10",
-   "framesBegun": 123,
-   "dropped": {
-    "theFlight": [
-     -437,
-     -421,
-     -402
+     -418,
+     -400
     ],
     "landingAndRolls": [
-     13
+     17,
+     34
     ],
     "theRest": []
    },
    "longestTaskMs": {
     "tapAndFlight": 43.5,
-    "landingAndRolls": 11.3,
-    "theRest": 1.9
+    "landingAndRolls": 43.5,
+    "theRest": 2.4
    },
    "window": [
     -450,
-    1600
+    900
    ],
    "errors": []
   },
   {
-   "shown": "10",
-   "framesBegun": 123,
+   "shown": "7",
+   "framesBegun": 81,
    "dropped": {
-    "theFlight": [],
+    "theFlight": [
+     -402,
+     -385,
+     -369,
+     -351
+    ],
     "landingAndRolls": [],
     "theRest": []
    },
    "longestTaskMs": {
-    "tapAndFlight": 21.1,
-    "landingAndRolls": 9.9,
-    "theRest": 5.4
+    "tapAndFlight": 69.6,
+    "landingAndRolls": 30.7,
+    "theRest": 1.3
    },
    "window": [
     -450,
-    1600
+    900
    ],
    "errors": []
   },
   {
-   "shown": "10",
-   "framesBegun": 123,
+   "shown": "7",
+   "framesBegun": 81,
    "dropped": {
     "theFlight": [
-     -435,
-     -418,
-     -401
-    ],
-    "landingAndRolls": [
-     15
-    ],
-    "theRest": []
-   },
-   "longestTaskMs": {
-    "tapAndFlight": 41.4,
-    "landingAndRolls": 41.4,
-    "theRest": 4.2
-   },
-   "window": [
-    -450,
-    1600
-   ],
-   "errors": []
-  },
-  {
-   "shown": "10",
-   "framesBegun": 123,
-   "dropped": {
-    "theFlight": [
-     -435,
+     -436,
      -419,
      -402,
-     -385
+     -384,
+     -369
     ],
     "landingAndRolls": [
-     14
+     16
     ],
     "theRest": []
    },
    "longestTaskMs": {
-    "tapAndFlight": 53.8,
-    "landingAndRolls": 7.8,
-    "theRest": 1.8
+    "tapAndFlight": 39.4,
+    "landingAndRolls": 39.4,
+    "theRest": 0.9
    },
    "window": [
     -450,
-    1600
+    900
+   ],
+   "errors": []
+  },
+  {
+   "shown": "7",
+   "framesBegun": 81,
+   "dropped": {
+    "theFlight": [
+     -434,
+     -419,
+     -402,
+     -384,
+     -367
+    ],
+    "landingAndRolls": [
+     16
+    ],
+    "theRest": []
+   },
+   "longestTaskMs": {
+    "tapAndFlight": 72.6,
+    "landingAndRolls": 3.9,
+    "theRest": 1.1
+   },
+   "window": [
+    -450,
+    900
    ],
    "errors": []
   }
@@ -293,15 +155,18 @@
    "framesBegun": 189,
    "dropped": {
     "theFlight": [
-     -386
+     -402,
+     -386,
+     -369,
+     -351
     ],
     "landingAndRolls": [],
     "theRest": []
    },
    "longestTaskMs": {
-    "tapAndFlight": 25.2,
-    "landingAndRolls": 4.3,
-    "theRest": 7.7
+    "tapAndFlight": 63.1,
+    "landingAndRolls": 6.2,
+    "theRest": 9.3
    },
    "window": [
     -450,
@@ -311,73 +176,20 @@
   },
   {
    "shown": "10",
-   "framesBegun": 189,
+   "framesBegun": 188,
    "dropped": {
     "theFlight": [
-     -418,
-     -403,
-     -385
+     -402,
+     -385,
+     -369
     ],
     "landingAndRolls": [],
     "theRest": []
    },
    "longestTaskMs": {
-    "tapAndFlight": 75.7,
-    "landingAndRolls": 24.9,
-    "theRest": 14.2
-   },
-   "window": [
-    -450,
-    2700
-   ],
-   "errors": []
-  },
-  {
-   "shown": "10",
-   "framesBegun": 190,
-   "dropped": {
-    "theFlight": [
-     -370
-    ],
-    "landingAndRolls": [],
-    "theRest": []
-   },
-   "longestTaskMs": {
-    "tapAndFlight": 22.3,
-    "landingAndRolls": 8.8,
-    "theRest": 7.2
-   },
-   "window": [
-    -450,
-    2700
-   ],
-   "errors": []
-  },
-  {
-   "shown": "10",
-   "framesBegun": 189,
-   "dropped": {
-    "theFlight": [
-     -407,
-     -388,
-     -371,
-     -355,
-     -339,
-     -323,
-     -307,
-     -288,
-     -273
-    ],
-    "landingAndRolls": [
-     11,
-     29
-    ],
-    "theRest": []
-   },
-   "longestTaskMs": {
-    "tapAndFlight": 114.5,
-    "landingAndRolls": 7.5,
-    "theRest": 14.6
+    "tapAndFlight": 40.3,
+    "landingAndRolls": 4.4,
+    "theRest": 11.9
    },
    "window": [
     -450,
@@ -396,9 +208,9 @@
     "theRest": []
    },
    "longestTaskMs": {
-    "tapAndFlight": 31.4,
-    "landingAndRolls": 6.8,
-    "theRest": 9
+    "tapAndFlight": 27.8,
+    "landingAndRolls": 4.7,
+    "theRest": 10
    },
    "window": [
     -450,
@@ -408,33 +220,226 @@
   },
   {
    "shown": "10",
-   "framesBegun": 190,
+   "framesBegun": 189,
    "dropped": {
     "theFlight": [
-     -418,
+     -436,
      -384,
-     -367,
+     -369,
      -351,
-     -336,
+     -335,
      -317,
-     -302,
-     -285,
-     -269
+     -301
+    ],
+    "landingAndRolls": [],
+    "theRest": []
+   },
+   "longestTaskMs": {
+    "tapAndFlight": 74.6,
+    "landingAndRolls": 5.9,
+    "theRest": 10.9
+   },
+   "window": [
+    -450,
+    2700
+   ],
+   "errors": []
+  },
+  {
+   "shown": "10",
+   "framesBegun": 189,
+   "dropped": {
+    "theFlight": [
+     -385,
+     -368,
+     -351,
+     -335,
+     -320,
+     -303,
+     -285
+    ],
+    "landingAndRolls": [],
+    "theRest": []
+   },
+   "longestTaskMs": {
+    "tapAndFlight": 102.2,
+    "landingAndRolls": 21.7,
+    "theRest": 11.8
+   },
+   "window": [
+    -450,
+    2700
+   ],
+   "errors": []
+  },
+  {
+   "shown": "10",
+   "framesBegun": 189,
+   "dropped": {
+    "theFlight": [
+     -437,
+     -420,
+     -404,
+     -387,
+     -369
+    ],
+    "landingAndRolls": [],
+    "theRest": []
+   },
+   "longestTaskMs": {
+    "tapAndFlight": 22.8,
+    "landingAndRolls": 4,
+    "theRest": 9.1
+   },
+   "window": [
+    -450,
+    2700
+   ],
+   "errors": []
+  }
+ ],
+ "complete": [
+  {
+   "shown": "10",
+   "framesBegun": 123,
+   "dropped": {
+    "theFlight": [
+     -436,
+     -418,
+     -403,
+     -387
+    ],
+    "landingAndRolls": [],
+    "theRest": []
+   },
+   "longestTaskMs": {
+    "tapAndFlight": 53.7,
+    "landingAndRolls": 7.3,
+    "theRest": 1.7
+   },
+   "window": [
+    -450,
+    1600
+   ],
+   "errors": []
+  },
+  {
+   "shown": "10",
+   "framesBegun": 123,
+   "dropped": {
+    "theFlight": [
+     -436,
+     -419,
+     -402
     ],
     "landingAndRolls": [
-     14,
+     16,
      31
     ],
     "theRest": []
    },
    "longestTaskMs": {
-    "tapAndFlight": 114.6,
-    "landingAndRolls": 5.9,
-    "theRest": 11.3
+    "tapAndFlight": 57.9,
+    "landingAndRolls": 10.3,
+    "theRest": 5.2
    },
    "window": [
     -450,
-    2700
+    1600
+   ],
+   "errors": []
+  },
+  {
+   "shown": "10",
+   "framesBegun": 123,
+   "dropped": {
+    "theFlight": [
+     -384,
+     -368,
+     -352
+    ],
+    "landingAndRolls": [],
+    "theRest": []
+   },
+   "longestTaskMs": {
+    "tapAndFlight": 47.6,
+    "landingAndRolls": 9.1,
+    "theRest": 5.6
+   },
+   "window": [
+    -450,
+    1600
+   ],
+   "errors": []
+  },
+  {
+   "shown": "10",
+   "framesBegun": 123,
+   "dropped": {
+    "theFlight": [
+     -434,
+     -420,
+     -403
+    ],
+    "landingAndRolls": [
+     14
+    ],
+    "theRest": []
+   },
+   "longestTaskMs": {
+    "tapAndFlight": 31.2,
+    "landingAndRolls": 7.8,
+    "theRest": 2.2
+   },
+   "window": [
+    -450,
+    1600
+   ],
+   "errors": []
+  },
+  {
+   "shown": "10",
+   "framesBegun": 124,
+   "dropped": {
+    "theFlight": [
+     -400
+    ],
+    "landingAndRolls": [],
+    "theRest": []
+   },
+   "longestTaskMs": {
+    "tapAndFlight": 21.1,
+    "landingAndRolls": 8.4,
+    "theRest": 4
+   },
+   "window": [
+    -450,
+    1600
+   ],
+   "errors": []
+  },
+  {
+   "shown": "10",
+   "framesBegun": 123,
+   "dropped": {
+    "theFlight": [
+     -435,
+     -420,
+     -404
+    ],
+    "landingAndRolls": [
+     14
+    ],
+    "theRest": []
+   },
+   "longestTaskMs": {
+    "tapAndFlight": 33.7,
+    "landingAndRolls": 8.9,
+    "theRest": 4.1
+   },
+   "window": [
+    -450,
+    1600
    ],
    "errors": []
   }

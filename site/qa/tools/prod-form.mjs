@@ -1,21 +1,26 @@
 // Production build check: the form must not claim a send when no endpoint is configured.
 // Run `npm run build && npm run preview` first. node qa/tools/prod-form.mjs out.png
 import { chromium } from 'playwright';
+import { readFileSync } from 'node:fs';
 const out = process.argv[2] ?? 'qa/prod-form-error.png';
 const browser = await chromium.launch({ channel: 'chrome' });
 const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
 const errors = [];
 page.on('pageerror', (e) => errors.push(String(e)));
 page.on('requestfailed', (r) => errors.push(`failed: ${r.url()}`));
-// Production ignores ?found=10, so start from saved progress instead.
-const all = ['sill', 'drape', 'skirting', 'screed', 'tiles', 'conduit', 'socket', 'ladder-foot', 'ladder-step', 'toolbox'];
-await page.addInitScript((found) => {
-  localStorage.setItem('hjaas:scene1:v1', JSON.stringify({ found, unlocked: true, seenIntro: true, panned: false }));
-}, all);
-await page.goto('http://localhost:4173/');
-await page.waitForSelector('.hj-pin-action:not([hidden])');
+// Production ignores ?all=50, so start from saved progress instead: every spot of every scene, read from the sources.
+const scenes = Object.fromEntries(['build', 'grow', 'design', 'film', 'set'].map((id) => {
+  const found = [...readFileSync(new URL(`../../src/scenes/${id}.ts`, import.meta.url), 'utf8').matchAll(/\{ id: '([\w-]+)', art:/g)].map((m) => m[1]);
+  if (found.length !== 10) throw new Error(`${id}: ${found.length} spots read`);
+  return [id, { found, seen: true, panX: null }];
+}));
+await page.addInitScript((saved) => {
+  localStorage.setItem('hjaas:site:v2', JSON.stringify({ scenes: saved, unlocked: false, panned: false }));
+}, scenes);
+await page.goto(process.env.HJ_PROD ?? 'http://localhost:4173/');
+await page.waitForSelector('.hj-contact', { state: 'visible' });
 await page.waitForTimeout(1500);
-await page.click('.hj-pin-action');
+await page.click('.hj-contact');
 await page.waitForTimeout(500);
 const onOpen = await page.evaluate(() => ({
   notice: document.querySelector('.hj-notice').hidden ? null : document.querySelector('.hj-notice').textContent,
