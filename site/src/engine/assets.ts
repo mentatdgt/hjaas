@@ -43,8 +43,8 @@ export async function loadImage(url: string, img = new Image()): Promise<HTMLIma
     await Promise.race([
       img.decode(),
       new Promise<never>((_, reject) => {
+        // (Rejected first: taking the source away makes decode() fail too, in its own words.)
         timeout = setTimeout(() => {
-          img.removeAttribute('src');
           reject(new DeadlineError(`${url}: image deadline exceeded`));
         }, NETWORK_DEADLINE_MS);
       }),
@@ -251,13 +251,22 @@ export function releaseFrame(frame: Frame): void {
   if ('close' in frame) frame.close();
 }
 
+/** How many times a plate has been waited for in vain. */
+const stalled = new Map<string, number>();
+
 /** A scene's plate, downloaded and decoded. Resolves with the address to give the scene's <img>. */
 export function loadPlate(path: string): Promise<HTMLImageElement> {
   // An <img> request is the only kind WebKit matches to the document's image preload.
+  // After a stall it is asked for under another address: under its own it would be given the same stalled request,
+  // which the document's preload keeps open.
+  const again = stalled.get(path);
   return requiredAsset(() => {
     const img = new Image();
     img.setAttribute('fetchpriority', 'high');
-    return loadImage(asset(path), img);
+    return loadImage(asset(path) + (again ? `?again=${again}` : ''), img);
+  }).catch((error) => {
+    if (error instanceof DeadlineError) stalled.set(path, (again ?? 0) + 1);
+    throw error;
   });
 }
 

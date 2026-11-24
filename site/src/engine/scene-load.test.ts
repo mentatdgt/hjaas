@@ -225,6 +225,7 @@ describe('recoverable room assets', () => {
     expect(String(await failed)).toContain('deadline exceeded');
     expect(decode).toHaveBeenCalledOnce();
     decode.mockResolvedValue();
-    await expect(loadPlate('room.webp')).resolves.toMatchObject({ src: expect.stringContaining('room.webp') });
+    // Under another address: the stalled request, which the preload keeps open, is not waited for again.
+    await expect(loadPlate('room.webp')).resolves.toMatchObject({ src: expect.stringContaining('room.webp?again=1') });
   });
 });
