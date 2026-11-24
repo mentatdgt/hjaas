@@ -80,6 +80,7 @@ class Row {
   private readonly shine: HTMLElement;
   private relabel = 0;
   private rolling: Animation[] = [];
+  private glinting: Animation | null = null;
 
   constructor(kind: 'cream' | 'red') {
     this.el = document.createElement('div');
@@ -100,7 +101,9 @@ class Row {
   /** Simply so: no roll, no fill. */
   set(found: number, total: number, label: string, spoken: string): void {
     this.still();
-    for (const animation of this.shine.getAnimations()) animation.cancel();
+    // (Not getAnimations(): asking brings the page's style up to date there and then, in the middle of a change.)
+    this.glinting?.cancel();
+    this.glinting = null;
     this.el.classList.remove('is-filling');
     write(this.now, String(found));
     this.of.textContent = `/${total}`;
@@ -133,7 +136,7 @@ class Row {
   /** A soft light across the cap, once. */
   glint(): void {
     if (reducedMotion()) return;
-    this.shine.animate(
+    this.glinting = this.shine.animate(
       [
         { transform: 'translateX(-15px) skewX(-18deg)', opacity: 1 },
         { transform: 'translateX(36px) skewX(-18deg)', opacity: 1 },
