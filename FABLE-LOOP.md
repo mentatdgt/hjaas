@@ -25,6 +25,7 @@
 - Wren can't start the watcher itself: its shell on the Mac is a sandbox that can't run Mac apps.
 
 ## Writing jobs (Wren)
+- **Before the first job on a branch, ask the user whether their own Claude Code window is still working on it.** (Job 001 ran for a few minutes alongside a session that was still building scene 5; it was stopped and cancelled.)
 - One job = one round of one scene. Name it `NNN-sceneN-roundM`. Keep job numbers rising (000 is the smoke test).
 - Start the job with the branch and the brief to read; end with where the report goes and "push before you finish".
 - Commit the brief to main first, so the job can say `git show origin/main:<path>`.
