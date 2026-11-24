@@ -89,6 +89,6 @@ export const grow: SceneConfig = {
   edge: 129,
   lines: 'pencil',
   strokes: STROKES,
-  // A phone starts on Rachel and the trolley (about plate x 680-1180): centred on x 930 at either shape.
-  phoneStart: { wide: [554, 1306], tall: [616, 1244] },
+  // Rachel, with the spray bottle (845 to 1145): between the middle of her body and the middle of her reach.
+  focusX: 1005,
 };

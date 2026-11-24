@@ -1,74 +1,53 @@
-// Portrait phones show a crop of the room as tall as the screen allows (4:5 up to 2:3) and the visitor swipes
-// sideways to explore.
+// Portrait phones show a crop of the room about 60% of the screen tall and the visitor swipes sideways to
+// explore.
 //
 // The crop is a native horizontal scroller. That is what makes it feel native: the browser itself follows
 // the finger 1:1, adds momentum and eases into the edges, all off the main thread, so panning stays smooth
 // even while Rachel is hammering. Up-and-down swipes are not claimed (touch-action: pan-x pan-y), so the
 // page scrolls under the same finger. This file only sets the starting position, adds mouse dragging for
-// narrow desktop windows, and shows the one-time swipe hint.
+// narrow desktop windows, and shows a new visitor, once, that the room moves: it drifts a little way and back.
 import { PLATE } from './assets';
 import { reducedMotion } from './motion';
 
-/** A scene's opening framing on a phone: the plate x ranges shown by a 4:5 window and by a 2:3 window. */
-export interface PhoneStart {
-  wide: readonly [number, number];
-  tall: readonly [number, number];
-}
+/** How far the room drifts, in CSS px, and how long it takes each way. */
+const DRIFT_PX = 40;
+const DRIFT_MS = 1200;
+/** sine.inOut: it sets off and comes back without a jolt at either end or at the turn. */
+const DRIFT_EASE = 'cubic-bezier(0.37, 0, 0.63, 1)';
 
-// Windows between 4:5 and 2:3 are framed in between. Plate px, at full plate height.
-const WIDTH_4_5 = (PLATE.h * 4) / 5;
-const WIDTH_2_3 = (PLATE.h * 2) / 3;
-
-function startCentre(start: PhoneStart, visibleWidth: number): number {
-  const wide = (start.wide[0] + start.wide[1]) / 2;
-  const tall = (start.tall[0] + start.tall[1]) / 2;
-  const t = Math.min(1, Math.max(0, (WIDTH_4_5 - visibleWidth) / (WIDTH_4_5 - WIDTH_2_3)));
-  return wide + (tall - wide) * t;
-}
-
-const CHEVRON = `<svg viewBox="0 0 10 16" aria-hidden="true" focusable="false"><path d="M7.5 2 2.5 8l5 6"/></svg>`;
-// TODO(copy): placeholder wording.
-const SWIPE_HINT = 'Swipe sideways';
+const TOUCHES = ['pointerdown', 'touchstart', 'wheel', 'keydown'] as const;
 
 export class Pan {
   private readonly viewport: HTMLElement;
   private plate: HTMLElement | null = null;
-  private start: PhoneStart = { wide: [0, PLATE.w], tall: [0, PLATE.w] };
-  /** Plate x at the middle of the crop, once the visitor has panned. Until then the start framing applies. */
+  /** The plate x the scene opens centred on: Rachel. */
+  private focusX = PLATE.w / 2;
+  /** Plate x at the middle of the crop, once the visitor has panned. Until then the scene's own focus applies. */
   private centreX: number | null = null;
-  private hint: HTMLElement | null = null;
+  private drifting: Animation | null = null;
   private settingScroll = false;
   private readonly onPan: (centreX: number) => void;
   private panned: boolean;
 
-  /**
-   * `hintHost` is where the swipe hint goes (the caption). `panned`: the visitor has panned before, so no
-   * hint. `onPan` is called with the new position (plate x at the middle of the window) on every pan.
-   */
-  constructor(viewport: HTMLElement, hintHost: HTMLElement, panned: boolean, onPan: (centreX: number) => void) {
+  /** `panned`: the visitor has panned before. `onPan` is called with the new position (plate x at the middle of the window) on every pan. */
+  constructor(viewport: HTMLElement, panned: boolean, onPan: (centreX: number) => void) {
     this.viewport = viewport;
     this.panned = panned;
     this.onPan = onPan;
-    if (!panned) {
-      // Made now and shown later, so that showing it changes nothing but its opacity.
-      const hint = document.createElement('p');
-      hint.className = 'hj-swipe';
-      hint.setAttribute('aria-hidden', 'true');
-      hint.innerHTML = `${CHEVRON}<span>${SWIPE_HINT}</span>${CHEVRON.replace('<svg ', '<svg class="is-right" ')}`;
-      hintHost.append(hint);
-      this.hint = hint;
-    }
     viewport.addEventListener('scroll', this.onScroll, { passive: true });
+    // The visitor's own hand ends the drift at once, wherever it is.
+    for (const type of TOUCHES) viewport.addEventListener(type, this.stopDrift, { passive: true });
     this.enableMouseDrag();
   }
 
   /**
-   * Point the pan at a scene's plate: its opening framing, and where this visitor left it (plate x at the
-   * middle of the window, or null). Call when the plate goes into the window.
+   * Point the pan at a scene's plate: the plate x it opens centred on, and where this visitor left it (plate x
+   * at the middle of the window, or null). Call when the plate goes into the window.
    */
-  use(plate: HTMLElement, start: PhoneStart, savedX: number | null): void {
+  use(plate: HTMLElement, focusX: number, savedX: number | null): void {
+    this.stopDrift();
     this.plate = plate;
-    this.start = start;
+    this.focusX = focusX;
     this.centreX = savedX;
     this.layout();
   }
@@ -90,24 +69,58 @@ export class Pan {
     if (!this.plate || !this.active) return;
     const u = this.plate.clientWidth / PLATE.w;
     if (!u) return;
-    const centre = this.centreX ?? startCentre(this.start, this.viewport.clientWidth / u);
+    this.stopDrift();
+    const centre = this.centreX ?? this.focusX;
+    this.scrollTo(centre * u - this.viewport.clientWidth / 2);
+  }
+
+  /** A scroll of the page's own, which is not a pan. */
+  private scrollTo(left: number): void {
     this.settingScroll = true;
-    this.viewport.scrollLeft = centre * u - this.viewport.clientWidth / 2;
+    this.viewport.scrollLeft = left;
     // The scroll event for this arrives asynchronously; ignore that one.
     requestAnimationFrame(() => {
       this.settingScroll = false;
     });
   }
 
-  /** A small, still line in the caption, once the scene has settled. It leaves at the first pan. */
-  showHint(): void {
-    if (this.panned || !this.active) return;
-    this.hint?.classList.add('is-on');
+  /**
+   * A new visitor's sign that the room can be panned: it moves 40 px one way and back, once. Nothing is said and
+   * nothing is saved. Never with reduced motion, nor once they have panned. It is the plate that moves, on the
+   * compositor, and not the scroller: a scroll position is rounded to whole pixels, which a slow drift shows.
+   */
+  drift(): void {
+    if (this.panned || this.drifting || !this.plate || !this.active || reducedMotion()) return;
+    const from = this.viewport.scrollLeft;
+    const room = this.viewport.scrollWidth - this.viewport.clientWidth - from;
+    // Toward the side with more to see.
+    const x = room >= from ? -DRIFT_PX : DRIFT_PX;
+    const drift = this.plate.animate(
+      [
+        { transform: 'none', easing: DRIFT_EASE },
+        { transform: `translateX(${x}px)`, easing: DRIFT_EASE },
+        { transform: 'none' },
+      ],
+      { duration: 2 * DRIFT_MS },
+    );
+    drift.onfinish = () => (this.drifting = null);
+    this.drifting = drift;
   }
 
+  /** Cut short, the room stays where it has got to: what was drift becomes scroll. */
+  stopDrift = (): void => {
+    if (!this.drifting || !this.plate) return;
+    const x = new DOMMatrix(getComputedStyle(this.plate).transform).e;
+    this.drifting.onfinish = null;
+    this.drifting.cancel();
+    this.drifting = null;
+    this.scrollTo(this.viewport.scrollLeft - x);
+  };
+
   destroy(): void {
+    this.drifting?.cancel();
     this.viewport.removeEventListener('scroll', this.onScroll);
-    this.hint?.remove();
+    for (const type of TOUCHES) this.viewport.removeEventListener(type, this.stopDrift);
   }
 
   private onScroll = (): void => {
@@ -116,16 +129,7 @@ export class Pan {
     this.centreX = (this.viewport.scrollLeft + this.viewport.clientWidth / 2) / u;
     this.panned = true;
     this.onPan(this.centreX);
-    this.dismissHint();
   };
-
-  private dismissHint(): void {
-    const hint = this.hint;
-    if (!hint) return;
-    this.hint = null;
-    hint.classList.remove('is-on');
-    window.setTimeout(() => hint.remove(), 400);
-  }
 
   /** Touch pans natively. A mouse has no native drag-to-scroll, so narrow desktop windows get one here. */
   private enableMouseDrag(): void {

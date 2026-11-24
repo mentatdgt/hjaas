@@ -138,16 +138,17 @@ describe('every scene\'s hunt', () => {
   });
 });
 
-describe('Film on a phone', () => {
-  it("opens with both faces in the window, at the tallest phone's crop as at the widest (Wren's review of build 01)", () => {
-    const film = SCENES.find((scene) => scene.id === 'film')!;
-    // Measured from the package: his face, and hers even mid-reaction (R_K1_look).
-    const faces = { presenter: [669, 815], rachel: [1133, 1262] };
-    for (const [shape, [left, right]] of Object.entries(film.phoneStart)) {
-      for (const [who, [from, to]] of Object.entries(faces)) {
-        expect(from, `${who}'s face at the ${shape} crop`).toBeGreaterThanOrEqual(left);
-        expect(to, `${who}'s face at the ${shape} crop`).toBeLessThanOrEqual(right);
-      }
+describe('On a phone', () => {
+  // Rachel at her first frame, with what she holds and without her furniture, in plate px (measured on the page:
+  // qa/counter/phone.json). The narrowest opening window is 2:3 (627 px).
+  const HER: Record<string, readonly [number, number]> = { build: [610, 912], grow: [845, 1145], design: [780, 1005], film: [1025, 1351], set: [738, 1050] };
+
+  it('every scene opens centred on Rachel, all of her in view (hunt-counter-build.md section 3)', () => {
+    for (const scene of SCENES) {
+      const [left, right] = HER[scene.id];
+      expect(Math.abs(scene.focusX - (left + right) / 2), scene.id).toBeLessThanOrEqual(30);
+      expect(left, scene.id).toBeGreaterThan(scene.focusX - 627 / 2);
+      expect(right, scene.id).toBeLessThan(scene.focusX + 627 / 2);
     }
   });
 });
@@ -213,13 +214,5 @@ describe('Set Design', () => {
     expect(setCast.room).toEqual(expect.arrayContaining(['lamp', 'backdrop_01', 'backdrop_10']));
     expect(scene.answer).toBe('at-once');
     expect(scene.again).toBe('hold');
-  });
-
-  it('opens on a phone with all of Rachel\'s layer and the start of the bare canvas in view', () => {
-    expect(scene.phoneStart).toEqual({ wide: [554, 1306], tall: [617, 1243] });
-    for (const [left, right] of Object.values(scene.phoneStart)) {
-      expect(left).toBeLessThanOrEqual(702);
-      expect(right).toBeGreaterThanOrEqual(1096);
-    }
   });
 });

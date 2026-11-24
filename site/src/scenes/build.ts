@@ -74,7 +74,6 @@ export const build: SceneConfig = {
   edge: 243,
   lines: 'pencil',
   strokes: STROKES,
-  // The crop starts on Rachel and the box. A 4:5 window shows plate x 514-1267 (scene/README.md), a 2:3
-  // window x 590-1220 (review 01).
-  phoneStart: { wide: [514, 1267], tall: [590, 1220] },
+  // Rachel, with the hammer (610 to 912): between the middle of her body and the middle of her reach.
+  focusX: 755,
 };

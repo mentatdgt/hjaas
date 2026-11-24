@@ -56,12 +56,12 @@ Inside `src/engine/`:
 | `reel.ts` | Keeps a clip character's memory down: her patches stay as downloaded and are decoded only a few frames ahead of being shown, then given back. |
 | `routine.ts` | A simpler loop manifest for whole-frame characters: loops, cycles, transitions, blinks. |
 | `reaction.ts` | Loads and plays `reaction.json` exactly as delivered. |
-| `mushrooms.ts` | Tap boxes, the short trip to the caption, the hint wiggle. |
-| `caption.ts` | The caption under the picture ("3 of 10 found") and the Contact button. |
+| `mushrooms.ts` | Tap boxes, the short trip to the cream counter, the hint wiggle (only a mushroom on screen; none, no wiggle). |
+| `caption.ts` | The two counters under the picture (cream: this scene; red: all scenes) and the Contact button they turn into: the fills, the rolls, the glints, the "Next" link. The timings are at the top of the file. |
 | `logo.ts`, `glint.ts` | The logo and its glint, clipped to the image's own alpha. Nothing else glints. |
-| `pan.ts` | The portrait-phone crop, sideways panning, and where the visitor left each room. |
+| `pan.ts` | The portrait-phone crop, sideways panning, where the visitor left each room, and a new visitor's one small drift. |
 | `form.ts`, `submit.ts` | The contact form, and the one function that sends it. |
-| `state.ts` | Progress in `localStorage`: per scene, the mushrooms found and the pan position. The unlock is worked out from the finds (every spot of every scene), never trusted from storage. |
+| `state.ts` | Progress in `localStorage`: per scene, the mushrooms found and the pan position. The unlock is worked out from the finds (every spot of every scene), never trusted from storage. `huntView` is the one place the counters, the tab dots, the "Next" link and the unlock are worked out. |
 | `flags.ts` | URL switches for QA (below). |
 
 ## Adding or changing a scene
@@ -92,7 +92,7 @@ worked example), listed in `src/scenes/index.ts`. The menu shows whatever is lis
   run `npm run assets`: it cuts the map to the edge's strips. Without it the colour fades the same way,
   with no pencil;
 - the paint-in strokes;
-- what a phone shows first.
+- `focusX`, the plate x a phone opens centred on (Rachel).
 
 Also add the scene's assets folder to the small list in `index.html`, so its picture starts downloading early
 when someone opens its address directly.

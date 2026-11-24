@@ -132,6 +132,6 @@ export const set: SceneConfig = {
   answer: 'at-once',
   again: 'hold',
   strokes: STROKES,
-  // A phone starts on plate x 930: all of Rachel's layer (702 to 1096) and the start of the bare canvas.
-  phoneStart: { wide: [554, 1306], tall: [617, 1243] },
+  // Rachel (738 to 935) and her brush (to 1050): between the middle of her body and the middle of her reach.
+  focusX: 865,
 };

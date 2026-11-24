@@ -19,7 +19,7 @@ export interface HuntOptions {
   target: () => DOMRect;
   /** The moment of the click or key press. */
   onFind: (spot: Spot) => void;
-  /** The moment the mushroom reaches the caption. */
+  /** The moment the mushroom reaches the cream counter. */
   onLand: (spot: Spot) => void;
 }
 
@@ -146,17 +146,18 @@ export class Hunt {
     }
   }
 
-  /** One unfound mushroom gives a single tiny wiggle. Prefers one the visitor can currently see. */
-  hint(): void {
-    const candidates = [...this.buttons.values()];
-    if (candidates.length === 0) return;
-    const visible = candidates.filter((button) => inView(button));
-    const pool = visible.length ? visible : candidates;
-    const art = pool[Math.floor(Math.random() * pool.length)].querySelector<HTMLElement>('.hj-shroom-art')!;
+  /**
+   * One unfound mushroom the visitor can see now gives a single tiny wiggle. With none on screen (a phone, the
+   * rest of the room panned out of view) nothing moves. True if one wiggled.
+   */
+  hint(): boolean {
+    const visible = [...this.buttons.values()].map((button) => button.querySelector<HTMLElement>('.hj-shroom-art')!).filter(inView);
+    if (visible.length === 0) return false;
+    const art = visible[Math.floor(Math.random() * visible.length)];
     if (reducedMotion()) {
       // No movement: a brief dip in opacity instead.
       gsap.timeline().to(art, { opacity: 0.45, duration: 0.14, ease: 'none' }).to(art, { opacity: 1, duration: 0.2, ease: 'none' });
-      return;
+      return true;
     }
     // A few degrees, pivoting on the base, under 400 ms, once.
     gsap
@@ -165,6 +166,7 @@ export class Hunt {
       .to(art, { rotation: -5, duration: 0.11 })
       .to(art, { rotation: 2.5, duration: 0.09 })
       .to(art, { rotation: 0, duration: 0.08 });
+    return true;
   }
 
   private collect(spot: Spot): void {
@@ -201,8 +203,9 @@ export class Hunt {
     onFind(spot);
 
     const done = (): void => {
-      flyer.remove();
       onLand(spot);
+      // It has faded out by now. It is taken off the page later, not in the counter's first frame.
+      window.setTimeout(() => flyer.remove(), 800);
     };
 
     if (reducedMotion()) {
@@ -265,10 +268,11 @@ export class Hunt {
   }
 }
 
-function inView(el: HTMLElement): boolean {
-  const viewport = el.closest('.hj-viewport');
-  if (!viewport) return true;
-  const a = el.getBoundingClientRect();
-  const b = viewport.getBoundingClientRect();
-  return a.right > b.left && a.left < b.right;
+/** The whole drawing is inside the window onto the room, and on screen. */
+function inView(art: HTMLElement): boolean {
+  const a = art.getBoundingClientRect();
+  const b = art.closest('.hj-viewport')?.getBoundingClientRect() ?? document.documentElement.getBoundingClientRect();
+  return (
+    a.left >= Math.max(0, b.left) && a.right <= Math.min(window.innerWidth, b.right) && a.top >= Math.max(0, b.top) && a.bottom <= Math.min(window.innerHeight, b.bottom)
+  );
 }

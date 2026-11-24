@@ -2,7 +2,7 @@ import '@fontsource-variable/bricolage-grotesque';
 import '@fontsource/spectral/latin-400.css';
 import './site.css';
 import { setAssetBase } from './assets';
-import { Caption } from './caption';
+import { Caption, type CaptionCopy } from './caption';
 import { DEFAULT_EDGE, EDGE_STYLES, edgeSeed, type EdgeStyle } from './edge';
 import { flags } from './flags';
 import { ContactForm } from './form';
@@ -10,7 +10,7 @@ import { Logo } from './logo';
 import { onReducedMotionChange, reducedMotion } from './motion';
 import { Pan } from './pan';
 import { Scene } from './scene';
-import { freshScene, loadProgress, noteFor as noteText, presetAll, saveProgress, siteCount, unlockedBy, type SceneProgress } from './state';
+import { freshScene, huntView, loadProgress, presetAll, saveProgress, type HuntView, type SceneProgress } from './state';
 import { seeded } from './steps';
 import { Transition } from './transition';
 import type { SceneConfig, Spot } from './types';
@@ -29,11 +29,13 @@ export interface Site {
 }
 
 const HINT_AFTER_S = 60;
+/** The first visit's drift (pan.ts), after the painting has ended. */
+const DRIFT_AFTER_MS = 700;
 // QA: the nine mushroom drawings, decoded (see scripts/build-assets.mjs for their size).
 const SPRITE_BYTES = 9 * 166 * 154 * 4;
 
 // TODO(copy): every word on the page is a placeholder until the real copy arrives. They are all here,
-// except the scene names (src/scenes/), the form's (form.ts) and the count itself, "3 of 10 found" (caption.ts).
+// except the scene names (src/scenes/) and the form's (form.ts).
 const COPY = {
   name: 'Hui Jie',
   tagline: 'TODO(copy): what Hui Jie does, in one line',
@@ -42,12 +44,23 @@ const COPY = {
   pause: 'Pause animation',
   play: 'Play animation',
   replay: 'Replay painting',
-  prompt: (here: number) => `Find the ${here} hidden mushrooms`,
-  /** Counts the whole site: the Contact button waits for every mushroom in every scene. */
-  prize: (site: number) => `Find all ${site} to reach Hui Jie`,
-  doneHere: (here: number, elsewhere: number) => `You found all ${here} here. ${elsewhere} more in the other scenes`,
-  done: (here: number) => `You found all ${here}`,
-  unlock: (site: number) => `All ${site} mushrooms found. The Contact Hui Jie button is now available.`,
+  /** A tab whose scene is finished, for screen readers (the dot says it to everyone else). */
+  tabDone: ', all found',
+};
+
+/** The two counters, the link to the next scene, and the button they turn into. */
+const COUNTER: CaptionCopy = {
+  hereFound: (scene) => `found in ${scene}`,
+  hereMore: (left, scene) => `${left} more in ${scene}`,
+  hereDone: (scene) => `${scene} complete`,
+  siteAll: (total) => `find all ${total} to contact Hui Jie`,
+  siteMore: (left) => `${left} more to contact Hui Jie`,
+  siteDone: (total) => `You found all ${total}`,
+  next: 'Next:',
+  contact: 'Contact Hui Jie',
+  hereSpoken: (found, total, scene) => `${found} of ${total} found in ${scene}`,
+  siteSpoken: (found, total) => `${found} of ${total} found in all scenes`,
+  unlock: (total) => `All ${total} mushrooms found. The Contact Hui Jie button is now available.`,
 };
 
 /**
@@ -97,7 +110,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
           // Only the scenes that exist are listed; with one scene there is nowhere to go and no menu.
           scenes.length > 1
             ? `<nav class="hj-menu" aria-label="${COPY.menu}">${scenes
-                .map((scene) => `<a class="hj-tab" href="#${scene.id}" data-scene="${scene.id}">${scene.label}</a>`)
+                .map((scene) => `<a class="hj-tab" href="#${scene.id}" data-scene="${scene.id}">${scene.label}<span class="hj-tab-dot" aria-hidden="true"></span><span class="hj-sr">${COPY.tabDone}</span></a>`)
                 .join('')}</nav>`
             : ''
         }
@@ -136,6 +149,8 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   const progress = loadProgress();
   const stateOf = (id: string): SceneProgress => (progress.scenes[id] ??= freshScene());
   const first = sceneInAddress();
+  /** Nothing has been painted for this visitor before: their first visit. */
+  const newcomer = Object.values(progress.scenes).every((scene) => !scene.seen);
   for (const scene of scenes) {
     const state = stateOf(scene.id);
     // A find of a hiding spot that has since been replaced counts for the spot that took its place.
@@ -159,7 +174,9 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   const findsOf = (id: string): ReadonlySet<string> => foundIn.get(id) ?? new Set();
   // The Contact button is earned by every mushroom of every scene, and worked out from the finds themselves:
   // a saved flag is never trusted (one saved by the old rule, the first scene to reach 10, means nothing now).
-  progress.unlocked = unlockedBy(scenes, findsOf);
+  // The counters, the dots on the tabs and the "Next" link read the same view.
+  const viewOf = (config: SceneConfig): HuntView => huntView(scenes, findsOf, config.id);
+  progress.unlocked = viewOf(first).unlocked;
 
   // QA: with ?debug, every frame that arrives late is logged (start time and length, in ms).
   const jank: Array<[number, number]> = [];
@@ -219,22 +236,29 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   let paused = false;
   const still = (): boolean => paused || reducedMotion();
 
-  // ---- The caption: this scene's count, what the hunt is for, and (once earned) the Contact button. ----
+  // ---- The caption: the two counters, and (once earned) the Contact button they turn into. ----
 
-  const total = first.spots.length;
-  const caption = new Caption(total);
+  /** A finished scene's tab has a cream dot. `live`: one that comes now, with the scene's tenth find, fades in. */
+  const markTabs = (live = false): void => {
+    const { done } = viewOf(current?.config ?? first);
+    for (const tab of tabs) {
+      const on = done.includes(tab.dataset.scene ?? '');
+      tab.classList.toggle('is-dot-new', live && on && !tab.classList.contains('is-done'));
+      tab.classList.toggle('is-done', on);
+    }
+  };
+  const caption: Caption = new Caption(COUNTER, {
+    onDone: () => markTabs(true),
+    onButton: () => {
+      // Keyboard and screen-reader users land on the prize, and it is brought on screen if it was not.
+      caption.action.focus({ preventScroll: true });
+      caption.action.scrollIntoView({ block: 'nearest', behavior: reducedMotion() ? 'auto' : 'smooth' });
+    },
+  });
   captionRow.prepend(caption.el);
   if (flags.debug) (window as unknown as { __hj: { caption: Caption } }).__hj.caption = caption;
-  /**
-   * The line beside the count: what to look for, then what the hunt is for (every mushroom of the site), then
-   * that this scene is done and how many are still to find in the others.
-   */
-  const noteFor = (count: number, of: number): string => noteText(COPY, count, of, siteCount(scenes, findsOf));
-  const captionFor = (config: SceneConfig): [number, string, boolean] => {
-    const count = foundIn.get(config.id)!.size;
-    return [count, noteFor(count, config.spots.length), progress.unlocked];
-  };
-  caption.set(...captionFor(first));
+  caption.set(viewOf(first));
+  markTabs();
 
   const form = new ContactForm(root, caption.action);
   // A click with detail 0 came from the keyboard: keyboard actions open at once, with no entrance.
@@ -242,7 +266,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
 
   // Where a phone visitor leaves a room is where they find it next time.
   let panSave = 0;
-  const pan = new Pan(viewport, captionRow, progress.panned, (centreX) => {
+  const pan = new Pan(viewport, progress.panned, (centreX) => {
     if (!current) return;
     progress.panned = true;
     stateOf(current.config.id).panX = Math.round(centreX);
@@ -331,40 +355,12 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     if (document.hidden || !settled || busy || !current || current.hunt.remaining === 0) return;
     quietSeconds++;
     if (quietSeconds >= hintAfter) {
-      window.clearInterval(hintClock);
-      current.hunt.hint();
+      // With none on screen it skips, and is due again after another quiet minute.
+      if (current.hunt.hint()) window.clearInterval(hintClock);
+      else quietSeconds = 0;
     }
   }, 1000);
   cleanup.push(() => window.clearInterval(hintClock));
-
-  /**
-   * A scene's tenth mushroom has landed: the scene is done. Only the find that completes the whole site (the
-   * 50th, in whichever scene) earns the Contact button, for good.
-   */
-  const finish = (scene: Scene): void => {
-    const earned = unlockEarned;
-    unlockEarned = false;
-    save();
-    const calm = reducedMotion();
-    const of = scene.total;
-    // Her reaction is the celebration. Once she has looked up, the caption quietly changes.
-    window.setTimeout(
-      () => {
-        if (scene !== current) return;
-        caption.change(of, noteFor(of, of), progress.unlocked, earned ? COPY.unlock(siteCount(scenes, findsOf).total) : '');
-        if (!earned) return;
-        // Keyboard and screen-reader users land on the prize, and it is brought on screen if it was not.
-        window.setTimeout(
-          () => {
-            caption.action.focus({ preventScroll: true });
-            caption.action.scrollIntoView({ block: 'nearest', behavior: calm ? 'auto' : 'smooth' });
-          },
-          calm ? 0 : 420,
-        );
-      },
-      calm ? 0 : 900,
-    );
-  };
 
   /** The find that completed the whole site has been made; its mushroom has not landed yet. */
   let unlockEarned = false;
@@ -394,7 +390,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
         stateOf(config.id).found = [...found];
         // Worked out again after every find: this one may have been the last of the whole site.
         const was = progress.unlocked;
-        progress.unlocked = unlockedBy(scenes, findsOf);
+        progress.unlocked = viewOf(config).unlocked;
         if (progress.unlocked && !was) unlockEarned = true;
         save();
         if (!self) return;
@@ -406,12 +402,8 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       onLand: () => {
         // (A mushroom still in the air when the visitor changes scene has been counted; the caption has moved on.)
         if (!self || self !== current) return;
-        const next = Math.min(of, caption.current + 1);
-        const firstFind = next === 1;
-        caption.land(next, firstFind && next < of && !progress.unlocked ? COPY.prize(siteCount(scenes, findsOf).total) : '');
-        // The prompt has done its job: from the first find on, the caption says what the hunt is for.
-        if (next < of) caption.say(noteFor(next, of));
-        else finish(self);
+        unlockEarned = false;
+        caption.land(viewOf(config));
       },
       onLayout: () => {
         if (self === current) pan.layout();
@@ -438,7 +430,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       if (tab.dataset.scene === scene.config.id) tab.setAttribute('aria-current', 'page');
       else tab.removeAttribute('aria-current');
     }
-    pan.use(scene.plate, scene.config.phoneStart, stateOf(scene.config.id).panX);
+    pan.use(scene.plate, scene.config.focusX, stateOf(scene.config.id).panX);
   };
 
   const seen = (scene: Scene): void => {
@@ -478,9 +470,18 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     if (destroyed) return;
     const firstVisit = !stateOf(config.id).seen && flags.intro !== 'quick';
     const calm = reducedMotion() || flags.intro === 'off';
-    const state = captionFor(config);
-    // Screen readers hear where they have arrived, and this scene's own count.
-    const arriving = `${config.label}. ${state[0]} of ${config.spots.length} mushrooms found.`;
+    /** The caption for the scene arrived at. Its state is read as it goes up: a find may land meanwhile. */
+    const retitle = (): void => {
+      const view = viewOf(config);
+      // Screen readers hear where they have arrived, and this scene's own count (and the prize, if the last
+      // mushroom was still in the air).
+      const arriving = `${config.label}. ${COUNTER.hereSpoken(view.here.found, view.here.total, view.label)}.${unlockEarned ? ` ${COUNTER.unlock(view.site.total)}` : ''}`;
+      unlockEarned = false;
+      // Keyboard focus on a link that is about to go moves to the tab it led to.
+      if (document.activeElement === caption.next) tabs.find((tab) => tab.dataset.scene === config.id)?.focus({ preventScroll: true });
+      caption.change(view, arriving);
+      markTabs();
+    };
     // The new scene's parts are drawn for the first time one frame after another, under the old picture
     // (or the blank sheet), not all in the frame of the tap: the room first, then her.
     const her = (): Promise<void> => next.enter().catch(warn(config));
@@ -502,7 +503,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       place(next);
       leave.cancel();
       transition.prepare(next);
-      caption.change(...state, arriving);
+      retitle();
       showControls(true);
       await frame1();
       // The scene just left is off the page: it gives its decoded images back now, before the new scene's
@@ -520,7 +521,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       // A copy of the old picture goes over the window, and the new one is put together underneath it.
       transition.cover((ctx, origin) => old.sketch(ctx, origin), next);
       place(next);
-      caption.change(...state, arriving);
+      retitle();
       if (!calm) showControls(true);
       await frame1();
       // The old picture is on the sheet now, as a copy: the scene itself gives its decoded images back
@@ -576,15 +577,16 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     tab.addEventListener('click', () => {
       if (busy) transition.skip();
     });
-    // The pointer on a tab, a finger going down on it, or keyboard focus: the scene will probably be opened.
-    // Its character's first frames start downloading and decoding now, a moment ahead of the click.
-    const config = sceneById(tab.dataset.scene ?? '');
-    if (!config) continue;
+  }
+  for (const link of [...tabs, caption.next]) {
+    // The pointer on a tab (or on "Next"), a finger going down on it, or keyboard focus: the scene will probably
+    // be opened. Its character's first frames start downloading and decoding now, a moment ahead of the click.
     // (Not while a painting is under way: nothing may compete with the brush for the page's time.)
     const soon = (): void => {
-      if (!busy) void sceneFor(config).then((scene) => scene.preload(), () => {});
+      const config = sceneById(link.hash.slice(1));
+      if (config && !busy) void sceneFor(config).then((scene) => scene.preload(), () => {});
     };
-    for (const type of ['pointerenter', 'pointerdown', 'focus'] as const) tab.addEventListener(type, soon, { passive: true });
+    for (const type of ['pointerenter', 'pointerdown', 'focus'] as const) link.addEventListener(type, soon, { passive: true });
   }
 
   // "Replay painting": she stops, the picture clears to a blank sheet, and it is painted again.
@@ -638,6 +640,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     await document.fonts?.ready;
     await breath();
     form.prepare();
+    caption.prepare(scenes.map((each) => each.label), viewOf(first).site.total);
     await breath();
     if (destroyed) return;
     const painting = opening === 'paint' && !skipped;
@@ -662,7 +665,12 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     marks.introEnd = Math.round(performance.now());
     settled = true;
     showControls(false);
-    pan.showHint();
+    // A new visitor on a phone sees, once, that the room can be panned: a moment after the paint is dry.
+    if (painting && newcomer) {
+      window.setTimeout(() => {
+        if (!destroyed && !busy && !paused && current === scene && !document.hidden) pan.drift();
+      }, DRIFT_AFTER_MS);
+    }
     seen(scene);
     busy = false;
     // A scene asked for while the opening was being painted.

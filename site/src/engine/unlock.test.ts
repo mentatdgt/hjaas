@@ -3,7 +3,7 @@
 // first N finds of the whole site.
 import { describe, expect, it } from 'vitest';
 import { SCENES } from '../scenes';
-import { noteFor, presetAll, siteCount, unlockedBy, type HuntScene, type NoteCopy } from './state';
+import { fillOf, hereLabel, huntView, presetAll, siteCount, siteLabel, stemFinds, unlockedBy, type CounterCopy, type HuntScene, type NamedScene } from './state';
 
 // Five made-up scenes of ten spots each, as the site will have.
 const FIVE: HuntScene[] = ['build', 'grow', 'design', 'film', 'set'].map((id) => ({ id, spots: Array.from({ length: 10 }, (_, i) => ({ id: `${id}-${i}` })) }));
@@ -80,26 +80,97 @@ describe('?all=N', () => {
   });
 });
 
-describe('the line beside the count', () => {
-  const COPY: NoteCopy = {
-    prompt: (here) => `Find the ${here} hidden mushrooms`,
-    prize: (site) => `Find all ${site} to reach Hui Jie`,
-    doneHere: (here, elsewhere) => `You found all ${here} here. ${elsewhere} more in the other scenes`,
-    done: (here) => `You found all ${here}`,
+describe('the two counters', () => {
+  const COPY: CounterCopy = {
+    hereFound: (scene) => `found in ${scene}`,
+    hereMore: (left, scene) => `${left} more in ${scene}`,
+    hereDone: (scene) => `${scene} complete`,
+    siteAll: (total) => `find all ${total} to contact Hui Jie`,
+    siteMore: (left) => `${left} more to contact Hui Jie`,
+    siteDone: (total) => `You found all ${total}`,
   };
+  const here = (found: number) => hereLabel(COPY, 'Set Design', { found, total: 10 });
+  const site = (found: number) => siteLabel(COPY, { found, total: 50 });
 
-  it('asks for this scene\'s ten before the first find, then counts the whole site', () => {
-    expect(noteFor(COPY, 0, 10, { found: 0, total: 50 })).toBe('Find the 10 hidden mushrooms');
-    expect(noteFor(COPY, 0, 10, { found: 23, total: 50 })).toBe('Find the 10 hidden mushrooms');
-    expect(noteFor(COPY, 3, 10, { found: 3, total: 50 })).toBe('Find all 50 to reach Hui Jie');
+  it('cream: what is found while that is under half, what is left from halfway on, and complete', () => {
+    expect([0, 1, 4].map(here)).toEqual(Array(3).fill('found in Set Design'));
+    expect(here(5)).toBe('5 more in Set Design');
+    expect(here(7)).toBe('3 more in Set Design');
+    expect(here(9)).toBe('1 more in Set Design');
+    expect(here(10)).toBe('Set Design complete');
   });
 
-  it('once a scene is done, says how many are still to find in the others', () => {
-    expect(noteFor(COPY, 10, 10, { found: 10, total: 50 })).toBe('You found all 10 here. 40 more in the other scenes');
-    expect(noteFor(COPY, 10, 10, { found: 49, total: 50 })).toBe('You found all 10 here. 1 more in the other scenes');
+  it('red: all 50 while more than 25 are left, then how many are left, down to 1', () => {
+    expect([0, 17, 24].map(site)).toEqual(Array(3).fill('find all 50 to contact Hui Jie'));
+    expect(site(25)).toBe('25 more to contact Hui Jie');
+    expect(site(26)).toBe('24 more to contact Hui Jie');
+    expect(site(49)).toBe('1 more to contact Hui Jie');
+    expect(site(50)).toBe('You found all 50');
   });
 
-  it('when every mushroom is found, the scene is simply done', () => {
-    expect(noteFor(COPY, 10, 10, { found: 50, total: 50 })).toBe('You found all 10');
+  it('fill stem first, then cap: the stem over finds 1 to 3 (cream) and 1 to 15 (red)', () => {
+    expect([stemFinds(10), stemFinds(50)]).toEqual([3, 15]);
+    const cream = (n: number) => fillOf(n, 10, stemFinds(10));
+    expect(cream(0)).toEqual({ stem: 0, cap: 0 });
+    expect(cream(3)).toEqual({ stem: 1, cap: 0 });
+    expect(cream(4).cap).toBeCloseTo(1 / 7);
+    expect(cream(10)).toEqual({ stem: 1, cap: 1 });
+    const red = (n: number) => fillOf(n, 50, stemFinds(50));
+    expect(red(15)).toEqual({ stem: 1, cap: 0 });
+    expect(red(16).cap).toBeCloseTo(1 / 35);
+    expect(red(50)).toEqual({ stem: 1, cap: 1 });
+  });
+});
+
+describe('one set of finds', () => {
+  const NAMED: NamedScene[] = FIVE.map((scene) => ({ ...scene, label: scene.id.toUpperCase() }));
+
+  it('the counters, the tab dots, the Next link and the unlock all read it, whatever it holds', () => {
+    // A few hundred different hunts, each looked at from every scene.
+    for (let n = 0; n < 400; n++) {
+      const counts = Object.fromEntries(NAMED.map((scene, i) => [scene.id, Math.min(10, (n * (7 + 4 * i)) % 14)]));
+      const found = finds(NAMED, counts);
+      for (const scene of NAMED) {
+        const view = huntView(NAMED, found, scene.id);
+        const sum = Object.values(counts).reduce((a, b) => a + b, 0);
+        expect(view.here).toEqual({ found: counts[scene.id], total: 10 });
+        // Red is the sum of the per-scene counts: there is no second count.
+        expect(view.site).toEqual({ found: sum, total: 50 });
+        expect(view.site).toEqual(siteCount(NAMED, found));
+        expect(view.done).toEqual(NAMED.filter((s) => counts[s.id] === 10).map((s) => s.id));
+        // The unlock is the rule that was there, and says the same as the count and the dots.
+        expect(view.unlocked).toBe(unlockedBy(NAMED, found));
+        expect(view.unlocked).toBe(sum === 50);
+        expect(view.unlocked).toBe(view.done.length === NAMED.length);
+        expect(view.next === null).toBe(NAMED.every((s) => s === scene || counts[s.id] === 10));
+        if (view.next) expect(counts[view.next.id]).toBeLessThan(10);
+      }
+    }
+  });
+
+  it('counts a stray id (a spot since replaced) nowhere', () => {
+    const stray = (id: string): ReadonlySet<string> => new Set([...Array.from({ length: 9 }, (_, i) => `${id}-${i}`), 'somewhere-else']);
+    const view = huntView(NAMED, stray, 'film');
+    expect(view.here.found).toBe(9);
+    expect(view.site.found).toBe(45);
+    expect(view.done).toEqual([]);
+    expect(view.unlocked).toBe(false);
+  });
+
+  it('Next goes on round the menu to the next scene with something left, and is gone when none is', () => {
+    const next = (counts: Record<string, number>, from: string) => huntView(NAMED, finds(NAMED, counts), from).next?.id ?? null;
+    expect(next({ build: 10 }, 'build')).toBe('grow');
+    expect(next({ build: 10, grow: 10, design: 10 }, 'build')).toBe('film');
+    expect(next({ set: 10 }, 'set')).toBe('build');
+    expect(next({ ...all(10), grow: 9 }, 'set')).toBe('grow');
+    expect(next(all(10), 'set')).toBe(null);
+  });
+
+  it('holds for the scenes the site has now, with their own tab names', () => {
+    const preset = presetAll(SCENES, 49);
+    const view = huntView(SCENES, (id) => new Set(preset[id]), 'set');
+    expect(view).toMatchObject({ label: 'Set Design', here: { found: 9, total: 10 }, site: { found: 49, total: 50 }, done: ['build', 'grow', 'design', 'film'], unlocked: false });
+    const done = presetAll(SCENES, 50);
+    expect(huntView(SCENES, (id) => new Set(done[id]), 'build')).toMatchObject({ site: { found: 50, total: 50 }, next: null, unlocked: true });
   });
 });

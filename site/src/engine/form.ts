@@ -1,4 +1,4 @@
-// The prize for finding all ten: a contact form that opens from the caption-turned-button.
+// The prize for finding all fifty: a contact form that opens from the caption-turned-button.
 // TODO(copy): the form's words (labels, choices, messages) are placeholders.
 import { MUSHROOM_ICON } from './caption';
 import { SendError, canSend, submitContact, type ContactPayload } from './submit';

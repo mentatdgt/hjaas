@@ -15,7 +15,7 @@ const SCALES = {
   'desktop 1024': 820 / 1672,
   'phone 390': 531 / 941,
   'phone 360': 486 / 941,
-  // The smallest the room is ever shown: a 320 px phone too short for more than a 4:5 window.
+  // The smallest a phone held upright ever shows it (site.css: 355 px tall).
   'phone 320, short': 355 / 941,
 };
 
@@ -56,6 +56,27 @@ describe('the painting behind every mushroom', () => {
             const b = boxes[j];
             const apart = Math.abs(a.cx - b.cx) >= (a.w + b.w) / 2 || Math.abs(a.cy - b.cy) >= (a.h + b.h) / 2;
             expect(apart, `${scene.id}: ${a.id} and ${b.id} overlap on ${name}`).toBe(true);
+          }
+        }
+      }
+    });
+  }
+});
+
+describe('a phone on its side (44 px is a large part of the room there, and boxes may meet)', () => {
+  // The smallest (site.css: 440 px wide), and 844 × 390.
+  for (const [name, u] of Object.entries({ smallest: 440 / 1672, '844 × 390': 465 / 1672 })) {
+    it(`every drawing is under its own box, and no other box reaches its middle (${name})`, () => {
+      for (const scene of SCENES) {
+        const alpha = edgeAlpha(DEFAULT_EDGE, edgeSeed(edgeName(scene)), scene.keep);
+        const boxes = scene.spots.map((spot) => ({ spot, w: spot.h * ASPECT[spot.art - 1], box: tapBox(alpha, { cx: spot.x, cy: spot.y - spot.h / 2, w: spot.h * ASPECT[spot.art - 1], h: spot.h }, u) }));
+        for (const { spot, w, box } of boxes) {
+          expect(Math.abs(spot.x - box.cx) + w / 2, `${scene.id}/${spot.id}`).toBeLessThanOrEqual(box.w / 2 + 0.5);
+          expect(Math.abs(spot.y - spot.h / 2 - box.cy) + spot.h / 2, `${scene.id}/${spot.id}`).toBeLessThanOrEqual(box.h / 2 + 0.5);
+          for (const other of boxes) {
+            if (other.spot === spot) continue;
+            const inside = Math.abs(spot.x - other.box.cx) < other.box.w / 2 && Math.abs(spot.y - spot.h / 2 - other.box.cy) < other.box.h / 2;
+            expect(inside, `${scene.id}: ${other.spot.id}'s box over ${spot.id}`).toBe(false);
           }
         }
       }

@@ -556,6 +556,10 @@ export function tapBox(
     if (lowestAlpha(alpha, cx + dx, cy, mw, mh) > lowestAlpha(alpha, cx, cy + dy, mw, mh)) cx += dx;
     else cy += dy;
   }
+  // Never so far that the drawing is no longer under its own box (a phone on its side, where 44 px is a large part
+  // of the room: there a little of the box may lie over the soft edge).
+  cx = Math.min(art.cx + (w - art.w) / 2, Math.max(art.cx - (w - art.w) / 2, cx));
+  cy = Math.min(art.cy + (h - art.h) / 2, Math.max(art.cy - (h - art.h) / 2, cy));
   return { cx, cy, w, h };
 }
 

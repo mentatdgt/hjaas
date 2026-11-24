@@ -162,9 +162,6 @@ export interface SceneConfig {
   answer?: 'at-once';
   /** The first-visit painting. The same strokes, played quickly, brush the scene in over another one. */
   strokes: readonly StrokePlan[];
-  /**
-   * What a portrait phone shows first, as plate x ranges: at a 4:5 window and at a 2:3 window.
-   * Windows in between are framed in between.
-   */
-  phoneStart: { wide: readonly [number, number]; tall: readonly [number, number] };
+  /** The plate x a portrait phone opens centred on: the middle of Rachel herself, not of her furniture. */
+  focusX: number;
 }

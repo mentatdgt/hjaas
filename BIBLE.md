@@ -1,21 +1,29 @@
 # HJaaS: the bible
 
-What's decided. Everyone (Wren, Quinn, Fable, Foreman) follows this. If a task, review or old note disagrees, this file wins; then fix the other file. **Last updated: 2026-11-20.**
+What's decided. Everyone (Wren, Quinn, Fable, Foreman) follows this. If a task, review or old note disagrees, this file wins; then fix the other file. **Last updated: 2026-11-24.**
 
 ## 1. The site
-- **HJaaS: Hui Jie As a Service.** A gift for Hui Jie (English name **Rachel**), an interior designer who also does contracting, video, mushroom farming and travel. It should feel handmade, warm, playful and elegant, never like a template or a game HUD.
-- **Format:** a painting sitting on a paper page, not a full-bleed screen. Each scene is a living hand-drawn illustration with a small scene menu (Build / Grow / Design / …).
-- **The hunt:** 10 hidden mushrooms per scene. Difficulty: 3 easy, 4 medium, 3 hard. Fair: always visible, never under UI, hit areas ≥ 44 px.
+- **HJaaS: Hui Jie As a Service.** A gift for Hui Jie (English name **Rachel**), an interior designer who also does contracting, video, mushroom farming and set design. It should feel handmade, warm, playful and elegant, never like a template or a game HUD.
+- **Format:** a painting sitting on a paper page, not a full-bleed screen. Each scene is a living hand-drawn illustration with a small scene menu: Build / Grow / Design / Film / Set Design.
+- **Phone (user 2026-11-24):** in portrait the scene is zoomed in, not the whole landscape squeezed into the frame. It pans sideways by swipe so every mushroom stays reachable, and opens centred on Rachel. Turned sideways, the phone shows the whole scene. Spec: `HANDOVER-hunt-counter.md` §4.
+- **The hunt:** 10 hidden mushrooms per scene (user confirmed 2026-11-21, knowing it's a lot). Difficulty: 3 easy, 4 medium, 3 hard. Fair: always visible, never under UI, hit areas ≥ 44 px.
 - **Hint:** one gentle wiggle after 60 s, once per visit. No more hand-holding.
-- **Prize:** finding 10/10 in any scene for the first time unlocks the contact form.
+- **Prize (changed 2026-11-21):** the contact form unlocks only when **every mushroom in every scene** is found (10 × 5 = 50). No email shortcut: the site is a fun gift, not a sales tool. Progress must be saved in the visitor's browser so they can come back and carry on.
 - **Text:** none yet besides the logo, counter, hunt prompt, unlock moment and form labels. The user adds copy later.
 
 ## 2. Look and motion
 - **Art:** a Gravity Falls-*style* 2D cartoon (style only, original characters). Characters have round white eyes with dot pupils (no lashes or eyeliner), hair as solid shapes, flat colour with one hard shadow tone, thick even outlines, slightly stylised proportions. Not anime, not cosy painterly illustration. Backgrounds can be painted and detailed, with warm light from the left. **Rachel's master look: `reference/rachel/M01_rachel_model.png`** (approved 2026-11-20). Its style table is the rule for Rachel and the barista. The café's child, mum, old man and cat keep their original, slightly softer look by the user's choice (2026-11-20). Don't restyle them.
 - **Logo:** the tape-measure pin, `assets/logo/hjaas-logo.png`; favicon `assets/logo/hjaas-reel.png`.
 - **Page:** paper-coloured page with the scene inset; the edge is the **organic watercolour feather with a pencil trail** (option B, `reviews/scene-edge-pencil.md`): the colour fades, pencil lines carry on a little and trail off into the paper. Never a hard straight cut.
-- **Intro:** 5 s watercolour paint-in with doubled strokes, easing `cubic-bezier(0.645, 0.045, 0.355, 1)`. Skip and pause available; reduced motion respected.
-- **UI:** quiet and small. The counter is a little enamel-pin jewel, not a HUD.
+- **Intro:** 5 s watercolour paint-in with doubled strokes, easing `cubic-bezier(0.645, 0.045, 0.355, 1)`. Skip and pause available; reduced motion respected. **Rachel is painted in with the room, by the same strokes (user 2026-11-24)**, never faded in after it: a late arrival would show which mushrooms sit near her. Brief: `reviews/scene-5-build-round4.md`.
+- **UI:** quiet and small. **The counter (decided 2026-11-24):** two small mushrooms stacked in the bottom bar where the Contact button sits.
+  - A **cream** one counts this scene ("7/10 · 3 more in Build").
+  - A **red** one with white spots counts all scenes ("17/50 · find all 50 to contact Hui Jie").
+  - Each fills bottom-up, stem first, then cap.
+  - At 10/10 the cream cap glints and the scene's tab gets a cream dot.
+  - At 50/50 the red cap glints and both turn into the Contact Hui Jie button.
+  - No enamel-pin counter.
+  - Full spec: `HANDOVER-hunt-counter.md`.
 - **Motion bar:** smooth and human, never jerky. Randomised holds, natural blinks, no popping or pose glitches. 60 fps on a throttled phone.
 
 ## 3. Rachel
@@ -27,7 +35,7 @@ What's decided. Everyone (Wren, Quinn, Fable, Foreman) follows this. If a task, 
 | 2 Grow | Lab: white lab coat over a dark top, olive cargos, boots (`hjaas6.png`) | Low ponytail, dark tie | Mist → write on the clipboard → rotate the rack, unhurried | Looks up, thumbs-up (may change to a peace sign) |
 | 3 Design | Outfit 1 | Loose, wavy | Sketch on the iPad ↔ sip a hot coffee, two stages | Looks up at you with a warm smile, no gesture |
 | 4 Film | Black tank, tan cargo shorts (seen from behind, cropped at the thighs) | Loose, wavy, no bandana | Holds still, filming the presenter with a DSLR; the screen shows him live and the red REC dot blinks (no head movement) | Looks back over her shoulder at you and smiles |
-| 5 Travel | TBD | TBD | TBD | Look and a small wave |
+| 5 Set Design (tab name "Set Design", user 2026-11-21; replaces Travel in the menu and the contact form) | White tank top, navy cargo trousers, brown boots (user 2026-11-21, for variety) | Loose, wavy | On a ladder painting a theatre backdrop: brush strokes ↔ leans back to judge it, then dips the brush in the pot hooked on the ladder | Turns her head to you, smiles, raises the brush in a little salute |
 
 The reaction changes per scene so the thumbs-up doesn't repeat everywhere.
 
@@ -46,12 +54,24 @@ All original characters, described in words. Never based on a real person's phot
 - **Presenter:** an original character, described in words only: a friendly young East Asian man with short black hair and thin glasses, a black short-sleeved shirt with a clip-on mic, a watch, light-grey jeans and white sneakers. He stands in front of a silver fastback car (no badges), talking to camera with lively gestures and blinks. His gestures always stay clear of Rachel's camera.
 - **Merlion water:** flows constantly (a hand-drawn loop).
 
+## 4c. Supporting cast and set (scene 5, theatre)
+- **The backdrop fills in with the hunt:** part of the sky is bare canvas with pencil lines; each find in this scene paints one more patch; at 10/10 here it is complete (Wren cuts the stages from the finished and pencil versions).
+- **Stagehand (user 2026-11-21 17:54):** an original character: a middle-aged contractor in a grey T-shirt and jeans, tan work boots (design: `frames/022-theatre-scene/incoming/022_stagehand_sheet.png`). Every 40–70 s (random) he crosses BEHIND the backdrop, right to left, walking with purpose; 10–15 s later he walks back left to right. **He is seen only where he really would be (user, 2026-11-23):**
+  - under the hem, only his boots;
+  - in the open dark slot between the backdrop's right edge and the curtain, the whole man, from his character sheet, in dim backstage light;
+  - walking left, he goes out of sight behind the leaning flat.
+
+  **No peeking:** he never looks out or stops. The backdrop is not altered to hide him. Boots and body are hand-drawn walk cycles by Quinn (jobs 022g/022h boots, 022j/022l body), planted feet never slide, 60 fps.
+- **Ambient:** the caged work lamp swings rigidly on its rope (built). Not built (optional, for Fable in code if wanted): dust motes drifting in the floodlight beam. The fly ropes and the velvet curtain stay still.
+- **Scene look (user 2026-11-21):** keep mock-up A's busyness: seat backs along the bottom, knotted fly ropes, dripping paint pots, paint cart.
+
 ## 5. Working rules
-- **Roles:** Wren (Claude) does art direction, QC, tasks, Higgsfield jobs and commits. Quinn (ChatGPT) draws, with read-only GitHub access. Fable (Claude Fable 5.2 in Claude Code on the Mac) builds the site. Foreman (Grok) dispatches Cursor agents for PRs into site branches. The user carries files and makes the calls.
+- **Roles:** Wren (Claude) does art direction, QC, tasks, Higgsfield jobs and commits. Quinn (ChatGPT) draws, with read-only GitHub access. Fable (Claude Code on the Mac; Opus 5.5 by default, Fable 5.2 when chosen) builds the site. Foreman (Grok) dispatches Cursor agents for PRs into site branches. The user carries files and makes the calls.
 - **Money:** a cost quote and the user's approval before every paid Higgsfield job.
 - **Merging:** nothing merges into `main` without Wren's review and the user's OK.
 - **Prompts for the user:** one short paste-ready prompt per step. Details live in the repo, not the paste.
 - **Art edits:** every pose is an edit of a green anchor at the approved scene's exact size, never a redraw. Get the scene approved before drawing poses.
 - **No flicker, by construction (2026-11-21):** every animation pose is the actor's approved base image plus ONLY the part that moves, pasted and colour-matched by Wren. A generated pose is never used whole. Head turns and expressions are cuts hidden by blinks; soft fades only inside small loops. No AI video for flat-style faces.
 - **The Quinn loop:** Wren sends Quinn jobs and collects results directly (`QUINN-LOOP.md`). The user sees finished previews, not intermediate files.
+- **The Fable loop (2026-11-24):** Wren sends Fable build jobs and gets the reports back directly (`FABLE-LOOP.md`). The user starts the watcher and does phone checks.
 - **Never commit:** secrets, cookies or real people's photos used as character references.

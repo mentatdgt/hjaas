@@ -91,6 +91,6 @@ export const design: SceneConfig = {
   edge: 95,
   lines: 'pencil',
   strokes: STROKES,
-  // A phone starts on Rachel at her table (about plate x 690-1070): centred on x 880 at either shape.
-  phoneStart: { wide: [504, 1256], tall: [566, 1194] },
+  // Rachel and the hand she draws with (780 to 1005).
+  focusX: 900,
 };

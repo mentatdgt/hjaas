@@ -123,8 +123,7 @@ export const film: SceneConfig = {
   // A second find while she is looking back holds the look longer; she never turns twice.
   again: 'hold',
   strokes: STROKES,
-  // A phone starts on the two of them, centred on plate x 977: both faces are in at every phone shape (his,
-  // 669 to 815; hers, 1133 to 1262 even as she looks round). His open hand and the outside of her hair go
-  // past the window's sides; panning shows them (Wren's review of build 01, which keeps this framing).
-  phoneStart: { wide: [601, 1353], tall: [663, 1291] },
+  // Rachel and her camera (1025 to 1351): between the middle of her body and the middle of her reach. The presenter is
+  // a swipe to the left (hunt-counter-build.md section 3; it was 977, with both faces in view).
+  focusX: 1195,
 };
