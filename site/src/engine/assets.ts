@@ -15,13 +15,22 @@ export function asset(path: string): string {
   return base + path;
 }
 
-const ASSET_DEADLINE_MS = 8000;
+/**
+ * How long a file may take to arrive before it counts as lost. Long enough for a slow phone: at 400 kbit/s the
+ * opening room and her first frames take about 45 s between them, and a request given up on starts again from
+ * nothing. (A refused or broken request fails at once, whatever this says.)
+ */
+const NETWORK_DEADLINE_MS = 60_000;
+const DECODE_DEADLINE_MS = 8000;
 
-/** Required art gets one fresh attempt before the visitor is offered a retry. */
+class DeadlineError extends Error {}
+
+/** Required art gets one fresh attempt before the visitor is offered a retry (but not a second long wait). */
 export async function requiredAsset<T>(load: () => Promise<T>): Promise<T> {
   try {
     return await load();
-  } catch {
+  } catch (error) {
+    if (error instanceof DeadlineError) throw error;
     return load();
   }
 }
@@ -36,8 +45,8 @@ export async function loadImage(url: string, img = new Image()): Promise<HTMLIma
       new Promise<never>((_, reject) => {
         timeout = setTimeout(() => {
           img.removeAttribute('src');
-          reject(new Error(`${url}: image deadline exceeded`));
-        }, ASSET_DEADLINE_MS);
+          reject(new DeadlineError(`${url}: image deadline exceeded`));
+        }, NETWORK_DEADLINE_MS);
       }),
     ]);
     return img;
@@ -50,7 +59,7 @@ export async function loadImage(url: string, img = new Image()): Promise<HTMLIma
 }
 
 export function assetSignal(): AbortSignal {
-  return AbortSignal.timeout(ASSET_DEADLINE_MS);
+  return AbortSignal.timeout(NETWORK_DEADLINE_MS);
 }
 
 /** Compressed bytes can be reused across rooms and are evicted least-recently used. */
@@ -170,7 +179,7 @@ function decodeInWorker(blob: Blob, crop?: Crop): Promise<ImageBitmap> {
   let timeout: ReturnType<typeof setTimeout> | undefined;
   return new Promise<ImageBitmap>((resolve, reject) => {
     decodes.set(id, { resolve, reject });
-    timeout = setTimeout(() => reject(new Error('decode deadline exceeded')), ASSET_DEADLINE_MS);
+    timeout = setTimeout(() => reject(new Error('decode deadline exceeded')), DECODE_DEADLINE_MS);
     worker.postMessage({ id, blob, crop });
   }).finally(() => {
     clearTimeout(timeout);

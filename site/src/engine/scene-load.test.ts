@@ -200,13 +200,19 @@ describe('recoverable room assets', () => {
     scene.destroy();
   });
 
-  it('expires a stalled room after two attempts, and a fresh load can succeed', async () => {
+  it('gives a slow room a minute, then expires, and a fresh load can succeed', async () => {
     vi.useFakeTimers();
     decode.mockImplementation(() => new Promise(() => {}));
-    const failed = expect(loadPlate('room.webp')).rejects.toThrow('deadline exceeded');
+    let expired = false;
+    const failed = loadPlate('room.webp').catch((error: Error) => {
+      expired = true;
+      return error;
+    });
+    await vi.advanceTimersByTimeAsync(50_000);
+    expect(expired).toBe(false);
     await vi.runAllTimersAsync();
-    await failed;
-    expect(decode).toHaveBeenCalledTimes(2);
+    expect(String(await failed)).toContain('deadline exceeded');
+    expect(decode).toHaveBeenCalledOnce();
     decode.mockResolvedValue();
     await expect(loadPlate('room.webp')).resolves.toMatchObject({ src: expect.stringContaining('room.webp') });
   });
