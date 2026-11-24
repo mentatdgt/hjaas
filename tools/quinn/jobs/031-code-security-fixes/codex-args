@@ -1,0 +1,4 @@
+-m
+gpt-6.2-sol
+-c
+model_reasoning_effort="high"
