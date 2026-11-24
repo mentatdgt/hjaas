@@ -164,7 +164,7 @@ const run = {
     for (const row of report.spots) say(row.id, row);
 
     // Tab order: from the last menu tab, Tab ten times.
-    await page.locator('.hj-tab[data-scene="grow"]').focus();
+    await page.locator('.hj-tab').last().focus();
     const order = [];
     for (let i = 0; i < 10; i++) { await page.keyboard.press('Tab'); order.push(await page.evaluate(() => document.activeElement?.dataset?.spot ?? document.activeElement?.className)); }
     const xs = await page.evaluate(() => Object.fromEntries([...document.querySelectorAll('.hj-shroom')].map((b) => [b.dataset.spot, Math.round(b.getBoundingClientRect().left)])));

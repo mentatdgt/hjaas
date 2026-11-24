@@ -38,7 +38,7 @@ const state = async (page) => {
 const scene = (page) => page.evaluate(() => ({
   address: location.hash,
   scene: window.__hj.scene.config.id,
-  current: document.querySelector('.hj-tab[aria-current="page"]')?.textContent,
+  current: document.querySelector('.hj-tab[aria-current="page"]')?.firstChild.textContent,
   pan: Math.round(document.querySelector('.hj-viewport').scrollLeft),
 }));
 
@@ -387,7 +387,7 @@ const run = {
       const order = [];
       for (let i = 0; i < 4; i++) {
         await page.keyboard.press('Tab');
-        order.push(await page.evaluate(() => { const el = document.activeElement; return el.classList.contains('hj-logo') ? 'logo' : el.classList.contains('hj-tab') ? `tab:${el.textContent}` : el.dataset.spot ? `mushroom:${el.dataset.spot}` : el.textContent.trim(); }));
+        order.push(await page.evaluate(() => { const el = document.activeElement; return el.classList.contains('hj-logo') ? 'logo' : el.classList.contains('hj-tab') ? `tab:${el.firstChild.textContent}` : el.dataset.spot ? `mushroom:${el.dataset.spot}` : el.textContent.trim(); }));
       }
       await page.keyboard.press('Shift+Tab');
       const focused = await page.evaluate(() => document.activeElement.textContent);
@@ -395,7 +395,7 @@ const run = {
       await arrived(page, 'grow');
       const afterEnter = await state(page);
       const ring = await page.evaluate(() => { const s = getComputedStyle(document.activeElement); return { outline: s.outlineStyle, width: s.outlineWidth }; });
-      const semantics = await page.evaluate(() => ({ nav: document.querySelector('.hj-menu').tagName, label: document.querySelector('.hj-menu').getAttribute('aria-label'), current: [...document.querySelectorAll('.hj-tab')].map((t) => `${t.textContent}:${t.getAttribute('aria-current') ?? '-'}`), picture: document.querySelector('.hj-frame').getAttribute('aria-label') }));
+      const semantics = await page.evaluate(() => ({ nav: document.querySelector('.hj-menu').tagName, label: document.querySelector('.hj-menu').getAttribute('aria-label'), current: [...document.querySelectorAll('.hj-tab')].map((t) => `${t.firstChild.textContent}:${t.getAttribute('aria-current') ?? '-'}`), picture: document.querySelector('.hj-frame').getAttribute('aria-label') }));
       report.keyboard = { tabOrder: order, focusedBeforeEnter: focused, afterEnter, focusRing: ring, semantics, errors };
       say('keyboard', report.keyboard);
       await context.close();

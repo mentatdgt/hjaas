@@ -5,7 +5,7 @@ import sharp from 'sharp';
 import { CAPTION } from './caption-state.mjs';
 
 const item = process.argv[2];
-const browser = await chromium.launch();
+const browser = await chromium.launch({ channel: 'chrome' });
 
 async function shot(url, viewport, wait, settle = 1500) {
   const page = await browser.newPage({ viewport });

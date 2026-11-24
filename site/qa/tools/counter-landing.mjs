@@ -15,7 +15,7 @@ const tiles = [];
 while (tiles.length < 40) {
   const at = await page.evaluate(() => Math.round(performance.now() - window.__t0));
   if (at > 1500) break;
-  if (at >= 500) tiles.push({ at, png: await page.screenshot({ clip }) });
+  if (at >= 360) tiles.push({ at, png: await page.screenshot({ clip }) });
 }
 await browser.close();
 const cols = 6, rows = Math.ceil(tiles.length / cols);

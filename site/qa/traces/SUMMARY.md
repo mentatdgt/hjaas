@@ -230,3 +230,14 @@ the landing (`hj-land`). Numbers: `qa/counter/trace.json`, `trace-before.json`; 
 | A find | 4, 1, 5, 2, 4, 2 (before: 2, 1, 1, 5, 2, 3) | 0 | 1 in two runs of six (before: 1 to 3 in three of six) | 0 |
 | A scene's tenth | 6, 1, 3, 0, 3, 4 | 0 | 1 in three runs of six | 0 |
 | The fiftieth | 1, 3, 1, 7, 1, 7 (before: 1, 1, 1, 4, 1, 1) | 2 in two runs of six | 2 in two runs of six (before: 2 in one) | 0 |
+
+### Round 2 (the phone framing, same day)
+
+The same, on the final build (source `9ceff98`), in turn with round 4's (`528746a`); load 3.2 to 3.9. Round 1's table above is
+kept for comparison; `trace.json` and `trace-before.json` now hold these runs.
+
+| | Dropped at the tap, per run | In the flight | First two frames of the landing | After that |
+|---|---|---|---|---|
+| A find | 3, 1, 3, 4, 5, 5 (before: 2, 1, 5, 1, 1, 4) | 0 | 2, 1, 1 in three runs of six (before: 1 in one; 3 at 45 to 76 ms in another) | 0 |
+| A scene's tenth | 4, 3, 3, 3, 1, 3 | 0 | 2, 1, 1 in three runs of six | 0 |
+| The fiftieth | 4, 3, 1, 7, 6, 5 (before: 3, 5, 5, 6, 3, 6) | 1 in one run of six (before: 1 or 2 in all six) | 0 (before: 0) | 0 |

@@ -126,3 +126,73 @@ Same phone profile, 4× slower, production build, the build before run in turn, 
   which alters neither those screens nor the counter. The tests, the phone stills and the whole hunt were run after it.
 - Memory, the painting and the edge checks were not run again in the browser (the edge's unit tests were).
 - `.DS_Store` and `.impeccable/` were untracked in the working tree before I started; nothing tracked was changed. I left them alone.
+
+---
+
+# Round 2 (2026-11-25)
+
+Four things asked; all done. The counter's design and timings are untouched. The only change to the site is two numbers
+(`focusX` in `film.ts` and `build.ts`). Everything below was run on that build (source commit `9ceff98`; only QA files, this report and the trace summary after it).
+
+## R2.1 What changed
+
+| | Asked | Result | Evidence (`site/qa/counter/`) |
+|---|---|---|---|
+| ✅ | Film keeps its approved framing on a phone | `focusX: 977`. At 390×844 his face is whole (3.5 px inside the window's side, as in the approved framing: it runs a little into the 12 px side fade), with Rachel (where her face comes as she looks round), her camera and its screen. The outside of her hair and right hip go past the right side, as approved. | `open-390x844-film.jpg`, `open-*-film.jpg` |
+| ✅ | Its test | The approved framing is held: 977, his face (669 to 815), hers as she looks round (1133 to 1262) and the camera. The rest still open centred on Rachel, except Build. | `scenes.test.ts` |
+| ✅ | Build shows her whole box | `focusX: 900` (was 755). She and the box are 610 to 1199, 589 of the 627 px the narrowest window shows, so there are 38 px to share. At 900 all of her is 13 px inside the window at 390×844, clear of the side fade, and the box's far end is 8 px inside, in the paler part of it. At 375×667 both have 46 px or more. | `open-390x844-build.jpg`, `open-*-build.jpg`, `phone.json` |
+| ✅ | Fresh evidence | Recordings (16), strips, timing, states, whole hunt, the stills of all five scenes at five sizes, traces (30 runs) and WebKit, all replaced. | below |
+| ✅ | Older QA tools | They read the new counter through one shared reader, `qa/tools/caption-state.mjs`. | R2.4 |
+
+**For Wren.** Build's first-visit drift goes the other way now (it goes towards the side with more to see, and that is
+the left). The far end of the box is back where it was when the drift ends: `drift-portrait-60fps.mp4`.
+
+## R2.2 Frame times
+
+Phone profile, processor 4× slower, production build, six runs each, in turn with round 4's build (`528746a`). Load 3.2 to 3.9.
+Dropped frames per run, with round 1's beside it:
+
+| | | At the tap | In the flight | First two frames of the landing | After that |
+|---|---|---|---|---|---|
+| A find | **now** | 3, 1, 3, 4, 5, 5 | 0 | 2, 1, 1 in three of six | 0 |
+| | round 1 | 4, 1, 5, 2, 4, 2 | 0 | 1, 1 in two of six | 0 |
+| | before, now | 2, 1, 5, 1, 1, 4 | 0 | 1 in one; 3 more at 45 to 76 ms in another | 0 |
+| The fiftieth | **now** | 4, 3, 1, 7, 6, 5 | 1 in one of six | 0 | 0 |
+| | round 1 | 1, 3, 1, 7, 1, 7 | 2, 2 in two of six | 2, 2 in two of six | 0 |
+| | before, now | 3, 5, 5, 6, 3, 6 | 1 to 2 in all six, at 6 to 24 ms before the landing | 0 | 0 |
+| A scene's tenth | **now** | 4, 3, 3, 3, 1, 3 | 0 | 2, 1, 1 in three of six | 0 |
+| | round 1 | 6, 1, 3, 0, 3, 4 | 0 | 1, 1, 1 in three of six | 0 |
+
+- **The same picture as round 1.** Rolls, fills, glints and the cross-fade are clean in all 18 runs; nothing drops later than 34 ms after a landing.
+  A find's landing dropped in one more run than in round 1, and the fiftieth's in none; six runs do not tell these apart.
+- **Still not "no dropped frames"**: the tap drops 1 to 7, in both builds. Longest task at a tap: 73 ms for a find, 102 for the fiftieth (round 1: 64, 115; round 4's build now: 52, 94).
+- The build before has no landing mark: its landing is taken as 395 ms after the click. Its drops "in the flight" may be the landing's own.
+- The fiftieth's tap costs more in this round, in both builds (round 4's: 1, 1, 1, 4, 1, 1 then; 3, 5, 5, 6, 3, 6 now), so that is the machine, not the change.
+- Numbers: `trace.json`, `trace-before.json`.
+
+**WebKit** (iPhone profile, two runs each, longest frame; no errors): at the tap 22 to 49 ms (round 1: 20 to 51; round 4's
+build now: 18 to 43). From the flight on 19 to 22 ms, except the fiftieth at 44 and 39, one frame about 40 ms after the landing
+(round 1: 42 and 32; round 4's build now: 19 to 33). `webkit.json` is the second run.
+
+**Recordings.** The same longest gaps as round 1 to the tenth of a ms: finds 16.7, drift 33.3, and 50 to 83 only at the end of
+the glints, after the light has left the cap. `record.json`.
+
+## R2.3 Checks
+
+218 tests (three more than round 1) and the type check pass. `states`: 0 problems, 13 hunts × 5 scenes, return visits, hint, drift. `phone`: 0 problems at five sizes.
+`hunt`: 50 taps of 50 on the three devices, then the button and the form. Timing: every start and end within a frame of round 1's. No console errors.
+
+## R2.4 The older tools
+
+Rewritten for the counter, and run: `review01` (flags), `review02` (sprites), `review03` (shots, phone, desktop), `scene2` (hunt, nav),
+`scene5` (film: 10th and unlock, desktop), `same-as-before`, `hunt` (checks). Also the five that still looked for the caption before that one
+(`.hj-pin`): `counter-landing`, `morph-frames`, `prod-form`, `record` (finale), `ui-states`. All end without errors and read what is on screen.
+
+- **What they expected was updated with it:** ten finds bring the dot and Next, and the button takes all fifty (`review03`, `scene2`, `same-as-before`,
+  `review01`, `ui-states`, `record`, `prod-form`).
+- Three small repairs on the way: `review01` starts the installed Chrome; tab names are read without the hidden ", all found"; `hunt`'s Tab order starts from the last tab.
+- **Their old evidence is as it was.** Their output of this run was looked at and put back.
+- **Not rewritten:** `review01`'s other items (`wink`, `dedupe`, `outlines`…) test scene 1's first code and were stale for other reasons; `review03 desktop` measures
+  the reveal on Rachel's opacity, which round 4 replaced (it says 0 ms); the archived assessment scripts in `qa/impeccable/`, kept with their results; `review03-before`, which is for the old branch.
+  `review03 phone` says the page does not scroll at 390×664: it fits there now, so it need not.
+- **No real phone** was used in this round either.

@@ -552,7 +552,7 @@ const run = {
       await page.mouse.move(5, 5);
       for (let i = 0; i < 14; i++) {
         await page.keyboard.press('Tab');
-        order.push(await page.evaluate(() => { const el = document.activeElement; if (el === document.body) return 'page'; if (el?.classList.contains('hj-logo')) return 'logo'; return el?.dataset?.spot ?? el?.textContent?.trim() ?? el?.getAttribute('aria-label') ?? el?.tagName; }));
+        order.push(await page.evaluate(() => { const el = document.activeElement; if (el === document.body) return 'page'; if (el?.classList.contains('hj-logo')) return 'logo'; return el?.dataset?.spot ?? (el?.classList.contains('hj-tab') ? el.firstChild.textContent : null) ?? el?.textContent?.trim() ?? el?.getAttribute('aria-label') ?? el?.tagName; }));
       }
       report.cursorAndKeyboard = { ...cursors, hoverChangesPixels: Buffer.compare(away, over) !== 0, tabOrder: order, errors };
       say('cursor and keyboard', report.cursorAndKeyboard);
