@@ -66,6 +66,9 @@ const SWITCH_WASH_S = 0.25;
 
 export class Transition {
   private readonly stage: Stage;
+  private fade: Animation | null = null;
+  private finishFade: ((show: boolean) => void) | null = null;
+  private brushCrop: { x: number; width: number; w: number; h: number } | null = null;
   private timeline: gsap.core.Timeline | null = null;
   private painter: Painter | null = null;
   /** Over the edge's pencil while a first-visit painting has not reached it. */
@@ -89,7 +92,7 @@ export class Transition {
 
   /** True while a brush is at work. */
   get running(): boolean {
-    return this.timeline !== null;
+    return this.timeline !== null || this.fade !== null;
   }
 
   /** Jump to the finished picture, at any point. */
@@ -97,11 +100,22 @@ export class Transition {
     // Rendering the timeline at its end clears the sheet, frees the mushrooms, shows the character and the
     // caption, and runs the callbacks, exactly as if it had played through.
     this.timeline?.progress(1);
+    this.finishFade?.(true);
+  }
+
+  /** Move on promptly when the crop under the short brush no longer matches its sampled geometry. */
+  cropChanged(view: { x: number; width: number }): void {
+    const crop = this.brushCrop;
+    const frame = this.stage.window;
+    if (crop && (crop.x !== view.x || crop.width !== view.width || crop.w !== frame.clientWidth || crop.h !== frame.clientHeight)) {
+      this.skip();
+    }
   }
 
   /** Simply there. */
   show(scene: Scene): void {
     this.stage.root.classList.remove('is-pre');
+    scene.hunt.el.inert = false;
     scene.work();
   }
 
@@ -116,26 +130,14 @@ export class Transition {
     blank.className = 'hj-blank';
     blank.setAttribute('aria-hidden', 'true');
     blank.style.background = getComputedStyle(root).backgroundColor;
+    scene.hunt.el.inert = true;
     scene.plate.append(blank);
     this.blank = blank;
     // The caption is not in the picture: it has a transition of its own (site.css).
     root.classList.add('is-revealing');
     void root.offsetWidth;
     root.classList.remove('is-pre');
-    blank.animate([{ opacity: 1 }, { opacity: 0 }], { duration: REVEAL_MS, easing: 'linear', fill: 'forwards' });
-    return new Promise((resolve) => {
-      window.setTimeout(() => {
-        root.classList.remove('is-revealing');
-        scene.work();
-        // The sheet, clear by now, is taken away a little later (as after a painting: see clock()).
-        this.tidy = window.setTimeout(() => {
-          if (this.blank !== blank) return;
-          blank.remove();
-          this.blank = null;
-        }, TIDY_MS);
-        resolve();
-      }, REVEAL_MS + 20);
-    });
+    return this.fadeSheet(blank, scene, () => root.classList.remove('is-revealing'));
   }
 
   /**
@@ -209,7 +211,7 @@ export class Transition {
   }
 
   /** The first-visit painting. Resolves when everything is settled. */
-  paint(scene: Scene): Promise<void> {
+  paint(scene: Scene, collectDuringWash = true): Promise<void> {
     const { caption } = this.stage;
     const { hunt } = scene;
     if (!this.painter?.fresh) this.prepare(scene);
@@ -247,7 +249,7 @@ export class Transition {
         painter.wash(washed.amount);
         veil?.wash(washed.amount);
       };
-      timeline.call(() => void (hunt.el.inert = false), undefined, wash);
+      timeline.call(() => void (hunt.el.inert = false), undefined, collectDuringWash ? wash : wash + 0.42);
       timeline.to(washed, { amount: 1, duration: 0.42, ease: 'power1.inOut', onUpdate: rinse }, wash);
 
       // She has been painted with the room, at her first frame. A still moment (0.26 s) once the last of the
@@ -271,6 +273,7 @@ export class Transition {
   cover(sketch: (ctx: CanvasRenderingContext2D, origin: DOMRect) => void, next: Scene): void {
     const { window: frame } = this.stage;
     this.clear();
+    next.hunt.el.inert = true;
     const origin = frame.getBoundingClientRect();
     this.painter = new Painter({
       width: frame.clientWidth,
@@ -293,10 +296,12 @@ export class Transition {
   brushOver(scene: Scene, view: { x: number; width: number }): Promise<void> {
     const painter = this.painter;
     if (!painter) {
-      scene.work();
+      this.show(scene);
       return Promise.resolve();
     }
-    painter.aim(this.stage.window.clientWidth / Math.min(view.width, PLATE.w), view.x);
+    const { clientWidth: w, clientHeight: h } = this.stage.window;
+    this.brushCrop = { ...view, w, h };
+    painter.aim(w / Math.min(view.width, PLATE.w), view.x);
     return new Promise((resolve) => {
       const clock = { t: 0 };
       const timeline = this.clock(painter, resolve);
@@ -308,7 +313,7 @@ export class Transition {
         painter.seconds - 0.1,
       );
       // She was drawn under the old picture, still; she starts as the last of it goes.
-      timeline.call(() => scene.work(), undefined, painter.seconds + SWITCH_WASH_S - 0.1);
+      timeline.call(() => this.show(scene), undefined, painter.seconds + SWITCH_WASH_S - 0.1);
     });
   }
 
@@ -316,19 +321,41 @@ export class Transition {
   fadeOver(scene: Scene): Promise<void> {
     const painter = this.painter;
     if (!painter) {
-      scene.work();
+      this.show(scene);
       return Promise.resolve();
     }
-    const fade = painter.canvas.animate([{ opacity: 1 }, { opacity: 0 }], { duration: REVEAL_MS, easing: 'linear', fill: 'forwards' });
-    return fade.finished.then(() => {
-      if (this.painter === painter) this.clear();
-      scene.work();
+    return this.fadeSheet(painter.canvas, scene);
+  }
+
+  private fadeSheet(sheet: HTMLElement, scene: Scene, done?: () => void): Promise<void> {
+    const fade = sheet.animate([{ opacity: 1 }, { opacity: 0 }], { duration: REVEAL_MS, easing: 'linear', fill: 'forwards' });
+    this.fade = fade;
+    return new Promise((resolve) => {
+      const finish = (show: boolean): void => {
+        this.finishFade = null;
+        this.fade = null;
+        fade.onfinish = null;
+        if (show) {
+          fade.finish();
+          this.show(scene);
+          if (sheet === this.blank) this.tidy = window.setTimeout(() => this.clear(), TIDY_MS);
+          else this.clear();
+        } else {
+          fade.cancel();
+        }
+        done?.();
+        resolve();
+      };
+      this.finishFade = finish;
+      fade.onfinish = () => finish(true);
     });
   }
 
   /** Take any sheet off the page now. */
   clear(): void {
     window.clearTimeout(this.tidy);
+    this.finishFade?.(false);
+    this.brushCrop = null;
     this.stage.caption.style.willChange = '';
     this.timeline?.kill();
     this.timeline = null;
@@ -348,6 +375,7 @@ export class Transition {
         // where it is. (In WebKit, changing the plate's layers in this frame repainted all of it at once:
         // review 02 measured 55–60 ms.) It is taken away a little later, when only the character is moving.
         this.timeline = null;
+        this.brushCrop = null;
         this.tidy = window.setTimeout(() => {
           if (this.painter !== painter || this.timeline) return;
           painter.canvas.remove();

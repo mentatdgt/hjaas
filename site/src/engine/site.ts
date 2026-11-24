@@ -310,6 +310,14 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   });
 
   const transition = new Transition({ root, window: frame, viewport, caption: caption.el, seed: flags.seed });
+  const cropChanged = (): void => transition.cropChanged(pan.view);
+  const cropLayout = new ResizeObserver(cropChanged);
+  cropLayout.observe(frame);
+  viewport.addEventListener('scroll', cropChanged, { passive: true });
+  cleanup.push(() => {
+    cropLayout.disconnect();
+    viewport.removeEventListener('scroll', cropChanged);
+  });
   /**
    * Skip while a brush is at work; afterwards, Pause and the way to see the room painted again.
    * With reduced motion nothing moves by itself and nothing is painted, so neither is offered.
@@ -412,7 +420,10 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
         caption.land(viewOf(config));
       },
       onLayout: () => {
-        if (self === current) pan.layout();
+        if (self === current) {
+          pan.layout();
+          cropChanged();
+        }
       },
       onPose: flags.debug ? (pose, at) => poses.push([pose, Math.round(at)]) : undefined,
       edge: { style: edgeStyle, seed: edgeSeed, paper },
@@ -462,6 +473,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   /** Put a scene in the window: its plate, its pan position, its name. */
   const place = (scene: Scene): void => {
     current = scene;
+    scene.hunt.el.inert = true;
     viewport.replaceChildren(scene.plate);
     figure.setAttribute('aria-label', scene.config.picture);
     for (const tab of tabs) {
@@ -566,7 +578,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       await Promise.all([her(), dress()]);
       await allDrawn(next);
       await steadyFrames();
-      await transition.paint(next);
+      await transition.paint(next, false);
     } else {
       marks.switchStart = Math.round(performance.now());
       old.hold();

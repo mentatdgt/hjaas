@@ -177,6 +177,7 @@ export class Hunt {
   }
 
   private collect(spot: Spot): void {
+    if (this.el.inert) return;
     const button = this.buttons.get(spot.id);
     if (!button) return;
     this.buttons.delete(spot.id);
