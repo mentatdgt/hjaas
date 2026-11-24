@@ -1,0 +1,35 @@
+{
+ "first visit, Build to Set Design": {
+  "file": "switch-first-visit-60fps.mp4",
+  "frames": 303,
+  "herFirst": 0.571,
+  "herLast": 1,
+  "sheGoesBackBy": "see blankUntilTheFirstStroke (the old picture is measured too)",
+  "mostSheIsAheadOfTheRoom": 0.126,
+  "mostTheRoomIsAheadOfHer": 0.485,
+  "blankUntilTheFirstStroke": {
+   "frames": 40,
+   "mostOfHer": 0
+  },
+  "blankMs": 378
+ },
+ "short brush, Build to Set Design": {
+  "file": "switch-short-brush-60fps.mp4",
+  "frames": 93,
+  "herFirst": 0,
+  "herLast": 1,
+  "sheGoesBackBy": 0,
+  "mostSheIsAheadOfTheRoom": 0.104,
+  "mostTheRoomIsAheadOfHer": 0.093
+ },
+ "return visit, Set Design": {
+  "file": "return-visit-60fps.mp4",
+  "frames": 15,
+  "herFirst": 0,
+  "herLast": 1,
+  "sheGoesBackBy": 0,
+  "mostSheIsAheadOfTheRoom": 0,
+  "mostTheRoomIsAheadOfHer": 0.001
+ },
+ "errors": []
+}

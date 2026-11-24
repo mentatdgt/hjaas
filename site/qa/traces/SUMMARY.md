@@ -193,3 +193,27 @@ script), then three finds. Load 3.9 when it ended. Raw file, not in git: `s5r3-m
 | Three finds (`--mark hj-qa-find1`, `2`, `3`, `--span 3500`): lead-in, salute, back, with the swath's fade | 210 begun each; 1, 0 and 0 dropped. Longest task 27, 34 and 11 ms. |
 
 The two builds measured in turn without the tracer: `../scene5/frames-r3-vs-r2.json`.
+
+## Round 4 (Rachel painted in with the room), 2026-11-25
+
+The painting of a new visitor, phone profile (`390x844x3,mobile,touch`, CPU throttling 4), production build,
+Chrome, recorded by `node qa/tools/paint-in.mjs trace` (CDP, headless, the page navigated with no script of the tool's own
+in it). Four runs of each scene, in turn with round 3's build (with the same `hj-paint` mark added); load about
+3. Times are from `hj-paint`, the performance mark the page now sets as the painting's clock starts. Numbers of
+all 16 runs: `../paint/trace.json`, `../paint/trace-before.json`. Raw (not in git): `r4-build-paint-mobile-4x.json.gz`,
+`r4-set-paint-mobile-4x.json.gz`.
+
+| | Build | Set Design |
+|---|---|---|
+| Frames begun, 0 to 6 s | 360 in each run | 360 in each run |
+| Dropped in the first 100 ms | 0, 0, 0, 0 | 0, 0, 0, 0 |
+| Dropped in the painting (0 to 4.75 s) | 0, 0, 0, 0 | 0, 0, 0, 0 |
+| Dropped after it (4.75 to 6 s, she starts work) | 0, 1, 0, 0 (at 4.76 s) | 0, 0, 0, 0 |
+| Longest task while painting | 6 to 11 ms (round 3: 8 to 11) | 4 to 6 ms (round 3: 4 to 7) |
+| Longest task setting up, on blank paper | 41 to 49 ms (round 3: 76 to 91) | 36 to 38 ms, one run 102 (round 3: 76 to 93) |
+| The clock starts after navigation | 876 to 924 ms (round 3: 840 to 923) | 1349 to 1427 ms (round 3: 1317 to 1381) |
+
+Round 3's "6 dropped in the first tenth of a second" were before its clock: with the mark added, its build drops
+7 to 11 frames on blank paper and none from the first stroke on. The window 1.0 to 7.0 s was counted from navigation.
+What is left there (3 to 12 frames) is still paper: nothing on screen moves.
+

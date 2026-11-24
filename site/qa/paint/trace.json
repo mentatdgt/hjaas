@@ -1,0 +1,120 @@
+{
+ "build": [
+  {
+   "clockMs": 876,
+   "framesBegun": 360,
+   "droppedFirst100ms": 0,
+   "droppedInThePainting": [],
+   "droppedAfterTo6s": [],
+   "droppedBeforeOnBlankPaper": 5,
+   "longestTaskMs": {
+    "settingUp": 43,
+    "painting": 6,
+    "after": 10
+   },
+   "errors": []
+  },
+  {
+   "clockMs": 876,
+   "framesBegun": 360,
+   "droppedFirst100ms": 0,
+   "droppedInThePainting": [],
+   "droppedAfterTo6s": [
+    4764
+   ],
+   "droppedBeforeOnBlankPaper": 3,
+   "longestTaskMs": {
+    "settingUp": 49,
+    "painting": 11,
+    "after": 16
+   },
+   "errors": []
+  },
+  {
+   "clockMs": 907,
+   "framesBegun": 360,
+   "droppedFirst100ms": 0,
+   "droppedInThePainting": [],
+   "droppedAfterTo6s": [],
+   "droppedBeforeOnBlankPaper": 6,
+   "longestTaskMs": {
+    "settingUp": 41,
+    "painting": 8,
+    "after": 13
+   },
+   "errors": []
+  },
+  {
+   "clockMs": 924,
+   "framesBegun": 360,
+   "droppedFirst100ms": 0,
+   "droppedInThePainting": [],
+   "droppedAfterTo6s": [],
+   "droppedBeforeOnBlankPaper": 5,
+   "longestTaskMs": {
+    "settingUp": 43,
+    "painting": 9,
+    "after": 6
+   },
+   "errors": []
+  }
+ ],
+ "set": [
+  {
+   "clockMs": 1357,
+   "framesBegun": 360,
+   "droppedFirst100ms": 0,
+   "droppedInThePainting": [],
+   "droppedAfterTo6s": [],
+   "droppedBeforeOnBlankPaper": 6,
+   "longestTaskMs": {
+    "settingUp": 36,
+    "painting": 5,
+    "after": 9
+   },
+   "errors": []
+  },
+  {
+   "clockMs": 1354,
+   "framesBegun": 360,
+   "droppedFirst100ms": 0,
+   "droppedInThePainting": [],
+   "droppedAfterTo6s": [],
+   "droppedBeforeOnBlankPaper": 5,
+   "longestTaskMs": {
+    "settingUp": 38,
+    "painting": 4,
+    "after": 6
+   },
+   "errors": []
+  },
+  {
+   "clockMs": 1349,
+   "framesBegun": 360,
+   "droppedFirst100ms": 0,
+   "droppedInThePainting": [],
+   "droppedAfterTo6s": [],
+   "droppedBeforeOnBlankPaper": 6,
+   "longestTaskMs": {
+    "settingUp": 36,
+    "painting": 4,
+    "after": 6
+   },
+   "errors": []
+  },
+  {
+   "clockMs": 1427,
+   "framesBegun": 360,
+   "droppedFirst100ms": 0,
+   "droppedInThePainting": [],
+   "droppedAfterTo6s": [],
+   "droppedBeforeOnBlankPaper": 12,
+   "longestTaskMs": {
+    "settingUp": 102,
+    "painting": 6,
+    "after": 6
+   },
+   "errors": []
+  }
+ ]
+}
