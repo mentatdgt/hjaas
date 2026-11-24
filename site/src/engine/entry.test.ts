@@ -125,8 +125,24 @@ describe('a find', () => {
   it('at rest, long enough: the reaction at once, with nothing before it', () => {
     const it = make(3);
     const at = findOn(it, REST, 200);
+    frame();
+    expect(it.log[at].pose).toBe(REST);
     expect(it.her.current).toBe('R_T_A1_K1_1');
-    expect(it.log[at].pose === REST || it.log[at].pose === 'R_T_A1_K1_1').toBe(true);
+  });
+
+  it('between two frames of the page: the first drawing is still painted on all its frames', () => {
+    for (const [pose, first, count] of [['R_B2_dip', 'R_T_A1_B2_3', 2], [REST, 'R_T_A1_K1_1', 3]] as const) {
+      const it = make(3);
+      if (pose === REST) run(3000);
+      findOn(it, pose, 250);
+      // What each frame paints is what she is on once its callbacks have run.
+      let painted = 0;
+      for (let i = 0; i < 8; i++) {
+        frame();
+        if (it.her.current === first) painted++;
+      }
+      expect(painted).toBe(count);
+    }
   });
 
   it('lets the still on screen finish showing first: 120 ms, 500 for the lean, or its own time if shorter', () => {
@@ -142,6 +158,7 @@ describe('a find', () => {
     // Shown long enough already: not a frame longer.
     const it = make(5);
     findOn(it, 'R_B1_lean', 700);
+    frame();
     expect(it.her.current).toBe(REST);
   });
 

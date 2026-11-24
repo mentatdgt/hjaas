@@ -2,44 +2,85 @@
  {
   "browser": "chrome, 1440 × 900",
   "aFindDuringTheLean": {
-   "wasOn": "R_B1_lean, 618.2 ms into it",
+   "foundAt": 12198.6,
+   "wasOn": "R_B1_lean, 617.4 ms into it",
    "thenShe": [
-    "4.7 ms: R_K1_salute, shown 2092.7 ms",
-    "2097.4 ms: R_A1, shown 401.3 ms",
-    "2498.7 ms: R_A1, shown 433.3 ms",
-    "2932 ms: R_A1"
+    "26.8 ms: R_A1, shown 90 ms",
+    "116.8 ms: R_T_A1_K1_1, shown 48.4 ms",
+    "165.2 ms: R_T_A1_K1_1b, shown 50.5 ms",
+    "215.7 ms: R_T_A1_K1_2, shown 49.8 ms",
+    "265.5 ms: R_T_A1_K1_3, shown 51.6 ms",
+    "317.1 ms: R_K1_salute, shown 1814.7 ms",
+    "2131.8 ms: R_T_A1_K1_3, shown 51.6 ms",
+    "2183.4 ms: R_T_A1_K1_2, shown 50 ms",
+    "2233.4 ms: R_T_A1_K1_1b, shown 50.2 ms",
+    "2283.6 ms: R_T_A1_K1_1, shown 50 ms",
+    "2333.6 ms: R_A1, shown 400 ms",
+    "2733.6 ms: R_A1, shown 483.6 ms",
+    "3217.2 ms: R_T_A1_B2_0, shown 48.2 ms"
    ],
-   "msFromTheFindToTheSalute": 4.7,
-   "withinAFrame": true,
-   "saluteShownMs": 2092.7,
+   "msFromTheFindToTheFirstMove": 26.8,
+   "msFromTheFindToTheSalute": 317.1,
+   "asThePackageSays": true,
+   "saluteShownMs": 1814.7,
    "saluteInRange": true,
-   "thenR_A1Ms": 401.3
+   "thenR_A1Ms": 400,
+   "thenTheRoutineAt": "R_A1"
   },
   "aFindDuringAStroke": {
-   "wasOn": "R_A3_stroke_out, 133.9 ms into it",
+   "foundAt": 18866.2,
+   "wasOn": "R_A3_stroke_out, 134 ms into it",
    "thenShe": [
-    "1.4 ms: R_K1_salute, shown 1881.1 ms",
-    "1882.5 ms: R_A1, shown 399 ms",
-    "2281.5 ms: R_A1, shown 401.6 ms",
-    "2683.1 ms: R_A2_stroke_low"
+    "14.3 ms: R_T_A2_A3_3, shown 34.1 ms",
+    "48.4 ms: R_T_A2_A3_2, shown 32.7 ms",
+    "81.1 ms: R_T_A2_A3_1, shown 34.6 ms",
+    "115.7 ms: R_A2_stroke_low, shown 32 ms",
+    "147.7 ms: R_T_A1_A2_2, shown 33.3 ms",
+    "181 ms: R_T_A1_A2_1, shown 34 ms",
+    "215 ms: R_T_A1_K1_1, shown 50.5 ms",
+    "265.5 ms: R_T_A1_K1_1b, shown 50.5 ms",
+    "316 ms: R_T_A1_K1_2, shown 49.1 ms",
+    "365.1 ms: R_T_A1_K1_3, shown 50.7 ms",
+    "415.8 ms: R_K1_salute, shown 1599.8 ms",
+    "2015.6 ms: R_T_A1_K1_3, shown 49.2 ms",
+    "2064.8 ms: R_T_A1_K1_2, shown 50.8 ms",
+    "2115.6 ms: R_T_A1_K1_1b, shown 49.7 ms",
+    "2165.3 ms: R_T_A1_K1_1, shown 49.7 ms",
+    "2215 ms: R_A1, shown 400.7 ms",
+    "2615.7 ms: R_A1, shown 533.3 ms",
+    "3149 ms: R_T_A1_A2_1, shown 50.1 ms"
    ],
-   "msFromTheFindToTheSalute": 1.4,
-   "withinAFrame": true,
-   "saluteShownMs": 1881.1,
+   "msFromTheFindToTheFirstMove": 14.3,
+   "msFromTheFindToTheSalute": 415.8,
+   "asThePackageSays": true,
+   "saluteShownMs": 1599.8,
    "saluteInRange": true,
-   "thenR_A1Ms": 399
+   "thenR_A1Ms": 400.7,
+   "thenTheRoutineAt": "R_A1"
   },
   "aSecondFindDuringTheSalute": {
-   "secondFindMsIntoIt": 810,
+   "secondFindMsIntoIt": 808.6,
    "thenShe": [
-    "1.5 ms: R_K1_salute, shown 2559.9 ms",
-    "2561.4 ms: R_A1, shown 401 ms",
-    "2962.4 ms: R_A1, shown 349.6 ms",
-    "3312 ms: R_A1"
+    "2.7 ms: R_T_A1_K1_1, shown 49.3 ms",
+    "52 ms: R_T_A1_K1_1b, shown 50.1 ms",
+    "102.1 ms: R_T_A1_K1_2, shown 50.9 ms",
+    "153 ms: R_T_A1_K1_3, shown 50.3 ms",
+    "203.3 ms: R_K1_salute, shown 2682.2 ms",
+    "2885.5 ms: R_T_A1_K1_3, shown 50 ms",
+    "2935.5 ms: R_T_A1_K1_2, shown 51.1 ms",
+    "2986.6 ms: R_T_A1_K1_1b, shown 48.4 ms",
+    "3035 ms: R_T_A1_K1_1, shown 49.6 ms",
+    "3084.6 ms: R_A1, shown 401.3 ms",
+    "3485.9 ms: R_A1, shown 132.3 ms",
+    "3618.2 ms: R_A1_blink, shown 99.9 ms",
+    "3718.1 ms: R_A1, shown 418.4 ms",
+    "4136.5 ms: R_T_A1_A2_1, shown 50.6 ms",
+    "4187.1 ms: R_T_A1_A2_2, shown 48.8 ms",
+    "4235.9 ms: R_A2_stroke_low"
    ],
-   "saluteShownMsInAll": 2559.9,
-   "msAfterTheSecondFind": 1749.9,
-   "cutInOnce": true,
+   "saluteShownMsInAll": 2682.2,
+   "msAfterTheSecondFind": 1873.6,
+   "saluteOnce": true,
    "extended": true
   },
   "aMinuteOfHerRoutine": {
@@ -50,38 +91,38 @@
     4
    ],
    "leanMs": [
-    2649.3,
-    2582.1
+    2631.9,
+    2998.4
    ],
    "dipMs": [
-    966.7,
-    1081.8,
-    1100
+    983.6,
+    1049.3,
+    1100.3
    ],
    "holdsOutsideTheirRange": [],
    "blinks": {
     "count": 8,
     "shownMs": [
-     99.7,
-     99.9,
-     98.6,
-     100.5,
-     99.5,
-     101.3,
      99.2,
-     99.3
+     100,
+     99.9,
+     100,
+     100.2,
+     100.3,
+     99.2,
+     99.9
     ],
     "onlyOnR_A1": true,
     "gapsMs": [
-     3766.1,
-     6832.7,
-     6632.4,
-     8500.8,
-     6400.1
+     4568.2,
+     7749,
+     7500.1,
+     4333.4,
+     5698.2
     ],
     "gapsAcrossAnAnswerMs": [
-     7699.5,
-     11349.7
+     10300.4,
+     10014.6
     ]
    },
    "anyDissolve": false,
@@ -91,28 +132,28 @@
    "steps": 619,
    "seconds": 61.8,
    "inOrder": true,
-   "shortestMs": 97.9,
-   "longestMs": 102.2,
+   "shortestMs": 82.3,
+   "longestMs": 118.1,
    "meanMs": 100,
    "wrapsL35toL00": 17,
    "wrapStepMs": [
-    100.3,
-    100.1,
-    100.6,
-    99.8,
-    98.8,
     99.9,
+    101.5,
+    99.7,
     101.9,
-    99.9,
-    101.4,
-    99,
-    99.8,
-    98.3,
-    101.6,
+    115.1,
+    98.2,
     100,
-    99.8,
+    101.9,
+    100.5,
+    99.6,
     100.1,
-    100
+    100.4,
+    99.3,
+    100.2,
+    99.9,
+    100.2,
+    100.2
    ],
    "ok": true
   },
@@ -122,86 +163,127 @@
  {
   "browser": "webkit, iPhone 14 profile",
   "aFindDuringTheLean": {
-   "wasOn": "R_B1_lean, 623 ms into it",
+   "foundAt": 12381,
+   "wasOn": "R_B1_lean, 621 ms into it",
    "thenShe": [
-    "26 ms: R_K1_salute, shown 2068 ms",
-    "2094 ms: R_A1, shown 400 ms",
-    "2494 ms: R_A1, shown 317 ms",
-    "2811 ms: R_A1"
+    "79 ms: R_A1, shown 100 ms",
+    "179 ms: R_T_A1_K1_1, shown 50 ms",
+    "229 ms: R_T_A1_K1_1b, shown 50 ms",
+    "279 ms: R_T_A1_K1_2, shown 50 ms",
+    "329 ms: R_T_A1_K1_3, shown 50 ms",
+    "379 ms: R_K1_salute, shown 1817 ms",
+    "2196 ms: R_T_A1_K1_3, shown 50 ms",
+    "2246 ms: R_T_A1_K1_2, shown 50 ms",
+    "2296 ms: R_T_A1_K1_1b, shown 49 ms",
+    "2345 ms: R_T_A1_K1_1, shown 51 ms",
+    "2396 ms: R_A1, shown 400 ms",
+    "2796 ms: R_A1, shown 483 ms",
+    "3279 ms: R_T_A1_B2_0, shown 50 ms"
    ],
-   "msFromTheFindToTheSalute": 26,
-   "withinAFrame": false,
-   "saluteShownMs": 2068,
+   "msFromTheFindToTheFirstMove": 79,
+   "msFromTheFindToTheSalute": 379,
+   "asThePackageSays": true,
+   "saluteShownMs": 1817,
    "saluteInRange": true,
-   "thenR_A1Ms": 400
+   "thenR_A1Ms": 400,
+   "thenTheRoutineAt": "R_A1"
   },
   "aFindDuringAStroke": {
-   "wasOn": "R_A3_stroke_out, 133 ms into it",
+   "foundAt": 19110,
+   "wasOn": "R_A3_stroke_out, 135 ms into it",
    "thenShe": [
-    "1 ms: R_K1_salute, shown 1884 ms",
-    "1885 ms: R_A1, shown 399 ms",
-    "2284 ms: R_A1, shown 432 ms",
-    "2716 ms: R_A2_stroke_low"
+    "18 ms: R_T_A2_A3_3, shown 32 ms",
+    "50 ms: R_T_A2_A3_2, shown 33 ms",
+    "83 ms: R_T_A2_A3_1, shown 34 ms",
+    "117 ms: R_A2_stroke_low, shown 33 ms",
+    "150 ms: R_T_A1_A2_2, shown 32 ms",
+    "182 ms: R_T_A1_A2_1, shown 34 ms",
+    "216 ms: R_T_A1_K1_1, shown 50 ms",
+    "266 ms: R_T_A1_K1_1b, shown 50 ms",
+    "316 ms: R_T_A1_K1_2, shown 50 ms",
+    "366 ms: R_T_A1_K1_3, shown 50 ms",
+    "416 ms: R_K1_salute, shown 1615 ms",
+    "2031 ms: R_T_A1_K1_3, shown 53 ms",
+    "2084 ms: R_T_A1_K1_2, shown 49 ms",
+    "2133 ms: R_T_A1_K1_1b, shown 50 ms",
+    "2183 ms: R_T_A1_K1_1, shown 48 ms",
+    "2231 ms: R_A1, shown 402 ms",
+    "2633 ms: R_A1, shown 534 ms",
+    "3167 ms: R_T_A1_A2_1, shown 48 ms"
    ],
-   "msFromTheFindToTheSalute": 1,
-   "withinAFrame": true,
-   "saluteShownMs": 1884,
+   "msFromTheFindToTheFirstMove": 18,
+   "msFromTheFindToTheSalute": 416,
+   "asThePackageSays": true,
+   "saluteShownMs": 1615,
    "saluteInRange": true,
-   "thenR_A1Ms": 399
+   "thenR_A1Ms": 402,
+   "thenTheRoutineAt": "R_A1"
   },
   "aSecondFindDuringTheSalute": {
-   "secondFindMsIntoIt": 815,
+   "secondFindMsIntoIt": 809,
    "thenShe": [
-    "1 ms: R_K1_salute, shown 2570 ms",
-    "2571 ms: R_A1, shown 399 ms",
-    "2970 ms: R_A1, shown 383 ms",
-    "3353 ms: R_A1"
+    "4 ms: R_T_A1_K1_1, shown 50 ms",
+    "54 ms: R_T_A1_K1_1b, shown 52 ms",
+    "106 ms: R_T_A1_K1_2, shown 48 ms",
+    "154 ms: R_T_A1_K1_3, shown 51 ms",
+    "205 ms: R_K1_salute, shown 2683 ms",
+    "2888 ms: R_T_A1_K1_3, shown 48 ms",
+    "2936 ms: R_T_A1_K1_2, shown 52 ms",
+    "2988 ms: R_T_A1_K1_1b, shown 50 ms",
+    "3038 ms: R_T_A1_K1_1, shown 48 ms",
+    "3086 ms: R_A1, shown 403 ms",
+    "3489 ms: R_A1, shown 132 ms",
+    "3621 ms: R_A1_blink, shown 101 ms",
+    "3722 ms: R_A1, shown 416 ms",
+    "4138 ms: R_T_A1_A2_1, shown 50 ms",
+    "4188 ms: R_T_A1_A2_2, shown 50 ms",
+    "4238 ms: R_A2_stroke_low"
    ],
-   "saluteShownMsInAll": 2570,
-   "msAfterTheSecondFind": 1755,
-   "cutInOnce": true,
+   "saluteShownMsInAll": 2683,
+   "msAfterTheSecondFind": 1874,
+   "saluteOnce": true,
    "extended": true
   },
   "aMinuteOfHerRoutine": {
-   "seconds": 60.9,
+   "seconds": 60.6,
    "passesSeen": 2,
    "paintLoopsPerPass": [
     4,
     4
    ],
    "leanMs": [
-    2652,
-    2598
+    2648,
+    3000
    ],
    "dipMs": [
-    967,
-    1099,
-    1100
+    982,
+    1050,
+    1101
    ],
    "holdsOutsideTheirRange": [],
    "blinks": {
     "count": 8,
     "shownMs": [
-     111,
+     100,
+     99,
+     101,
      100,
      100,
      99,
-     100,
      101,
-     100,
-     99
+     101
     ],
     "onlyOnR_A1": true,
     "gapsMs": [
-     3751,
-     6832,
-     6632,
-     8501,
-     6400
+     4567,
+     7750,
+     7518,
+     4332,
+     5700
     ],
     "gapsAcrossAnAnswerMs": [
-     7583,
-     11383
+     10367,
+     10033
     ]
    },
    "anyDissolve": false,
@@ -211,28 +293,28 @@
    "steps": 619,
    "seconds": 61.8,
    "inOrder": true,
-   "shortestMs": 73,
-   "longestMs": 127,
+   "shortestMs": 92,
+   "longestMs": 107,
    "meanMs": 100,
    "wrapsL35toL00": 17,
    "wrapStepMs": [
-    100,
-    100,
-    100,
-    102,
-    101,
-    102,
-    100,
-    101,
-    100,
-    85,
     101,
     101,
+    99,
+    100,
     100,
     99,
-    108,
+    101,
+    99,
+    102,
+    101,
+    102,
+    103,
     100,
-    100
+    101,
+    97,
+    101,
+    101
    ],
    "ok": true
   },
@@ -243,16 +325,17 @@
   "browser": "chrome, reduced motion",
   "aFind": {
    "thenShe": [
-    "0.7 ms: R_K1_salute, shown 1910.5 ms",
-    "1911.2 ms: R_A1, shown 466.8 ms",
-    "2378 ms: R_A1"
+    "3.2 ms: R_K1_salute, shown 1806.2 ms",
+    "1809.4 ms: R_A1, shown 183.9 ms",
+    "1993.3 ms: R_A1, shown 216.9 ms",
+    "2210.2 ms: R_A1, shown 199.4 ms"
    ],
    "oneHeldSalute": true,
-   "saluteShownMs": 1910.5,
+   "saluteShownMs": 1806.2,
    "swathFadedIn": false
   },
   "thirtySeconds": {
-   "framesRead": 1802,
+   "framesRead": 1803,
    "framesWithAWalk": 0,
    "framesWithAFade": 0,
    "lampPoses": [

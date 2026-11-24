@@ -132,8 +132,8 @@ export class Player {
       this.reactionDone = resolve;
       this.queued = steps;
       if (now && led && this.entry) {
+        // (On the next frame at the soonest: begun between two frames, its first drawing would lose one of its own.)
         this.settling = true;
-        this.whenShown();
         return;
       }
       // On the contact frame already: go now. Otherwise the swing finishes first, so the hammer never teleports.

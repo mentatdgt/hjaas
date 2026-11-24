@@ -7,6 +7,8 @@
 //   node qa/tools/scene5.mjs react      her salute from whatever pose, a second find, a minute of her routine and her blinks, the lamp's swing; reduced motion
 //   node qa/tools/scene5.mjs walk       the stagehand: the schedule, pause, leaving and coming back, even timing, the drawing at 1:1, never outside the masks
 //   node qa/tools/scene5.mjs strips     the stagehand frame by frame at 1:1 beside theatre-preview.mp4: the slot both ways, the hand-over, the left end
+//   node qa/tools/scene5.mjs moves      Rachel's in-betweens: 60 fps recordings of a stroke cycle, a dip and a find at rest, at A3, in the dip and the lean, drawing by drawing
+//   node qa/tools/scene5.mjs held [s]   how many frames each in-between is on screen: desktop, the phone slowed four times, WebKit; finds at random moments
 //   node qa/tools/scene5.mjs film60     one whole crossing, out and back, on the routine's own schedule, recorded at 60 fps
 //   node qa/tools/scene5.mjs film       recordings: 45 s at work, the 10th find, the unlock (and a 10/10 scene without it), reduced motion
 //   node qa/tools/scene5.mjs preview    the page against the package's own picture (as tools/theatre_preview.py draws it): Rachel, the lamp, the boots
@@ -473,6 +475,7 @@ run.fade = async () => {
     await page.waitForTimeout(1300);
     const rows = await page.evaluate(() => { window.__fade.stop = true; return window.__fade.rows; });
     const salute = (await stepsOf(page, 'rachel')).find(([p, , , at]) => p === 'R_K1_salute' && at >= t0);
+    // (Round 3: the swath still begins at the find; she may first finish showing a drawing, and goes back to rest, before the salute.)
     const fading = rows.filter((r) => r[1] >= 0 && r[0] >= t0);
     const rowOut = { browser: name, findAt: t0, saluteAt: salute?.[3] ?? null };
     if (options.reducedMotion) {
@@ -487,7 +490,7 @@ run.fade = async () => {
       const drops = fading.filter((r, i) => i > 0 && r[1] < fading[i - 1][1] - 0.001).length;
       rowOut.overlayFirstSeenMsAfterTheFind = r1(first[0] - t0);
       rowOut.overlayFirstSeenMsAfterHerSalute = salute ? r1(first[0] - salute[3]) : null;
-      rowOut.startsWithinAFrameOfHerSalute = salute ? Math.abs(first[0] - salute[3]) <= 20 : null;
+      rowOut.startsWithTheFind = first[0] - t0 <= 34;
       rowOut.fadeShownMs = r1(span);
       rowOut.lasts700msGiveOrTakeAFrame = Math.abs(span - 700) <= 25;
       rowOut.easing = { at25: at(0.25), at50: at(0.5), at75: at(0.75) };
@@ -535,8 +538,8 @@ run.fade = async () => {
 
 // Her routine and her answer, and the lamp. Chrome, the iPhone profile in WebKit, and Chrome with reduced
 // motion.
-//   - A find during the lean (R_B1_lean) and one during a stroke (R_A3_stroke_out): she cuts straight to
-//     R_K1_salute, within a frame; K1 1.7 to 2.1 s; R_A1 400 ms; back to her loop.
+//   - A find during the lean (R_B1_lean) and one during a stroke (R_A3_stroke_out): back to rest by the package's
+//     lead-in, up into the salute, R_K1_salute 1.6 to 2 s, down again, R_A1 400 ms and the routine's own rest step.
 //   - A second find 800 ms into the salute: the salute is held longer, and she does not cut in again.
 //   - A minute of her routine: the paint loop A1 > A2 > A3 > A2, three to six times, then A1, the lean (2 to
 //     3 s), A1, the dip, A1. Blinks: R_A1_blink, 100 ms, only on R_A1 holds, every 3 to 6 s.
@@ -579,12 +582,12 @@ run.react = async () => {
         const before = steps.findLast((s) => s.at <= f.at);
         const after = steps.filter((s) => s.at >= f.at);
         const k1 = after.find((s) => s.pose === 'R_K1_salute');
-        const k1i = after.indexOf(k1);
+        const way = [...(routine.rachel.reaction.lead_in[pose] ?? []), ...routine.rachel.reaction.steps].map((x) => x.still);
         rowOut[label] = {
-          wasOn: before ? `${before.pose}, ${r1(f.at - before.at)} ms into it` : null, thenShe: line(after.slice(0, 5), f.at),
-          msFromTheFindToTheSalute: k1 ? r1(k1.at - f.at) : null, withinAFrame: k1 ? k1.at - f.at <= 20 && k1i === 0 : false,
-          saluteShownMs: k1?.shown ?? null, saluteInRange: k1 ? k1.shown >= 1700 - 30 && k1.shown <= 2100 + 45 : false,
-          thenR_A1Ms: after[k1i + 1]?.pose === 'R_A1' ? after[k1i + 1].shown : null,
+          foundAt: f.at, wasOn: before ? `${before.pose}, ${r1(f.at - before.at)} ms into it` : null, thenShe: line(after.slice(0, way.length + 2), f.at),
+          msFromTheFindToTheFirstMove: after[0] ? r1(after[0].at - f.at) : null, msFromTheFindToTheSalute: k1 ? r1(k1.at - f.at) : null,
+          asThePackageSays: way.every((still, i) => after[i]?.pose === still), saluteShownMs: k1?.shown ?? null, saluteInRange: k1 ? k1.shown >= 1600 - 30 && k1.shown <= 2000 + 45 : false,
+          thenR_A1Ms: after[way.length - 1]?.shown ?? null, thenTheRoutineAt: after[way.length]?.pose ?? null,
         };
       }
       // A second find, 800 ms into the salute.
@@ -599,13 +602,15 @@ run.react = async () => {
       const two = await hers(tA);
       const salutes = two.filter((s) => s.pose === 'R_K1_salute');
       const from = salutes[0]?.at; const to = salutes.length ? salutes.at(-1).at + salutes.at(-1).shown : null;
-      rowOut.aSecondFindDuringTheSalute = { secondFindMsIntoIt: from ? r1(tB - from) : null, thenShe: line(two.slice(0, 5), tA), saluteShownMsInAll: from ? r1(to - from) : null, msAfterTheSecondFind: to ? r1(to - tB) : null, cutInOnce: salutes.length >= 1 && two.slice(0, two.findIndex((s) => s.pose !== 'R_K1_salute' && s.at > from)).every((s) => s.pose === 'R_K1_salute'), extended: to !== null && to - tB >= 1700 - 30 };
+      rowOut.aSecondFindDuringTheSalute = { secondFindMsIntoIt: from ? r1(tB - from) : null, thenShe: line(two.slice(0, 18), tA), saluteShownMsInAll: from ? r1(to - from) : null, msAfterTheSecondFind: to ? r1(to - tB) : null, saluteOnce: salutes.length === 1, extended: to !== null && to - tB >= 1600 - 30 };
       // A minute of her routine (from where the log began, skipping the finds' answers), and 30 s of the lamp.
+      await page.evaluate((t) => { window.__findTimes = t; }, [tA, ...Object.values(rowOut).map((x) => x?.foundAt).filter(Boolean)]);
       await page.waitForTimeout(Math.max(0, 62000 - ((await page.evaluate(() => performance.now())) - t00)));
       const all = shown(await stepsOf(page, 'rachel')).filter((s) => s.shown !== null);
       const reactions = [];
       // (Each answer, and the hold the find cut short just before it.)
-      all.forEach((s, i) => { if (s.pose === 'R_K1_salute') reactions.push([(all[i - 1]?.at ?? s.at) - 1, (all[i + 2]?.at ?? s.at + 3000) + 10]); });
+      const findTimes = await page.evaluate(() => window.__findTimes);
+      for (const at of findTimes) { const i = all.findLastIndex((s) => s.at <= at); const k = all.findIndex((s) => s.at > at && s.pose === 'R_K1_salute'); if (k < 0) continue; const home = all.findIndex((s, n) => n > k && s.pose === 'R_A1'); reactions.push([all[i].at - 1, all[home].at + 1]); }
       const loopOnly = all.filter((s) => !reactions.some(([a, b]) => s.at >= a && s.at <= b));
       const range = {};
       for (const item of routine.rachel.routine) for (const step of item.steps ?? [item]) { const [lo, hi] = Array.isArray(step.ms) ? step.ms : [step.ms, step.ms]; range[step.still] = [Math.min(range[step.still]?.[0] ?? Infinity, lo), Math.max(range[step.still]?.[1] ?? 0, hi)]; }
@@ -616,7 +621,7 @@ run.react = async () => {
         if (s.pose === 'R_A1_blink' || (last?.pose === 'R_A1' && last.blinked && s.pose === 'R_A1')) { if (last) { last.total += s.shown; if (s.pose === 'R_A1_blink') last.blinked = (last.blinked ?? 0) + 1; } continue; }
         folded.push({ pose: s.pose, total: s.shown, at: s.at, blinked: 0 });
       }
-      const seq = folded.map((s) => s.pose).join(' ');
+      const seq = folded.map((s) => s.pose).filter((p) => !p.startsWith('R_T_')).join(' ');
       const loops = [...seq.matchAll(/((R_A1 R_A2_stroke_low R_A3_stroke_out R_A2_stroke_low ?)+)R_A1 R_B1_lean R_A1 R_B2_dip R_A1/g)].map((m) => m[1].trim().split(' ').length / 4);
       const outOfRange = folded.slice(1, -1).filter((s) => range[s.pose] && !(s.blinked) && (s.total < range[s.pose][0] - 30 || s.total > range[s.pose][1] + 45)).map((s) => `${s.pose} ${s.total} ms`);
       const blinkSteps = loopOnly.map((s, i) => ({ ...s, before: loopOnly[i - 1]?.pose, after: loopOnly[i + 1]?.pose })).filter((s) => s.pose === 'R_A1_blink');
@@ -948,6 +953,213 @@ run.strips = async () => {
   say('what shows', report);
   say('the hand-over', handover);
   await save('strips.json', { scale: u, starts, ...report, handover, errors: errorsSeen });
+};
+
+// ---- Round 3: Rachel's in-betweens. -------------------------------------------------------------------------
+/** Her pose on every frame of the page: window.__f = [page clock ms, pose]. And the moment of the find. */
+const watchPose = (page) => page.evaluate(() => {
+  window.__f = []; window.__finds = [];
+  const tick = (now) => { window.__f.push([Math.round(now * 10) / 10, window.__hj.rachel.current]); requestAnimationFrame(tick); };
+  requestAnimationFrame(tick);
+});
+/** Find a mushroom on the first frame she has been on this pose for `into` ms (after `after` ms from now). */
+const findOnPose = (page, pose, into, spot, after = 0) => page.evaluate(({ pose, into, spot, after }) => new Promise((resolve) => {
+  const t0 = performance.now(); let since = null;
+  const tick = (now) => {
+    const p = window.__hj.rachel.current;
+    if (p === pose) since ??= now; else since = null;
+    if (since !== null && now - since >= into && now - t0 >= after && !window.__hj.player.reacting) { window.__finds.push([performance.now(), p]); document.querySelector(`.hj-plate [data-spot="${spot}"]`).click(); resolve(true); return; }
+    if (now - t0 > 70000) { resolve(false); return; }
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}), { pose, into, spot, after });
+/** Runs of the same pose: [pose, frames, ms, starts at]. The last is still running. */
+const runs = (rows) => {
+  const list = [];
+  for (const [at, pose] of rows) { const last = list.at(-1); if (last?.pose === pose) { last.frames++; } else { if (last) last.ms = r1(at - last.at); list.push({ pose, frames: 1, at, ms: null }); } }
+  return list;
+};
+/** Which drawing may follow which, from the package alone: its routine, its lead-ins and its reaction. */
+const neighbours = async () => {
+  const her = (await routineOf()).actors.rachel;
+  const next = new Set();
+  const chain = (names) => names.forEach((n, i) => i && next.add(`${names[i - 1]}>${n}`));
+  for (const item of her.routine) if (item.steps) chain([...item.steps.map((x) => x.still), item.steps[0].still]);
+  chain(her.routine.map((item) => item.still ?? 'R_A1'));
+  chain(['R_A1', 'R_A1_blink', 'R_A1']);
+  const salute = her.reaction.steps.map((x) => x.still);
+  chain(['R_A1', ...salute]);
+  for (const [from, steps] of Object.entries(her.reaction.lead_in)) chain([from, ...steps.map((x) => x.still), salute[0]]);
+  const stills = new Set([...her.routine.flatMap((i) => i.steps ?? [i]).map((x) => x.still), 'R_A1_blink']);
+  for (const still of stills) if (!her.reaction.lead_in[still]) chain([still, salute[0]]);
+  return { next, her, salute };
+};
+
+// The five situations of the brief (and a find the moment she leans), each recorded at 60 fps and shown drawing
+// by drawing. ?found=9: the only mushroom left is the far-right one, and its swath is far from her, so that
+// nothing but Rachel changes in the pictures of her.
+run.moves = async () => {
+  const { execFileSync } = await import('node:child_process');
+  const { next, her } = await neighbours();
+  const dir = `${out}moves-take/`;
+  const report = {};
+  const ONLY = process.argv[3];
+  const CASES = {
+    'stroke-cycle': { title: 'a stroke cycle', from: 'R_A1', until: (p) => p[0] === 'R_A2_stroke_low' },
+    dip: { title: 'a dip' },
+    'find-at-rest': { title: 'a find at rest, 250 ms into R_A1', pose: 'R_A1', into: 250, after: 600 },
+    'find-at-A3': { title: 'a find the moment her arm is stretched out (R_A3)', pose: 'R_A3_stroke_out', into: 0 },
+    'find-in-the-dip': { title: 'a find during the dip, 200 ms into R_B2', pose: 'R_B2_dip', into: 200 },
+    'find-in-the-lean': { title: 'a find the moment she leans back', pose: 'R_B1_lean', into: 0 },
+    'find-mid-stroke': { title: 'a find on an in-between (R_T_A2_A3_2)', pose: 'R_T_A2_A3_2', into: 0 },
+  };
+  for (const [name, c] of Object.entries(CASES)) {
+    if (ONLY && ONLY !== name) continue;
+    await rm(dir, { recursive: true, force: true }); await mkdir(dir, { recursive: true });
+    const { browser, context, page, errors } = await open(chromium, { viewport: { width: 1280, height: 800 } }, '?debug&intro=off&seed=7&found=9');
+    await clean(page);
+    const spot = (await unfound(page))[0];
+    // (The stagehand stays at home in this one: Chrome's screencast falls behind at a find during a walk, though the page does not.)
+    if (name === 'find-in-the-dip') await page.evaluate(() => { window.__hj.scene.walks.length = 0; });
+    await watchPose(page);
+    const cdp = await context.newCDPSession(page);
+    const frames = []; const writes = [];
+    cdp.on('Page.screencastFrame', ({ data, metadata, sessionId }) => {
+      const file = `${dir}${String(frames.length).padStart(5, '0')}.jpg`;
+      frames.push({ at: metadata.timestamp * 1000, file }); writes.push(writeFile(file, Buffer.from(data, 'base64')));
+      void cdp.send('Page.screencastFrameAck', { sessionId }).catch(() => {});
+    });
+    const seen = (pose) => page.waitForFunction((p) => window.__hj.rachel.current === p, pose, { timeout: 60000, polling: 'raf' });
+    const start = () => cdp.send('Page.startScreencast', { format: 'jpeg', quality: 92, everyNthFrame: 1 });
+    // Recording starts well before the moment, and ends well after.
+    if (name === 'dip' || name === 'find-in-the-dip') await seen('R_B1_lean');
+    if (name === 'find-in-the-lean') { await seen('R_A3_stroke_out'); }
+    await start();
+    if (name === 'stroke-cycle') { await seen('R_A3_stroke_out'); await seen('R_A1'); await seen('R_A3_stroke_out'); await seen('R_A1'); await page.waitForTimeout(400); }
+    else if (name === 'dip') { await seen('R_B2_dip'); await seen('R_T_A1_B2_0'); await page.waitForTimeout(500); }
+    else {
+      const ok = await findOnPose(page, c.pose, c.into, spot, c.after ?? 0);
+      if (!ok) { report[name] = { failed: `${c.pose} not seen` }; await browser.close(); continue; }
+      await seen('R_K1_salute');
+      await page.waitForFunction(() => !window.__hj.player.reacting, null, { timeout: 20000 });
+      await page.waitForTimeout(1500);
+    }
+    await cdp.send('Page.stopScreencast');
+    await Promise.all(writes);
+    const { rows, finds, origin, box } = await page.evaluate(() => { const r = document.querySelector('.hj-plate[data-scene="set"] [data-actor="rachel"]').getBoundingClientRect(); return { rows: window.__f, finds: window.__finds, origin: performance.timeOrigin, box: { x: r.left, y: r.top, width: r.width, height: r.height } }; });
+    const missed = await page.evaluate(() => window.__hj.rachel.missed);
+    await browser.close();
+    const all = runs(rows);
+    const first = frames[0].at - origin;
+    const findAt = finds[0]?.[0] ?? null;
+    // The stretch looked at: the last whole cycle or dip, or from the find's pose to two drawings after the salute's end.
+    let a; let b;
+    if (name === 'stroke-cycle') { const i3 = all.findLastIndex((x) => x.pose === 'R_A3_stroke_out'); a = all.slice(0, i3).findLastIndex((x) => x.pose === 'R_A1'); b = i3 + all.slice(i3).findIndex((x) => x.pose === 'R_A1'); }
+    else if (name === 'dip') { const i2 = all.findLastIndex((x) => x.pose === 'R_B2_dip'); a = all.slice(0, i2).findLastIndex((x) => x.pose === 'R_A1'); b = i2 + all.slice(i2).findIndex((x) => x.pose === 'R_A1'); }
+    else { a = Math.max(0, all.findLastIndex((x) => x.at <= findAt)); const k = all.findIndex((x, i) => i > a && x.pose === 'R_K1_salute'); b = Math.min(all.length - 1, k + all.slice(k).findIndex((x) => x.pose === 'R_A1') + 1); if (name !== 'find-mid-stroke') a = Math.max(0, a - 1); }
+    const part = all.slice(a, b + 1);
+    const pairs = part.slice(1).map((x, i) => `${part[i].pose}>${x.pose}`);
+    const passing = part.filter((x) => x.pose.startsWith('R_T_') || (findAt !== null && x.frames <= 2));
+    // The film: from a little before to a little after, as recorded.
+    const from = origin + part[0].at - (part[0].ms > 700 ? -(part[0].ms - 700) : 300); const to = origin + part.at(-1).at + 700;
+    const cut = frames.filter((f) => f.at >= Math.max(from, frames[0].at) && f.at <= to);
+    await writeFile(`${dir}list.txt`, `ffconcat version 1.0\n${cut.map((f, i) => `file '${f.file}'\nduration ${(((cut[i + 1]?.at ?? f.at + 16.7) - f.at) / 1000).toFixed(6)}`).join('\n')}\n`);
+    const mp4 = `moves-${name}-60fps.mp4`;
+    execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', `${dir}list.txt`, '-vf', 'fps=60,scale=trunc(iw/2)*2:trunc(ih/2)*2', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '18', '-movflags', '+faststart', `${out}${mp4}`]);
+    // The strip: every new picture of her that reached the recording, in order.
+    const pad = 4; const crop = { left: Math.round(box.x) - pad, top: Math.round(box.y) - pad, width: Math.round(box.width) + 2 * pad, height: Math.round(box.height) + 2 * pad };
+    // (Compared above the gap under the hem, plate y 552: the stagehand's boots may cross behind her ladder.)
+    const bare = { ...crop, height: Math.round((box.height * (552 - 75)) / 500) };
+    const pics = []; let before = null;
+    for (const f of cut) {
+      const buf = await sharp(f.file).extract(bare).removeAlpha().raw().toBuffer();
+      let n = 0; if (before) for (let i = 0; i < buf.length; i += 3) if (Math.abs(buf[i] - before[i]) + Math.abs(buf[i + 1] - before[i + 1]) + Math.abs(buf[i + 2] - before[i + 2]) > 60) n++;
+      if (!before || n > 25) pics.push({ at: f.at - origin, file: f.file, changed: n });
+      before = buf;
+    }
+    const tiles = []; const W = Math.round(crop.width * 0.62); const H = Math.round(crop.height * 0.62); const PER = 9;
+    for (const [i, p] of pics.entries()) {
+      const x = (i % PER) * (W + 8) + 8; const y = Math.floor(i / PER) * (H + 30) + 40;
+      tiles.push({ input: await sharp(p.file).extract(crop).resize(W, H).png().toBuffer(), left: x, top: y + 20 });
+      tiles.push({ input: text(`${Math.round(p.at - (findAt ?? pics[0].at))} ms${i ? `, ${p.changed} px` : ''}`, W, 12), left: x, top: y });
+    }
+    const sw = PER * (W + 8) + 8;
+    await sharp({ create: { width: sw, height: Math.ceil(pics.length / PER) * (H + 30) + 50, channels: 3, background: '#d9d6cf' } }).composite([{ input: text(`${c.title}: every new picture of her in the 60 fps recording (ms from ${findAt ? 'the find' : 'the first'}; px changed)`, sw), left: 0, top: 4 }, ...tiles]).jpeg({ quality: 84 }).toFile(`${out}moves-${name}.jpg`);
+    const picsIn = pics.filter((p) => p.at >= part[0].at - 5 && p.at <= part.at(-1).at + 60);
+    const k1 = part.find((x) => x.pose === 'R_K1_salute');
+    report[name] = {
+      what: c.title, file: mp4, seconds: r1((cut.at(-1).at - cut[0].at) / 1000), recordedFrames: cut.length, longestRecordedGapMs: r1(Math.max(...cut.slice(1).map((f, i) => f.at - cut[i].at))),
+      drawings: part.map((x) => `${x.pose} ${x.frames}f ${x.ms ?? '…'} ms`),
+      notNextToEachOtherInThePackage: pairs.filter((p) => !next.has(p)),
+      inBetweenFrames: part.filter((x) => x.pose.startsWith('R_T_')).map((x) => x.frames),
+      picturesInTheRecording: picsIn.length, drawingsShown: part.length, largestPictureChangePx: Math.max(...picsIn.slice(1).map((p) => p.changed)),
+      ...(findAt ? { findOn: finds[0][1], msFromTheFindToTheFirstMove: r1((part.find((x) => x.at > findAt)?.at ?? 0) - findAt), msFromTheFindToTheSalute: r1(k1.at - findAt), saluteMs: k1.ms } : {}),
+      missed, errors,
+    };
+    say(name, report[name]);
+  }
+  await rm(dir, { recursive: true, force: true });
+  if (!ONLY) await save('moves.json', report);
+};
+
+// How long each in-between is really on screen, over a long stretch with finds at random moments: a page frame
+// at a time, on the desktop, on the phone slowed four times, and in WebKit. An in-between is 3 frames (50 ms),
+// 2 in a lead-in (33 ms); none is ever skipped (every drawing follows one the package puts next to it).
+run.held = async () => {
+  const seconds = Number(process.argv[3] ?? 90);
+  const { next, her } = await neighbours();
+  const report = [];
+  const pixel = { ...devices['iPhone 14'], viewport: { width: 390, height: 844 }, deviceScaleFactor: 3 };
+  for (const [name, engine, options, slow] of [['chrome, 1280 × 800', chromium, { viewport: { width: 1280, height: 800 } }, 1], ['chrome, phone 390 × 844 × 3, slowed 4 times', chromium, pixel, 4], ['webkit, iPhone 14 profile', webkit, phone, 1]]) {
+    const tally = { routine: {}, leadIn: {} }; const bad = []; const longFrames = []; let finds = 0; let missed = 0; let frames = 0; const from = {}; const waits = []; const odd = []; let errorsAll = [];
+    // Ten finds to a page: as many fresh pages as the time needs.
+    const end = Date.now() + seconds * 1000;
+    for (let seed = 7; Date.now() < end; seed++) {
+      const { browser, context, page, errors } = await open(engine, options, `?debug&reset&intro=off&seed=${seed}`);
+      if (slow > 1) { const cdp = await context.newCDPSession(page); await cdp.send('Emulation.setCPUThrottlingRate', { rate: slow }); await page.waitForTimeout(2000); }
+      await watchPose(page);
+      // A find at a random moment, 2.5 to 6.5 s after the last one's answer.
+      const done = await page.evaluate(async ({ finds: order, seed, until }) => {
+        let a = seed * 7919; const rnd = () => { a = (a * 1664525 + 1013904223) >>> 0; return a / 4294967296; };
+        const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+        let n = 0;
+        for (const spot of order) {
+          if (Date.now() > until) break;
+          await wait(2500 + rnd() * 4000);
+          while (window.__hj.player.reacting) await wait(50);
+          window.__finds.push([performance.now(), window.__hj.rachel.current]);
+          document.querySelector(`.hj-plate [data-spot="${spot}"]`).click(); n++;
+          await wait(100);
+          while (window.__hj.player.reacting) await wait(100);
+        }
+        await wait(1500);
+        return n;
+      }, { finds: FINDS, seed, until: end });
+      finds += done;
+      const { rows, f, m } = await page.evaluate(() => ({ rows: window.__f, f: window.__finds, m: window.__hj.rachel.missed }));
+      missed += m; frames += rows.length; errorsAll = errorsAll.concat(errors);
+      for (let i = 1; i < rows.length; i++) if (rows[i][0] - rows[i - 1][0] > 25) longFrames.push(r1(rows[i][0] - rows[i - 1][0]));
+      const all = runs(rows);
+      for (let i = 1; i < all.length; i++) if (!next.has(`${all[i - 1].pose}>${all[i].pose}`)) bad.push(`${all[i - 1].pose}>${all[i].pose}`);
+      // A lead-in: from a find to the first drawing of the salute.
+      const leads = f.map(([at, pose]) => { const k = all.findIndex((x) => x.at > at - 40 && x.pose === 'R_T_A1_K1_1'); from[pose] = (from[pose] ?? 0) + 1; waits.push(r1(all[k].at - at)); return [at - 40, all[k].at]; });
+      all.slice(1, -1).forEach((x, i) => {
+        const lead = leads.find(([a, b]) => x.at > a && x.at < b);
+        const planned = lead ? her.reaction.lead_in[all[i].pose]?.[0] : null;
+        const isLead = lead && planned?.ms === 33 && planned.still === x.pose;
+        if (!isLead && !x.pose.startsWith('R_T_')) return;
+        // In time on screen, as frames of 16.7 ms (a page frame that came late is longer than one).
+        const held = Math.round(x.ms / (1000 / 60)); const to = isLead ? tally.leadIn : tally.routine;
+        to[held] = (to[held] ?? 0) + 1;
+        if (held !== (isLead ? 2 : 3)) odd.push(`${x.pose} ${isLead ? '(lead-in) ' : ''}${x.ms} ms, ${x.frames} page frames, after ${all[i].pose}, ${f.some(([at]) => Math.abs(at - x.at) < 120) ? 'at a find' : ''} page frames ${rows.map((q, k) => [q[0], k ? r1(q[0] - rows[k - 1][0]) : 0]).filter((q) => q[0] > x.at - 40 && q[0] <= x.at + x.ms + 1).map((q) => q[1]).join(' ')}`);
+      });
+      await browser.close();
+    }
+    const rowOut = { on: name, pageFrames: frames, finds, findsOn: from, framesEachInBetweenWasShown: tally.routine, framesEachLeadInDrawingWasShown: tally.leadIn, oddOnes: odd, drawingsSkipped: bad.length, skips: [...new Set(bad)].slice(0, 8), posesMissed: missed, pageFramesOver25ms: longFrames.length, longestPageFrameMs: Math.max(0, ...longFrames), msFromAFindToTheSalutesFirstDrawing: { shortest: Math.min(...waits), longest: Math.max(...waits) }, errors: errorsAll };
+    report.push(rowOut); say(name, rowOut);
+  }
+  await save('held.json', report);
 };
 
 // A whole crossing at 60 fps, desktop Chrome through Playwright (its own video is 25 fps, so the frames are taken
