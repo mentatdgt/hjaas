@@ -1,0 +1,268 @@
+{
+ "chrome": {
+  "sprite": {
+   "blocked": "mushroom_07.webp",
+   "requestsRefused": 2,
+   "roomShows": true,
+   "mushrooms": 10,
+   "rachel": true,
+   "foundOfTen": "10",
+   "retry": false,
+   "warnings": [
+    "[hjaas] a mushroom drawing could not be loaded; another stands in for it EncodingError: The source image cannot be decoded."
+   ],
+   "errors": [],
+   "ok": true
+  },
+  "allSprites": {
+   "retryOffered": true,
+   "afterRetry": {
+    "mushrooms": 10,
+    "rachel": true,
+    "retry": false
+   },
+   "errors": [],
+   "ok": true
+  },
+  "castFrame": {
+   "build": {
+    "blocked": "rachel/frame_01.webp",
+    "roomShows": true,
+    "rachelWithout": false,
+    "mushrooms": 10,
+    "foundOfTen": "10",
+    "rachelOnComingBack": true,
+    "errors": [],
+    "ok": true
+   },
+   "grow": {
+    "blocked": "rachel/stills/A1_mist_aim.webp",
+    "roomShows": true,
+    "rachelWithout": false,
+    "mushrooms": 10,
+    "foundOfTen": "10",
+    "rachelOnComingBack": true,
+    "errors": [],
+    "ok": true
+   },
+   "design": {
+    "blocked": "cast/fan/fan_00.webp",
+    "roomShows": true,
+    "rachelWithout": false,
+    "mushrooms": 10,
+    "foundOfTen": "10",
+    "rachelOnComingBack": true,
+    "errors": [],
+    "ok": true
+   },
+   "film": {
+    "blocked": "cast/water/W_1.webp",
+    "roomShows": true,
+    "rachelWithout": false,
+    "mushrooms": 10,
+    "foundOfTen": "10",
+    "rachelOnComingBack": true,
+    "errors": [],
+    "ok": true
+   },
+   "set": {
+    "blocked": "cast/lamp/L_00.webp",
+    "roomShows": true,
+    "rachelWithout": false,
+    "mushrooms": 10,
+    "foundOfTen": "10",
+    "rachelOnComingBack": true,
+    "errors": [],
+    "ok": true
+   }
+  },
+  "opening, room blocked": {
+   "retryOfferedAfterMs": 117,
+   "requestsRefused": 4,
+   "retry": true,
+   "retryAgainWhileBlocked": true,
+   "controlsThen": [
+    "Retry room"
+   ],
+   "afterRetry": {
+    "plate": "build",
+    "rachel": true,
+    "foundOfTen": "10",
+    "retry": false
+   },
+   "errors": [],
+   "ok": true
+  },
+  "opening, folder blocked": {
+   "retryOfferedAfterMs": 105,
+   "requestsRefused": 16,
+   "retry": true,
+   "retryAgainWhileBlocked": true,
+   "controlsThen": [
+    "Retry room"
+   ],
+   "afterRetry": {
+    "plate": "build",
+    "rachel": true,
+    "foundOfTen": "10",
+    "retry": false
+   },
+   "errors": [],
+   "ok": true
+  },
+  "otherTabAfterFailedOpening": {
+   "scene": "film",
+   "retry": false,
+   "errors": [],
+   "ok": true
+  },
+  "switchRoomBlocked": {
+   "oldRoomKept": "build",
+   "retry": true,
+   "huntGoesOn": "1",
+   "anotherTabWorks": "film",
+   "retryGoneThere": true,
+   "afterRetry": {
+    "plate": "design",
+    "rachel": true,
+    "foundOfTen": "10",
+    "retry": false
+   },
+   "errors": [],
+   "ok": true
+  }
+ },
+ "webkit": {
+  "sprite": {
+   "blocked": "mushroom_07.webp",
+   "requestsRefused": 2,
+   "roomShows": true,
+   "mushrooms": 10,
+   "rachel": true,
+   "foundOfTen": "10",
+   "retry": false,
+   "warnings": [
+    "[hjaas] a mushroom drawing could not be loaded; another stands in for it EncodingError: Loading error."
+   ],
+   "errors": [],
+   "ok": true
+  },
+  "allSprites": {
+   "retryOffered": true,
+   "afterRetry": {
+    "mushrooms": 10,
+    "rachel": true,
+    "retry": false
+   },
+   "errors": [],
+   "ok": true
+  },
+  "castFrame": {
+   "build": {
+    "blocked": "rachel/frame_01.webp",
+    "roomShows": true,
+    "rachelWithout": false,
+    "mushrooms": 10,
+    "foundOfTen": "10",
+    "rachelOnComingBack": true,
+    "errors": [],
+    "ok": true
+   },
+   "grow": {
+    "blocked": "rachel/stills/A1_mist_aim.webp",
+    "roomShows": true,
+    "rachelWithout": false,
+    "mushrooms": 10,
+    "foundOfTen": "10",
+    "rachelOnComingBack": true,
+    "errors": [],
+    "ok": true
+   },
+   "design": {
+    "blocked": "cast/fan/fan_00.webp",
+    "roomShows": true,
+    "rachelWithout": false,
+    "mushrooms": 10,
+    "foundOfTen": "10",
+    "rachelOnComingBack": true,
+    "errors": [],
+    "ok": true
+   },
+   "film": {
+    "blocked": "cast/water/W_1.webp",
+    "roomShows": true,
+    "rachelWithout": false,
+    "mushrooms": 10,
+    "foundOfTen": "10",
+    "rachelOnComingBack": true,
+    "errors": [],
+    "ok": true
+   },
+   "set": {
+    "blocked": "cast/lamp/L_00.webp",
+    "roomShows": true,
+    "rachelWithout": false,
+    "mushrooms": 10,
+    "foundOfTen": "10",
+    "rachelOnComingBack": true,
+    "errors": [],
+    "ok": true
+   }
+  },
+  "opening, room blocked": {
+   "retryOfferedAfterMs": 63,
+   "requestsRefused": 5,
+   "retry": true,
+   "retryAgainWhileBlocked": true,
+   "controlsThen": [
+    "Retry room"
+   ],
+   "afterRetry": {
+    "plate": "build",
+    "rachel": true,
+    "foundOfTen": "10",
+    "retry": false
+   },
+   "errors": [],
+   "ok": true
+  },
+  "opening, folder blocked": {
+   "retryOfferedAfterMs": 70,
+   "requestsRefused": 17,
+   "retry": true,
+   "retryAgainWhileBlocked": true,
+   "controlsThen": [
+    "Retry room"
+   ],
+   "afterRetry": {
+    "plate": "build",
+    "rachel": true,
+    "foundOfTen": "10",
+    "retry": false
+   },
+   "errors": [],
+   "ok": true
+  },
+  "otherTabAfterFailedOpening": {
+   "scene": "film",
+   "retry": false,
+   "errors": [],
+   "ok": true
+  },
+  "switchRoomBlocked": {
+   "oldRoomKept": "build",
+   "retry": true,
+   "huntGoesOn": "1",
+   "anotherTabWorks": "film",
+   "retryGoneThere": true,
+   "afterRetry": {
+    "plate": "design",
+    "rachel": true,
+    "foundOfTen": "10",
+    "retry": false
+   },
+   "errors": [],
+   "ok": true
+  }
+ }
+}

@@ -1,0 +1,306 @@
+{
+ "chrome": {
+  "desktop build 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1296000,
+   "mostLevels": 0
+  },
+  "desktop grow 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1296000,
+   "mostLevels": 0
+  },
+  "desktop design 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1296000,
+   "mostLevels": 0
+  },
+  "desktop film 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1296000,
+   "mostLevels": 0
+  },
+  "desktop set 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1296000,
+   "mostLevels": 0
+  },
+  "desktop build 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1296000,
+   "mostLevels": 0
+  },
+  "desktop grow 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1296000,
+   "mostLevels": 0
+  },
+  "desktop design 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1296000,
+   "mostLevels": 0
+  },
+  "desktop film 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1296000,
+   "mostLevels": 0
+  },
+  "desktop set 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1296000,
+   "mostLevels": 0
+  },
+  "portrait build 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "portrait grow 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "portrait design 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "portrait film 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "portrait set 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "portrait build 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "portrait grow 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "portrait design 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "portrait film 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "portrait set 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "landscape build 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "landscape grow 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "landscape design 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "landscape film 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "landscape set 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "landscape build 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "landscape grow 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "landscape design 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "landscape film 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 2
+  },
+  "landscape set 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  }
+ },
+ "webkit": {
+  "desktop build 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1296000,
+   "mostLevels": 0
+  },
+  "desktop grow 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1296000,
+   "mostLevels": 0
+  },
+  "desktop design 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1296000,
+   "mostLevels": 0
+  },
+  "desktop film 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1296000,
+   "mostLevels": 0
+  },
+  "desktop set 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1296000,
+   "mostLevels": 0
+  },
+  "desktop build 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1296000,
+   "mostLevels": 0
+  },
+  "desktop grow 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1296000,
+   "mostLevels": 0
+  },
+  "desktop design 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1296000,
+   "mostLevels": 0
+  },
+  "desktop film 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1296000,
+   "mostLevels": 0
+  },
+  "desktop set 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1296000,
+   "mostLevels": 0
+  },
+  "portrait build 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "portrait grow 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "portrait design 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "portrait film 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "portrait set 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "portrait build 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "portrait grow 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "portrait design 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "portrait film 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "portrait set 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "landscape build 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "landscape grow 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "landscape design 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "landscape film 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "landscape set 17": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "landscape build 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "landscape grow 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "landscape design 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "landscape film 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  },
+  "landscape set 50": {
+   "pixelsThatDiffer": 0,
+   "of": 1316640,
+   "mostLevels": 0
+  }
+ }
+}

@@ -1,0 +1,21 @@
+S4: what listens where (2026-11-25 06:06)
+
+$ npm run dev (running on 5173)
+node IPv4 TCP 127.0.0.1:5173 (LISTEN)
+127.0.0.1:5173 -> 200
+LAN address:5173 -> 000 (000: refused)
+
+$ npm run preview (running on 4173)
+node IPv4 TCP 127.0.0.1:4173 (LISTEN)
+127.0.0.1:4173 -> 200
+LAN address:4173 -> 000
+
+$ npm run dev:lan -- --port 5180
+node IPv4 TCP *:5180 (LISTEN)
+127.0.0.1:5180 -> 200
+LAN address:5180 -> 200
+
+$ npm run preview:lan -- --port 4183
+node IPv4 TCP *:4183 (LISTEN)
+127.0.0.1:4183 -> 200
+LAN address:4183 -> 200

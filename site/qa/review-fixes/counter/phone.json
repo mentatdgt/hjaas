@@ -1,0 +1,662 @@
+{
+ "portrait": {
+  "375x667": {
+   "build": {
+    "windowPx": [
+     339,
+     388
+    ],
+    "windowPctOfScreen": 58.2,
+    "roomSeenPct": 49,
+    "herCentreOffPx": -57.6,
+    "herInView": true,
+    "mustShowClearancePx": [
+     [
+      49.6,
+      164.8
+     ],
+     [
+      142,
+      46.5
+     ]
+    ],
+    "openedAtPlateX": 901,
+    "countersEnd": 604,
+    "controlsEnd": 649,
+    "screen": 667,
+    "pageTall": 667,
+    "overlap": false,
+    "sideways": 0,
+    "smallestTapBox": null,
+    "scrollbar": 0,
+    "touchAction": "pan-x pan-y",
+    "id": "build"
+   },
+   "grow": {
+    "windowPx": [
+     339,
+     388
+    ],
+    "windowPctOfScreen": 58.2,
+    "roomSeenPct": 49,
+    "herCentreOffPx": -4.1,
+    "herInView": true,
+    "openedAtPlateX": 1005,
+    "countersEnd": 604,
+    "controlsEnd": 649,
+    "screen": 667,
+    "pageTall": 667,
+    "overlap": false,
+    "sideways": 0,
+    "smallestTapBox": 44,
+    "scrollbar": 0,
+    "touchAction": "pan-x pan-y",
+    "id": "grow"
+   },
+   "design": {
+    "windowPx": [
+     339,
+     388
+    ],
+    "windowPctOfScreen": 58.2,
+    "roomSeenPct": 49,
+    "herCentreOffPx": -3.4,
+    "herInView": true,
+    "openedAtPlateX": 901,
+    "countersEnd": 604,
+    "controlsEnd": 649,
+    "screen": 667,
+    "pageTall": 667,
+    "overlap": false,
+    "sideways": 0,
+    "smallestTapBox": 44,
+    "scrollbar": 0,
+    "touchAction": "pan-x pan-y",
+    "id": "design"
+   },
+   "film": {
+    "windowPx": [
+     339,
+     388
+    ],
+    "windowPctOfScreen": 58.2,
+    "roomSeenPct": 49,
+    "herCentreOffPx": 86.5,
+    "herInView": true,
+    "mustShowClearancePx": [
+     [
+      41.9,
+      236.8
+     ],
+     [
+      233.3,
+      52.5
+     ],
+     [
+      188.8,
+      102.8
+     ]
+    ],
+    "openedAtPlateX": 978,
+    "countersEnd": 604,
+    "controlsEnd": 649,
+    "screen": 667,
+    "pageTall": 667,
+    "overlap": false,
+    "sideways": 0,
+    "smallestTapBox": 44,
+    "scrollbar": 0,
+    "touchAction": "pan-x pan-y",
+    "id": "film"
+   },
+   "set": {
+    "windowPx": [
+     339,
+     388
+    ],
+    "windowPctOfScreen": 58.2,
+    "roomSeenPct": 49,
+    "herCentreOffPx": 12.2,
+    "herInView": true,
+    "openedAtPlateX": 864,
+    "countersEnd": 604,
+    "controlsEnd": 649,
+    "screen": 667,
+    "pageTall": 667,
+    "overlap": false,
+    "sideways": 0,
+    "smallestTapBox": 44,
+    "scrollbar": 0,
+    "touchAction": "pan-x pan-y",
+    "id": "set"
+   }
+  },
+  "390x844": {
+   "build": {
+    "windowPx": [
+     354,
+     531
+    ],
+    "windowPctOfScreen": 62.9,
+    "roomSeenPct": 38,
+    "herCentreOffPx": -78.6,
+    "herInView": true,
+    "mustShowClearancePx": [
+     [
+      13.2,
+      170.4
+     ],
+     [
+      139.6,
+      8.4
+     ]
+    ],
+    "openedAtPlateX": 900,
+    "countersEnd": 747,
+    "controlsEnd": 792,
+    "screen": 844,
+    "pageTall": 844,
+    "overlap": false,
+    "sideways": 0,
+    "smallestTapBox": null,
+    "scrollbar": 0,
+    "touchAction": "pan-x pan-y",
+    "id": "build"
+   },
+   "grow": {
+    "windowPx": [
+     354,
+     531
+    ],
+    "windowPctOfScreen": 62.9,
+    "roomSeenPct": 38,
+    "herCentreOffPx": -5.5,
+    "herInView": true,
+    "openedAtPlateX": 1005,
+    "countersEnd": 747,
+    "controlsEnd": 792,
+    "screen": 844,
+    "pageTall": 844,
+    "overlap": false,
+    "sideways": 0,
+    "smallestTapBox": 44,
+    "scrollbar": 0,
+    "touchAction": "pan-x pan-y",
+    "id": "grow"
+   },
+   "design": {
+    "windowPx": [
+     354,
+     531
+    ],
+    "windowPctOfScreen": 62.9,
+    "roomSeenPct": 38,
+    "herCentreOffPx": -4.4,
+    "herInView": true,
+    "openedAtPlateX": 900,
+    "countersEnd": 747,
+    "controlsEnd": 792,
+    "screen": 844,
+    "pageTall": 844,
+    "overlap": false,
+    "sideways": 0,
+    "smallestTapBox": 44,
+    "scrollbar": 0,
+    "touchAction": "pan-x pan-y",
+    "id": "design"
+   },
+   "film": {
+    "windowPx": [
+     354,
+     531
+    ],
+    "windowPctOfScreen": 62.9,
+    "roomSeenPct": 38,
+    "herCentreOffPx": 119.4,
+    "herInView": false,
+    "mustShowClearancePx": [
+     [
+      3.5,
+      268.1
+     ],
+     [
+      265.3,
+      15.9
+     ],
+     [
+      204.4,
+      84.7
+     ]
+    ],
+    "openedAtPlateX": 976,
+    "countersEnd": 747,
+    "controlsEnd": 792,
+    "screen": 844,
+    "pageTall": 844,
+    "overlap": false,
+    "sideways": 0,
+    "smallestTapBox": 44,
+    "scrollbar": 0,
+    "touchAction": "pan-x pan-y",
+    "id": "film"
+   },
+   "set": {
+    "windowPx": [
+     354,
+     531
+    ],
+    "windowPctOfScreen": 62.9,
+    "roomSeenPct": 38,
+    "herCentreOffPx": 16.5,
+    "herInView": true,
+    "openedAtPlateX": 865,
+    "countersEnd": 747,
+    "controlsEnd": 792,
+    "screen": 844,
+    "pageTall": 844,
+    "overlap": false,
+    "sideways": 0,
+    "smallestTapBox": 44,
+    "scrollbar": 0,
+    "touchAction": "pan-x pan-y",
+    "id": "set"
+   }
+  },
+  "430x932": {
+   "build": {
+    "windowPx": [
+     394,
+     591
+    ],
+    "windowPctOfScreen": 63.4,
+    "roomSeenPct": 38,
+    "herCentreOffPx": -87.1,
+    "herInView": true,
+    "mustShowClearancePx": [
+     [
+      15.1,
+      189.2
+     ],
+     [
+      155.8,
+      9
+     ]
+    ],
+    "openedAtPlateX": 900,
+    "countersEnd": 807,
+    "controlsEnd": 852,
+    "screen": 932,
+    "pageTall": 932,
+    "overlap": false,
+    "sideways": 0,
+    "smallestTapBox": null,
+    "scrollbar": 0,
+    "touchAction": "pan-x pan-y",
+    "id": "build"
+   },
+   "grow": {
+    "windowPx": [
+     394,
+     591
+    ],
+    "windowPctOfScreen": 63.4,
+    "roomSeenPct": 38,
+    "herCentreOffPx": -6.1,
+    "herInView": true,
+    "openedAtPlateX": 1005,
+    "countersEnd": 807,
+    "controlsEnd": 852,
+    "screen": 932,
+    "pageTall": 932,
+    "overlap": false,
+    "sideways": 0,
+    "smallestTapBox": 44,
+    "scrollbar": 0,
+    "touchAction": "pan-x pan-y",
+    "id": "grow"
+   },
+   "design": {
+    "windowPx": [
+     394,
+     591
+    ],
+    "windowPctOfScreen": 63.4,
+    "roomSeenPct": 38,
+    "herCentreOffPx": -4.5,
+    "herInView": true,
+    "openedAtPlateX": 900,
+    "countersEnd": 807,
+    "controlsEnd": 852,
+    "screen": 932,
+    "pageTall": 932,
+    "overlap": false,
+    "sideways": 0,
+    "smallestTapBox": 44,
+    "scrollbar": 0,
+    "touchAction": "pan-x pan-y",
+    "id": "design"
+   },
+   "film": {
+    "windowPx": [
+     394,
+     591
+    ],
+    "windowPctOfScreen": 63.4,
+    "roomSeenPct": 38,
+    "herCentreOffPx": 132.1,
+    "herInView": false,
+    "mustShowClearancePx": [
+     [
+      3.2,
+      299.1
+     ],
+     [
+      294.6,
+      18.4
+     ],
+     [
+      226.7,
+      95
+     ]
+    ],
+    "openedAtPlateX": 978,
+    "countersEnd": 807,
+    "controlsEnd": 852,
+    "screen": 932,
+    "pageTall": 932,
+    "overlap": false,
+    "sideways": 0,
+    "smallestTapBox": 44,
+    "scrollbar": 0,
+    "touchAction": "pan-x pan-y",
+    "id": "film"
+   },
+   "set": {
+    "windowPx": [
+     394,
+     591
+    ],
+    "windowPctOfScreen": 63.4,
+    "roomSeenPct": 38,
+    "herCentreOffPx": 18.5,
+    "herInView": true,
+    "openedAtPlateX": 865,
+    "countersEnd": 807,
+    "controlsEnd": 852,
+    "screen": 932,
+    "pageTall": 932,
+    "overlap": false,
+    "sideways": 0,
+    "smallestTapBox": 44,
+    "scrollbar": 0,
+    "touchAction": "pan-x pan-y",
+    "id": "set"
+   }
+  }
+ },
+ "landscape": {
+  "844x390": {
+   "build": {
+    "windowPx": [
+     466,
+     262
+    ],
+    "windowPctOfScreen": 67.2,
+    "roomSeenPct": 100,
+    "herCentreOffPx": -20.9,
+    "herInView": true,
+    "mustShowClearancePx": [
+     [
+      169.8,
+      211.6
+     ],
+     [
+      232.2,
+      131.7
+     ]
+    ],
+    "openedAtPlateX": 836,
+    "countersEnd": 382,
+    "controlsEnd": 374,
+    "screen": 390,
+    "pageTall": 390,
+    "overlap": false,
+    "sideways": 0,
+    "smallestTapBox": null,
+    "scrollbar": 0,
+    "touchAction": "auto",
+    "id": "build"
+   },
+   "grow": {
+    "windowPx": [
+     466,
+     262
+    ],
+    "windowPctOfScreen": 67.2,
+    "roomSeenPct": 100,
+    "herCentreOffPx": 44.3,
+    "herInView": true,
+    "openedAtPlateX": 836,
+    "countersEnd": 382,
+    "controlsEnd": 374,
+    "screen": 390,
+    "pageTall": 390,
+    "overlap": false,
+    "sideways": 0,
+    "smallestTapBox": 44,
+    "scrollbar": 0,
+    "touchAction": "auto",
+    "id": "grow"
+   },
+   "design": {
+    "windowPx": [
+     466,
+     262
+    ],
+    "windowPctOfScreen": 67.2,
+    "roomSeenPct": 100,
+    "herCentreOffPx": 15.7,
+    "herInView": true,
+    "openedAtPlateX": 836,
+    "countersEnd": 382,
+    "controlsEnd": 374,
+    "screen": 390,
+    "pageTall": 390,
+    "overlap": false,
+    "sideways": 0,
+    "smallestTapBox": 44,
+    "scrollbar": 0,
+    "touchAction": "auto",
+    "id": "design"
+   },
+   "film": {
+    "windowPx": [
+     466,
+     262
+    ],
+    "windowPctOfScreen": 67.2,
+    "roomSeenPct": 100,
+    "herCentreOffPx": 98,
+    "herInView": true,
+    "mustShowClearancePx": [
+     [
+      186.3,
+      238.6
+     ],
+     [
+      315.4,
+      114.2
+     ],
+     [
+      285.4,
+      148.1
+     ]
+    ],
+    "openedAtPlateX": 836,
+    "countersEnd": 382,
+    "controlsEnd": 374,
+    "screen": 390,
+    "pageTall": 390,
+    "overlap": false,
+    "sideways": 0,
+    "smallestTapBox": 44,
+    "scrollbar": 0,
+    "touchAction": "auto",
+    "id": "film"
+   },
+   "set": {
+    "windowPx": [
+     466,
+     262
+    ],
+    "windowPctOfScreen": 67.2,
+    "roomSeenPct": 100,
+    "herCentreOffPx": 16.1,
+    "herInView": true,
+    "openedAtPlateX": 836,
+    "countersEnd": 382,
+    "controlsEnd": 374,
+    "screen": 390,
+    "pageTall": 390,
+    "overlap": false,
+    "sideways": 0,
+    "smallestTapBox": 44,
+    "scrollbar": 0,
+    "touchAction": "auto",
+    "id": "set"
+   }
+  },
+  "932x430": {
+   "build": {
+    "windowPx": [
+     537,
+     302
+    ],
+    "windowPctOfScreen": 70.2,
+    "roomSeenPct": 100,
+    "herCentreOffPx": -24.1,
+    "herInView": true,
+    "mustShowClearancePx": [
+     [
+      195.8,
+      243.9
+     ],
+     [
+      267.6,
+      151.8
+     ]
+    ],
+    "openedAtPlateX": 836,
+    "countersEnd": 422,
+    "controlsEnd": 414,
+    "screen": 430,
+    "pageTall": 430,
+    "overlap": false,
+    "sideways": 0,
+    "smallestTapBox": null,
+    "scrollbar": 0,
+    "touchAction": "auto",
+    "id": "build"
+   },
+   "grow": {
+    "windowPx": [
+     537,
+     302
+    ],
+    "windowPctOfScreen": 70.2,
+    "roomSeenPct": 100,
+    "herCentreOffPx": 51,
+    "herInView": true,
+    "openedAtPlateX": 836,
+    "countersEnd": 422,
+    "controlsEnd": 414,
+    "screen": 430,
+    "pageTall": 430,
+    "overlap": false,
+    "sideways": 0,
+    "smallestTapBox": 44,
+    "scrollbar": 0,
+    "touchAction": "auto",
+    "id": "grow"
+   },
+   "design": {
+    "windowPx": [
+     537,
+     302
+    ],
+    "windowPctOfScreen": 70.2,
+    "roomSeenPct": 100,
+    "herCentreOffPx": 18.1,
+    "herInView": true,
+    "openedAtPlateX": 836,
+    "countersEnd": 422,
+    "controlsEnd": 414,
+    "screen": 430,
+    "pageTall": 430,
+    "overlap": false,
+    "sideways": 0,
+    "smallestTapBox": 44,
+    "scrollbar": 0,
+    "touchAction": "auto",
+    "id": "design"
+   },
+   "film": {
+    "windowPx": [
+     537,
+     302
+    ],
+    "windowPctOfScreen": 70.2,
+    "roomSeenPct": 100,
+    "herCentreOffPx": 112.9,
+    "herInView": true,
+    "mustShowClearancePx": [
+     [
+      214.7,
+      275.1
+     ],
+     [
+      363.6,
+      131.6
+     ],
+     [
+      328.9,
+      170.8
+     ]
+    ],
+    "openedAtPlateX": 836,
+    "countersEnd": 422,
+    "controlsEnd": 414,
+    "screen": 430,
+    "pageTall": 430,
+    "overlap": false,
+    "sideways": 0,
+    "smallestTapBox": 44,
+    "scrollbar": 0,
+    "touchAction": "auto",
+    "id": "film"
+   },
+   "set": {
+    "windowPx": [
+     537,
+     302
+    ],
+    "windowPctOfScreen": 70.2,
+    "roomSeenPct": 100,
+    "herCentreOffPx": 18.6,
+    "herInView": true,
+    "openedAtPlateX": 836,
+    "countersEnd": 422,
+    "controlsEnd": 414,
+    "screen": 430,
+    "pageTall": 430,
+    "overlap": false,
+    "sideways": 0,
+    "smallestTapBox": 44,
+    "scrollbar": 0,
+    "touchAction": "auto",
+    "id": "set"
+   }
+  }
+ },
+ "problems": []
+}

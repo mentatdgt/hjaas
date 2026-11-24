@@ -1,0 +1,44 @@
+{
+ "build": [
+  {
+   "clockMs": 535,
+   "frames": 361,
+   "longestMs": 21,
+   "longestAtMs": 4765,
+   "over25": 0,
+   "over50": 0,
+   "longestFirst100ms": 17,
+   "errors": []
+  },
+  {
+   "clockMs": 528,
+   "frames": 361,
+   "longestMs": 20,
+   "longestAtMs": 4766,
+   "over25": 0,
+   "over50": 0,
+   "longestFirst100ms": 17,
+   "errors": []
+  },
+  {
+   "clockMs": 532,
+   "frames": 361,
+   "longestMs": 21,
+   "longestAtMs": 115,
+   "over25": 0,
+   "over50": 0,
+   "longestFirst100ms": 18,
+   "errors": []
+  },
+  {
+   "clockMs": 561,
+   "frames": 361,
+   "longestMs": 23,
+   "longestAtMs": 4765,
+   "over25": 0,
+   "over50": 0,
+   "longestFirst100ms": 17,
+   "errors": []
+  }
+ ]
+}

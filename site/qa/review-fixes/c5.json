@@ -1,0 +1,722 @@
+{
+ "chrome": {
+  "desktop": {
+   "painting": {
+    "sheetBeforePc": 47,
+    "settled": {
+     "ms": 14,
+     "frames": 1
+    },
+    "controls": [],
+    "rachel": true,
+    "errors": [],
+    "posesInTwoSeconds": 1,
+    "aFindAfterwards": "1",
+    "posesInSixSecondsWithMotionBack": 4,
+    "ok": true
+   },
+   "switch": {
+    "sheetBeforePc": 49,
+    "settled": {
+     "ms": 14,
+     "frames": 1
+    },
+    "scene": "set",
+    "errors": [],
+    "ok": true
+   },
+   "flight": {
+    "flyingWhenSwitched": 1,
+    "inTheFrameOfTheSwitch": {
+     "cream": "6",
+     "fly": [
+      796
+     ]
+    },
+    "settled": {
+     "ms": 11,
+     "frames": 1
+    },
+    "from": "6",
+    "to": "7",
+    "red": "17",
+    "findsStored": 17,
+    "landings": 1,
+    "dots": [
+     "build"
+    ],
+    "button": false,
+    "said": "",
+    "errors": [],
+    "later": {
+     "cream": "7",
+     "findsStored": 17
+    },
+    "ok": true
+   },
+   "tenth": {
+    "flyingWhenSwitched": 1,
+    "inTheFrameOfTheSwitch": {
+     "cream": "9",
+     "fly": [
+      1058
+     ]
+    },
+    "settled": {
+     "ms": 10,
+     "frames": 1
+    },
+    "from": "9",
+    "to": "10",
+    "red": "20",
+    "findsStored": 20,
+    "landings": 1,
+    "dots": [
+     "build",
+     "grow"
+    ],
+    "button": false,
+    "said": "",
+    "errors": [],
+    "later": {
+     "cream": "10",
+     "findsStored": 20
+    },
+    "ok": true
+   },
+   "fiftieth": {
+    "flyingWhenSwitched": 1,
+    "inTheFrameOfTheSwitch": {
+     "cream": "9",
+     "fly": [
+      1066
+     ]
+    },
+    "settled": {
+     "ms": 12,
+     "frames": 1
+    },
+    "from": "9",
+    "to": "10",
+    "red": "50",
+    "findsStored": 50,
+    "landings": 1,
+    "dots": [
+     "build",
+     "grow",
+     "design",
+     "film",
+     "set"
+    ],
+    "button": true,
+    "said": "All 50 mushrooms found. The Contact Hui Jie button is now available.",
+    "errors": [],
+    "later": {
+     "cream": "10",
+     "findsStored": 50
+    },
+    "ok": true
+   },
+   "fiftieth, in its ceremony": {
+    "flyingWhenSwitched": 0,
+    "inTheFrameOfTheSwitch": {
+     "cream": "10",
+     "fly": []
+    },
+    "settled": {
+     "ms": 8,
+     "frames": 1
+    },
+    "from": "9",
+    "to": "10",
+    "red": "50",
+    "findsStored": 50,
+    "landings": 1,
+    "dots": [
+     "build",
+     "grow",
+     "design",
+     "film",
+     "set"
+    ],
+    "button": true,
+    "said": "All 50 mushrooms found. The Contact Hui Jie button is now available.",
+    "errors": [],
+    "later": {
+     "cream": "10",
+     "findsStored": 50
+    },
+    "ok": true
+   },
+   "hidden in the painting": {
+    "finishedWhileHidden": true,
+    "controlsAfter": [
+     "Pause animation",
+     "Replay painting"
+    ],
+    "errors": [],
+    "ok": true
+   },
+   "hidden from the start": {
+    "paintingsWhileHidden": 0,
+    "countedAsSeenWhileHidden": null,
+    "paintingOnceLookedAt": 1,
+    "seenAfterwards": "1",
+    "errors": [],
+    "ok": true
+   },
+   "hidden while it loads": {
+    "paintingsWhileHidden": 0,
+    "countedAsSeenWhileHidden": null,
+    "paintingOnceLookedAt": 1,
+    "seenAfterwards": "1",
+    "errors": [],
+    "ok": true
+   },
+   "hidden in a flight": {
+    "cream": "7",
+    "stored": 17,
+    "landings": 1,
+    "later": "7",
+    "errors": [],
+    "ok": true
+   }
+  },
+  "portrait": {
+   "painting": {
+    "sheetBeforePc": 47,
+    "settled": {
+     "ms": 16,
+     "frames": 1
+    },
+    "controls": [],
+    "rachel": true,
+    "errors": [],
+    "posesInTwoSeconds": 1,
+    "aFindAfterwards": "1",
+    "posesInSixSecondsWithMotionBack": 5,
+    "ok": true
+   },
+   "switch": {
+    "sheetBeforePc": 45,
+    "settled": {
+     "ms": 16,
+     "frames": 1
+    },
+    "scene": "set",
+    "errors": [],
+    "ok": true
+   },
+   "flight": {
+    "flyingWhenSwitched": 1,
+    "inTheFrameOfTheSwitch": {
+     "cream": "6",
+     "fly": [
+      184
+     ]
+    },
+    "settled": {
+     "ms": 6,
+     "frames": 1
+    },
+    "from": "6",
+    "to": "7",
+    "red": "17",
+    "findsStored": 17,
+    "landings": 1,
+    "dots": [
+     "build"
+    ],
+    "button": false,
+    "said": "",
+    "errors": [],
+    "later": {
+     "cream": "7",
+     "findsStored": 17
+    },
+    "ok": true
+   },
+   "tenth": {
+    "flyingWhenSwitched": 1,
+    "inTheFrameOfTheSwitch": {
+     "cream": "9",
+     "fly": [
+      215
+     ]
+    },
+    "settled": {
+     "ms": 9,
+     "frames": 1
+    },
+    "from": "9",
+    "to": "10",
+    "red": "20",
+    "findsStored": 20,
+    "landings": 1,
+    "dots": [
+     "build",
+     "grow"
+    ],
+    "button": false,
+    "said": "",
+    "errors": [],
+    "later": {
+     "cream": "10",
+     "findsStored": 20
+    },
+    "ok": true
+   },
+   "fiftieth": {
+    "flyingWhenSwitched": 1,
+    "inTheFrameOfTheSwitch": {
+     "cream": "9",
+     "fly": [
+      240
+     ]
+    },
+    "settled": {
+     "ms": 8,
+     "frames": 1
+    },
+    "from": "9",
+    "to": "10",
+    "red": "50",
+    "findsStored": 50,
+    "landings": 1,
+    "dots": [
+     "build",
+     "grow",
+     "design",
+     "film",
+     "set"
+    ],
+    "button": true,
+    "said": "All 50 mushrooms found. The Contact Hui Jie button is now available.",
+    "errors": [],
+    "later": {
+     "cream": "10",
+     "findsStored": 50
+    },
+    "ok": true
+   },
+   "fiftieth, in its ceremony": {
+    "flyingWhenSwitched": 0,
+    "inTheFrameOfTheSwitch": {
+     "cream": "10",
+     "fly": []
+    },
+    "settled": {
+     "ms": 5,
+     "frames": 1
+    },
+    "from": "9",
+    "to": "10",
+    "red": "50",
+    "findsStored": 50,
+    "landings": 1,
+    "dots": [
+     "build",
+     "grow",
+     "design",
+     "film",
+     "set"
+    ],
+    "button": true,
+    "said": "All 50 mushrooms found. The Contact Hui Jie button is now available.",
+    "errors": [],
+    "later": {
+     "cream": "10",
+     "findsStored": 50
+    },
+    "ok": true
+   },
+   "hidden in the painting": {
+    "finishedWhileHidden": true,
+    "controlsAfter": [
+     "Pause animation",
+     "Replay painting"
+    ],
+    "errors": [],
+    "ok": true
+   },
+   "hidden from the start": {
+    "paintingsWhileHidden": 0,
+    "countedAsSeenWhileHidden": null,
+    "paintingOnceLookedAt": 1,
+    "seenAfterwards": "1",
+    "errors": [],
+    "ok": true
+   },
+   "hidden while it loads": {
+    "paintingsWhileHidden": 0,
+    "countedAsSeenWhileHidden": null,
+    "paintingOnceLookedAt": 1,
+    "seenAfterwards": "1",
+    "errors": [],
+    "ok": true
+   },
+   "hidden in a flight": {
+    "cream": "7",
+    "stored": 17,
+    "landings": 1,
+    "later": "7",
+    "errors": [],
+    "ok": true
+   }
+  }
+ },
+ "webkit": {
+  "desktop": {
+   "painting": {
+    "sheetBeforePc": 47,
+    "settled": {
+     "ms": 0,
+     "frames": 0
+    },
+    "controls": [],
+    "rachel": true,
+    "errors": [],
+    "posesInTwoSeconds": 1,
+    "aFindAfterwards": "1",
+    "posesInSixSecondsWithMotionBack": 4,
+    "ok": true
+   },
+   "switch": {
+    "sheetBeforePc": 49,
+    "settled": {
+     "ms": 0,
+     "frames": 0
+    },
+    "scene": "set",
+    "errors": [],
+    "ok": true
+   },
+   "flight": {
+    "flyingWhenSwitched": 1,
+    "inTheFrameOfTheSwitch": {
+     "cream": "7",
+     "fly": []
+    },
+    "settled": {
+     "ms": 0,
+     "frames": 0
+    },
+    "from": "6",
+    "to": "7",
+    "red": "17",
+    "findsStored": 17,
+    "landings": 1,
+    "dots": [
+     "build"
+    ],
+    "button": false,
+    "said": "",
+    "errors": [],
+    "later": {
+     "cream": "7",
+     "findsStored": 17
+    },
+    "ok": true
+   },
+   "tenth": {
+    "flyingWhenSwitched": 1,
+    "inTheFrameOfTheSwitch": {
+     "cream": "10",
+     "fly": []
+    },
+    "settled": {
+     "ms": 0,
+     "frames": 0
+    },
+    "from": "9",
+    "to": "10",
+    "red": "20",
+    "findsStored": 20,
+    "landings": 1,
+    "dots": [
+     "build",
+     "grow"
+    ],
+    "button": false,
+    "said": "",
+    "errors": [],
+    "later": {
+     "cream": "10",
+     "findsStored": 20
+    },
+    "ok": true
+   },
+   "fiftieth": {
+    "flyingWhenSwitched": 1,
+    "inTheFrameOfTheSwitch": {
+     "cream": "10",
+     "fly": []
+    },
+    "settled": {
+     "ms": 0,
+     "frames": 0
+    },
+    "from": "9",
+    "to": "10",
+    "red": "50",
+    "findsStored": 50,
+    "landings": 1,
+    "dots": [
+     "build",
+     "grow",
+     "design",
+     "film",
+     "set"
+    ],
+    "button": true,
+    "said": "All 50 mushrooms found. The Contact Hui Jie button is now available.",
+    "errors": [],
+    "later": {
+     "cream": "10",
+     "findsStored": 50
+    },
+    "ok": true
+   },
+   "fiftieth, in its ceremony": {
+    "flyingWhenSwitched": 0,
+    "inTheFrameOfTheSwitch": {
+     "cream": "10",
+     "fly": []
+    },
+    "settled": {
+     "ms": 0,
+     "frames": 0
+    },
+    "from": "9",
+    "to": "10",
+    "red": "50",
+    "findsStored": 50,
+    "landings": 1,
+    "dots": [
+     "build",
+     "grow",
+     "design",
+     "film",
+     "set"
+    ],
+    "button": true,
+    "said": "All 50 mushrooms found. The Contact Hui Jie button is now available.",
+    "errors": [],
+    "later": {
+     "cream": "10",
+     "findsStored": 50
+    },
+    "ok": true
+   },
+   "hidden in the painting": {
+    "finishedWhileHidden": true,
+    "controlsAfter": [
+     "Pause animation",
+     "Replay painting"
+    ],
+    "errors": [],
+    "ok": true
+   },
+   "hidden from the start": {
+    "paintingsWhileHidden": 0,
+    "countedAsSeenWhileHidden": null,
+    "paintingOnceLookedAt": 1,
+    "seenAfterwards": "1",
+    "errors": [],
+    "ok": true
+   },
+   "hidden while it loads": {
+    "paintingsWhileHidden": 0,
+    "countedAsSeenWhileHidden": null,
+    "paintingOnceLookedAt": 1,
+    "seenAfterwards": "1",
+    "errors": [],
+    "ok": true
+   },
+   "hidden in a flight": {
+    "cream": "7",
+    "stored": 17,
+    "landings": 1,
+    "later": "7",
+    "errors": [],
+    "ok": true
+   }
+  },
+  "portrait": {
+   "painting": {
+    "sheetBeforePc": 47,
+    "settled": {
+     "ms": 0,
+     "frames": 0
+    },
+    "controls": [],
+    "rachel": true,
+    "errors": [],
+    "posesInTwoSeconds": 1,
+    "aFindAfterwards": "1",
+    "posesInSixSecondsWithMotionBack": 5,
+    "ok": true
+   },
+   "switch": {
+    "sheetBeforePc": 45,
+    "settled": {
+     "ms": 0,
+     "frames": 0
+    },
+    "scene": "set",
+    "errors": [],
+    "ok": true
+   },
+   "flight": {
+    "flyingWhenSwitched": 1,
+    "inTheFrameOfTheSwitch": {
+     "cream": "7",
+     "fly": []
+    },
+    "settled": {
+     "ms": 0,
+     "frames": 0
+    },
+    "from": "6",
+    "to": "7",
+    "red": "17",
+    "findsStored": 17,
+    "landings": 1,
+    "dots": [
+     "build"
+    ],
+    "button": false,
+    "said": "",
+    "errors": [],
+    "later": {
+     "cream": "7",
+     "findsStored": 17
+    },
+    "ok": true
+   },
+   "tenth": {
+    "flyingWhenSwitched": 1,
+    "inTheFrameOfTheSwitch": {
+     "cream": "10",
+     "fly": []
+    },
+    "settled": {
+     "ms": 0,
+     "frames": 0
+    },
+    "from": "9",
+    "to": "10",
+    "red": "20",
+    "findsStored": 20,
+    "landings": 1,
+    "dots": [
+     "build",
+     "grow"
+    ],
+    "button": false,
+    "said": "",
+    "errors": [],
+    "later": {
+     "cream": "10",
+     "findsStored": 20
+    },
+    "ok": true
+   },
+   "fiftieth": {
+    "flyingWhenSwitched": 1,
+    "inTheFrameOfTheSwitch": {
+     "cream": "10",
+     "fly": []
+    },
+    "settled": {
+     "ms": 0,
+     "frames": 0
+    },
+    "from": "9",
+    "to": "10",
+    "red": "50",
+    "findsStored": 50,
+    "landings": 1,
+    "dots": [
+     "build",
+     "grow",
+     "design",
+     "film",
+     "set"
+    ],
+    "button": true,
+    "said": "All 50 mushrooms found. The Contact Hui Jie button is now available.",
+    "errors": [],
+    "later": {
+     "cream": "10",
+     "findsStored": 50
+    },
+    "ok": true
+   },
+   "fiftieth, in its ceremony": {
+    "flyingWhenSwitched": 0,
+    "inTheFrameOfTheSwitch": {
+     "cream": "10",
+     "fly": []
+    },
+    "settled": {
+     "ms": 0,
+     "frames": 0
+    },
+    "from": "9",
+    "to": "10",
+    "red": "50",
+    "findsStored": 50,
+    "landings": 1,
+    "dots": [
+     "build",
+     "grow",
+     "design",
+     "film",
+     "set"
+    ],
+    "button": true,
+    "said": "All 50 mushrooms found. The Contact Hui Jie button is now available.",
+    "errors": [],
+    "later": {
+     "cream": "10",
+     "findsStored": 50
+    },
+    "ok": true
+   },
+   "hidden in the painting": {
+    "finishedWhileHidden": true,
+    "controlsAfter": [
+     "Pause animation",
+     "Replay painting"
+    ],
+    "errors": [],
+    "ok": true
+   },
+   "hidden from the start": {
+    "paintingsWhileHidden": 0,
+    "countedAsSeenWhileHidden": null,
+    "paintingOnceLookedAt": 1,
+    "seenAfterwards": "1",
+    "errors": [],
+    "ok": true
+   },
+   "hidden while it loads": {
+    "paintingsWhileHidden": 0,
+    "countedAsSeenWhileHidden": null,
+    "paintingOnceLookedAt": 1,
+    "seenAfterwards": "1",
+    "errors": [],
+    "ok": true
+   },
+   "hidden in a flight": {
+    "cream": "7",
+    "stored": 17,
+    "landings": 1,
+    "later": "7",
+    "errors": [],
+    "ok": true
+   }
+  }
+ }
+}

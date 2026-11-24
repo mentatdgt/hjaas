@@ -20,7 +20,8 @@ import sharp from 'sharp';
 import { CAPTION, CONTACT_SHOWN } from './caption-state.mjs';
 
 const base = process.env.HJ_URL ?? 'http://localhost:5173/';
-const out = new URL('../scene5/', import.meta.url).pathname;
+// (HJ_OUT: another folder for the results, e.g. ../review-fixes/counter/)
+const out = new URL(process.env.HJ_OUT ?? '../scene5/', import.meta.url).pathname;
 await mkdir(out, { recursive: true });
 const pkg = new URL('../../../frames/022-theatre-scene/', import.meta.url).pathname;
 const ID = 'set';

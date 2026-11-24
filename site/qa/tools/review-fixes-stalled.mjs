@@ -1,0 +1,7 @@
+// C1: a room that never answers (production build on 4173), Chrome and WebKit: Retry room after a minute, and it recovers.
+
+import { chromium, webkit } from 'playwright'; import { writeFileSync } from 'node:fs';
+const out = {};
+await Promise.all([['chrome', chromium, { channel: 'chrome' }], ['webkit', webkit, {}]].map(async ([n, e, o]) => { const b = await e.launch(o); const p = await (await b.newContext({ viewport: { width: 1440, height: 900 } })).newPage(); let stall = true; await p.route('**/scene1/room.webp', async (r) => { if (stall) return; await r.continue(); }); const t = Date.now(); await p.goto('http://127.0.0.1:4173/', { waitUntil: 'commit' });
+const retry = () => p.waitForFunction(() => [...document.querySelectorAll('.hj-link')].some((x) => x.textContent === 'Retry room' && !x.hidden), null, { timeout: 150000, polling: 200 }); await retry(); const ms = Date.now() - t; stall = false; await p.getByText('Retry room').click(); await p.waitForFunction(() => document.querySelector('.hj-mushrooms')?.inert === false, null, { timeout: 30000 }).catch(() => {}); out[n] = { retryOfferedAfterMs: ms, afterRetry: await p.evaluate(() => ({ plate: !!document.querySelector('.hj-plate'), rachel: !!document.querySelector('.hj-rachel'), mushrooms: document.querySelectorAll('.hj-shroom').length })) }; await b.close(); }));
+writeFileSync('qa/review-fixes/c1-stalled.json', JSON.stringify(out, null, 1)); console.log(JSON.stringify(out));

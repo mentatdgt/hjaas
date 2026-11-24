@@ -1,0 +1,186 @@
+{
+ "chrome": {
+  "connectSrc": "connect-src 'self' http://127.0.0.1:4196",
+  "maxlength": {
+   "name": 100,
+   "email": 254,
+   "message": 4000
+  },
+  "nameAfterTyping120": 100,
+  "messageAfterInserting4500": 4000,
+  "tooLong": {
+   "name": {
+    "length": 101,
+    "errors": [
+     "Use 100 characters or fewer."
+    ],
+    "requests": 0,
+    "sent": false
+   },
+   "email": {
+    "length": 255,
+    "errors": [
+     "Use 254 characters or fewer."
+    ],
+    "requests": 0,
+    "sent": false
+   },
+   "message": {
+    "length": 4001,
+    "errors": [
+     "Use 4000 characters or fewer."
+    ],
+    "requests": 0,
+    "sent": false
+   },
+   "needs": {
+    "length": 600,
+    "alert": "Use 500 characters or fewer for your selections.",
+    "requests": 0,
+    "sent": false
+   }
+  },
+  "atTheLimits": {
+   "sent": true,
+   "requests": 1,
+   "lengths": {
+    "name": 100,
+    "email": 254,
+    "message": 4000,
+    "needs": [
+     "Build",
+     "Design",
+     "Film",
+     "Grow",
+     "Set Design",
+     "Something else"
+    ]
+   },
+   "errors": []
+  },
+  "rejected": {
+   "alert": "Your message could not be sent. Check your connection and try again.",
+   "sent": false,
+   "draftKept": true,
+   "sentOnTryingAgain": true
+  },
+  "timeout": {
+   "requests": 1,
+   "at14s": {
+    "sending": true,
+    "alert": null
+   },
+   "gaveUpAfterMs": 15104,
+   "alert": "Your message could not be sent. Check your connection and try again.",
+   "sent": false,
+   "draftKept": true,
+   "connectionClosed": true,
+   "lateAnswerIgnored": true
+  },
+  "closedWhileSending": {
+   "requestCancelled": true,
+   "reopened": {
+    "sent": false,
+    "sending": false,
+    "draftKept": true
+   },
+   "sendsAgain": true,
+   "requests": 2
+  },
+  "cspViolations": [],
+  "errors": [],
+  "ok": true
+ },
+ "webkit": {
+  "connectSrc": "connect-src 'self' http://127.0.0.1:4196",
+  "maxlength": {
+   "name": 100,
+   "email": 254,
+   "message": 4000
+  },
+  "nameAfterTyping120": 100,
+  "messageAfterInserting4500": 4000,
+  "tooLong": {
+   "name": {
+    "length": 101,
+    "errors": [
+     "Use 100 characters or fewer."
+    ],
+    "requests": 0,
+    "sent": false
+   },
+   "email": {
+    "length": 255,
+    "errors": [
+     "Use 254 characters or fewer."
+    ],
+    "requests": 0,
+    "sent": false
+   },
+   "message": {
+    "length": 4001,
+    "errors": [
+     "Use 4000 characters or fewer."
+    ],
+    "requests": 0,
+    "sent": false
+   },
+   "needs": {
+    "length": 600,
+    "alert": "Use 500 characters or fewer for your selections.",
+    "requests": 0,
+    "sent": false
+   }
+  },
+  "atTheLimits": {
+   "sent": true,
+   "requests": 1,
+   "lengths": {
+    "name": 100,
+    "email": 254,
+    "message": 4000,
+    "needs": [
+     "Build",
+     "Design",
+     "Film",
+     "Grow",
+     "Set Design",
+     "Something else"
+    ]
+   },
+   "errors": []
+  },
+  "rejected": {
+   "alert": "Your message could not be sent. Check your connection and try again.",
+   "sent": false,
+   "draftKept": true,
+   "sentOnTryingAgain": true
+  },
+  "timeout": {
+   "requests": 1,
+   "at14s": {
+    "sending": true,
+    "alert": null
+   },
+   "gaveUpAfterMs": 15054,
+   "alert": "Your message could not be sent. Check your connection and try again.",
+   "sent": false,
+   "draftKept": true,
+   "connectionClosed": true,
+   "lateAnswerIgnored": true
+  },
+  "closedWhileSending": {
+   "requestCancelled": true,
+   "reopened": {
+    "sent": false,
+    "sending": false,
+    "draftKept": true
+   },
+   "sendsAgain": true,
+   "requests": 2
+  },
+  "cspViolations": [],
+  "errors": [],
+  "ok": true
+ }
+}

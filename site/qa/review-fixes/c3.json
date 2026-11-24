@@ -1,0 +1,338 @@
+{
+ "chrome": {
+  "now": {
+   "short brush": {
+    "build → grow": {
+     "taps": 20,
+     "whileTheBrushWorked": 19,
+     "collected": 0,
+     "hiddenMushroomsThatTookFocus": 0,
+     "afterwardsATapCollects": 1,
+     "errors": []
+    },
+    "grow → design": {
+     "taps": 21,
+     "whileTheBrushWorked": 20,
+     "collected": 0,
+     "hiddenMushroomsThatTookFocus": 0,
+     "afterwardsATapCollects": 1,
+     "errors": []
+    },
+    "design → film": {
+     "taps": 21,
+     "whileTheBrushWorked": 21,
+     "collected": 0,
+     "hiddenMushroomsThatTookFocus": 0,
+     "afterwardsATapCollects": 1,
+     "errors": []
+    },
+    "film → set": {
+     "taps": 21,
+     "whileTheBrushWorked": 20,
+     "collected": 0,
+     "hiddenMushroomsThatTookFocus": 0,
+     "afterwardsATapCollects": 1,
+     "errors": []
+    },
+    "set → build": {
+     "taps": 21,
+     "whileTheBrushWorked": 20,
+     "collected": 0,
+     "hiddenMushroomsThatTookFocus": 0,
+     "afterwardsATapCollects": 1,
+     "errors": []
+    }
+   },
+   "first-visit painting": {
+    "build → design": {
+     "taps": 64,
+     "whileTheBrushWorked": 60,
+     "collected": 0,
+     "hiddenMushroomsThatTookFocus": 0,
+     "afterwardsATapCollects": 1,
+     "errors": []
+    },
+    "build → film": {
+     "taps": 64,
+     "whileTheBrushWorked": 60,
+     "collected": 0,
+     "hiddenMushroomsThatTookFocus": 0,
+     "afterwardsATapCollects": 1,
+     "errors": []
+    },
+    "build → set": {
+     "taps": 64,
+     "whileTheBrushWorked": 59,
+     "collected": 0,
+     "hiddenMushroomsThatTookFocus": 0,
+     "afterwardsATapCollects": 1,
+     "errors": []
+    }
+   },
+   "return reveal": {
+    "taps": 27,
+    "tapsUnderTheBlankSheet": 27,
+    "collected": 0,
+    "hiddenMushroomsThatTookFocus": 0,
+    "afterwardsATapCollects": 1
+   },
+   "a pan during the brush": {
+    "inertBefore": true,
+    "inert60msAfterThePan": false,
+    "controls": [
+     "Pause animation",
+     "Replay painting"
+    ]
+   },
+   "collectedThroughTheOverlay": 0,
+   "ok": true
+  },
+  "before": {
+   "short brush": {
+    "build → grow": {
+     "taps": 21,
+     "whileTheBrushWorked": 20,
+     "collected": 10,
+     "hiddenMushroomsThatTookFocus": 7,
+     "afterwardsATapCollects": 0,
+     "errors": []
+    },
+    "grow → design": {
+     "taps": 21,
+     "whileTheBrushWorked": 20,
+     "collected": 10,
+     "hiddenMushroomsThatTookFocus": 6,
+     "afterwardsATapCollects": 0,
+     "errors": []
+    },
+    "design → film": {
+     "taps": 20,
+     "whileTheBrushWorked": 20,
+     "collected": 10,
+     "hiddenMushroomsThatTookFocus": 9,
+     "afterwardsATapCollects": 0,
+     "errors": []
+    },
+    "film → set": {
+     "taps": 20,
+     "whileTheBrushWorked": 20,
+     "collected": 10,
+     "hiddenMushroomsThatTookFocus": 8,
+     "afterwardsATapCollects": 0,
+     "errors": []
+    },
+    "set → build": {
+     "taps": 20,
+     "whileTheBrushWorked": 20,
+     "collected": 10,
+     "hiddenMushroomsThatTookFocus": 8,
+     "afterwardsATapCollects": 0,
+     "errors": []
+    }
+   },
+   "first-visit painting": {
+    "build → design": {
+     "taps": 64,
+     "whileTheBrushWorked": 61,
+     "collected": 10,
+     "hiddenMushroomsThatTookFocus": 0,
+     "afterwardsATapCollects": 0,
+     "errors": []
+    },
+    "build → film": {
+     "taps": 64,
+     "whileTheBrushWorked": 60,
+     "collected": 10,
+     "hiddenMushroomsThatTookFocus": 0,
+     "afterwardsATapCollects": 0,
+     "errors": []
+    },
+    "build → set": {
+     "taps": 64,
+     "whileTheBrushWorked": 60,
+     "collected": 10,
+     "hiddenMushroomsThatTookFocus": 0,
+     "afterwardsATapCollects": 0,
+     "errors": []
+    }
+   },
+   "return reveal": {
+    "taps": 28,
+    "tapsUnderTheBlankSheet": 28,
+    "collected": 10,
+    "hiddenMushroomsThatTookFocus": 9,
+    "afterwardsATapCollects": 0
+   },
+   "collectedThroughTheOverlay": 90,
+   "ok": false
+  }
+ },
+ "webkit": {
+  "now": {
+   "short brush": {
+    "build → grow": {
+     "taps": 20,
+     "whileTheBrushWorked": 20,
+     "collected": 0,
+     "hiddenMushroomsThatTookFocus": 0,
+     "afterwardsATapCollects": 1,
+     "errors": []
+    },
+    "grow → design": {
+     "taps": 20,
+     "whileTheBrushWorked": 19,
+     "collected": 0,
+     "hiddenMushroomsThatTookFocus": 0,
+     "afterwardsATapCollects": 1,
+     "errors": []
+    },
+    "design → film": {
+     "taps": 20,
+     "whileTheBrushWorked": 20,
+     "collected": 0,
+     "hiddenMushroomsThatTookFocus": 0,
+     "afterwardsATapCollects": 1,
+     "errors": []
+    },
+    "film → set": {
+     "taps": 20,
+     "whileTheBrushWorked": 19,
+     "collected": 0,
+     "hiddenMushroomsThatTookFocus": 0,
+     "afterwardsATapCollects": 1,
+     "errors": []
+    },
+    "set → build": {
+     "taps": 21,
+     "whileTheBrushWorked": 20,
+     "collected": 0,
+     "hiddenMushroomsThatTookFocus": 0,
+     "afterwardsATapCollects": 1,
+     "errors": []
+    }
+   },
+   "first-visit painting": {
+    "build → design": {
+     "taps": 63,
+     "whileTheBrushWorked": 59,
+     "collected": 0,
+     "hiddenMushroomsThatTookFocus": 0,
+     "afterwardsATapCollects": 1,
+     "errors": []
+    },
+    "build → film": {
+     "taps": 63,
+     "whileTheBrushWorked": 59,
+     "collected": 0,
+     "hiddenMushroomsThatTookFocus": 0,
+     "afterwardsATapCollects": 1,
+     "errors": []
+    },
+    "build → set": {
+     "taps": 63,
+     "whileTheBrushWorked": 58,
+     "collected": 0,
+     "hiddenMushroomsThatTookFocus": 0,
+     "afterwardsATapCollects": 1,
+     "errors": []
+    }
+   },
+   "return reveal": {
+    "taps": 27,
+    "tapsUnderTheBlankSheet": 27,
+    "collected": 0,
+    "hiddenMushroomsThatTookFocus": 0,
+    "afterwardsATapCollects": 1
+   },
+   "a pan during the brush": {
+    "inertBefore": true,
+    "inert60msAfterThePan": false,
+    "controls": [
+     "Pause animation",
+     "Replay painting"
+    ]
+   },
+   "collectedThroughTheOverlay": 0,
+   "ok": true
+  },
+  "before": {
+   "short brush": {
+    "build → grow": {
+     "taps": 21,
+     "whileTheBrushWorked": 20,
+     "collected": 10,
+     "hiddenMushroomsThatTookFocus": 7,
+     "afterwardsATapCollects": 0,
+     "errors": []
+    },
+    "grow → design": {
+     "taps": 20,
+     "whileTheBrushWorked": 19,
+     "collected": 10,
+     "hiddenMushroomsThatTookFocus": 6,
+     "afterwardsATapCollects": 0,
+     "errors": []
+    },
+    "design → film": {
+     "taps": 20,
+     "whileTheBrushWorked": 20,
+     "collected": 10,
+     "hiddenMushroomsThatTookFocus": 9,
+     "afterwardsATapCollects": 0,
+     "errors": []
+    },
+    "film → set": {
+     "taps": 20,
+     "whileTheBrushWorked": 20,
+     "collected": 10,
+     "hiddenMushroomsThatTookFocus": 8,
+     "afterwardsATapCollects": 0,
+     "errors": []
+    },
+    "set → build": {
+     "taps": 20,
+     "whileTheBrushWorked": 19,
+     "collected": 10,
+     "hiddenMushroomsThatTookFocus": 7,
+     "afterwardsATapCollects": 0,
+     "errors": []
+    }
+   },
+   "first-visit painting": {
+    "build → design": {
+     "taps": 63,
+     "whileTheBrushWorked": 59,
+     "collected": 10,
+     "hiddenMushroomsThatTookFocus": 0,
+     "afterwardsATapCollects": 0,
+     "errors": []
+    },
+    "build → film": {
+     "taps": 63,
+     "whileTheBrushWorked": 59,
+     "collected": 10,
+     "hiddenMushroomsThatTookFocus": 0,
+     "afterwardsATapCollects": 0,
+     "errors": []
+    },
+    "build → set": {
+     "taps": 63,
+     "whileTheBrushWorked": 58,
+     "collected": 10,
+     "hiddenMushroomsThatTookFocus": 0,
+     "afterwardsATapCollects": 0,
+     "errors": []
+    }
+   },
+   "return reveal": {
+    "taps": 26,
+    "tapsUnderTheBlankSheet": 26,
+    "collected": 10,
+    "hiddenMushroomsThatTookFocus": 9,
+    "afterwardsATapCollects": 0
+   },
+   "collectedThroughTheOverlay": 90,
+   "ok": false
+  }
+ }
+}

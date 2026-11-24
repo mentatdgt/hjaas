@@ -1,0 +1,496 @@
+{
+ "chrome": {
+  "now": {
+   "390x844 right": {
+    "opened": {
+     "left": 390,
+     "most": 589,
+     "plateX": 1005
+    },
+    "panned": {
+     "left": 589,
+     "most": 589,
+     "plateX": 1358
+    },
+    "landscape": {
+     "left": 0,
+     "most": 0,
+     "plateX": 836
+    },
+    "savedInLandscape": 1358,
+    "back": {
+     "left": 589,
+     "most": 589,
+     "plateX": 1358
+    },
+    "afterReload": {
+     "left": 589,
+     "most": 589,
+     "plateX": 1358
+    },
+    "errors": [],
+    "ok": true
+   },
+   "390x844 left": {
+    "opened": {
+     "left": 390,
+     "most": 589,
+     "plateX": 1005
+    },
+    "panned": {
+     "left": 0,
+     "most": 589,
+     "plateX": 314
+    },
+    "landscape": {
+     "left": 0,
+     "most": 0,
+     "plateX": 836
+    },
+    "savedInLandscape": 314,
+    "back": {
+     "left": 0,
+     "most": 589,
+     "plateX": 314
+    },
+    "afterReload": {
+     "left": 0,
+     "most": 589,
+     "plateX": 314
+    },
+    "errors": [],
+    "ok": true
+   },
+   "375x667 right": {
+    "opened": {
+     "left": 245,
+     "most": 351,
+     "plateX": 1004
+    },
+    "panned": {
+     "left": 351,
+     "most": 351,
+     "plateX": 1261
+    },
+    "landscape": {
+     "left": 0,
+     "most": 0,
+     "plateX": 836
+    },
+    "savedInLandscape": 1261,
+    "back": {
+     "left": 351,
+     "most": 351,
+     "plateX": 1261
+    },
+    "afterReload": {
+     "left": 351,
+     "most": 351,
+     "plateX": 1261
+    },
+    "errors": [],
+    "ok": true
+   },
+   "375x667 left": {
+    "opened": {
+     "left": 245,
+     "most": 351,
+     "plateX": 1004
+    },
+    "panned": {
+     "left": 0,
+     "most": 351,
+     "plateX": 411
+    },
+    "landscape": {
+     "left": 0,
+     "most": 0,
+     "plateX": 836
+    },
+    "savedInLandscape": 411,
+    "back": {
+     "left": 0,
+     "most": 351,
+     "plateX": 411
+    },
+    "afterReload": {
+     "left": 0,
+     "most": 351,
+     "plateX": 411
+    },
+    "errors": [],
+    "ok": true
+   }
+  },
+  "before": {
+   "390x844 right": {
+    "opened": {
+     "left": 390,
+     "most": 589,
+     "plateX": 1005
+    },
+    "panned": {
+     "left": 589,
+     "most": 589,
+     "plateX": 1358
+    },
+    "landscape": {
+     "left": 0,
+     "most": 0,
+     "plateX": 836
+    },
+    "savedInLandscape": 836,
+    "back": {
+     "left": 295,
+     "most": 589,
+     "plateX": 837
+    },
+    "afterReload": {
+     "left": 295,
+     "most": 589,
+     "plateX": 837
+    },
+    "errors": [],
+    "ok": false
+   },
+   "390x844 left": {
+    "opened": {
+     "left": 390,
+     "most": 589,
+     "plateX": 1005
+    },
+    "panned": {
+     "left": 0,
+     "most": 589,
+     "plateX": 314
+    },
+    "landscape": {
+     "left": 0,
+     "most": 0,
+     "plateX": 836
+    },
+    "savedInLandscape": 314,
+    "back": {
+     "left": 0,
+     "most": 589,
+     "plateX": 314
+    },
+    "afterReload": {
+     "left": 0,
+     "most": 589,
+     "plateX": 314
+    },
+    "errors": [],
+    "ok": true
+   },
+   "375x667 right": {
+    "opened": {
+     "left": 245,
+     "most": 351,
+     "plateX": 1004
+    },
+    "panned": {
+     "left": 351,
+     "most": 351,
+     "plateX": 1261
+    },
+    "landscape": {
+     "left": 0,
+     "most": 0,
+     "plateX": 836
+    },
+    "savedInLandscape": 836,
+    "back": {
+     "left": 176,
+     "most": 351,
+     "plateX": 837
+    },
+    "afterReload": {
+     "left": 176,
+     "most": 351,
+     "plateX": 837
+    },
+    "errors": [],
+    "ok": false
+   },
+   "375x667 left": {
+    "opened": {
+     "left": 245,
+     "most": 351,
+     "plateX": 1004
+    },
+    "panned": {
+     "left": 0,
+     "most": 351,
+     "plateX": 411
+    },
+    "landscape": {
+     "left": 0,
+     "most": 0,
+     "plateX": 836
+    },
+    "savedInLandscape": 411,
+    "back": {
+     "left": 0,
+     "most": 351,
+     "plateX": 411
+    },
+    "afterReload": {
+     "left": 0,
+     "most": 351,
+     "plateX": 411
+    },
+    "errors": [],
+    "ok": true
+   }
+  }
+ },
+ "webkit": {
+  "now": {
+   "390x844 right": {
+    "opened": {
+     "left": 389,
+     "most": 589,
+     "plateX": 1004
+    },
+    "panned": {
+     "left": 589,
+     "most": 589,
+     "plateX": 1358
+    },
+    "landscape": {
+     "left": 0,
+     "most": 0,
+     "plateX": 836
+    },
+    "savedInLandscape": 1358,
+    "back": {
+     "left": 589,
+     "most": 589,
+     "plateX": 1358
+    },
+    "afterReload": {
+     "left": 588,
+     "most": 589,
+     "plateX": 1356
+    },
+    "errors": [],
+    "ok": true
+   },
+   "390x844 left": {
+    "opened": {
+     "left": 389,
+     "most": 589,
+     "plateX": 1004
+    },
+    "panned": {
+     "left": 0,
+     "most": 589,
+     "plateX": 314
+    },
+    "landscape": {
+     "left": 0,
+     "most": 0,
+     "plateX": 836
+    },
+    "savedInLandscape": 314,
+    "back": {
+     "left": 0,
+     "most": 589,
+     "plateX": 314
+    },
+    "afterReload": {
+     "left": 0,
+     "most": 589,
+     "plateX": 314
+    },
+    "errors": [],
+    "ok": true
+   },
+   "375x667 right": {
+    "opened": {
+     "left": 245,
+     "most": 351,
+     "plateX": 1004
+    },
+    "panned": {
+     "left": 351,
+     "most": 351,
+     "plateX": 1261
+    },
+    "landscape": {
+     "left": 0,
+     "most": 0,
+     "plateX": 836
+    },
+    "savedInLandscape": 1261,
+    "back": {
+     "left": 351,
+     "most": 351,
+     "plateX": 1261
+    },
+    "afterReload": {
+     "left": 350,
+     "most": 351,
+     "plateX": 1259
+    },
+    "errors": [],
+    "ok": true
+   },
+   "375x667 left": {
+    "opened": {
+     "left": 245,
+     "most": 351,
+     "plateX": 1004
+    },
+    "panned": {
+     "left": 0,
+     "most": 351,
+     "plateX": 411
+    },
+    "landscape": {
+     "left": 0,
+     "most": 0,
+     "plateX": 836
+    },
+    "savedInLandscape": 411,
+    "back": {
+     "left": 0,
+     "most": 351,
+     "plateX": 411
+    },
+    "afterReload": {
+     "left": 0,
+     "most": 351,
+     "plateX": 411
+    },
+    "errors": [],
+    "ok": true
+   }
+  },
+  "before": {
+   "390x844 right": {
+    "opened": {
+     "left": 389,
+     "most": 589,
+     "plateX": 1004
+    },
+    "panned": {
+     "left": 589,
+     "most": 589,
+     "plateX": 1358
+    },
+    "landscape": {
+     "left": 0,
+     "most": 0,
+     "plateX": 836
+    },
+    "savedInLandscape": 836,
+    "back": {
+     "left": 294,
+     "most": 589,
+     "plateX": 835
+    },
+    "afterReload": {
+     "left": 294,
+     "most": 589,
+     "plateX": 835
+    },
+    "errors": [],
+    "ok": false
+   },
+   "390x844 left": {
+    "opened": {
+     "left": 389,
+     "most": 589,
+     "plateX": 1004
+    },
+    "panned": {
+     "left": 0,
+     "most": 589,
+     "plateX": 314
+    },
+    "landscape": {
+     "left": 0,
+     "most": 0,
+     "plateX": 836
+    },
+    "savedInLandscape": 314,
+    "back": {
+     "left": 0,
+     "most": 589,
+     "plateX": 314
+    },
+    "afterReload": {
+     "left": 0,
+     "most": 589,
+     "plateX": 314
+    },
+    "errors": [
+     "pageerror: /127.0.0.1:4174/assets/scene2/rachel-1.5x/look_up/look_up_032.webp due to access control checks."
+    ],
+    "ok": true
+   },
+   "375x667 right": {
+    "opened": {
+     "left": 245,
+     "most": 351,
+     "plateX": 1004
+    },
+    "panned": {
+     "left": 351,
+     "most": 351,
+     "plateX": 1261
+    },
+    "landscape": {
+     "left": 0,
+     "most": 0,
+     "plateX": 836
+    },
+    "savedInLandscape": 836,
+    "back": {
+     "left": 175,
+     "most": 351,
+     "plateX": 835
+    },
+    "afterReload": {
+     "left": 175,
+     "most": 351,
+     "plateX": 835
+    },
+    "errors": [],
+    "ok": false
+   },
+   "375x667 left": {
+    "opened": {
+     "left": 245,
+     "most": 351,
+     "plateX": 1004
+    },
+    "panned": {
+     "left": 0,
+     "most": 351,
+     "plateX": 411
+    },
+    "landscape": {
+     "left": 0,
+     "most": 0,
+     "plateX": 836
+    },
+    "savedInLandscape": 411,
+    "back": {
+     "left": 0,
+     "most": 351,
+     "plateX": 411
+    },
+    "afterReload": {
+     "left": 0,
+     "most": 351,
+     "plateX": 411
+    },
+    "errors": [],
+    "ok": true
+   }
+  }
+ }
+}

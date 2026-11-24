@@ -17,7 +17,8 @@ import sharp from 'sharp';
 
 const base = process.env.HJ_URL ?? 'http://localhost:5173/';
 const prod = process.env.HJ_PROD ?? 'http://localhost:4173/';
-const out = new URL('../counter/', import.meta.url).pathname;
+// (HJ_OUT: another folder for the results, e.g. ../review-fixes/counter/)
+const out = new URL(process.env.HJ_OUT ?? '../counter/', import.meta.url).pathname;
 const tmp = new URL('../../node_modules/.hj/film/', import.meta.url).pathname;
 await mkdir(out, { recursive: true });
 const IDS = ['build', 'grow', 'design', 'film', 'set'];
@@ -126,17 +127,21 @@ run.record = async () => {
     if (name === 'return') {
       // A real return visit: all 50 saved, every scene seen, no flags but the one that exposes the page's state.
       await withSaved(context, await saved(50));
-      await page.goto(`${base}robots.txt`); await wait(300); await film.start();
-      await page.goto(`${base}#set`); await wait(3500);
+      await page.goto(`${process.env.HJ_RECORD_PROD ? prod : base}robots.txt`); await wait(300); await film.start();
+      await page.goto(`${process.env.HJ_RECORD_PROD ? prod : base}#set`); await wait(3500);
       await film.stop();
     } else if (name === 'drift') {
-      await page.goto(`${base}robots.txt`); await wait(300); await film.start();
-      await page.goto(`${base}?reset&seed=7#build`); await wait(10500);
+      await page.goto(`${process.env.HJ_RECORD_PROD ? prod : base}robots.txt`); await wait(300); await film.start();
+      await page.goto(process.env.HJ_RECORD_PROD ? `${prod}#build` : `${base}?reset&seed=7#build`); await wait(10500);
       await film.stop();
     } else {
       const s = SCENARIOS[name];
-      await page.goto(`${base}?debug&reset&intro=off&seed=7&all=${s.n}#${s.hash}`); await ready(page);
-      await page.addStyleTag({ content: '.hj-mushrooms.is-debug .hj-shroom { outline: none !important; background: none !important; }' });
+      // (HJ_RECORD_PROD: on the production build, with the progress put in storage, as the traces are.)
+      if (process.env.HJ_RECORD_PROD) { await withSaved(context, await saved(s.n)); await page.goto(`${prod}#${s.hash}`); await wait(4500); }
+      else {
+        await page.goto(`${base}?debug&reset&intro=off&seed=7&all=${s.n}#${s.hash}`); await ready(page);
+        await page.addStyleTag({ content: '.hj-mushrooms.is-debug .hj-shroom { outline: none !important; background: none !important; }' });
+      }
       await wait(600);
       const at = await nextShroom(page);
       const touch = device !== 'desktop';
@@ -352,13 +357,13 @@ run.states = async () => {
     await page.addInitScript(DRIFT); await page.goto(url);
     if (during) await during(page);
     await wait(ms);
-    const { pan, stored } = await page.evaluate(() => ({ pan: window.__pan.filter((p) => p[1] > 0), stored: JSON.parse(localStorage.getItem('hjaas:site:v2') ?? '{}') }));
+    const { pan, storedPan } = await page.evaluate(() => ({ pan: window.__pan.filter((p) => p[1] > 0), storedPan: localStorage.getItem('hjaas:site:v3:pan:build') }));
     const start = pan[0]?.[1]; const moving = pan.filter((p, i) => i && Math.abs(p[1] - pan[i - 1][1]) > 0.01);
-    const row = { startsAt: r1(start), furthest: r1(Math.max(...pan.map((p) => Math.abs(p[1] - start)))), endsAt: r1(pan.at(-1)[1]), firstMoveMsAfterTheBrushStarted: moving.length ? Math.round(moving[0][0]) : null, lastMove: moving.length ? Math.round(moving.at(-1)[0]) : null, biggestStepPx: r1(Math.max(0, ...moving.map((p) => Math.abs(p[1] - pan[pan.indexOf(p) - 1][1])))), savedPanned: stored.panned ?? null, savedPanX: stored.scenes?.build?.panX ?? null };
+    const row = { startsAt: r1(start), furthest: r1(Math.max(...pan.map((p) => Math.abs(p[1] - start)))), endsAt: r1(pan.at(-1)[1]), firstMoveMsAfterTheBrushStarted: moving.length ? Math.round(moving[0][0]) : null, lastMove: moving.length ? Math.round(moving.at(-1)[0]) : null, biggestStepPx: r1(Math.max(0, ...moving.map((p) => Math.abs(p[1] - pan[pan.indexOf(p) - 1][1])))), savedPanX: storedPan };
     report.drift ??= {}; report.drift[label] = row; say(`drift, ${label}`, row); await context.close(); return row;
   };
   const d = await drifts('first visit', {});
-  if (Math.abs(d.furthest - 40) > 1 || Math.abs(d.endsAt - d.startsAt) > 1 || d.firstMoveMsAfterTheBrushStarted < 4750 || d.savedPanned || d.savedPanX !== null) bad('drift', d);
+  if (Math.abs(d.furthest - 40) > 1 || Math.abs(d.endsAt - d.startsAt) > 1 || d.firstMoveMsAfterTheBrushStarted < 4750 || d.savedPanX !== null) bad('drift', d);
   for (const [label, o] of Object.entries({
     'reduced motion': { options: { reducedMotion: 'reduce' }, ms: 6000 },
     'return visit': { progress: await saved(0, { panned: false }), ms: 6000 },

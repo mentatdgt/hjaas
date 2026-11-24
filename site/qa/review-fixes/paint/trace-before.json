@@ -1,0 +1,94 @@
+{
+ "build": [
+  {
+   "clockMs": 970,
+   "framesBegun": 360,
+   "droppedFirst100ms": 0,
+   "droppedInThePainting": [],
+   "droppedAfterTo6s": [],
+   "droppedBeforeOnBlankPaper": 6,
+   "longestTaskMs": {
+    "settingUp": 47,
+    "painting": 12,
+    "after": 16
+   },
+   "errors": []
+  },
+  {
+   "clockMs": 944,
+   "framesBegun": 359,
+   "droppedFirst100ms": 0,
+   "droppedInThePainting": [],
+   "droppedAfterTo6s": [],
+   "droppedBeforeOnBlankPaper": 6,
+   "longestTaskMs": {
+    "settingUp": 47,
+    "painting": 9,
+    "after": 11
+   },
+   "errors": []
+  },
+  {
+   "clockMs": 926,
+   "framesBegun": 360,
+   "droppedFirst100ms": 0,
+   "droppedInThePainting": [],
+   "droppedAfterTo6s": [
+    5466
+   ],
+   "droppedBeforeOnBlankPaper": 5,
+   "longestTaskMs": {
+    "settingUp": 44,
+    "painting": 9,
+    "after": 12
+   },
+   "errors": []
+  }
+ ],
+ "set": [
+  {
+   "clockMs": 1370,
+   "framesBegun": 360,
+   "droppedFirst100ms": 0,
+   "droppedInThePainting": [],
+   "droppedAfterTo6s": [],
+   "droppedBeforeOnBlankPaper": 6,
+   "longestTaskMs": {
+    "settingUp": 38,
+    "painting": 5,
+    "after": 13
+   },
+   "errors": []
+  },
+  {
+   "clockMs": 1373,
+   "framesBegun": 360,
+   "droppedFirst100ms": 0,
+   "droppedInThePainting": [],
+   "droppedAfterTo6s": [
+    5463
+   ],
+   "droppedBeforeOnBlankPaper": 5,
+   "longestTaskMs": {
+    "settingUp": 39,
+    "painting": 7,
+    "after": 16
+   },
+   "errors": []
+  },
+  {
+   "clockMs": 1373,
+   "framesBegun": 360,
+   "droppedFirst100ms": 0,
+   "droppedInThePainting": [],
+   "droppedAfterTo6s": [],
+   "droppedBeforeOnBlankPaper": 6,
+   "longestTaskMs": {
+    "settingUp": 37,
+    "painting": 5,
+    "after": 14
+   },
+   "errors": []
+  }
+ ]
+}

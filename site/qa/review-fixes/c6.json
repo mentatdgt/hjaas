@@ -1,0 +1,202 @@
+{
+ "chrome": {
+  "now": {
+   "in grow, after the ones before": {
+    "total": 62,
+    "awayMB": {
+     "build.frames": 2.36
+    }
+   },
+   "in design, after the ones before": {
+    "total": 54.1,
+    "awayMB": {
+     "build.frames": 2.36,
+     "grow.frames": 3.04
+    }
+   },
+   "in film, after the ones before": {
+    "total": 36.7,
+    "awayMB": {
+     "build.frames": 2.36,
+     "grow.frames": 3.04
+    }
+   },
+   "in set, after the ones before": {
+    "total": 53.8,
+    "awayMB": {
+     "build.frames": 2.36,
+     "grow.frames": 3.04,
+     "film.canvases": 0.37
+    }
+   },
+   "in build, after the ones before": {
+    "total": 62.7,
+    "awayMB": {
+     "grow.frames": 3.04,
+     "film.canvases": 0.37
+    }
+   },
+   "Build left while its reaction was loading": {
+    "build.frames": 2.36
+   },
+   "bitmaps open then (Film, and what Build has left)": {
+    "open": 24,
+    "MB": 20.25
+   },
+   "bitmaps open with Film alone": {
+    "open": 23,
+    "MB": 17.89
+   },
+   "errors": []
+  },
+  "before": {
+   "in grow, after the ones before": {
+    "total": 62,
+    "awayMB": {
+     "build.frames": 2.36
+    }
+   },
+   "in design, after the ones before": {
+    "total": 54.1,
+    "awayMB": {
+     "build.frames": 2.36,
+     "grow.frames": 3.04
+    }
+   },
+   "in film, after the ones before": {
+    "total": 36.7,
+    "awayMB": {
+     "build.frames": 2.36,
+     "grow.frames": 3.04
+    }
+   },
+   "in set, after the ones before": {
+    "total": 53.8,
+    "awayMB": {
+     "build.frames": 2.36,
+     "grow.frames": 3.04,
+     "film.canvases": 0.37
+    }
+   },
+   "in build, after the ones before": {
+    "total": 62.7,
+    "awayMB": {
+     "grow.frames": 3.04,
+     "film.canvases": 0.37
+    }
+   },
+   "Build left while its reaction was loading": {
+    "build.frames": 2.36
+   },
+   "bitmaps open then (Film, and what Build has left)": {
+    "open": 24,
+    "MB": 20.25
+   },
+   "bitmaps open with Film alone": {
+    "open": 23,
+    "MB": 17.89
+   },
+   "errors": []
+  }
+ },
+ "webkit": {
+  "now": {
+   "in grow, after the ones before": {
+    "total": 46.2,
+    "awayMB": {
+     "build.frames": 2.36
+    }
+   },
+   "in design, after the ones before": {
+    "total": 54.1,
+    "awayMB": {
+     "build.frames": 2.36,
+     "grow.frames": 3.04
+    }
+   },
+   "in film, after the ones before": {
+    "total": 36.7,
+    "awayMB": {
+     "build.frames": 2.36,
+     "grow.frames": 3.04
+    }
+   },
+   "in set, after the ones before": {
+    "total": 53.8,
+    "awayMB": {
+     "build.frames": 2.36,
+     "grow.frames": 3.04,
+     "film.canvases": 0.37
+    }
+   },
+   "in build, after the ones before": {
+    "total": 62.7,
+    "awayMB": {
+     "grow.frames": 3.04,
+     "film.canvases": 0.37
+    }
+   },
+   "Build left while its reaction was loading": {
+    "build.frames": 2.36
+   },
+   "bitmaps open then (Film, and what Build has left)": {
+    "open": 24,
+    "MB": 20.25
+   },
+   "bitmaps open with Film alone": {
+    "open": 23,
+    "MB": 17.89
+   },
+   "errors": []
+  },
+  "before": {
+   "in grow, after the ones before": {
+    "total": 45.2,
+    "awayMB": {
+     "build.frames": 2.36
+    }
+   },
+   "in design, after the ones before": {
+    "total": 54.1,
+    "awayMB": {
+     "build.frames": 2.36,
+     "grow.frames": 3.04
+    }
+   },
+   "in film, after the ones before": {
+    "total": 36.7,
+    "awayMB": {
+     "build.frames": 2.36,
+     "grow.frames": 3.04
+    }
+   },
+   "in set, after the ones before": {
+    "total": 53.8,
+    "awayMB": {
+     "build.frames": 2.36,
+     "grow.frames": 3.04,
+     "film.canvases": 0.37
+    }
+   },
+   "in build, after the ones before": {
+    "total": 62.7,
+    "awayMB": {
+     "grow.frames": 3.04,
+     "film.canvases": 0.37
+    }
+   },
+   "Build left while its reaction was loading": {
+    "build.frames": 2.36
+   },
+   "bitmaps open then (Film, and what Build has left)": {
+    "open": 24,
+    "MB": 20.25
+   },
+   "bitmaps open with Film alone": {
+    "open": 23,
+    "MB": 17.89
+   },
+   "errors": []
+  }
+ }
+}

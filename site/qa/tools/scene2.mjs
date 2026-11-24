@@ -190,7 +190,7 @@ const run = {
       await arrived(page, 'build');
       await page.waitForTimeout(500);
       row.afterReloadBuild = await state(page);
-      row.saved = await page.evaluate(() => { const s = JSON.parse(localStorage.getItem('hjaas:site:v2')); return { unlocked: s.unlocked, build: s.scenes.build.found.length, grow: s.scenes.grow.found.length }; });
+      row.saved = await page.evaluate(() => { const n = (id) => Object.keys(localStorage).filter((k) => k.startsWith(`hjaas:site:v3:found:${id}:`)).length; return { build: n('build'), grow: n('grow') }; });
       row.errors = errors;
       row.ok = row.scenes.build.found === 10 && row.scenes.grow.found === 10 && row.scenes.build.after.dots.join() === 'build' && row.scenes.build.after.next === '#grow' && !row.scenes.build.after.button && arriving.here === '0/10' && arriving.site === '10/50' && !arriving.next
         && row.afterReload.scene === 'grow' && row.afterReload.here === '10/10' && row.afterReload.site === '20/50' && row.afterReload.dots.join() === 'build,grow' && !row.afterReload.button && row.afterReloadBuild.here === '10/10' && row.saved.build === 10 && row.saved.grow === 10 && row.scenes.grow.overlaps.length === 0 && row.scenes.grow.allInsidePicture && errors.length === 0;

@@ -1,0 +1,52 @@
+{
+ "chrome": {
+  "1600 kbit/s, now": {
+   "paintingStartsMs": 12666,
+   "rachel": true,
+   "retry": false,
+   "requestsGivenUp": []
+  },
+  "1600 kbit/s, before": {
+   "paintingStartsMs": 12571,
+   "rachel": true,
+   "retry": false,
+   "requestsGivenUp": []
+  },
+  "1000 kbit/s, now": {
+   "paintingStartsMs": 19660,
+   "rachel": true,
+   "retry": false,
+   "requestsGivenUp": []
+  },
+  "1000 kbit/s, before": {
+   "paintingStartsMs": 19606,
+   "rachel": true,
+   "retry": false,
+   "requestsGivenUp": []
+  },
+  "700 kbit/s, now": {
+   "paintingStartsMs": 27709,
+   "rachel": true,
+   "retry": false,
+   "requestsGivenUp": []
+  },
+  "700 kbit/s, before": {
+   "paintingStartsMs": 27610,
+   "rachel": true,
+   "retry": false,
+   "requestsGivenUp": []
+  },
+  "400 kbit/s, now": {
+   "paintingStartsMs": 48022,
+   "rachel": true,
+   "retry": false,
+   "requestsGivenUp": []
+  },
+  "400 kbit/s, before": {
+   "paintingStartsMs": 47808,
+   "rachel": true,
+   "retry": false,
+   "requestsGivenUp": []
+  }
+ }
+}

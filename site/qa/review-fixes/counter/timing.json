@@ -1,0 +1,492 @@
+{
+ "find": {
+  "cream": {
+   "oldNumberOnScreen": [
+    18,
+    165
+   ],
+   "oldRisesTo": -8,
+   "newNumberMoves": [
+    18,
+    148
+   ],
+   "newComesFrom": 8,
+   "numberBecomes": "7",
+   "fillMoves": [
+    32,
+    333
+   ],
+   "fillEnds": {
+    "stem": 1,
+    "cap": 0.5714
+   },
+   "labels": [
+    [
+     18,
+     "4 more in Grow"
+    ],
+    [
+     165,
+     "3 more in Grow"
+    ]
+   ],
+   "glint": [
+    null,
+    null
+   ]
+  },
+  "red": {
+   "oldNumberOnScreen": [
+    115,
+    266
+   ],
+   "oldRisesTo": -8,
+   "newNumberMoves": [
+    115,
+    250
+   ],
+   "newComesFrom": 8,
+   "numberBecomes": "17",
+   "fillMoves": [
+    132,
+    315
+   ],
+   "fillEnds": {
+    "stem": 1,
+    "cap": 0.0571
+   },
+   "labels": [
+    [
+     18,
+     "find all 50 to contact Hui Jie"
+    ]
+   ],
+   "glint": [
+    null,
+    null
+   ]
+  },
+  "tabDot": {
+   "appears": null,
+   "whole": null
+  },
+  "next": {
+   "appears": null,
+   "whole": null
+  },
+  "crossfade": {
+   "from": null,
+   "buttonWhole": null,
+   "counterGone": 2799,
+   "counterRisesTo": 0,
+   "buttonComesFrom": 0
+  },
+  "longestFrameMs": 19,
+  "focused": "hj-shroom",
+  "said": "7 of 10 found in Grow. 3 more in Grow."
+ },
+ "complete": {
+  "cream": {
+   "oldNumberOnScreen": [
+    17,
+    165
+   ],
+   "oldRisesTo": -8,
+   "newNumberMoves": [
+    17,
+    150
+   ],
+   "newComesFrom": 8,
+   "numberBecomes": "10",
+   "fillMoves": [
+    34,
+    333
+   ],
+   "fillEnds": {
+    "stem": 1,
+    "cap": 1
+   },
+   "labels": [
+    [
+     17,
+     "1 more in Grow"
+    ],
+    [
+     150,
+     "Grow complete"
+    ]
+   ],
+   "glint": [
+    467,
+    1365
+   ]
+  },
+  "red": {
+   "oldNumberOnScreen": [
+    100,
+    249
+   ],
+   "oldRisesTo": -8,
+   "newNumberMoves": [
+    100,
+    231
+   ],
+   "newComesFrom": 8,
+   "numberBecomes": "20",
+   "fillMoves": [
+    116,
+    300
+   ],
+   "fillEnds": {
+    "stem": 1,
+    "cap": 0.1429
+   },
+   "labels": [
+    [
+     17,
+     "find all 50 to contact Hui Jie"
+    ]
+   ],
+   "glint": [
+    null,
+    null
+   ]
+  },
+  "tabDot": {
+   "appears": 481,
+   "whole": 682
+  },
+  "next": {
+   "appears": 682,
+   "whole": 916
+  },
+  "crossfade": {
+   "from": null,
+   "buttonWhole": null,
+   "counterGone": 3200,
+   "counterRisesTo": 0,
+   "buttonComesFrom": 0
+  },
+  "longestFrameMs": 19,
+  "focused": "",
+  "said": "10 of 10 found in Grow. Grow complete."
+ },
+ "unlock": {
+  "cream": {
+   "oldNumberOnScreen": [
+    20,
+    169
+   ],
+   "oldRisesTo": -8,
+   "newNumberMoves": [
+    20,
+    152
+   ],
+   "newComesFrom": 8,
+   "numberBecomes": "10",
+   "fillMoves": [
+    35,
+    336
+   ],
+   "fillEnds": {
+    "stem": 1,
+    "cap": 1
+   },
+   "labels": [
+    [
+     20,
+     "1 more in Set Design"
+    ],
+    [
+     152,
+     "Set Design complete"
+    ]
+   ],
+   "glint": [
+    453,
+    1335
+   ]
+  },
+  "red": {
+   "oldNumberOnScreen": [
+    103,
+    252
+   ],
+   "oldRisesTo": -8,
+   "newNumberMoves": [
+    103,
+    235
+   ],
+   "newComesFrom": 8,
+   "numberBecomes": "50",
+   "fillMoves": [
+    118,
+    302
+   ],
+   "fillEnds": {
+    "stem": 1,
+    "cap": 1
+   },
+   "labels": [
+    [
+     20,
+     "1 more to contact Hui Jie"
+    ],
+    [
+     235,
+     "You found all 50"
+    ]
+   ],
+   "glint": [
+    917,
+    1818
+   ]
+  },
+  "tabDot": {
+   "appears": 467,
+   "whole": 668
+  },
+  "next": {
+   "appears": null,
+   "whole": null
+  },
+  "crossfade": {
+   "from": 2035,
+   "buttonWhole": 2386,
+   "counterGone": 2467,
+   "counterRisesTo": -4,
+   "buttonComesFrom": 4
+  },
+  "longestFrameMs": 21.3,
+  "focused": "hj-contact",
+  "said": "All 50 mushrooms found. The Contact Hui Jie button is now available."
+ },
+ "find (reduced motion)": {
+  "cream": {
+   "oldNumberOnScreen": [
+    null,
+    null
+   ],
+   "oldRisesTo": 0,
+   "newNumberMoves": [
+    null,
+    null
+   ],
+   "newComesFrom": 0,
+   "numberBecomes": "7",
+   "fillMoves": null,
+   "fillEnds": {
+    "stem": 1,
+    "cap": 0.5714
+   },
+   "labels": [
+    [
+     22,
+     "3 more in Grow"
+    ]
+   ],
+   "glint": [
+    null,
+    null
+   ]
+  },
+  "red": {
+   "oldNumberOnScreen": [
+    null,
+    null
+   ],
+   "oldRisesTo": 0,
+   "newNumberMoves": [
+    null,
+    null
+   ],
+   "newComesFrom": 0,
+   "numberBecomes": "17",
+   "fillMoves": null,
+   "fillEnds": {
+    "stem": 1,
+    "cap": 0.0571
+   },
+   "labels": [
+    [
+     22,
+     "find all 50 to contact Hui Jie"
+    ]
+   ],
+   "glint": [
+    null,
+    null
+   ]
+  },
+  "tabDot": {
+   "appears": null,
+   "whole": null
+  },
+  "next": {
+   "appears": null,
+   "whole": null
+  },
+  "crossfade": {
+   "from": null,
+   "buttonWhole": null,
+   "counterGone": 3198,
+   "counterRisesTo": 0,
+   "buttonComesFrom": 0
+  },
+  "longestFrameMs": 18.8,
+  "focused": "hj-shroom",
+  "said": "7 of 10 found in Grow. 3 more in Grow."
+ },
+ "complete (reduced motion)": {
+  "cream": {
+   "oldNumberOnScreen": [
+    null,
+    null
+   ],
+   "oldRisesTo": 0,
+   "newNumberMoves": [
+    null,
+    null
+   ],
+   "newComesFrom": 0,
+   "numberBecomes": "10",
+   "fillMoves": null,
+   "fillEnds": {
+    "stem": 1,
+    "cap": 1
+   },
+   "labels": [
+    [
+     26,
+     "Grow complete"
+    ]
+   ],
+   "glint": [
+    null,
+    null
+   ]
+  },
+  "red": {
+   "oldNumberOnScreen": [
+    null,
+    null
+   ],
+   "oldRisesTo": 0,
+   "newNumberMoves": [
+    null,
+    null
+   ],
+   "newComesFrom": 0,
+   "numberBecomes": "20",
+   "fillMoves": null,
+   "fillEnds": {
+    "stem": 1,
+    "cap": 0.1429
+   },
+   "labels": [
+    [
+     26,
+     "find all 50 to contact Hui Jie"
+    ]
+   ],
+   "glint": [
+    null,
+    null
+   ]
+  },
+  "tabDot": {
+   "appears": 481,
+   "whole": 715
+  },
+  "next": {
+   "appears": 679,
+   "whole": 912
+  },
+  "crossfade": {
+   "from": null,
+   "buttonWhole": null,
+   "counterGone": 3597,
+   "counterRisesTo": 0,
+   "buttonComesFrom": 0
+  },
+  "longestFrameMs": 19,
+  "focused": "",
+  "said": "10 of 10 found in Grow. Grow complete."
+ },
+ "unlock (reduced motion)": {
+  "cream": {
+   "oldNumberOnScreen": [
+    null,
+    null
+   ],
+   "oldRisesTo": 0,
+   "newNumberMoves": [
+    null,
+    null
+   ],
+   "newComesFrom": 0,
+   "numberBecomes": "10",
+   "fillMoves": null,
+   "fillEnds": {
+    "stem": 1,
+    "cap": 1
+   },
+   "labels": [
+    [
+     35,
+     "Set Design complete"
+    ]
+   ],
+   "glint": [
+    null,
+    null
+   ]
+  },
+  "red": {
+   "oldNumberOnScreen": [
+    null,
+    null
+   ],
+   "oldRisesTo": 0,
+   "newNumberMoves": [
+    null,
+    null
+   ],
+   "newComesFrom": 0,
+   "numberBecomes": "50",
+   "fillMoves": null,
+   "fillEnds": {
+    "stem": 1,
+    "cap": 1
+   },
+   "labels": [
+    [
+     35,
+     "You found all 50"
+    ]
+   ],
+   "glint": [
+    null,
+    null
+   ]
+  },
+  "tabDot": {
+   "appears": 477,
+   "whole": 710
+  },
+  "next": {
+   "appears": null,
+   "whole": null
+  },
+  "crossfade": {
+   "from": 2026,
+   "buttonWhole": 2461,
+   "counterGone": 2461,
+   "counterRisesTo": 0,
+   "buttonComesFrom": 0
+  },
+  "longestFrameMs": 19.3,
+  "focused": "hj-contact",
+  "said": "All 50 mushrooms found. The Contact Hui Jie button is now available."
+ }
+}

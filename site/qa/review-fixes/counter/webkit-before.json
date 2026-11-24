@@ -1,0 +1,22 @@
+{
+ "find": {
+  "atTheTapMs": 36,
+  "fromTheFlightOnMs": 20,
+  "over34": [
+   [
+    -399,
+    36
+   ]
+  ]
+ },
+ "complete": {
+  "atTheTapMs": 26,
+  "fromTheFlightOnMs": 27,
+  "over34": []
+ },
+ "unlock": {
+  "atTheTapMs": 21,
+  "fromTheFlightOnMs": 26,
+  "over34": []
+ }
+}

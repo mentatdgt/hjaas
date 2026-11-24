@@ -1,0 +1,258 @@
+{
+ "chrome": {
+  "#%E0%A4%A": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "#%": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "#%zz": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "#%00": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "#": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "(none)": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "#nope": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "#BUILD": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "#__proto__": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "#constructor": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "#toString": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "#hasOwnProperty": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "#grow%20": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "##grow": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "#%3Cscript%3E": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "#%67row": {
+   "opens": "grow",
+   "preload": "scene2/room.webp",
+   "whenTheAddressChanges": "grow",
+   "errors": [],
+   "ok": true
+  },
+  "#set": {
+   "opens": "set",
+   "preload": "scene5/room.webp",
+   "whenTheAddressChanges": "set",
+   "errors": [],
+   "ok": true
+  },
+  "#aaaaaaaaaaaaaaaaaaaaaaa": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  }
+ },
+ "webkit": {
+  "#%E0%A4%A": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "#%": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "#%zz": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "#%00": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "#": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "(none)": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "#nope": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "#BUILD": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "#__proto__": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "#constructor": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "#toString": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "#hasOwnProperty": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "#grow%20": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "##grow": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "#%3Cscript%3E": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  },
+  "#%67row": {
+   "opens": "grow",
+   "preload": "scene2/room.webp",
+   "whenTheAddressChanges": "grow",
+   "errors": [],
+   "ok": true
+  },
+  "#set": {
+   "opens": "set",
+   "preload": "scene5/room.webp",
+   "whenTheAddressChanges": "set",
+   "errors": [],
+   "ok": true
+  },
+  "#aaaaaaaaaaaaaaaaaaaaaaa": {
+   "opens": "build",
+   "preload": "scene1/room.webp",
+   "whenTheAddressChanges": "build",
+   "errors": [],
+   "ok": true
+  }
+ }
+}

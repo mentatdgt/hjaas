@@ -1,0 +1,18 @@
+{
+ "chrome": {
+  "retryOfferedAfterMs": 60213,
+  "afterRetry": {
+   "plate": true,
+   "rachel": true,
+   "mushrooms": 10
+  }
+ },
+ "webkit": {
+  "retryOfferedAfterMs": 60260,
+  "afterRetry": {
+   "plate": true,
+   "rachel": true,
+   "mushrooms": 10
+  }
+ }
+}

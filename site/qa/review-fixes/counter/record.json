@@ -1,0 +1,188 @@
+{
+ "find-desktop": {
+  "frames": 76,
+  "seconds": 2.8,
+  "movingFrames": 44,
+  "longestGapWhileMovingMs": 16.7,
+  "gapsOver34": [],
+  "errors": []
+ },
+ "complete-desktop": {
+  "frames": 117,
+  "seconds": 3.5,
+  "movingFrames": 87,
+  "longestGapWhileMovingMs": 83.3,
+  "gapsOver34": [
+   [
+    1164,
+    83
+   ],
+   [
+    1247,
+    67
+   ]
+  ],
+  "errors": []
+ },
+ "unlock-desktop": {
+  "frames": 222,
+  "seconds": 5.3,
+  "movingFrames": 135,
+  "longestGapWhileMovingMs": 100,
+  "gapsOver34": [
+   [
+    1598,
+    50
+   ],
+   [
+    1648,
+    100
+   ]
+  ],
+  "errors": []
+ },
+ "return-desktop": {
+  "frames": 58,
+  "seconds": 3.5,
+  "movingFrames": 0,
+  "longestGapWhileMovingMs": null,
+  "gapsOver34": [],
+  "errors": []
+ },
+ "find-portrait": {
+  "frames": 79,
+  "seconds": 2.9,
+  "movingFrames": 44,
+  "longestGapWhileMovingMs": 16.7,
+  "gapsOver34": [],
+  "errors": []
+ },
+ "complete-portrait": {
+  "frames": 123,
+  "seconds": 3.6,
+  "movingFrames": 87,
+  "longestGapWhileMovingMs": 83.3,
+  "gapsOver34": [
+   [
+    1183,
+    83
+   ],
+   [
+    1266,
+    67
+   ]
+  ],
+  "errors": []
+ },
+ "unlock-portrait": {
+  "frames": 216,
+  "seconds": 5.3,
+  "movingFrames": 136,
+  "longestGapWhileMovingMs": 83.3,
+  "gapsOver34": [
+   [
+    1597,
+    83
+   ],
+   [
+    1681,
+    50
+   ],
+   [
+    1731,
+    50
+   ]
+  ],
+  "errors": []
+ },
+ "return-portrait": {
+  "frames": 32,
+  "seconds": 2.9,
+  "movingFrames": 0,
+  "longestGapWhileMovingMs": null,
+  "gapsOver34": [],
+  "errors": []
+ },
+ "find-landscape": {
+  "frames": 78,
+  "seconds": 2.9,
+  "movingFrames": 44,
+  "longestGapWhileMovingMs": 16.7,
+  "gapsOver34": [],
+  "errors": []
+ },
+ "complete-landscape": {
+  "frames": 123,
+  "seconds": 3.6,
+  "movingFrames": 86,
+  "longestGapWhileMovingMs": 83.3,
+  "gapsOver34": [
+   [
+    1149,
+    83
+   ],
+   [
+    1233,
+    83
+   ]
+  ],
+  "errors": []
+ },
+ "unlock-landscape": {
+  "frames": 228,
+  "seconds": 5.4,
+  "movingFrames": 135,
+  "longestGapWhileMovingMs": 100,
+  "gapsOver34": [
+   [
+    1597,
+    100
+   ],
+   [
+    1697,
+    83
+   ]
+  ],
+  "errors": []
+ },
+ "return-landscape": {
+  "frames": 58,
+  "seconds": 3.6,
+  "movingFrames": 0,
+  "longestGapWhileMovingMs": null,
+  "gapsOver34": [],
+  "errors": []
+ },
+ "find-desktop-reduced": {
+  "frames": 15,
+  "seconds": 1.6,
+  "movingFrames": 0,
+  "longestGapWhileMovingMs": null,
+  "gapsOver34": [],
+  "errors": []
+ },
+ "complete-desktop-reduced": {
+  "frames": 43,
+  "seconds": 1.6,
+  "movingFrames": 0,
+  "longestGapWhileMovingMs": null,
+  "gapsOver34": [],
+  "errors": []
+ },
+ "unlock-desktop-reduced": {
+  "frames": 59,
+  "seconds": 3,
+  "movingFrames": 0,
+  "longestGapWhileMovingMs": null,
+  "gapsOver34": [],
+  "errors": []
+ },
+ "drift-portrait": {
+  "frames": 470,
+  "seconds": 10.3,
+  "movingFrames": 120,
+  "longestGapWhileMovingMs": 33.3,
+  "gapsOver34": [],
+  "errors": []
+ }
+}

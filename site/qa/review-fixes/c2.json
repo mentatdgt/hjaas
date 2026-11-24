@@ -1,0 +1,120 @@
+{
+ "chrome": {
+  "now": {
+   "findInEach": {
+    "otherTabSeesItAtOnce": [
+     "1",
+     "2"
+    ],
+    "stored": [
+     "build:drape",
+     "build:sill",
+     "grow:door"
+    ],
+    "afterReload": {
+     "a": "3",
+     "b": "3"
+    },
+    "errors": []
+   },
+   "stalePan": {
+    "otherTabUnlocked": true,
+    "staleTabStillOld": "49",
+    "storedAfterThePan": 50,
+    "afterReload": {
+     "staleTab": true,
+     "otherTab": true
+    },
+    "panSavedAcrossAnImmediateReload": "1043"
+   },
+   "ok": true
+  },
+  "before": {
+   "findInEach": {
+    "otherTabSeesItAtOnce": [
+     "0",
+     "1"
+    ],
+    "stored": [
+     "build:sill",
+     "grow:door"
+    ],
+    "afterReload": {
+     "a": "2",
+     "b": "2"
+    },
+    "errors": []
+   },
+   "stalePan": {
+    "otherTabUnlocked": true,
+    "staleTabStillOld": "49",
+    "storedAfterThePan": 49,
+    "afterReload": {
+     "staleTab": false,
+     "otherTab": false
+    },
+    "panSavedAcrossAnImmediateReload": null
+   },
+   "ok": false
+  }
+ },
+ "webkit": {
+  "now": {
+   "findInEach": {
+    "otherTabSeesItAtOnce": [
+     "1",
+     "2"
+    ],
+    "stored": [
+     "build:drape",
+     "build:sill",
+     "grow:door"
+    ],
+    "afterReload": {
+     "a": "3",
+     "b": "3"
+    },
+    "errors": []
+   },
+   "stalePan": {
+    "otherTabUnlocked": true,
+    "staleTabStillOld": "49",
+    "storedAfterThePan": 50,
+    "afterReload": {
+     "staleTab": true,
+     "otherTab": true
+    },
+    "panSavedAcrossAnImmediateReload": "1041"
+   },
+   "ok": true
+  },
+  "before": {
+   "findInEach": {
+    "otherTabSeesItAtOnce": [
+     "0",
+     "1"
+    ],
+    "stored": [
+     "build:sill",
+     "grow:door"
+    ],
+    "afterReload": {
+     "a": "2",
+     "b": "2"
+    },
+    "errors": []
+   },
+   "stalePan": {
+    "otherTabUnlocked": true,
+    "staleTabStillOld": "49",
+    "storedAfterThePan": 49,
+    "afterReload": {
+     "staleTab": false,
+     "otherTab": false
+    },
+    "panSavedAcrossAnImmediateReload": null
+   },
+   "ok": false
+  }
+ }
+}

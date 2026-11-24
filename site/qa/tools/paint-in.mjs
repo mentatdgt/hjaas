@@ -17,7 +17,8 @@ import sharp from 'sharp';
 
 const base = process.env.HJ_URL ?? 'http://localhost:5173/';
 const prod = process.env.HJ_PROD ?? 'http://localhost:4173/';
-const out = new URL('../paint/', import.meta.url).pathname;
+// (HJ_OUT: another folder for the results, e.g. ../review-fixes/counter/)
+const out = new URL(process.env.HJ_OUT ?? '../paint/', import.meta.url).pathname;
 await mkdir(out, { recursive: true });
 const IDS = ['build', 'grow', 'design', 'film', 'set'];
 const N = (id) => IDS.indexOf(id) + 1;
@@ -177,6 +178,12 @@ const filmOf = async (context, page, dir) => {
   });
   return { frames, start: () => cdp.send('Page.startScreencast', { format: 'jpeg', quality: 95, everyNthFrame: 1 }), stop: async () => { await cdp.send('Page.stopScreencast'); await Promise.all(writes); } };
 };
+/** WebKit has no screencast: one screenshot after another, each with the middle of its own time (HJ_ENGINE=webkit). */
+const snapsOf = async (page, dir) => {
+  await rm(dir, { recursive: true, force: true }); await mkdir(dir, { recursive: true });
+  const frames = []; let on = false; let loop;
+  return { frames, start: async () => { on = true; loop = (async () => { while (on) { const a = Date.now(); const file = `${dir}${String(frames.length).padStart(5, '0')}.png`; await page.screenshot({ path: file }).catch(() => {}); frames.push({ at: (a + Date.now()) / 2, file }); } })(); }, stop: async () => { on = false; await loop; } };
+};
 const toMp4 = async (frames, list, mp4) => {
   await writeFile(list, `ffconcat version 1.0\n${frames.map((f, i) => `file '${f.file}'\nduration ${(((frames[i + 1]?.at ?? f.at + 16.7) - f.at) / 1000).toFixed(6)}`).join('\n')}\n`);
   execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', list, '-vf', 'fps=60,scale=trunc(iw/2)*2:trunc(ih/2)*2', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '19', '-movflags', '+faststart', mp4]);
@@ -250,18 +257,19 @@ const ROOM_DONE = 0.985; const SHE_IS = 0.95; const SECTOR_IS = 0.6;
 
 run.record = async () => {
   // HJ_OLD: the same test on an earlier build (its numbers only).
-  const OLD = !!process.env.HJ_OLD; const results = OLD ? 'before.json' : 'paint.json';
+  const WK = process.env.HJ_ENGINE === 'webkit';
+  const OLD = !!process.env.HJ_OLD || WK; const results = WK ? 'paint-webkit.json' : OLD ? 'before.json' : 'paint.json';
   const report = JSON.parse(await readFile(`${out}${results}`, 'utf8').catch(() => '{}'));
   for (const id of ONLY ? [ONLY] : IDS) for (const [device, { options, suffix }] of Object.entries(DEVICES)) {
     const shape = await shapes(id);
     // Chrome's recorder now and then stalls for a moment: of up to four takes, the one with the fewest gaps is kept.
     // (On the phone a gap can also be a stroke outside the window: nothing on screen changes.)
     let best = null;
-    for (let take = 0; take < 4 && best?.stalls !== 0; take++) {
+    for (let take = 0; take < (WK ? 1 : 4) && best?.stalls !== 0; take++) {
       const dir = `${out}take-${take}/`;
-      const browser = await launch(chromium); const context = await browser.newContext(options); const page = await context.newPage();
+      const browser = await launch(WK ? webkit : chromium); const context = await browser.newContext(options); const page = await context.newPage();
       const errors = errorsOf(page);
-      const film = await filmOf(context, page, dir);
+      const film = WK ? await snapsOf(page, dir) : await filmOf(context, page, dir);
       await page.goto(`${prod}#${id}`, { waitUntil: 'commit' });
       await film.start().catch(async () => { await wait(60); await film.start(); });
       while ((await page.evaluate(() => performance.getEntriesByName('hj-paint').length)) === 0) await wait(200);
