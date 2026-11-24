@@ -20,11 +20,11 @@ npm install
 npm run dev
 ```
 
-Then open **http://localhost:5173/** (the same address works from a phone on the same Wi-Fi if you
-replace `localhost` with the Mac's IP address, which the command prints as "Network").
+Then open **http://127.0.0.1:5173/**. `npm run build` makes the static site in `site/dist/`.
+`npm run preview` serves that build on http://127.0.0.1:4173/. `npm test` runs the unit tests.
 
-`npm run build` makes the static site in `site/dist/`; `npm run preview` serves that build on
-http://localhost:4173/. `npm test` runs the unit tests.
+For a phone session, use `npm run dev:lan` or `npm run preview:lan` and open the URL printed as
+"Network" on a phone connected to the same Wi-Fi.
 
 ## Where things are
 

@@ -5,8 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:lan": "vite --host 0.0.0.0",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
+    "preview:lan": "vite preview --host 0.0.0.0",
     "assets": "node scripts/build-assets.mjs",
     "test": "vitest run"
   },

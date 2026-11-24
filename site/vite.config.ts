@@ -7,8 +7,8 @@ export default defineConfig(({ command, mode }) => {
   const endpoint = command === 'build' ? loadEnv(mode, process.cwd(), 'VITE_').VITE_FORM_ENDPOINT : undefined;
   return {
     base: './',
-    server: { port: 5173, strictPort: true, host: true },
-    preview: { port: 4173, strictPort: true, host: true },
+    server: { port: 5173, strictPort: true, host: '127.0.0.1' },
+    preview: { port: 4173, strictPort: true, host: '127.0.0.1' },
     build: { target: 'es2022' },
     plugins: [{
       name: 'hjaas-security-headers',
