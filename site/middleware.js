@@ -1,4 +1,6 @@
-// Preview gate (Vercel Routing Middleware). Keeps hjaas.com private until launch: every request,
+// Preview gate (Vercel Routing Middleware). Plain JavaScript on purpose: Vercel compiles a .ts version with
+// the site's tsconfig, which fails on its 'vite/client' types.
+// Keeps hjaas.com private until launch: every request,
 // pages and art alike, needs the preview cookie, which the password form below sets.
 //
 // The password is not in the code: it is the PREVIEW_PASSWORD environment variable in the Vercel project.
@@ -6,18 +8,16 @@
 //
 // AT LAUNCH: delete this file and the PREVIEW_PASSWORD variable, then redeploy.
 
-declare const process: { env: Record<string, string | undefined> };
-
 const COOKIE = 'hjaas_preview';
 const LOGIN = '/__preview';
 const THIRTY_DAYS = 60 * 60 * 24 * 30;
 
-async function token(password: string): Promise<string> {
+async function token(password) {
   const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`hjaas-preview:${password}`));
   return Array.from(new Uint8Array(digest), (b) => b.toString(16).padStart(2, '0')).join('');
 }
 
-function cookieValue(request: Request): string | undefined {
+function cookieValue(request) {
   const header = request.headers.get('cookie') ?? '';
   for (const part of header.split(';')) {
     const [name, ...rest] = part.trim().split('=');
@@ -27,14 +27,14 @@ function cookieValue(request: Request): string | undefined {
 }
 
 /** Same length and every character compared, so the time taken says nothing about the token. */
-function same(a: string, b: string): boolean {
+function same(a, b) {
   if (a.length !== b.length) return false;
   let diff = 0;
   for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
   return diff === 0;
 }
 
-function page(status: number, wrong: boolean): Response {
+function page(status, wrong) {
   const html = `<!doctype html>
 <html lang="en">
 <head>
@@ -80,7 +80,7 @@ function page(status: number, wrong: boolean): Response {
   });
 }
 
-export default async function middleware(request: Request): Promise<Response | undefined> {
+export default async function middleware(request) {
   const password = process.env.PREVIEW_PASSWORD;
   if (!password) return page(503, false);
   const expected = await token(password);
