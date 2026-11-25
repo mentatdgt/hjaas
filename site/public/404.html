@@ -10,19 +10,23 @@
   /* Reference build by Wren. Every URL is absolute: this page is served at any missing path. */
   @font-face { font-family: 'Instrument Sans'; src: url('/assets/404/instrument-sans.woff2') format('woff2'); font-weight: 400 700; font-display: swap; }
   html, body { margin: 0; height: 100%; background: #F6F3EC; color: #111; }
-  body { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.25rem;
+  body { display: flex; flex-direction: column; align-items: center; justify-content: center;
+         /* the text's top is 18px below the boots: the art ends 24 canvas px below them */
+         --art: min(100vw, 1100px); gap: calc(18px - var(--art) * 24 / 1672);
          font-family: 'Instrument Sans', system-ui, sans-serif; }
-  svg { display: block; width: min(100vw, 1100px); height: auto; aspect-ratio: 1672 / 941; }
+  svg { display: block; width: var(--art); height: auto; aspect-ratio: 1672 / 854; }
   /* the phone viewBox's shape, held from the first paint so nothing shifts when 404.json arrives */
-  @media (max-aspect-ratio: 1/1) { svg { aspect-ratio: 1384 / 941; } }
+  @media (max-aspect-ratio: 1/1) { body { gap: calc(18px - var(--art) * 24 / 1384); } svg { aspect-ratio: 1384 / 854; } }
   .gone { visibility: hidden; }
-  p { margin: 0 0 2rem; font-size: 1.0625rem; }
-  a { color: inherit; text-underline-offset: .2em; }
+  p { margin: 0 0 2rem; font-size: 1.0625rem; text-align: center; }
+  /* as much below the text as the art leaves above the numeral, so what is seen is centred (a phone's 2rem is that already) */
+  @media (min-aspect-ratio: 1/1) and (min-height: 700px) { p { margin-bottom: calc(var(--art) * 110.8 / 1672); } }
+  a { color: inherit; text-underline-offset: .2em; display: inline-block; }
 </style>
 </head>
 <body>
 <main>
-  <svg id="art" viewBox="0 0 1672 941" role="img" aria-label="404: Rachel sketching at her drafting table">
+  <svg id="art" viewBox="0 0 1672 854" role="img" aria-label="404: Rachel sketching at her drafting table">
     <path id="numeral" fill="#000"/>
     <g id="rachel" class="gone">
       <image id="figure" href="/assets/404/figure.webp"/>
@@ -31,7 +35,7 @@
     </g>
   </svg>
 </main>
-<p>This page doesn't exist. <a href="/">Back to the start</a></p>
+<p>This page is still on the drawing board. <a href="/">Back to the main site!</a></p>
 <script>
 (async () => {
   const base = '/assets/404/';
@@ -49,7 +53,9 @@
     document.getElementById('arms').append(im); arms[name] = im;
   }
   const phone = matchMedia('(max-aspect-ratio: 1/1)');
-  const fit = () => svg.setAttribute('viewBox', phone.matches ? m.phone_viewbox.join(' ') : `0 0 ${m.canvas.w} ${m.canvas.h}`);
+  // the empty page under the boots and the numeral (its bbox ends at 830.2) is cropped to 24px: the height is in the CSS too
+  const height = Math.round(m.numeral.bbox[3] + 24);
+  const fit = () => { const [x, y, w] = phone.matches ? m.phone_viewbox : [0, 0, m.canvas.w]; svg.setAttribute('viewBox', [x, y, w, height].join(' ')); };
   fit(); phone.addEventListener('change', fit);
   const ready = src => { const i = new Image(); i.src = base + src; return i.decode().catch(() => {}); };
   // she appears placed and whole: never unplaced, and never with the hole where her arm goes

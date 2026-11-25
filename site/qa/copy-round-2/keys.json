@@ -1,0 +1,108 @@
+{
+ "chrome": {
+  "armed": "Tap again to reset all 50",
+  "afterTheSecond": "Skip",
+  "skipEndsIt": {
+   "scene": "build",
+   "cream": "0/10 hiding in Build",
+   "red": "0/50 find all 50 to contact Hui Jie",
+   "hiddenHere": 10,
+   "marks": [],
+   "contact": false,
+   "reset": null,
+   "pause": true,
+   "skip": false,
+   "said": "",
+   "saved": 0
+  },
+  "settled": "Pause animation",
+  "sameOrderAsTheSite": true,
+  "end": {
+   "scene": "build",
+   "cream": "0/10 hiding in Build",
+   "red": "0/50 find all 50 to contact Hui Jie",
+   "hiddenHere": 10,
+   "marks": [],
+   "contact": false,
+   "reset": null,
+   "pause": true,
+   "skip": false,
+   "said": "",
+   "saved": 0
+  },
+  "errors": []
+ },
+ "chrome, reduced motion": {
+  "armed": "Tap again to reset all 50",
+  "afterTheSecond": "Build",
+  "settled": "Build",
+  "sameOrderAsTheSite": true,
+  "end": {
+   "scene": "build",
+   "cream": "0/10 hiding in Build",
+   "red": "0/50 find all 50 to contact Hui Jie",
+   "hiddenHere": 10,
+   "marks": [],
+   "contact": false,
+   "reset": null,
+   "pause": false,
+   "skip": false,
+   "said": "",
+   "saved": 0
+  },
+  "errors": []
+ },
+ "webkit": {
+  "armed": "Tap again to reset all 50",
+  "afterTheSecond": "Skip",
+  "skipEndsIt": {
+   "scene": "build",
+   "cream": "0/10 hiding in Build",
+   "red": "0/50 find all 50 to contact Hui Jie",
+   "hiddenHere": 10,
+   "marks": [],
+   "contact": false,
+   "reset": null,
+   "pause": true,
+   "skip": false,
+   "said": "",
+   "saved": 0
+  },
+  "settled": "Pause animation",
+  "sameOrderAsTheSite": true,
+  "end": {
+   "scene": "build",
+   "cream": "0/10 hiding in Build",
+   "red": "0/50 find all 50 to contact Hui Jie",
+   "hiddenHere": 10,
+   "marks": [],
+   "contact": false,
+   "reset": null,
+   "pause": true,
+   "skip": false,
+   "said": "",
+   "saved": 0
+  },
+  "errors": []
+ },
+ "webkit, reduced motion": {
+  "armed": "Tap again to reset all 50",
+  "afterTheSecond": "Build",
+  "settled": "Build",
+  "sameOrderAsTheSite": true,
+  "end": {
+   "scene": "build",
+   "cream": "0/10 hiding in Build",
+   "red": "0/50 find all 50 to contact Hui Jie",
+   "hiddenHere": 10,
+   "marks": [],
+   "contact": false,
+   "reset": null,
+   "pause": false,
+   "skip": false,
+   "said": "",
+   "saved": 0
+  },
+  "errors": []
+ }
+}

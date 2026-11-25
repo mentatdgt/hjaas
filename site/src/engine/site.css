@@ -56,9 +56,15 @@
   --logo-h: calc(var(--logo-w) / (var(--logo-ratio)));
   --pad-top: clamp(20px, 2.2cqw, 44px);
   --pad-bottom: clamp(18px, 1.8cqw, 36px);
-  /* The identity: the logo, or the name and its line (two rows of it) beside it, whichever is the taller. */
-  --ident-h: calc(clamp(27px, 2.7cqw, 62px) * 1.08 + clamp(4px, 0.4cqw, 8px) + clamp(14.5px, 1.08cqw, 24px) * 1.3 * 2);
+  /* The identity: the logo, or the name and its line beside it, whichever is the taller. The line is one row; small
+     windows need two, and that much is kept on the next larger ones too, so the picture does not jump between them. */
+  --line-size: clamp(15px, 1.2cqw, 26px);
+  --ident-h: max(clamp(27px, 2.7cqw, 62px) * 1.08 + clamp(4px, 0.4cqw, 8px) + var(--line-size) * 1.3, 27px * 1.08 + 4px + 15px * 1.3 * 2);
   --mast-h: max(var(--logo-h), var(--ident-h));
+  --mast-gap: clamp(14px, min(1.8cqw, 4cqw - 32px), 30px);
+  --tab-size: clamp(15.5px, 1.15cqw, 21px);
+  /* Between two labels (see .hj-menu). */
+  --tab-gap: clamp(18px, min(1.8cqw, 2.7cqw - 13px), 34px);
   --gap-head: clamp(16px, 1.5cqw, 30px);
   --gap-caption: clamp(12px, 1.1cqw, 22px);
   /* The two counters, one over the other. */
@@ -77,6 +83,10 @@
     max(72.2cqw, 820px),
     max(calc((100svh - var(--chrome)) * var(--plate-w) / var(--plate-h)), 540px)
   );
+  /* The logo and the tabs beside a tagline of one row (it is 22.15em long, the tabs' labels 15.1em, and it is never
+     smaller than 14.4 px). In a short window the picture is narrower than that, and the masthead stands out past it. */
+  --mast-fixed: calc(var(--logo-w) + var(--mast-gap) * 2 + var(--tab-size) * 15.1 + var(--tab-gap) * 4);
+  --mast-w: max(var(--pic-w), min(100cqw - 2 * var(--page-margin), var(--mast-fixed) + 14.4px * 22.2));
   display: flex;
   flex-direction: column;
   width: var(--pic-w);
@@ -87,13 +97,19 @@
 .hj-masthead {
   display: flex;
   align-items: center;
-  gap: clamp(14px, 1.8cqw, 30px);
+  gap: var(--mast-gap);
+  width: var(--mast-w);
   min-height: var(--logo-h);
-  margin-bottom: var(--gap-head);
+  margin: 0 calc((var(--pic-w) - var(--mast-w)) / 2) var(--gap-head);
 }
 
+/* As tall as it may need to be, whatever it holds: its line takes one row or two, and nothing below it moves. */
 .hj-ident {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   min-width: 0;
+  min-height: var(--ident-h);
 }
 
 /* The scene menu: quiet tabs at the end of the masthead, just above the picture. */
@@ -102,9 +118,8 @@
   /* (Beside the tagline it keeps its width: a tab's name never breaks.) */
   flex: none;
   align-self: flex-end;
-  /* Between two labels. Each tab's tap area has some of it on either side: more on the right, where a finished
+  /* Each tab's tap area has some of the gap on either side: more on the right, where a finished
      scene's mushroom stands; the two make up the whole gap, so no tap area lies over another. */
-  --tab-gap: clamp(18px, 1.8cqw, 34px);
   --tab-right: max(14px, var(--tab-gap) / 2);
   --tab-left: calc(var(--tab-gap) - var(--tab-right));
   gap: var(--tab-gap);
@@ -120,7 +135,7 @@
   min-height: 44px;
   border-bottom: 1.5px solid transparent;
   color: var(--hj-ink-soft);
-  font-size: clamp(15.5px, 1.15cqw, 21px);
+  font-size: var(--tab-size);
   line-height: 1.2;
   text-decoration: none;
   -webkit-user-select: none;
@@ -217,9 +232,11 @@
   max-width: 44ch;
   margin: clamp(4px, 0.4cqw, 8px) 0 0;
   color: var(--hj-ink-soft);
-  font-size: clamp(14.5px, 1.08cqw, 24px);
+  /* One row, as large as it fits between the logo and the tabs. */
+  font-size: clamp(14.4px, calc((var(--mast-w) - var(--mast-fixed)) / 22.2), var(--line-size));
   line-height: 1.3;
-  text-wrap: pretty;
+  /* (Not "pretty": WebKit's makes a third row of it on the narrowest.) */
+  text-wrap: balance;
 }
 
 /* The picture sits straight on the page: no frame, no mat. Its own soft edge is part of the plate (.hj-edge). */
@@ -846,26 +863,35 @@ a.hj-logo:active {
   transform: scale(0.98);
 }
 
-/* Quiet controls at the end of the caption: Skip while the room is painted, then Pause animation and
-   Replay painting. Skip shares the first control's place. */
+/* Quiet controls at the end of the caption: Skip while the room is painted, then Pause animation in the same place,
+   and beside it Reset mushrooms, once there is one to reset (.has-reset). Reset is on the open side, so that it comes,
+   goes and changes its words without moving Pause; and it has the room its longer words need (site.ts). */
 .hj-controls {
   display: grid;
-  grid-template-columns: auto auto;
   justify-items: end;
-  gap: 0 22px;
   margin-left: auto;
+  white-space: nowrap;
 }
 
-.hj-controls > :nth-child(1) {
+.hj-controls > * {
   grid-area: 1 / 2;
 }
 
-.hj-controls > :nth-child(2) {
+.hj-controls > .hj-reset,
+.hj-controls.has-reset::before {
   grid-area: 1 / 1;
+  margin-right: 22px;
 }
 
-.hj-controls > :nth-child(3) {
-  grid-area: 1 / 2;
+.hj-controls.has-reset::before {
+  content: attr(data-armed);
+  height: 0;
+  font-size: 14.5px;
+  visibility: hidden;
+}
+
+.hj-controls:not(.has-reset) > .hj-reset {
+  display: none;
 }
 
 .hj-link {
@@ -890,7 +916,7 @@ a.hj-logo:active {
     text-decoration-color 140ms ease;
 }
 
-/* Controls swap by visibility, not display: all three keep their place, so nothing on the page moves. */
+/* Controls swap by visibility, not display: they keep their place, so nothing on the page moves. */
 .hj-link.is-off {
   visibility: hidden;
 }
@@ -1467,12 +1493,20 @@ a.hj-logo:active {
   }
 }
 
-/* ---------- Tablets and small windows: the menu on its own row, so the tagline has room ---------- */
+/* ---------- Tablets and small windows: two rows of tagline; then the menu on its own row, so it has one ---------- */
 
 @media (min-height: 481px) {
-  @container (max-width: 860px) {
+  @container (max-width: 885px) {
+    .hj-tagline {
+      font-size: 15px;
+    }
+  }
+
+  @container (max-width: 760px) {
     .hj-page {
+      --mast-w: var(--pic-w);
       --menu-h: 44px;
+      --ident-h: calc(27px * 1.08 + 4px + 15px * 1.3);
     }
 
     .hj-masthead {
@@ -1498,8 +1532,10 @@ a.hj-logo:active {
     .hj-page {
       --page-margin: 18px;
       --logo-w: clamp(120px, 33cqw, 140px);
-      /* Its line runs to three rows here (four on the narrowest, below). */
-      --ident-h: calc(27px * 1.08 + 4px + 14px * 1.3 * 3);
+      --mast-gap: 14px;
+      /* Its line takes two rows here: 14.5 px, smaller only on the narrowest. (The longer row is 11.8em.) */
+      --line-size: min(14.5px, calc((100cqw - 2 * var(--page-margin) - var(--logo-w) - var(--mast-gap)) / 11.9));
+      --ident-h: calc(27px * 1.08 + 4px + var(--line-size) * 1.3 * 2);
       --pad-top: 14px;
       --pad-bottom: 18px;
       --gap-head: 12px;
@@ -1514,7 +1550,9 @@ a.hj-logo:active {
 
     .hj-masthead {
       flex-wrap: wrap;
-      gap: 0 14px;
+      gap: 0 var(--mast-gap);
+      width: auto;
+      margin: 0 0 var(--gap-head);
     }
 
     /* The name stays beside the logo; its text wraps inside its own column. */
@@ -1566,23 +1604,12 @@ a.hj-logo:active {
     }
 
     .hj-tagline {
-      font-size: 14px;
-      line-height: 1.3;
-    }
-
-    @container (max-width: 373px) {
-      .hj-tagline {
-        font-size: 13.5px;
-      }
+      font-size: var(--line-size);
     }
 
     @container (max-width: 349px) {
       .hj-page {
-        --ident-h: calc(27px * 1.08 + 4px + 13px * 1.3 * 4);
-      }
-
-      .hj-tagline {
-        font-size: 13px;
+        --mast-gap: 8px;
       }
     }
 
@@ -1715,12 +1742,29 @@ a.hj-logo:active {
     .hj-controls {
       justify-content: start;
       justify-items: start;
-      gap: 0 26px;
       margin-left: 0;
     }
 
-    .hj-controls > :nth-child(1) {
+    .hj-controls > * {
       grid-area: 1 / 1;
+    }
+
+    .hj-controls > .hj-reset,
+    .hj-controls.has-reset::before {
+      grid-area: 1 / 2;
+      margin: 0 0 0 26px;
+    }
+
+    @container (max-width: 349px) {
+      .hj-controls > .hj-reset,
+      .hj-controls.has-reset::before {
+        margin-left: 14px;
+      }
+
+      .hj-link,
+      .hj-controls.has-reset::before {
+        font-size: 13.5px;
+      }
     }
   }
 }
@@ -1733,7 +1777,8 @@ a.hj-logo:active {
   .hj-page {
     --page-margin: 20px;
     --logo-w: 112px;
-    --ident-h: 48px;
+    --ident-h: 44px;
+    --mast-gap: 14px;
     --pad-top: 8px;
     --pad-bottom: 8px;
     --gap-head: 4px;
@@ -1744,7 +1789,8 @@ a.hj-logo:active {
   }
 
   .hj-masthead {
-    gap: 14px;
+    width: auto;
+    margin: 0 0 var(--gap-head);
   }
 
   .hj-menu {
@@ -1754,27 +1800,35 @@ a.hj-logo:active {
   }
 
   .hj-name {
-    font-size: 20px;
+    font-size: 22px;
   }
 
-  /* Two short rows, and never a third. */
   .hj-tagline {
-    display: -webkit-box;
-    margin-top: 0;
-    overflow: hidden;
-    font-size: 11.5px;
-    line-height: 1.15;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+    margin-top: 1px;
+    font-size: 13px;
+  }
+
+  /* The tabs leave it two short rows. */
+  @container (max-width: 800px) {
+    .hj-page {
+      --ident-h: 48px;
+    }
+
+    .hj-name {
+      font-size: 20px;
+    }
+
+    .hj-tagline {
+      margin-top: 0;
+      font-size: 12px;
+      line-height: 1.1;
+    }
   }
 
   @container (max-width: 720px) {
     .hj-page {
       --logo-w: 100px;
-    }
-
-    .hj-masthead {
-      gap: 10px;
+      --mast-gap: 10px;
     }
 
     .hj-menu {
@@ -1785,11 +1839,6 @@ a.hj-logo:active {
       font-size: 14.5px;
     }
 
-    .hj-tagline {
-      font-size: 11px;
-      letter-spacing: -0.01em;
-    }
-
     .hj-num {
       font-size: 20px;
     }
@@ -1797,6 +1846,40 @@ a.hj-logo:active {
     .hj-label,
     .hj-next {
       font-size: 14px;
+    }
+
+    /* (The controls stay beside the longest finished row.) */
+    .hj-caption {
+      column-gap: 12px;
+    }
+
+    .hj-link,
+    .hj-controls.has-reset::before {
+      font-size: 13px;
+    }
+
+    .hj-controls > .hj-reset,
+    .hj-controls.has-reset::before {
+      margin-right: 12px;
+    }
+  }
+
+  @container (max-width: 640px) {
+    .hj-page {
+      --logo-w: 92px;
+    }
+
+    .hj-menu {
+      --tab-gap: 14px;
+    }
+
+    .hj-tab {
+      font-size: 14px;
+    }
+
+    .hj-tagline {
+      font-size: 11px;
+      letter-spacing: -0.01em;
     }
   }
 
@@ -1852,7 +1935,8 @@ a.hj-logo:active {
     font-size: 18px;
   }
 
-  .hj-link {
+  .hj-link,
+  .hj-controls.has-reset::before {
     font-size: 17px;
   }
 
@@ -1873,6 +1957,16 @@ a.hj-logo:active {
   .hj-tab.is-mark-new .hj-tab-mark {
     transition: opacity 260ms ease;
     scale: none;
+  }
+
+  /* Skip and Pause are never offered: Reset stands by itself. */
+  .hj-controls > .hj-link:not(.hj-reset) {
+    display: none;
+  }
+
+  .hj-controls > .hj-reset,
+  .hj-controls.has-reset::before {
+    margin: 0;
   }
 
   /* Pressed controls change colour, not size. */

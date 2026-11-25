@@ -1,0 +1,110 @@
+{
+ "375x812": {
+  "chrome": {
+   "font": 14.5,
+   "masthead": 112.9,
+   "pictureTop": 138.9,
+   "window": "339x508.5",
+   "rows": 2,
+   "errors": []
+  },
+  "webkit": {
+   "font": 14.5,
+   "masthead": 112.9,
+   "pictureTop": 138.9,
+   "window": "339x508.5",
+   "rows": 2,
+   "errors": []
+  }
+ },
+ "390x844": {
+  "chrome": {
+   "font": 14.5,
+   "masthead": 112.9,
+   "pictureTop": 138.9,
+   "window": "354x531",
+   "rows": 2,
+   "errors": []
+  },
+  "webkit": {
+   "font": 14.5,
+   "masthead": 112.9,
+   "pictureTop": 138.9,
+   "window": "354x531",
+   "rows": 2,
+   "errors": []
+  }
+ },
+ "568x320": {
+  "chrome": {
+   "font": 11,
+   "masthead": 48,
+   "pictureTop": 60,
+   "window": "440x247.6",
+   "rows": 2,
+   "errors": []
+  },
+  "webkit": {
+   "font": 11,
+   "masthead": 48,
+   "pictureTop": 60,
+   "window": "440x247.6",
+   "rows": 2,
+   "errors": []
+  }
+ },
+ "890x800": {
+  "chrome": {
+   "font": 14.6,
+   "masthead": 72.2,
+   "pictureTop": 108.2,
+   "window": "818.8x460.8",
+   "rows": 1,
+   "errors": []
+  },
+  "webkit": {
+   "font": 14.6,
+   "masthead": 72.2,
+   "pictureTop": 108.2,
+   "window": "818.8x460.8",
+   "rows": 1,
+   "errors": []
+  }
+ },
+ "1280x720": {
+  "chrome": {
+   "font": 15.4,
+   "masthead": 72.2,
+   "pictureTop": 119.5,
+   "window": "880.2x495.4",
+   "rows": 1,
+   "errors": []
+  },
+  "webkit": {
+   "font": 15.4,
+   "masthead": 72.2,
+   "pictureTop": 119.5,
+   "window": "880.2x495.4",
+   "rows": 1,
+   "errors": []
+  }
+ },
+ "1440x900": {
+  "chrome": {
+   "font": 17.3,
+   "masthead": 76.8,
+   "pictureTop": 130.1,
+   "window": "1039.7x585.1",
+   "rows": 1,
+   "errors": []
+  },
+  "webkit": {
+   "font": 17.3,
+   "masthead": 76.8,
+   "pictureTop": 130.1,
+   "window": "1039.7x585.1",
+   "rows": 1,
+   "errors": []
+  }
+ }
+}

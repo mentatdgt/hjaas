@@ -23,13 +23,15 @@ class Element extends EventTarget {
   naturalHeight = 30;
 
   constructor(readonly tag = 'img') { super(); }
-  append(...children: Element[]) { this.children.push(...children); }
+  parent: Element | null = null;
+  append(...children: Element[]) { for (const child of children) { child.parent = this; this.children.push(child); } }
+  before(other: Element) { other.parent = this.parent; this.parent!.children.splice(this.parent!.children.indexOf(this), 0, other); }
   setAttribute() {}
   querySelector(selector: string) {
     return this.children.find((child) => selector === child.tag || selector === `.${child.className}`);
   }
   getBoundingClientRect() { return { left: 10, top: 10, width: 20, height: 30 }; }
-  remove() {}
+  remove() { if (this.parent) this.parent.children.splice(this.parent.children.indexOf(this), 1); }
   async decode() {}
 }
 
@@ -71,4 +73,37 @@ it('ignores a hidden mushroom and settles a collected flight exactly once', asyn
   await vi.runAllTimersAsync();
   expect(onFind).toHaveBeenCalledOnce();
   expect(onLand).toHaveBeenCalledExactlyOnceWith(spot);
+});
+
+it('hides every mushroom again, in order and findable, once the finds are forgotten', async () => {
+  vi.stubGlobal('Image', Element);
+  vi.stubGlobal('window', globalThis);
+  vi.stubGlobal('document', { createElement: (tag: string) => new Element(tag), activeElement: null });
+  const spots = ['a', 'b', 'c', 'd'].map((id) => ({ id, x: 10, y: 30, h: 30, art: 1 }));
+  const found = new Set(['a', 'c']);
+  const onFind = vi.fn((spot: { id: string }) => void found.add(spot.id));
+  const hunt = new Hunt({
+    spots,
+    edge: () => 1,
+    plate: new Element() as unknown as HTMLElement,
+    flyLayer: new Element() as unknown as HTMLElement,
+    found,
+    target: () => new Element().getBoundingClientRect() as DOMRect,
+    onFind,
+    onLand: vi.fn(),
+  }, await Hunt.art(spots));
+  const hidden = () => [...hunt.el.children].map((button) => (button as HTMLElement).dataset.spot);
+  expect(hidden()).toEqual(['b', 'd']);
+
+  found.clear();
+  hunt.syncFinds();
+  expect(hidden()).toEqual(['a', 'b', 'c', 'd']);
+  expect(hunt.remaining).toBe(4);
+  hunt.syncFinds();
+  expect(hidden()).toEqual(['a', 'b', 'c', 'd']);
+
+  hunt.el.children[2].dispatchEvent(new Event('click'));
+  expect(onFind).toHaveBeenCalledExactlyOnceWith(spots[2]);
+  hunt.syncFinds();
+  expect(hidden()).toEqual(['a', 'b', 'd']);
 });

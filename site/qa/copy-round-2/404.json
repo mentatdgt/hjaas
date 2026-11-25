@@ -1,0 +1,126 @@
+{
+ "chrome 1280x800": {
+  "viewport": "1280x800",
+  "viewBox": "0 0 1672 854",
+  "artHeight": 561.83,
+  "heightFromViewBox": 561.84,
+  "text": "This page is still on the drawing board. Back to the main site!",
+  "link": "/",
+  "textRows": 1,
+  "gapBootsToTextBox": 17.85,
+  "gapBootsToCapitals": 21.61,
+  "boxAbove": 71.53,
+  "boxBelow": 144.44,
+  "inkAbove": 144.43,
+  "inkBelow": 144.44,
+  "font": [
+   "Instrument Sans loaded"
+  ],
+  "fontSize": 17,
+  "sideways": false,
+  "scrolls": false,
+  "status": 404,
+  "errors": [
+   "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "failed": [],
+  "reducedMotion": {
+   "identical": true,
+   "mostAChannelDiffers": 0,
+   "channelsDiffering": 0
+  }
+ },
+ "chrome iPhone 13": {
+  "viewport": "390x664",
+  "viewBox": "144 0 1384 854",
+  "artHeight": 240.64,
+  "heightFromViewBox": 240.65,
+  "text": "This page is still on the drawing board. Back to the main site!",
+  "link": "/",
+  "textRows": 2,
+  "gapBootsToTextBox": 17.93,
+  "gapBootsToCapitals": 21.69,
+  "boxAbove": 170.06,
+  "boxBelow": 202.06,
+  "inkAbove": 201.29,
+  "inkBelow": 202.06,
+  "font": [
+   "Instrument Sans loaded"
+  ],
+  "fontSize": 17,
+  "sideways": false,
+  "scrolls": false,
+  "status": 404,
+  "errors": [
+   "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "failed": [],
+  "reducedMotion": {
+   "identical": false,
+   "mostAChannelDiffers": 1,
+   "channelsDiffering": 117
+  }
+ },
+ "webkit 1280x800": {
+  "viewport": "1280x800",
+  "viewBox": "0 0 1672 854",
+  "artHeight": 561.83,
+  "heightFromViewBox": 561.84,
+  "text": "This page is still on the drawing board. Back to the main site!",
+  "link": "/",
+  "textRows": 1,
+  "gapBootsToTextBox": 17.85,
+  "gapBootsToCapitals": 21.61,
+  "boxAbove": 71.53,
+  "boxBelow": 144.44,
+  "inkAbove": 144.43,
+  "inkBelow": 144.44,
+  "font": [
+   "Instrument Sans loaded"
+  ],
+  "fontSize": 17,
+  "sideways": false,
+  "scrolls": false,
+  "status": 404,
+  "errors": [
+   "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "failed": [],
+  "reducedMotion": {
+   "identical": true,
+   "mostAChannelDiffers": 0,
+   "channelsDiffering": 0
+  }
+ },
+ "webkit iPhone 13": {
+  "viewport": "390x664",
+  "viewBox": "144 0 1384 854",
+  "artHeight": 240.64,
+  "heightFromViewBox": 240.65,
+  "text": "This page is still on the drawing board. Back to the main site!",
+  "link": "/",
+  "textRows": 2,
+  "gapBootsToTextBox": 17.93,
+  "gapBootsToCapitals": 21.7,
+  "boxAbove": 170.06,
+  "boxBelow": 202.06,
+  "inkAbove": 201.29,
+  "inkBelow": 202.06,
+  "font": [
+   "Instrument Sans loaded"
+  ],
+  "fontSize": 17,
+  "sideways": false,
+  "scrolls": false,
+  "status": 404,
+  "errors": [
+   "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "failed": [],
+  "reducedMotion": {
+   "identical": true,
+   "mostAChannelDiffers": 0,
+   "channelsDiffering": 0
+  }
+ }
+}

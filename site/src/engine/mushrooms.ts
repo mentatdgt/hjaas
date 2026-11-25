@@ -33,48 +33,54 @@ export class Hunt {
   private readonly buttons = new Map<string, HTMLButtonElement>();
   /** Each drawing's centre and size, in plate px. */
   private readonly art = new Map<string, { cx: number; cy: number; w: number; h: number }>();
+  private readonly drawn: HuntArt;
+  /** CSS px per plate px, once the plate has a size. */
+  private u = 0;
 
   constructor(options: HuntOptions, drawn: HuntArt) {
     this.options = options;
+    this.drawn = drawn;
     this.el = document.createElement('div');
     this.el.className = 'hj-mushrooms';
     if (flags.debug) this.el.classList.add('is-debug');
 
-    for (const spot of options.spots) {
-      if (options.found.has(spot.id)) continue;
-      const { art: shown, aspect } = drawn.get(spot.art)!;
-      const w = spot.h * aspect;
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'hj-shroom';
-      button.dataset.spot = spot.id;
-      button.setAttribute('aria-label', 'Hidden mushroom');
-      // The drawing's centre, in plate px.
-      button.style.setProperty('--cx', String(spot.x));
-      button.style.setProperty('--cy', String(spot.y - spot.h / 2));
-      this.art.set(spot.id, { cx: spot.x, cy: spot.y - spot.h / 2, w, h: spot.h });
-      button.style.setProperty('--w', String(w));
-      button.style.setProperty('--h', String(spot.h));
-      if (spot.grounded) button.classList.add('is-grounded');
+    this.syncFinds();
+  }
 
-      const art = document.createElement('span');
-      art.className = 'hj-shroom-art';
-      if (spot.tint) art.style.filter = spot.tint;
-      if (spot.tuck) art.style.clipPath = spot.tuck;
-      const img = document.createElement('img');
-      img.src = artUrl(shown);
-      img.alt = '';
-      img.draggable = false;
-      if (spot.flip) img.classList.add('is-flipped');
-      // On the image, not the drawing's box: the hint's wiggle and dip belong to the box.
-      if (spot.opacity !== undefined) img.style.opacity = String(spot.opacity);
-      art.append(img);
-      button.append(art);
+  /** One mushroom, in its hiding place. */
+  private hide(spot: Spot): HTMLButtonElement {
+    const { art: shown, aspect } = this.drawn.get(spot.art)!;
+    const w = spot.h * aspect;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'hj-shroom';
+    button.dataset.spot = spot.id;
+    button.setAttribute('aria-label', 'Hidden mushroom');
+    // The drawing's centre, in plate px.
+    button.style.setProperty('--cx', String(spot.x));
+    button.style.setProperty('--cy', String(spot.y - spot.h / 2));
+    this.art.set(spot.id, { cx: spot.x, cy: spot.y - spot.h / 2, w, h: spot.h });
+    button.style.setProperty('--w', String(w));
+    button.style.setProperty('--h', String(spot.h));
+    if (spot.grounded) button.classList.add('is-grounded');
 
-      button.addEventListener('click', () => this.collect(spot));
-      this.buttons.set(spot.id, button);
-      this.el.append(button);
-    }
+    const art = document.createElement('span');
+    art.className = 'hj-shroom-art';
+    if (spot.tint) art.style.filter = spot.tint;
+    if (spot.tuck) art.style.clipPath = spot.tuck;
+    const img = document.createElement('img');
+    img.src = artUrl(shown);
+    img.alt = '';
+    img.draggable = false;
+    if (spot.flip) img.classList.add('is-flipped');
+    // On the image, not the drawing's box: the hint's wiggle and dip belong to the box.
+    if (spot.opacity !== undefined) img.style.opacity = String(spot.opacity);
+    art.append(img);
+    button.append(art);
+
+    button.addEventListener('click', () => this.collect(spot));
+    this.buttons.set(spot.id, button);
+    return button;
   }
 
   /**
@@ -82,14 +88,19 @@ export class Hunt {
    * soft edge moves inward until all of it is over solid painting; its drawing stays where it was painted.
    */
   layout(u: number): void {
-    if (!u) return;
-    for (const [id, button] of this.buttons) {
-      const art = this.art.get(id)!;
-      const box = tapBox(this.options.edge, art, u);
-      // Whole CSS pixels, so the box and its focus ring are crisp.
-      button.style.setProperty('--bx', `${Math.round(box.cx * u)}px`);
-      button.style.setProperty('--by', `${Math.round(box.cy * u)}px`);
-    }
+    this.u = u;
+    for (const id of this.buttons.keys()) this.placeBox(id);
+  }
+
+  private placeBox(id: string): void {
+    const { buttons, u } = this;
+    const button = buttons.get(id);
+    if (!u || !button) return;
+    const art = this.art.get(id)!;
+    const box = tapBox(this.options.edge, art, u);
+    // Whole CSS pixels, so the box and its focus ring are crisp.
+    button.style.setProperty('--bx', `${Math.round(box.cx * u)}px`);
+    button.style.setProperty('--by', `${Math.round(box.cy * u)}px`);
   }
 
   /**
@@ -124,11 +135,23 @@ export class Hunt {
     for (const animation of this.motion) animation.progress(1);
   }
 
+  /** The mushrooms hidden are the ones not found: whatever was found elsewhere goes, whatever was reset comes back. */
   syncFinds(): void {
-    for (const id of this.options.found) {
-      this.buttons.get(id)?.remove();
-      this.buttons.delete(id);
-    }
+    const { spots, found } = this.options;
+    spots.forEach((spot, i) => {
+      const button = this.buttons.get(spot.id);
+      if (found.has(spot.id)) {
+        button?.remove();
+        this.buttons.delete(spot.id);
+      } else if (!button) {
+        // In the order of the spots: it is the order of the Tab key.
+        const next = spots.slice(i + 1).map(({ id }) => this.buttons.get(id)).find((other) => other !== undefined);
+        const back = this.hide(spot);
+        if (next) next.before(back);
+        else this.el.append(back);
+        this.placeBox(spot.id);
+      }
+    });
   }
 
   get remaining(): number {
