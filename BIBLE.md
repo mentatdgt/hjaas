@@ -27,7 +27,7 @@ What's decided. Everyone (Wren, Quinn, Fable, Foreman) follows this. If a task, 
 - **Motion bar:** smooth and human, never jerky. Randomised holds, natural blinks, no popping or pose glitches. 60 fps on a throttled phone.
 
 ## 3. Rachel
-**Locked in every frame:** **no glasses, ever** (the reference sheets show glasses; ignore that). Build's 23 drawings lost theirs on 2026-11-25 (Quinn 034/035, eye area only); Grow still has them. Dark brown hair, warm tan skin, gold round pendant on a thin cord, the reference style. Real person, so keep her likeness kind and flattering.
+**Locked in every frame:** **no glasses, ever** (the reference sheets show glasses; ignore that). Build's 23 drawings lost theirs on 2026-11-25 (Quinn 034/035, eye area only). Grow never had any: Wren checked all 7 stills and the clip frames on 2026-11-25. Dark brown hair, warm tan skin, gold round pendant on a thin cord, the reference style. Real person, so keep her likeness kind and flattering.
 
 | Scene | Outfit | Hair | Loop | Reaction to a mushroom find |
 |---|---|---|---|---|

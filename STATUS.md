@@ -29,7 +29,7 @@ New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a
 
 ## Next
 1. After your phone check: merge in order `site/scene-3` → `site/scene-4` → `site/scene-5` → `site/counter` → `site/review-fixes` into `main` (each needs Wren's review and your OK).
-2. Model-sheet pass on scenes 1–2 (scene 1 loses its glasses).
+2. Model-sheet pass on scenes 1–2 (scene 1's glasses are already gone; Grow never had any).
 
 ## Branches
 | Branch | Holds |
@@ -46,7 +46,7 @@ New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a
 - [ ] Hosting: **Vercel (user decided 2026-11-25).** Hobby fits, since this is a personal, non-commercial gift. Settings come from Quinn's load review (job 041).
 - [ ] Domain.
 - [ ] At launch: open up `robots.txt`; set `og:image` to the full URL.
-- [ ] Film scene: consent from Sean before he appears.
+- [x] Film scene: Sean's consent received (user, 2026-11-25).
 - [ ] Optional: polish frames for the reaction; switch the lab's thumbs-up to a peace sign.
 - [ ] Optional: in-betweens for Rachel's lean in Set Design (still a single cut, shown at least 500 ms).
 - [ ] Your design notes from 2026-11-19 (too cartoonish, paint-in too fast, full-bleed): partly addressed by the elegant version and the edge. Re-check once scene 2 merges.
