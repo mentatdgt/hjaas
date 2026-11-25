@@ -1,5 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { cutFrom, loadPlate, retainAssets, warmPlate } from './assets';
+import { cutFrom, keepsRooms, loadPlate, retainAssets, savesData, warmRoom } from './assets';
+import setFrames from '../../public/assets/scene5/cast/frames.json';
+import setRoutine from '../../public/assets/scene5/cast/routine.json';
+import setWalk from '../../public/assets/scene5/cast/stagehand/walk.json';
 import growFrames from '../../public/assets/scene2/rachel/frames.json';
 import growRoutine from '../../public/assets/scene2/rachel/routine.json';
 import { Casting, Scene } from './scene';
@@ -45,8 +48,10 @@ class Element {
   remove() {}
   addEventListener() {}
   setAttribute(_name: string, _value: string) {}
+  getAttribute(name: string) { return name === 'src' ? this.src || null : null; }
   removeAttribute() { this.src = ''; }
   decode() { return decode(this.src); }
+  getContext() { return { drawImage() {}, clearRect() {} }; }
 }
 
 const host = () => ({
@@ -301,22 +306,99 @@ describe('recoverable room assets', () => {
     }
   });
 
-  it('waits for idle to warm a room at low priority and skips a departed opening room', async () => {
-    const callbacks: Array<() => void> = [];
-    const priorities: string[] = [];
-    vi.stubGlobal('requestIdleCallback', (fn: () => void) => callbacks.push(fn));
-    vi.stubGlobal('Image', class extends Element {
-      setAttribute(name: string, value: string) {
-        if (name === 'fetchpriority') priorities.push(value);
-      }
-    });
-    const active = warmPlate('scene2/room.webp', () => true);
-    const departed = warmPlate('scene3/room.webp', () => false);
+  it('downloads the next room ahead at low priority, keeps none of it, and its scene waits for it rather than download it twice', async () => {
+    const asked: Array<{ url: string; init?: RequestInit }> = [];
+    let send!: (chunk: Uint8Array | null) => void;
+    vi.stubGlobal('fetch', vi.fn(async (url: string, init?: RequestInit) => {
+      asked.push({ url, init });
+      const body = new ReadableStream<Uint8Array>({
+        start(controller) {
+          send = (chunk) => (chunk ? controller.enqueue(chunk) : controller.close());
+        },
+      });
+      return new Response(body);
+    }));
+    const blobs = vi.spyOn(Response.prototype, 'blob');
+    const control = new AbortController();
+    const warm = warmRoom('scene2/room.webp', control.signal);
+    // (Asked twice: the same download.)
+    expect(warmRoom('scene2/room.webp', control.signal)).toBe(warm);
+    await vi.waitFor(() => expect(asked).toHaveLength(1));
+    expect(asked[0].init).toMatchObject({ priority: 'low' });
+    const plate = loadPlate('scene2/room.webp');
+    send(new Uint8Array(1000));
+    await new Promise((resolve) => setTimeout(resolve, 5));
+    // The scene's own <img> waits for it.
     expect(decode).not.toHaveBeenCalled();
-    callbacks.splice(0).forEach((fn) => fn());
-    await Promise.all([active, departed]);
+    send(null);
+    await warm;
+    await plate;
     expect(decode).toHaveBeenCalledExactlyOnceWith(expect.stringContaining('scene2/room.webp'));
-    expect(priorities).toEqual(['low']);
+    expect(asked).toHaveLength(1);
+    expect(blobs).not.toHaveBeenCalled();
+  });
+
+  it('gives up a room downloaded ahead when called off, and its scene then downloads it itself', async () => {
+    vi.stubGlobal('fetch', vi.fn((_url: string, init?: RequestInit) => new Promise<Response>((_, reject) => {
+      init!.signal!.addEventListener('abort', () => reject(new DOMException('called off', 'AbortError')));
+    })));
+    const control = new AbortController();
+    const warm = warmRoom('scene3/room.webp', control.signal);
+    const plate = loadPlate('scene3/room.webp');
+    control.abort();
+    await expect(warm).rejects.toThrow();
+    await plate;
+    expect(decode).toHaveBeenCalledOnce();
+  });
+
+  it('asks only the browser\'s cache whether rooms are kept, and hears when data is to be saved', async () => {
+    const asked = vi.fn(async () => new Response('x'));
+    vi.stubGlobal('fetch', asked);
+    expect(await keepsRooms('scene1/room.webp')).toBe(true);
+    expect(asked).toHaveBeenCalledWith(expect.stringContaining('scene1/room.webp'), expect.objectContaining({ cache: 'only-if-cached' }));
+    asked.mockImplementation(async () => { throw new TypeError('not cached'); });
+    expect(await keepsRooms('scene1/room.webp')).toBe(false);
+    vi.stubGlobal('matchMedia', () => ({ matches: false }));
+    vi.stubGlobal('navigator', { connection: { saveData: true } });
+    expect(savesData()).toBe(true);
+    vi.stubGlobal('navigator', {});
+    expect(savesData()).toBe(false);
+  });
+
+  it('opens the theatre on the backdrop pieces already earned, then the next one; the rest and the stagehand only once it has settled', async () => {
+    const requested: string[] = [];
+    vi.stubGlobal('requestIdleCallback', (fn: () => void) => queueMicrotask(fn));
+    vi.stubGlobal('createImageBitmap', async () => ({ width: 100, height: 100, close() {} }));
+    vi.stubGlobal('fetch', vi.fn(async (url: string) => {
+      const name = url.split('/assets/scene5/cast/').pop()!;
+      requested.push(name);
+      if (name === 'frames.json') return new Response(JSON.stringify(setFrames));
+      if (name === 'routine.json') return new Response(JSON.stringify(setRoutine));
+      if (name.endsWith('walk.json')) return new Response(JSON.stringify(setWalk));
+      return new Response(url);
+    }));
+    const set = SCENES.find((scene) => scene.id === 'set')!;
+    const found = new Set(set.spots.slice(0, 2).map((spot) => spot.id));
+    const scene = await Scene.load(set, { ...host(), found }, true);
+    const pieces = (): string[] => requested.filter((name) => name.startsWith('backdrop_'));
+    const stagehand = (): string[] => requested.filter((name) => name.startsWith('stagehand/'));
+    // Ready to paint: the two pieces earned, the third on its way (not waited for), no stagehand.
+    expect(pieces().slice(0, 2)).toEqual(['backdrop_01/P_01.webp', 'backdrop_02/P_02.webp']);
+    await vi.waitFor(() => expect(pieces()).toHaveLength(3));
+    expect(pieces()[2]).toBe('backdrop_03/P_03.webp');
+    expect(stagehand()).toEqual([]);
+    await scene.stock();
+    expect(pieces()).toHaveLength(3);
+    expect(stagehand()).toEqual([]);
+    expect(scene.memory).toBeDefined();
+    // Settled: the others in hunt order, then he joins.
+    await scene.loadMore();
+    expect(pieces()).toEqual(Array.from({ length: 10 }, (_, i) => `backdrop_${String(i + 1).padStart(2, '0')}/P_${String(i + 1).padStart(2, '0')}.webp`));
+    expect(stagehand().length).toBeGreaterThan(10);
+    expect(requested.indexOf(stagehand()[0])).toBeGreaterThan(requested.indexOf('backdrop_10/P_10.webp'));
+    // Each file once.
+    expect(new Set(requested).size).toBe(requested.length);
+    scene.destroy();
   });
 
   it('parks the clip queue of a departed room and restarts it on return', async () => {
@@ -352,6 +434,39 @@ describe('recoverable room assets', () => {
     finish(new Response(first));
     await resumedQueue;
     expect(requested).toEqual([first, first]);
+    scene.destroy();
+  });
+
+  it('calls off Grow\'s later clips on a tap, and carries on from the same frame if the visitor stays', async () => {
+    const pending: Array<{ url: string; signal: AbortSignal; arrive: () => void }> = [];
+    vi.stubGlobal('requestIdleCallback', (fn: () => void) => queueMicrotask(fn));
+    vi.stubGlobal('createImageBitmap', async () => ({ width: 100, height: 100, close() {} }));
+    vi.stubGlobal('fetch', vi.fn(async (url: string, init?: RequestInit) => {
+      if (url.endsWith('/frames.json')) return new Response(JSON.stringify(growFrames));
+      if (url.endsWith('/routine.json')) return new Response(JSON.stringify(growRoutine));
+      if (init?.priority !== 'low') return new Response(url);
+      return new Promise<Response>((resolve, reject) => {
+        const signal = init.signal!;
+        signal.addEventListener('abort', () => reject(signal.reason));
+        pending.push({ url, signal, arrive: () => resolve(new Response(url)) });
+      });
+    }));
+    const scene = await load(SCENES[1]);
+    const more = scene.loadMore();
+    await vi.waitFor(() => expect(pending).toHaveLength(1));
+    // A tap: the clip's request is given up at once, and nothing more is asked for.
+    scene.pause();
+    await more;
+    expect(pending[0].signal.aborted).toBe(true);
+    expect(pending).toHaveLength(1);
+    expect(console.warn).not.toHaveBeenCalled();
+    // The visitor stays: the same frame again, and then the next.
+    scene.resume();
+    await vi.waitFor(() => expect(pending).toHaveLength(2));
+    expect(pending[1].url).toBe(pending[0].url);
+    pending[1].arrive();
+    await vi.waitFor(() => expect(pending).toHaveLength(3));
+    expect(pending[2].url).not.toBe(pending[0].url);
     scene.destroy();
   });
 

@@ -66,9 +66,10 @@ interface Cast {
   entry?: Entry | null;
   /**
    * Fetches what the first showing did not need (clips, reaction frames), one image at a time in quiet
-   * moments. `reactions: false` leaves out what only a reaction uses.
+   * moments. `reactions: false` leaves out what only a reaction uses. Called off by `signal` (a tap: it has the
+   * network to itself), it carries on from there the next time.
    */
-  more: (reactions: boolean) => Promise<void>;
+  more: (reactions: boolean, signal: AbortSignal) => Promise<void>;
   /** The poses that may be shown soon (see steps.ts). Only a character with a reel listens. */
   ahead?: (poses: readonly string[]) => void;
   /**
@@ -96,9 +97,10 @@ interface Cast {
 
 /**
  * A whole cast, and what else its package puts in the picture: the hunt's progress pieces (the theatre's
- * backdrop) and its walkers (the stagehand). Painted with the room, under the cast.
+ * backdrop), painted with the room, under the cast; and its walkers (the stagehand), who are downloaded once the
+ * scene has settled and join it when they are ready (he is out of sight until his first walk).
  */
-type CastList = Cast[] & { progress?: Progress; walks?: Walk[] };
+type CastList = Cast[] & { progress?: Progress; walkers?: ReadonlyArray<(signal: AbortSignal) => Promise<Walk>> };
 
 function releaseCastList(casts: CastList): void {
   for (const actor of casts) {
@@ -106,7 +108,6 @@ function releaseCastList(casts: CastList): void {
     actor.backdrop?.close();
   }
   casts.progress?.sleep();
-  for (const walk of casts.walks ?? []) walk.sleep();
 }
 
 const json = <T>(path: string, signal?: AbortSignal): Promise<T> => fetchJson<T>(asset(path), signal);
@@ -260,10 +261,10 @@ async function frameCast(config: SceneConfig, cast: FrameCast, host: SceneHost, 
       // (Not while her frames are still coming back after a sleep: she would skip the ones not there yet.)
       reaction: () => (reaction && reaction.steps.every((step) => character.has(step.pose)) ? reaction : null),
       still: [],
-      more: (reactions) => {
-        if (!cast.reaction || !reactions || !awake || reaction) return Promise.resolve();
+      more: (reactions, by) => {
+        if (!cast.reaction || !reactions || !awake || reaction || by.aborted) return Promise.resolve();
         const at = generation;
-        const active = (): boolean => awake && generation === at;
+        const active = (): boolean => awake && generation === at && !by.aborted;
         loading ??= loadReaction(config.assets, dir + cast.reaction, active, (pose, url) => loadPose(pose, url, at))
           .then((ready) => {
             if (active() && ready) reaction = ready;
@@ -338,25 +339,36 @@ async function troupe(config: SceneConfig, cast: Troupe, host: SceneHost, signal
   if (problems.length) throw new Error(`${config.id}: ${problems.join(' ')}`);
   const lead = leadOf(actors);
   const load: LoadFile = (file, priority, by) => fetchBlob(asset(dir + webp(file)), priority, by);
-  const file = (path: string): Promise<Blob> => load(path, undefined, signal);
-  const [fetched, pieceFiles, walkFiles] = await Promise.all([
+  const [fetched, pieceFiles] = await Promise.all([
     Promise.all(
       actors.map((actor) => actorCast(`${config.id}, ${actor.name}`, actor.frames, actor.routine, host, load, signal, { keeps: false, className: actor === lead ? 'hj-rachel' : 'hj-actor', name: actor.name })),
     ),
-    // The hunt's progress pieces and the walkers' files: downloaded now, decoded when the scene goes on.
-    Promise.all(progress.map((piece) => file(piece.file))),
-    Promise.all(
-      walkers.map(async (walker) => {
-        const [track, sprites, mask, bodyMask] = await Promise.all([
-          json<TrackFile>(dir + walker.track, signal),
-          Promise.all(Object.entries(walker.sprites).map(async ([name, path]) => [name, await file(path)] as const)),
-          walker.mask ? file(walker.mask) : null,
-          walker.bodyMask ? file(walker.bodyMask) : null,
-        ]);
-        return { walker, track, files: { sprites: new Map(sprites), mask, bodyMask } };
-      }),
-    ),
+    // The hunt's progress pieces already reached are part of the picture: downloaded now, decoded when the scene
+    // goes on. The next one comes straight after, the others once the scene has settled (Progress.stream).
+    Promise.all(progress.slice(0, host.found.size).map((piece) => load(piece.file, undefined, signal))),
   ]);
+  // The walkers: downloaded once the scene has settled (he has all of his first wait to arrive in).
+  // (Kept as they arrive: called off part way, he carries on from there the next time.)
+  const walkerFiles = new Map<string, Promise<Blob>>();
+  const bringWalker = (walker: (typeof walkers)[number]) => async (by: AbortSignal): Promise<Walk> => {
+    const file = (path: string): Promise<Blob> => {
+      const here = walkerFiles.get(path);
+      if (here) return here;
+      const got = requiredAsset(() => load(path, 'low', by));
+      walkerFiles.set(path, got);
+      got.catch(() => {
+        if (walkerFiles.get(path) === got) walkerFiles.delete(path);
+      });
+      return got;
+    };
+    const [track, sprites, mask, bodyMask] = await Promise.all([
+      json<TrackFile>(dir + walker.track, by),
+      Promise.all(Object.entries(walker.sprites).map(async ([name, path]) => [name, await file(path)] as const)),
+      walker.mask ? file(walker.mask) : null,
+      walker.bodyMask ? file(walker.bodyMask) : null,
+    ]);
+    return new Walk(walker, track, { sprites: new Map(sprites), mask, bodyMask }, frames.canvas, host.rnd, host.still);
+  };
   return async (room) => {
     const [results, backdrop] = await Promise.all([
       Promise.allSettled(fetched.map((decode) => decode(room))),
@@ -379,8 +391,9 @@ async function troupe(config: SceneConfig, cast: Troupe, host: SceneHost, signal
       casts[holder].screen = screen;
       casts[holder].backdrop = backdrop;
     } else backdrop?.close();
-    if (progress.length) casts.progress = new Progress(progress, pieceFiles, progressFade, () => host.found.size);
-    if (walkFiles.length) casts.walks = walkFiles.map(({ walker, track, files }) => new Walk(walker, track, files, frames.canvas, host.rnd, host.still));
+    // (The next piece is wanted at the next find: at the usual priority. The others are not wanted soon.)
+    if (progress.length) casts.progress = new Progress(progress, pieceFiles, (i, by) => load(progress[i].file, i === host.found.size ? undefined : 'low', by), progressFade, () => host.found.size);
+    if (walkers.length) casts.walkers = walkers.map(bringWalker);
     return casts;
   };
 }
@@ -467,16 +480,17 @@ async function actorCast(
     const inUse = clipsInUse(routine);
     const fetching = new Map<string, Promise<void>>();
     const offsets = new Map<string, number>();
-    const fetchClip = (name: string, active: () => boolean): Promise<void> => {
-      if (loaded.has(name)) return Promise.resolve();
-      const pending = fetching.get(name);
-      if (pending) return pending;
+    /** A clip's frames, one at a time in quiet moments. Called off (`by`: a tap), it carries on from the same frame next time. */
+    const fetchClip = async (name: string, active: () => boolean, by: AbortSignal): Promise<void> => {
+      // (One that was called off a moment ago has finished with it first.)
+      for (let pending = fetching.get(name); pending; pending = fetching.get(name)) await pending;
+      if (loaded.has(name) || !active()) return;
       const clip = frames.clips[name];
       const task = (async () => {
         for (let i = offsets.get(name) ?? 0; i < clip.frames.length; i++) {
           await idle();
           if (!active()) return;
-          const blob = await load(clip.frames[i], 'low');
+          const blob = await load(clip.frames[i], 'low', by);
           if (!active()) return;
           reel.add(clipPose(name, i), { blob, base: clip.base, x: clip.x, y: clip.y });
           offsets.set(name, i + 1);
@@ -551,18 +565,18 @@ async function actorCast(
           : null,
       still: full?.still ?? [],
       entry: clipEntry(routine),
-      more: async (reactions) => {
+      more: async (reactions, by) => {
         const at = generation;
-        const active = (): boolean => awake && at === generation;
+        const active = (): boolean => awake && at === generation && !by.aborted;
         for (const name of inUse.routine) {
           if (!active()) return;
-          await fetchClip(name, active);
+          await fetchClip(name, active, by);
         }
         if (!active() || !reactions || !full) return;
         reel.pin(reactionFrames);
         for (const name of inUse.reaction) {
           if (!active()) return;
-          await fetchClip(name, active);
+          await fetchClip(name, active, by);
         }
       },
       ahead: (poses) => reel.want(poses),
@@ -714,8 +728,9 @@ export class Scene {
   private readonly casting: Casting;
   /** The hunt's progress, shown in the picture (the theatre's backdrop), if the scene has it. */
   private progress: Progress | null = null;
-  /** Its walkers (the stagehand), if it has any. */
+  /** Its walkers (the stagehand), if it has any, and those still to be downloaded (see callWalkers()). */
   private walks: Walk[] = [];
+  private walkers: Array<(signal: AbortSignal) => Promise<Walk>> = [];
   /** Her drawings still to be downloaded (see stock()) are called off by this: the visitor has asked for another scene. */
   private fetching = new AbortController();
   private paused = false;
@@ -902,6 +917,8 @@ export class Scene {
     await idle();
     if (signal.aborted || at !== this.generation) return;
     const lead = this.cast;
+    // (Asked for again if a tap called it off: the next find may come any moment.)
+    void this.progress?.stream(signal, 1);
     for (const { character } of this.casts) character.painting = !this.working;
     await Promise.all(
       [...this.casts].sort((a, b) => Number(b === lead) - Number(a === lead)).map(async (cast) => {
@@ -922,15 +939,19 @@ export class Scene {
     );
   }
 
-  /** Only the downloading of what stock() decodes. */
+  /** Only the downloading of what stock() decodes; and the next piece of the hunt's progress. */
   private download(): void {
     if (this.paused) return;
     const { signal } = this.fetching;
+    void this.progress?.stream(signal, 1);
     const lead = this.cast;
     for (const cast of [...this.casts].sort((a, b) => Number(b === lead) - Number(a === lead))) void cast.download(signal).catch(() => {});
   }
 
-  /** Another scene has been asked for: this one's drawings still to come wait, so that the tap has the network. (Clips go on, as before.) */
+  /**
+   * Another scene has been asked for: whatever this one still has to download (her drawings, her clips, the hunt's
+   * progress pieces, the walkers) waits, so that the tap has the network. What is under way is called off.
+   */
   pause(): void {
     if (this.paused) return;
     this.paused = true;
@@ -962,11 +983,7 @@ export class Scene {
       this.progress = casts.progress;
       this.plate.insertBefore(casts.progress.el, this.hunt.el);
     }
-    for (const walk of casts.walks ?? []) {
-      this.walks.push(walk);
-      this.plate.insertBefore(walk.el, this.mark);
-      void walk.wake();
-    }
+    this.walkers = [...(casts.walkers ?? [])];
     casts.forEach((cast) => {
       const { character } = cast;
       if (character.shadow) this.plate.insertBefore(character.shadow, this.hunt.el);
@@ -980,8 +997,8 @@ export class Scene {
     });
     this.player = this.players.get(lead)!;
     if (this.host.onPose) this.player.onPose = this.host.onPose;
-    // The walkers keep time on the lead's player's frames.
-    if (this.walks.length) {
+    // The walkers keep time on the lead's player's frames (once they have joined).
+    if (this.walkers.length) {
       const walks = this.walks;
       this.player.onFrame = (now) => {
         for (const walk of walks) walk.frame(now);
@@ -1199,14 +1216,41 @@ export class Scene {
     if (!this.cast) await this.entering?.catch(() => {});
     if (at !== this.generation || this.paused) return;
     const { signal } = this.fetching;
+    const over = (): boolean => at !== this.generation || signal.aborted;
     await this.stock();
-    if (at !== this.generation || signal.aborted) return;
-    // The lead's first: hers are the clips that matter.
+    if (over()) return;
+    // Alongside: the rest of the hunt's progress, in hunt order, then the walkers.
+    const others = (async () => {
+      await this.progress?.stream(signal);
+      await this.callWalkers(signal, over);
+    })();
+    // The lead's first: hers are the clips that matter. (All of it gives way to a tap: see pause().)
     const reactions = this.hunt.remaining > 0;
-    await this.cast?.more(reactions);
+    await this.cast?.more(reactions, signal);
     for (const cast of this.casts) {
-      if (at !== this.generation) return;
-      if (cast !== this.cast) await cast.more(reactions);
+      if (over()) break;
+      if (cast !== this.cast) await cast.more(reactions, signal);
+    }
+    await others;
+  }
+
+  /** The walkers, downloaded and put on the plate (over the hunt's progress, under the cast), each as soon as he is ready. */
+  private async callWalkers(signal: AbortSignal, over: () => boolean): Promise<void> {
+    while (this.walkers.length && !over()) {
+      const bring = this.walkers[0];
+      let walk: Walk;
+      try {
+        walk = await bring(signal);
+      } catch (error) {
+        if (!signal.aborted) console.warn(`[hjaas] ${this.config.id}: a walker could not be loaded; the scene goes on without`, error);
+        return;
+      }
+      // (Asked for twice, as one was called off: only the first to arrive is taken.)
+      if (over() || this.walkers[0] !== bring) return;
+      this.walkers.shift();
+      this.walks.push(walk);
+      this.plate.insertBefore(walk.el, this.casts[0]?.character.el ?? this.mark);
+      await walk.wake();
     }
   }
 
@@ -1262,6 +1306,7 @@ export class Scene {
     this.plate.replaceChildren();
     this.casts = [];
     this.walks = [];
+    this.walkers = [];
     this.players.clear();
     this.character = this.cast = this.player = this.finder = this.progress = null;
     this.entering = null;
