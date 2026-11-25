@@ -631,13 +631,20 @@ const NEAR = 6;
 function breathe(): Promise<void> {
   return new Promise((resolve) => {
     const channel = new MessageChannel();
+    // (A message posted as the browser freezes a page it may come back to can be lost.)
+    const late = setTimeout(() => {
+      channel.port1.close();
+      resolve();
+    }, LOST_MS);
     channel.port1.onmessage = () => {
+      clearTimeout(late);
       channel.port1.close();
       resolve();
     };
     channel.port2.postMessage(0);
   });
 }
+const LOST_MS = 250;
 /** The longest the page's thread is kept at one go while an edge is made, in ms. */
 const SLICE_MS = 7;
 

@@ -658,6 +658,10 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
 
   /** A scene is being fetched, or put in the window (up to the first stroke of its painting). */
   let moving = false;
+  /** The page has been left: every canvas has given its pixels back, so that they never count against the next page's. */
+  let away = false;
+  /** Nothing more is put on this page (or not until it is come back to: see comeBack()). */
+  const gone = (): boolean => destroyed || away;
   /** The painting, brush-over or fade under way in the window, if there is one. */
   let playing: Scene | null = null;
   /** Counts them, so that one that was left does not end another. */
@@ -803,7 +807,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
 
   const switchTo = async (config: SceneConfig): Promise<void> => {
     const next = await bring(config);
-    if (destroyed || !next) return;
+    if (gone() || !next) return;
     // From here to the first stroke nothing turns back: the new scene goes in the window, and if another has been
     // asked for by then, its painting is left for that one's.
     const signal = paintWait.signal;
@@ -838,22 +842,25 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       // A scene's first appearance in this visit is its full painting, from a blank sheet. She is painted with
       // the room, so her frames' files are here already.
       await leaveRoom(old.plate, signal);
-      if (destroyed) return;
+      if (gone()) return;
       place(next);
       left();
       transition.prepare(next);
       retitle();
       if (!rush(signal)) showControls(true);
       await frame1(signal);
+      if (gone()) return;
       // The scene just left is off the page: it gives its decoded images back now, before the new scene's
       // arrive, so the two sets are never in memory together. (A frame of its own: not in the tap's.)
       old.rest();
       await frame1(signal);
+      if (gone()) return;
       // Its own edge is drawn now that the other scene's has been given back, under the blank sheet.
       await Promise.all([her(), dress()]);
+      if (gone()) return;
       await allDrawn(next, soon);
       await waitForFrames(soon);
-      if (destroyed) return;
+      if (gone()) return;
       if (rush(signal)) {
         transition.finish(next);
         arrived(next);
@@ -866,11 +873,13 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     retitle();
     if (!calm) showControls(true);
     await frame1(signal);
+    if (gone()) return;
     // The old picture is on the sheet now, as a copy: the scene itself gives its decoded images back
     // before the new scene's arrive, so the two sets are never in memory together. (A frame of its own:
     // not in the tap's.)
     old.rest();
     await frame1(signal);
+    if (gone()) return;
     // Her frames are usually decoded by now. If the network is slow the brush does not wait for long:
     // she fades in when she arrives.
     // The new scene's edge is drawn meanwhile, now that the old one's has been given back: nothing of the
@@ -882,7 +891,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     // Without brushwork (reduced motion) the old picture fades off the new one in 200 ms. Otherwise a scene
     // painted before in this visit is brushed in over the one being left.
     if (!calm) await waitForFrames(soon, 70);
-    if (destroyed) return;
+    if (gone()) return;
     if (rush(signal)) {
       transition.finish(next);
       arrived(next);
@@ -894,7 +903,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     if (moving) return;
     moving = true;
     try {
-      while (!destroyed && current && wanted.id !== current.config.id) {
+      while (!gone() && current && wanted.id !== current.config.id) {
         const requested = wanted;
         try {
           await switchTo(requested);
@@ -980,14 +989,15 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     const leave = leaveRoom(scene.plate, signal);
     void (async () => {
       await leave;
-      if (destroyed) return;
+      if (gone()) return;
       left();
       scene.syncFinds();
       if (!calm && !rush(signal)) {
         transition.prepare(scene);
         await allDrawn(scene, soon);
+        if (gone()) return;
         await waitForFrames(soon, 70);
-        if (destroyed) return;
+        if (gone()) return;
       }
       if (rush(signal)) {
         transition.finish(scene);
@@ -1011,11 +1021,12 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
 
   // ---- The page is left, and comes back as it was (the browser's back-forward cache). ----
 
-  /** It has been left: every canvas has given its pixels back, so that they never count against the next page's. */
-  let away = false;
+  /** It was left while a scene was being put in the window: what that was waiting for may never come (Firefox drops messages as it freezes a page). */
+  let interrupted = false;
   const leavePage = (): void => {
     if (away) return;
     away = true;
+    interrupted = moving;
     if (begun) settleMotion(false);
     transition.release();
     current?.hold();
@@ -1025,30 +1036,28 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   };
   const comeBack = async (): Promise<void> => {
     if (!away) return;
-    // Left before its opening picture was finished: opened afresh, painting and all.
-    if (!settled || !current) {
+    // Left before its opening picture was finished, or in the middle of a change of scene: opened afresh, at the same address.
+    if (!settled || !current || interrupted) {
       location.reload();
       return;
     }
     away = false;
-    // (A switch that was under way when the page was left ends first.)
-    while (moving && !destroyed && !away) await new Promise((resolve) => window.setTimeout(resolve, 30));
-    if (destroyed || away) return;
     moving = true;
     const scene = current;
     const { config } = scene;
     transition.release();
     try {
-      // (Whatever a switch under way has drawn since is as good as nothing: from the start.)
+      // (From the start: a painting cut short may have drawn something since.)
       scene.rest(true);
       await scene.ready().catch(warn(config));
+      if (gone()) return;
       const her = scene.enter().catch(warn(config));
       scene.fit();
       await Promise.all([scene.dress().catch(warn(config)), Promise.race([her, new Promise((resolve) => window.setTimeout(resolve, WAIT_FOR_HER_MS))])]);
     } finally {
-      moving = false;
+      if (!away) moving = false;
     }
-    if (destroyed || away) return;
+    if (gone()) return;
     root.classList.remove('is-away');
     logo?.prepare();
     startLogoIdle();
@@ -1084,12 +1093,12 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       roomFailed(config, error);
       return;
     }
-    if (destroyed) return;
+    if (gone()) return;
     place(scene);
     // Before a painting each part of the setting up gets a frame to itself, not one long task for all of it.
     const breath = (): Promise<void> => opening === 'paint' ? frame1(signal) : Promise.resolve();
     await breath();
-    if (destroyed) return;
+    if (gone()) return;
     logo = theLogo;
     // The logo keeps its own proportions; the page reserves exactly that space for it.
     if (theLogo) {
@@ -1108,11 +1117,12 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     form.prepare();
     caption.prepare(scenes.map((each) => each.label), viewOf(first).site.total);
     await breath();
-    if (destroyed) return;
+    if (gone()) return;
     const painting = opening === 'paint' && !signal.aborted;
     if (painting) {
       transition.prepare(scene);
       await frame1(signal);
+      if (gone()) return;
       await allDrawn(scene, soon);
     }
     // Let the setup above reach the screen before any motion starts. Before a painting that includes the
@@ -1123,7 +1133,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       await whenVisible(signal);
       await waitForFrames(signal);
     }
-    if (destroyed) return;
+    if (gone()) return;
     begun = true;
     marks.introStart = Math.round(performance.now());
     const opened = (): void => {

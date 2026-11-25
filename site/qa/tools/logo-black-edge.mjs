@@ -141,7 +141,7 @@ const run = {
       let loads = 0; page.on('load', () => loads++);
       const key = `${name} ${found ? 'all50' : 'fresh'}`; const row = (report[key] = {});
       const shot = (what) => join(out, `${tag}-${name}-${found ? 'all50' : 'fresh'}-css${late}-${what}.jpg`);
-      const note = async (what, keep) => { await settled(page); await wait(700); row[what] = { loads, edge: await edgeIs(page), ring: await ring(page, keep ? shot(what) : undefined), canvasBytes: await page.evaluate(() => window.__bytes()), url: page.url().replace(base, '/'), scene: await page.evaluate(() => document.querySelector('.hj-tab[aria-current]')?.dataset.scene), logo: await page.evaluate(() => document.querySelectorAll('.hj-logo').length) }; };
+      const note = async (what, keep) => { await settled(page); await wait(700); row[what] = { loads, edge: await edgeIs(page), ring: await ring(page, keep ? shot(what) : undefined), canvasBytes: await page.evaluate(() => window.__bytes()), url: (await page.evaluate(() => location.href)).replace(base, '/'), scene: await page.evaluate(() => document.querySelector('.hj-tab[aria-current]')?.dataset.scene), logo: await page.evaluate(() => document.querySelectorAll('.hj-logo').length) }; };
       cssLate = 0; await page.goto(`${base}robots.txt`); await page.goto(base); await settled(page); await wait(2800); await note('0 taps');
       cssLate = late;
       const tap = async () => { await tapLogo(page, options.hasTouch); await wait(600); await page.waitForSelector('.hj-logo'); await settled(page); await wait(2800); };
@@ -149,10 +149,12 @@ const run = {
       for (let i = 0; i < 4; i++) await tap();
       await note('5 taps', true);
       // (The old build's taps replace the page, so back leaves the site: forward then loads it again.)
-      const home = () => page.url().startsWith(base) && !page.url().includes('robots');
+      const at = () => page.evaluate(() => location.href);
+      const home = async () => /^[^?#]*\/(#.*)?$/.test(await at());
       await page.goBack().catch(() => {}); await wait(600);
-      if (home()) await note('back', found); else row.back = `left for ${page.url().replace(base, '/')}`;
-      await page.goForward().catch(() => {}); await wait(600); await note('forward', found);
+      if (await home()) await note('back', found); else row.back = `left for ${(await at()).replace(base, '/')}`;
+      await page.goForward().catch(() => {}); await wait(600);
+      if (await home()) await note('forward', found); else row.forward = `at ${(await at()).replace(base, '/')}`;
       await page.goto(`${base}robots.txt`); await page.goBack({ waitUntil: 'commit' }).catch(() => {}); await wait(800); await note('another page, and back', found);
       row.console = [...new Set(said)];
       console.log(key, JSON.stringify(row)); await browser.close();
@@ -167,7 +169,7 @@ const run = {
       let loads = 0; page.on('load', () => loads++);
       await page.goto(`${base}#grow`); await settled(page);
       const row = (report[name] = { href: await page.evaluate(() => [document.querySelector('.hj-logo').tagName, document.querySelector('.hj-logo').getAttribute('href'), document.querySelector('.hj-logo').href].join(' ').replace(location.origin, '')) });
-      const where = async () => ({ url: page.url().replace(base, '/'), scene: await page.evaluate(() => document.querySelector('.hj-tab[aria-current]')?.dataset.scene), loads, edge: await edgeIs(page) });
+      const where = async () => ({ url: (await page.evaluate(() => location.href)).replace(base, '/'), scene: await page.evaluate(() => document.querySelector('.hj-tab[aria-current]')?.dataset.scene), loads, edge: await edgeIs(page) });
       const until = async (id) => { await page.waitForFunction((want) => document.querySelector('.hj-tab[aria-current]')?.dataset.scene === want, id, { timeout: 20000 }); await settled(page); };
       await page.click('.hj-logo'); await until('build'); row['from grow'] = await where();
       await page.click('[data-scene=set]'); await until('set'); await page.focus('.hj-logo'); await page.keyboard.press('Enter'); await until('build'); row['Enter, from set'] = await where();
@@ -187,7 +189,7 @@ const run = {
   async away() {
     cssLate = 0;
     const report = {};
-    for (const name of pick(Object.keys(engines))) for (const [how, scene] of [['cache', ''], ['cache', '#film'], ['events', ''], ['events', '#grow'], ['events', '#film'], ['events', '#set'], ['painting', ''], ['switching', '']]) {
+    for (const name of pick(Object.keys(engines))) for (const [how, scene] of [['cache', ''], ['cache', '#film'], ['events', ''], ['events', '#grow'], ['events', '#film'], ['events', '#set'], ['painting', ''], ['switching', ''], ...[0, 60, 150, 400].map((ms) => [`cache-switch+${ms}`, '']), ['cache-twice', '#set']]) {
       const browser = await engines[name](name === 'chrome' ? { ignoreDefaultArgs: ['--disable-back-forward-cache'] } : {});
       const context = await browser.newContext({ viewport: { width: 1180, height: 820 }, deviceScaleFactor: 2 }); await prepare(context); const page = await context.newPage();
       const said = []; page.on('pageerror', (e) => said.push(`pageerror: ${e.message}`)); page.on('console', (m) => m.type() !== 'log' && said.push(m.text()));
@@ -196,9 +198,12 @@ const run = {
       if (how !== 'painting') await wait(2800);
       row.before = await page.evaluate(() => window.__bytes());
       await page.evaluate(() => { window.__kept = 1; window.addEventListener('pagehide', () => setTimeout(() => {}, 0)); });
-      if (how === 'cache') {
+      if (how.startsWith('cache-switch')) { await page.evaluate(() => document.querySelector('[data-scene=set]').click()); await page.waitForFunction(() => document.querySelector('.hj-tab[aria-current]')?.dataset.scene === 'set'); await settled(page); await wait(600); await page.evaluate(() => document.querySelector('[data-scene=build]').click()); await wait(Number(how.split('+')[1])); }
+      if (how === 'cache-twice') await page.evaluate(() => window.addEventListener('pageshow', (e) => { if (e.persisted && !window.__once) { window.__once = 1; setTimeout(() => history.forward(), 40); } }));
+      if (how.startsWith('cache')) {
         await page.evaluate(() => window.addEventListener('pagehide', () => { window.__hidden = window.__bytes(); }));
         await page.goto(`${base}robots.txt`); await page.evaluate(() => void setTimeout(() => history.back())); await wait(1500);
+        if (how === 'cache-twice') { await page.evaluate(() => void setTimeout(() => history.back())); await wait(2500); }
         row.restored = (await page.evaluate(() => window.__kept === 1)) ? 'as it was' : 'loaded afresh';
         row.hidden = await page.evaluate(() => window.__hidden ?? null);
       } else {
