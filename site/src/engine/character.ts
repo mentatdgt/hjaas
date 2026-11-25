@@ -235,7 +235,9 @@ export class Character {
     this.patches.set(name, patch);
     if (old && old.frame !== patch.frame) releaseFrame(old.frame);
     if (!patch.still) return;
-    this.warm(patch.frame);
+    // Before she is on the page they come all at once: rehearsed one by one, as after a sleep (see resize()).
+    if (this.el.isConnected) this.warm(patch.frame);
+    else this.rehearseLater([name]);
     // The still her canvas was waiting for (see add()).
     if (!this.drawn && name === this.pose) this.draw();
   }
@@ -298,16 +300,22 @@ export class Character {
     // for scene 2's seven stills), which showed as a hitch when the lab was first opened.
     // (Before a first-visit painting they are not left to the quiet moments: see rehearse().)
     if (first) {
-      const alone = this.unrehearsed.length === 0;
-      this.unrehearsed = [...this.frames.keys(), ...[...this.patches].filter(([, patch]) => patch.still).map(([name]) => name)];
-      if (!alone) return;
-      void (async () => {
-        while (this.unrehearsed.length) {
-          await idle();
-          this.rehearseNext();
-        }
-      })();
+      const stills = [...this.patches].filter(([, patch]) => patch.still).map(([name]) => name);
+      this.rehearseLater([...this.frames.keys(), ...stills], true);
     }
+  }
+
+  /** Rehearse these, one at a time, in quiet moments: after any that are waiting already, or instead of them. */
+  private rehearseLater(names: string[], instead = false): void {
+    const alone = this.unrehearsed.length === 0;
+    this.unrehearsed = instead ? names : [...this.unrehearsed, ...names];
+    if (!alone) return;
+    void (async () => {
+      while (this.unrehearsed.length) {
+        await idle();
+        this.rehearseNext();
+      }
+    })();
   }
 
   /** The next still waiting to be rehearsed, if it is still in memory. */

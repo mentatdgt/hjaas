@@ -1,0 +1,373 @@
+{
+ "machine": "11:24  up 13 days, 18:34, 3 users, load averages: 3.09 3.12 3.43",
+ "now": [
+  {
+   "firstStrokeAtMs": 944,
+   "onBlankPaper": {
+    "longestTaskMs": 34,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 550.7,
+    "dropped": 0,
+    "framesBegun": 57
+   },
+   "painting": {
+    "longestTaskMs": 3.5,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 15.8,
+    "dropped": 0,
+    "framesBegun": 285
+   },
+   "justAfter": {
+    "longestTaskMs": 2.9,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 16.4,
+    "dropped": 1,
+    "framesBegun": 138
+   },
+   "droppedAtMsFromFirstStroke": [
+    4765
+   ],
+   "atWork8to38s": {
+    "longestTaskMs": 20.3,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 12.9,
+    "dropped": 0,
+    "framesBegun": 1800
+   },
+   "errors": []
+  },
+  {
+   "firstStrokeAtMs": 972,
+   "onBlankPaper": {
+    "longestTaskMs": 49.8,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 566.1,
+    "dropped": 2,
+    "framesBegun": 60
+   },
+   "painting": {
+    "longestTaskMs": 3.6,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 16.4,
+    "dropped": 0,
+    "framesBegun": 285
+   },
+   "justAfter": {
+    "longestTaskMs": 2.1,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 16.8,
+    "dropped": 1,
+    "framesBegun": 136
+   },
+   "droppedAtMsFromFirstStroke": [
+    -953,
+    -586,
+    4764
+   ],
+   "atWork8to38s": {
+    "longestTaskMs": 8.5,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 12.5,
+    "dropped": 0,
+    "framesBegun": 1800
+   },
+   "errors": []
+  },
+  {
+   "firstStrokeAtMs": 953,
+   "onBlankPaper": {
+    "longestTaskMs": 37.7,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 549.5,
+    "dropped": 2,
+    "framesBegun": 57
+   },
+   "painting": {
+    "longestTaskMs": 3.6,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 15.7,
+    "dropped": 0,
+    "framesBegun": 285
+   },
+   "justAfter": {
+    "longestTaskMs": 1.6,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 13.6,
+    "dropped": 1,
+    "framesBegun": 138
+   },
+   "droppedAtMsFromFirstStroke": [
+    -687,
+    -672,
+    4761
+   ],
+   "atWork8to38s": {
+    "longestTaskMs": 20.4,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 12.7,
+    "dropped": 0,
+    "framesBegun": 1800
+   },
+   "errors": []
+  },
+  {
+   "firstStrokeAtMs": 999,
+   "onBlankPaper": {
+    "longestTaskMs": 47.6,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 576,
+    "dropped": 3,
+    "framesBegun": 61
+   },
+   "painting": {
+    "longestTaskMs": 3.4,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 14.4,
+    "dropped": 0,
+    "framesBegun": 285
+   },
+   "justAfter": {
+    "longestTaskMs": 1.9,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 13.4,
+    "dropped": 1,
+    "framesBegun": 135
+   },
+   "droppedAtMsFromFirstStroke": [
+    -723,
+    -706,
+    -704,
+    4762
+   ],
+   "atWork8to38s": {
+    "longestTaskMs": 25.4,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 15.4,
+    "dropped": 0,
+    "framesBegun": 1800
+   },
+   "errors": []
+  },
+  {
+   "firstStrokeAtMs": 947,
+   "onBlankPaper": {
+    "longestTaskMs": 37.9,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 545.5,
+    "dropped": 2,
+    "framesBegun": 57
+   },
+   "painting": {
+    "longestTaskMs": 3.4,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 16.3,
+    "dropped": 0,
+    "framesBegun": 285
+   },
+   "justAfter": {
+    "longestTaskMs": 2.3,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 15.3,
+    "dropped": 1,
+    "framesBegun": 138
+   },
+   "droppedAtMsFromFirstStroke": [
+    -688,
+    -670,
+    4763
+   ],
+   "atWork8to38s": {
+    "longestTaskMs": 10.2,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 11.6,
+    "dropped": 0,
+    "framesBegun": 1800
+   },
+   "errors": []
+  }
+ ],
+ "before": [
+  {
+   "firstStrokeAtMs": 925,
+   "onBlankPaper": {
+    "longestTaskMs": 41.5,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 539.9,
+    "dropped": 1,
+    "framesBegun": 57
+   },
+   "painting": {
+    "longestTaskMs": 3.4,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 18.2,
+    "dropped": 0,
+    "framesBegun": 285
+   },
+   "justAfter": {
+    "longestTaskMs": 2.1,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 14.2,
+    "dropped": 1,
+    "framesBegun": 139
+   },
+   "droppedAtMsFromFirstStroke": [
+    -654,
+    4764
+   ],
+   "atWork8to38s": {
+    "longestTaskMs": 11.7,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 11.5,
+    "dropped": 0,
+    "framesBegun": 1800
+   },
+   "errors": []
+  },
+  {
+   "firstStrokeAtMs": 1001,
+   "onBlankPaper": {
+    "longestTaskMs": 65.7,
+    "tasksOver50": 1,
+    "busyMsPerSecond": 571.7,
+    "dropped": 0,
+    "framesBegun": 60
+   },
+   "painting": {
+    "longestTaskMs": 4,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 18,
+    "dropped": 0,
+    "framesBegun": 285
+   },
+   "justAfter": {
+    "longestTaskMs": 2.8,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 15.9,
+    "dropped": 1,
+    "framesBegun": 135
+   },
+   "droppedAtMsFromFirstStroke": [
+    4765
+   ],
+   "atWork8to38s": {
+    "longestTaskMs": 9.4,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 11.6,
+    "dropped": 0,
+    "framesBegun": 1800
+   },
+   "errors": []
+  },
+  {
+   "firstStrokeAtMs": 935,
+   "onBlankPaper": {
+    "longestTaskMs": 40.2,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 527,
+    "dropped": 3,
+    "framesBegun": 57
+   },
+   "painting": {
+    "longestTaskMs": 3.6,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 16.2,
+    "dropped": 0,
+    "framesBegun": 285
+   },
+   "justAfter": {
+    "longestTaskMs": 1.9,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 18.7,
+    "dropped": 1,
+    "framesBegun": 139
+   },
+   "droppedAtMsFromFirstStroke": [
+    -671,
+    -654,
+    -653,
+    4764
+   ],
+   "atWork8to38s": {
+    "longestTaskMs": 15.9,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 13.1,
+    "dropped": 0,
+    "framesBegun": 1800
+   },
+   "errors": []
+  },
+  {
+   "firstStrokeAtMs": 990,
+   "onBlankPaper": {
+    "longestTaskMs": 58.6,
+    "tasksOver50": 1,
+    "busyMsPerSecond": 594.3,
+    "dropped": 2,
+    "framesBegun": 61
+   },
+   "painting": {
+    "longestTaskMs": 3.3,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 15.8,
+    "dropped": 0,
+    "framesBegun": 285
+   },
+   "justAfter": {
+    "longestTaskMs": 4,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 16.8,
+    "dropped": 1,
+    "framesBegun": 135
+   },
+   "droppedAtMsFromFirstStroke": [
+    -703,
+    -568,
+    4763
+   ],
+   "atWork8to38s": {
+    "longestTaskMs": 21.8,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 12.9,
+    "dropped": 0,
+    "framesBegun": 1800
+   },
+   "errors": []
+  },
+  {
+   "firstStrokeAtMs": 898,
+   "onBlankPaper": {
+    "longestTaskMs": 35.4,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 549.7,
+    "dropped": 1,
+    "framesBegun": 55
+   },
+   "painting": {
+    "longestTaskMs": 4.9,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 17.3,
+    "dropped": 0,
+    "framesBegun": 285
+   },
+   "justAfter": {
+    "longestTaskMs": 2.3,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 14.2,
+    "dropped": 1,
+    "framesBegun": 141
+   },
+   "droppedAtMsFromFirstStroke": [
+    -637,
+    4764
+   ],
+   "atWork8to38s": {
+    "longestTaskMs": 9,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 11.7,
+    "dropped": 0,
+    "framesBegun": 1800
+   },
+   "errors": []
+  }
+ ]
+}

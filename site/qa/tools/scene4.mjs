@@ -1024,7 +1024,8 @@ run.preview = async () => {
     const { width, height } = await shot.metadata();
     const mine = await shot.removeAlpha().raw().toBuffer();
     // The package's picture, as film_preview.py draws a frame: plate, layers, the screen's copy and the dot.
-    const layers = frames.layers.map((layer) => ({ input: `${pkg}site/${frames.stills[used[layer.actor]]}`, left: layer.x, top: layer.y }));
+    // (A layer with a scale is drawn into its box.)
+    const layers = await Promise.all(frames.layers.map(async (layer) => ({ input: await sharp(`${pkg}site/${frames.stills[used[layer.actor]]}`).resize(layer.w, layer.h, { fit: 'fill', kernel: 'lanczos3' }).png().toBuffer(), left: layer.x, top: layer.y })));
     const scene = await sharp(`${pkg}site/${frames.plate}`).composite(layers).png().toBuffer();
     const src = frames.camera_screen.source;
     const rect = frames.camera_screen.rect_by_still[used.rachel];
@@ -1063,7 +1064,7 @@ run.preview = async () => {
     const actors = {};
     for (const layer of frames.layers) {
       if (layer.actor === 'water') { actors.water = 'scenery, soft and see-through: not placed by this measure'; continue; }
-      const solid = await sharp(`${pkg}site/${frames.stills[used[layer.actor]]}`).ensureAlpha().extractChannel(3).raw().toBuffer({ resolveWithObject: true });
+      const solid = await sharp(`${pkg}site/${frames.stills[used[layer.actor]]}`).resize(layer.w, layer.h, { fit: 'fill' }).ensureAlpha().extractChannel(3).raw().toBuffer({ resolveWithObject: true });
       // An actor is compared where its drawing is solid and the painting is whole under it: Rachel only above
       // her waist (plate y 760), since the edge fades her legs into the paper.
       const bottom = layer.actor === 'rachel' ? 740 : layer.y + layer.h;

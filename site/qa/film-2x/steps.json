@@ -1,0 +1,51 @@
+{
+ "pointing": {
+  "left hand: index fingertip": {
+   "M_1 > M_1_12": 17,
+   "M_1_12 > M_12": 19,
+   "M_12 > M_2": 48
+  },
+  "left hand: middle of the palm or fist": {
+   "M_1 > M_1_12": 9,
+   "M_1_12 > M_12": 20,
+   "M_12 > M_2": 44
+  },
+  "left elbow": {
+   "M_1 > M_1_12": 3,
+   "M_1_12 > M_12": 10,
+   "M_12 > M_2": 76
+  },
+  "right hand: middle of the palm": {
+   "M_1 > M_1_12": 29,
+   "M_1_12 > M_12": 64,
+   "M_12 > M_2": 33
+  },
+  "right wrist (the band)": {
+   "M_1 > M_1_12": 32,
+   "M_1_12 > M_12": 10,
+   "M_12 > M_2": 26
+  }
+ },
+ "hands together": {
+  "left hand: middle of the palm": {
+   "M_1 > M_1_13": 18,
+   "M_1_13 > M_13": 57,
+   "M_13 > M_3": 26
+  },
+  "left elbow": {
+   "M_1 > M_1_13": 6,
+   "M_1_13 > M_13": 11,
+   "M_13 > M_3": 5
+  },
+  "right hand: middle of the palm": {
+   "M_1 > M_1_13": 32,
+   "M_1_13 > M_13": 47,
+   "M_13 > M_3": 37
+  },
+  "right wrist (the band)": {
+   "M_1 > M_1_13": 26,
+   "M_1_13 > M_13": 23,
+   "M_13 > M_3": 18
+  }
+ }
+}

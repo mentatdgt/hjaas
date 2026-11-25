@@ -1,0 +1,12 @@
+{ "note": "Read off the delivered 2x drawings by eye, in their own px. Left and right are the viewer's.", "gestures": {
+ "pointing": { "poses": ["M_1", "M_1_12", "M_12", "M_2"], "marks": {
+  "left hand: index fingertip": [[58, 366], [32, 344], [32, 306], [12, 212]],
+  "left hand: middle of the palm or fist": [[108, 440], [110, 422], [94, 385], [68, 300]],
+  "left elbow": [[160, 590], [156, 585], [142, 572], [20, 480]],
+  "right hand: middle of the palm": [[560, 425], [522, 470], [450, 575], [436, 640]],
+  "right wrist (the band)": [[527, 485], [520, 548], [502, 556], [492, 608]] } },
+ "hands together": { "poses": ["M_1", "M_1_13", "M_13", "M_3"], "marks": {
+  "left hand: middle of the palm": [[108, 440], [130, 468], [240, 500], [290, 512]],
+  "left elbow": [[160, 590], [150, 595], [130, 605], [140, 608]],
+  "right hand: middle of the palm": [[560, 425], [510, 465], [425, 505], [370, 555]],
+  "right wrist (the band)": [[527, 485], [500, 530], [455, 540], [425, 560]] } } } }

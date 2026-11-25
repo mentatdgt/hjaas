@@ -1,0 +1,374 @@
+[
+ {
+  "browser": "chrome, 1440 × 900",
+  "seconds": 59.7,
+  "gestures": "M_1 > M_1_12 > M_12 > M_2 > M_12 > M_1_12 > M_1 > M_1_13 > M_13 > M_3 > M_13 > M_1_13 > M_1 > M_1_12 > M_12 > M_2 > M_12 > M_1_12 > M_1 > M_1_13 > M_13 > M_3 > M_13 > M_1_13 > M_1 > M_1_12 > M_12 > M_2 > M_12 > M_1_12 > M_1 > M_1_13 > M_13 > M_3 > M_13 > M_1_13 > M_1",
+  "timesEachPoseWasShown": {
+   "M_1_mid": 81,
+   "M_1_closed": 86,
+   "M_1": 80,
+   "M_1_blink": 2,
+   "M_1_12": 6,
+   "M_12": 6,
+   "M_2": 28,
+   "M_2_closed": 28,
+   "M_1_mid_blink": 2,
+   "M_1_closed_blink": 5,
+   "M_1_13": 6,
+   "M_13": 6,
+   "M_3": 22,
+   "M_3_closed_blink": 2,
+   "M_3_closed": 20,
+   "M_2_closed_blink": 2
+  },
+  "inBetweens": [
+   "M_1_12 64.8 ms",
+   "M_12 51.9 ms",
+   "M_12 67.8 ms",
+   "M_1_12 49.4 ms",
+   "M_1_13 67.7 ms",
+   "M_13 65.7 ms",
+   "M_13 51.7 ms",
+   "M_1_13 67.3 ms",
+   "M_1_12 66.5 ms",
+   "M_12 50.3 ms",
+   "M_12 65.8 ms",
+   "M_1_12 49.4 ms",
+   "M_1_13 50.4 ms",
+   "M_13 66.4 ms",
+   "M_13 66.6 ms",
+   "M_1_13 50.2 ms",
+   "M_1_12 50.1 ms",
+   "M_12 65 ms",
+   "M_12 50.1 ms",
+   "M_1_12 67.7 ms",
+   "M_1_13 49.7 ms",
+   "M_13 66 ms",
+   "M_13 65.7 ms",
+   "M_1_13 50.9 ms"
+  ],
+  "blinks": {
+   "count": 13,
+   "gapsMs": [
+    4582.8,
+    4614.8,
+    2718.4,
+    4065.3,
+    3315.5,
+    4502.1,
+    5249.6,
+    4766.4,
+    5699.7,
+    3833.3,
+    4498.8,
+    4834.4
+   ],
+   "shortestGapMs": 2718.4,
+   "longestGapMs": 5699.7,
+   "meanGapMs": 4390,
+   "each": [
+    {
+     "at": 5374.6,
+     "pose": "M_1_blink",
+     "shownMs": 116.6,
+     "before": "M_1_closed",
+     "after": "M_1_mid",
+     "msSinceTheLast": null
+    },
+    {
+     "at": 9957.4,
+     "pose": "M_1_mid_blink",
+     "shownMs": 98.8,
+     "before": "M_1",
+     "after": "M_1_closed",
+     "msSinceTheLast": 4582.8
+    },
+    {
+     "at": 14572.2,
+     "pose": "M_1_closed_blink",
+     "shownMs": 101.5,
+     "before": "M_1_closed",
+     "after": "M_1_closed",
+     "msSinceTheLast": 4614.8
+    },
+    {
+     "at": 17290.6,
+     "pose": "M_3_closed_blink",
+     "shownMs": 115.1,
+     "before": "M_3",
+     "after": "M_3",
+     "msSinceTheLast": 2718.4
+    },
+    {
+     "at": 21355.9,
+     "pose": "M_1_closed_blink",
+     "shownMs": 99.4,
+     "before": "M_1_closed",
+     "after": "M_1_closed",
+     "msSinceTheLast": 4065.3
+    },
+    {
+     "at": 24671.4,
+     "pose": "M_2_closed_blink",
+     "shownMs": 118.7,
+     "before": "M_2",
+     "after": "M_2",
+     "msSinceTheLast": 3315.5
+    },
+    {
+     "at": 29173.5,
+     "pose": "M_1_mid_blink",
+     "shownMs": 116.7,
+     "before": "M_1",
+     "after": "M_1_closed",
+     "msSinceTheLast": 4502.1
+    },
+    {
+     "at": 34423.1,
+     "pose": "M_1_closed_blink",
+     "shownMs": 116.5,
+     "before": "M_1_closed",
+     "after": "M_1_closed",
+     "msSinceTheLast": 5249.6
+    },
+    {
+     "at": 39189.5,
+     "pose": "M_1_closed_blink",
+     "shownMs": 116.2,
+     "before": "M_1_mid",
+     "after": "M_1_closed",
+     "msSinceTheLast": 4766.4
+    },
+    {
+     "at": 44889.2,
+     "pose": "M_1_blink",
+     "shownMs": 116.7,
+     "before": "M_1_closed",
+     "after": "M_1_mid",
+     "msSinceTheLast": 5699.7
+    },
+    {
+     "at": 48722.5,
+     "pose": "M_2_closed_blink",
+     "shownMs": 98.4,
+     "before": "M_2_closed",
+     "after": "M_2_closed",
+     "msSinceTheLast": 3833.3
+    },
+    {
+     "at": 53221.3,
+     "pose": "M_3_closed_blink",
+     "shownMs": 117.9,
+     "before": "M_3",
+     "after": "M_3",
+     "msSinceTheLast": 4498.8
+    },
+    {
+     "at": 58055.7,
+     "pose": "M_1_closed_blink",
+     "shownMs": 116.7,
+     "before": "M_1_closed",
+     "after": "M_1_closed",
+     "msSinceTheLast": 4834.4
+    }
+   ]
+  },
+  "longestHold": {
+   "pose": "M_1_closed",
+   "ms": 484.5
+  },
+  "lateFramesMadeUp": [],
+  "anyDissolve": false,
+  "problems": [],
+  "stepsLogged": 382,
+  "everyStep": "M_1_mid 101.1, M_1_closed 100.5, M_1 150, M_1_mid 99.3, M_1_closed 284.7, M_1 133.2, M_1_mid 99, M_1_closed 101.5, M_1 131.6, M_1_mid 85, M_1_closed 349.8, M_1 116.5, M_1_mid 116.6, M_1_closed 98.5, M_1 166.6, M_1_mid 83.8, M_1_closed 250.5, M_1 99, M_1_mid 85.2, M_1_closed 148.3, M_1 149.9, M_1_mid 68.4, M_1_closed 466.6, M_1 116.2, M_1_mid 100.5, M_1_closed 166.7, M_1 166.8, M_1_mid 99.4, M_1_closed 449.6, M_1 150.7, M_1_mid 83.6, M_1_closed 83.7, M_1_blink 116.6, M_1_mid 64.4, M_1_closed 235.2, M_1_12 64.8, M_12 51.9, M_2 116, M_2_closed 132, M_2 135.4, M_2_closed 466.7, M_2 150.1, M_2_closed 149.9, M_2 133.5, M_2_closed 299.8, M_2 100.2, M_2_closed 100.2, M_2 165, M_2_closed 318, M_2 99.1, M_2_closed 150.5, M_2 117.1, M_2_closed 232.9, M_2 148.6, M_2_closed 168.4, M_2 149.7, M_2_closed 432.4, M_12 67.8, M_1_12 49.4, M_1 167.2, M_1_mid_blink 98.8, M_1_closed 151.4, M_1 183.1, M_1_mid 99.5, M_1_closed 432.2, M_1 134.9, M_1_mid 116.6, M_1_closed 199.2, M_1 134.2, M_1_mid 99.5, M_1_closed 217.1, M_1 132.1, M_1_mid 82.7, M_1_closed 167.9, M_1 133.9, M_1_mid 98.8, M_1_closed 484.5, M_1 131.7, M_1_mid 100.2, M_1_closed 134.4, M_1 150.3, M_1_mid 99.5, M_1_closed 365.5, M_1 101.5, M_1_mid 83.4, M_1_closed 81.7, M_1 101.8, M_1_mid 116.7, M_1_closed 181.7, M_1_closed_blink 101.5, M_1_closed 148.9, M_1 134.4, M_1_mid 100.2, M_1_closed 149.8, M_1 183.6, M_1_mid 65.1, M_1_closed 483.6, M_1 134.4, M_1_mid 116.7, M_1_closed 149.7, M_1 167.1, M_1_mid 65.2, M_1_closed 467, M_1_13 67.7, M_13 65.7, M_3 117.8, M_3_closed_blink 115.1, M_3 117, M_3_closed 434.5, M_3 149.9, M_3_closed 166.8, M_3 149.9, M_3_closed 466.8, M_3 133.3, M_3_closed 166.5, M_3 182.1, M_3_closed 334.6, M_3 116.6, M_3_closed 133.4, M_3 166.8, M_3_closed 448.2, M_13 51.7, M_1_13 67.3, M_1 132.5, M_1_mid 82.5, M_1_closed 150.2, M_1 115.6, M_1_mid 67, M_1_closed 117, M_1_closed_blink 99.4, M_1_closed 117.4, M_1 82.6, M_1_mid 85.2, M_1_closed 83, M_1 116.8, M_1_mid 98.2, M_1_closed 467.4, M_1 100.9, M_1_mid 83.3, M_1_closed 115.1, M_1 150.7, M_1_mid 84.2, M_1_closed 316.6, M_1 115.1, M_1_mid 118.4, M_1_closed 150.3, M_1 166.4, M_1_mid 83.3, M_1_closed 432.8, M_1_12 66.5, M_12 50.3, M_2 131.6, M_2_closed_blink 118.7, M_2 149.8, M_2_closed 249.6, M_2 100.5, M_2_closed 164.6, M_2 169.2, M_2_closed 433.4, M_2 116.3, M_2_closed 115.3, M_2 168.1, M_2_closed 299.5, M_2 99.6, M_2_closed 133.6, M_2 166.5, M_2_closed 334.2, M_12 65.8, M_1_12 49.4, M_1 134.3, M_1_mid 83.2, M_1_closed 117.4, M_1 147.8, M_1_mid 68.7, M_1_closed 449.1, M_1 134.2, M_1_mid 115.8, M_1_closed 183.2, M_1 134.3, M_1_mid_blink 116.7, M_1_closed 449.2, M_1 133.6, M_1_mid 99.5, M_1_closed 99.9, M_1 167, M_1_mid 65.6, M_1_closed 384.7, M_1 149, M_1_mid 83.3, M_1_closed 117.8, M_1 116.6, M_1_mid 82.8, M_1_closed 416.2, M_1 149.2, M_1_mid 84.4, M_1_closed 116.1, M_1 101.5, M_1_mid 98.6, M_1_closed 466.8, M_1 133.3, M_1_mid 117.7, M_1_closed 182, M_1 117.9, M_1_mid 116.7, M_1_closed 283.1, M_1 133.8, M_1_mid 81.1, M_1_closed 168.7, M_1 166.6, M_1_mid 82.4, M_1_closed 167.8, M_1_closed_blink 116.5, M_1_closed 131.8, M_1 101.5, M_1_mid 114.9, M_1_closed 134.9, M_1 116.9, M_1_mid 83.4, M_1_closed 349.7, M_1_13 50.4, M_13 66.4, M_3 133.4, M_3_closed 166.8, M_3 181.4, M_3_closed 250.2, M_3 101.8, M_3_closed 115.5, M_3 151, M_3_closed 315.2, M_3 150.6, M_3_closed 183.9, M_3 133, M_3_closed 448.9, M_3 117, M_3_closed 134.6, M_3 166.3, M_3_closed 400.4, M_13 66.6, M_1_13 50.2, M_1 115, M_1_mid 118.2, M_1_closed_blink 116.2, M_1_closed 66.3, M_1 99.8, M_1_mid 67.6, M_1_closed 416.7, M_1 98.1, M_1_mid 83.9, M_1_closed 184.6, M_1 116.4, M_1_mid 83.7, M_1_closed 283.2, M_1 150, M_1_mid 115.8, M_1_closed 84, M_1 133.7, M_1_mid 100, M_1_closed 249.7, M_1 98.4, M_1_mid 85.1, M_1_closed 166.1, M_1 151, M_1_mid 83, M_1_closed 350, M_1 99.8, M_1_mid 83.5, M_1_closed 131.6, M_1 150.1, M_1_mid 67.6, M_1_closed 417.2, M_1 115.1, M_1_mid 101.4, M_1_closed 165.4, M_1 101.3, M_1_mid 66.7, M_1_closed 415.5, M_1 150.6, M_1_mid 84, M_1_closed 166.6, M_1_blink 116.7, M_1_mid 65.3, M_1_closed 251.4, M_1_12 50.1, M_12 65, M_2 135, M_2_closed 115.1, M_2 134.8, M_2_closed 248.6, M_2 117, M_2_closed 134.3, M_2 149.7, M_2_closed 265.7, M_2 150.3, M_2_closed 100.6, M_2 117, M_2_closed 266.4, M_2 150.2, M_2_closed 83.3, M_2 100, M_2_closed 466.7, M_2 166.6, M_2_closed 132.6, M_2 133.4, M_2_closed 117.5, M_2_closed_blink 98.4, M_2_closed 200.2, M_12 50.1, M_1_12 67.7, M_1 132.4, M_1_mid 101.2, M_1_closed 166.4, M_1 116.6, M_1_mid 82.8, M_1_closed 316.2, M_1 101, M_1_mid 117, M_1_closed 99.6, M_1 116.4, M_1_mid 67.3, M_1_closed 315.9, M_1 149.8, M_1_mid 100.8, M_1_closed 182.2, M_1 168.1, M_1_mid 83.2, M_1_closed 449, M_1 134.1, M_1_mid 100.2, M_1_closed 166.3, M_1 116.8, M_1_mid 82.7, M_1_closed 400.3, M_1_13 49.7, M_13 66, M_3 100.4, M_3_closed_blink 117.9, M_3 148.2, M_3_closed 334.8, M_3 133, M_3_closed 116.9, M_3 148.6, M_3_closed 368.2, M_3 116.7, M_3_closed 116.5, M_3 166.8, M_3_closed 249.9, M_13 65.7, M_1_13 50.9, M_1 133.6, M_1_mid 99.9, M_1_closed 149.4, M_1 116.9, M_1_mid 66.6, M_1_closed 467.2, M_1 150, M_1_mid 99.1, M_1_closed 150.8, M_1 115.5, M_1_mid 116.3, M_1_closed 234.8, M_1 150.4, M_1_mid 83.2, M_1_closed 116.5, M_1 133.4, M_1_mid 66, M_1_closed 250.7, M_1_closed_blink 116.7, M_1_closed 81.2, M_1 150.1, M_1_mid 85.1, M_1_closed 133.3, M_1 116.8, M_1_mid 49.8, M_1_closed 400.1, M_1 149.9, M_1_mid 83.4, M_1_closed 82.4, M_1 134.2, M_1_mid 100.1, M_1_closed 298.4, M_1 142.2, M_1_mid 91, M_1_closed …",
+  "errors": [],
+  "ok": true
+ },
+ {
+  "browser": "webkit, iPhone 14 profile",
+  "seconds": 59.7,
+  "gestures": "M_1 > M_1_12 > M_12 > M_2 > M_12 > M_1_12 > M_1 > M_1_13 > M_13 > M_3 > M_13 > M_1_13 > M_1 > M_1_12 > M_12 > M_2 > M_12 > M_1_12 > M_1 > M_1_13 > M_13 > M_3 > M_13 > M_1_13 > M_1 > M_1_12 > M_12 > M_2 > M_12 > M_1_12 > M_1 > M_1_13 > M_13 > M_3 > M_13 > M_1_13 > M_1",
+  "timesEachPoseWasShown": {
+   "M_1_mid": 81,
+   "M_1_closed": 86,
+   "M_1": 80,
+   "M_1_blink": 2,
+   "M_1_12": 6,
+   "M_12": 6,
+   "M_2": 28,
+   "M_2_closed": 28,
+   "M_1_mid_blink": 2,
+   "M_1_closed_blink": 5,
+   "M_1_13": 6,
+   "M_13": 6,
+   "M_3": 22,
+   "M_3_closed_blink": 2,
+   "M_3_closed": 20,
+   "M_2_closed_blink": 2
+  },
+  "inBetweens": [
+   "M_1_12 66 ms",
+   "M_12 49 ms",
+   "M_12 51 ms",
+   "M_1_12 66 ms",
+   "M_1_13 67 ms",
+   "M_13 51 ms",
+   "M_13 67 ms",
+   "M_1_13 66 ms",
+   "M_1_12 47 ms",
+   "M_12 69 ms",
+   "M_12 66 ms",
+   "M_1_12 66 ms",
+   "M_1_13 67 ms",
+   "M_13 65 ms",
+   "M_13 50 ms",
+   "M_1_13 65 ms",
+   "M_1_12 64 ms",
+   "M_12 67 ms",
+   "M_12 66 ms",
+   "M_1_12 48 ms",
+   "M_1_13 66 ms",
+   "M_13 51 ms",
+   "M_13 66 ms",
+   "M_1_13 50 ms"
+  ],
+  "blinks": {
+   "count": 13,
+   "gapsMs": [
+    4566,
+    4617,
+    2733,
+    4050,
+    3333,
+    4500,
+    5249,
+    4768,
+    5700,
+    3816,
+    4516,
+    4834
+   ],
+   "shortestGapMs": 2733,
+   "longestGapMs": 5700,
+   "meanGapMs": 4390,
+   "each": [
+    {
+     "at": 5590,
+     "pose": "M_1_blink",
+     "shownMs": 116,
+     "before": "M_1_closed",
+     "after": "M_1_mid",
+     "msSinceTheLast": null
+    },
+    {
+     "at": 10156,
+     "pose": "M_1_mid_blink",
+     "shownMs": 117,
+     "before": "M_1",
+     "after": "M_1_closed",
+     "msSinceTheLast": 4566
+    },
+    {
+     "at": 14773,
+     "pose": "M_1_closed_blink",
+     "shownMs": 115,
+     "before": "M_1_closed",
+     "after": "M_1_closed",
+     "msSinceTheLast": 4617
+    },
+    {
+     "at": 17506,
+     "pose": "M_3_closed_blink",
+     "shownMs": 116,
+     "before": "M_3",
+     "after": "M_3",
+     "msSinceTheLast": 2733
+    },
+    {
+     "at": 21556,
+     "pose": "M_1_closed_blink",
+     "shownMs": 116,
+     "before": "M_1_closed",
+     "after": "M_1_closed",
+     "msSinceTheLast": 4050
+    },
+    {
+     "at": 24889,
+     "pose": "M_2_closed_blink",
+     "shownMs": 100,
+     "before": "M_2",
+     "after": "M_2",
+     "msSinceTheLast": 3333
+    },
+    {
+     "at": 29389,
+     "pose": "M_1_mid_blink",
+     "shownMs": 101,
+     "before": "M_1",
+     "after": "M_1_closed",
+     "msSinceTheLast": 4500
+    },
+    {
+     "at": 34638,
+     "pose": "M_1_closed_blink",
+     "shownMs": 101,
+     "before": "M_1_closed",
+     "after": "M_1_closed",
+     "msSinceTheLast": 5249
+    },
+    {
+     "at": 39406,
+     "pose": "M_1_closed_blink",
+     "shownMs": 99,
+     "before": "M_1_mid",
+     "after": "M_1_closed",
+     "msSinceTheLast": 4768
+    },
+    {
+     "at": 45106,
+     "pose": "M_1_blink",
+     "shownMs": 116,
+     "before": "M_1_closed",
+     "after": "M_1_mid",
+     "msSinceTheLast": 5700
+    },
+    {
+     "at": 48922,
+     "pose": "M_2_closed_blink",
+     "shownMs": 117,
+     "before": "M_2_closed",
+     "after": "M_2_closed",
+     "msSinceTheLast": 3816
+    },
+    {
+     "at": 53438,
+     "pose": "M_3_closed_blink",
+     "shownMs": 100,
+     "before": "M_3",
+     "after": "M_3",
+     "msSinceTheLast": 4516
+    },
+    {
+     "at": 58272,
+     "pose": "M_1_closed_blink",
+     "shownMs": 116,
+     "before": "M_1_closed",
+     "after": "M_1_closed",
+     "msSinceTheLast": 4834
+    }
+   ]
+  },
+  "longestHold": {
+   "pose": "M_3_closed",
+   "ms": 484
+  },
+  "lateFramesMadeUp": [],
+  "anyDissolve": false,
+  "problems": [],
+  "stepsLogged": 382,
+  "everyStep": "M_1_mid 83, M_1_closed 118, M_1 133, M_1_mid 99, M_1_closed 284, M_1 150, M_1_mid 100, M_1_closed 100, M_1 133, M_1_mid 69, M_1_closed 363, M_1 102, M_1_mid 117, M_1_closed 116, M_1 167, M_1_mid 66, M_1_closed 267, M_1 100, M_1_mid 83, M_1_closed 134, M_1 166, M_1_mid 66, M_1_closed 451, M_1 134, M_1_mid 99, M_1_closed 150, M_1 182, M_1_mid 85, M_1_closed 466, M_1 151, M_1_mid 66, M_1_closed 100, M_1_blink 116, M_1_mid 51, M_1_closed 250, M_1_12 66, M_12 49, M_2 118, M_2_closed 134, M_2 131, M_2_closed 468, M_2 134, M_2_closed 166, M_2 117, M_2_closed 318, M_2 99, M_2_closed 100, M_2 166, M_2_closed 300, M_2 100, M_2_closed 150, M_2 135, M_2_closed 233, M_2 132, M_2_closed 184, M_2 150, M_2_closed 432, M_12 51, M_1_12 66, M_1 150, M_1_mid_blink 117, M_1_closed 150, M_1 167, M_1_mid 116, M_1_closed 434, M_1 132, M_1_mid 118, M_1_closed 183, M_1 149, M_1_mid 99, M_1_closed 219, M_1 133, M_1_mid 83, M_1_closed 151, M_1 148, M_1_mid 101, M_1_closed 467, M_1 133, M_1_mid 118, M_1_closed 116, M_1 150, M_1_mid 100, M_1_closed 366, M_1 118, M_1_mid 82, M_1_closed 84, M_1 100, M_1_mid 100, M_1_closed 183, M_1_closed_blink 115, M_1_closed 134, M_1 135, M_1_mid 98, M_1_closed 167, M_1 184, M_1_mid 68, M_1_closed 481, M_1 134, M_1_mid 100, M_1_closed 149, M_1 168, M_1_mid 67, M_1_closed 482, M_1_13 67, M_13 51, M_3 133, M_3_closed_blink 116, M_3 118, M_3_closed 433, M_3 148, M_3_closed 152, M_3 149, M_3_closed 484, M_3 132, M_3_closed 168, M_3 165, M_3_closed 351, M_3 101, M_3_closed 150, M_3 167, M_3_closed 433, M_13 67, M_1_13 66, M_1 117, M_1_mid 100, M_1_closed 133, M_1 117, M_1_mid 84, M_1_closed 99, M_1_closed_blink 116, M_1_closed 101, M_1 100, M_1_mid 83, M_1_closed 83, M_1 100, M_1_mid 99, M_1_closed 483, M_1 102, M_1_mid 67, M_1_closed 131, M_1 135, M_1_mid 101, M_1_closed 317, M_1 114, M_1_mid 101, M_1_closed 167, M_1 166, M_1_mid 84, M_1_closed 434, M_1_12 47, M_12 69, M_2 133, M_2_closed_blink 100, M_2 167, M_2_closed 234, M_2 116, M_2_closed 167, M_2 167, M_2_closed 416, M_2 117, M_2_closed 133, M_2 166, M_2_closed 284, M_2 117, M_2_closed 134, M_2 166, M_2_closed 317, M_12 66, M_1_12 66, M_1 117, M_1_mid 100, M_1_closed 117, M_1 150, M_1_mid 66, M_1_closed 451, M_1 132, M_1_mid 116, M_1_closed 168, M_1 150, M_1_mid_blink 101, M_1_closed 464, M_1 135, M_1_mid 100, M_1_closed 101, M_1 147, M_1_mid 85, M_1_closed 384, M_1 149, M_1_mid 84, M_1_closed 116, M_1 101, M_1_mid 99, M_1_closed 400, M_1 167, M_1_mid 83, M_1_closed 118, M_1 98, M_1_mid 101, M_1_closed 450, M_1 150, M_1_mid 117, M_1_closed 183, M_1 117, M_1_mid 100, M_1_closed 302, M_1 132, M_1_mid 83, M_1_closed 167, M_1 149, M_1_mid 100, M_1_closed 166, M_1_closed_blink 101, M_1_closed 133, M_1 116, M_1_mid 102, M_1_closed 132, M_1 117, M_1_mid 100, M_1_closed 333, M_1_13 67, M_13 65, M_3 119, M_3_closed 183, M_3 183, M_3_closed 249, M_3 100, M_3_closed 117, M_3 131, M_3_closed 318, M_3 166, M_3_closed 169, M_3 150, M_3_closed 449, M_3 117, M_3_closed 133, M_3 165, M_3_closed 402, M_13 50, M_1_13 65, M_1 119, M_1_mid 117, M_1_closed_blink 99, M_1_closed 84, M_1 100, M_1_mid 66, M_1_closed 417, M_1 100, M_1_mid 67, M_1_closed 181, M_1 118, M_1_mid 101, M_1_closed 283, M_1 150, M_1_mid 100, M_1_closed 84, M_1 149, M_1_mid 100, M_1_closed 250, M_1 84, M_1_mid 98, M_1_closed 169, M_1 149, M_1_mid 67, M_1_closed 349, M_1 101, M_1_mid 98, M_1_closed 120, M_1 147, M_1_mid 68, M_1_closed 433, M_1 101, M_1_mid 100, M_1_closed 182, M_1 99, M_1_mid 69, M_1_closed 415, M_1 151, M_1_mid 83, M_1_closed 168, M_1_blink 116, M_1_mid 67, M_1_closed 235, M_1_12 64, M_12 67, M_2 133, M_2_closed 101, M_2 150, M_2_closed 232, M_2 134, M_2_closed 115, M_2 168, M_2_closed 267, M_2 133, M_2_closed 100, M_2 116, M_2_closed 284, M_2 150, M_2_closed 84, M_2 100, M_2_closed 467, M_2 148, M_2_closed 135, M_2 150, M_2_closed 100, M_2_closed_blink 117, M_2_closed 183, M_12 66, M_1_12 48, M_1 136, M_1_mid 117, M_1_closed 165, M_1 101, M_1_mid 100, M_1_closed 317, M_1 83, M_1_mid 116, M_1_closed 118, M_1 116, M_1_mid 66, M_1_closed 318, M_1 132, M_1_mid 117, M_1_closed 182, M_1 151, M_1_mid 100, M_1_closed 449, M_1 135, M_1_mid 98, M_1_closed 152, M_1 132, M_1_mid 84, M_1_closed 384, M_1_13 66, M_13 51, M_3 116, M_3_closed_blink 100, M_3 167, M_3_closed 316, M_3 149, M_3_closed 103, M_3 165, M_3_closed 350, M_3 117, M_3_closed 131, M_3 169, M_3_closed 250, M_13 66, M_1_13 50, M_1 134, M_1_mid 100, M_1_closed 150, M_1 100, M_1_mid 83, M_1_closed 467, M_1 133, M_1_mid 100, M_1_closed 166, M_1 118, M_1_mid 116, M_1_closed 233, M_1 134, M_1_mid 98, M_1_closed 102, M_1 134, M_1_mid 82, M_1_closed 251, M_1_closed_blink 116, M_1_closed 66, M_1 167, M_1_mid 66, M_1_closed 134, M_1 117, M_1_mid 67, M_1_closed 399, M_1 150, M_1_mid 82, M_1_closed 69, M_1 150, M_1_mid 83, M_1_closed 300, M_1 133, M_1_mid 128, M_1_closed …",
+  "errors": [],
+  "ok": true
+ }
+]

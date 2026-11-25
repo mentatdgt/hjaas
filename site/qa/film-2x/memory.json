@@ -1,0 +1,162 @@
+{
+ "webkit, iPhone 14 profile": {
+  "before": {
+   "atRestMB": {
+    "film.frames": 17.51,
+    "film.canvases": 3.34,
+    "film.room": 6.29,
+    "film.edge": 2.6
+   },
+   "atRestFilmMB": 29.75,
+   "mostMB": {
+    "film.frames": 17.51,
+    "film.canvases": 4.94,
+    "film.room": 6.29,
+    "film.edge": 2.6,
+    "filmTotal": 31.35,
+    "page": 37.74
+   },
+   "errors": []
+  },
+  "now": {
+   "atRestMB": {
+    "film.frames": 20.95,
+    "film.canvases": 4.8,
+    "film.room": 6.29,
+    "film.edge": 2.6
+   },
+   "atRestFilmMB": 34.64,
+   "mostMB": {
+    "film.frames": 20.95,
+    "film.canvases": 6.94,
+    "film.room": 6.29,
+    "film.edge": 2.6,
+    "filmTotal": 36.78,
+    "page": 43.18
+   },
+   "errors": []
+  },
+  "filmAddsAtRestMB": 4.89,
+  "filmAddsAtMostMB": 5.43
+ },
+ "chrome, phone 3x": {
+  "before": {
+   "atRestMB": {
+    "film.frames": 17.51,
+    "film.canvases": 3.34,
+    "film.room": 6.29,
+    "film.edge": 2.6
+   },
+   "atRestFilmMB": 29.75,
+   "mostMB": {
+    "film.frames": 17.51,
+    "film.canvases": 4.94,
+    "film.room": 6.29,
+    "film.edge": 2.6,
+    "filmTotal": 31.35,
+    "page": 37.74
+   },
+   "errors": []
+  },
+  "now": {
+   "atRestMB": {
+    "film.frames": 20.95,
+    "film.canvases": 4.8,
+    "film.room": 6.29,
+    "film.edge": 2.6
+   },
+   "atRestFilmMB": 34.64,
+   "mostMB": {
+    "film.frames": 20.95,
+    "film.canvases": 6.96,
+    "film.room": 6.29,
+    "film.edge": 2.6,
+    "filmTotal": 36.8,
+    "page": 43.19
+   },
+   "errors": []
+  },
+  "filmAddsAtRestMB": 4.89,
+  "filmAddsAtMostMB": 5.45
+ },
+ "chrome, desktop 1x": {
+  "before": {
+   "atRestMB": {
+    "film.frames": 17.51,
+    "film.canvases": 1.82,
+    "film.room": 6.29,
+    "film.edge": 2.6
+   },
+   "atRestFilmMB": 28.23,
+   "mostMB": {
+    "film.frames": 17.51,
+    "film.canvases": 3.42,
+    "film.room": 6.29,
+    "film.edge": 2.6,
+    "filmTotal": 29.83,
+    "page": 34.22
+   },
+   "errors": []
+  },
+  "now": {
+   "atRestMB": {
+    "film.frames": 20.95,
+    "film.canvases": 2.6,
+    "film.room": 6.29,
+    "film.edge": 2.6
+   },
+   "atRestFilmMB": 32.44,
+   "mostMB": {
+    "film.frames": 20.95,
+    "film.canvases": 4.2,
+    "film.room": 6.29,
+    "film.edge": 2.6,
+    "filmTotal": 34.04,
+    "page": 38.43
+   },
+   "errors": []
+  },
+  "filmAddsAtRestMB": 4.21,
+  "filmAddsAtMostMB": 4.21
+ },
+ "chrome, desktop 2x": {
+  "before": {
+   "atRestMB": {
+    "film.frames": 17.51,
+    "film.canvases": 3.33,
+    "film.room": 6.29,
+    "film.edge": 2.6
+   },
+   "atRestFilmMB": 29.74,
+   "mostMB": {
+    "film.frames": 17.51,
+    "film.canvases": 4.93,
+    "film.room": 6.29,
+    "film.edge": 2.6,
+    "filmTotal": 31.34,
+    "page": 37.89
+   },
+   "errors": []
+  },
+  "now": {
+   "atRestMB": {
+    "film.frames": 20.95,
+    "film.canvases": 3.76,
+    "film.room": 6.29,
+    "film.edge": 2.6
+   },
+   "atRestFilmMB": 33.6,
+   "mostMB": {
+    "film.frames": 20.95,
+    "film.canvases": 5.58,
+    "film.room": 6.29,
+    "film.edge": 2.6,
+    "filmTotal": 35.42,
+    "page": 41.97
+   },
+   "errors": []
+  },
+  "filmAddsAtRestMB": 3.86,
+  "filmAddsAtMostMB": 4.08
+ }
+}

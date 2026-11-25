@@ -1,0 +1,101 @@
+{
+ "phone": {
+  "frames": 576,
+  "seconds": 28,
+  "framePx": [
+   390,
+   844
+  ],
+  "errors": [],
+  "steadyPart": {
+   "px": 9435,
+   "worstFrameToFrameMean": {
+    "mean": 0.63,
+    "atMs": 6828
+   },
+   "worstSinglePx": 12,
+   "meanOfAllFrames": 0.08
+  },
+  "inBetweens": [
+   "M_1_12 66.6 ms",
+   "M_12 50 ms",
+   "M_12 66.6 ms",
+   "M_1_12 50 ms",
+   "M_1_13 49.8 ms",
+   "M_13 66.8 ms",
+   "M_13 50.2 ms",
+   "M_1_13 66.4 ms",
+   "M_1_12 50.2 ms",
+   "M_12 66.5 ms",
+   "M_12 49.8 ms",
+   "M_1_12 66.8 ms"
+  ],
+  "poses": 176
+ },
+ "phone-3x": {
+  "frames": 585,
+  "seconds": 28,
+  "framePx": [
+   1500,
+   3246
+  ],
+  "errors": [],
+  "steadyPart": {
+   "px": 186462,
+   "worstFrameToFrameMean": {
+    "mean": 0.34,
+    "atMs": 25579
+   },
+   "worstSinglePx": 12,
+   "meanOfAllFrames": 0.03
+  },
+  "inBetweens": [
+   "M_1_12 65.1 ms",
+   "M_12 50.4 ms",
+   "M_12 66.6 ms",
+   "M_1_12 48.6 ms",
+   "M_1_13 49.4 ms",
+   "M_13 68.1 ms",
+   "M_13 66.8 ms",
+   "M_1_13 66.1 ms",
+   "M_1_12 65 ms",
+   "M_12 51.7 ms",
+   "M_12 64.8 ms",
+   "M_1_12 66.9 ms"
+  ],
+  "poses": 177
+ },
+ "desktop": {
+  "frames": 543,
+  "seconds": 28,
+  "framePx": [
+   1440,
+   900
+  ],
+  "errors": [],
+  "steadyPart": {
+   "px": 18631,
+   "worstFrameToFrameMean": {
+    "mean": 0.66,
+    "atMs": 21921
+   },
+   "worstSinglePx": 16,
+   "meanOfAllFrames": 0.08
+  },
+  "inBetweens": [
+   "M_1_12 66.6 ms",
+   "M_12 49.3 ms",
+   "M_12 64.8 ms",
+   "M_1_12 50 ms",
+   "M_1_13 67.1 ms",
+   "M_13 66.7 ms",
+   "M_13 48.9 ms",
+   "M_1_13 67.2 ms",
+   "M_1_12 49.3 ms",
+   "M_12 66.5 ms",
+   "M_12 49.1 ms",
+   "M_1_12 67.5 ms"
+  ],
+  "poses": 172
+ }
+}

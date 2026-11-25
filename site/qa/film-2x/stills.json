@@ -1,0 +1,404 @@
+{
+ "390x844 M_1": {
+  "shownDevicePx": [
+   435,
+   1029
+  ],
+  "canvasBefore": [
+   320,
+   608
+  ],
+  "canvasNow": [
+   543,
+   1032
+  ],
+  "bestShiftPx": [
+   0,
+   0
+  ],
+  "meanDifference": 6.22,
+  "darkPxBefore": 82433,
+  "darkPxNow": 82971,
+  "edgeEnergyNowOverBefore": 4.21
+ },
+ "390x844 M_2": {
+  "shownDevicePx": [
+   435,
+   1029
+  ],
+  "canvasBefore": [
+   320,
+   608
+  ],
+  "canvasNow": [
+   543,
+   1032
+  ],
+  "bestShiftPx": [
+   0,
+   0
+  ],
+  "meanDifference": 6.29,
+  "darkPxBefore": 89131,
+  "darkPxNow": 82643,
+  "edgeEnergyNowOverBefore": 4.17
+ },
+ "390x844 M_3": {
+  "shownDevicePx": [
+   435,
+   1029
+  ],
+  "canvasBefore": [
+   320,
+   608
+  ],
+  "canvasNow": [
+   543,
+   1032
+  ],
+  "bestShiftPx": [
+   0,
+   0
+  ],
+  "meanDifference": 6.86,
+  "darkPxBefore": 87425,
+  "darkPxNow": 87475,
+  "edgeEnergyNowOverBefore": 4.09
+ },
+ "390x844 errors": [],
+ "1440x900 M_1": {
+  "shownDevicePx": [
+   396,
+   756
+  ],
+  "canvasBefore": [
+   320,
+   608
+  ],
+  "canvasNow": [
+   398,
+   756
+  ],
+  "bestShiftPx": [
+   0,
+   0
+  ],
+  "meanDifference": 5.34,
+  "darkPxBefore": 62752,
+  "darkPxNow": 63596,
+  "edgeEnergyNowOverBefore": 2.72
+ },
+ "1440x900 M_2": {
+  "shownDevicePx": [
+   396,
+   756
+  ],
+  "canvasBefore": [
+   320,
+   608
+  ],
+  "canvasNow": [
+   398,
+   756
+  ],
+  "bestShiftPx": [
+   0,
+   0
+  ],
+  "meanDifference": 5.58,
+  "darkPxBefore": 69440,
+  "darkPxNow": 65749,
+  "edgeEnergyNowOverBefore": 2.72
+ },
+ "1440x900 M_3": {
+  "shownDevicePx": [
+   396,
+   756
+  ],
+  "canvasBefore": [
+   320,
+   608
+  ],
+  "canvasNow": [
+   398,
+   756
+  ],
+  "bestShiftPx": [
+   0,
+   0
+  ],
+  "meanDifference": 5.77,
+  "darkPxBefore": 65551,
+  "darkPxNow": 65952,
+  "edgeEnergyNowOverBefore": 2.66
+ },
+ "1440x900 errors": [],
+ "webkit-390x844 M_1": {
+  "shownDevicePx": [
+   435,
+   1029
+  ],
+  "canvasBefore": [
+   320,
+   608
+  ],
+  "canvasNow": [
+   543,
+   1032
+  ],
+  "bestShiftPx": [
+   0,
+   0
+  ],
+  "meanDifference": 6.35,
+  "darkPxBefore": 84507,
+  "darkPxNow": 84123,
+  "edgeEnergyNowOverBefore": 2.88
+ },
+ "webkit-390x844 M_2": {
+  "shownDevicePx": [
+   435,
+   1029
+  ],
+  "canvasBefore": [
+   320,
+   608
+  ],
+  "canvasNow": [
+   543,
+   1032
+  ],
+  "bestShiftPx": [
+   0,
+   0
+  ],
+  "meanDifference": 6.44,
+  "darkPxBefore": 91525,
+  "darkPxNow": 83815,
+  "edgeEnergyNowOverBefore": 2.84
+ },
+ "webkit-390x844 M_3": {
+  "shownDevicePx": [
+   435,
+   1029
+  ],
+  "canvasBefore": [
+   320,
+   608
+  ],
+  "canvasNow": [
+   543,
+   1032
+  ],
+  "bestShiftPx": [
+   0,
+   0
+  ],
+  "meanDifference": 7.01,
+  "darkPxBefore": 89475,
+  "darkPxNow": 88684,
+  "edgeEnergyNowOverBefore": 2.82
+ },
+ "webkit-390x844 errors": [],
+ "webkit-1440x900-1x M_1": {
+  "shownDevicePx": [
+   198,
+   378
+  ],
+  "canvasBefore": [
+   199,
+   378
+  ],
+  "canvasNow": [
+   199,
+   378
+  ],
+  "bestShiftPx": [
+   0,
+   0
+  ],
+  "meanDifference": 4.66,
+  "darkPxBefore": 15746,
+  "darkPxNow": 15692,
+  "edgeEnergyNowOverBefore": 1.4
+ },
+ "webkit-1440x900-1x M_2": {
+  "shownDevicePx": [
+   198,
+   378
+  ],
+  "canvasBefore": [
+   199,
+   378
+  ],
+  "canvasNow": [
+   199,
+   378
+  ],
+  "bestShiftPx": [
+   0,
+   0
+  ],
+  "meanDifference": 4.88,
+  "darkPxBefore": 17425,
+  "darkPxNow": 16277,
+  "edgeEnergyNowOverBefore": 1.41
+ },
+ "webkit-1440x900-1x M_3": {
+  "shownDevicePx": [
+   198,
+   378
+  ],
+  "canvasBefore": [
+   199,
+   378
+  ],
+  "canvasNow": [
+   199,
+   378
+  ],
+  "bestShiftPx": [
+   0,
+   0
+  ],
+  "meanDifference": 5.2,
+  "darkPxBefore": 16436,
+  "darkPxNow": 16188,
+  "edgeEnergyNowOverBefore": 1.32
+ },
+ "webkit-1440x900-1x errors": [],
+ "1440x900-1x M_1": {
+  "shownDevicePx": [
+   198,
+   378
+  ],
+  "canvasBefore": [
+   199,
+   378
+  ],
+  "canvasNow": [
+   199,
+   378
+  ],
+  "bestShiftPx": [
+   0,
+   0
+  ],
+  "meanDifference": 4.87,
+  "darkPxBefore": 15719,
+  "darkPxNow": 15740,
+  "edgeEnergyNowOverBefore": 1.54
+ },
+ "1440x900-1x M_2": {
+  "shownDevicePx": [
+   198,
+   378
+  ],
+  "canvasBefore": [
+   199,
+   378
+  ],
+  "canvasNow": [
+   199,
+   378
+  ],
+  "bestShiftPx": [
+   0,
+   0
+  ],
+  "meanDifference": 5.07,
+  "darkPxBefore": 17416,
+  "darkPxNow": 16336,
+  "edgeEnergyNowOverBefore": 1.56
+ },
+ "1440x900-1x M_3": {
+  "shownDevicePx": [
+   198,
+   378
+  ],
+  "canvasBefore": [
+   199,
+   378
+  ],
+  "canvasNow": [
+   199,
+   378
+  ],
+  "bestShiftPx": [
+   0,
+   0
+  ],
+  "meanDifference": 5.35,
+  "darkPxBefore": 16393,
+  "darkPxNow": 16350,
+  "edgeEnergyNowOverBefore": 1.53
+ },
+ "1440x900-1x errors": [],
+ "webkit-1440x900 M_1": {
+  "shownDevicePx": [
+   396,
+   756
+  ],
+  "canvasBefore": [
+   320,
+   608
+  ],
+  "canvasNow": [
+   398,
+   756
+  ],
+  "bestShiftPx": [
+   0,
+   0
+  ],
+  "meanDifference": 5.62,
+  "darkPxBefore": 64041,
+  "darkPxNow": 64266,
+  "edgeEnergyNowOverBefore": 2.71
+ },
+ "webkit-1440x900 M_2": {
+  "shownDevicePx": [
+   396,
+   756
+  ],
+  "canvasBefore": [
+   320,
+   608
+  ],
+  "canvasNow": [
+   398,
+   756
+  ],
+  "bestShiftPx": [
+   0,
+   0
+  ],
+  "meanDifference": 5.88,
+  "darkPxBefore": 70924,
+  "darkPxNow": 66411,
+  "edgeEnergyNowOverBefore": 2.71
+ },
+ "webkit-1440x900 M_3": {
+  "shownDevicePx": [
+   396,
+   756
+  ],
+  "canvasBefore": [
+   320,
+   608
+  ],
+  "canvasNow": [
+   398,
+   756
+  ],
+  "bestShiftPx": [
+   0,
+   0
+  ],
+  "meanDifference": 6.03,
+  "darkPxBefore": 66904,
+  "darkPxNow": 66596,
+  "edgeEnergyNowOverBefore": 2.64
+ },
+ "webkit-1440x900 errors": []
+}
