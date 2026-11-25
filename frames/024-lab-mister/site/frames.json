@@ -1,0 +1,30 @@
+{
+ "canvas": {
+  "w": 1672,
+  "h": 941,
+  "note": "Scene 2 (Grow, the mushroom lab) canvas 1672x941 = plate space (the 1x set; there is no larger master, so do not upscale for phones). The plate is the lab room as the site already ships it (site/public/assets/scene2/room.webp, from scene/mushroom-lab.png); this package has no plate of its own. Draw the layer over the plate, under Rachel. Each patch is the room itself for its rectangle except where the mist is, with a solid alpha feathered to clear over its outer 10 px, so it meets the room with no seam."
+ },
+ "layers": [
+  {
+   "actor": "mister",
+   "x": 1245,
+   "y": 336,
+   "w": 123,
+   "h": 159,
+   "stills": [
+    "M1",
+    "M2",
+    "M3",
+    "M4"
+   ],
+   "scenery": true
+  }
+ ],
+ "stills": {
+  "M1": "mister/M1.png",
+  "M2": "mister/M2.png",
+  "M3": "mister/M3.png",
+  "M4": "mister/M4.png"
+ },
+ "clips": {}
+}
