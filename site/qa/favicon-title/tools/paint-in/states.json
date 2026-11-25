@@ -1,0 +1,136 @@
+{
+ "build": {
+  "stillsNotYetDrawnWhenTheBrushIsAtWork": 0,
+  "everyoneAtTheirFirstFrame": true,
+  "sheet": {
+   "opacity": "1",
+   "transform": "none",
+   "sheetOverHer": true
+  },
+  "draws": {
+   "whilePainting": {
+    "rehearsal": 9
+   },
+   "castAndRehearsalDrawsBefore": 7,
+   "lastOfThemBeforeTheClockMs": 224,
+   "clockMs": 472,
+   "castFirstMoves": null
+  }
+ },
+ "grow": {
+  "stillsNotYetDrawnWhenTheBrushIsAtWork": 0,
+  "everyoneAtTheirFirstFrame": true,
+  "sheet": {
+   "opacity": "1",
+   "transform": "none",
+   "sheetOverHer": true
+  },
+  "draws": {
+   "whilePainting": {
+    "rehearsal": 6
+   },
+   "castAndRehearsalDrawsBefore": 6,
+   "lastOfThemBeforeTheClockMs": 213,
+   "clockMs": 387,
+   "castFirstMoves": 5268
+  }
+ },
+ "design": {
+  "stillsNotYetDrawnWhenTheBrushIsAtWork": 0,
+  "everyoneAtTheirFirstFrame": true,
+  "sheet": {
+   "opacity": "1",
+   "transform": "none",
+   "sheetOverHer": true
+  },
+  "draws": {
+   "whilePainting": {
+    "rehearsal": 33,
+    "small": 5
+   },
+   "castAndRehearsalDrawsBefore": 16,
+   "lastOfThemBeforeTheClockMs": 391,
+   "clockMs": 695,
+   "castFirstMoves": null
+  }
+ },
+ "film": {
+  "stillsNotYetDrawnWhenTheBrushIsAtWork": 0,
+  "everyoneAtTheirFirstFrame": true,
+  "sheet": {
+   "opacity": "1",
+   "transform": "none",
+   "sheetOverHer": true
+  },
+  "draws": {
+   "whilePainting": {
+    "rehearsal": 19,
+    "small": 2
+   },
+   "castAndRehearsalDrawsBefore": 31,
+   "lastOfThemBeforeTheClockMs": 279,
+   "clockMs": 482,
+   "castFirstMoves": null
+  }
+ },
+ "set": {
+  "stillsNotYetDrawnWhenTheBrushIsAtWork": 0,
+  "everyoneAtTheirFirstFrame": true,
+  "sheet": {
+   "opacity": "1",
+   "transform": "none",
+   "sheetOverHer": true
+  },
+  "draws": {
+   "whilePainting": {
+    "small": 35,
+    "rehearsal": 20
+   },
+   "castAndRehearsalDrawsBefore": 8,
+   "lastOfThemBeforeTheClockMs": 260,
+   "clockMs": 614,
+   "castFirstMoves": null
+  }
+ },
+ "skipAndReset": {
+  "afterSkip": {
+   "opacity": "1",
+   "transform": "none",
+   "sheetOverHer": true
+  },
+  "sheetLeftAfterSkip": 0,
+  "duringReset": {
+   "opacity": "1",
+   "transform": "none",
+   "sheetOverHer": true
+  },
+  "atRestDuringReset": true,
+  "afterReset": {
+   "opacity": "1",
+   "transform": "none",
+   "sheetOverHer": true
+  }
+ },
+ "slowNetwork": {
+  "pictureOnShowAtMs": 0,
+  "sheArrivesAtMs": 30607,
+  "opacityFirst": 1,
+  "fadeMs": 0,
+  "fadesIn": false
+ },
+ "intro=off": {
+  "opacity": "1",
+  "transform": "none",
+  "sheetOverHer": "no sheet",
+  "painted": 0,
+  "atRest": true
+ },
+ "reduced motion": {
+  "opacity": "1",
+  "transform": "none",
+  "sheetOverHer": "no sheet",
+  "painted": 0,
+  "atRest": true
+ },
+ "errors": []
+}

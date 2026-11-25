@@ -1,0 +1,487 @@
+{
+ "webkit iPad": {
+  "before": {
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "doubleTap": {
+   "tapsMs": [
+    0,
+    148
+   ],
+   "label": "Tap again to reset all 50",
+   "said": "Tap again to reset all 50",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "doubleTapLater": {
+   "label": "Tap again to reset all 50",
+   "said": "Tap again to reset all 50",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "labelBackAfterMs": 4033,
+  "afterTheWait": {
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "secondDoubleTap": {
+   "label": "Tap again to reset all 50",
+   "said": "Tap again to reset all 50",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "doubleTapThenAThirdAt1s": {
+   "tapsMs": [
+    0,
+    152,
+    1005
+   ],
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 0,
+   "red": "0/50",
+   "hiddenHere": 10,
+   "painting": true
+  },
+  "foundAgain": {
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "twoTaps1sApart": {
+   "tapsMs": [
+    0,
+    1001
+   ],
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 0,
+   "red": "0/50",
+   "hiddenHere": 10,
+   "painting": true
+  },
+  "settled": {
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 0,
+   "red": "0/50",
+   "hiddenHere": 10,
+   "painting": false
+  },
+  "reloaded": {
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 0,
+   "red": "0/50",
+   "hiddenHere": 10,
+   "painting": false
+  },
+  "errors": []
+ },
+ "webkit iPhone": {
+  "before": {
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "doubleTap": {
+   "tapsMs": [
+    0,
+    148
+   ],
+   "label": "Tap again to reset all 50",
+   "said": "Tap again to reset all 50",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "doubleTapLater": {
+   "label": "Tap again to reset all 50",
+   "said": "Tap again to reset all 50",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "labelBackAfterMs": 4019,
+  "afterTheWait": {
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "secondDoubleTap": {
+   "label": "Tap again to reset all 50",
+   "said": "Tap again to reset all 50",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "doubleTapThenAThirdAt1s": {
+   "tapsMs": [
+    0,
+    153,
+    1003
+   ],
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 0,
+   "red": "0/50",
+   "hiddenHere": 10,
+   "painting": true
+  },
+  "foundAgain": {
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "twoTaps1sApart": {
+   "tapsMs": [
+    0,
+    1009
+   ],
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 0,
+   "red": "0/50",
+   "hiddenHere": 10,
+   "painting": true
+  },
+  "settled": {
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 0,
+   "red": "0/50",
+   "hiddenHere": 10,
+   "painting": false
+  },
+  "reloaded": {
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 0,
+   "red": "0/50",
+   "hiddenHere": 10,
+   "painting": false
+  },
+  "errors": []
+ },
+ "webkit desktop": {
+  "before": {
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "doubleTap": {
+   "tapsMs": [
+    0,
+    142
+   ],
+   "label": "Tap again to reset all 50",
+   "said": "Tap again to reset all 50",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "doubleTapLater": {
+   "label": "Tap again to reset all 50",
+   "said": "Tap again to reset all 50",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "labelBackAfterMs": 4040,
+  "afterTheWait": {
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "secondDoubleTap": {
+   "label": "Tap again to reset all 50",
+   "said": "Tap again to reset all 50",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "doubleTapThenAThirdAt1s": {
+   "tapsMs": [
+    0,
+    151,
+    1002
+   ],
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 0,
+   "red": "0/50",
+   "hiddenHere": 10,
+   "painting": true
+  },
+  "foundAgain": {
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "twoTaps1sApart": {
+   "tapsMs": [
+    0,
+    1003
+   ],
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 0,
+   "red": "0/50",
+   "hiddenHere": 10,
+   "painting": true
+  },
+  "settled": {
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 0,
+   "red": "0/50",
+   "hiddenHere": 10,
+   "painting": false
+  },
+  "reloaded": {
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 0,
+   "red": "0/50",
+   "hiddenHere": 10,
+   "painting": false
+  },
+  "errors": []
+ },
+ "chrome desktop": {
+  "before": {
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "doubleTap": {
+   "tapsMs": [
+    0,
+    147
+   ],
+   "label": "Tap again to reset all 50",
+   "said": "Tap again to reset all 50",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "doubleTapLater": {
+   "label": "Tap again to reset all 50",
+   "said": "Tap again to reset all 50",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "labelBackAfterMs": 4049,
+  "afterTheWait": {
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "secondDoubleTap": {
+   "label": "Tap again to reset all 50",
+   "said": "Tap again to reset all 50",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "doubleTapThenAThirdAt1s": {
+   "tapsMs": [
+    0,
+    153,
+    1006
+   ],
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 0,
+   "red": "0/50",
+   "hiddenHere": 10,
+   "painting": true
+  },
+  "foundAgain": {
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "twoTaps1sApart": {
+   "tapsMs": [
+    0,
+    997
+   ],
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 0,
+   "red": "0/50",
+   "hiddenHere": 10,
+   "painting": true
+  },
+  "settled": {
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 0,
+   "red": "0/50",
+   "hiddenHere": 10,
+   "painting": false
+  },
+  "reloaded": {
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 0,
+   "red": "0/50",
+   "hiddenHere": 10,
+   "painting": false
+  },
+  "errors": []
+ },
+ "chrome phone": {
+  "before": {
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "doubleTap": {
+   "tapsMs": [
+    0,
+    144
+   ],
+   "label": "Tap again to reset all 50",
+   "said": "Tap again to reset all 50",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "doubleTapLater": {
+   "label": "Tap again to reset all 50",
+   "said": "Tap again to reset all 50",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "labelBackAfterMs": 4111,
+  "afterTheWait": {
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "secondDoubleTap": {
+   "label": "Tap again to reset all 50",
+   "said": "Tap again to reset all 50",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "doubleTapThenAThirdAt1s": {
+   "tapsMs": [
+    0,
+    153,
+    1004
+   ],
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 0,
+   "red": "0/50",
+   "hiddenHere": 10,
+   "painting": true
+  },
+  "foundAgain": {
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 1000,
+   "red": "25/50",
+   "hiddenHere": 5,
+   "painting": false
+  },
+  "twoTaps1sApart": {
+   "tapsMs": [
+    0,
+    1000
+   ],
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 0,
+   "red": "0/50",
+   "hiddenHere": 10,
+   "painting": true
+  },
+  "settled": {
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 0,
+   "red": "0/50",
+   "hiddenHere": 10,
+   "painting": false
+  },
+  "reloaded": {
+   "label": "Reset mushrooms",
+   "said": "",
+   "saved": 0,
+   "red": "0/50",
+   "hiddenHere": 10,
+   "painting": false
+  },
+  "errors": []
+ }
+}

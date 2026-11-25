@@ -1,0 +1,216 @@
+{
+ "chrome": {
+  "before": {
+   "scene": "set",
+   "cream": "10/10 Set Design complete",
+   "red": "50/50 All 50. Good eye.",
+   "hiddenHere": 0,
+   "marks": [
+    "build",
+    "grow",
+    "design",
+    "film",
+    "set"
+   ],
+   "contact": true,
+   "reset": "Reset mushrooms",
+   "pause": true,
+   "skip": false,
+   "said": "",
+   "saved": 0,
+   "pieces": {
+    "shown": 10,
+    "baked": 10,
+    "fading": 0
+   }
+  },
+  "oneTap": {
+   "scene": "set",
+   "cream": "10/10 Set Design complete",
+   "red": "50/50 All 50. Good eye.",
+   "hiddenHere": 0,
+   "marks": [
+    "build",
+    "grow",
+    "design",
+    "film",
+    "set"
+   ],
+   "contact": true,
+   "reset": "Tap again to reset all 50",
+   "pause": true,
+   "skip": false,
+   "said": "Tap again to reset all 50",
+   "saved": 0,
+   "pieces": {
+    "shown": 10,
+    "baked": 10,
+    "fading": 0
+   }
+  },
+  "painting": {
+   "pieces": {
+    "shown": 0,
+    "baked": 0,
+    "fading": 0
+   }
+  },
+  "after": {
+   "scene": "set",
+   "cream": "0/10 hiding in Set Design",
+   "red": "0/50 find all 50 to contact Hui Jie",
+   "hiddenHere": 10,
+   "marks": [],
+   "contact": false,
+   "reset": null,
+   "pause": true,
+   "skip": false,
+   "said": "",
+   "saved": 0,
+   "pieces": {
+    "shown": 0,
+    "baked": 0,
+    "fading": 0
+   }
+  },
+  "threeFound": {
+   "scene": "set",
+   "cream": "3/10 found in Set Design",
+   "red": "3/50 find all 50 to contact Hui Jie",
+   "hiddenHere": 7,
+   "marks": [],
+   "contact": false,
+   "reset": "Reset mushrooms",
+   "pause": true,
+   "skip": false,
+   "said": "",
+   "saved": 0,
+   "pieces": {
+    "shown": 3,
+    "baked": 3,
+    "fading": 0
+   }
+  },
+  "design": {
+   "scene": "design",
+   "cream": "0/10 hiding in Design",
+   "red": "3/50 find all 50 to contact Hui Jie",
+   "hiddenHere": 10,
+   "marks": [],
+   "contact": false,
+   "reset": "Reset mushrooms",
+   "pause": true,
+   "skip": false,
+   "said": "",
+   "saved": 0
+  },
+  "errors": []
+ },
+ "webkit": {
+  "before": {
+   "scene": "set",
+   "cream": "10/10 Set Design complete",
+   "red": "50/50 All 50. Good eye.",
+   "hiddenHere": 0,
+   "marks": [
+    "build",
+    "grow",
+    "design",
+    "film",
+    "set"
+   ],
+   "contact": true,
+   "reset": "Reset mushrooms",
+   "pause": true,
+   "skip": false,
+   "said": "",
+   "saved": 0,
+   "pieces": {
+    "shown": 10,
+    "baked": 10,
+    "fading": 0
+   }
+  },
+  "oneTap": {
+   "scene": "set",
+   "cream": "10/10 Set Design complete",
+   "red": "50/50 All 50. Good eye.",
+   "hiddenHere": 0,
+   "marks": [
+    "build",
+    "grow",
+    "design",
+    "film",
+    "set"
+   ],
+   "contact": true,
+   "reset": "Tap again to reset all 50",
+   "pause": true,
+   "skip": false,
+   "said": "Tap again to reset all 50",
+   "saved": 0,
+   "pieces": {
+    "shown": 10,
+    "baked": 10,
+    "fading": 0
+   }
+  },
+  "painting": {
+   "pieces": {
+    "shown": 0,
+    "baked": 0,
+    "fading": 0
+   }
+  },
+  "after": {
+   "scene": "set",
+   "cream": "0/10 hiding in Set Design",
+   "red": "0/50 find all 50 to contact Hui Jie",
+   "hiddenHere": 10,
+   "marks": [],
+   "contact": false,
+   "reset": null,
+   "pause": true,
+   "skip": false,
+   "said": "",
+   "saved": 0,
+   "pieces": {
+    "shown": 0,
+    "baked": 0,
+    "fading": 0
+   }
+  },
+  "threeFound": {
+   "scene": "set",
+   "cream": "3/10 found in Set Design",
+   "red": "3/50 find all 50 to contact Hui Jie",
+   "hiddenHere": 7,
+   "marks": [],
+   "contact": false,
+   "reset": "Reset mushrooms",
+   "pause": true,
+   "skip": false,
+   "said": "",
+   "saved": 0,
+   "pieces": {
+    "shown": 3,
+    "baked": 3,
+    "fading": 0
+   }
+  },
+  "design": {
+   "scene": "design",
+   "cream": "0/10 hiding in Design",
+   "red": "3/50 find all 50 to contact Hui Jie",
+   "hiddenHere": 10,
+   "marks": [],
+   "contact": false,
+   "reset": "Reset mushrooms",
+   "pause": true,
+   "skip": false,
+   "said": "",
+   "saved": 0
+  },
+  "errors": []
+ }
+}

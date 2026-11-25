@@ -481,12 +481,9 @@ console.log(`shared with rachel/: ${Object.keys(shared).join(', ') || 'none'}`);
 await copyFile(join(repo, reaction, 'reaction.json'), join(small1, 'reaction/reaction.json'));
 await writeFile(join(small1, 'reaction/shared.json'), `${JSON.stringify(Object.fromEntries(Object.entries(shared).map(([file, path]) => [file, path.replace(/^rachel\//, 'rachel-1.5x/')])), null, 1)}\n`);
 
-// Favicon and home-screen icon: the reel on its own, which is drawn square.
-for (const [size, name] of [[32, 'favicon-32.png'], [180, 'apple-touch-icon.png']]) {
-  await sharp(join(repo, 'assets/logo/hjaas-reel.png'))
-    .resize(size, size, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
-    .png()
-    .toFile(join(site, 'public', name));
+// Browser tab (the mushroom) and home screen (her head) icons, used as delivered.
+for (const name of ['favicon.ico', 'favicon-16.png', 'favicon-32.png', 'apple-touch-icon.png', 'icon-192.png']) {
+  await copyFile(join(repo, 'assets/logo/favicon', name), join(site, 'public', name));
 }
 
 // Link-preview image (og:image): the logo centred on the page colour, at the 1200 × 630 size link previews
