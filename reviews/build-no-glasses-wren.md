@@ -24,3 +24,7 @@ The engineering passes: patches, memory peak of 78.1 MB, hunt 50/50, no seams. T
   - Quinn job 039 is drawing `frame_02_03ab` halfway between them, with the fist beside her temple, outside her face.
   - The swing becomes 02 → 02_03a → 02_03ab → 02_03b → 03.
 - **Pasting:** only the changed zone went in, keyed with a soft 3 px edge. Nothing outside the zone changed (0 levels).
+
+## Quinn 039 checked by Wren
+- `frame_02_03ab`: the fist is beside her temple, clear of her face. The hammer rises steadily through 02_03a → 02_03ab → 02_03b → 03 and her eyes are visible in every drawing.
+- Steps measure 61, 91, 97 and 40. The large ones are the upper arm coming over her head, which a single drawing cannot avoid, and they read as one rising motion. Approved.
