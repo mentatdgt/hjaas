@@ -2,6 +2,8 @@
 
 **Reported by the user 2026-11-26:** on iPad **in landscape**, every scene shows a thin line at its left and right edges. And in portrait the whole landscape scene is squeezed into the frame: the user wants **the phone experience on iPad mini** (zoomed crop, swipe sideways) and the whole scene kept on full-size iPads.
 
+**Update from the user:** the lines show in **Chrome on the iPad**, not in Safari. Chrome on iPadOS runs WebKit (Apple's rule), but its toolbars differ, so the window is a slightly different size than Safari's and the scene lands on a different fraction of a pixel. So don't test only the exact device sizes: in landscape, **sweep window heights from 650 to 860 CSS px in 1 px steps at widths 1133, 1180, 1194 and 1366** (DPR 2), and record which sizes show a line before and after the fix. Use a Chrome-on-iPad user agent (CriOS) for one pass too, in case the site branches on it. Also check desktop Chromium at the same sizes, to rule it out.
+
 ## Likely cause (Wren, from the code)
 `site.css`, `.hj-viewport`: `clip-path: inset(1px 0)`. Its comment explains that where the window sits at a fraction of a pixel, WebKit snaps the room's picture to screen pixels but not the edge layer, so the room's outermost row showed as a hairline. The fix covered the **top and bottom** only, because on a phone held upright the sides cut through the middle of the room (it pans). On an iPad the whole plate shows, so the same hairline shows at the **left and right**.
 
@@ -17,7 +19,7 @@ Today the phone layout (the tall crop panned sideways, counters stacked under th
 - The pan memory, the one-time drift hint, focus on Rachel at open, and 44 px tap targets all work as on phones.
 
 ## Checks for the report
-- Before and after 4x crops of both sides, at every size above, all five scenes, in WebKit. Plus Chrome at 820x1180 and 1440x900, to show nothing changed there.
+- The sweep: a count of sizes with a line, before and after (after must be 0), in WebKit, plus before and after 4x crops of both sides at the worst sizes, all five scenes. Plus Chrome at 820x1180 and 1440x900, to show nothing changed there.
 - The panned phone view (375x812, 390x844 WebKit) is unchanged: before and after screenshots match apart from the top and bottom pixel rows.
 - **Part 2,** WebKit with Playwright's iPad devices: screenshots of all five scenes at 744x1133 and 768x1024 (phone view), and at 810x1080 and 820x1180 (whole scene, unchanged apart from Part 1). A recording at 744x1133: open, the drift, swipe across the whole room, find a mushroom at each end, rotate to landscape and back.
 - Phones (375x812, 390x844) look exactly as before.
