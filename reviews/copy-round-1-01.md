@@ -55,7 +55,7 @@ The tagline is twice as long as its placeholder, and the new font's figures and 
 | No markers left | No `TODO(copy)` in `index.html` or `src/` |
 | Not touched | `middleware.js`, the art, animation timing, the hunt's logic, memory |
 
-All on the final build, except the counter states and the hunt in WebKit: those two ran before or during the last change of two font sizes, the form's title and "Got it, thank you."
+All on the final build, except the counter states, which ran just before the last change of two font sizes (the form's title and "Got it, thank you.").
 
 What Resend would get ("Production for a shoot" picked):
 
