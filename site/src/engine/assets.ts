@@ -30,7 +30,7 @@ export async function requiredAsset<T>(load: () => Promise<T>): Promise<T> {
   try {
     return await load();
   } catch (error) {
-    if (error instanceof DeadlineError) throw error;
+    if (error instanceof DeadlineError || (error as Error)?.name === 'TimeoutError') throw error;
     return load();
   }
 }
@@ -62,15 +62,33 @@ export function assetSignal(): AbortSignal {
   return AbortSignal.timeout(NETWORK_DEADLINE_MS);
 }
 
+/** Runs a request under the network deadline, and gives it up at once if `signal` says so. */
+async function underDeadline<T>(signal: AbortSignal | undefined, request: (signal: AbortSignal) => Promise<T>): Promise<T> {
+  if (!signal) return request(assetSignal());
+  const control = new AbortController();
+  const deadline = assetSignal();
+  const stop = (): void => control.abort(signal.reason);
+  const expire = (): void => control.abort(deadline.reason);
+  signal.addEventListener('abort', stop, { once: true });
+  deadline.addEventListener('abort', expire, { once: true });
+  if (signal.aborted) stop();
+  try {
+    return await request(control.signal);
+  } finally {
+    signal.removeEventListener('abort', stop);
+    deadline.removeEventListener('abort', expire);
+  }
+}
+
 /** Compressed bytes can be reused across rooms and are evicted least-recently used. */
 const BLOB_CACHE_LIMIT = 192;
 const blobCache = new Map<string, Promise<Blob>>();
 
-function blobOf(url: string): Promise<Blob> {
+function blobOf(url: string, signal?: AbortSignal): Promise<Blob> {
   let blob = blobCache.get(url);
   if (blob) blobCache.delete(url);
   else {
-    blob = fetchBlob(url);
+    blob = fetchBlob(url, undefined, signal);
     const pending = blob;
     void pending.catch(() => {
       if (blobCache.get(url) === pending) blobCache.delete(url);
@@ -108,8 +126,8 @@ export class FrameStore {
 }
 
 /** Download a frame without decoding it. */
-export function fetchFrame(url: string): Promise<void> {
-  return blobOf(url).then(() => {});
+export function fetchFrame(url: string, signal?: AbortSignal): Promise<void> {
+  return blobOf(url, signal).then(() => {});
 }
 
 async function decodeFrame(url: string): Promise<Frame> {
@@ -122,10 +140,12 @@ async function decodeFrame(url: string): Promise<Frame> {
 }
 
 /** A file's bytes, as downloaded: an image kept this way takes a fraction of its decoded size. */
-export async function fetchBlob(url: string, priority?: RequestInit['priority']): Promise<Blob> {
-  const response = await fetch(url, { signal: assetSignal(), priority });
-  if (!response.ok) throw new Error(`${url}: ${response.status}`);
-  return response.blob();
+export function fetchBlob(url: string, priority?: RequestInit['priority'], signal?: AbortSignal): Promise<Blob> {
+  return underDeadline(signal, async (limit) => {
+    const response = await fetch(url, { signal: limit, priority });
+    if (!response.ok) throw new Error(`${url}: ${response.status}`);
+    return response.blob();
+  });
 }
 
 // Decode off the main thread. Browsers that cannot run the worker decode on the page instead.

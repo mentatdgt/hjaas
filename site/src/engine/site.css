@@ -22,8 +22,7 @@
   --hj-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --hj-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 
-  --hj-font: 'Bricolage Grotesque Variable', 'Avenir Next', 'Segoe UI', system-ui, sans-serif;
-  --hj-serif: 'Spectral', 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  --hj-font: 'Instrument Sans Variable', 'Instrument Sans', 'Avenir Next', 'Segoe UI', system-ui, sans-serif;
 
   position: relative;
   flex: 1 0 auto;
@@ -57,8 +56,8 @@
   --logo-h: calc(var(--logo-w) / (var(--logo-ratio)));
   --pad-top: clamp(20px, 2.2cqw, 44px);
   --pad-bottom: clamp(18px, 1.8cqw, 36px);
-  /* The identity: the logo, or the name and its line beside it, whichever is the taller. */
-  --ident-h: calc(clamp(27px, 2.7cqw, 62px) * 1.08 + clamp(4px, 0.5cqw, 9px) + clamp(15px, 1.2cqw, 26px) * 1.35);
+  /* The identity: the logo, or the name and its line (two rows of it) beside it, whichever is the taller. */
+  --ident-h: calc(clamp(27px, 2.7cqw, 62px) * 1.08 + clamp(4px, 0.4cqw, 8px) + clamp(14.5px, 1.08cqw, 24px) * 1.3 * 2);
   --mast-h: max(var(--logo-h), var(--ident-h));
   --gap-head: clamp(16px, 1.5cqw, 30px);
   --gap-caption: clamp(12px, 1.1cqw, 22px);
@@ -100,6 +99,8 @@
 /* The scene menu: quiet tabs at the end of the masthead, just above the picture. */
 .hj-menu {
   display: flex;
+  /* (Beside the tagline it keeps its width: a tab's name never breaks.) */
+  flex: none;
   align-self: flex-end;
   /* Between two labels. Each tab's tap area has some of it on either side: more on the right, where a finished
      scene's mushroom stands; the two make up the whole gap, so no tap area lies over another. */
@@ -206,20 +207,18 @@
 
 .hj-name {
   margin: 0;
-  font-family: var(--hj-serif);
   font-size: clamp(27px, 2.7cqw, 62px);
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.08;
-  letter-spacing: -0.012em;
+  letter-spacing: -0.02em;
 }
 
 .hj-tagline {
   max-width: 44ch;
-  margin: clamp(4px, 0.5cqw, 9px) 0 0;
+  margin: clamp(4px, 0.4cqw, 8px) 0 0;
   color: var(--hj-ink-soft);
-  font-family: var(--hj-serif);
-  font-size: clamp(15px, 1.2cqw, 26px);
-  line-height: 1.35;
+  font-size: clamp(14.5px, 1.08cqw, 24px);
+  line-height: 1.3;
   text-wrap: pretty;
 }
 
@@ -690,7 +689,6 @@ a.hj-logo:active {
 .hj-num {
   display: inline-flex;
   flex: none;
-  font-family: var(--hj-serif);
   font-size: 22px;
   line-height: 1;
   font-variant-numeric: tabular-nums lining-nums;
@@ -700,7 +698,8 @@ a.hj-logo:active {
    roll, which takes no room of its own.) */
 .hj-num-n {
   position: relative;
-  width: 2ch;
+  /* Two fixed-width digits (0.6em each; "ch" is the wider proportional zero). */
+  width: 1.21em;
   height: calc(1em + 20px);
   margin: -10px 0;
   padding: 10px 0;
@@ -723,7 +722,7 @@ a.hj-logo:active {
 }
 
 .hj-num-of {
-  width: 2.4ch;
+  width: 1.65em;
   color: var(--hj-ink-soft);
 }
 
@@ -1034,11 +1033,12 @@ a.hj-logo:active {
 
 .hj-sheet h2 {
   margin: 0;
-  font-family: var(--hj-serif);
-  font-size: 27px;
-  font-weight: 400;
+  /* (One row on a phone; two even ones on the narrowest.) */
+  font-size: 20px;
+  font-weight: 500;
   line-height: 1.15;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
 }
 
 .hj-close {
@@ -1084,6 +1084,16 @@ a.hj-logo:active {
   display: none;
 }
 
+/* The honeypot (form.ts): off-screen, so only something filling in forms by itself finds it. Out of the flow. */
+.hj-trap {
+  position: absolute;
+  top: 0;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 .hj-field {
   display: flex;
   flex-direction: column;
@@ -1125,6 +1135,11 @@ a.hj-logo:active {
   -webkit-appearance: none;
   appearance: none;
   transition: border-color 140ms ease;
+}
+
+.hj-field textarea::placeholder {
+  color: #756f64;
+  opacity: 1;
 }
 
 .hj-field textarea {
@@ -1378,10 +1393,9 @@ a.hj-logo:active {
 
 .hj-sent h3 {
   margin: 0;
-  font-family: var(--hj-serif);
-  font-size: 25px;
-  font-weight: 400;
-  letter-spacing: -0.01em;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
 }
 
 .hj-sent p {
@@ -1453,6 +1467,30 @@ a.hj-logo:active {
   }
 }
 
+/* ---------- Tablets and small windows: the menu on its own row, so the tagline has room ---------- */
+
+@media (min-height: 481px) {
+  @container (max-width: 860px) {
+    .hj-page {
+      --menu-h: 44px;
+    }
+
+    .hj-masthead {
+      flex-wrap: wrap;
+      row-gap: 0;
+    }
+
+    .hj-ident {
+      flex: 1 1 0;
+    }
+
+    .hj-menu {
+      flex: 0 0 100%;
+      justify-content: flex-end;
+    }
+  }
+}
+
 /* ---------- Phones: a tall crop of the room, panned sideways ---------- */
 
 @media (orientation: portrait) {
@@ -1460,8 +1498,8 @@ a.hj-logo:active {
     .hj-page {
       --page-margin: 18px;
       --logo-w: clamp(120px, 33cqw, 140px);
-      /* Its line runs to two here. */
-      --ident-h: calc(27px * 1.08 + 4px + 14.5px * 1.3 * 2);
+      /* Its line runs to three rows here (four on the narrowest, below). */
+      --ident-h: calc(27px * 1.08 + 4px + 14px * 1.3 * 3);
       --pad-top: 14px;
       --pad-bottom: 18px;
       --gap-head: 12px;
@@ -1487,6 +1525,7 @@ a.hj-logo:active {
     /* The menu takes its own row under the identity, and stays on one row. */
     .hj-menu {
       flex: 0 0 calc(100% + 34px);
+      justify-content: flex-start;
       --tab-gap: 23px;
       /* Room inside the scroller for the first tab's focus ring and the last tab's mushroom and ring. */
       margin: 2px -17px -4px;
@@ -1527,8 +1566,24 @@ a.hj-logo:active {
     }
 
     .hj-tagline {
-      font-size: 14.5px;
+      font-size: 14px;
       line-height: 1.3;
+    }
+
+    @container (max-width: 373px) {
+      .hj-tagline {
+        font-size: 13.5px;
+      }
+    }
+
+    @container (max-width: 349px) {
+      .hj-page {
+        --ident-h: calc(27px * 1.08 + 4px + 13px * 1.3 * 4);
+      }
+
+      .hj-tagline {
+        font-size: 13px;
+      }
     }
 
     /* As tall as the screen allows, 55 to 65% of it, and never taller than 2:3: the counters and the controls
@@ -1600,14 +1655,14 @@ a.hj-logo:active {
       margin-left: 2px;
     }
 
-    @container (max-width: 385px) {
+    @container (max-width: 411px) {
       .hj-label,
       .hj-next {
         font-size: 14px;
       }
     }
 
-    @container (max-width: 373px) {
+    @container (max-width: 385px) {
       .hj-num {
         font-size: 20px;
       }
@@ -1618,11 +1673,26 @@ a.hj-logo:active {
       }
     }
 
+    @container (max-width: 373px) {
+      .hj-row {
+        gap: 6px;
+      }
+
+      .hj-num {
+        font-size: 19.5px;
+      }
+
+      .hj-label,
+      .hj-next {
+        font-size: 13px;
+      }
+    }
+
     @container (max-width: 349px) {
       .hj-row {
         --mush: 27px;
         --mush-scale: 0.9;
-        gap: 6px;
+        gap: 5px;
       }
 
       .hj-num {
@@ -1663,7 +1733,7 @@ a.hj-logo:active {
   .hj-page {
     --page-margin: 20px;
     --logo-w: 112px;
-    --ident-h: 44px;
+    --ident-h: 48px;
     --pad-top: 8px;
     --pad-bottom: 8px;
     --gap-head: 4px;
@@ -1684,15 +1754,50 @@ a.hj-logo:active {
   }
 
   .hj-name {
-    font-size: 22px;
+    font-size: 20px;
   }
 
+  /* Two short rows, and never a third. */
   .hj-tagline {
-    margin-top: 1px;
+    display: -webkit-box;
+    margin-top: 0;
     overflow: hidden;
-    font-size: 13px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    font-size: 11.5px;
+    line-height: 1.15;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  @container (max-width: 720px) {
+    .hj-page {
+      --logo-w: 100px;
+    }
+
+    .hj-masthead {
+      gap: 10px;
+    }
+
+    .hj-menu {
+      --tab-gap: 16px;
+    }
+
+    .hj-tab {
+      font-size: 14.5px;
+    }
+
+    .hj-tagline {
+      font-size: 11px;
+      letter-spacing: -0.01em;
+    }
+
+    .hj-num {
+      font-size: 20px;
+    }
+
+    .hj-label,
+    .hj-next {
+      font-size: 14px;
+    }
   }
 
   .hj-frame {

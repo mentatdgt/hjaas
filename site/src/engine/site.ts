@@ -1,5 +1,4 @@
-import '@fontsource-variable/bricolage-grotesque';
-import '@fontsource/spectral/latin-400.css';
+import './font.css';
 import './site.css';
 import { retainAssets, setAssetBase, warmPlate } from './assets';
 import { Caption, MUSHROOM_ICON, type CaptionCopy } from './caption';
@@ -41,11 +40,11 @@ const DRIFT_AFTER_MS = 700;
 // QA: the nine mushroom drawings, decoded (see scripts/build-assets.mjs for their size).
 const SPRITE_BYTES = 9 * 166 * 154 * 4;
 
-// TODO(copy): every word on the page is a placeholder until the real copy arrives. They are all here,
-// except the scene names (src/scenes/) and the form's (form.ts).
+// The words on the page are all here, except the scene names (src/scenes/) and the form's (form.ts, needs.js).
+// Name, tagline, counter: reviews/copy-round-1-build.md.
 const COPY = {
   name: 'Hui Jie',
-  tagline: 'TODO(copy): what Hui Jie does, in one line',
+  tagline: 'I design rooms and sets, build them, film them, and grow mushrooms in between.',
   menu: 'Scenes',
   skip: 'Skip',
   pause: 'Pause animation',
@@ -57,12 +56,13 @@ const COPY = {
 
 /** The two counters, the link to the next scene, and the button they turn into. */
 const COUNTER: CaptionCopy = {
+  hereNone: (scene) => `hiding in ${scene}`,
   hereFound: (scene) => `found in ${scene}`,
   hereMore: (left, scene) => `${left} more in ${scene}`,
   hereDone: (scene) => `${scene} complete`,
   siteAll: (total) => `find all ${total} to contact Hui Jie`,
   siteMore: (left) => `${left} more to contact Hui Jie`,
-  siteDone: (total) => `You found all ${total}`,
+  siteDone: (total) => `All ${total}. Good eye.`,
   next: 'Next:',
   contact: 'Contact Hui Jie',
   hereSpoken: (found, total, scene) => `${found} of ${total} found in ${scene}`,
@@ -585,6 +585,12 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     retry.hidden = false;
     retry.setAttribute('aria-label', `Retry ${config.label}`);
     if (!playing) show(skip, false);
+    current?.resume();
+  };
+  /** `config` is asked for: what the scene on show has still to download for its routine waits, so that the tap has the network. */
+  const makeWay = (config: SceneConfig): void => {
+    if (config.id === current?.config.id) current.resume();
+    else current?.pause();
   };
 
   /** A picture is finished, and the page is quiet again. */
@@ -602,6 +608,9 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   const play = (scene: Scene, motion: () => Promise<void>, then?: () => void): void => {
     const mine = ++plays;
     playing = scene;
+    // Her other drawings come while the brush is at work (unless another scene has been asked for meanwhile).
+    if (wanted.id === scene.config.id) void scene.stock();
+    else scene.pause();
     void motion().then(() => {
       if (destroyed || !playing || plays !== mine) return;
       playing = null;
@@ -818,6 +827,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       // (If one is on its way to the window, it need not be as carefully prepared.)
       if (moving) hasten();
     }
+    makeWay(config);
     retry.hidden = true;
     void travel();
   };
@@ -950,9 +960,10 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       const nextId = viewOf(config).next?.id;
       const likelyNext = nextId && sceneById(nextId);
       if (likelyNext && wanted === config) {
-        void warmPlate(likelyNext.assets + likelyNext.plate, () =>
-          !destroyed && !busy() && !document.hidden && current === scene,
-        );
+        // (Not before her own drawings are here: her routine is waiting for them.)
+        void scene.stock().then(() => warmPlate(likelyNext.assets + likelyNext.plate, () =>
+          !destroyed && !busy() && !document.hidden && current === scene && wanted === config,
+        ));
       }
     };
     moving = false;

@@ -1,0 +1,154 @@
+{
+ "desktop, chrome, build": {
+  "frames": 151,
+  "labels": [
+   "hiding in Build (96.6 px)",
+   "found in Build (94 px)"
+  ],
+  "creamLabelAt": [
+   "[313.06,749.11]"
+  ],
+  "redLabelAt": [
+   "[313.06,784.11]"
+  ],
+  "numberAt": [
+   "[266.77,747.86]"
+  ],
+  "captionHeight": [
+   "68"
+  ]
+ },
+ "desktop, chrome, set": {
+  "frames": 152,
+  "labels": [
+   "hiding in Set Design (136.6 px)",
+   "found in Set Design (133.9 px)"
+  ],
+  "creamLabelAt": [
+   "[313.06,749.11]"
+  ],
+  "redLabelAt": [
+   "[313.06,784.11]"
+  ],
+  "numberAt": [
+   "[266.77,747.86]"
+  ],
+  "captionHeight": [
+   "68"
+  ]
+ },
+ "phone, chrome, build": {
+  "frames": 152,
+  "labels": [
+   "hiding in Build (87 px)",
+   "found in Build (84.6 px)"
+  ],
+  "creamLabelAt": [
+   "[121.19,680.94]"
+  ],
+  "redLabelAt": [
+   "[121.19,715.94]"
+  ],
+  "numberAt": [
+   "[80.19,679.72]"
+  ],
+  "captionHeight": [
+   "114"
+  ]
+ },
+ "phone, chrome, set": {
+  "frames": 152,
+  "labels": [
+   "hiding in Set Design (122.9 px)",
+   "found in Set Design (120.5 px)"
+  ],
+  "creamLabelAt": [
+   "[121.19,680.94]"
+  ],
+  "redLabelAt": [
+   "[121.19,715.94]"
+  ],
+  "numberAt": [
+   "[80.19,679.72]"
+  ],
+  "captionHeight": [
+   "114"
+  ]
+ },
+ "desktop, webkit, build": {
+  "frames": 152,
+  "labels": [
+   "hiding in Build (96.6 px)",
+   "found in Build (94 px)"
+  ],
+  "creamLabelAt": [
+   "[313.06,749.11]"
+  ],
+  "redLabelAt": [
+   "[313.06,784.11]"
+  ],
+  "numberAt": [
+   "[266.77,747.86]"
+  ],
+  "captionHeight": [
+   "68"
+  ]
+ },
+ "desktop, webkit, set": {
+  "frames": 152,
+  "labels": [
+   "hiding in Set Design (136.6 px)",
+   "found in Set Design (133.9 px)"
+  ],
+  "creamLabelAt": [
+   "[313.06,749.11]"
+  ],
+  "redLabelAt": [
+   "[313.06,784.11]"
+  ],
+  "numberAt": [
+   "[266.77,747.86]"
+  ],
+  "captionHeight": [
+   "68"
+  ]
+ },
+ "phone, webkit, build": {
+  "frames": 153,
+  "labels": [
+   "hiding in Build (87 px)",
+   "found in Build (84.6 px)"
+  ],
+  "creamLabelAt": [
+   "[121.19,680.94]"
+  ],
+  "redLabelAt": [
+   "[121.19,715.94]"
+  ],
+  "numberAt": [
+   "[80.19,679.72]"
+  ],
+  "captionHeight": [
+   "114"
+  ]
+ },
+ "phone, webkit, set": {
+  "frames": 152,
+  "labels": [
+   "hiding in Set Design (122.9 px)",
+   "found in Set Design (120.5 px)"
+  ],
+  "creamLabelAt": [
+   "[121.19,680.94]"
+  ],
+  "redLabelAt": [
+   "[121.19,715.94]"
+  ],
+  "numberAt": [
+   "[80.19,679.72]"
+  ],
+  "captionHeight": [
+   "114"
+  ]
+ }
+}

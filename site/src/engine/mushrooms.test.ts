@@ -47,7 +47,7 @@ it('ignores a hidden mushroom and settles a collected flight exactly once', asyn
   const onLand = vi.fn();
   const layer = new Element();
   const spot = { id: 'a', x: 10, y: 30, h: 30, art: 1 };
-  const hunt = await Hunt.create({
+  const hunt = new Hunt({
     spots: [spot],
     edge: () => 1,
     plate: new Element() as unknown as HTMLElement,
@@ -56,7 +56,7 @@ it('ignores a hidden mushroom and settles a collected flight exactly once', asyn
     target: () => new Element().getBoundingClientRect() as DOMRect,
     onFind,
     onLand,
-  });
+  }, await Hunt.art([spot]));
   const button = hunt.el.children[0];
   hunt.el.inert = true;
   button.dispatchEvent(new Event('click'));

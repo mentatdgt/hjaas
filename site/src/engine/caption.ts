@@ -233,7 +233,7 @@ export class Caption {
   prepare(scenes: readonly string[], total: number): void {
     const { copy } = this;
     const numbers = Array.from({ length: total + 1 }, (_, i) => i).join(' ');
-    const words = scenes.flatMap((scene) => [copy.hereFound(scene), copy.hereMore(1, scene), copy.hereDone(scene)]);
+    const words = scenes.flatMap((scene) => [copy.hereNone(scene), copy.hereFound(scene), copy.hereMore(1, scene), copy.hereDone(scene)]);
     const el = document.createElement('div');
     el.className = 'hj-rehearse';
     el.setAttribute('aria-hidden', 'true');

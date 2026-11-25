@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { loadPlate, warmPlate } from './assets';
+import { loadPlate, retainAssets, warmPlate } from './assets';
 import growFrames from '../../public/assets/scene2/rachel/frames.json';
 import growRoutine from '../../public/assets/scene2/rachel/routine.json';
 import { Scene } from './scene';
@@ -66,7 +66,9 @@ describe('recoverable room assets', () => {
   beforeEach(() => {
     decode.mockReset().mockResolvedValue();
     vi.stubGlobal('Image', Element);
+    vi.stubGlobal('HTMLImageElement', Element);
     vi.stubGlobal('cancelAnimationFrame', () => {});
+    vi.stubGlobal('requestAnimationFrame', (fn: () => void) => setTimeout(fn, 1));
     vi.stubGlobal('document', { createElement: () => new Element(), createComment: () => ({}) });
     vi.stubGlobal('ResizeObserver', class { observe() {} disconnect() {} });
     // A denied cast download must still leave the room and hunt intact.
@@ -77,6 +79,8 @@ describe('recoverable room assets', () => {
     vi.useRealTimers();
     vi.unstubAllGlobals();
     vi.restoreAllMocks();
+    // (Nothing downloaded in one test is here in the next.)
+    retainAssets()();
   });
 
   it('retries a failed mushroom sprite and builds the hunt', async () => {
@@ -141,6 +145,7 @@ describe('recoverable room assets', () => {
     });
     const scene = await load();
     expect(scene.character).not.toBeNull();
+    await scene.stock();
     const reaction = scene.loadMore();
     await started;
     scene.rest();
@@ -157,6 +162,67 @@ describe('recoverable room assets', () => {
     await scene.enter();
     expect(scene.character).toBeNull();
     expect(stills).toHaveLength(decodedCount);
+  });
+
+  it('paints her on the drawing she rests on, then brings the others, and only then starts her routine', async () => {
+    const requested: string[] = [];
+    const waiting: Array<() => void> = [];
+    vi.stubGlobal('requestIdleCallback', (fn: () => void) => queueMicrotask(fn));
+    vi.stubGlobal('createImageBitmap', async () => ({ width: 100, height: 100, close() {} }));
+    vi.stubGlobal('fetch', vi.fn(async (url: string) => {
+      requested.push(url.split('/').pop()!);
+      if (url.endsWith('/frame_01.webp')) return new Response(url);
+      return new Promise<Response>((resolve) => waiting.push(() => resolve(new Response(url))));
+    }));
+    const scene = await load();
+    // Nothing but the rest pose before the scene was ready; the others are asked for from then on.
+    expect(requested[0]).toBe('frame_01.webp');
+    expect(scene.character?.has('frame_01')).toBe(true);
+    expect(scene.character?.has('frame_02')).toBe(false);
+    await vi.waitFor(() => expect(requested).toHaveLength(10));
+    const poses: string[] = [];
+    const loops = vi.spyOn(scene.player!, 'setLoop');
+    scene.player!.onPose = (pose) => poses.push(pose);
+    vi.stubGlobal('document', { ...document, hidden: false });
+    scene.work();
+    expect(poses).toEqual(['frame_01']);
+    const stocked = scene.stock();
+    expect(loops).not.toHaveBeenCalled();
+    waiting.forEach((arrive) => arrive());
+    await stocked;
+    expect(scene.character?.has('frame_02')).toBe(true);
+    expect(loops).toHaveBeenCalledOnce();
+    scene.destroy();
+  });
+
+  it('stops downloading for a room another has been asked from, and carries on if the visitor stays', async () => {
+    const pending: Array<{ name: string; signal: AbortSignal; arrive: () => void }> = [];
+    vi.stubGlobal('requestIdleCallback', (fn: () => void) => queueMicrotask(fn));
+    vi.stubGlobal('createImageBitmap', async () => ({ width: 100, height: 100, close() {} }));
+    vi.stubGlobal('fetch', vi.fn((url: string, init?: RequestInit) => {
+      if (url.endsWith('/frame_01.webp')) return Promise.resolve(new Response(url));
+      return new Promise<Response>((resolve, reject) => {
+        const signal = init!.signal!;
+        if (signal.aborted) return reject(signal.reason);
+        signal.addEventListener('abort', () => reject(signal.reason));
+        pending.push({ name: url, signal, arrive: () => resolve(new Response(url)) });
+      });
+    }));
+    const scene = await load();
+    const first = scene.stock();
+    await vi.waitFor(() => expect(pending).toHaveLength(9));
+    scene.pause();
+    await first;
+    expect(pending.every(({ signal }) => signal.aborted)).toBe(true);
+    expect(console.warn).not.toHaveBeenCalled();
+    await scene.stock();
+    expect(pending).toHaveLength(9);
+    scene.resume();
+    await vi.waitFor(() => expect(pending).toHaveLength(18));
+    pending.slice(9).forEach(({ arrive }) => arrive());
+    await scene.stock();
+    expect(scene.character?.has('blink_closed')).toBe(true);
+    scene.destroy();
   });
 
   it('waits for idle to warm a room at low priority and skips a departed opening room', async () => {

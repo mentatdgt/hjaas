@@ -207,7 +207,8 @@ export function huntView(scenes: readonly NamedScene[], found: (id: string) => R
 
 /** The words beside the two counters (the copy itself lives in site.ts). */
 export interface CounterCopy {
-  /** Under half of this scene found, half or more found, and all of it. */
+  /** None of this scene found, under half, half or more, and all of it. */
+  hereNone: (scene: string) => string;
   hereFound: (scene: string) => string;
   hereMore: (left: number, scene: string) => string;
   hereDone: (scene: string) => string;
@@ -217,10 +218,11 @@ export interface CounterCopy {
   siteDone: (total: number) => string;
 }
 
-/** The cream counter's label: what has been found, and from halfway on, what is left. */
+/** The cream counter's label: what is hiding, what has been found, and from halfway on, what is left. */
 export function hereLabel(copy: CounterCopy, scene: string, { found, total }: { found: number; total: number }): string {
   const left = total - found;
   if (left <= 0) return copy.hereDone(scene);
+  if (found <= 0) return copy.hereNone(scene);
   return found < left ? copy.hereFound(scene) : copy.hereMore(left, scene);
 }
 

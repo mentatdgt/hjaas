@@ -52,6 +52,9 @@ const SHADOW_STOPS: ReadonlyArray<readonly [number, number]> = [
 // The most pixels her canvas may have. Scene 1's cut-out frames are well under it; full-plate frames
 // (scene 2) are held to it so a pose change stays one cheap draw on a phone.
 const MAX_PIXELS = 2_600_000;
+/** The rehearsal canvas is given back this long after the last frame it was needed for. */
+const SCRATCH_MS = 1500;
+const SCRATCH_PAINTING_MS = 5000;
 /** How long a frame spends rehearsing stills before a painting, in ms (see Character.rehearse). */
 const REHEARSE_MS = 6;
 
@@ -141,6 +144,8 @@ export class Character {
   private half: CanvasRenderingContext2D | null = null;
   private scratch: CanvasRenderingContext2D | null = null;
   private scratchIdle = 0;
+  /** A brush is at work over her: giving back the rehearsal canvas waits until it is done (it can cost a frame). */
+  painting = false;
   /** Stills not yet rehearsed at her canvas's real size (see resize() and rehearse()). */
   private unrehearsed: string[] = [];
 
@@ -465,7 +470,7 @@ export class Character {
     this.scratchIdle = window.setTimeout(() => {
       scratch.canvas.width = 0;
       scratch.canvas.height = 0;
-    }, 1500);
+    }, this.painting ? SCRATCH_PAINTING_MS : SCRATCH_MS);
   }
 
   private draw(): void {

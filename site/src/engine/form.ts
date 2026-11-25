@@ -1,9 +1,8 @@
 // The prize for finding all fifty: a contact form that opens from the caption-turned-button.
-// TODO(copy): the form's words (labels, choices, messages) are placeholders.
+// Its words: reviews/copy-round-1-build.md, section 4. (The choices are in needs.js, shared with the server.)
 import { MUSHROOM_ICON } from './caption';
+import { NEEDS } from './needs.js';
 import { CONTACT_LIMITS, SendError, canSend, needsLength, submitContact, type ContactPayload } from './submit';
-
-const NEEDS = ['Build', 'Design', 'Film', 'Grow', 'Set Design', 'Something else'] as const;
 
 const CLOSE_ICON = `<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.5 3.5l9 9m0-9l-9 9"/></svg>`;
 const TICK_ICON = `<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.6 8.4l2.9 2.9 5.9-6.2"/></svg>`;
@@ -13,18 +12,18 @@ const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 type FieldName = 'name' | 'email' | 'message';
 
 const RULES: Record<FieldName, (value: string) => string> = {
-  name: (value) => (value ? '' : 'Add your name.'),
+  name: (value) => (value ? '' : 'What should I call you?'),
   email: (value) =>
-    !value ? 'Add your email so Hui Jie can reply.' : EMAIL.test(value) ? '' : 'That email looks incomplete. Check it for typos.',
-  message: (value) => (value ? '' : 'Write a few words about what you need.'),
+    !value ? 'I need an email to reply to.' : EMAIL.test(value) ? '' : 'That email looks a bit off. Typo?',
+  message: (value) => (value ? '' : 'A few words, so I know where to start.'),
 };
 
 const COPY = {
-  send: 'Send to Hui Jie',
+  send: 'Send it',
   sending: 'Sending',
   notConnected: 'This form is not switched on yet, so messages cannot be sent from here for now.',
   notSent: 'This form is not switched on yet, so your message has not been sent.',
-  failed: 'Your message could not be sent. Check your connection and try again.',
+  failed: "That didn't go through. Check your connection and try again?",
 };
 
 const EXIT_MS = 240;
@@ -52,7 +51,7 @@ export class ContactForm {
     this.dialog.innerHTML = `
       <div class="hj-sheet">
         <header class="hj-sheet-head">
-          <h2 id="hj-form-title" tabindex="-1">Contact Hui Jie</h2>
+          <h2 id="hj-form-title" tabindex="-1">Hi! What have you got in mind?</h2>
           <button type="button" class="hj-close" aria-label="Close">${CLOSE_ICON}</button>
         </header>
         <div class="hj-sheet-body">
@@ -64,30 +63,34 @@ export class ContactForm {
               <p class="hj-err" id="hj-name-err" aria-live="polite" hidden></p>
             </div>
             <div class="hj-field">
-              <label for="hj-email">Email</label>
+              <label for="hj-email">Where should I reply?</label>
               <input id="hj-email" name="email" type="email" autocomplete="email" inputmode="email" spellcheck="false" maxlength="${CONTACT_LIMITS.email}" required aria-describedby="hj-email-err" />
               <p class="hj-err" id="hj-email-err" aria-live="polite" hidden></p>
             </div>
             <fieldset class="hj-field hj-needs">
-              <legend>What do you need? <span class="hj-hint">Pick any</span></legend>
+              <legend>What can I help with? <span class="hj-hint">Pick any</span></legend>
               <div class="hj-chips">
                 ${NEEDS.map((need) => `<label class="hj-chip"><input type="checkbox" name="need" value="${need}" /><span>${TICK_ICON}${need}</span></label>`).join('')}
               </div>
             </fieldset>
             <div class="hj-field">
-              <label for="hj-message">Message</label>
-              <textarea id="hj-message" name="message" rows="4" maxlength="${CONTACT_LIMITS.message}" required aria-describedby="hj-message-err"></textarea>
+              <label for="hj-message">Tell me about it</label>
+              <textarea id="hj-message" name="message" rows="4" placeholder="The space, the timeline, the feeling you're after. Rough is fine." maxlength="${CONTACT_LIMITS.message}" required aria-describedby="hj-message-err"></textarea>
               <p class="hj-err" id="hj-message-err" aria-live="polite" hidden></p>
+            </div>
+            <div class="hj-trap" aria-hidden="true">
+              <label for="hj-website">Website</label>
+              <input id="hj-website" name="website" type="text" tabindex="-1" autocomplete="off" data-1p-ignore data-lpignore="true" data-bwignore />
             </div>
             <p class="hj-alert hj-failure" role="alert" hidden></p>
             <button type="submit" class="hj-send"><span class="hj-send-label">${COPY.send}</span></button>
           </form>
           <div class="hj-sent" hidden>
             <span class="hj-sent-mark">${MUSHROOM_ICON}<span class="hj-sent-tick">${TICK_ICON}</span></span>
-            <h3 tabindex="-1">Message sent</h3>
+            <h3 tabindex="-1">Got it, thank you.</h3>
             <p class="hj-sent-line" role="status"></p>
             <p class="hj-dev-note" hidden>Test mode: nothing was sent. The message is in the browser console.</p>
-            <button type="button" class="hj-send hj-done"><span class="hj-send-label">Back to the room</span></button>
+            <button type="button" class="hj-send hj-done"><span class="hj-send-label">Back to the scenes</span></button>
           </div>
         </div>
       </div>
@@ -250,6 +253,7 @@ export class ContactForm {
       email: String(data.get('email') ?? '').trim(),
       needs: data.getAll('need').map(String),
       message: String(data.get('message') ?? '').trim(),
+      website: String(data.get('website') ?? ''),
     };
 
     if (needsLength(payload.needs) > CONTACT_LIMITS.needs) {
@@ -299,7 +303,7 @@ export class ContactForm {
   private showSent(email: string, testMode: boolean): void {
     this.form.hidden = true;
     this.sent.hidden = false;
-    this.sent.querySelector<HTMLElement>('.hj-sent-line')!.textContent = `Hui Jie will reply to ${email}.`;
+    this.sent.querySelector<HTMLElement>('.hj-sent-line')!.textContent = `I'll reply to ${email}.`;
     this.sent.querySelector<HTMLElement>('.hj-dev-note')!.hidden = !testMode;
     this.body.scrollTop = 0;
     this.sent.querySelector<HTMLElement>('h3')!.focus({ preventScroll: true });

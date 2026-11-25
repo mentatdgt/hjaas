@@ -1,0 +1,82 @@
+[
+  {
+    "case": "good",
+    "answer": 200,
+    "body": {
+      "ok": true
+    },
+    "toResend": {
+      "url": "https://api.resend.com/emails",
+      "method": "POST",
+      "headers": {
+        "Authorization": "Bearer <RESEND_API_KEY>",
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "from": "HJaaS <from@example.org>",
+        "to": [
+          "inbox@example.org"
+        ],
+        "reply_to": "wren@example.org",
+        "subject": "HJaaS: Wren",
+        "text": "Name: Wren\nEmail: wren@example.org\nNeeds: Build, Set Design\n\nA shelf, please.\nNo hurry.\n"
+      }
+    }
+  },
+  {
+    "case": "no needs",
+    "answer": 200,
+    "body": {
+      "ok": true
+    },
+    "toResend": {
+      "url": "https://api.resend.com/emails",
+      "method": "POST",
+      "headers": {
+        "Authorization": "Bearer <RESEND_API_KEY>",
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "from": "HJaaS <from@example.org>",
+        "to": [
+          "inbox@example.org"
+        ],
+        "reply_to": "wren@example.org",
+        "subject": "HJaaS: Wren",
+        "text": "Name: Wren\nEmail: wren@example.org\nNeeds: (none picked)\n\nA shelf, please.\nNo hurry.\n"
+      }
+    }
+  },
+  {
+    "case": "honeypot",
+    "answer": 200,
+    "body": {
+      "ok": true
+    },
+    "toResend": null
+  },
+  {
+    "case": "bad email",
+    "answer": 400,
+    "body": {
+      "ok": false
+    },
+    "toResend": null
+  },
+  {
+    "case": "other site",
+    "answer": 403,
+    "body": {
+      "ok": false
+    },
+    "toResend": null
+  },
+  {
+    "case": "no CONTACT_TO",
+    "answer": 503,
+    "body": {
+      "ok": false
+    },
+    "toResend": null
+  }
+]

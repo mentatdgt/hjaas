@@ -1,0 +1,459 @@
+{
+  "csp": "connect-src 'self'",
+  "desktop-chrome": {
+    "trap": {
+      "inputRight": -9647,
+      "offScreen": true,
+      "layoutSameWithoutIt": true,
+      "ariaHidden": "true",
+      "tabIndex": -1,
+      "autocomplete": "off",
+      "pixelsSameWithoutIt": true,
+      "inAccessibilityTree": false,
+      "tabStops": [
+        "hj-email",
+        "Build",
+        "Design",
+        "Film",
+        "Grow",
+        "Set Design",
+        "Something else",
+        "hj-message",
+        "hj-send",
+        "BODY",
+        "hj-close",
+        "hj-name"
+      ],
+      "reachedByTab": false
+    },
+    "sending": {
+      "button": "Sending",
+      "disabled": "true",
+      "failed": null,
+      "sent": null,
+      "kept": "A shelf for the mushroom lab, please.",
+      "focus": "hj-send is-sending"
+    },
+    "failed": {
+      "button": "Send to Hui Jie",
+      "disabled": null,
+      "failed": "Your message could not be sent. Check your connection and try again.",
+      "sent": null,
+      "kept": "A shelf for the mushroom lab, please.",
+      "focus": "hj-send"
+    },
+    "consoleAfter500": [
+      "error: Failed to load resource: the server responded with a status of 500 (Internal Server Error)"
+    ],
+    "sendingAgain": {
+      "button": "Sending",
+      "disabled": "true",
+      "failed": null,
+      "sent": null,
+      "kept": "A shelf for the mushroom lab, please.",
+      "focus": "hj-send is-sending"
+    },
+    "sent": {
+      "button": "Send to Hui Jie",
+      "disabled": null,
+      "failed": null,
+      "sent": "Message sent\n\nHui Jie will reply to wren@example.org.\n\nBack to the room",
+      "kept": "A shelf for the mushroom lab, please.",
+      "focus": "H3"
+    },
+    "posted": [
+      {
+        "method": "POST",
+        "type": "application/json",
+        "body": {
+          "name": "Wren",
+          "email": "wren@example.org",
+          "needs": [
+            "Build",
+            "Set Design"
+          ],
+          "message": "A shelf for the mushroom lab, please.",
+          "website": ""
+        }
+      },
+      {
+        "method": "POST",
+        "type": "application/json",
+        "body": {
+          "name": "Wren",
+          "email": "wren@example.org",
+          "needs": [
+            "Build",
+            "Set Design"
+          ],
+          "message": "A shelf for the mushroom lab, please.",
+          "website": ""
+        }
+      }
+    ],
+    "emptyAgain": true,
+    "throughTheFunction": [
+      {
+        "from": "HJaaS <from@example.org>",
+        "to": [
+          "inbox@example.org"
+        ],
+        "reply_to": "wren@example.org",
+        "subject": "HJaaS: Wren",
+        "text": "Name: Wren\nEmail: wren@example.org\nNeeds: Build, Set Design\n\nA shelf for the mushroom lab, please.\n"
+      }
+    ],
+    "honeypotFilled": {
+      "says": "sent",
+      "toResend": 0
+    },
+    "honeypotClearedAfter": true,
+    "consoleErrors": []
+  },
+  "desktop-webkit": {
+    "trap": {
+      "inputRight": -9644,
+      "offScreen": true,
+      "layoutSameWithoutIt": true,
+      "ariaHidden": "true",
+      "tabIndex": -1,
+      "autocomplete": "off",
+      "pixelsSameWithoutIt": true,
+      "inAccessibilityTree": false,
+      "tabStops": [
+        "hj-email",
+        "Build",
+        "Design",
+        "Film",
+        "Grow",
+        "Set Design",
+        "Something else",
+        "hj-message",
+        "hj-send",
+        "BODY",
+        "hj-dialog is-instant is-open",
+        "hj-close",
+        "hj-name"
+      ],
+      "reachedByTab": false
+    },
+    "sending": {
+      "button": "Sending",
+      "disabled": "true",
+      "failed": null,
+      "sent": null,
+      "kept": "A shelf for the mushroom lab, please.",
+      "focus": "hj-dialog is-instant is-open"
+    },
+    "failed": {
+      "button": "Send to Hui Jie",
+      "disabled": null,
+      "failed": "Your message could not be sent. Check your connection and try again.",
+      "sent": null,
+      "kept": "A shelf for the mushroom lab, please.",
+      "focus": "hj-dialog is-instant is-open"
+    },
+    "consoleAfter500": [
+      "error: Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy.",
+      "error: Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy.",
+      "error: Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy.",
+      "error: Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy.",
+      "error: Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "error: Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy."
+    ],
+    "sendingAgain": {
+      "button": "Sending",
+      "disabled": "true",
+      "failed": null,
+      "sent": null,
+      "kept": "A shelf for the mushroom lab, please.",
+      "focus": "hj-dialog is-instant is-open"
+    },
+    "sent": {
+      "button": "Send to Hui Jie",
+      "disabled": null,
+      "failed": null,
+      "sent": "Message sent\n\nHui Jie will reply to wren@example.org.\n\nBack to the room",
+      "kept": "A shelf for the mushroom lab, please.",
+      "focus": "H3"
+    },
+    "posted": [
+      {
+        "method": "POST",
+        "type": "application/json",
+        "body": {
+          "name": "Wren",
+          "email": "wren@example.org",
+          "needs": [
+            "Build",
+            "Set Design"
+          ],
+          "message": "A shelf for the mushroom lab, please.",
+          "website": ""
+        }
+      },
+      {
+        "method": "POST",
+        "type": "application/json",
+        "body": {
+          "name": "Wren",
+          "email": "wren@example.org",
+          "needs": [
+            "Build",
+            "Set Design"
+          ],
+          "message": "A shelf for the mushroom lab, please.",
+          "website": ""
+        }
+      }
+    ],
+    "emptyAgain": true,
+    "throughTheFunction": [
+      {
+        "from": "HJaaS <from@example.org>",
+        "to": [
+          "inbox@example.org"
+        ],
+        "reply_to": "wren@example.org",
+        "subject": "HJaaS: Wren",
+        "text": "Name: Wren\nEmail: wren@example.org\nNeeds: Build, Set Design\n\nA shelf for the mushroom lab, please.\n"
+      }
+    ],
+    "honeypotFilled": {
+      "says": "sent",
+      "toResend": 0
+    },
+    "honeypotClearedAfter": true,
+    "consoleErrors": [
+      "error: Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy."
+    ]
+  },
+  "phone-webkit": {
+    "trap": {
+      "inputRight": -9844,
+      "offScreen": true,
+      "layoutSameWithoutIt": true,
+      "ariaHidden": "true",
+      "tabIndex": -1,
+      "autocomplete": "off",
+      "pixelsSameWithoutIt": true,
+      "inAccessibilityTree": false,
+      "tabStops": [
+        "hj-close",
+        "hj-name",
+        "hj-email",
+        "Build",
+        "Design",
+        "Film",
+        "Grow",
+        "Set Design",
+        "Something else",
+        "hj-message",
+        "hj-send",
+        "BODY",
+        "hj-dialog is-instant is-open"
+      ],
+      "reachedByTab": false
+    },
+    "sending": {
+      "button": "Sending",
+      "disabled": "true",
+      "failed": null,
+      "sent": null,
+      "kept": "A shelf for the mushroom lab, please.",
+      "focus": "hj-dialog is-instant is-open"
+    },
+    "failed": {
+      "button": "Send to Hui Jie",
+      "disabled": null,
+      "failed": "Your message could not be sent. Check your connection and try again.",
+      "sent": null,
+      "kept": "A shelf for the mushroom lab, please.",
+      "focus": "hj-dialog is-instant is-open"
+    },
+    "consoleAfter500": [
+      "error: Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy.",
+      "error: Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy.",
+      "error: Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy.",
+      "error: Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy.",
+      "error: Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "error: Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy."
+    ],
+    "sendingAgain": {
+      "button": "Sending",
+      "disabled": "true",
+      "failed": null,
+      "sent": null,
+      "kept": "A shelf for the mushroom lab, please.",
+      "focus": "hj-dialog is-instant is-open"
+    },
+    "sent": {
+      "button": "Send to Hui Jie",
+      "disabled": null,
+      "failed": null,
+      "sent": "Message sent\n\nHui Jie will reply to wren@example.org.\n\nBack to the room",
+      "kept": "A shelf for the mushroom lab, please.",
+      "focus": "H3"
+    },
+    "posted": [
+      {
+        "method": "POST",
+        "type": "application/json",
+        "body": {
+          "name": "Wren",
+          "email": "wren@example.org",
+          "needs": [
+            "Build",
+            "Set Design"
+          ],
+          "message": "A shelf for the mushroom lab, please.",
+          "website": ""
+        }
+      },
+      {
+        "method": "POST",
+        "type": "application/json",
+        "body": {
+          "name": "Wren",
+          "email": "wren@example.org",
+          "needs": [
+            "Build",
+            "Set Design"
+          ],
+          "message": "A shelf for the mushroom lab, please.",
+          "website": ""
+        }
+      }
+    ],
+    "emptyAgain": true,
+    "throughTheFunction": [
+      {
+        "from": "HJaaS <from@example.org>",
+        "to": [
+          "inbox@example.org"
+        ],
+        "reply_to": "wren@example.org",
+        "subject": "HJaaS: Wren",
+        "text": "Name: Wren\nEmail: wren@example.org\nNeeds: Build, Set Design\n\nA shelf for the mushroom lab, please.\n"
+      }
+    ],
+    "honeypotFilled": {
+      "says": "sent",
+      "toResend": 0
+    },
+    "honeypotClearedAfter": true,
+    "consoleErrors": [
+      "error: Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy."
+    ]
+  },
+  "phone-chrome": {
+    "trap": {
+      "inputRight": -9847,
+      "offScreen": true,
+      "layoutSameWithoutIt": true,
+      "ariaHidden": "true",
+      "tabIndex": -1,
+      "autocomplete": "off",
+      "pixelsSameWithoutIt": true,
+      "inAccessibilityTree": false,
+      "tabStops": [
+        "hj-close",
+        "hj-name",
+        "hj-email",
+        "Build",
+        "Design",
+        "Film",
+        "Grow",
+        "Set Design",
+        "Something else",
+        "hj-message",
+        "hj-send",
+        "BODY"
+      ],
+      "reachedByTab": false
+    },
+    "sending": {
+      "button": "Sending",
+      "disabled": "true",
+      "failed": null,
+      "sent": null,
+      "kept": "A shelf for the mushroom lab, please.",
+      "focus": "hj-send is-sending"
+    },
+    "failed": {
+      "button": "Send to Hui Jie",
+      "disabled": null,
+      "failed": "Your message could not be sent. Check your connection and try again.",
+      "sent": null,
+      "kept": "A shelf for the mushroom lab, please.",
+      "focus": "hj-send"
+    },
+    "consoleAfter500": [
+      "error: Failed to load resource: the server responded with a status of 500 (Internal Server Error)"
+    ],
+    "sendingAgain": {
+      "button": "Sending",
+      "disabled": "true",
+      "failed": null,
+      "sent": null,
+      "kept": "A shelf for the mushroom lab, please.",
+      "focus": "hj-send is-sending"
+    },
+    "sent": {
+      "button": "Send to Hui Jie",
+      "disabled": null,
+      "failed": null,
+      "sent": "Message sent\n\nHui Jie will reply to wren@example.org.\n\nBack to the room",
+      "kept": "A shelf for the mushroom lab, please.",
+      "focus": "H3"
+    },
+    "posted": [
+      {
+        "method": "POST",
+        "type": "application/json",
+        "body": {
+          "name": "Wren",
+          "email": "wren@example.org",
+          "needs": [
+            "Build",
+            "Set Design"
+          ],
+          "message": "A shelf for the mushroom lab, please.",
+          "website": ""
+        }
+      },
+      {
+        "method": "POST",
+        "type": "application/json",
+        "body": {
+          "name": "Wren",
+          "email": "wren@example.org",
+          "needs": [
+            "Build",
+            "Set Design"
+          ],
+          "message": "A shelf for the mushroom lab, please.",
+          "website": ""
+        }
+      }
+    ],
+    "emptyAgain": true,
+    "throughTheFunction": [
+      {
+        "from": "HJaaS <from@example.org>",
+        "to": [
+          "inbox@example.org"
+        ],
+        "reply_to": "wren@example.org",
+        "subject": "HJaaS: Wren",
+        "text": "Name: Wren\nEmail: wren@example.org\nNeeds: Build, Set Design\n\nA shelf for the mushroom lab, please.\n"
+      }
+    ],
+    "honeypotFilled": {
+      "says": "sent",
+      "toResend": 0
+    },
+    "honeypotClearedAfter": true,
+    "consoleErrors": []
+  }
+}

@@ -1,0 +1,491 @@
+{
+ "presets": {
+  "0": {
+   "cream": {
+    "number": "0/10",
+    "label": "hiding in Set Design",
+    "aria": "0 of 10 found in Set Design"
+   },
+   "red": {
+    "number": "0/50",
+    "label": "find all 50 to contact Hui Jie",
+    "aria": "0 of 50 found in all scenes"
+   },
+   "dots": [],
+   "next": null,
+   "button": null,
+   "counterShown": true,
+   "prizeLine": null,
+   "moving": 0,
+   "oldWords": false
+  },
+  "1": {
+   "cream": {
+    "number": "0/10",
+    "label": "hiding in Set Design",
+    "aria": "0 of 10 found in Set Design"
+   },
+   "red": {
+    "number": "1/50",
+    "label": "find all 50 to contact Hui Jie",
+    "aria": "1 of 50 found in all scenes"
+   },
+   "dots": [],
+   "next": null,
+   "button": null,
+   "counterShown": true,
+   "prizeLine": null,
+   "moving": 0,
+   "oldWords": false
+  },
+  "4": {
+   "cream": {
+    "number": "0/10",
+    "label": "hiding in Set Design",
+    "aria": "0 of 10 found in Set Design"
+   },
+   "red": {
+    "number": "4/50",
+    "label": "find all 50 to contact Hui Jie",
+    "aria": "4 of 50 found in all scenes"
+   },
+   "dots": [],
+   "next": null,
+   "button": null,
+   "counterShown": true,
+   "prizeLine": null,
+   "moving": 0,
+   "oldWords": false
+  },
+  "5": {
+   "cream": {
+    "number": "0/10",
+    "label": "hiding in Set Design",
+    "aria": "0 of 10 found in Set Design"
+   },
+   "red": {
+    "number": "5/50",
+    "label": "find all 50 to contact Hui Jie",
+    "aria": "5 of 50 found in all scenes"
+   },
+   "dots": [],
+   "next": null,
+   "button": null,
+   "counterShown": true,
+   "prizeLine": null,
+   "moving": 0,
+   "oldWords": false
+  },
+  "9": {
+   "cream": {
+    "number": "0/10",
+    "label": "hiding in Set Design",
+    "aria": "0 of 10 found in Set Design"
+   },
+   "red": {
+    "number": "9/50",
+    "label": "find all 50 to contact Hui Jie",
+    "aria": "9 of 50 found in all scenes"
+   },
+   "dots": [],
+   "next": null,
+   "button": null,
+   "counterShown": true,
+   "prizeLine": null,
+   "moving": 0,
+   "oldWords": false
+  },
+  "10": {
+   "cream": {
+    "number": "0/10",
+    "label": "hiding in Set Design",
+    "aria": "0 of 10 found in Set Design"
+   },
+   "red": {
+    "number": "10/50",
+    "label": "find all 50 to contact Hui Jie",
+    "aria": "10 of 50 found in all scenes"
+   },
+   "dots": [
+    "build"
+   ],
+   "next": null,
+   "button": null,
+   "counterShown": true,
+   "prizeLine": null,
+   "moving": 0,
+   "oldWords": false
+  },
+  "17": {
+   "cream": {
+    "number": "0/10",
+    "label": "hiding in Set Design",
+    "aria": "0 of 10 found in Set Design"
+   },
+   "red": {
+    "number": "17/50",
+    "label": "find all 50 to contact Hui Jie",
+    "aria": "17 of 50 found in all scenes"
+   },
+   "dots": [
+    "build"
+   ],
+   "next": null,
+   "button": null,
+   "counterShown": true,
+   "prizeLine": null,
+   "moving": 0,
+   "oldWords": false
+  },
+  "24": {
+   "cream": {
+    "number": "0/10",
+    "label": "hiding in Set Design",
+    "aria": "0 of 10 found in Set Design"
+   },
+   "red": {
+    "number": "24/50",
+    "label": "find all 50 to contact Hui Jie",
+    "aria": "24 of 50 found in all scenes"
+   },
+   "dots": [
+    "build",
+    "grow"
+   ],
+   "next": null,
+   "button": null,
+   "counterShown": true,
+   "prizeLine": null,
+   "moving": 0,
+   "oldWords": false
+  },
+  "25": {
+   "cream": {
+    "number": "0/10",
+    "label": "hiding in Set Design",
+    "aria": "0 of 10 found in Set Design"
+   },
+   "red": {
+    "number": "25/50",
+    "label": "25 more to contact Hui Jie",
+    "aria": "25 of 50 found in all scenes"
+   },
+   "dots": [
+    "build",
+    "grow"
+   ],
+   "next": null,
+   "button": null,
+   "counterShown": true,
+   "prizeLine": null,
+   "moving": 0,
+   "oldWords": false
+  },
+  "26": {
+   "cream": {
+    "number": "0/10",
+    "label": "hiding in Set Design",
+    "aria": "0 of 10 found in Set Design"
+   },
+   "red": {
+    "number": "26/50",
+    "label": "24 more to contact Hui Jie",
+    "aria": "26 of 50 found in all scenes"
+   },
+   "dots": [
+    "build",
+    "grow"
+   ],
+   "next": null,
+   "button": null,
+   "counterShown": true,
+   "prizeLine": null,
+   "moving": 0,
+   "oldWords": false
+  },
+  "40": {
+   "cream": {
+    "number": "0/10",
+    "label": "hiding in Set Design",
+    "aria": "0 of 10 found in Set Design"
+   },
+   "red": {
+    "number": "40/50",
+    "label": "10 more to contact Hui Jie",
+    "aria": "40 of 50 found in all scenes"
+   },
+   "dots": [
+    "build",
+    "grow",
+    "design",
+    "film"
+   ],
+   "next": null,
+   "button": null,
+   "counterShown": true,
+   "prizeLine": null,
+   "moving": 0,
+   "oldWords": false
+  },
+  "49": {
+   "cream": {
+    "number": "9/10",
+    "label": "1 more in Set Design",
+    "aria": "9 of 10 found in Set Design"
+   },
+   "red": {
+    "number": "49/50",
+    "label": "1 more to contact Hui Jie",
+    "aria": "49 of 50 found in all scenes"
+   },
+   "dots": [
+    "build",
+    "grow",
+    "design",
+    "film"
+   ],
+   "next": null,
+   "button": null,
+   "counterShown": true,
+   "prizeLine": null,
+   "moving": 0,
+   "oldWords": false
+  },
+  "50": {
+   "cream": {
+    "number": "10/10",
+    "label": "Set Design complete",
+    "aria": "10 of 10 found in Set Design"
+   },
+   "red": {
+    "number": "50/50",
+    "label": "All 50. Good eye.",
+    "aria": "50 of 50 found in all scenes"
+   },
+   "dots": [
+    "build",
+    "grow",
+    "design",
+    "film",
+    "set"
+   ],
+   "next": null,
+   "button": "BUTTON",
+   "counterShown": false,
+   "prizeLine": "All 50. Good eye.",
+   "moving": 0,
+   "oldWords": false
+  }
+ },
+ "problems": [],
+ "returnWith17": {
+  "first": {
+   "button": "hidden",
+   "n": "7"
+  },
+  "animations": []
+ },
+ "returnWith20": {
+  "first": {
+   "button": "hidden",
+   "n": "10"
+  },
+  "animations": []
+ },
+ "returnWith50": {
+  "first": {
+   "button": "visible",
+   "n": "10"
+  },
+  "animations": []
+ },
+ "fourQuickFinds": {
+  "cream": {
+   "number": "6/10",
+   "label": "4 more in Grow",
+   "aria": "6 of 10 found in Grow"
+  },
+  "red": {
+   "number": "16/50",
+   "label": "find all 50 to contact Hui Jie",
+   "aria": "16 of 50 found in all scenes"
+  },
+  "ghosts": 0
+ },
+ "atTen": {
+  "cream": {
+   "number": "10/10",
+   "label": "Grow complete",
+   "aria": "10 of 10 found in Grow"
+  },
+  "next": {
+   "tag": "A",
+   "text": "Next: Design",
+   "href": "#design",
+   "tap": [
+    118,
+    45
+   ]
+  },
+  "dots": [
+   "build",
+   "grow"
+  ]
+ },
+ "afterNext": {
+  "cream": {
+   "number": "0/10",
+   "label": "hiding in Design",
+   "aria": "0 of 10 found in Design"
+  },
+  "next": null,
+  "dots": [
+   "build",
+   "grow"
+  ],
+  "focus": "design"
+ },
+ "switchMidUnlock": {
+  "button": "BUTTON",
+  "counterShown": false,
+  "dots": [
+   "build",
+   "grow",
+   "design",
+   "film",
+   "set"
+  ],
+  "line": "All 50. Good eye.",
+  "moving": 0
+ },
+ "formOpens": true,
+ "hint": [
+  {
+   "scrollLeft": 0,
+   "onScreen": [
+    "sill",
+    "drape",
+    "skirting",
+    "screed"
+   ],
+   "said": true,
+   "moved": [
+    "drape"
+   ]
+  },
+  {
+   "scrollLeft": 200,
+   "onScreen": [
+    "sill",
+    "drape",
+    "skirting",
+    "screed"
+   ],
+   "said": true,
+   "moved": [
+    "sill"
+   ]
+  },
+  {
+   "scrollLeft": 420,
+   "onScreen": [
+    "tiles",
+    "conduit",
+    "socket",
+    "ladder-foot"
+   ],
+   "said": true,
+   "moved": [
+    "ladder-foot"
+   ]
+  },
+  {
+   "scrollLeft": 589,
+   "onScreen": [
+    "tiles",
+    "conduit",
+    "socket",
+    "ladder-foot",
+    "ladder-step",
+    "toolbox"
+   ],
+   "said": true,
+   "moved": [
+    "socket",
+    "ladder-step"
+   ]
+  },
+  {
+   "scrollLeft": 589,
+   "onScreen": [
+    "tiles",
+    "conduit",
+    "socket",
+    "ladder-foot",
+    "ladder-step",
+    "toolbox"
+   ],
+   "said": true,
+   "moved": [
+    "ladder-step"
+   ]
+  },
+  {
+   "scrollLeft": 589,
+   "onScreen": [],
+   "said": false,
+   "moved": []
+  }
+ ],
+ "drift": {
+  "first visit": {
+   "startsAt": 331,
+   "furthest": 40,
+   "endsAt": 331,
+   "firstMoveMsAfterTheBrushStarted": 5500,
+   "lastMove": 7883,
+   "biggestStepPx": 0.9,
+   "savedPanX": null
+  },
+  "reduced motion": {
+   "startsAt": 331,
+   "furthest": 0,
+   "endsAt": 331,
+   "firstMoveMsAfterTheBrushStarted": null,
+   "lastMove": null,
+   "biggestStepPx": 0,
+   "savedPanX": null
+  },
+  "return visit": {
+   "startsAt": 331,
+   "furthest": 0,
+   "endsAt": 331,
+   "firstMoveMsAfterTheBrushStarted": null,
+   "lastMove": null,
+   "biggestStepPx": 0,
+   "savedPanX": null
+  },
+  "another scene seen before": {
+   "startsAt": 331,
+   "furthest": 0,
+   "endsAt": 331,
+   "firstMoveMsAfterTheBrushStarted": null,
+   "lastMove": null,
+   "biggestStepPx": 0,
+   "savedPanX": null
+  },
+  "landscape": {
+   "startsAt": 18,
+   "furthest": 0,
+   "endsAt": 18,
+   "firstMoveMsAfterTheBrushStarted": null,
+   "lastMove": null,
+   "biggestStepPx": 0,
+   "savedPanX": null
+  },
+  "touched": {
+   "stoppedAt": 315.4,
+   "later": 315
+  }
+ }
+}

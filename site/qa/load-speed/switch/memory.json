@@ -1,0 +1,195 @@
+{
+ "now": [
+  {
+   "tapEveryMs": 2000,
+   "taps": 48,
+   "peakMB": 69.6,
+   "at": "grow, during a switch",
+   "peakParts": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "sheet": 3,
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "design.frames": 35.9,
+    "design.canvases": 8.1,
+    "design.room": 6.3,
+    "design.edge": 2.6,
+    "grow.frames": 3,
+    "grow.room": 6.3
+   },
+   "mostCastsDecodedAtOnce": 1,
+   "mostEdgesAtOnce": 1,
+   "mostRoomsAtOnce": 2,
+   "othersHoldAtMostMB": 58.7,
+   "othersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "design.frames": 35.9,
+    "design.canvases": 8.1,
+    "design.room": 6.3,
+    "design.edge": 2.6,
+    "grow.frames": 3
+   },
+   "afterwardsOthersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "grow.frames": 3
+   },
+   "endedIn": "design",
+   "errors": []
+  },
+  {
+   "tapEveryMs": 1000,
+   "taps": 48,
+   "peakMB": 65.3,
+   "at": "design, during a switch",
+   "peakParts": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "sheet": 4.8,
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "design.frames": 35.9,
+    "design.canvases": 8.3,
+    "design.room": 6.3,
+    "design.edge": 2.6,
+    "grow.frames": 3
+   },
+   "mostCastsDecodedAtOnce": 1,
+   "mostEdgesAtOnce": 1,
+   "mostRoomsAtOnce": 2,
+   "othersHoldAtMostMB": 42.3,
+   "othersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "set.frames": 7.3,
+    "set.canvases": 20.4,
+    "set.room": 6.3,
+    "set.edge": 2.6,
+    "grow.frames": 3
+   },
+   "afterwardsOthersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "grow.frames": 3
+   },
+   "endedIn": "design",
+   "errors": []
+  },
+  {
+   "tapEveryMs": 600,
+   "taps": 48,
+   "peakMB": 65.3,
+   "at": "design, during a switch",
+   "peakParts": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "sheet": 4.8,
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "design.frames": 35.9,
+    "design.canvases": 8.3,
+    "design.room": 6.3,
+    "design.edge": 2.6,
+    "grow.frames": 3
+   },
+   "mostCastsDecodedAtOnce": 1,
+   "mostEdgesAtOnce": 1,
+   "mostRoomsAtOnce": 2,
+   "othersHoldAtMostMB": 35.1,
+   "othersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "set.frames": 0.8,
+    "set.canvases": 19.6,
+    "set.room": 6.3,
+    "set.edge": 2.6,
+    "grow.frames": 3
+   },
+   "afterwardsOthersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "grow.frames": 3
+   },
+   "endedIn": "design",
+   "errors": []
+  },
+  {
+   "tapEveryMs": 300,
+   "taps": 48,
+   "peakMB": 65.3,
+   "at": "design, during a switch",
+   "peakParts": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "sheet": 4.8,
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "design.frames": 35.9,
+    "design.canvases": 8.3,
+    "design.room": 6.3,
+    "design.edge": 2.6,
+    "grow.frames": 3
+   },
+   "mostCastsDecodedAtOnce": 1,
+   "mostEdgesAtOnce": 1,
+   "mostRoomsAtOnce": 2,
+   "othersHoldAtMostMB": 35.9,
+   "othersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "set.frames": 0.8,
+    "set.canvases": 20.4,
+    "set.room": 6.3,
+    "set.edge": 2.6,
+    "grow.frames": 3
+   },
+   "afterwardsOthersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "grow.frames": 3
+   },
+   "endedIn": "design",
+   "errors": []
+  },
+  {
+   "tapEveryMs": 120,
+   "taps": 48,
+   "peakMB": 65.3,
+   "at": "design, during a switch",
+   "peakParts": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "sheet": 4.8,
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "grow.frames": 3,
+    "design.frames": 35.9,
+    "design.canvases": 8.3,
+    "design.room": 6.3,
+    "design.edge": 2.6
+   },
+   "mostCastsDecodedAtOnce": 1,
+   "mostEdgesAtOnce": 1,
+   "mostRoomsAtOnce": 2,
+   "othersHoldAtMostMB": 37.5,
+   "othersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "grow.frames": 3,
+    "set.frames": 2.4,
+    "set.canvases": 20.4,
+    "set.room": 6.3,
+    "set.edge": 2.6
+   },
+   "afterwardsOthersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "grow.frames": 3
+   },
+   "endedIn": "design",
+   "errors": []
+  }
+ ]
+}

@@ -82,18 +82,20 @@ describe('?all=N', () => {
 
 describe('the two counters', () => {
   const COPY: CounterCopy = {
+    hereNone: (scene) => `hiding in ${scene}`,
     hereFound: (scene) => `found in ${scene}`,
     hereMore: (left, scene) => `${left} more in ${scene}`,
     hereDone: (scene) => `${scene} complete`,
     siteAll: (total) => `find all ${total} to contact Hui Jie`,
     siteMore: (left) => `${left} more to contact Hui Jie`,
-    siteDone: (total) => `You found all ${total}`,
+    siteDone: (total) => `All ${total}. Good eye.`,
   };
   const here = (found: number) => hereLabel(COPY, 'Set Design', { found, total: 10 });
   const site = (found: number) => siteLabel(COPY, { found, total: 50 });
 
-  it('cream: what is found while that is under half, what is left from halfway on, and complete', () => {
-    expect([0, 1, 4].map(here)).toEqual(Array(3).fill('found in Set Design'));
+  it('cream: hiding at none, what is found while that is under half, what is left from halfway on, and complete', () => {
+    expect(here(0)).toBe('hiding in Set Design');
+    expect([1, 2, 4].map(here)).toEqual(Array(3).fill('found in Set Design'));
     expect(here(5)).toBe('5 more in Set Design');
     expect(here(7)).toBe('3 more in Set Design');
     expect(here(9)).toBe('1 more in Set Design');
@@ -105,7 +107,7 @@ describe('the two counters', () => {
     expect(site(25)).toBe('25 more to contact Hui Jie');
     expect(site(26)).toBe('24 more to contact Hui Jie');
     expect(site(49)).toBe('1 more to contact Hui Jie');
-    expect(site(50)).toBe('You found all 50');
+    expect(site(50)).toBe('All 50. Good eye.');
   });
 
   it('fill stem first, then cap: the stem over finds 1 to 3 (cream) and 1 to 15 (red)', () => {
