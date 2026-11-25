@@ -585,6 +585,12 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     retry.hidden = false;
     retry.setAttribute('aria-label', `Retry ${config.label}`);
     if (!playing) show(skip, false);
+    current?.resume();
+  };
+  /** `config` is asked for: what the scene on show has still to download for its routine waits, so that the tap has the network. */
+  const makeWay = (config: SceneConfig): void => {
+    if (config.id === current?.config.id) current.resume();
+    else current?.pause();
   };
 
   /** A picture is finished, and the page is quiet again. */
@@ -602,6 +608,9 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   const play = (scene: Scene, motion: () => Promise<void>, then?: () => void): void => {
     const mine = ++plays;
     playing = scene;
+    // Her other drawings come while the brush is at work (unless another scene has been asked for meanwhile).
+    if (wanted.id === scene.config.id) void scene.stock();
+    else scene.pause();
     void motion().then(() => {
       if (destroyed || !playing || plays !== mine) return;
       playing = null;
@@ -818,6 +827,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       // (If one is on its way to the window, it need not be as carefully prepared.)
       if (moving) hasten();
     }
+    makeWay(config);
     retry.hidden = true;
     void travel();
   };
@@ -950,9 +960,10 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       const nextId = viewOf(config).next?.id;
       const likelyNext = nextId && sceneById(nextId);
       if (likelyNext && wanted === config) {
-        void warmPlate(likelyNext.assets + likelyNext.plate, () =>
-          !destroyed && !busy() && !document.hidden && current === scene,
-        );
+        // (Not before her own drawings are here: her routine is waiting for them.)
+        void scene.stock().then(() => warmPlate(likelyNext.assets + likelyNext.plate, () =>
+          !destroyed && !busy() && !document.hidden && current === scene && wanted === config,
+        ));
       }
     };
     moving = false;
