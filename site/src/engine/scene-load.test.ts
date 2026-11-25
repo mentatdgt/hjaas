@@ -1,8 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { loadPlate, retainAssets, warmPlate } from './assets';
+import { cutFrom, loadPlate, retainAssets, warmPlate } from './assets';
 import growFrames from '../../public/assets/scene2/rachel/frames.json';
 import growRoutine from '../../public/assets/scene2/rachel/routine.json';
-import { Scene } from './scene';
+import { Casting, Scene } from './scene';
 import { SCENES } from '../scenes';
 
 vi.mock('./edge', () => ({
@@ -49,9 +49,9 @@ class Element {
   decode() { return decode(this.src); }
 }
 
-const load = (room = config) => Scene.load(room, {
+const host = () => ({
   flyLayer: new Element() as unknown as HTMLElement,
-  found: new Set(),
+  found: new Set<string>(),
   target: () => new DOMRect(),
   rnd: () => 0,
   still: () => false,
@@ -59,8 +59,9 @@ const load = (room = config) => Scene.load(room, {
   onFind: () => {},
   onLand: () => {},
   onLayout: () => {},
-  edge: { style: 'pencil', seed: () => 0, paper: [255, 255, 255] },
-}, true);
+  edge: { style: 'pencil' as const, seed: () => 0, paper: [255, 255, 255] as [number, number, number] },
+});
+const load = (room = config) => Scene.load(room, host(), true);
 
 describe('recoverable room assets', () => {
   beforeEach(() => {
@@ -223,6 +224,81 @@ describe('recoverable room assets', () => {
     await scene.stock();
     expect(scene.character?.has('blink_closed')).toBe(true);
     scene.destroy();
+  });
+
+  it('asks for a scene\'s cast together with its room, and decodes none of it before the scene is opened', async () => {
+    const requested: string[] = [];
+    const bitmaps = vi.fn(async () => ({ width: 100, height: 100, close() {} }));
+    vi.stubGlobal('createImageBitmap', bitmaps);
+    vi.stubGlobal('fetch', vi.fn(async (url: string) => {
+      requested.push(url.split('/').pop()!);
+      if (url.endsWith('/frames.json')) return new Response(JSON.stringify(growFrames));
+      if (url.endsWith('/routine.json')) return new Response(JSON.stringify(growRoutine));
+      return new Response(url);
+    }));
+    let roomHere!: () => void;
+    decode.mockImplementation((src) => (src.endsWith('/room.webp') ? new Promise((resolve) => { roomHere = resolve; }) : Promise.resolve()));
+    const coming = Scene.load(SCENES[1], host(), false);
+    // The room is still on its way: her manifests and the drawing she rests on have been asked for (and nothing else).
+    await vi.waitFor(() => expect(requested).toHaveLength(3));
+    expect(requested.slice(0, 2).sort()).toEqual(['frames.json', 'routine.json']);
+    expect(requested[2]).toMatch(/\.webp$/);
+    roomHere();
+    const scene = await coming;
+    await scene.loaded();
+    expect(bitmaps).not.toHaveBeenCalled();
+    expect(scene.character).toBeNull();
+    await scene.enter();
+    expect(scene.character).not.toBeNull();
+    expect(requested.filter((name) => name === requested[2])).toHaveLength(1);
+    scene.destroy();
+  });
+
+  it('calls a cast off when another scene is asked for first, and starts afresh when it is wanted again at once', async () => {
+    const pending: Array<{ signal: AbortSignal; arrive: () => void }> = [];
+    const requested: string[] = [];
+    vi.stubGlobal('fetch', vi.fn((url: string, init?: RequestInit) => new Promise<Response>((resolve, reject) => {
+      const signal = init!.signal!;
+      requested.push(url);
+      signal.addEventListener('abort', () => reject(signal.reason));
+      pending.push({ signal, arrive: () => resolve(new Response(url)) });
+    })));
+    const casting = new Casting(config, { ...host(), shownWidth: () => 390 });
+    const first = casting.start();
+    first.catch(() => {});
+    await vi.waitFor(() => expect(pending).toHaveLength(1));
+    casting.cancel();
+    const again = casting.start();
+    expect(again).not.toBe(first);
+    await expect(first).rejects.toThrow();
+    await vi.waitFor(() => expect(pending).toHaveLength(2));
+    expect(pending[0].signal.aborted).toBe(true);
+    // The same drawing again, not the one a wider screen gets.
+    expect(requested[1]).toBe(requested[0]);
+    pending[1].arrive();
+    await expect(again).resolves.toBeTypeOf('function');
+    // All here: kept.
+    casting.cancel();
+    expect(casting.start()).toBe(again);
+    expect(pending).toHaveLength(2);
+  });
+
+  it('cuts a live screen from the room without downloading it again', async () => {
+    const img = { src: 'http://x/room.webp' } as HTMLImageElement;
+    const part = { x: 10.2, y: 20, w: 30, h: 40 };
+    const bitmaps = vi.fn(async (source: unknown) => ({ from: source }));
+    vi.stubGlobal('createImageBitmap', bitmaps);
+    const asked = vi.fn(async () => new Response('bytes'));
+    vi.stubGlobal('fetch', asked);
+    expect((await cutFrom(img, part)) as unknown).toMatchObject({ from: expect.any(Blob) });
+    expect(asked).toHaveBeenCalledExactlyOnceWith('http://x/room.webp', expect.objectContaining({ cache: 'only-if-cached', mode: 'same-origin' }));
+    // The browser has not kept it: from the picture on the page, and still never from the network.
+    for (const answer of [() => Promise.reject(new TypeError('not cached')), async () => new Response(null, { status: 504 })]) {
+      asked.mockReset().mockImplementation(answer as () => Promise<Response>);
+      expect((await cutFrom(img, part)) as unknown).toEqual({ from: img });
+      expect(bitmaps).toHaveBeenLastCalledWith(img, 10, 20, 30, 40);
+      expect(asked).toHaveBeenCalledOnce();
+    }
   });
 
   it('waits for idle to warm a room at low priority and skips a departed opening room', async () => {

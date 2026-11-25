@@ -90,9 +90,12 @@ function blobOf(url: string, signal?: AbortSignal): Promise<Blob> {
   else {
     blob = fetchBlob(url, undefined, signal);
     const pending = blob;
-    void pending.catch(() => {
+    const forget = (): void => {
       if (blobCache.get(url) === pending) blobCache.delete(url);
-    });
+    };
+    // (Called off: whoever asks for it next starts afresh, without waiting for this one to fail.)
+    signal?.addEventListener('abort', forget, { once: true });
+    void pending.then(() => signal?.removeEventListener('abort', forget), forget);
   }
   blobCache.set(url, blob);
   if (blobCache.size > BLOB_CACHE_LIMIT) blobCache.delete(blobCache.keys().next().value!);
@@ -145,6 +148,15 @@ export function fetchBlob(url: string, priority?: RequestInit['priority'], signa
     const response = await fetch(url, { signal: limit, priority });
     if (!response.ok) throw new Error(`${url}: ${response.status}`);
     return response.blob();
+  });
+}
+
+/** A small JSON file. */
+export function fetchJson<T>(url: string, signal?: AbortSignal): Promise<T> {
+  return underDeadline(signal, async (limit) => {
+    const response = await fetch(url, { signal: limit });
+    if (!response.ok) throw new Error(`${url}: ${response.status}`);
+    return (await response.json()) as T;
   });
 }
 
@@ -265,6 +277,26 @@ export async function decodePart(blob: Blob, part: Crop): Promise<ImageBitmap | 
   } catch {
     return null;
   }
+}
+
+/**
+ * A rectangle of a picture that an <img> on the page already holds: never downloaded again. (An <img> and fetch() do
+ * not share a request, so asked for with fetch() the file would cross the network twice.) The bytes come from the
+ * browser's cache, and only from there, so that they are decoded off the main thread; where it keeps none (a private
+ * tab in Safari), the rectangle is cut from the <img> itself. Null where the browser can do neither.
+ */
+export async function cutFrom(img: HTMLImageElement, part: Crop): Promise<ImageBitmap | null> {
+  try {
+    const response = await fetch(img.src, { cache: 'only-if-cached', mode: 'same-origin', signal: assetSignal() });
+    if (response.ok) {
+      const cut = await decodePart(await response.blob(), part);
+      if (cut) return cut;
+    }
+  } catch {
+    // Not kept.
+  }
+  if (typeof createImageBitmap !== 'function') return null;
+  return createImageBitmap(img, Math.round(part.x), Math.round(part.y), Math.round(part.w), Math.round(part.h)).catch(() => null);
 }
 
 export function releaseFrame(frame: Frame): void {

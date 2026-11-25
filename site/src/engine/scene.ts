@@ -1,6 +1,6 @@
 // One scene, built from its config: the plate, the character on it, and the ten hidden mushrooms.
 // A scene knows nothing about the page around it; site.ts puts it in the window and takes it out again.
-import { FrameStore, PLATE, type Frame, asset, assetSignal, decodeBlob, decodePart, fetchBlob, fetchFrame, frameSize, idle, loadImage, loadPlate, releaseFrame, requiredAsset } from './assets';
+import { FrameStore, PLATE, type Frame, asset, cutFrom, decodeBlob, fetchBlob, fetchFrame, fetchJson, frameSize, idle, loadImage, loadPlate, releaseFrame, requiredAsset } from './assets';
 import { leadOf, splitCast, type CastFrames, type CastRoutines, type CastScreen } from './cast';
 import { Character } from './character';
 import { edgeAlpha, edgeName, makeEdge, type Edge, type EdgeStyle } from './edge';
@@ -109,11 +109,7 @@ function releaseCastList(casts: CastList): void {
   for (const walk of casts.walks ?? []) walk.sleep();
 }
 
-const json = async <T>(path: string): Promise<T> => {
-  const response = await fetch(asset(path), { signal: assetSignal() });
-  if (!response.ok) throw new Error(`${path}: ${response.status}`);
-  return (await response.json()) as T;
-};
+const json = <T>(path: string, signal?: AbortSignal): Promise<T> => fetchJson<T>(asset(path), signal);
 /** How many drawings are decoded at a time before they are rehearsed. */
 const BATCH = 4;
 /** What one quiet moment between two frames is given to: so many of the drawings' pixels, and no more than so long. */
@@ -163,16 +159,16 @@ const webp = (file: string): string => file.replace(/\.png$/i, '.webp');
 /**
  * A cast whose files are here but not yet decoded. The destination's files can download while another scene
  * is still on show. They are decoded once the scene goes on the plate and the old scene has rested. The two sets are never in memory
- * together: that is what keeps the page inside a phone's budget.
+ * together: that is what keeps the page inside a phone's budget. `room`: the scene's own picture, decoded.
  */
-type Decode<T> = () => Promise<T>;
+type Decode<T> = (room: Promise<HTMLImageElement>) => Promise<T>;
 
 /** A character whose every pose is one image (scene 1): the whole drawing, or the part of it that differs from another. */
-async function frameCast(config: SceneConfig, cast: FrameCast, host: SceneHost): Promise<Decode<Cast>> {
+async function frameCast(config: SceneConfig, cast: FrameCast, host: SceneHost, signal: AbortSignal): Promise<Decode<Cast>> {
   let names = [...cast.frames];
   let routine: () => Schedule;
   if (cast.routine.kind === 'manifest') {
-    const manifest = await json<RoutineManifest>(config.assets + cast.dir + cast.routine.file);
+    const manifest = await json<RoutineManifest>(config.assets + cast.dir + cast.routine.file, signal);
     const problems = checkRoutine(manifest);
     if (problems.length) throw new Error(`${config.id}: ${cast.routine.file}: ${problems.join(' ')}`);
     names = [...new Set([...names, ...routineFrames(manifest)])];
@@ -185,10 +181,15 @@ async function frameCast(config: SceneConfig, cast: FrameCast, host: SceneHost):
   const light = cast.small && host.shownWidth() < cast.small.below ? cast.small.dir : null;
   // The drawing she rests on (and the one under it, should it be a patch): she is painted on it. The rest come later.
   const fetchRest = async (folder: string): Promise<string> => {
-    await Promise.all(restPoses(cast, folder).map((name) => fetchFrame(asset(`${config.assets}${folder}${name}.webp`))));
+    await Promise.all(restPoses(cast, folder).map((name) => fetchFrame(asset(`${config.assets}${folder}${name}.webp`), signal)));
     return folder;
   };
-  const dir = await (light ? fetchRest(light).catch(() => fetchRest(cast.dir)) : fetchRest(cast.dir));
+  const dir = await (light
+    ? fetchRest(light).catch((error) => {
+        if (signal.aborted) throw error;
+        return fetchRest(cast.dir);
+      })
+    : fetchRest(cast.dir));
   const urlOf = (name: string): string => asset(`${config.assets}${dir}${name}.webp`);
   const rest = restPoses(cast, dir);
   const later = names.filter((name) => !rest.includes(name));
@@ -308,58 +309,59 @@ async function frameCast(config: SceneConfig, cast: FrameCast, host: SceneHost):
 }
 
 /** A character delivered as stills and clips of patches (scene 2; see clips.ts and reel.ts). */
-async function clipCast(config: SceneConfig, cast: ClipCast, host: SceneHost): Promise<Decode<Cast>> {
+async function clipCast(config: SceneConfig, cast: ClipCast, host: SceneHost, signal: AbortSignal): Promise<Decode<Cast>> {
   const dir = config.assets + cast.dir;
   // A narrow screen gets the lighter set of the same frames, if the scene has one.
   const light = cast.small && host.shownWidth() < cast.small.below ? config.assets + cast.small.dir : null;
   let art = light ?? dir;
   const [frames, routine] = await Promise.all([
-    json<ClipFrames>(art + cast.frames).catch((error) => {
-      if (!light) throw error;
+    json<ClipFrames>(art + cast.frames, signal).catch((error) => {
+      if (!light || signal.aborted) throw error;
       art = dir;
-      return json<ClipFrames>(dir + cast.frames);
+      return json<ClipFrames>(dir + cast.frames, signal);
     }),
-    json<ClipRoutine>(dir + cast.routine),
+    json<ClipRoutine>(dir + cast.routine, signal),
   ]);
   const problems = checkClips(frames, routine);
   if (problems.length) throw new Error(`${config.id}: ${problems.join(' ')}`);
-  return actorCast(config.id, frames, routine, host, (file, priority, by) => fetchBlob(asset(art + webp(file)), priority, by), { keeps: true });
+  return actorCast(config.id, frames, routine, host, (file, priority, by) => fetchBlob(asset(art + webp(file)), priority, by), signal, { keeps: true });
 }
 
 /**
  * A whole cast delivered in one package (scene 3; see cast.ts): every actor is played by the same code as the
  * lab's Rachel, each from its own share of the two manifests. Bottom to top.
  */
-async function troupe(config: SceneConfig, cast: Troupe, host: SceneHost): Promise<Decode<CastList>> {
+async function troupe(config: SceneConfig, cast: Troupe, host: SceneHost, signal: AbortSignal): Promise<Decode<CastList>> {
   const dir = config.assets + cast.dir;
-  const [frames, routines] = await Promise.all([json<CastFrames>(dir + cast.frames), json<CastRoutines>(dir + cast.routine)]);
+  const [frames, routines] = await Promise.all([json<CastFrames>(dir + cast.frames, signal), json<CastRoutines>(dir + cast.routine, signal)]);
   const { actors, problems, screen, progress, progressFade, walkers } = splitCast(frames, routines, PLATE.w);
   if (problems.length) throw new Error(`${config.id}: ${problems.join(' ')}`);
   const lead = leadOf(actors);
   const load: LoadFile = (file, priority, by) => fetchBlob(asset(dir + webp(file)), priority, by);
-  const fetched = await Promise.all(
-    actors.map((actor) => actorCast(`${config.id}, ${actor.name}`, actor.frames, actor.routine, host, load, { keeps: false, className: actor === lead ? 'hj-rachel' : 'hj-actor', name: actor.name })),
-  );
-  // A live screen shows a part of the plate: the plate's file once more (from the browser's cache), to cut
-  // that part from when the scene goes on the plate.
-  const plate = screen ? await fetchBlob(asset(config.assets + config.plate)).catch(() => null) : null;
-  // The hunt's progress pieces and the walkers' files: downloaded now, decoded when the scene goes on.
-  const pieceFiles = await Promise.all(progress.map((piece) => load(piece.file)));
-  const walkFiles = await Promise.all(
-    walkers.map(async (walker) => ({
-      walker,
-      track: await json<TrackFile>(dir + walker.track),
-      files: {
-        sprites: new Map(await Promise.all(Object.entries(walker.sprites).map(async ([name, file]) => [name, await load(file)] as const))),
-        mask: walker.mask ? await load(walker.mask) : null,
-        bodyMask: walker.bodyMask ? await load(walker.bodyMask) : null,
-      },
-    })),
-  );
-  return async () => {
+  const file = (path: string): Promise<Blob> => load(path, undefined, signal);
+  const [fetched, pieceFiles, walkFiles] = await Promise.all([
+    Promise.all(
+      actors.map((actor) => actorCast(`${config.id}, ${actor.name}`, actor.frames, actor.routine, host, load, signal, { keeps: false, className: actor === lead ? 'hj-rachel' : 'hj-actor', name: actor.name })),
+    ),
+    // The hunt's progress pieces and the walkers' files: downloaded now, decoded when the scene goes on.
+    Promise.all(progress.map((piece) => file(piece.file))),
+    Promise.all(
+      walkers.map(async (walker) => {
+        const [track, sprites, mask, bodyMask] = await Promise.all([
+          json<TrackFile>(dir + walker.track, signal),
+          Promise.all(Object.entries(walker.sprites).map(async ([name, path]) => [name, await file(path)] as const)),
+          walker.mask ? file(walker.mask) : null,
+          walker.bodyMask ? file(walker.bodyMask) : null,
+        ]);
+        return { walker, track, files: { sprites: new Map(sprites), mask, bodyMask } };
+      }),
+    ),
+  ]);
+  return async (room) => {
     const [results, backdrop] = await Promise.all([
-      Promise.allSettled(fetched.map((decode) => decode())),
-      screen && plate ? decodePart(plate, screen.source) : null,
+      Promise.allSettled(fetched.map((decode) => decode(room))),
+      // A live screen shows a part of the plate: cut from the room's own picture, once that is here.
+      screen ? room.then((plate) => cutFrom(plate, screen.source)).catch(() => null) : null,
     ]);
     const casts: CastList = [];
     let failure: PromiseRejectedResult | undefined;
@@ -398,6 +400,7 @@ async function actorCast(
   routine: ClipRoutine,
   host: SceneHost,
   load: LoadFile,
+  signal: AbortSignal,
   options: { keeps: boolean; className?: string; name?: string },
 ): Promise<Decode<Cast>> {
   // The stills first: they are all she needs to start her routine, and they stay decoded while the scene
@@ -423,7 +426,7 @@ async function actorCast(
     void file.then(() => by?.removeEventListener('abort', forget), forget);
     return file;
   };
-  await Promise.all(first.map((name) => stillFile(names.indexOf(name))));
+  await Promise.all(first.map((name) => stillFile(names.indexOf(name), signal)));
   return async () => {
     const stills: Array<Frame | null> = names.map(() => null);
     const results = await Promise.allSettled(first.map(async (name) => {
@@ -623,6 +626,58 @@ async function actorCast(
   };
 }
 
+/**
+ * A scene's cast being downloaded: its manifests, and the drawings its first picture needs. It starts with the room, and
+ * is called off when another scene is asked for first. Once here, the files are kept for the visit.
+ */
+export class Casting {
+  private readonly config: SceneConfig;
+  private readonly host: SceneHost;
+  private job: Promise<Decode<CastList> | null> | null = null;
+  private here = false;
+  private control = new AbortController();
+
+  constructor(config: SceneConfig, host: SceneHost) {
+    this.config = config;
+    this.host = host;
+  }
+
+  /** Download it, unless it is here or on its way. If it failed, or was called off, this starts afresh. */
+  start(): Promise<Decode<CastList> | null> {
+    if (!this.job) {
+      const control = new AbortController();
+      const job = this.fetch(control.signal);
+      this.control = control;
+      this.job = job;
+      job.then(
+        () => {
+          if (this.job === job) this.here = true;
+        },
+        () => {
+          if (this.job === job) this.job = null;
+        },
+      );
+    }
+    return this.job;
+  }
+
+  /** Another scene is wanted first: it has the network to itself. (Does nothing once everything is here.) */
+  cancel(): void {
+    if (this.here || !this.job) return;
+    this.job = null;
+    this.control.abort();
+  }
+
+  private async fetch(signal: AbortSignal): Promise<Decode<CastList> | null> {
+    const { config, host } = this;
+    const cast = config.character;
+    if (!cast) return null;
+    if (cast.kind === 'cast') return troupe(config, cast, host, signal);
+    const one = await (cast.kind === 'clips' ? clipCast(config, cast, host, signal) : frameCast(config, cast, host, signal));
+    return async (room) => [await one(room)];
+  }
+}
+
 export class Scene {
   readonly config: SceneConfig;
   /** The scene's coordinate system: children are placed in percentages of 1672 × 941. */
@@ -655,8 +710,8 @@ export class Scene {
   private cast: Cast | null = null;
   /** The live screen one of the cast holds, if the scene has one. */
   private finder: Viewfinder | null = null;
-  /** Their first frames' files being fetched. (They are decoded when the scene goes on the plate: see Decode.) */
-  private casting: Promise<Decode<CastList> | null> | null = null;
+  /** Their first frames' files. (They are decoded when the scene goes on the plate: see Decode.) */
+  private readonly casting: Casting;
   /** The hunt's progress, shown in the picture (the theatre's backdrop), if the scene has it. */
   private progress: Progress | null = null;
   /** Its walkers (the stagehand), if it has any. */
@@ -676,7 +731,7 @@ export class Scene {
   private generation = 0;
   private destroyed = false;
 
-  private constructor(config: SceneConfig, host: SceneHost, plate: HTMLDivElement, room: HTMLImageElement, hunt: Hunt, edge: Edge) {
+  private constructor(config: SceneConfig, host: SceneHost, plate: HTMLDivElement, room: HTMLImageElement, hunt: Hunt, edge: Edge, casting: Casting) {
     this.config = config;
     this.host = host;
     this.plate = plate;
@@ -684,6 +739,7 @@ export class Scene {
     this.roomSrc = room.src;
     this.hunt = hunt;
     this.edge = edge;
+    this.casting = casting;
     // Bottom to top: the room, her shadow, the mushrooms, the character (or her cast), a first-visit painting's
     // sheet of paper, and over them all the painting's edge.
     plate.append(hunt.el, this.mark, this.edge.el);
@@ -705,18 +761,20 @@ export class Scene {
   }
 
   /**
-   * Downloads and decodes the plate and the mushrooms, with the edge's files alongside. `withCharacter` fetches and
-   * decodes the drawing she rests on as well, and draws the edge (the opening scene); otherwise they are left until the
-   * scene is first opened (see enter() and dress()), so that a scene nobody has visited yet costs only its plate.
+   * Downloads and decodes the plate and the mushrooms; alongside, the edge's files and her first frames' (`casting`).
+   * `withCharacter`: hers are decoded as well, and the edge is drawn (the opening scene). Otherwise that waits until
+   * the scene goes on the plate (see enter() and dress()), so that two casts are never in memory together.
    */
-  static async load(config: SceneConfig, host: SceneHost, withCharacter: boolean): Promise<Scene> {
+  static async load(config: SceneConfig, host: SceneHost, withCharacter: boolean, casting = new Casting(config, host)): Promise<Scene> {
     const roomImage = loadPlate(config.assets + config.plate);
+    // (Should it fail, enter() tries again and says so.)
+    casting.start().catch(() => {});
     const art = Hunt.art(config.spots);
     art.catch(() => {});
     const edge = makeEdge(host.edge.style, host.edge.seed(edgeName(config)), host.edge.paper, config.lines && config.assets + config.lines, config.keep);
     // (The opening scene: nothing else is on show, so its frames are decoded as soon as they are here.)
     const cast = withCharacter
-      ? Scene.castFor(config, host).then((decode) => decode?.() ?? null).catch((error) => {
+      ? casting.start().then((decode) => decode?.(roomImage) ?? null).catch((error) => {
           console.warn(`[hjaas] ${config.id}: the character could not be loaded; the room is shown without her`, error);
           return null;
         })
@@ -763,7 +821,7 @@ export class Scene {
       },
       onLand: host.onLand,
     }, drawn);
-    const scene = new Scene(config, host, plate, room, hunt, edge);
+    const scene = new Scene(config, host, plate, room, hunt, edge, casting);
     made = scene;
     // The opening scene's edge is needed at once; any other scene's is made when it is opened (see dress()).
     const [ready] = await Promise.all([cast, withCharacter ? scene.dress().catch(() => {}) : null]);
@@ -772,14 +830,6 @@ export class Scene {
       await scene.progress?.wake().catch(() => {});
     }
     return scene;
-  }
-
-  private static async castFor(config: SceneConfig, host: SceneHost): Promise<Decode<CastList> | null> {
-    const cast = config.character;
-    if (!cast) return null;
-    if (cast.kind === 'cast') return troupe(config, cast, host);
-    const one = await (cast.kind === 'clips' ? clipCast(config, cast, host) : frameCast(config, cast, host));
-    return async () => [await one()];
   }
 
   syncFinds(): void {
@@ -793,16 +843,11 @@ export class Scene {
   }
 
   /**
-   * Fetch her first frames once the visitor asks for this scene, while the current picture can stay up.
+   * Fetch her first frames, if they are not here or on their way, while the current picture can stay up.
    */
   preload(): void {
-    if (this.cast || this.casting || !this.config.character) return;
-    this.casting = Scene.castFor(this.config, this.host);
     // If it fails (the network), the next call tries again; enter() reports it.
-    this.casting.catch(() => {
-      this.casting = null;
-      this.entering = null;
-    });
+    if (!this.cast) this.casting.start().catch(() => (this.entering = null));
   }
 
   /**
@@ -820,8 +865,8 @@ export class Scene {
     if (this.character || !this.config.character) return back;
     this.preload();
     const at = this.generation;
-    this.entering ??= this.casting!
-      .then((decode) => decode?.() ?? null)
+    this.entering ??= this.casting.start()
+      .then((decode) => decode?.(Promise.resolve(this.room)) ?? null)
       .then(async (casts) => {
         if (at !== this.generation) {
           if (casts) releaseCastList(casts);
@@ -831,10 +876,7 @@ export class Scene {
         // The progress pieces the hunt has reached are drawn before the scene shows, and the walkers' pictures decoded.
         await Promise.all([this.progress?.wake(), ...this.walks.map((walk) => walk.wake())]);
       }).catch((error) => {
-        if (at === this.generation) {
-          this.entering = null;
-          this.casting = null;
-        }
+        if (at === this.generation) this.entering = null;
         throw error;
       });
     return this.entering;
@@ -844,7 +886,7 @@ export class Scene {
   loaded(): Promise<void> {
     if (this.cast || !this.config.character) return Promise.resolve();
     this.preload();
-    return this.casting!.then(() => {});
+    return this.casting.start().then(() => {});
   }
 
   /**
@@ -1222,7 +1264,8 @@ export class Scene {
     this.walks = [];
     this.players.clear();
     this.character = this.cast = this.player = this.finder = this.progress = null;
-    this.casting = this.entering = null;
+    this.entering = null;
+    this.casting.cancel();
     this.fetching.abort();
   }
 

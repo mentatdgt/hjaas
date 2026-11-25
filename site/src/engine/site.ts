@@ -10,7 +10,7 @@ import { onReducedMotionChange, reducedMotion } from './motion';
 import { Pan } from './pan';
 import { paperOf } from './paper';
 import { RESET_WAIT_MS, resetTap } from './reset';
-import { Scene } from './scene';
+import { Casting, Scene, type SceneHost } from './scene';
 import { freshScene, huntView, isProgressKey, loadProgress, presetAll, resetProgress, saveFind, savePan, saveSeen, type HuntView, type Progress, type SceneProgress } from './state';
 import { seeded } from './steps';
 import { Transition } from './transition';
@@ -486,6 +486,8 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
 
   const loading = new Map<string, Promise<Scene>>();
   const scenesLoaded = new Map<string, Scene>();
+  /** Each scene's cast, downloaded from when the scene is first asked for. */
+  const castings = new Map<string, Casting>();
   /** A scene, loaded once. Its mushrooms report back here. */
   const sceneFor = (config: SceneConfig): Promise<Scene> => {
     let scene = loading.get(config.id);
@@ -493,10 +495,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     const found = foundIn.get(config.id)!;
     const of = config.spots.length;
     let self: Scene | undefined;
-    // The opening scene comes with its character; any other scene fetches hers when it is first opened.
-    scene = Scene.load(
-      config,
-      {
+    const sceneHost: SceneHost = {
       flyLayer,
       found,
       target: () => caption.targetRect(),
@@ -545,9 +544,11 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       },
       onPose: flags.debug ? (pose, at) => poses.push([pose, Math.round(at)]) : undefined,
       edge: { style: edgeStyle, seed: edgeSeed, paper },
-      },
-      !current,
-    ).then((loaded) => {
+    };
+    const casting = castings.get(config.id) ?? new Casting(config, sceneHost);
+    castings.set(config.id, casting);
+    // The opening scene's character is decoded with it; any other scene's, when it goes in the window.
+    scene = Scene.load(config, sceneHost, !current, casting).then((loaded) => {
       if (destroyed) {
         loaded.destroy();
         return loaded;
@@ -558,7 +559,11 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       return loaded;
     });
     loading.set(config.id, scene);
-    void scene.catch(() => loading.delete(config.id));
+    void scene.catch(() => {
+      loading.delete(config.id);
+      // (The cast with it, if it is still on its way: nothing is shown without the room.)
+      casting.cancel();
+    });
     return scene;
   };
 
@@ -780,11 +785,13 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     };
     const overtaken = new Promise<null>((resolve) => asked.addEventListener('abort', () => resolve(null), { once: true }));
     const bringing = (async () => {
-      const next = await sceneFor(config);
+      const coming = sceneFor(config);
+      // Her first frames' files come with the room. (Asked for before, and called off: they are asked for again.)
+      castings.get(config.id)?.start().catch(() => {});
+      const next = await coming;
       if (asked.aborted) return next;
-      // Fetch her first frames once this room has been requested.
       next.preload();
-      if (paintsInFull(config) && !reducedMotion()) await Promise.race([next.loaded().catch(warn(config)), overtaken]);
+      if (paintsInFull(config) && !reducedMotion()) await Promise.race([next.loaded().catch((error) => asked.aborted || warn(config)(error)), overtaken]);
       // A scene out of sight holds no decoded picture: its room is decoded again here, from the browser's
       // own copy of the file, before anything is put on the page.
       if (!asked.aborted) await decoding;
@@ -801,6 +808,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     })();
     const next = await Promise.race([bringing, overtaken]);
     if (next && !asked.aborted) return next;
+    if (wanted.id !== config.id) castings.get(config.id)?.cancel();
     void bringing.then(drop, () => {});
     return null;
   };
@@ -1181,6 +1189,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       transition.clear();
       cleanup.forEach((fn) => fn());
       for (const scene of scenesLoaded.values()) scene.destroy();
+      for (const casting of castings.values()) casting.cancel();
       loading.clear();
       scenesLoaded.clear();
       root.remove();

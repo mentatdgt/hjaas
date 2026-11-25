@@ -14,7 +14,8 @@ import { LINES, serve } from './slow-server.mjs';
 
 const site = new URL('../../', import.meta.url).pathname;
 const builds = { before: process.env.HJ_OLD_DIST ?? `${site}node_modules/.hj/dist-old`, now: process.env.HJ_DIST ?? `${site}dist` };
-const out = new URL('../load-speed/', import.meta.url).pathname;
+// (HJ_OUT: another folder for the results, e.g. ../load-speed-2a/)
+const out = new URL(process.env.HJ_OUT ?? '../load-speed/', import.meta.url).pathname;
 await mkdir(out, { recursive: true });
 const phone = { ...devices['iPhone 14'], viewport: { width: 390, height: 844 } };
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -63,7 +64,7 @@ run.timings = async () => {
   const cases = [
     ['opening Build', {}],
     ...['grow', 'design', 'film', 'set'].map((id) => [`opening ${id}`, { first: id }]),
-    ...['grow', 'design', 'set'].map((id) => [`cold switch to ${id}`, { to: id }]),
+    ...['grow', 'design', 'film', 'set'].map((id) => [`cold switch to ${id}`, { to: id }]),
   ];
   for (const browser of only ? [only] : ['webkit', 'chrome']) for (const line of ['fast', 'slow']) for (const [label, options] of cases) {
     if (process.env.HJ_ONLY && !label.includes(process.env.HJ_ONLY)) continue;
