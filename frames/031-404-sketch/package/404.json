@@ -1,0 +1,61 @@
+{
+ "note": "HJaaS 404 page: Rachel sketching. All coordinates are in the 1672x941 page canvas (use it as the SVG viewBox). Layers, back to front: the 404 path (solid #000 on #F6F3EC), figure.webp, ONE arm patch (always exactly one visible), the blink patch (only during a blink). figure.webp has a transparent hole where the arm patch goes; each arm patch fully fills it with a 2px overlap.",
+ "canvas": {
+  "w": 1672,
+  "h": 941,
+  "background": "#F6F3EC"
+ },
+ "numeral": {
+  "fill": "#000000",
+  "d": "M443.6 824.1V712.2H234.1V601.8L367.8 116.9H587.7V594.1H625.5V712.2H587.7V824.1ZM360.1 594.1H443.6V238.1Z M836.2 830.2Q746.7 830.2 697.9 780.0Q649.1 729.8 649.1 635.5V316.8Q649.1 217.2 695.5 164.0Q741.9 110.8 836.2 110.8Q930.9 110.8 977.1 164.0Q1023.3 217.2 1023.3 316.8V635.5Q1023.3 729.8 974.7 780.0Q926.1 830.2 836.2 830.2ZM836.2 700.1Q852.7 700.1 861.9 685.3Q871.1 670.4 871.1 651.9V303.1Q871.1 278.2 865.7 259.6Q860.3 240.9 836.2 240.9Q812.1 240.9 806.7 259.6Q801.3 278.2 801.3 303.1V651.9Q801.3 670.4 810.7 685.3Q820.1 700.1 836.2 700.1Z M1256.1 824.1V712.2H1046.5V601.8L1180.2 116.9H1400.2V594.1H1437.9V712.2H1400.2V824.1ZM1172.6 594.1H1256.1V238.1Z",
+  "bbox": [
+   234.1,
+   110.8,
+   1437.9,
+   830.2
+  ]
+ },
+ "figure": {
+  "src": "figure.webp",
+  "x": 501,
+  "y": 182,
+  "w": 668,
+  "h": 652
+ },
+ "arm": {
+  "x": 590,
+  "y": 383,
+  "w": 215,
+  "h": 133,
+  "frames": {
+   "S1": "arm-S1.webp",
+   "S2": "arm-S2.webp",
+   "S3": "arm-S3.webp",
+   "S4": "arm-S4.webp",
+   "S5": "arm-S5.webp"
+  },
+  "rest": "S1"
+ },
+ "blink": {
+  "src": "blink.webp",
+  "x": 722,
+  "y": 270,
+  "w": 78,
+  "h": 60
+ },
+ "phone_viewbox": [
+  144,
+  0,
+  1384,
+  941
+ ],
+ "bytes": {
+  "figure": 45014,
+  "arm-S1": 9864,
+  "arm-S2": 9716,
+  "arm-S3": 9502,
+  "arm-S4": 9864,
+  "arm-S5": 9716,
+  "blink": 1480
+ }
+}
