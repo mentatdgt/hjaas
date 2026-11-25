@@ -22,6 +22,9 @@ In `site/public/404.html`, the same five links. (Check the site's Vite `base: '.
 - `site/public/404.html`: `<title>Page not found · HJaaS</title>` stays as it is (short, so the tab still shows "Page not found").
 - If the site sets `document.title` anywhere in code (per scene, for example), make it the same string.
 
+## 3. Reset mushrooms: no accidental double tap
+Job 015 found that the confirming second tap counts however soon it comes, so a quick accidental double tap (easy on an iPad) resets all 50 at once. **The second tap only counts if it comes at least 500 ms after the first.** A tap sooner than that is ignored, and the label stays on "Tap again to reset all 50". The 4 s window is unchanged. Add a test, and check it in WebKit with a 150 ms double tap (nothing cleared) and taps 1 s apart (reset). Also update `qa/tools/paint-in.mjs` and `review03.mjs`, which still click the old "Replay painting" button.
+
 ## Must not change
 Anything else.
 
