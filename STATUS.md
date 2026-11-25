@@ -1,6 +1,6 @@
 # HJaaS: status
 
-Where everything stands. Update this whenever a scene changes state. **Last updated: 2026-11-25 08:30 (Wren: counter round 2 passed; Quinn review 030 and fixes 031; Fable applied and checked them on `site/review-fixes`).**
+Where everything stands. Update this whenever a scene changes state. **Last updated: 2026-11-25 23:10 (Wren: Engine 011b, 012b, 013b and 014 reviewed and live on hjaas.com via `deploy` at `3e5a064`).**
 
 New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a scene gets made) and the handover for your scene: `HANDOVER-scene-3.md` (café, finishing in the original Wren chat) `HANDOVER-next-scene.md` (scene 4, Film) or `HANDOVER-scene-5.md` (scene 5, set design). For the counter and the phone crop: `HANDOVER-hunt-counter.md`. For sending Fable build jobs without the user pasting: `FABLE-LOOP.md`.
 
@@ -41,9 +41,12 @@ New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a
 ## Open decisions and launch list
 - [ ] **Model-sheet pass for scenes 1 and 2:** restyle Rachel to `M01_rachel_model.png` (scene 1 also loses its glasses).
 - [x] **Scene 1 glasses removed 2026-11-25** (Quinn 034/035; eye area only, checked for drift). Was: **Scene 1 still has glasses → remove them.** Decided: no glasses anywhere. Scene 1's frames (hammer loop, blink, reaction, wink, 2× set) were drawn with glasses and need a no-glasses re-edit. Plan this as its own task after the café.
-- [ ] Copy: about text, services, taglines (marked `TODO(copy)` in the code).
+- [x] Copy round 1 + Instrument Sans site-wide (Engine 013b, live 2026-11-25). Wording for Skip / Pause / Replay / Scenes is unchanged.
+- [x] 404 page: Rachel sketching in front of a solid black Anton "404" (Quinn 044–046, Engine 014, live 2026-11-25). Text: "This page doesn't exist. Back to the start".
+- [x] Faster opening, part 1 (Engine 011b, live). Part 2 (cast with the room, Film's double download, Set Design's backdrop wait) is on `wip/011-load-speed`.
+- [ ] Contact form: live on Resend (Engine 012b), Vercel settings present. Needs one real test message from the user's phone. `CONTACT_TO` switches to Hui Jie at launch.
 - [ ] Contact form: **Resend** (Vercel Marketplace integration, Free plan, sending domain hjaas.com in the Tokyo region; DNS auto-configured 2026-11-25, verification pending). Vercel env vars set: `RESEND_API_KEY` (integration), `MAIL_FROM`, and `CONTACT_TO`, which is the user's inbox while private (**switch to Hui Jie's at launch**). The code is Engine job 012.
-- [ ] Hosting: **Vercel (user decided 2026-11-25).** Private preview on hjaas.com and www.hjaas.com from the `deploy` branch (`site/review-fixes` plus `site/middleware.ts`, a password gate driven by the `PREVIEW_PASSWORD` env var). After each approved Engine job, Wren merges `site/review-fixes` into `deploy`. At launch: delete the middleware and the env var. Hobby fits, since this is a personal, non-commercial gift. Settings come from Quinn's load review (job 041).
+- [ ] Hosting: **Vercel (user decided 2026-11-25).** Private preview on hjaas.com and www.hjaas.com from the `deploy` branch (`site/review-fixes` plus `site/middleware.js`, a password gate driven by the `PREVIEW_PASSWORD` env var). After each approved Engine job, Wren merges `site/review-fixes` into `deploy`. At launch: delete the middleware and the env var. Hobby fits, since this is a personal, non-commercial gift. Settings come from Quinn's load review (job 041).
 - [ ] Domain.
 - [ ] At launch: open up `robots.txt`; set `og:image` to the full URL.
 - [x] Film scene: Sean's consent received (user, 2026-11-25).
