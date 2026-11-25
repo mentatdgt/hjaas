@@ -2,6 +2,9 @@
 
 **Reported by the user 2026-11-26** (photo: `reviews/assets/logo-black-edge-ipad.jpg`): Chrome on iPad, landscape, all 50 found. After tapping the logo, everything outside the painting's feathered edge, up to the window's rectangle, is **solid black** instead of paper. The masthead, counters and controls are normal. Fix it for every browser.
 
+
+**Update from the user (01:46):** in **Safari** on iPad the border does NOT turn black, but after tapping the logo the **thin lines at the left and right sides** appear (job 016's bug). In **Chrome** on iPad the same tap turns the whole border black. So both may come from the same thing: how the page and its edge canvases are rebuilt after the logo's reload (for example, edge strips that partly fail or are drawn at a different size or fraction of a pixel on reload). Whichever job runs first: test the logo tap, and say whether the two bugs share a cause.
+
 ## Lead (Wren, from the code; not yet proven)
 - The logo is a link (`options.homeHref`), so tapping it reloads the page.
 - The paper border is drawn on canvases (`edge.ts`: strips along the plate's sides, plus a scratch canvas, `putImageData`).
