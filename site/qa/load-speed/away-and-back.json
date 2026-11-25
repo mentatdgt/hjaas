@@ -1,0 +1,52 @@
+{
+ "webkit, back": {
+  "drawingsAtTheTap": 1,
+  "askedWhileAway": 0,
+  "calledOff": 6,
+  "picturesOfHerIn25s": 10,
+  "atWorkAfterMs": 5737,
+  "drawingsDownloadedInFullTwice": 0,
+  "errors": []
+ },
+ "webkit, there": {
+  "drawingsAtTheTap": 1,
+  "askedWhileAway": 0,
+  "calledOff": 6,
+  "picturesOfHerIn25s": 10,
+  "atWorkAfterMs": 5646,
+  "drawingsDownloadedInFullTwice": 0,
+  "errors": []
+ },
+ "webkit, skip": {
+  "drawingsAtTheTap": 1,
+  "picturesOfHerIn25s": 10,
+  "atWorkAfterMs": 4166,
+  "drawingsDownloadedInFullTwice": 0,
+  "errors": []
+ },
+ "chrome, back": {
+  "drawingsAtTheTap": 1,
+  "askedWhileAway": 3,
+  "calledOff": 8,
+  "picturesOfHerIn25s": 11,
+  "atWorkAfterMs": 5809,
+  "drawingsDownloadedInFullTwice": 0,
+  "errors": []
+ },
+ "chrome, there": {
+  "drawingsAtTheTap": 1,
+  "askedWhileAway": 3,
+  "calledOff": 8,
+  "picturesOfHerIn25s": 11,
+  "atWorkAfterMs": 4318,
+  "drawingsDownloadedInFullTwice": 0,
+  "errors": []
+ },
+ "chrome, skip": {
+  "drawingsAtTheTap": 1,
+  "picturesOfHerIn25s": 11,
+  "atWorkAfterMs": 3371,
+  "drawingsDownloadedInFullTwice": 0,
+  "errors": []
+ }
+}

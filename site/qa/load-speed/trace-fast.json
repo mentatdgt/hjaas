@@ -1,0 +1,186 @@
+{
+ "now": [
+  {
+   "rows": {
+    "opening (Build)": {
+     "frames": 285,
+     "dropped": 1,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4064
+     ],
+     "longestTaskMs": 19,
+     "tasksOver16": 1
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 14,
+     "tasksOver16": 0
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "frames": 285,
+     "dropped": 3,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4063,
+      4080,
+      4563
+     ],
+     "longestTaskMs": 37,
+     "tasksOver16": 2
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "frames": 285,
+     "dropped": 17,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4065,
+      4082,
+      4099,
+      4115,
+      4132,
+      4149,
+      4165,
+      4182,
+      4565,
+      4582,
+      4615,
+      4632,
+      4649,
+      4665,
+      4682,
+      4699,
+      4715
+     ],
+     "longestTaskMs": 137,
+     "tasksOver16": 3
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "frames": 285,
+     "dropped": 4,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4065,
+      4565,
+      4598,
+      4615
+     ],
+     "longestTaskMs": 25,
+     "tasksOver16": 1
+    }
+   },
+   "errors": []
+  }
+ ],
+ "before": [
+  {
+   "rows": {
+    "opening (Build)": {
+     "frames": 285,
+     "dropped": 8,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4063,
+      4080,
+      4096,
+      4113,
+      4130,
+      4146,
+      4563,
+      4580
+     ],
+     "longestTaskMs": 112,
+     "tasksOver16": 2
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 9,
+     "tasksOver16": 0
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "frames": 285,
+     "dropped": 3,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4064,
+      4564,
+      4598
+     ],
+     "longestTaskMs": 28,
+     "tasksOver16": 1
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "frames": 285,
+     "dropped": 3,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4064,
+      4564,
+      4597
+     ],
+     "longestTaskMs": 26,
+     "tasksOver16": 2
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "frames": 285,
+     "dropped": 3,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4064,
+      4081,
+      4564
+     ],
+     "longestTaskMs": 37,
+     "tasksOver16": 1
+    }
+   },
+   "errors": []
+  }
+ ]
+}

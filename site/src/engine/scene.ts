@@ -661,7 +661,7 @@ export class Scene {
   private progress: Progress | null = null;
   /** Its walkers (the stagehand), if it has any. */
   private walks: Walk[] = [];
-  /** Whatever is downloaded after the first showing is called off by this: the visitor has asked for another scene. */
+  /** Her drawings still to be downloaded (see stock()) are called off by this: the visitor has asked for another scene. */
   private fetching = new AbortController();
   private paused = false;
   /** The scene has settled: loadMore() has been asked for. */
@@ -884,7 +884,7 @@ export class Scene {
     for (const cast of [...this.casts].sort((a, b) => Number(b === lead) - Number(a === lead))) void cast.download(signal).catch(() => {});
   }
 
-  /** Another scene has been asked for: nothing more is downloaded for this one, so that it has the network to itself. */
+  /** Another scene has been asked for: this one's drawings still to come wait, so that the tap has the network. (Clips go on, as before.) */
   pause(): void {
     if (this.paused) return;
     this.paused = true;

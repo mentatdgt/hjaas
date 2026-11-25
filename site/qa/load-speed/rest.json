@@ -1,0 +1,214 @@
+{
+ "chrome desktop, build: painted on the same pixels": {
+  "same": true,
+  "figures": 1
+ },
+ "chrome desktop, grow: painted on the same pixels": {
+  "same": true,
+  "figures": 1
+ },
+ "chrome desktop, design: painted on the same pixels": {
+  "same": true,
+  "figures": 7
+ },
+ "chrome desktop, film: painted on the same pixels": {
+  "same": true,
+  "figures": 4
+ },
+ "chrome desktop, set: painted on the same pixels": {
+  "same": true,
+  "figures": 3
+ },
+ "chrome phone, build: painted on the same pixels": {
+  "same": true,
+  "figures": 1
+ },
+ "chrome phone, grow: painted on the same pixels": {
+  "same": true,
+  "figures": 1
+ },
+ "chrome phone, design: painted on the same pixels": {
+  "same": true,
+  "figures": 7
+ },
+ "chrome phone, film: painted on the same pixels": {
+  "same": true,
+  "figures": 4
+ },
+ "chrome phone, set: painted on the same pixels": {
+  "same": true,
+  "figures": 3
+ },
+ "webkit phone, build: painted on the same pixels": {
+  "same": true,
+  "figures": 1
+ },
+ "webkit phone, grow: painted on the same pixels": {
+  "same": true,
+  "figures": 1
+ },
+ "webkit phone, design: painted on the same pixels": {
+  "same": true,
+  "figures": 7
+ },
+ "webkit phone, film: painted on the same pixels": {
+  "same": true,
+  "figures": 4
+ },
+ "webkit phone, set: painted on the same pixels": {
+  "same": true,
+  "figures": 3
+ },
+ "webkit, build: her other drawings held back": {
+  "changedWhileHeld": null,
+  "findWhileHeld": 1,
+  "movesAfterTheyArriveMs": 1011,
+  "errors": []
+ },
+ "webkit, build, Skip: her other drawings held back": {
+  "changedWhileHeld": null,
+  "findWhileHeld": 1,
+  "movesAfterTheyArriveMs": 1519,
+  "errors": []
+ },
+ "webkit, grow: her other drawings held back": {
+  "changedWhileHeld": null,
+  "findWhileHeld": 1,
+  "movesAfterTheyArriveMs": 2771,
+  "errors": []
+ },
+ "webkit, grow, Skip: her other drawings held back": {
+  "changedWhileHeld": null,
+  "findWhileHeld": 1,
+  "movesAfterTheyArriveMs": 1298,
+  "errors": []
+ },
+ "webkit, set: her other drawings held back": {
+  "changedWhileHeld": null,
+  "findWhileHeld": 1,
+  "movesAfterTheyArriveMs": 1726,
+  "errors": []
+ },
+ "webkit, set, Skip: her other drawings held back": {
+  "changedWhileHeld": null,
+  "findWhileHeld": 1,
+  "movesAfterTheyArriveMs": 1875,
+  "errors": []
+ },
+ "chrome, build: her other drawings held back": {
+  "changedWhileHeld": null,
+  "findWhileHeld": 1,
+  "movesAfterTheyArriveMs": 537,
+  "errors": []
+ },
+ "chrome, build, Skip: her other drawings held back": {
+  "changedWhileHeld": null,
+  "findWhileHeld": 1,
+  "movesAfterTheyArriveMs": 455,
+  "errors": []
+ },
+ "chrome, grow: her other drawings held back": {
+  "changedWhileHeld": null,
+  "findWhileHeld": 1,
+  "movesAfterTheyArriveMs": 758,
+  "errors": []
+ },
+ "chrome, grow, Skip: her other drawings held back": {
+  "changedWhileHeld": null,
+  "findWhileHeld": 1,
+  "movesAfterTheyArriveMs": 761,
+  "errors": []
+ },
+ "chrome, set: her other drawings held back": {
+  "changedWhileHeld": null,
+  "findWhileHeld": 1,
+  "movesAfterTheyArriveMs": 10,
+  "errors": []
+ },
+ "chrome, set, Skip: her other drawings held back": {
+  "changedWhileHeld": null,
+  "findWhileHeld": 1,
+  "movesAfterTheyArriveMs": 12,
+  "errors": []
+ },
+ "webkit, fast, build: her first move after the first stroke, ms": {
+  "before": 4927,
+  "now": 5007
+ },
+ "webkit, fast, grow: her first move after the first stroke, ms": {
+  "before": 5431,
+  "now": 5349
+ },
+ "webkit, fast, design: her first move after the first stroke, ms": {
+  "before": 5745,
+  "now": 5864
+ },
+ "webkit, fast, film: her first move after the first stroke, ms": {
+  "before": 5212,
+  "now": 5638
+ },
+ "webkit, fast, set: her first move after the first stroke, ms": {
+  "before": 5520,
+  "now": 5320
+ },
+ "webkit, slow, build: her first move after the first stroke, ms": {
+  "before": 4927,
+  "now": 4918
+ },
+ "webkit, slow, grow: her first move after the first stroke, ms": {
+  "before": 5337,
+  "now": 5258
+ },
+ "webkit, slow, design: her first move after the first stroke, ms": {
+  "before": 5787,
+  "now": 6642
+ },
+ "webkit, slow, film: her first move after the first stroke, ms": {
+  "before": 5101,
+  "now": 5043
+ },
+ "webkit, slow, set: her first move after the first stroke, ms": {
+  "before": 5554,
+  "now": 5596
+ },
+ "chrome, fast, build: her first move after the first stroke, ms": {
+  "before": 4999,
+  "now": 5340
+ },
+ "chrome, fast, grow: her first move after the first stroke, ms": {
+  "before": 5246,
+  "now": 5224
+ },
+ "chrome, fast, design: her first move after the first stroke, ms": {
+  "before": 5666,
+  "now": 5960
+ },
+ "chrome, fast, film: her first move after the first stroke, ms": {
+  "before": 5754,
+  "now": 5537
+ },
+ "chrome, fast, set: her first move after the first stroke, ms": {
+  "before": 5361,
+  "now": 5354
+ },
+ "chrome, slow, build: her first move after the first stroke, ms": {
+  "before": 4936,
+  "now": 5123
+ },
+ "chrome, slow, grow: her first move after the first stroke, ms": {
+  "before": 5380,
+  "now": 5337
+ },
+ "chrome, slow, design: her first move after the first stroke, ms": {
+  "before": 5829,
+  "now": 6103
+ },
+ "chrome, slow, film: her first move after the first stroke, ms": {
+  "before": 5326,
+  "now": 5519
+ },
+ "chrome, slow, set: her first move after the first stroke, ms": {
+  "before": 5491,
+  "now": 5565
+ }
+}

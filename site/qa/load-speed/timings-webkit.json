@@ -1,0 +1,282 @@
+{
+ "webkit, fast: opening Build": {
+  "before": {
+   "ms": [
+    3286,
+    3210,
+    3266
+   ],
+   "median": 3266,
+   "bytes": {
+    "requests": 30,
+    "kB": 2495
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    2394,
+    2359,
+    2321
+   ],
+   "median": 2359,
+   "bytes": {
+    "requests": 27,
+    "kB": 1953
+   },
+   "errors": []
+  }
+ },
+ "webkit, fast: opening grow": {
+  "before": {
+   "ms": [
+    3252,
+    3329,
+    3351
+   ],
+   "median": 3329,
+   "bytes": {
+    "requests": 27,
+    "kB": 2605
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    2363,
+    2511,
+    2465
+   ],
+   "median": 2465,
+   "bytes": {
+    "requests": 27,
+    "kB": 1949
+   },
+   "errors": []
+  }
+ },
+ "webkit, fast: opening design": {
+  "before": {
+   "ms": [
+    4165,
+    4164,
+    4304
+   ],
+   "median": 4165,
+   "bytes": {
+    "requests": 66,
+    "kB": 3145
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    2669,
+    2707,
+    2703
+   ],
+   "median": 2703,
+   "bytes": {
+    "requests": 34,
+    "kB": 2231
+   },
+   "errors": []
+  }
+ },
+ "webkit, fast: opening film": {
+  "before": {
+   "ms": [
+    4288,
+    4284,
+    4343
+   ],
+   "median": 4288,
+   "bytes": {
+    "requests": 45,
+    "kB": 3709
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    3539,
+    3608,
+    3572
+   ],
+   "median": 3572,
+   "bytes": {
+    "requests": 38,
+    "kB": 3291
+   },
+   "errors": []
+  }
+ },
+ "webkit, fast: opening set": {
+  "before": {
+   "ms": [
+    5194,
+    5923,
+    5176
+   ],
+   "median": 5194,
+   "bytes": {
+    "requests": 139,
+    "kB": 3773
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    4259,
+    3773,
+    4102
+   ],
+   "median": 4102,
+   "bytes": {
+    "requests": 102,
+    "kB": 3490
+   },
+   "errors": []
+  }
+ },
+ "webkit, slow: opening Build": {
+  "before": {
+   "ms": [
+    13708,
+    14134,
+    13689
+   ],
+   "median": 13708,
+   "bytes": {
+    "requests": 30,
+    "kB": 2495
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    9936,
+    10081,
+    10246
+   ],
+   "median": 10081,
+   "bytes": {
+    "requests": 27,
+    "kB": 1793
+   },
+   "errors": []
+  }
+ },
+ "webkit, slow: opening grow": {
+  "before": {
+   "ms": [
+    14560,
+    14348,
+    14125
+   ],
+   "median": 14348,
+   "bytes": {
+    "requests": 27,
+    "kB": 2605
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    9768,
+    9764,
+    9719
+   ],
+   "median": 9764,
+   "bytes": {
+    "requests": 27,
+    "kB": 1805
+   },
+   "errors": []
+  }
+ },
+ "webkit, slow: opening design": {
+  "before": {
+   "ms": [
+    17112,
+    17053,
+    17201
+   ],
+   "median": 17112,
+   "bytes": {
+    "requests": 66,
+    "kB": 3145
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    9867,
+    9999,
+    9985
+   ],
+   "median": 9985,
+   "bytes": {
+    "requests": 34,
+    "kB": 1824
+   },
+   "errors": []
+  }
+ },
+ "webkit, slow: opening film": {
+  "before": {
+   "ms": [
+    19561,
+    19566,
+    19529
+   ],
+   "median": 19561,
+   "bytes": {
+    "requests": 45,
+    "kB": 3709
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    15908,
+    15925,
+    15966
+   ],
+   "median": 15925,
+   "bytes": {
+    "requests": 32,
+    "kB": 3042
+   },
+   "errors": []
+  }
+ },
+ "webkit, slow: opening set": {
+  "before": {
+   "ms": [
+    20260,
+    20611,
+    20295
+   ],
+   "median": 20295,
+   "bytes": {
+    "requests": 139,
+    "kB": 3773
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    15752,
+    15716,
+    15634
+   ],
+   "median": 15716,
+   "bytes": {
+    "requests": 90,
+    "kB": 2991
+   },
+   "errors": []
+  }
+ }
+}
