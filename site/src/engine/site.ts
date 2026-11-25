@@ -8,6 +8,7 @@ import { ContactForm } from './form';
 import { Logo } from './logo';
 import { onReducedMotionChange, reducedMotion } from './motion';
 import { Pan } from './pan';
+import { paperOf } from './paper';
 import { RESET_WAIT_MS, resetTap } from './reset';
 import { Scene } from './scene';
 import { freshScene, huntView, isProgressKey, loadProgress, presetAll, resetProgress, saveFind, savePan, saveSeen, type HuntView, type Progress, type SceneProgress } from './state';
@@ -35,6 +36,8 @@ export interface Site {
   destroy(): void;
 }
 
+/** The scene a plain address opens (as in public/room-route.js). */
+const HOME = 'build';
 const HINT_AFTER_S = 60;
 /** The first visit's drift (pan.ts), after the painting has ended. */
 const DRIFT_AFTER_MS = 700;
@@ -131,7 +134,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   const sceneById = (id: string): SceneConfig | undefined => scenes.find((scene) => scene.id === id);
   /** Resolve the same room as the early image preload, falling back to Build. */
   const sceneInAddress = (): SceneConfig =>
-    sceneById(window.hjaasRoom(location.hash).id) ?? sceneById('build') ?? scenes[0];
+    sceneById(window.hjaasRoom(location.hash).id) ?? sceneById(HOME) ?? scenes[0];
 
   const root = document.createElement('div');
   root.className = 'hj-scene is-pre';
@@ -259,7 +262,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
 
   // The painting's edge. One style ships; the others can be asked for in development, to compare.
   const edgeStyle: EdgeStyle = EDGE_STYLES.find((style) => style === flags.edge) ?? DEFAULT_EDGE;
-  const paper = (getComputedStyle(root).backgroundColor.match(/[\d.]+/g) ?? ['246', '243', '236']).slice(0, 3).map(Number) as [number, number, number];
+  const paper = paperOf(root);
 
   const rnd = flags.seed === undefined ? Math.random : seeded(flags.seed);
   // The visitor can pause the routine; reduced motion never starts it. Either way she holds her rest pose.
@@ -940,6 +943,12 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       else if (tab.hash === location.hash) onAddress();
     });
   }
+  /** The logo, on the home page itself: the opening scene, exactly as its tab would go there. */
+  const goHome = (): void => {
+    const tab = tabs.find((each) => each.dataset.scene === HOME);
+    if (tab) tab.click();
+    else if (current) go(current.config);
+  };
   // "Reset mushrooms", tapped twice (but not a double tap): every mushroom of every scene is hidden again and nothing
   // found is kept. She stops, the picture clears to a blank sheet, and it is painted again, its mushrooms with it.
   reset.addEventListener('click', (event) => {
@@ -995,9 +1004,65 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     if (!document.hidden) startLogoIdle();
     else if (begun) settleMotion(false);
     current?.visibility();
+    if (!document.hidden && !away && !busy()) current?.checkEdge();
   };
   document.addEventListener('visibilitychange', onVisibility);
   cleanup.push(() => document.removeEventListener('visibilitychange', onVisibility));
+
+  // ---- The page is left, and comes back as it was (the browser's back-forward cache). ----
+
+  /** It has been left: every canvas has given its pixels back, so that they never count against the next page's. */
+  let away = false;
+  const leavePage = (): void => {
+    if (away) return;
+    away = true;
+    if (begun) settleMotion(false);
+    transition.release();
+    current?.hold();
+    for (const scene of scenesLoaded.values()) scene.rest(scene === current);
+    logo?.release();
+    root.classList.add('is-away');
+  };
+  const comeBack = async (): Promise<void> => {
+    if (!away) return;
+    // Left before its opening picture was finished: opened afresh, painting and all.
+    if (!settled || !current) {
+      location.reload();
+      return;
+    }
+    away = false;
+    // (A switch that was under way when the page was left ends first.)
+    while (moving && !destroyed && !away) await new Promise((resolve) => window.setTimeout(resolve, 30));
+    if (destroyed || away) return;
+    moving = true;
+    const scene = current;
+    const { config } = scene;
+    transition.release();
+    try {
+      // (Whatever a switch under way has drawn since is as good as nothing: from the start.)
+      scene.rest(true);
+      await scene.ready().catch(warn(config));
+      const her = scene.enter().catch(warn(config));
+      scene.fit();
+      await Promise.all([scene.dress().catch(warn(config)), Promise.race([her, new Promise((resolve) => window.setTimeout(resolve, WAIT_FOR_HER_MS))])]);
+    } finally {
+      moving = false;
+    }
+    if (destroyed || away) return;
+    root.classList.remove('is-away');
+    logo?.prepare();
+    startLogoIdle();
+    transition.show(scene);
+    arrived(scene);
+    void travel();
+  };
+  const onShow = (): void => void comeBack();
+  window.addEventListener('pagehide', leavePage);
+  window.addEventListener('pageshow', onShow);
+  cleanup.push(() => {
+    window.removeEventListener('pagehide', leavePage);
+    window.removeEventListener('pageshow', onShow);
+  });
 
   // ---- The opening. ----
 
@@ -1012,7 +1077,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     try {
       [scene, theLogo] = await Promise.all([
         sceneFor(config),
-        Logo.create(options.homeHref).catch(() => undefined),
+        Logo.create(options.homeHref, goHome).catch(() => undefined),
       ]);
     } catch (error) {
       moving = false;

@@ -308,6 +308,37 @@
   display: block;
 }
 
+/* Where a strip of the edge could not be drawn (edge.ts): a plain fade into the paper stands in for it. */
+.hj-edge-mask {
+  position: absolute;
+  display: none;
+}
+
+.hj-edge-mask.is-on {
+  display: block;
+}
+
+.hj-edge-mask.is-top {
+  background: linear-gradient(to bottom, var(--hj-paper) 18%, rgba(246, 243, 236, 0));
+}
+
+.hj-edge-mask.is-bottom {
+  background: linear-gradient(to top, var(--hj-paper) 18%, rgba(246, 243, 236, 0));
+}
+
+.hj-edge-mask.is-left {
+  background: linear-gradient(to right, var(--hj-paper) 18%, rgba(246, 243, 236, 0));
+}
+
+.hj-edge-mask.is-right {
+  background: linear-gradient(to left, var(--hj-paper) 18%, rgba(246, 243, 236, 0));
+}
+
+/* The page has been left and has come back: its picture shows once every part of it is drawn again (site.ts). */
+.hj-scene.is-away .hj-viewport {
+  visibility: hidden;
+}
+
 /* Between scenes the sheet is a copy of the picture being left, and lies over the window itself. */
 .hj-paint.is-over-window {
   z-index: 2;
