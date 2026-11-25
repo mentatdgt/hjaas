@@ -1,0 +1,35 @@
+{
+ "complete-desktop": {
+  "frames": 118,
+  "seconds": 3.5,
+  "movingFrames": 87,
+  "longestGapWhileMovingMs": 83.3,
+  "gapsOver34": [
+   [
+    1183,
+    83
+   ],
+   [
+    1266,
+    67
+   ]
+  ],
+  "errors": []
+ },
+ "complete-desktop-reduced": {
+  "frames": 44,
+  "seconds": 1.6,
+  "movingFrames": 0,
+  "longestGapWhileMovingMs": null,
+  "gapsOver34": [],
+  "errors": []
+ },
+ "complete-portrait": {
+  "frames": 123,
+  "seconds": 3.5,
+  "movingFrames": 84,
+  "longestGapWhileMovingMs": 16.7,
+  "gapsOver34": [],
+  "errors": []
+ }
+}

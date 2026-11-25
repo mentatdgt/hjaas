@@ -1,0 +1,249 @@
+{
+ "chrome": {
+  "servedBy": "run.s3 in qa/tools/review-fixes.mjs: a static server on 127.0.0.1 that reads dist/_headers (Netlify / Cloudflare Pages format) and puts its headers on every response",
+  "headers": {
+   "/": {
+    "status": 200,
+    "content-type": "text/html; charset=utf-8",
+    "content-security-policy": "default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self'; style-src-attr 'none'; img-src 'self' blob:; font-src 'self'; worker-src 'self'; connect-src 'self'; form-action 'none'; frame-ancestors 'none'",
+    "x-content-type-options": "nosniff",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "permissions-policy": "accelerometer=(), autoplay=(), bluetooth=(), camera=(), display-capture=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), magnetometer=(), microphone=(), midi=(), payment=(), serial=(), usb=()"
+   },
+   "/room-route.js": {
+    "status": 200,
+    "content-type": "text/javascript",
+    "content-security-policy": "default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self'; style-src-attr 'none'; img-src 'self' blob:; font-src 'self'; worker-src 'self'; connect-src 'self'; form-action 'none'; frame-ancestors 'none'",
+    "x-content-type-options": "nosniff",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "permissions-policy": "accelerometer=(), autoplay=(), bluetooth=(), camera=(), display-capture=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), magnetometer=(), microphone=(), midi=(), payment=(), serial=(), usb=()"
+   },
+   "/shell.css": {
+    "status": 200,
+    "content-type": "text/css",
+    "content-security-policy": "default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self'; style-src-attr 'none'; img-src 'self' blob:; font-src 'self'; worker-src 'self'; connect-src 'self'; form-action 'none'; frame-ancestors 'none'",
+    "x-content-type-options": "nosniff",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "permissions-policy": "accelerometer=(), autoplay=(), bluetooth=(), camera=(), display-capture=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), magnetometer=(), microphone=(), midi=(), payment=(), serial=(), usb=()"
+   },
+   "/assets/scene1/room.webp": {
+    "status": 200,
+    "content-type": "image/webp",
+    "content-security-policy": "default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self'; style-src-attr 'none'; img-src 'self' blob:; font-src 'self'; worker-src 'self'; connect-src 'self'; form-action 'none'; frame-ancestors 'none'",
+    "x-content-type-options": "nosniff",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "permissions-policy": "accelerometer=(), autoplay=(), bluetooth=(), camera=(), display-capture=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), magnetometer=(), microphone=(), midi=(), payment=(), serial=(), usb=()"
+   },
+   "/missing.txt": {
+    "status": 404,
+    "content-type": null,
+    "content-security-policy": "default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self'; style-src-attr 'none'; img-src 'self' blob:; font-src 'self'; worker-src 'self'; connect-src 'self'; form-action 'none'; frame-ancestors 'none'",
+    "x-content-type-options": "nosniff",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "permissions-policy": "accelerometer=(), autoplay=(), bluetooth=(), camera=(), display-capture=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), magnetometer=(), microphone=(), midi=(), payment=(), serial=(), usb=()"
+   }
+  },
+  "visits": {
+   "opening, find, switches (desktop)": {
+    "violations": [],
+    "console": [],
+    "requestsFailed": [],
+    "decoderWorker": [
+     "/assets/decoder.worker-DMyipsq3.js",
+     "/assets/decoder.worker-DMyipsq3.js"
+    ],
+    "afterAFind": "1",
+    "red": "5",
+    "fonts": [
+     "Bricolage Grotesque Variable 200 800",
+     "Spectral 400"
+    ],
+    "rachel": true,
+    "returnVisit": "5"
+   },
+   "opening, find, switch (phone)": {
+    "violations": [],
+    "console": [],
+    "requestsFailed": [],
+    "decoderWorker": [
+     "/assets/decoder.worker-DMyipsq3.js"
+    ],
+    "red": "1"
+   },
+   "a scene complete, the unlock and the form": {
+    "violations": [],
+    "console": [],
+    "requestsFailed": [],
+    "decoderWorker": [
+     "/assets/decoder.worker-DMyipsq3.js"
+    ],
+    "button": true,
+    "form": true
+   },
+   "reduced motion": {
+    "violations": [],
+    "console": [],
+    "requestsFailed": [],
+    "decoderWorker": [
+     "/assets/decoder.worker-DMyipsq3.js"
+    ],
+    "scene": "grow"
+   },
+   "CONTROL: what must be stopped": {
+    "violations": [
+     "script-src-elem inline :1 ",
+     "style-src-attr inline :1 ",
+     "connect-src http://127.0.0.1:4173/robots.txt :1 ",
+     "img-src data :0 ",
+     "worker-src blob :1 ",
+     "frame-src http://127.0.0.1:4181/ :0 "
+    ],
+    "console": [
+     "Executing inline script violates the following Content Security Policy directive 'script-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-SlHSUXvpUrZZqHBPWfdJaR/1l5NR39l5yPTcF2NGT3I='), or a nonce ('nonce",
+     "Applying inline style violates the following Content Security Policy directive 'style-src-attr 'none''. Either the 'unsafe-inline' keyword, a hash ('sha256-8f935d27GvUutRyY9yWScUMiFUk4WTdZURISiYfPOeQ='), or a nonce ('non",
+     "Connecting to 'http://127.0.0.1:4173/robots.txt' violates the following Content Security Policy directive: \"connect-src 'self'\". The action has been blocked.",
+     "Fetch API cannot load http://127.0.0.1:4173/robots.txt. Refused to connect because it violates the document's Content Security Policy.",
+     "Loading the image 'data:image/gif;base64,R0lGODlhAQABAAAAACw=' violates the following Content Security Policy directive: \"img-src 'self' blob:\". The action has been blocked.",
+     "Creating a worker from 'blob:http://127.0.0.1:4181/c861bb0d-8adc-4035-812f-3c1442b616f7' violates the following Content Security Policy directive: \"worker-src 'self'\". The action has been blocked.",
+     "Framing 'http://127.0.0.1:4181/' violates the following Content Security Policy directive: \"default-src 'none'\". The request has been blocked. Note that 'frame-src' was not explicitly set, so 'default-src' is used as a f"
+    ],
+    "requestsFailed": [],
+    "decoderWorker": [
+     "/assets/decoder.worker-DMyipsq3.js"
+    ],
+    "before": 0,
+    "tried": {
+     "inlineScriptRan": false,
+     "styleAttribute": "rgb(0, 0, 0)",
+     "crossOriginFetch": false,
+     "blobWorker": "refused"
+    }
+   }
+  },
+  "violationsInTheSite": 0,
+  "ok": true
+ },
+ "webkit": {
+  "servedBy": "run.s3 in qa/tools/review-fixes.mjs: a static server on 127.0.0.1 that reads dist/_headers (Netlify / Cloudflare Pages format) and puts its headers on every response",
+  "headers": {
+   "/": {
+    "status": 200,
+    "content-type": "text/html; charset=utf-8",
+    "content-security-policy": "default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self'; style-src-attr 'none'; img-src 'self' blob:; font-src 'self'; worker-src 'self'; connect-src 'self'; form-action 'none'; frame-ancestors 'none'",
+    "x-content-type-options": "nosniff",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "permissions-policy": "accelerometer=(), autoplay=(), bluetooth=(), camera=(), display-capture=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), magnetometer=(), microphone=(), midi=(), payment=(), serial=(), usb=()"
+   },
+   "/room-route.js": {
+    "status": 200,
+    "content-type": "text/javascript",
+    "content-security-policy": "default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self'; style-src-attr 'none'; img-src 'self' blob:; font-src 'self'; worker-src 'self'; connect-src 'self'; form-action 'none'; frame-ancestors 'none'",
+    "x-content-type-options": "nosniff",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "permissions-policy": "accelerometer=(), autoplay=(), bluetooth=(), camera=(), display-capture=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), magnetometer=(), microphone=(), midi=(), payment=(), serial=(), usb=()"
+   },
+   "/shell.css": {
+    "status": 200,
+    "content-type": "text/css",
+    "content-security-policy": "default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self'; style-src-attr 'none'; img-src 'self' blob:; font-src 'self'; worker-src 'self'; connect-src 'self'; form-action 'none'; frame-ancestors 'none'",
+    "x-content-type-options": "nosniff",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "permissions-policy": "accelerometer=(), autoplay=(), bluetooth=(), camera=(), display-capture=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), magnetometer=(), microphone=(), midi=(), payment=(), serial=(), usb=()"
+   },
+   "/assets/scene1/room.webp": {
+    "status": 200,
+    "content-type": "image/webp",
+    "content-security-policy": "default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self'; style-src-attr 'none'; img-src 'self' blob:; font-src 'self'; worker-src 'self'; connect-src 'self'; form-action 'none'; frame-ancestors 'none'",
+    "x-content-type-options": "nosniff",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "permissions-policy": "accelerometer=(), autoplay=(), bluetooth=(), camera=(), display-capture=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), magnetometer=(), microphone=(), midi=(), payment=(), serial=(), usb=()"
+   },
+   "/missing.txt": {
+    "status": 404,
+    "content-type": null,
+    "content-security-policy": "default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self'; style-src-attr 'none'; img-src 'self' blob:; font-src 'self'; worker-src 'self'; connect-src 'self'; form-action 'none'; frame-ancestors 'none'",
+    "x-content-type-options": "nosniff",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "permissions-policy": "accelerometer=(), autoplay=(), bluetooth=(), camera=(), display-capture=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), magnetometer=(), microphone=(), midi=(), payment=(), serial=(), usb=()"
+   }
+  },
+  "visits": {
+   "opening, find, switches (desktop)": {
+    "violations": [],
+    "console": [],
+    "requestsFailed": [],
+    "decoderWorker": [
+     "/assets/decoder.worker-DMyipsq3.js",
+     "/assets/decoder.worker-DMyipsq3.js"
+    ],
+    "afterAFind": "1",
+    "red": "5",
+    "fonts": [
+     "Bricolage Grotesque Variable 200 800",
+     "Spectral 400"
+    ],
+    "rachel": true,
+    "returnVisit": "5"
+   },
+   "opening, find, switch (phone)": {
+    "violations": [],
+    "console": [],
+    "requestsFailed": [],
+    "decoderWorker": [
+     "/assets/decoder.worker-DMyipsq3.js"
+    ],
+    "red": "1"
+   },
+   "a scene complete, the unlock and the form": {
+    "violations": [],
+    "console": [],
+    "requestsFailed": [],
+    "decoderWorker": [
+     "/assets/decoder.worker-DMyipsq3.js"
+    ],
+    "button": true,
+    "form": true
+   },
+   "reduced motion": {
+    "violations": [],
+    "console": [],
+    "requestsFailed": [],
+    "decoderWorker": [
+     "/assets/decoder.worker-DMyipsq3.js"
+    ],
+    "scene": "grow"
+   },
+   "CONTROL: what must be stopped": {
+    "violations": [
+     "script-src-elem inline :1 ",
+     "img-src data :1 ",
+     "style-src-attr inline :1 ",
+     "connect-src http://127.0.0.1:4173/robots.txt :1 ",
+     "worker-src blob :1 ",
+     "frame-src http://127.0.0.1:4182/ :1 "
+    ],
+    "console": [
+     "Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does not appear in the script-src directive of the Content Security Policy.",
+     "Refused to load data:image/gif;base64,R0lGODlhAQABAAAAACw= because it does not appear in the img-src directive of the Content Security Policy.",
+     "Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy.",
+     "Refused to connect to http://127.0.0.1:4173/robots.txt because it does not appear in the connect-src directive of the Content Security Policy.",
+     "Refused to load blob:http://127.0.0.1:4182/e41612c1-607c-4d37-bf42-67a5c8e0f693 because it does not appear in the worker-src directive of the Content Security Policy.",
+     "Refused to load http://127.0.0.1:4182/ because it appears in neither the frame-src directive nor the default-src directive of the Content Security Policy."
+    ],
+    "requestsFailed": [],
+    "decoderWorker": [
+     "/assets/decoder.worker-DMyipsq3.js"
+    ],
+    "before": 0,
+    "tried": {
+     "inlineScriptRan": false,
+     "styleAttribute": "rgb(0, 0, 0)",
+     "crossOriginFetch": false,
+     "blobWorker": "refused"
+    }
+   }
+  },
+  "violationsInTheSite": 0,
+  "ok": true
+ }
+}

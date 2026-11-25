@@ -1,0 +1,162 @@
+{
+ "build": {
+  "herBox": [
+   610,
+   414,
+   1200,
+   868
+  ],
+  "seconds": 4.317,
+  "her": {
+   "p10": 1.7,
+   "p50": 2.367,
+   "p90": 2.717,
+   "p97": 2.75
+  },
+  "ring": {
+   "p10": 1.683,
+   "p50": 2.033,
+   "p90": 2.75,
+   "p97": 2.9
+  },
+  "plate": {
+   "p10": 0.483,
+   "p50": 1.667,
+   "p90": 3.65,
+   "p97": 3.95
+  },
+  "herPaintedWhenRingIs90pc": 0.987,
+  "plateWhenSheIs50pc": 0.653,
+  "plateWhenSheIs97pc": 0.749,
+  "mostTheRingLeadsHer": 0.128,
+  "beforeTheWashHer": 1
+ },
+ "grow": {
+  "herBox": [
+   700,
+   232,
+   1146,
+   880
+  ],
+  "seconds": 4.317,
+  "her": {
+   "p10": 1.017,
+   "p50": 1.4,
+   "p90": 2.9,
+   "p97": 3.05
+  },
+  "ring": {
+   "p10": 0.933,
+   "p50": 1.383,
+   "p90": 3.083,
+   "p97": 3.117
+  },
+  "plate": {
+   "p10": 0.467,
+   "p50": 1.4,
+   "p90": 3.483,
+   "p97": 3.75
+  },
+  "herPaintedWhenRingIs90pc": 0.986,
+  "plateWhenSheIs50pc": 0.503,
+  "plateWhenSheIs97pc": 0.826,
+  "mostTheRingLeadsHer": 0.106,
+  "beforeTheWashHer": 1
+ },
+ "design": {
+  "herBox": [
+   686,
+   390,
+   1110,
+   918
+  ],
+  "seconds": 4.317,
+  "her": {
+   "p10": 1.967,
+   "p50": 2.7,
+   "p90": 3.1,
+   "p97": 3.133
+  },
+  "ring": {
+   "p10": 1.933,
+   "p50": 2.133,
+   "p90": 3.083,
+   "p97": 3.233
+  },
+  "plate": {
+   "p10": 0.467,
+   "p50": 1.95,
+   "p90": 2.983,
+   "p97": 3.25
+  },
+  "herPaintedWhenRingIs90pc": 0.893,
+  "plateWhenSheIs50pc": 0.736,
+  "plateWhenSheIs97pc": 0.955,
+  "mostTheRingLeadsHer": 0.176,
+  "beforeTheWashHer": 1
+ },
+ "film": {
+  "herBox": [
+   1016,
+   264,
+   1352,
+   942
+  ],
+  "seconds": 4.317,
+  "her": {
+   "p10": 1.65,
+   "p50": 2.217,
+   "p90": 3.483,
+   "p97": 3.5
+  },
+  "ring": {
+   "p10": 1.617,
+   "p50": 2.133,
+   "p90": 3.433,
+   "p97": 3.517
+  },
+  "plate": {
+   "p10": 0.467,
+   "p50": 1.65,
+   "p90": 3.183,
+   "p97": 3.55
+  },
+  "herPaintedWhenRingIs90pc": 0.831,
+  "plateWhenSheIs50pc": 0.629,
+  "plateWhenSheIs97pc": 0.955,
+  "mostTheRingLeadsHer": 0.216,
+  "beforeTheWashHer": 1
+ },
+ "set": {
+  "herBox": [
+   738,
+   84,
+   1050,
+   570
+  ],
+  "seconds": 4.317,
+  "her": {
+   "p10": 0.433,
+   "p50": 0.683,
+   "p90": 0.8,
+   "p97": 0.817
+  },
+  "ring": {
+   "p10": 0.417,
+   "p50": 0.683,
+   "p90": 2.267,
+   "p97": 2.3
+  },
+  "plate": {
+   "p10": 0.433,
+   "p50": 1.1,
+   "p90": 3.033,
+   "p97": 3.45
+  },
+  "herPaintedWhenRingIs90pc": 0.997,
+  "plateWhenSheIs50pc": 0.329,
+  "plateWhenSheIs97pc": 0.41,
+  "mostTheRingLeadsHer": 0.151,
+  "beforeTheWashHer": 1
+ }
+}

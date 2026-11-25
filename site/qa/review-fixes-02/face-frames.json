@@ -2,16 +2,16 @@
  "build desktop": {
   "errors": [],
   "face": {
-   "over5pcAt": 1.731,
-   "over95pcAt": 1.764,
+   "over5pcAt": 1.732,
+   "over95pcAt": 1.766,
    "partlyMs": 33,
-   "framesPartly": "1731 ms: 37%, 1748 ms: 71%"
+   "framesPartly": "1732 ms: 41%, 1749 ms: 71%"
   },
   "head": {
-   "over5pcAt": 1.714,
-   "over95pcAt": 1.764,
+   "over5pcAt": 1.716,
+   "over95pcAt": 1.766,
    "partlyMs": 50,
-   "framesPartly": "1714 ms: 33%, 1731 ms: 74%, 1748 ms: 92%"
+   "framesPartly": "1716 ms: 35%, 1732 ms: 78%, 1749 ms: 92%"
   },
   "longestGapBetweenRecordedFramesMs": 17
  },
@@ -21,45 +21,45 @@
    "over5pcAt": 1.732,
    "over95pcAt": 1.766,
    "partlyMs": 33,
-   "framesPartly": "1732 ms: 40%, 1749 ms: 70%"
+   "framesPartly": "1732 ms: 40%, 1749 ms: 68%"
   },
   "head": {
    "over5pcAt": 1.716,
    "over95pcAt": 1.766,
    "partlyMs": 50,
-   "framesPartly": "1716 ms: 35%, 1732 ms: 77%, 1749 ms: 92%"
+   "framesPartly": "1716 ms: 35%, 1732 ms: 77%, 1749 ms: 91%"
   },
   "longestGapBetweenRecordedFramesMs": 50
  },
  "design desktop": {
   "errors": [],
   "face": {
-   "over5pcAt": 1.982,
-   "over95pcAt": 2.015,
+   "over5pcAt": 1.98,
+   "over95pcAt": 2.014,
    "partlyMs": 33,
-   "framesPartly": "1982 ms: 23%, 1998 ms: 92%"
+   "framesPartly": "1980 ms: 34%, 1997 ms: 77%"
   },
   "head": {
-   "over5pcAt": 1.982,
-   "over95pcAt": 2.048,
+   "over5pcAt": 1.964,
+   "over95pcAt": 2.03,
    "partlyMs": 67,
-   "framesPartly": "1982 ms: 22%, 1998 ms: 50%, 2015 ms: 77%, 2032 ms: 92%"
+   "framesPartly": "1964 ms: 5%, 1980 ms: 21%, 1997 ms: 54%, 2014 ms: 81%"
   },
   "longestGapBetweenRecordedFramesMs": 17
  },
  "design phone": {
   "errors": [],
   "face": {
-   "over5pcAt": 1.981,
+   "over5pcAt": 1.98,
    "over95pcAt": 2.014,
    "partlyMs": 33,
-   "framesPartly": "1981 ms: 18%, 1998 ms: 90%"
+   "framesPartly": "1980 ms: 40%, 1997 ms: 81%"
   },
   "head": {
-   "over5pcAt": 1.981,
-   "over95pcAt": 2.048,
+   "over5pcAt": 1.964,
+   "over95pcAt": 2.03,
    "partlyMs": 67,
-   "framesPartly": "1981 ms: 21%, 1998 ms: 47%, 2014 ms: 76%, 2031 ms: 90%"
+   "framesPartly": "1964 ms: 5%, 1980 ms: 25%, 1997 ms: 57%, 2014 ms: 82%"
   },
   "longestGapBetweenRecordedFramesMs": 50
  }

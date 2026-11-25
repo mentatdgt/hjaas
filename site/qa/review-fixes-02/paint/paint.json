@@ -1,0 +1,312 @@
+{
+ "build desktop": {
+  "file": "scene1-paint-60fps.mp4",
+  "strip": "scene1-rachel-strip.jpg",
+  "recordedFrames": 298,
+  "framesInThePainting": 278,
+  "longestRecordedGapMs": 516.7,
+  "recordedGapsOver34ms": "83@-51 83@4499 283@4782 117@5065 317@5182 50@5499 517@5549 133@6065",
+  "herPaintedMs": {
+   "p10": 1715,
+   "p50": 2415,
+   "p90": 2732,
+   "p98": 2765
+  },
+  "roomAroundHerMs": {
+   "p10": 1699,
+   "p50": 2015,
+   "p90": 2765,
+   "p98": 2932
+  },
+  "blankFrameHer": 0,
+  "sheGoesBackBy": 0,
+  "wholeOfHer_framesWithTheRoomPaintedAndSheNot": 0,
+  "outline": {
+   "framesWithTheRoomPaintedAndSheNot": 0,
+   "mostTheRoomIsAheadOfHer": 0.044,
+   "sectorsTested": 18,
+   "sectorFramesWithTheRoomPaintedAndSheNot": 0,
+   "examples": []
+  },
+  "errors": []
+ },
+ "build phone": {
+  "file": "scene1-paint-phone-60fps.mp4",
+  "strip": "scene1-rachel-strip-phone.jpg",
+  "recordedFrames": 337,
+  "framesInThePainting": 263,
+  "longestRecordedGapMs": 300,
+  "recordedGapsOver34ms": "83@-51 50@1016 50@1599 67@4016 267@4499 300@4782 117@5082 300@5199",
+  "herPaintedMs": {
+   "p10": 1732,
+   "p50": 2399,
+   "p90": 2732,
+   "p98": 2766
+  },
+  "roomAroundHerMs": {
+   "p10": 1699,
+   "p50": 1882,
+   "p90": 2766,
+   "p98": 2932
+  },
+  "blankFrameHer": 0,
+  "sheGoesBackBy": 0,
+  "wholeOfHer_framesWithTheRoomPaintedAndSheNot": 0,
+  "outline": {
+   "framesWithTheRoomPaintedAndSheNot": 0,
+   "mostTheRoomIsAheadOfHer": 0.04,
+   "sectorsTested": 17,
+   "sectorFramesWithTheRoomPaintedAndSheNot": 0,
+   "examples": []
+  },
+  "errors": []
+ },
+ "grow desktop": {
+  "file": "scene2-paint-60fps.mp4",
+  "strip": "scene2-rachel-strip.jpg",
+  "recordedFrames": 295,
+  "framesInThePainting": 278,
+  "longestRecordedGapMs": 466.7,
+  "recordedGapsOver34ms": "83@-52 83@4497 400@4781 300@5181 467@5481",
+  "herPaintedMs": {
+   "p10": 1031,
+   "p50": 1431,
+   "p90": 2914,
+   "p98": 3098
+  },
+  "roomAroundHerMs": {
+   "p10": 948,
+   "p50": 1398,
+   "p90": 3081,
+   "p98": 3148
+  },
+  "blankFrameHer": 0,
+  "sheGoesBackBy": 0,
+  "wholeOfHer_framesWithTheRoomPaintedAndSheNot": 0,
+  "outline": {
+   "framesWithTheRoomPaintedAndSheNot": 0,
+   "mostTheRoomIsAheadOfHer": 0.087,
+   "sectorsTested": 23,
+   "sectorFramesWithTheRoomPaintedAndSheNot": 0,
+   "examples": []
+  },
+  "errors": []
+ },
+ "grow phone": {
+  "file": "scene2-paint-phone-60fps.mp4",
+  "strip": "scene2-rachel-strip-phone.jpg",
+  "recordedFrames": 300,
+  "framesInThePainting": 223,
+  "longestRecordedGapMs": 450,
+  "recordedGapsOver34ms": "383@-67 67@1933 100@2083 283@2233 233@3849 83@4499 450@4782 267@5232",
+  "herPaintedMs": {
+   "p10": 1033,
+   "p50": 1416,
+   "p90": 2883,
+   "p98": 3099
+  },
+  "roomAroundHerMs": {
+   "p10": 949,
+   "p50": 1383,
+   "p90": 3083,
+   "p98": 3149
+  },
+  "blankFrameHer": 0,
+  "sheGoesBackBy": 0,
+  "wholeOfHer_framesWithTheRoomPaintedAndSheNot": 0,
+  "outline": {
+   "framesWithTheRoomPaintedAndSheNot": 0,
+   "mostTheRoomIsAheadOfHer": 0.037,
+   "sectorsTested": 21,
+   "sectorFramesWithTheRoomPaintedAndSheNot": 0,
+   "examples": []
+  },
+  "errors": []
+ },
+ "design desktop": {
+  "file": "scene3-paint-60fps.mp4",
+  "strip": "scene3-rachel-strip.jpg",
+  "recordedFrames": 324,
+  "framesInThePainting": 277,
+  "longestRecordedGapMs": 683.3,
+  "recordedGapsOver34ms": "83@4497 683@4780 50@5497 50@5747 50@5830 50@5914 50@6164 50@6247",
+  "herPaintedMs": {
+   "p10": 1997,
+   "p50": 2714,
+   "p90": 3114,
+   "p98": 3164
+  },
+  "roomAroundHerMs": {
+   "p10": 1947,
+   "p50": 2080,
+   "p90": 3080,
+   "p98": 3314
+  },
+  "blankFrameHer": 0,
+  "sheGoesBackBy": 0,
+  "wholeOfHer_framesWithTheRoomPaintedAndSheNot": 0,
+  "outline": {
+   "framesWithTheRoomPaintedAndSheNot": 0,
+   "mostTheRoomIsAheadOfHer": 0.076,
+   "sectorsTested": 23,
+   "sectorFramesWithTheRoomPaintedAndSheNot": 0,
+   "examples": []
+  },
+  "errors": []
+ },
+ "design phone": {
+  "file": "scene3-paint-phone-60fps.mp4",
+  "strip": "scene3-rachel-strip-phone.jpg",
+  "recordedFrames": 339,
+  "framesInThePainting": 259,
+  "longestRecordedGapMs": 550,
+  "recordedGapsOver34ms": "550@-234 83@4499 183@4782 50@4966 50@5049 50@5132 50@5216 50@5299 50@5382",
+  "herPaintedMs": {
+   "p10": 1999,
+   "p50": 2749,
+   "p90": 3099,
+   "p98": 3149
+  },
+  "roomAroundHerMs": {
+   "p10": 1966,
+   "p50": 2099,
+   "p90": 3082,
+   "p98": 3282
+  },
+  "blankFrameHer": 0,
+  "sheGoesBackBy": 0,
+  "wholeOfHer_framesWithTheRoomPaintedAndSheNot": 0,
+  "outline": {
+   "framesWithTheRoomPaintedAndSheNot": 0,
+   "mostTheRoomIsAheadOfHer": 0.072,
+   "sectorsTested": 24,
+   "sectorFramesWithTheRoomPaintedAndSheNot": 0,
+   "examples": []
+  },
+  "errors": []
+ },
+ "film desktop": {
+  "file": "scene4-paint-60fps.mp4",
+  "strip": "scene4-rachel-strip.jpg",
+  "recordedFrames": 311,
+  "framesInThePainting": 277,
+  "longestRecordedGapMs": 250,
+  "recordedGapsOver34ms": "167@-136 83@4498 250@4781 117@5031 67@5148 50@5214 50@5264 50@5314 117@5364 100@5481 117@5581 100@5714 100@5814 117@5914 67@6064 67@6131 83@6281 67@6398",
+  "herPaintedMs": {
+   "p10": 1664,
+   "p50": 2231,
+   "p90": 3498,
+   "p98": 3531
+  },
+  "roomAroundHerMs": {
+   "p10": 1631,
+   "p50": 2131,
+   "p90": 3448,
+   "p98": 3548
+  },
+  "blankFrameHer": 0,
+  "sheGoesBackBy": 0,
+  "wholeOfHer_framesWithTheRoomPaintedAndSheNot": 0,
+  "outline": {
+   "framesWithTheRoomPaintedAndSheNot": 0,
+   "mostTheRoomIsAheadOfHer": 0.092,
+   "sectorsTested": 21,
+   "sectorFramesWithTheRoomPaintedAndSheNot": 0,
+   "examples": []
+  },
+  "errors": []
+ },
+ "film phone": {
+  "file": "scene4-paint-phone-60fps.mp4",
+  "strip": "scene4-rachel-strip-phone.jpg",
+  "recordedFrames": 337,
+  "framesInThePainting": 258,
+  "longestRecordedGapMs": 450,
+  "recordedGapsOver34ms": "450@-120 100@4497 317@4797 100@5114 67@5214 100@5280 117@5380",
+  "herPaintedMs": {
+   "p10": 1680,
+   "p50": 2247,
+   "p90": 3497,
+   "p98": 3514
+  },
+  "roomAroundHerMs": {
+   "p10": 1530,
+   "p50": 1697,
+   "p90": 3514,
+   "p98": 3547
+  },
+  "blankFrameHer": 0,
+  "sheGoesBackBy": 0,
+  "wholeOfHer_framesWithTheRoomPaintedAndSheNot": 0,
+  "outline": {
+   "framesWithTheRoomPaintedAndSheNot": 0,
+   "mostTheRoomIsAheadOfHer": 0.137,
+   "sectorsTested": 12,
+   "sectorFramesWithTheRoomPaintedAndSheNot": 0,
+   "examples": []
+  },
+  "errors": []
+ },
+ "set desktop": {
+  "file": "scene5-paint-60fps.mp4",
+  "strip": "scene5-rachel-strip.jpg",
+  "recordedFrames": 313,
+  "framesInThePainting": 277,
+  "longestRecordedGapMs": 283.3,
+  "recordedGapsOver34ms": "133@-102 83@4497 283@4781 100@5064 100@5164 67@5264 50@5381 100@5464 100@5564 100@5664 100@5764 50@5864 50@5914 50@5964 50@6014 100@6064 100@6164 50@6264 50@6314 50@6364 50@6414",
+  "herPaintedMs": {
+   "p10": 448,
+   "p50": 698,
+   "p90": 814,
+   "p98": 831
+  },
+  "roomAroundHerMs": {
+   "p10": 448,
+   "p50": 698,
+   "p90": 2281,
+   "p98": 2314
+  },
+  "blankFrameHer": 0,
+  "sheGoesBackBy": 0,
+  "wholeOfHer_framesWithTheRoomPaintedAndSheNot": 0,
+  "outline": {
+   "framesWithTheRoomPaintedAndSheNot": 0,
+   "mostTheRoomIsAheadOfHer": 0.044,
+   "sectorsTested": 16,
+   "sectorFramesWithTheRoomPaintedAndSheNot": 0,
+   "examples": []
+  },
+  "errors": []
+ },
+ "set phone": {
+  "file": "scene5-paint-phone-60fps.mp4",
+  "strip": "scene5-rachel-strip-phone.jpg",
+  "recordedFrames": 336,
+  "framesInThePainting": 257,
+  "longestRecordedGapMs": 616.6,
+  "recordedGapsOver34ms": "433@-86 100@4498 617@4798 50@5414",
+  "herPaintedMs": {
+   "p10": 464,
+   "p50": 698,
+   "p90": 814,
+   "p98": 831
+  },
+  "roomAroundHerMs": {
+   "p10": 448,
+   "p50": 698,
+   "p90": 2281,
+   "p98": 2314
+  },
+  "blankFrameHer": 0,
+  "sheGoesBackBy": 0,
+  "wholeOfHer_framesWithTheRoomPaintedAndSheNot": 0,
+  "outline": {
+   "framesWithTheRoomPaintedAndSheNot": 0,
+   "mostTheRoomIsAheadOfHer": 0.061,
+   "sectorsTested": 16,
+   "sectorFramesWithTheRoomPaintedAndSheNot": 0,
+   "examples": []
+  },
+  "errors": []
+ }
+}

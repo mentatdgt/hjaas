@@ -57,13 +57,14 @@ const STROKES: StrokePlan[] = [
   { via: [[60, 260], [720, 255]], width: 220, at: 0.62, takes: 0.8 },
   // The top of the doorway and the shelves of cups
   { via: [[740, 242], [1290, 240]], width: 200, at: 1, takes: 0.8 },
-  // Across the windows, the doorway, her head and the counter
-  { via: [[-60, 488], [700, 486], [1310, 478]], width: 290, at: 1.4, takes: 1.1 },
   // The niche, the palm and the right-hand wall
   { via: [[1400, 190], [1650, 210], [1640, 370], [1400, 360], [1395, 520], [1660, 540]], width: 240, at: 2.1, takes: 1.04 },
+  // Across the windows, the doorway, her head and the counter. (Listed here, not by its time: a stroke's bristles come from its
+  // place in the list, and these leave no late streak across her hair.)
+  { via: [[-60, 488], [700, 486], [1310, 478]], width: 290, at: 1.4, takes: 1.1 },
   // The floor
   { via: [[40, 650], [640, 665], [650, 790], [60, 800]], width: 215, at: 2.36, takes: 0.8 },
-  { via: [[720, 690], [1320, 680], [1330, 800], [730, 815]], width: 215, at: 2.6, takes: 0.84 },
+  { via: [[650, 692], [1320, 680], [1330, 800], [730, 815]], width: 215, at: 2.5, takes: 0.94 },
   { via: [[1390, 650], [1650, 670], [1640, 810], [1410, 800]], width: 235, at: 2.94, takes: 0.76 },
   { via: [[1660, 905], [330, 900]], width: 225, at: 3.1, takes: 0.9 },
   { via: [[60, 950], [1560, 953]], width: 150, at: 3.42, takes: 0.6 },

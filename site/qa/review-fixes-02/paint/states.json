@@ -1,0 +1,123 @@
+{
+ "build": {
+  "stillsNotYetDrawnWhenTheBrushIsAtWork": 0,
+  "everyoneAtTheirFirstFrame": true,
+  "sheet": {
+   "opacity": "1",
+   "transform": "none",
+   "sheetOverHer": true
+  },
+  "draws": {
+   "whilePainting": {},
+   "castAndRehearsalDrawsBefore": 12,
+   "lastOfThemBeforeTheClockMs": 225,
+   "clockMs": 427,
+   "castFirstMoves": null
+  }
+ },
+ "grow": {
+  "stillsNotYetDrawnWhenTheBrushIsAtWork": 0,
+  "everyoneAtTheirFirstFrame": true,
+  "sheet": {
+   "opacity": "1",
+   "transform": "none",
+   "sheetOverHer": true
+  },
+  "draws": {
+   "whilePainting": {},
+   "castAndRehearsalDrawsBefore": 12,
+   "lastOfThemBeforeTheClockMs": 213,
+   "clockMs": 410,
+   "castFirstMoves": 5301
+  }
+ },
+ "design": {
+  "stillsNotYetDrawnWhenTheBrushIsAtWork": 0,
+  "everyoneAtTheirFirstFrame": true,
+  "sheet": {
+   "opacity": "1",
+   "transform": "none",
+   "sheetOverHer": true
+  },
+  "draws": {
+   "whilePainting": {},
+   "castAndRehearsalDrawsBefore": 54,
+   "lastOfThemBeforeTheClockMs": 426,
+   "clockMs": 742,
+   "castFirstMoves": null
+  }
+ },
+ "film": {
+  "stillsNotYetDrawnWhenTheBrushIsAtWork": 0,
+  "everyoneAtTheirFirstFrame": true,
+  "sheet": {
+   "opacity": "1",
+   "transform": "none",
+   "sheetOverHer": true
+  },
+  "draws": {
+   "whilePainting": {},
+   "castAndRehearsalDrawsBefore": 49,
+   "lastOfThemBeforeTheClockMs": 291,
+   "clockMs": 537,
+   "castFirstMoves": null
+  }
+ },
+ "set": {
+  "stillsNotYetDrawnWhenTheBrushIsAtWork": 0,
+  "everyoneAtTheirFirstFrame": true,
+  "sheet": {
+   "opacity": "1",
+   "transform": "none",
+   "sheetOverHer": true
+  },
+  "draws": {
+   "whilePainting": {},
+   "castAndRehearsalDrawsBefore": 63,
+   "lastOfThemBeforeTheClockMs": 258,
+   "clockMs": 530,
+   "castFirstMoves": null
+  }
+ },
+ "skipAndReplay": {
+  "afterSkip": {
+   "opacity": "1",
+   "transform": "none",
+   "sheetOverHer": true
+  },
+  "sheetLeftAfterSkip": 0,
+  "duringReplay": {
+   "opacity": "1",
+   "transform": "none",
+   "sheetOverHer": true
+  },
+  "atRestDuringReplay": true,
+  "afterReplay": {
+   "opacity": "1",
+   "transform": "none",
+   "sheetOverHer": true
+  }
+ },
+ "slowNetwork": {
+  "pictureOnShowAtMs": 2852,
+  "sheArrivesAtMs": 25566,
+  "opacityFirst": 0,
+  "fadeMs": 285,
+  "fadesIn": true
+ },
+ "intro=off": {
+  "opacity": "1",
+  "transform": "none",
+  "sheetOverHer": "no sheet",
+  "painted": 0,
+  "atRest": true
+ },
+ "reduced motion": {
+  "opacity": "1",
+  "transform": "none",
+  "sheetOverHer": "no sheet",
+  "painted": 0,
+  "atRest": true
+ },
+ "errors": []
+}

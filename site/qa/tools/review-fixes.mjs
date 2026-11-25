@@ -28,7 +28,7 @@ import sharp from 'sharp';
 const prod = process.env.HJ_PROD ?? 'http://127.0.0.1:4173/';
 const oldProd = process.env.HJ_OLD_PROD ?? 'http://127.0.0.1:4174/';
 const site = new URL('../../', import.meta.url).pathname;
-const out = new URL('../review-fixes/', import.meta.url).pathname;
+const out = new URL(process.env.HJ_OUT ?? '../review-fixes/', import.meta.url).pathname;
 await mkdir(out, { recursive: true });
 const IDS = ['build', 'grow', 'design', 'film', 'set'];
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

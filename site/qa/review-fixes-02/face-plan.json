@@ -21,21 +21,20 @@
  "design": {
   "seconds": 4.32,
   "face": {
-   "over5pcAt": 1.963,
-   "over95pcAt": 1.988,
-   "partlyMs": 25
+   "over5pcAt": 1.954,
+   "over95pcAt": 1.996,
+   "partlyMs": 42
   },
   "head": {
-   "over5pcAt": 1.958,
-   "over95pcAt": 2.029,
-   "partlyMs": 71
+   "over5pcAt": 1.95,
+   "over95pcAt": 2.017,
+   "partlyMs": 67
   },
   "headAtEnd": 1,
   "steps": [
-   "1.95: face 0 head 1",
-   "1.98: face 66 head 39",
-   "2.00: face 100 head 81",
-   "2.02: face 100 head 94"
+   "1.95: face 2 head 7",
+   "1.98: face 68 head 41",
+   "2.00: face 100 head 82"
   ]
  }
 }

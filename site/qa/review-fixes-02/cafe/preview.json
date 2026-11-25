@@ -1,0 +1,268 @@
+{
+ "at rest": {
+  "poses": {
+   "fan": "fan_00",
+   "cat": "cat_1",
+   "child": "C_1",
+   "oldman": "O_1",
+   "barista": "B_1",
+   "rachel": "R_A1_sketch"
+  },
+  "platePxOnTheScreen": [
+   1662,
+   936
+  ],
+  "theRoom": {
+   "screenshotOffsetPx": [
+    -0.8,
+    -0.1
+   ],
+   "meanDifferenceOutOf255": 2.85
+  },
+  "actors": {
+   "fan": "a piece of the room, faded with it at the edge: not compared",
+   "cat": {
+    "screenPxFromWhereThePackagePutsIt": [
+     -0.7,
+     0
+    ],
+    "meanDifferenceOutOf255": 5.52,
+    "inPlace": true
+   },
+   "child": {
+    "screenPxFromWhereThePackagePutsIt": [
+     -0.1,
+     -0.1
+    ],
+    "meanDifferenceOutOf255": 5.13,
+    "inPlace": true
+   },
+   "oldman": {
+    "screenPxFromWhereThePackagePutsIt": [
+     -0.6,
+     -0.5
+    ],
+    "meanDifferenceOutOf255": 4.55,
+    "inPlace": true
+   },
+   "barista": {
+    "screenPxFromWhereThePackagePutsIt": [
+     0.1,
+     -0.5
+    ],
+    "meanDifferenceOutOf255": 5.27,
+    "inPlace": true
+   },
+   "rachel": {
+    "screenPxFromWhereThePackagePutsIt": [
+     0,
+     -0.2
+    ],
+    "meanDifferenceOutOf255": 4.61,
+    "inPlace": true
+   }
+  },
+  "everyActorIsInPlace": true
+ },
+ "the sip": {
+  "poses": {
+   "fan": "fan_07",
+   "cat": "cat_2",
+   "child": "C_3",
+   "oldman": "O_3",
+   "barista": "B_2_polish",
+   "rachel": "R_B1_sip",
+   "mum": "M_blink_closed"
+  },
+  "platePxOnTheScreen": [
+   1662,
+   936
+  ],
+  "theRoom": {
+   "screenshotOffsetPx": [
+    -0.8,
+    -0.1
+   ],
+   "meanDifferenceOutOf255": 2.85
+  },
+  "actors": {
+   "fan": "a piece of the room, faded with it at the edge: not compared",
+   "cat": {
+    "screenPxFromWhereThePackagePutsIt": [
+     -0.7,
+     0
+    ],
+    "meanDifferenceOutOf255": 5.74,
+    "inPlace": true
+   },
+   "child": {
+    "screenPxFromWhereThePackagePutsIt": [
+     -0.1,
+     0
+    ],
+    "meanDifferenceOutOf255": 6.09,
+    "inPlace": true
+   },
+   "oldman": {
+    "screenPxFromWhereThePackagePutsIt": [
+     -0.6,
+     -0.5
+    ],
+    "meanDifferenceOutOf255": 5.08,
+    "inPlace": true
+   },
+   "barista": {
+    "screenPxFromWhereThePackagePutsIt": [
+     0.1,
+     -0.5
+    ],
+    "meanDifferenceOutOf255": 5.28,
+    "inPlace": true
+   },
+   "rachel": {
+    "screenPxFromWhereThePackagePutsIt": [
+     0.1,
+     -0.2
+    ],
+    "meanDifferenceOutOf255": 4.59,
+    "inPlace": true
+   },
+   "mum": {
+    "meanDifferenceOutOf255": 1.2,
+    "note": "too small to place by this measure"
+   }
+  },
+  "everyActorIsInPlace": true
+ },
+ "the smile": {
+  "poses": {
+   "fan": "fan_13",
+   "cat": "cat_3",
+   "child": "C_2",
+   "oldman": "O_2",
+   "barista": "B_4_glance",
+   "rachel": "R_K2_smile"
+  },
+  "platePxOnTheScreen": [
+   1662,
+   936
+  ],
+  "theRoom": {
+   "screenshotOffsetPx": [
+    -0.8,
+    -0.1
+   ],
+   "meanDifferenceOutOf255": 2.83
+  },
+  "actors": {
+   "fan": "a piece of the room, faded with it at the edge: not compared",
+   "cat": {
+    "screenPxFromWhereThePackagePutsIt": [
+     -1.2,
+     0
+    ],
+    "meanDifferenceOutOf255": 5.99,
+    "inPlace": true
+   },
+   "child": {
+    "screenPxFromWhereThePackagePutsIt": [
+     -0.1,
+     -0.1
+    ],
+    "meanDifferenceOutOf255": 5.39,
+    "inPlace": true
+   },
+   "oldman": {
+    "screenPxFromWhereThePackagePutsIt": [
+     -1.2,
+     -0.4
+    ],
+    "meanDifferenceOutOf255": 5.06,
+    "inPlace": true
+   },
+   "barista": {
+    "screenPxFromWhereThePackagePutsIt": [
+     0.1,
+     -0.5
+    ],
+    "meanDifferenceOutOf255": 5.29,
+    "inPlace": true
+   },
+   "rachel": {
+    "screenPxFromWhereThePackagePutsIt": [
+     0,
+     -0.2
+    ],
+    "meanDifferenceOutOf255": 4.54,
+    "inPlace": true
+   }
+  },
+  "everyActorIsInPlace": true
+ },
+ "reaching": {
+  "poses": {
+   "fan": "fan_19",
+   "cat": "cat_1",
+   "child": "C_1",
+   "oldman": "O_1",
+   "barista": "B_3_polish",
+   "rachel": "R_S2_lift"
+  },
+  "platePxOnTheScreen": [
+   1662,
+   936
+  ],
+  "theRoom": {
+   "screenshotOffsetPx": [
+    -0.8,
+    -0.1
+   ],
+   "meanDifferenceOutOf255": 2.88
+  },
+  "actors": {
+   "fan": "a piece of the room, faded with it at the edge: not compared",
+   "cat": {
+    "screenPxFromWhereThePackagePutsIt": [
+     -0.7,
+     0
+    ],
+    "meanDifferenceOutOf255": 5.52,
+    "inPlace": true
+   },
+   "child": {
+    "screenPxFromWhereThePackagePutsIt": [
+     -0.1,
+     -0.1
+    ],
+    "meanDifferenceOutOf255": 5.13,
+    "inPlace": true
+   },
+   "oldman": {
+    "screenPxFromWhereThePackagePutsIt": [
+     -0.6,
+     -0.5
+    ],
+    "meanDifferenceOutOf255": 4.55,
+    "inPlace": true
+   },
+   "barista": {
+    "screenPxFromWhereThePackagePutsIt": [
+     0.1,
+     -0.5
+    ],
+    "meanDifferenceOutOf255": 5.53,
+    "inPlace": true
+   },
+   "rachel": {
+    "screenPxFromWhereThePackagePutsIt": [
+     0.1,
+     -0.2
+    ],
+    "meanDifferenceOutOf255": 4.84,
+    "inPlace": true
+   }
+  },
+  "everyActorIsInPlace": true
+ },
+ "errors": []
+}

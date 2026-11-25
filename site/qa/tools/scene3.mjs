@@ -15,7 +15,7 @@ import { mkdir, writeFile, readFile } from 'node:fs/promises';
 import sharp from 'sharp';
 
 const base = process.env.HJ_URL ?? 'http://localhost:5173/';
-const out = new URL('../scene3/', import.meta.url).pathname;
+const out = new URL(process.env.HJ_OUT ?? '../scene3/', import.meta.url).pathname;
 await mkdir(out, { recursive: true });
 const phone = { ...devices['iPhone 14'], viewport: { width: 390, height: 844 } };
 const ready = (page) => page.waitForFunction(() => window.__hj?.ready === true, null, { timeout: 40000 });

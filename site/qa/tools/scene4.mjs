@@ -15,7 +15,7 @@ import { mkdir, writeFile, readFile, rm, readdir } from 'node:fs/promises';
 import sharp from 'sharp';
 
 const base = process.env.HJ_URL ?? 'http://localhost:5173/';
-const out = new URL('../scene4/', import.meta.url).pathname;
+const out = new URL(process.env.HJ_OUT ?? '../scene4/', import.meta.url).pathname;
 await mkdir(out, { recursive: true });
 const pkg = new URL('../../../frames/020-film-scene/', import.meta.url).pathname;
 const ID = 'film';

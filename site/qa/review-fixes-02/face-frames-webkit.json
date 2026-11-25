@@ -1,0 +1,66 @@
+{
+ "build desktop": {
+  "errors": [],
+  "face": {
+   "over5pcAt": 1.755,
+   "over95pcAt": 1.809,
+   "partlyMs": 54,
+   "framesPartly": "1755 ms: 53%"
+  },
+  "head": {
+   "over5pcAt": 1.755,
+   "over95pcAt": 1.809,
+   "partlyMs": 54,
+   "framesPartly": "1755 ms: 86%"
+  },
+  "longestGapBetweenRecordedFramesMs": 61
+ },
+ "build phone": {
+  "errors": [],
+  "face": {
+   "over5pcAt": 1.777,
+   "over95pcAt": 1.839,
+   "partlyMs": 62,
+   "framesPartly": "1777 ms: 89%"
+  },
+  "head": {
+   "over5pcAt": 1.721,
+   "over95pcAt": 1.777,
+   "partlyMs": 55,
+   "framesPartly": "1721 ms: 18%"
+  },
+  "longestGapBetweenRecordedFramesMs": 76
+ },
+ "design desktop": {
+  "errors": [],
+  "face": {
+   "over5pcAt": 2.019,
+   "over95pcAt": 2.071,
+   "partlyMs": 51,
+   "framesPartly": "2019 ms: 92%"
+  },
+  "head": {
+   "over5pcAt": 2.019,
+   "over95pcAt": 2.071,
+   "partlyMs": 51,
+   "framesPartly": "2019 ms: 73%"
+  },
+  "longestGapBetweenRecordedFramesMs": 69
+ },
+ "design phone": {
+  "errors": [],
+  "face": {
+   "over5pcAt": 2.019,
+   "over95pcAt": 2.077,
+   "partlyMs": 59,
+   "framesPartly": "2019 ms: 89%"
+  },
+  "head": {
+   "over5pcAt": 2.019,
+   "over95pcAt": 2.077,
+   "partlyMs": 59,
+   "framesPartly": "2019 ms: 67%"
+  },
+  "longestGapBetweenRecordedFramesMs": 68
+ }
+}
