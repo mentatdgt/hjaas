@@ -43,7 +43,7 @@ New session? Read this, then `BIBLE.md` (what's fixed), `SCENE-RECIPE.md` (how a
 - [x] **Scene 1 glasses removed 2026-11-25** (Quinn 034/035; eye area only, checked for drift). Was: **Scene 1 still has glasses → remove them.** Decided: no glasses anywhere. Scene 1's frames (hammer loop, blink, reaction, wink, 2× set) were drawn with glasses and need a no-glasses re-edit. Plan this as its own task after the café.
 - [ ] Copy: about text, services, taglines (marked `TODO(copy)` in the code).
 - [ ] Contact form endpoint (Formspree suggested).
-- [ ] Hosting: Vercel Hobby is non-commercial only; Netlify or Cloudflare Pages at launch.
+- [ ] Hosting: **Vercel (user decided 2026-11-25).** Hobby fits, since this is a personal, non-commercial gift. Settings come from Quinn's load review (job 041).
 - [ ] Domain.
 - [ ] At launch: open up `robots.txt`; set `og:image` to the full URL.
 - [ ] Film scene: consent from Sean before he appears.
