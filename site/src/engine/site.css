@@ -101,7 +101,12 @@
 .hj-menu {
   display: flex;
   align-self: flex-end;
-  gap: clamp(18px, 1.8cqw, 34px);
+  /* Between two labels. Each tab's tap area has some of it on either side: more on the right, where a finished
+     scene's mushroom stands; the two make up the whole gap, so no tap area lies over another. */
+  --tab-gap: clamp(18px, 1.8cqw, 34px);
+  --tab-right: max(14px, var(--tab-gap) / 2);
+  --tab-left: calc(var(--tab-gap) - var(--tab-right));
+  gap: var(--tab-gap);
   margin-left: auto;
   /* The tabs' underlines sit on the masthead's bottom edge. */
   margin-bottom: -6px;
@@ -132,31 +137,38 @@
   font-weight: 500;
 }
 
-/* A finished scene: a 5 px cream dot beside its name. Out of the flow: it never moves a tab. */
-.hj-tab-dot {
+/* The tap area: the label and the gap beside it. */
+.hj-tab::before {
+  content: '';
   position: absolute;
-  top: 50%;
-  right: -10px;
-  width: 5px;
-  height: 5px;
-  margin-top: -2.5px;
-  border-radius: 50%;
-  background: var(--hj-cream);
-  box-shadow: 0 0 0 1px var(--hj-cream-ring);
-  opacity: 0;
+  inset: 0 calc(-1 * var(--tab-right)) 0 calc(-1 * var(--tab-left));
 }
 
-.hj-tab.is-done .hj-tab-dot {
+/* A finished scene: a tiny red mushroom beside its name, the counter's own drawing, full. Its outline is
+   thicker for its size, to read as ink at 9.5 px. Out of the flow: it never moves a tab. The drawing is 28 of the
+   30 units wide and tall, and the outline stands outside it: 9.5 px of ink in all. */
+.hj-tab-mark {
+  position: absolute;
+  top: 50%;
+  right: -12.3px;
+  width: 8.8px;
+  height: 8.8px;
+  /* (Half a pixel above the line's middle: the middle of the letters.) */
+  margin-top: -4.9px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hj-tab-mark .hj-m-line {
+  stroke-width: 3.3;
+}
+
+.hj-tab.is-done .hj-tab-mark {
   opacity: 1;
 }
 
-/* Said to a screen reader only once it is so. */
-.hj-tab:not(.is-done) .hj-sr {
-  visibility: hidden;
-}
-
 /* It comes with the cream cap's glint. */
-.hj-tab.is-dot-new .hj-tab-dot {
+.hj-tab.is-mark-new .hj-tab-mark {
   transition:
     opacity 260ms var(--hj-ease-out),
     scale 260ms var(--hj-ease-out);
@@ -171,10 +183,19 @@
   outline: none;
 }
 
-.hj-tab:focus-visible {
-  outline: 2px solid var(--hj-ink);
-  outline-offset: 3px;
+/* The focus ring is drawn inside the tab's own box and the room kept for it at the menu's ends: the phone's
+   menu scrolls, and would cut off a ring drawn around it. Past a mushroom it runs at the tap area's end. */
+.hj-tab:focus-visible::after {
+  content: '';
+  position: absolute;
+  inset: 1px calc(-1 * max(5px, var(--tab-left)));
+  border: 2px solid var(--hj-ink);
   border-radius: 4px;
+  pointer-events: none;
+}
+
+.hj-tab.is-done:focus-visible::after {
+  right: calc(-1 * var(--tab-right) - 2px);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -1465,10 +1486,11 @@ a.hj-logo:active {
 
     /* The menu takes its own row under the identity, and stays on one row. */
     .hj-menu {
-      flex: 0 0 100%;
-      /* (Room at the end for the last tab's dot.) */
-      gap: 23px;
-      margin: 2px 0 -4px;
+      flex: 0 0 calc(100% + 34px);
+      --tab-gap: 23px;
+      /* Room inside the scroller for the first tab's focus ring and the last tab's mushroom and ring. */
+      margin: 2px -17px -4px;
+      padding: 0 17px;
       overflow-x: auto;
       scrollbar-width: none;
     }
@@ -1486,7 +1508,7 @@ a.hj-logo:active {
        full. */
     @container (max-width: 373px) {
       .hj-menu {
-        gap: 20px;
+        --tab-gap: 20px;
       }
     }
 
@@ -1494,7 +1516,7 @@ a.hj-logo:active {
       .hj-menu {
         flex-wrap: wrap;
         justify-content: center;
-        column-gap: 22px;
+        --tab-gap: 22px;
         row-gap: 0;
         overflow-x: visible;
       }
@@ -1656,7 +1678,7 @@ a.hj-logo:active {
   }
 
   .hj-menu {
-    gap: 22px;
+    --tab-gap: 22px;
     margin-bottom: 0;
     margin-right: 10px;
   }
@@ -1742,8 +1764,8 @@ a.hj-logo:active {
     transition: none;
   }
 
-  /* The dot fades; it does not grow. */
-  .hj-tab.is-dot-new .hj-tab-dot {
+  /* The mushroom fades; it does not grow. */
+  .hj-tab.is-mark-new .hj-tab-mark {
     transition: opacity 260ms ease;
     scale: none;
   }

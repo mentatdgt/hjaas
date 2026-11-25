@@ -168,7 +168,7 @@ export interface NamedScene extends HuntScene {
 }
 
 /**
- * Everything the page shows of the hunt: the two counters, the dots on the menu's tabs, the "Next" link and the
+ * Everything the page shows of the hunt: the two counters, the mushrooms on the menu's tabs, the "Next" link and the
  * Contact button. All of it is worked out here, from the one set of finds, so no two parts of the page can
  * disagree (reviews/hunt-counter-build.md, section 2).
  */
@@ -179,7 +179,7 @@ export interface HuntView {
   here: { found: number; total: number };
   /** The red counter: the sum of every scene's finds. */
   site: { found: number; total: number };
-  /** The scenes with nothing left to find: the tabs with a dot. */
+  /** The scenes with nothing left to find: the tabs with a mushroom. */
   done: readonly string[];
   /** The next scene in the menu (round to the first) with something left to find, or null if there is none. */
   next: { id: string; label: string } | null;

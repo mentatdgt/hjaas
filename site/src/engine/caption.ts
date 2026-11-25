@@ -10,7 +10,7 @@
 //
 //      0 ms   the cream fill (500 ms), the cream number rolls, its label changes
 //     90      the same for the red row
-//    450      the scene's tenth: a glint across the cream cap (900 ms), the dot on its tab
+//    450      the scene's tenth: a glint across the cream cap (900 ms), the red mushroom on its tab
 //    650      and the "Next" link fades in
 //    900      the site's fiftieth: a glint across the red cap (900 ms)
 //   2000      and both rows cross-fade into the button (450 ms, 4 px rise)
@@ -47,7 +47,7 @@ function mushroom(kind: 'cream' | 'red', part: 'whole' | 'fill' | 'line' = 'whol
  */
 const counter = (kind: 'cream' | 'red'): string => `<span class="hj-m">${mushroom(kind, 'fill')}<span class="hj-m-clip"><span class="hj-m-cover" data-part="stem"></span></span><span class="hj-m-clip"><span class="hj-m-cover" data-part="cap"></span><span class="hj-m-glint"></span></span>${mushroom(kind, 'line')}</span>`;
 
-/** The red mushroom, full: the Contact button's icon, and the form's. */
+/** The red mushroom, full: the Contact button's icon, the form's, and (tiny) a finished scene's tab's. */
 export const MUSHROOM_ICON = mushroom('red');
 
 const ROLL_OUT_MS = 160;
@@ -171,7 +171,7 @@ export interface CaptionCopy extends CounterCopy {
 }
 
 export interface CaptionEvents {
-  /** A finished scene has had its moment: the dots on the tabs are due. */
+  /** A finished scene has had its moment: the mushroom on its tab is due. */
   onDone: () => void;
   /** The counter has become the button. */
   onButton: () => void;

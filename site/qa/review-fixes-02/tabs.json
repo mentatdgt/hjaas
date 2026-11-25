@@ -1,0 +1,1778 @@
+{
+ "chrome 1440x900@1": {
+  "labelsMovedPx": 0,
+  "menuHeight": [
+   44,
+   44
+  ],
+  "menuScrolls": [
+   true,
+   true
+  ],
+  "pageScrollsSideways": false,
+  "marksShown": [
+   "Build",
+   "Grow"
+  ],
+  "tapWidth": [
+   "Build 39.41 -> 64.41",
+   "Grow 41.83 -> 66.83",
+   "Design 54.45 -> 79.45",
+   "Film 33.11 -> 58.11",
+   "Set Design 83.97 -> 109.47"
+  ],
+  "tapHeight": 44,
+  "markToNextLabelPx": 13.600000000000023,
+  "lastMarkInsideMenuPx": -12.3,
+  "markCentreFromLabelLine": -0.05,
+  "markBoxHeight": 8.8,
+  "names": [
+   "- link \"Build, scene complete\":",
+   "- link \"Grow, scene complete\":",
+   "- link \"Design\":",
+   "- link \"Film\":",
+   "- link \"Set Design\":"
+  ],
+  "picture": {
+   "inkHeightCssPx": 10,
+   "inkWidthCssPx": 10,
+   "middleBelowLabelInkMiddlePx": 0,
+   "outlineContrastLowest": 5.7,
+   "outlineContrastAll": "12.2 6.1 12.2 12.2 12.2 12.2 12.2 5.7 12.2 12.2 12.2 10.2 10.2 12.2 8 12.2 6.1 12.2 10.2 12.2 12.2 8 8 8"
+  },
+  "rings": [
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 874,
+    "right": 940.8
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 938.8,
+    "right": 1008.1
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 1006.1,
+    "right": 1083.9
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 1085.9,
+    "right": 1142.4
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 1144.4,
+    "right": 1251.7
+   }
+  ],
+  "errors": []
+ },
+ "chrome 1440x900@2": {
+  "labelsMovedPx": 0,
+  "menuHeight": [
+   44,
+   44
+  ],
+  "menuScrolls": [
+   true,
+   true
+  ],
+  "pageScrollsSideways": false,
+  "marksShown": [
+   "Build",
+   "Grow"
+  ],
+  "tapWidth": [
+   "Build 39.41 -> 64.41",
+   "Grow 41.83 -> 66.83",
+   "Design 54.45 -> 79.45",
+   "Film 33.11 -> 58.11",
+   "Set Design 83.97 -> 109.47"
+  ],
+  "tapHeight": 44,
+  "markToNextLabelPx": 13.600000000000023,
+  "lastMarkInsideMenuPx": -12.3,
+  "markCentreFromLabelLine": -0.05,
+  "markBoxHeight": 8.8,
+  "names": [
+   "- link \"Build, scene complete\":",
+   "- link \"Grow, scene complete\":",
+   "- link \"Design\":",
+   "- link \"Film\":",
+   "- link \"Set Design\":"
+  ],
+  "picture": {
+   "inkHeightCssPx": 9.5,
+   "inkWidthCssPx": 9.5,
+   "middleBelowLabelInkMiddlePx": 0.25,
+   "outlineContrastLowest": 12.2,
+   "outlineContrastAll": "12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2"
+  },
+  "rings": [
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 874,
+    "right": 940.8
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 938.8,
+    "right": 1008.1
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 1006.1,
+    "right": 1083.9
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 1085.9,
+    "right": 1142.4
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 1144.4,
+    "right": 1251.7
+   }
+  ],
+  "errors": []
+ },
+ "chrome 1024x700@2": {
+  "labelsMovedPx": 0,
+  "menuHeight": [
+   44,
+   44
+  ],
+  "menuScrolls": [
+   true,
+   true
+  ],
+  "pageScrollsSideways": false,
+  "marksShown": [
+   "Build",
+   "Grow"
+  ],
+  "tapWidth": [
+   "Build 36.91 -> 54.41",
+   "Grow 39.19 -> 56.69",
+   "Design 51 -> 68.5",
+   "Film 31.03 -> 48.53",
+   "Set Design 78.63 -> 96.63"
+  ],
+  "tapHeight": 44,
+  "markToNextLabelPx": 6.1200000000000045,
+  "lastMarkInsideMenuPx": -12.3,
+  "markCentreFromLabelLine": -0.2,
+  "markBoxHeight": 8.8,
+  "names": [
+   "- link \"Build, scene complete\":",
+   "- link \"Grow, scene complete\":",
+   "- link \"Design\":",
+   "- link \"Film\":",
+   "- link \"Set Design\":"
+  ],
+  "picture": {
+   "inkHeightCssPx": 9.5,
+   "inkWidthCssPx": 9.5,
+   "middleBelowLabelInkMiddlePx": -0.25,
+   "outlineContrastLowest": 12.2,
+   "outlineContrastAll": "12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2"
+  },
+  "rings": [
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 609.1,
+    "right": 666.5
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 663.9,
+    "right": 723.6
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 721,
+    "right": 781.5
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 789.9,
+    "right": 830.5
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 838.9,
+    "right": 927
+   }
+  ],
+  "errors": []
+ },
+ "chrome 700x900@2": {
+  "labelsMovedPx": 0,
+  "menuHeight": [
+   44,
+   44
+  ],
+  "menuScrolls": [
+   true,
+   true
+  ],
+  "pageScrollsSideways": false,
+  "marksShown": [
+   "Build",
+   "Grow"
+  ],
+  "tapWidth": [
+   "Build 36.91 -> 53.91",
+   "Grow 39.19 -> 56.19",
+   "Design 51 -> 68",
+   "Film 31.03 -> 48.03",
+   "Set Design 50.36 -> 67.86"
+  ],
+  "tapHeight": 44,
+  "markToNextLabelPx": 5.7099999999999795,
+  "lastMarkInsideMenuPx": -12.3,
+  "markCentreFromLabelLine": -0.2,
+  "markBoxHeight": 8.8,
+  "names": [
+   "- link \"Build, scene complete\":",
+   "- link \"Grow, scene complete\":",
+   "- link \"Design\":",
+   "- link \"Film\":",
+   "- link \"Set Design\":"
+  ],
+  "picture": {
+   "inkHeightCssPx": 9.5,
+   "inkWidthCssPx": 9.5,
+   "middleBelowLabelInkMiddlePx": -0.25,
+   "outlineContrastLowest": 12.2,
+   "outlineContrastAll": "12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2"
+  },
+  "rings": [
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 389,
+    "right": 446.4
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 443.4,
+    "right": 503.1
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 500.1,
+    "right": 560.6
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 568.6,
+    "right": 609.2
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 617.2,
+    "right": 677
+   }
+  ],
+  "errors": []
+ },
+ "chrome 390x844@3": {
+  "labelsMovedPx": 0,
+  "menuHeight": [
+   44,
+   44
+  ],
+  "menuScrolls": [
+   false,
+   false
+  ],
+  "pageScrollsSideways": false,
+  "marksShown": [
+   "Build",
+   "Grow"
+  ],
+  "tapWidth": [
+   "Build 36.91 -> 58.91",
+   "Grow 39.19 -> 61.19",
+   "Design 51 -> 73",
+   "Film 31.03 -> 53.03",
+   "Set Design 78.63 -> 101.13"
+  ],
+  "tapHeight": 44,
+  "markToNextLabelPx": 10.700000000000017,
+  "lastMarkInsideMenuPx": 32.45,
+  "markCentreFromLabelLine": -0.2,
+  "markBoxHeight": 8.8,
+  "names": [
+   "- link \"Build, scene complete\":",
+   "- link \"Grow, scene complete\":",
+   "- link \"Design\":",
+   "- link \"Film\":",
+   "- link \"Set Design\":"
+  ],
+  "picture": {
+   "inkHeightCssPx": 9.3,
+   "inkWidthCssPx": 9.3,
+   "middleBelowLabelInkMiddlePx": -0.17,
+   "outlineContrastLowest": 12.2,
+   "outlineContrastAll": "12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2"
+  },
+  "rings": [
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 9,
+    "right": 70.4
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 68.4,
+    "right": 132.1
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 130.1,
+    "right": 198.6
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 203.6,
+    "right": 252.1
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 257.1,
+    "right": 353.3
+   }
+  ],
+  "errors": []
+ },
+ "chrome 375x667@2": {
+  "labelsMovedPx": 0,
+  "menuHeight": [
+   44,
+   44
+  ],
+  "menuScrolls": [
+   false,
+   false
+  ],
+  "pageScrollsSideways": false,
+  "marksShown": [
+   "Build",
+   "Grow"
+  ],
+  "tapWidth": [
+   "Build 36.91 -> 58.91",
+   "Grow 39.19 -> 61.19",
+   "Design 51 -> 73",
+   "Film 31.03 -> 53.03",
+   "Set Design 78.63 -> 101.13"
+  ],
+  "tapHeight": 44,
+  "markToNextLabelPx": 10.700000000000017,
+  "lastMarkInsideMenuPx": 17.45,
+  "markCentreFromLabelLine": -0.2,
+  "markBoxHeight": 8.8,
+  "names": [
+   "- link \"Build, scene complete\":",
+   "- link \"Grow, scene complete\":",
+   "- link \"Design\":",
+   "- link \"Film\":",
+   "- link \"Set Design\":"
+  ],
+  "picture": {
+   "inkHeightCssPx": 9.5,
+   "inkWidthCssPx": 9.5,
+   "middleBelowLabelInkMiddlePx": -0.25,
+   "outlineContrastLowest": 12.2,
+   "outlineContrastAll": "12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2"
+  },
+  "rings": [
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 9,
+    "right": 70.4
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 68.4,
+    "right": 132.1
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 130.1,
+    "right": 198.6
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 203.6,
+    "right": 252.1
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 257.1,
+    "right": 353.3
+   }
+  ],
+  "errors": []
+ },
+ "chrome 360x740@2": {
+  "labelsMovedPx": 0,
+  "menuHeight": [
+   44,
+   44
+  ],
+  "menuScrolls": [
+   false,
+   false
+  ],
+  "pageScrollsSideways": false,
+  "marksShown": [
+   "Build",
+   "Grow"
+  ],
+  "tapWidth": [
+   "Build 36.91 -> 55.91",
+   "Grow 39.19 -> 58.19",
+   "Design 51 -> 70",
+   "Film 31.03 -> 50.03",
+   "Set Design 78.63 -> 98.13"
+  ],
+  "tapHeight": 44,
+  "markToNextLabelPx": 7.700000000000003,
+  "lastMarkInsideMenuPx": 14.45,
+  "markCentreFromLabelLine": -0.2,
+  "markBoxHeight": 8.8,
+  "names": [
+   "- link \"Build, scene complete\":",
+   "- link \"Grow, scene complete\":",
+   "- link \"Design\":",
+   "- link \"Film\":",
+   "- link \"Set Design\":"
+  ],
+  "picture": {
+   "inkHeightCssPx": 9.5,
+   "inkWidthCssPx": 9.5,
+   "middleBelowLabelInkMiddlePx": -0.25,
+   "outlineContrastLowest": 12.2,
+   "outlineContrastAll": "12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2"
+  },
+  "rings": [
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 12,
+    "right": 70.4
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 68.4,
+    "right": 129.1
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 127.1,
+    "right": 189.6
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 197.6,
+    "right": 240.1
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 248.1,
+    "right": 338.3
+   }
+  ],
+  "errors": []
+ },
+ "chrome 340x700@2": {
+  "labelsMovedPx": 0,
+  "menuHeight": [
+   88,
+   88
+  ],
+  "menuScrolls": [
+   false,
+   false
+  ],
+  "pageScrollsSideways": false,
+  "marksShown": [
+   "Build",
+   "Grow"
+  ],
+  "tapWidth": [
+   "Build 36.91 -> 57.91",
+   "Grow 39.19 -> 60.19",
+   "Design 51 -> 72",
+   "Film 31.03 -> 52.53",
+   "Set Design 78.63 -> 100.13"
+  ],
+  "tapHeight": 44,
+  "markToNextLabelPx": 9.699999999999989,
+  "lastMarkInsideMenuPx": 117.64,
+  "markCentreFromLabelLine": -0.2,
+  "markBoxHeight": 8.8,
+  "names": [
+   "- link \"Build, scene complete\":",
+   "- link \"Grow, scene complete\":",
+   "- link \"Design\":",
+   "- link \"Film\":",
+   "- link \"Set Design\":"
+  ],
+  "picture": {
+   "inkHeightCssPx": 9.5,
+   "inkWidthCssPx": 9.5,
+   "middleBelowLabelInkMiddlePx": -0.25,
+   "outlineContrastLowest": 12.2,
+   "outlineContrastAll": "12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2"
+  },
+  "rings": [
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 50.9,
+    "right": 111.3
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 109.3,
+    "right": 172
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 170,
+    "right": 236.5
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 242.5,
+    "right": 289.1
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 122.9,
+    "right": 217.1
+   }
+  ],
+  "errors": []
+ },
+ "chrome 320x640@2": {
+  "labelsMovedPx": 0,
+  "menuHeight": [
+   88,
+   88
+  ],
+  "menuScrolls": [
+   false,
+   false
+  ],
+  "pageScrollsSideways": false,
+  "marksShown": [
+   "Build",
+   "Grow"
+  ],
+  "tapWidth": [
+   "Build 36.91 -> 57.91",
+   "Grow 39.19 -> 60.19",
+   "Design 51 -> 72",
+   "Film 31.03 -> 52.53",
+   "Set Design 78.63 -> 100.13"
+  ],
+  "tapHeight": 44,
+  "markToNextLabelPx": 9.699999999999989,
+  "lastMarkInsideMenuPx": 107.64,
+  "markCentreFromLabelLine": -0.2,
+  "markBoxHeight": 8.8,
+  "names": [
+   "- link \"Build, scene complete\":",
+   "- link \"Grow, scene complete\":",
+   "- link \"Design\":",
+   "- link \"Film\":",
+   "- link \"Set Design\":"
+  ],
+  "picture": {
+   "inkHeightCssPx": 9.5,
+   "inkWidthCssPx": 9.5,
+   "middleBelowLabelInkMiddlePx": -0.25,
+   "outlineContrastLowest": 12.2,
+   "outlineContrastAll": "12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2"
+  },
+  "rings": [
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 40.9,
+    "right": 101.3
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 99.3,
+    "right": 162
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 160,
+    "right": 226.5
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 232.5,
+    "right": 279.1
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 112.9,
+    "right": 207.1
+   }
+  ],
+  "errors": []
+ },
+ "chrome 844x390@3": {
+  "labelsMovedPx": 0,
+  "menuHeight": [
+   44,
+   44
+  ],
+  "menuScrolls": [
+   true,
+   true
+  ],
+  "pageScrollsSideways": false,
+  "marksShown": [
+   "Build",
+   "Grow"
+  ],
+  "tapWidth": [
+   "Build 36.91 -> 57.91",
+   "Grow 39.19 -> 60.19",
+   "Design 51 -> 72",
+   "Film 31.03 -> 52.03",
+   "Set Design 78.63 -> 100.13"
+  ],
+  "tapHeight": 44,
+  "markToNextLabelPx": 9.700000000000045,
+  "lastMarkInsideMenuPx": -12.3,
+  "markCentreFromLabelLine": -0.2,
+  "markBoxHeight": 8.8,
+  "names": [
+   "- link \"Build, scene complete\":",
+   "- link \"Grow, scene complete\":",
+   "- link \"Design\":",
+   "- link \"Film\":",
+   "- link \"Set Design\":"
+  ],
+  "picture": {
+   "inkHeightCssPx": 9.3,
+   "inkWidthCssPx": 9.3,
+   "middleBelowLabelInkMiddlePx": 0.83,
+   "outlineContrastLowest": 12.2,
+   "outlineContrastAll": "12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2"
+  },
+  "rings": [
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 483.8,
+    "right": 544.2
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 542.2,
+    "right": 604.8
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 602.8,
+    "right": 669.3
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 675.3,
+    "right": 721.9
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 727.9,
+    "right": 822
+   }
+  ],
+  "errors": []
+ },
+ "chrome 2560x1440@1": {
+  "labelsMovedPx": 0,
+  "menuHeight": [
+   44,
+   44
+  ],
+  "menuScrolls": [
+   true,
+   true
+  ],
+  "pageScrollsSideways": false,
+  "marksShown": [
+   "Build",
+   "Grow"
+  ],
+  "tapWidth": [
+   "Build 49.83 -> 82.83",
+   "Grow 52.91 -> 85.91",
+   "Design 68.92 -> 101.92",
+   "Film 41.86 -> 74.86",
+   "Set Design 106.34 -> 139.84"
+  ],
+  "tapHeight": 44,
+  "markToNextLabelPx": 21.699999999999818,
+  "lastMarkInsideMenuPx": -12.29,
+  "markCentreFromLabelLine": 0.1,
+  "markBoxHeight": 8.8,
+  "names": [
+   "- link \"Build, scene complete\":",
+   "- link \"Grow, scene complete\":",
+   "- link \"Design\":",
+   "- link \"Film\":",
+   "- link \"Set Design\":"
+  ],
+  "picture": {
+   "inkHeightCssPx": 10,
+   "inkWidthCssPx": 10,
+   "middleBelowLabelInkMiddlePx": 0.5,
+   "outlineContrastLowest": 5.7,
+   "outlineContrastAll": "12.2 6.1 12.2 12.2 12.2 12.2 12.2 5.7 12.2 12.2 12.2 10.2 10.2 12.2 8 12.2 6.1 12.2 10.2 12.2 12.2 8 8 8"
+  },
+  "rings": [
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 1733.8,
+    "right": 1819.1
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 1817.1,
+    "right": 1905.5
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 1903.5,
+    "right": 2006
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 2006,
+    "right": 2081.3
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 2081.3,
+    "right": 2221.2
+   }
+  ],
+  "errors": []
+ },
+ "chrome 1440 after a reload": [
+  "build 1",
+  "grow 1"
+ ],
+ "chrome 390 after a reload": [
+  "build 1",
+  "grow 1"
+ ],
+ "webkit 1440x900@1": {
+  "labelsMovedPx": 0,
+  "menuHeight": [
+   44,
+   44
+  ],
+  "menuScrolls": [
+   true,
+   true
+  ],
+  "pageScrollsSideways": false,
+  "marksShown": [
+   "Build",
+   "Grow"
+  ],
+  "tapWidth": [
+   "Build 39.39 -> 64.39",
+   "Grow 41.82 -> 66.82",
+   "Design 54.45 -> 79.45",
+   "Film 33.11 -> 58.11",
+   "Set Design 83.96 -> 109.96"
+  ],
+  "tapHeight": 44,
+  "markToNextLabelPx": 13.600000000000023,
+  "lastMarkInsideMenuPx": -12.3,
+  "markCentreFromLabelLine": -0.49,
+  "markBoxHeight": 8.8,
+  "names": [
+   "- link \"Build, scene complete\":",
+   "- link \"Grow, scene complete\":",
+   "- link \"Design\":",
+   "- link \"Film\":",
+   "- link \"Set Design\":"
+  ],
+  "picture": {
+   "inkHeightCssPx": 9,
+   "inkWidthCssPx": 9,
+   "middleBelowLabelInkMiddlePx": 0.5,
+   "outlineContrastLowest": 3.9,
+   "outlineContrastAll": "12.2 7.8 7.8 9.3 3.9 12.2 11.2 12.2 12.2 8.8 8.5 12.2 12.2 9.6 9 12.2 7.9 9.8 8.9 10.4 8.7 12.2 7.7 10"
+  },
+  "rings": [
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 874,
+    "right": 940.8
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 938.8,
+    "right": 1008.1
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 1006.1,
+    "right": 1083.9
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 1085.9,
+    "right": 1142.4
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 1144.4,
+    "right": 1251.7
+   }
+  ],
+  "errors": []
+ },
+ "webkit 1440x900@2": {
+  "labelsMovedPx": 0,
+  "menuHeight": [
+   44,
+   44
+  ],
+  "menuScrolls": [
+   true,
+   true
+  ],
+  "pageScrollsSideways": false,
+  "marksShown": [
+   "Build",
+   "Grow"
+  ],
+  "tapWidth": [
+   "Build 39.39 -> 64.39",
+   "Grow 41.82 -> 66.82",
+   "Design 54.45 -> 79.45",
+   "Film 33.11 -> 58.11",
+   "Set Design 83.96 -> 109.96"
+  ],
+  "tapHeight": 44,
+  "markToNextLabelPx": 13.600000000000023,
+  "lastMarkInsideMenuPx": -12.3,
+  "markCentreFromLabelLine": -0.49,
+  "markBoxHeight": 8.8,
+  "names": [
+   "- link \"Build, scene complete\":",
+   "- link \"Grow, scene complete\":",
+   "- link \"Design\":",
+   "- link \"Film\":",
+   "- link \"Set Design\":"
+  ],
+  "picture": {
+   "inkHeightCssPx": 9.5,
+   "inkWidthCssPx": 9.5,
+   "middleBelowLabelInkMiddlePx": 0.25,
+   "outlineContrastLowest": 10.1,
+   "outlineContrastAll": "12.2 12.2 12.2 12.2 12.2 11.6 11.6 12.1 12.2 12.2 12.2 12.2 12.2 12.2 12.2 10.1 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2"
+  },
+  "rings": [
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 874,
+    "right": 940.8
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 938.8,
+    "right": 1008.1
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 1006.1,
+    "right": 1083.9
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 1085.9,
+    "right": 1142.4
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 1144.4,
+    "right": 1251.7
+   }
+  ],
+  "errors": []
+ },
+ "webkit 1024x700@2": {
+  "labelsMovedPx": 0,
+  "menuHeight": [
+   44,
+   44
+  ],
+  "menuScrolls": [
+   true,
+   true
+  ],
+  "pageScrollsSideways": false,
+  "marksShown": [
+   "Build",
+   "Grow"
+  ],
+  "tapWidth": [
+   "Build 36.9 -> 54.4",
+   "Grow 39.18 -> 56.68",
+   "Design 51 -> 68.5",
+   "Film 31.02 -> 48.52",
+   "Set Design 78.62 -> 97.12"
+  ],
+  "tapHeight": 44,
+  "markToNextLabelPx": 6.1200000000000045,
+  "lastMarkInsideMenuPx": -12.3,
+  "markCentreFromLabelLine": -0.49,
+  "markBoxHeight": 8.8,
+  "names": [
+   "- link \"Build, scene complete\":",
+   "- link \"Grow, scene complete\":",
+   "- link \"Design\":",
+   "- link \"Film\":",
+   "- link \"Set Design\":"
+  ],
+  "picture": {
+   "inkHeightCssPx": 9.5,
+   "inkWidthCssPx": 9.5,
+   "middleBelowLabelInkMiddlePx": -0.25,
+   "outlineContrastLowest": 10.1,
+   "outlineContrastAll": "12.2 12.2 12.2 12.2 12.2 11.6 11.6 12.1 12.2 12.2 12.2 12.2 12.2 12.2 12.2 10.1 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2"
+  },
+  "rings": [
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 609.1,
+    "right": 666.5
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 663.9,
+    "right": 723.6
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 721,
+    "right": 781.5
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 789.9,
+    "right": 830.5
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 838.9,
+    "right": 927
+   }
+  ],
+  "errors": []
+ },
+ "webkit 700x900@2": {
+  "labelsMovedPx": 0,
+  "menuHeight": [
+   44,
+   44
+  ],
+  "menuScrolls": [
+   true,
+   true
+  ],
+  "pageScrollsSideways": false,
+  "marksShown": [
+   "Build",
+   "Grow"
+  ],
+  "tapWidth": [
+   "Build 36.9 -> 53.9",
+   "Grow 39.18 -> 56.18",
+   "Design 51 -> 68",
+   "Film 31.02 -> 48.02",
+   "Set Design 50.35 -> 68.35"
+  ],
+  "tapHeight": 44,
+  "markToNextLabelPx": 5.699999999999989,
+  "lastMarkInsideMenuPx": -12.3,
+  "markCentreFromLabelLine": -0.49,
+  "markBoxHeight": 8.8,
+  "names": [
+   "- link \"Build, scene complete\":",
+   "- link \"Grow, scene complete\":",
+   "- link \"Design\":",
+   "- link \"Film\":",
+   "- link \"Set Design\":"
+  ],
+  "picture": {
+   "inkHeightCssPx": 9.5,
+   "inkWidthCssPx": 9.5,
+   "middleBelowLabelInkMiddlePx": -0.25,
+   "outlineContrastLowest": 10.1,
+   "outlineContrastAll": "12.2 12.2 12.2 12.2 12.2 11.6 11.6 12.1 12.2 12.2 12.2 12.2 12.2 12.2 12.2 10.1 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2"
+  },
+  "rings": [
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 389,
+    "right": 446.4
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 443.4,
+    "right": 503.1
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 500.1,
+    "right": 560.6
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 568.6,
+    "right": 609.1
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 617.1,
+    "right": 677
+   }
+  ],
+  "errors": []
+ },
+ "webkit 390x844@3": {
+  "labelsMovedPx": 0,
+  "menuHeight": [
+   44,
+   44
+  ],
+  "menuScrolls": [
+   false,
+   false
+  ],
+  "pageScrollsSideways": false,
+  "marksShown": [
+   "Build",
+   "Grow"
+  ],
+  "tapWidth": [
+   "Build 36.9 -> 58.9",
+   "Grow 39.18 -> 61.18",
+   "Design 51 -> 73",
+   "Film 31.02 -> 53.02",
+   "Set Design 78.62 -> 101.62"
+  ],
+  "tapHeight": 44,
+  "markToNextLabelPx": 10.700000000000017,
+  "lastMarkInsideMenuPx": 32.45,
+  "markCentreFromLabelLine": -0.49,
+  "markBoxHeight": 8.8,
+  "names": [
+   "- link \"Build, scene complete\":",
+   "- link \"Grow, scene complete\":",
+   "- link \"Design\":",
+   "- link \"Film\":",
+   "- link \"Set Design\":"
+  ],
+  "picture": {
+   "inkHeightCssPx": 9.3,
+   "inkWidthCssPx": 9.3,
+   "middleBelowLabelInkMiddlePx": -0.17,
+   "outlineContrastLowest": 12.2,
+   "outlineContrastAll": "12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2"
+  },
+  "rings": [
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 9,
+    "right": 70.4
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 68.4,
+    "right": 132.1
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 130.1,
+    "right": 198.6
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 203.6,
+    "right": 252.1
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 257.1,
+    "right": 353.3
+   }
+  ],
+  "errors": []
+ },
+ "webkit 375x667@2": {
+  "labelsMovedPx": 0,
+  "menuHeight": [
+   44,
+   44
+  ],
+  "menuScrolls": [
+   false,
+   false
+  ],
+  "pageScrollsSideways": false,
+  "marksShown": [
+   "Build",
+   "Grow"
+  ],
+  "tapWidth": [
+   "Build 36.9 -> 58.9",
+   "Grow 39.18 -> 61.18",
+   "Design 51 -> 73",
+   "Film 31.02 -> 53.02",
+   "Set Design 78.62 -> 101.62"
+  ],
+  "tapHeight": 44,
+  "markToNextLabelPx": 10.700000000000017,
+  "lastMarkInsideMenuPx": 17.45,
+  "markCentreFromLabelLine": -0.49,
+  "markBoxHeight": 8.8,
+  "names": [
+   "- link \"Build, scene complete\":",
+   "- link \"Grow, scene complete\":",
+   "- link \"Design\":",
+   "- link \"Film\":",
+   "- link \"Set Design\":"
+  ],
+  "picture": {
+   "inkHeightCssPx": 9.5,
+   "inkWidthCssPx": 9.5,
+   "middleBelowLabelInkMiddlePx": -0.25,
+   "outlineContrastLowest": 10.1,
+   "outlineContrastAll": "12.2 12.2 12.2 12.2 12.2 11.6 11.6 12.1 12.2 12.2 12.2 12.2 12.2 12.2 12.2 10.1 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2"
+  },
+  "rings": [
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 9,
+    "right": 70.4
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 68.4,
+    "right": 132.1
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 130.1,
+    "right": 198.6
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 203.6,
+    "right": 252.1
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 257.1,
+    "right": 353.3
+   }
+  ],
+  "errors": []
+ },
+ "webkit 360x740@2": {
+  "labelsMovedPx": 0,
+  "menuHeight": [
+   44,
+   44
+  ],
+  "menuScrolls": [
+   false,
+   false
+  ],
+  "pageScrollsSideways": false,
+  "marksShown": [
+   "Build",
+   "Grow"
+  ],
+  "tapWidth": [
+   "Build 36.9 -> 55.9",
+   "Grow 39.18 -> 58.18",
+   "Design 51 -> 70",
+   "Film 31.02 -> 50.02",
+   "Set Design 78.62 -> 98.62"
+  ],
+  "tapHeight": 44,
+  "markToNextLabelPx": 7.700000000000003,
+  "lastMarkInsideMenuPx": 14.45,
+  "markCentreFromLabelLine": -0.49,
+  "markBoxHeight": 8.8,
+  "names": [
+   "- link \"Build, scene complete\":",
+   "- link \"Grow, scene complete\":",
+   "- link \"Design\":",
+   "- link \"Film\":",
+   "- link \"Set Design\":"
+  ],
+  "picture": {
+   "inkHeightCssPx": 9.5,
+   "inkWidthCssPx": 9.5,
+   "middleBelowLabelInkMiddlePx": -0.25,
+   "outlineContrastLowest": 10.1,
+   "outlineContrastAll": "12.2 12.2 12.2 12.2 12.2 11.6 11.6 12.1 12.2 12.2 12.2 12.2 12.2 12.2 12.2 10.1 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2"
+  },
+  "rings": [
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 12,
+    "right": 70.4
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 68.4,
+    "right": 129.1
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 127.1,
+    "right": 189.6
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 197.6,
+    "right": 240.1
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 248.1,
+    "right": 338.3
+   }
+  ],
+  "errors": []
+ },
+ "webkit 340x700@2": {
+  "labelsMovedPx": 0,
+  "menuHeight": [
+   88,
+   88
+  ],
+  "menuScrolls": [
+   false,
+   false
+  ],
+  "pageScrollsSideways": false,
+  "marksShown": [
+   "Build",
+   "Grow"
+  ],
+  "tapWidth": [
+   "Build 36.9 -> 57.9",
+   "Grow 39.18 -> 60.18",
+   "Design 51 -> 72",
+   "Film 31.02 -> 53.02",
+   "Set Design 78.62 -> 100.62"
+  ],
+  "tapHeight": 44,
+  "markToNextLabelPx": 9.699999999999989,
+  "lastMarkInsideMenuPx": 117.64,
+  "markCentreFromLabelLine": -0.49,
+  "markBoxHeight": 8.8,
+  "names": [
+   "- link \"Build, scene complete\":",
+   "- link \"Grow, scene complete\":",
+   "- link \"Design\":",
+   "- link \"Film\":",
+   "- link \"Set Design\":"
+  ],
+  "picture": {
+   "inkHeightCssPx": 9.5,
+   "inkWidthCssPx": 9.5,
+   "middleBelowLabelInkMiddlePx": -0.25,
+   "outlineContrastLowest": 10.1,
+   "outlineContrastAll": "12.2 12.2 12.2 12.2 12.2 11.6 11.6 12.1 12.2 12.2 12.2 12.2 12.2 12.2 12.2 10.1 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2"
+  },
+  "rings": [
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 50.9,
+    "right": 111.3
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 109.3,
+    "right": 172
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 170,
+    "right": 236.5
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 242.5,
+    "right": 289.1
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 122.9,
+    "right": 217.1
+   }
+  ],
+  "errors": []
+ },
+ "webkit 320x640@2": {
+  "labelsMovedPx": 0,
+  "menuHeight": [
+   88,
+   88
+  ],
+  "menuScrolls": [
+   false,
+   false
+  ],
+  "pageScrollsSideways": false,
+  "marksShown": [
+   "Build",
+   "Grow"
+  ],
+  "tapWidth": [
+   "Build 36.9 -> 57.9",
+   "Grow 39.18 -> 60.18",
+   "Design 51 -> 72",
+   "Film 31.02 -> 53.02",
+   "Set Design 78.62 -> 100.62"
+  ],
+  "tapHeight": 44,
+  "markToNextLabelPx": 9.699999999999989,
+  "lastMarkInsideMenuPx": 107.64,
+  "markCentreFromLabelLine": -0.49,
+  "markBoxHeight": 8.8,
+  "names": [
+   "- link \"Build, scene complete\":",
+   "- link \"Grow, scene complete\":",
+   "- link \"Design\":",
+   "- link \"Film\":",
+   "- link \"Set Design\":"
+  ],
+  "picture": {
+   "inkHeightCssPx": 9.5,
+   "inkWidthCssPx": 9.5,
+   "middleBelowLabelInkMiddlePx": -0.25,
+   "outlineContrastLowest": 10.1,
+   "outlineContrastAll": "12.2 12.2 12.2 12.2 12.2 11.6 11.6 12.1 12.2 12.2 12.2 12.2 12.2 12.2 12.2 10.1 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2"
+  },
+  "rings": [
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 40.9,
+    "right": 101.3
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 99.3,
+    "right": 162
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 160,
+    "right": 226.5
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 232.5,
+    "right": 279.1
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 112.9,
+    "right": 207.1
+   }
+  ],
+  "errors": []
+ },
+ "webkit 844x390@3": {
+  "labelsMovedPx": 0,
+  "menuHeight": [
+   44,
+   44
+  ],
+  "menuScrolls": [
+   true,
+   true
+  ],
+  "pageScrollsSideways": false,
+  "marksShown": [
+   "Build",
+   "Grow"
+  ],
+  "tapWidth": [
+   "Build 36.9 -> 57.9",
+   "Grow 39.18 -> 60.18",
+   "Design 51 -> 72",
+   "Film 31.02 -> 52.02",
+   "Set Design 78.62 -> 100.62"
+  ],
+  "tapHeight": 44,
+  "markToNextLabelPx": 9.700000000000045,
+  "lastMarkInsideMenuPx": -12.3,
+  "markCentreFromLabelLine": -0.49,
+  "markBoxHeight": 8.8,
+  "names": [
+   "- link \"Build, scene complete\":",
+   "- link \"Grow, scene complete\":",
+   "- link \"Design\":",
+   "- link \"Film\":",
+   "- link \"Set Design\":"
+  ],
+  "picture": {
+   "inkHeightCssPx": 9.3,
+   "inkWidthCssPx": 9.3,
+   "middleBelowLabelInkMiddlePx": -0.17,
+   "outlineContrastLowest": 12.2,
+   "outlineContrastAll": "12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2 12.2"
+  },
+  "rings": [
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 483.8,
+    "right": 544.2
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 542.2,
+    "right": 604.8
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 602.8,
+    "right": 669.3
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 675.3,
+    "right": 721.9
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 727.9,
+    "right": 822
+   }
+  ],
+  "errors": []
+ },
+ "webkit 2560x1440@1": {
+  "labelsMovedPx": 0,
+  "menuHeight": [
+   44,
+   44
+  ],
+  "menuScrolls": [
+   true,
+   true
+  ],
+  "pageScrollsSideways": false,
+  "marksShown": [
+   "Build",
+   "Grow"
+  ],
+  "tapWidth": [
+   "Build 49.82 -> 82.82",
+   "Grow 52.9 -> 85.9",
+   "Design 68.92 -> 101.92",
+   "Film 41.85 -> 74.85",
+   "Set Design 106.34 -> 140.34"
+  ],
+  "tapHeight": 44,
+  "markToNextLabelPx": 21.699999999999818,
+  "lastMarkInsideMenuPx": -12.29,
+  "markCentreFromLabelLine": -0.49,
+  "markBoxHeight": 8.8,
+  "names": [
+   "- link \"Build, scene complete\":",
+   "- link \"Grow, scene complete\":",
+   "- link \"Design\":",
+   "- link \"Film\":",
+   "- link \"Set Design\":"
+  ],
+  "picture": {
+   "inkHeightCssPx": 9,
+   "inkWidthCssPx": 9,
+   "middleBelowLabelInkMiddlePx": 1,
+   "outlineContrastLowest": 3.9,
+   "outlineContrastAll": "12.2 7.8 7.8 9.3 3.9 12.2 11.2 12.2 12.2 8.8 8.5 12.2 12.2 9.6 9 12.2 7.9 9.8 8.9 10.4 8.7 12.2 7.7 10"
+  },
+  "rings": [
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 1733.8,
+    "right": 1819.1
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 1817.1,
+    "right": 1905.5
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 1903.5,
+    "right": 2006
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 2006,
+    "right": 2081.3
+   },
+   {
+    "shown": true,
+    "inside": true,
+    "onScreen": true,
+    "left": 2081.3,
+    "right": 2221.2
+   }
+  ],
+  "errors": []
+ },
+ "webkit 1440 after a reload": [
+  "build 1",
+  "grow 1"
+ ],
+ "webkit 390 after a reload": [
+  "build 1",
+  "grow 1"
+ ]
+}

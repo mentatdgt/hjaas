@@ -203,7 +203,7 @@ const PROBE = () => {
         const r = q(`.hj-row.is-${k}`); const old = r.querySelector('.hj-num-old');
         row[k] = { n: r.querySelector('.hj-num-now').textContent, inA: alpha(r.querySelector('.hj-num-now')), inY: ty(r.querySelector('.hj-num-now')), oldA: alpha(old) > 0 ? alpha(old) : null, oldY: alpha(old) > 0 ? ty(old) : null, label: r.querySelector('.hj-label').textContent, stem: 1 - sy(r.querySelector('[data-part=stem]')), cap: 1 - sy(r.querySelector('[data-part=cap]')), glintA: alpha(r.querySelector('.hj-m-glint')), glintX: tx(r.querySelector('.hj-m-glint')) };
       }
-      const tab = q('.hj-tab[aria-current] .hj-tab-dot'); const next = q('.hj-next'); const c = q('.hj-counter'); const p = q('.hj-prize');
+      const tab = q('.hj-tab[aria-current] .hj-tab-mark'); const next = q('.hj-next'); const c = q('.hj-counter'); const p = q('.hj-prize');
       log.push({ t: performance.now() - window.__landed, ...row, dot: alpha(tab), next: next.classList.contains('is-off') ? 0 : alpha(next), counter: getComputedStyle(c).visibility === 'hidden' ? 0 : alpha(c), counterY: ty(c), prize: getComputedStyle(p).visibility === 'hidden' ? 0 : alpha(p), prizeY: ty(p) });
     }
     requestAnimationFrame(tick);

@@ -2,7 +2,7 @@ import '@fontsource-variable/bricolage-grotesque';
 import '@fontsource/spectral/latin-400.css';
 import './site.css';
 import { retainAssets, setAssetBase, warmPlate } from './assets';
-import { Caption, type CaptionCopy } from './caption';
+import { Caption, MUSHROOM_ICON, type CaptionCopy } from './caption';
 import { DEFAULT_EDGE, EDGE_STYLES, edgeSeed, type EdgeStyle } from './edge';
 import { flags } from './flags';
 import { ContactForm } from './form';
@@ -50,8 +50,8 @@ const COPY = {
   pause: 'Pause animation',
   play: 'Play animation',
   replay: 'Replay painting',
-  /** A tab whose scene is finished, for screen readers (the dot says it to everyone else). */
-  tabDone: ', all found',
+  /** A tab whose scene is finished, for screen readers (its mushroom says it to everyone else). */
+  tabDone: (scene: string) => `${scene}, scene complete`,
 };
 
 /** The two counters, the link to the next scene, and the button they turn into. */
@@ -140,7 +140,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
           // Only the scenes that exist are listed; with one scene there is nowhere to go and no menu.
           scenes.length > 1
             ? `<nav class="hj-menu" aria-label="${COPY.menu}">${scenes
-                .map((scene) => `<a class="hj-tab" href="#${scene.id}" data-scene="${scene.id}">${scene.label}<span class="hj-tab-dot" aria-hidden="true"></span><span class="hj-sr">${COPY.tabDone}</span></a>`)
+                .map((scene) => `<a class="hj-tab" href="#${scene.id}" data-scene="${scene.id}">${scene.label}<span class="hj-tab-mark" aria-hidden="true">${MUSHROOM_ICON}</span></a>`)
                 .join('')}</nav>`
             : ''
         }
@@ -195,7 +195,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   const findsOf = (id: string): ReadonlySet<string> => foundIn.get(id) ?? new Set();
   // The Contact button is earned by every mushroom of every scene, and worked out from the finds themselves:
   // a saved flag is never trusted (one saved by the old rule, the first scene to reach 10, means nothing now).
-  // The counters, the dots on the tabs and the "Next" link read the same view.
+  // The counters, the mushrooms on the tabs and the "Next" link read the same view.
   const viewOf = (config: SceneConfig): HuntView => huntView(scenes, findsOf, config.id);
   progress.unlocked = viewOf(first).unlocked;
 
@@ -259,13 +259,16 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
 
   // ---- The caption: the two counters, and (once earned) the Contact button they turn into. ----
 
-  /** A finished scene's tab has a cream dot. `live`: one that comes now, with the scene's tenth find, fades in. */
+  /** A finished scene's tab has a tiny red mushroom. `live`: one that comes now, with the scene's tenth find, fades in. */
   const markTabs = (live = false): void => {
     const { done } = viewOf(current?.config ?? first);
     for (const tab of tabs) {
       const on = done.includes(tab.dataset.scene ?? '');
-      tab.classList.toggle('is-dot-new', live && on && !tab.classList.contains('is-done'));
+      tab.classList.toggle('is-mark-new', live && on && !tab.classList.contains('is-done'));
       tab.classList.toggle('is-done', on);
+      const label = sceneById(tab.dataset.scene ?? '')?.label;
+      if (on && label) tab.setAttribute('aria-label', COPY.tabDone(label));
+      else tab.removeAttribute('aria-label');
     }
   };
   const caption: Caption = new Caption(COUNTER, {
