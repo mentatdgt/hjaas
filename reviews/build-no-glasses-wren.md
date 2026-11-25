@@ -28,3 +28,7 @@ The engineering passes: patches, memory peak of 78.1 MB, hunt 50/50, no seams. T
 ## Quinn 039 checked by Wren
 - `frame_02_03ab`: the fist is beside her temple, clear of her face. The hammer rises steadily through 02_03a → 02_03ab → 02_03b → 03 and her eyes are visible in every drawing.
 - Steps measure 61, 91, 97 and 40. The large ones are the upper arm coming over her head, which a single drawing cannot avoid, and they read as one rising motion. Approved.
+
+## Engine 010 checked by Wren: approved, in the phone preview
+- The art notes are minor and show only at 3x: 2 loose px by the claw in frame_01_02, no outline where the strap meets the arm in 02_03ab, and a stepped handle edge in rx_K1_B36. These go to a later cleanup pass.
+- `reaction.json` with the 33 ms steps is copied from `site/review-fixes` to main, so both have the same numbers.
