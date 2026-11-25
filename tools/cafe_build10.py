@@ -1,4 +1,4 @@
-"""Café package v10 (user requests 2026-11-26): the old man blinks and turns his page in four drawn steps (O_1 > T1..T4 > O_1,
+"""Café package v10 (user requests 2026-11-26): the old man blinks and turns his page in six drawn steps (O_1 > T1 > T2 > T2b > T3 > T3b > T4 > O_1,
 one reading pose, so the newspaper never changes); the barista's polish runs through three in-betweens (cloth circles the cup);
 the mum sips her coffee once per loop; the cat's tail flicks (F1/F2, cat_3 dropped).
 
@@ -104,7 +104,7 @@ def quinn(actor, name, ref_alpha):
 # ---------------- old man: blink + four-step page turn, all on O_1 ----------------
 O1 = REST['O_1']; poses['O_1'] = O1
 OM, _ = quinn('oldman', 'masters/oldman_MASTER', O1[..., 3] / 255)
-for n, src in [('O_blink', 'oldman_O_blink'), ('T1', 'oldman_T1'), ('T2', 'oldman_T2'), ('T3', 'oldman_T3'), ('T4', 'oldman_T4')]:
+for n, src in [('O_blink', 'oldman_O_blink'), ('T1', 'oldman_T1'), ('T2', 'oldman_T2'), ('T2b', 'oldman_T2b'), ('T3', 'oldman_T3'), ('T3b', 'oldman_T3b'), ('T4', 'oldman_T4')]:
     P, info = quinn('oldman', src, O1[..., 3] / 255)
     z = zone(OM, P, thr=24, smooth=1.0, minsize=40 if n == 'O_blink' else 120, grow=4 if n == 'O_blink' else 6)
     register(n, P, O1, z, info); poses[n] = paste(O1, P, z); zones[n] = z
@@ -177,7 +177,7 @@ def add_layer(actor, names):
         v = poses[n][y0:y1, x0:x1]; assert not (poses[n][..., 3] > 0)[~box_mask(S, x0, y0, x1, y1)].any(), n
         Image.fromarray(np.clip(np.round(v), 0, 255).astype(np.uint8), 'RGBA').save(f'{OUT}/{actor}/{n}.png'); man['stills'][n] = f'{actor}/{n}.png'
     man['layers'].append({'actor': actor, 'x': int(x0 - TRIM), 'y': int(y0), 'w': int(x1 - x0), 'h': int(y1 - y0), 'stills': names})
-NEW = {'cat': ['cat_1', 'cat_2', 'cat_F1', 'cat_F2'], 'oldman': ['O_1', 'O_blink', 'T1', 'T2', 'T3', 'T4'],
+NEW = {'cat': ['cat_1', 'cat_2', 'cat_F1', 'cat_F2'], 'oldman': ['O_1', 'O_blink', 'T1', 'T2', 'T2b', 'T3', 'T3b', 'T4'],
        'barista': ['B_1', 'B_P1', 'B_2_polish', 'B_P2', 'B_3_polish', 'B_P3', 'B_4_glance'],
        'mum': ['M_blink_half', 'M_blink_closed', 'M_S1', 'M_S2']}
 for l in man0['layers']:                                       # same drawing order as before
@@ -205,8 +205,9 @@ rt['note'] = ("Scene 3 (café) routines, v10. Holds in ms; [a,b] = random in ran
     "RULE: fade_ms (a true cross-dissolve into a still) applies ONLY between two stills of the same loop. Every other change is an instant cut. "
     "Within a layer every still is pixel-identical to the first outside the part that moves, so cuts never flicker. "
     "The fan is part of the room: play its loop forever, do not apply the 'fully painted under actors' edge rule to it, and let the edge fade it like the plate. "
-    "v10 (2026-11-26): OLD MAN reads on O_1 only (the newspaper never changes) and turns a page every 5-7 s in four drawn steps, cuts: "
-    "O_1 > T1 (corner lifted) > T2 (page rising) > T3 (page carried across) > T4 (hand back) > O_1, 140/140/160/140 ms; he blinks on O_1 only, about every 3-6 s (O_blink, 100 ms). "
+    "v10 (2026-11-26): OLD MAN reads on O_1 only (the newspaper never changes) and turns a page every 5-7 s in six drawn steps, cuts: "
+    "O_1 > T1 (corner lifted) > T2 (page rising) > T2b (page carried) > T3 (page laid on the left) > T3b (arm on its way back) > T4 (hand back) > O_1, "
+    "130/130/140/160/150/130 ms (0.84 s; the longer holds come before the longer moves, so the hand travels at an even speed); he blinks on O_1 only, about every 3-6 s (O_blink, 100 ms). "
     "BARISTA polishes in a circle, cuts at 140-200 ms: B_1 > B_P1 > B_2_polish > B_P2 > B_3_polish > B_P3, 3-6 rounds, then her pause and glance (B_4_glance) as before. "
     "MUM (part of the plate; her layer holds patches only) sips once per loop of about 18-24 s: rest > M_S1 (220 ms) > M_S2 (sip, eyes closed, 1.4-1.8 s) > M_S1 > rest; "
     "her blinks are scripted at four points in the loop, never during the sip. "
@@ -222,12 +223,13 @@ rt['actors']['barista'] = {
             {'still': 'B_P2', 'ms': [140, 200]}, {'still': 'B_3_polish', 'ms': [140, 200]}, {'still': 'B_P3', 'ms': [140, 200]}]},
         {'still': 'B_1', 'ms': [1500, 2500]}, {'still': 'B_4_glance', 'ms': [1400, 2000]}, {'still': 'B_1', 'ms': [800, 1200]}]}
 rt['actors']['oldman'] = {
-    'note': 'Reads on O_1, the only reading pose, then turns the page in four drawn steps with cuts. O_1 is three holds in a row (the same still, so nothing shows between them) because the engine fits at most one blink into a hold: this way he blinks every 3-6.5 s (measured over 50 min of the engine rules) and turns a page every 5-7 s. He blinks only on O_1, never mid-turn.',
+    'note': 'Reads on O_1, the only reading pose, then turns the page in six drawn steps with cuts (T2b and T3b are the in-betweens that even out the sweep: 46-82 px of hand travel per step). O_1 is three holds in a row (the same still, so nothing shows between them) because the engine fits at most one blink into a hold: this way he blinks every 3-6.5 s and turns a page every 5-6.5 s (5th-95th percentile, measured over 50 min of the engine rules). He blinks only on O_1, never mid-turn.',
     'routine': [
-        {'still': 'O_1', 'ms': [1300, 2300], 'blink_ok': True}, {'still': 'O_1', 'ms': [1300, 2300], 'blink_ok': True},
-        {'still': 'O_1', 'ms': [1300, 2300], 'blink_ok': True},
-        {'still': 'T1', 'ms': 140}, {'still': 'T2', 'ms': 140}, {'still': 'T3', 'ms': 160}, {'still': 'T4', 'ms': 140}],
-    'blink': {'on': 'O_1', 'frames': [{'still': 'O_blink', 'ms': 100}], 'every_ms': [2500, 5000]}}
+        {'still': 'O_1', 'ms': [1250, 2100], 'blink_ok': True}, {'still': 'O_1', 'ms': [1250, 2100], 'blink_ok': True},
+        {'still': 'O_1', 'ms': [1250, 2100], 'blink_ok': True},
+        {'still': 'T1', 'ms': 130}, {'still': 'T2', 'ms': 130}, {'still': 'T2b', 'ms': 140}, {'still': 'T3', 'ms': 160},
+        {'still': 'T3b', 'ms': 150}, {'still': 'T4', 'ms': 130}],
+    'blink': {'on': 'O_1', 'frames': [{'still': 'O_blink', 'ms': 100}], 'every_ms': [2500, 4500]}}
 FL = [{'still': 'cat_F1', 'ms': 110}, {'still': 'cat_F2', 'ms': 500}, {'still': 'cat_F1', 'ms': 110}]
 def breathe(name, n):
     return {'loop': name, 'repeat': n, 'steps': [

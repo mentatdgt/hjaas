@@ -1,5 +1,5 @@
 {
- "note": "Scene 3 (caf\u00e9) routines, v10. Holds in ms; [a,b] = random in range. Each actor runs independently and out of sync. RULE: fade_ms (a true cross-dissolve into a still) applies ONLY between two stills of the same loop. Every other change is an instant cut. Within a layer every still is pixel-identical to the first outside the part that moves, so cuts never flicker. The fan is part of the room: play its loop forever, do not apply the 'fully painted under actors' edge rule to it, and let the edge fade it like the plate. v10 (2026-11-26): OLD MAN reads on O_1 only (the newspaper never changes) and turns a page every 5-7 s in four drawn steps, cuts: O_1 > T1 (corner lifted) > T2 (page rising) > T3 (page carried across) > T4 (hand back) > O_1, 140/140/160/140 ms; he blinks on O_1 only, about every 3-6 s (O_blink, 100 ms). BARISTA polishes in a circle, cuts at 140-200 ms: B_1 > B_P1 > B_2_polish > B_P2 > B_3_polish > B_P3, 3-6 rounds, then her pause and glance (B_4_glance) as before. MUM (part of the plate; her layer holds patches only) sips once per loop of about 18-24 s: rest > M_S1 (220 ms) > M_S2 (sip, eyes closed, 1.4-1.8 s) > M_S1 > rest; her blinks are scripted at four points in the loop, never during the sip. CAT: cat_3 is gone. Its tail flicks twice per loop: cat_1 > cat_F1 (110 ms) > cat_F2 (500 ms) > cat_F1 (110 ms) > cat_1, at the start of the loop and again after 3 breaths (2 more follow), so at about 60% of the loop. It breathes (cat_1/cat_2, 1 s dissolves) the rest of the time, never during a flick; each breathing loop ends on cat_1 so the flick starts with a cut from an identical body.",
+ "note": "Scene 3 (caf\u00e9) routines, v10. Holds in ms; [a,b] = random in range. Each actor runs independently and out of sync. RULE: fade_ms (a true cross-dissolve into a still) applies ONLY between two stills of the same loop. Every other change is an instant cut. Within a layer every still is pixel-identical to the first outside the part that moves, so cuts never flicker. The fan is part of the room: play its loop forever, do not apply the 'fully painted under actors' edge rule to it, and let the edge fade it like the plate. v10 (2026-11-26): OLD MAN reads on O_1 only (the newspaper never changes) and turns a page every 5-7 s in six drawn steps, cuts: O_1 > T1 (corner lifted) > T2 (page rising) > T2b (page carried) > T3 (page laid on the left) > T3b (arm on its way back) > T4 (hand back) > O_1, 130/130/140/160/150/130 ms (0.84 s; the longer holds come before the longer moves, so the hand travels at an even speed); he blinks on O_1 only, about every 3-6 s (O_blink, 100 ms). BARISTA polishes in a circle, cuts at 140-200 ms: B_1 > B_P1 > B_2_polish > B_P2 > B_3_polish > B_P3, 3-6 rounds, then her pause and glance (B_4_glance) as before. MUM (part of the plate; her layer holds patches only) sips once per loop of about 18-24 s: rest > M_S1 (220 ms) > M_S2 (sip, eyes closed, 1.4-1.8 s) > M_S1 > rest; her blinks are scripted at four points in the loop, never during the sip. CAT: cat_3 is gone. Its tail flicks twice per loop: cat_1 > cat_F1 (110 ms) > cat_F2 (500 ms) > cat_F1 (110 ms) > cat_1, at the start of the loop and again after 3 breaths (2 more follow), so at about 60% of the loop. It breathes (cat_1/cat_2, 1 s dissolves) the rest of the time, never during a flick; each breathing loop ends on cat_1 so the flick starts with a cut from an identical body.",
  "actors": {
   "fan": {
    "routine": [
@@ -347,38 +347,42 @@
    ]
   },
   "oldman": {
-   "note": "Reads on O_1, the only reading pose, then turns the page in four drawn steps with cuts. O_1 is three holds in a row (the same still, so nothing shows between them) because the engine fits at most one blink into a hold: this way he blinks every 3-6.5 s (measured over 50 min of the engine rules) and turns a page every 5-7 s. He blinks only on O_1, never mid-turn.",
+   "note": "Reads on O_1, the only reading pose, then turns the page in six drawn steps with cuts (T2b and T3b are the in-betweens that even out the sweep: 46-82 px of hand travel per step). O_1 is three holds in a row (the same still, so nothing shows between them) because the engine fits at most one blink into a hold: this way he blinks every 3-6.5 s and turns a page every 5-6.5 s (5th-95th percentile, measured over 50 min of the engine rules). He blinks only on O_1, never mid-turn.",
    "routine": [
     {
      "still": "O_1",
      "ms": [
-      1300,
-      2300
+      1250,
+      2100
      ],
      "blink_ok": true
     },
     {
      "still": "O_1",
      "ms": [
-      1300,
-      2300
+      1250,
+      2100
      ],
      "blink_ok": true
     },
     {
      "still": "O_1",
      "ms": [
-      1300,
-      2300
+      1250,
+      2100
      ],
      "blink_ok": true
     },
     {
      "still": "T1",
-     "ms": 140
+     "ms": 130
     },
     {
      "still": "T2",
+     "ms": 130
+    },
+    {
+     "still": "T2b",
      "ms": 140
     },
     {
@@ -386,8 +390,12 @@
      "ms": 160
     },
     {
+     "still": "T3b",
+     "ms": 150
+    },
+    {
      "still": "T4",
-     "ms": 140
+     "ms": 130
     }
    ],
    "blink": {
@@ -400,7 +408,7 @@
     ],
     "every_ms": [
      2500,
-     5000
+     4500
     ]
    }
   },
