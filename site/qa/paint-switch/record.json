@@ -1,0 +1,254 @@
+{
+ "visit chrome": {
+  "file": "visit-desktop-60fps.mp4",
+  "strip": "visit-desktop-strip.jpg",
+  "frames": 1176,
+  "seconds": 25,
+  "strokes": [
+   [
+    "hj-paint",
+    400
+   ],
+   [
+    "hj-paint",
+    7317
+   ],
+   [
+    "hj-paint",
+    14333
+   ],
+   [
+    "hj-brush",
+    20848
+   ]
+  ],
+  "taps": [
+   [
+    "Film",
+    6650
+   ],
+   [
+    "Café",
+    13565
+   ],
+   [
+    "back to Film",
+    20561
+   ]
+  ],
+  "errors": []
+ },
+ "visit webkit": {
+  "file": "visit-iphone-60fps.mp4",
+  "strip": "visit-iphone-strip.jpg",
+  "frames": 1483,
+  "seconds": 24.7,
+  "strokes": [
+   [
+    "hj-paint",
+    333
+   ],
+   [
+    "hj-paint",
+    7133
+   ],
+   [
+    "hj-paint",
+    14083
+   ],
+   [
+    "hj-brush",
+    20483
+   ]
+  ],
+  "taps": [
+   [
+    "Film",
+    6550
+   ],
+   [
+    "Café",
+    13367
+   ],
+   [
+    "back to Film",
+    20300
+   ]
+  ],
+  "errors": []
+ },
+ "taps chrome": {
+  "file": "taps-desktop-60fps.mp4",
+  "strip": "taps-desktop-strip.jpg",
+  "frames": 947,
+  "seconds": 17.3,
+  "strokes": [
+   [
+    "hj-paint",
+    400
+   ],
+   [
+    "hj-paint",
+    3084
+   ],
+   [
+    "hj-paint",
+    5883
+   ],
+   [
+    "hj-paint",
+    8582
+   ],
+   [
+    "hj-brush",
+    10883
+   ],
+   [
+    "hj-brush",
+    13133
+   ]
+  ],
+  "taps": [
+   [
+    "Film",
+    2420
+   ],
+   [
+    "Café",
+    5101
+   ],
+   [
+    "Set Design",
+    7926
+   ],
+   [
+    "back to Film",
+    10600
+   ],
+   [
+    "back to Build",
+    12893
+   ]
+  ],
+  "errors": []
+ },
+ "taps webkit": {
+  "file": "taps-iphone-60fps.mp4",
+  "strip": "taps-iphone-strip.jpg",
+  "frames": 1010,
+  "seconds": 16.8,
+  "strokes": [
+   [
+    "hj-paint",
+    350
+   ],
+   [
+    "hj-paint",
+    2950
+   ],
+   [
+    "hj-paint",
+    5667
+   ],
+   [
+    "hj-paint",
+    8233
+   ],
+   [
+    "hj-brush",
+    10417
+   ],
+   [
+    "hj-brush",
+    12583
+   ]
+  ],
+  "taps": [
+   [
+    "Film",
+    2383
+   ],
+   [
+    "Café",
+    4967
+   ],
+   [
+    "Set Design",
+    7683
+   ],
+   [
+    "back to Film",
+    10267
+   ],
+   [
+    "back to Build",
+    12450
+   ]
+  ],
+  "errors": []
+ },
+ "reload chrome": {
+  "file": "reload-desktop-60fps.mp4",
+  "strip": "reload-desktop-strip.jpg",
+  "frames": 732,
+  "seconds": 15.4,
+  "strokes": [
+   [
+    "hj-paint",
+    335
+   ],
+   [
+    "hj-paint",
+    9534
+   ]
+  ],
+  "taps": [
+   [
+    "reload",
+    9175
+   ]
+  ],
+  "errors": [],
+  "found": [
+   "sill",
+   "drape"
+  ],
+  "stillHiddenAfterTheReload": [],
+  "counters": [
+   "2",
+   "2"
+  ]
+ },
+ "reload webkit": {
+  "file": "reload-iphone-60fps.mp4",
+  "strip": "reload-iphone-strip.jpg",
+  "frames": 933,
+  "seconds": 15.5,
+  "strokes": [
+   [
+    "hj-paint",
+    333
+   ],
+   [
+    "hj-paint",
+    9517
+   ]
+  ],
+  "taps": [
+   [
+    "reload",
+    9167
+   ]
+  ],
+  "errors": [],
+  "found": [
+   "screed",
+   "tiles"
+  ],
+  "stillHiddenAfterTheReload": [],
+  "counters": [
+   "2",
+   "2"
+  ]
+ }
+}

@@ -1,0 +1,59 @@
+{
+ "desktop Chrome": {
+  "switches": 25,
+  "cutShort": 9,
+  "framesChecked": {
+   "build paper": 409,
+   "grow paper": 399,
+   "design paper": 411,
+   "film paper": 412,
+   "set paper": 398,
+   "build over": 849,
+   "set over": 693,
+   "film over": 691,
+   "design over": 691,
+   "grow over": 795
+  },
+  "framesWithTheRoomPaintedAndSheNot": 0,
+  "examples": [],
+  "errors": []
+ },
+ "phone Chrome, 4x slower": {
+  "switches": 25,
+  "cutShort": 9,
+  "framesChecked": {
+   "build paper": 412,
+   "grow paper": 399,
+   "design paper": 416,
+   "film paper": 414,
+   "set paper": 398,
+   "build over": 849,
+   "set over": 634,
+   "film over": 644,
+   "design over": 647,
+   "grow over": 747
+  },
+  "framesWithTheRoomPaintedAndSheNot": 0,
+  "examples": [],
+  "errors": []
+ },
+ "iPhone WebKit": {
+  "switches": 25,
+  "cutShort": 9,
+  "framesChecked": {
+   "build paper": 413,
+   "grow paper": 404,
+   "design paper": 417,
+   "film paper": 417,
+   "set paper": 397,
+   "build over": 854,
+   "set over": 634,
+   "film over": 640,
+   "design over": 641,
+   "grow over": 745
+  },
+  "framesWithTheRoomPaintedAndSheNot": 0,
+  "examples": [],
+  "errors": []
+ }
+}

@@ -1,0 +1,405 @@
+{
+ "now": [
+  {
+   "tapEveryMs": 2000,
+   "taps": 48,
+   "peakMB": 65.6,
+   "at": "grow, during a switch",
+   "peakParts": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "sheet": 3,
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "design.frames": 35.9,
+    "design.canvases": 4.1,
+    "design.room": 6.3,
+    "design.edge": 2.6,
+    "grow.frames": 3,
+    "grow.room": 6.3
+   },
+   "mostCastsDecodedAtOnce": 1,
+   "mostEdgesAtOnce": 1,
+   "mostRoomsAtOnce": 2,
+   "othersHoldAtMostMB": 54.7,
+   "othersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "design.frames": 35.9,
+    "design.canvases": 4.1,
+    "design.room": 6.3,
+    "design.edge": 2.6,
+    "grow.frames": 3
+   },
+   "afterwardsOthersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "grow.frames": 3
+   },
+   "endedIn": "design",
+   "errors": [
+    "/localhost:5173/assets/scene1/rachel/frame_01.webp due to access control checks.",
+    "/localhost:5173/assets/scene1/rachel/frame_01_02.webp due to access control checks.",
+    "/localhost:5173/assets/scene1/rachel/frame_02.webp due to access control checks.",
+    "/localhost:5173/assets/scene1/rachel/frame_02_03a.webp due to access control checks.",
+    "/localhost:5173/assets/scene1/rachel/frame_02_03b.webp due to access control checks.",
+    "/localhost:5173/assets/scene1/rachel/frame_03.webp due to access control checks.",
+    "/localhost:5173/assets/scene1/rachel/frame_04.webp due to access control checks.",
+    "/localhost:5173/assets/scene1/rachel/blink_half.webp due to access control checks.",
+    "/localhost:5173/assets/scene1/rachel/blink_closed.webp due to access control checks."
+   ]
+  },
+  {
+   "tapEveryMs": 1000,
+   "taps": 48,
+   "peakMB": 72.4,
+   "at": "film, during a switch",
+   "peakParts": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "sheet": 4.8,
+    "build.frames": 2.4,
+    "film.canvases": 4.8,
+    "film.room": 6.3,
+    "design.frames": 35.9,
+    "design.canvases": 4.7,
+    "design.room": 6.3,
+    "design.edge": 2.6,
+    "grow.frames": 3
+   },
+   "mostCastsDecodedAtOnce": 1,
+   "mostEdgesAtOnce": 1,
+   "mostRoomsAtOnce": 2,
+   "othersHoldAtMostMB": 55.3,
+   "othersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "design.frames": 35.9,
+    "design.canvases": 4.7,
+    "design.room": 6.3,
+    "design.edge": 2.6,
+    "grow.frames": 3
+   },
+   "afterwardsOthersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "grow.frames": 3
+   },
+   "endedIn": "design",
+   "errors": []
+  },
+  {
+   "tapEveryMs": 600,
+   "taps": 48,
+   "peakMB": 72.4,
+   "at": "film, during a switch",
+   "peakParts": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "sheet": 4.8,
+    "build.frames": 2.4,
+    "film.canvases": 4.8,
+    "film.room": 6.3,
+    "design.frames": 35.9,
+    "design.canvases": 4.7,
+    "design.room": 6.3,
+    "design.edge": 2.6,
+    "grow.frames": 3
+   },
+   "mostCastsDecodedAtOnce": 1,
+   "mostEdgesAtOnce": 1,
+   "mostRoomsAtOnce": 2,
+   "othersHoldAtMostMB": 55.3,
+   "othersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "design.frames": 35.9,
+    "design.canvases": 4.7,
+    "design.room": 6.3,
+    "design.edge": 2.6,
+    "grow.frames": 3
+   },
+   "afterwardsOthersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "grow.frames": 3
+   },
+   "endedIn": "design",
+   "errors": []
+  },
+  {
+   "tapEveryMs": 300,
+   "taps": 48,
+   "peakMB": 74.4,
+   "at": "grow, during a switch",
+   "peakParts": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "sheet": 4.8,
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "design.frames": 35.9,
+    "design.canvases": 8.1,
+    "design.room": 6.3,
+    "design.edge": 2.6,
+    "grow.frames": 3,
+    "grow.canvases": 3,
+    "grow.room": 6.3
+   },
+   "mostCastsDecodedAtOnce": 1,
+   "mostEdgesAtOnce": 1,
+   "mostRoomsAtOnce": 2,
+   "othersHoldAtMostMB": 55.7,
+   "othersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "design.frames": 35.9,
+    "design.canvases": 8.1,
+    "design.room": 6.3,
+    "design.edge": 2.6
+   },
+   "afterwardsOthersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "grow.frames": 3
+   },
+   "endedIn": "design",
+   "errors": []
+  },
+  {
+   "tapEveryMs": 120,
+   "taps": 48,
+   "peakMB": 75.8,
+   "at": "film, during a switch",
+   "peakParts": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "sheet": 4.8,
+    "build.frames": 2.4,
+    "film.canvases": 4.8,
+    "film.room": 6.3,
+    "grow.frames": 3,
+    "design.frames": 35.9,
+    "design.canvases": 8.1,
+    "design.room": 6.3,
+    "design.edge": 2.6
+   },
+   "mostCastsDecodedAtOnce": 1,
+   "mostEdgesAtOnce": 1,
+   "mostRoomsAtOnce": 2,
+   "othersHoldAtMostMB": 58.7,
+   "othersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "grow.frames": 3,
+    "design.frames": 35.9,
+    "design.canvases": 8.1,
+    "design.room": 6.3,
+    "design.edge": 2.6
+   },
+   "afterwardsOthersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "grow.frames": 3
+   },
+   "endedIn": "design",
+   "errors": []
+  }
+ ],
+ "before": [
+  {
+   "tapEveryMs": 2000,
+   "taps": 48,
+   "peakMB": 66.1,
+   "at": "design, during a switch",
+   "peakParts": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "sheet": 3,
+    "build.frames": 2.9,
+    "film.canvases": 0.4,
+    "film.room": 6.3,
+    "design.frames": 35.9,
+    "design.canvases": 4.1,
+    "design.room": 6.3,
+    "design.edge": 2.6,
+    "grow.frames": 3
+   },
+   "mostCastsDecodedAtOnce": 1,
+   "mostEdgesAtOnce": 1,
+   "mostRoomsAtOnce": 2,
+   "othersHoldAtMostMB": 55.2,
+   "othersHold": {
+    "build.frames": 2.9,
+    "film.canvases": 0.4,
+    "design.frames": 35.9,
+    "design.canvases": 4.1,
+    "design.room": 6.3,
+    "design.edge": 2.6,
+    "grow.frames": 3
+   },
+   "afterwardsOthersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "grow.frames": 3
+   },
+   "endedIn": "design",
+   "errors": []
+  },
+  {
+   "tapEveryMs": 1000,
+   "taps": 48,
+   "peakMB": 69.6,
+   "at": "grow, during a switch",
+   "peakParts": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "sheet": 3,
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "design.frames": 35.9,
+    "design.canvases": 8.1,
+    "design.room": 6.3,
+    "design.edge": 2.6,
+    "grow.frames": 3,
+    "grow.room": 6.3
+   },
+   "mostCastsDecodedAtOnce": 1,
+   "mostEdgesAtOnce": 1,
+   "mostRoomsAtOnce": 2,
+   "othersHoldAtMostMB": 58.7,
+   "othersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "design.frames": 35.9,
+    "design.canvases": 8.1,
+    "design.room": 6.3,
+    "design.edge": 2.6,
+    "grow.frames": 3
+   },
+   "afterwardsOthersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "grow.frames": 3
+   },
+   "endedIn": "design",
+   "errors": []
+  },
+  {
+   "tapEveryMs": 600,
+   "taps": 48,
+   "peakMB": 69.6,
+   "at": "grow, during a switch",
+   "peakParts": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "sheet": 3,
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "design.frames": 35.9,
+    "design.canvases": 8.1,
+    "design.room": 6.3,
+    "design.edge": 2.6,
+    "grow.frames": 3,
+    "grow.room": 6.3
+   },
+   "mostCastsDecodedAtOnce": 1,
+   "mostEdgesAtOnce": 1,
+   "mostRoomsAtOnce": 2,
+   "othersHoldAtMostMB": 58.7,
+   "othersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "design.frames": 35.9,
+    "design.canvases": 8.1,
+    "design.room": 6.3,
+    "design.edge": 2.6,
+    "grow.frames": 3
+   },
+   "afterwardsOthersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "grow.frames": 3
+   },
+   "endedIn": "design",
+   "errors": []
+  },
+  {
+   "tapEveryMs": 300,
+   "taps": 48,
+   "peakMB": 69.9,
+   "at": "film, during a switch",
+   "peakParts": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "sheet": 3,
+    "build.frames": 2.6,
+    "film.canvases": 0.4,
+    "film.room": 6.3,
+    "design.frames": 35.9,
+    "design.canvases": 8.1,
+    "design.room": 6.3,
+    "design.edge": 2.6,
+    "grow.frames": 3
+   },
+   "mostCastsDecodedAtOnce": 1,
+   "mostEdgesAtOnce": 1,
+   "mostRoomsAtOnce": 2,
+   "othersHoldAtMostMB": 59,
+   "othersHold": {
+    "build.frames": 2.6,
+    "film.canvases": 0.4,
+    "design.frames": 35.9,
+    "design.canvases": 8.1,
+    "design.room": 6.3,
+    "design.edge": 2.6,
+    "grow.frames": 3
+   },
+   "afterwardsOthersHold": {
+    "build.frames": 2.8,
+    "film.canvases": 0.4,
+    "grow.frames": 3
+   },
+   "endedIn": "design",
+   "errors": []
+  },
+  {
+   "tapEveryMs": 120,
+   "taps": 48,
+   "peakMB": 65.8,
+   "at": "film, during a switch",
+   "peakParts": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "sheet": 3,
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "film.room": 6.3,
+    "design.frames": 32.1,
+    "design.canvases": 8.1,
+    "design.room": 6.3,
+    "design.edge": 2.6,
+    "grow.frames": 3
+   },
+   "mostCastsDecodedAtOnce": 1,
+   "mostEdgesAtOnce": 1,
+   "mostRoomsAtOnce": 2,
+   "othersHoldAtMostMB": 54.6,
+   "othersHold": {
+    "build.frames": 2.4,
+    "design.frames": 32.1,
+    "design.canvases": 8.1,
+    "design.room": 6.3,
+    "design.edge": 2.6,
+    "grow.frames": 3
+   },
+   "afterwardsOthersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "grow.frames": 3
+   },
+   "endedIn": "design",
+   "errors": []
+  }
+ ]
+}

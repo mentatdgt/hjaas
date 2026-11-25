@@ -655,34 +655,46 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   /** How long a switch waits, under the old picture, for the new scene's character before going on without her. */
   const WAIT_FOR_HER_MS = 600;
 
+  /** (With motion, that is.) */
+  const paintsInFull = (config: SceneConfig): boolean => visit.isNew(config.id) && flags.intro !== 'quick' && flags.intro !== 'off';
+
   /**
    * A scene, ready to go in the window: its room decoded and, before a first painting, its first frames' files
    * here. The picture on show stays as it is meanwhile, painting and all. Null if another scene is asked for
    * first; what this one brings after that is given back at once, so that it is never kept beside another's.
    */
+  /** A room being decoded for a switch. The next one waits for it (a moment), so that there are never three. */
+  let decoding: Promise<unknown> = Promise.resolve();
   const bring = async (config: SceneConfig): Promise<Scene | null> => {
     const asked = asking.signal;
+    /** Not wanted after all. */
+    const drop = (late: Scene): void => {
+      if (late !== current && wanted.id !== config.id) late.rest();
+    };
+    const overtaken = new Promise<null>((resolve) => asked.addEventListener('abort', () => resolve(null), { once: true }));
     const bringing = (async () => {
       const next = await sceneFor(config);
+      if (asked.aborted) return next;
       // Fetch her first frames once this room has been requested.
       next.preload();
-      if (visit.isNew(config.id)) await next.loaded().catch(warn(config));
+      if (paintsInFull(config) && !reducedMotion()) await Promise.race([next.loaded().catch(warn(config)), overtaken]);
       // A scene out of sight holds no decoded picture: its room is decoded again here, from the browser's
       // own copy of the file, before anything is put on the page.
-      if (!asked.aborted) await next.ready();
+      if (!asked.aborted) await decoding;
+      if (asked.aborted) return next;
+      const decoded = next.ready();
+      decoding = decoded.then(
+        () => {
+          if (asked.aborted) drop(next);
+        },
+        () => {},
+      );
+      await decoded;
       return next;
     })();
-    const next = await Promise.race([
-      bringing,
-      new Promise<null>((resolve) => asked.addEventListener('abort', () => resolve(null), { once: true })),
-    ]);
+    const next = await Promise.race([bringing, overtaken]);
     if (next && !asked.aborted) return next;
-    void bringing.then(
-      (late) => {
-        if (late !== current && wanted.id !== config.id) late.rest();
-      },
-      () => {},
-    );
+    void bringing.then(drop, () => {});
     return null;
   };
 
@@ -694,7 +706,6 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     const signal = paintWait.signal;
     const soon = hurry.signal;
     const old = current!;
-    const firstTime = visit.isNew(config.id) && flags.intro !== 'quick';
     const calm = reducedMotion() || flags.intro === 'off' || rush(signal);
     cutShort();
     /** The caption for the scene arrived at. Its state is read as it goes up: a find may land meanwhile. */
@@ -720,7 +731,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
 
     marks.switchStart = Math.round(performance.now());
     old.hold();
-    if (firstTime && !calm) {
+    if (paintsInFull(config) && !calm) {
       // A scene's first appearance in this visit is its full painting, from a blank sheet. She is painted with
       // the room, so her frames' files are here already.
       await leaveRoom(old.plate, signal);
@@ -938,12 +949,13 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       }
       const nextId = viewOf(config).next?.id;
       const likelyNext = nextId && sceneById(nextId);
-      if (likelyNext && !moving) {
+      if (likelyNext && wanted === config) {
         void warmPlate(likelyNext.assets + likelyNext.plate, () =>
           !destroyed && !busy() && !document.hidden && current === scene,
         );
       }
     };
+    moving = false;
     if (painting && !rush(signal)) play(scene, () => transition.paint(scene), opened);
     else if (opening === 'reveal' && !rush(signal)) play(scene, () => transition.reveal(scene), opened);
     else {
@@ -952,7 +964,6 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       arrived(scene);
       opened();
     }
-    moving = false;
     // A scene asked for while the opening was being prepared.
     void travel();
   };

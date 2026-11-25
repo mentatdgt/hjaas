@@ -141,10 +141,10 @@ export class Transition {
     window.clearTimeout(this.tidy);
     const done = this.finishBrush;
     this.finishBrush = null;
-    // The page's first painting has not brought the caption yet: it comes now, by itself.
+    // The page's first painting has not brought the caption yet: it comes by itself, once it says where the visitor is going.
     if (this.captionDue) {
       this.captionDue = false;
-      gsap.to(this.stage.caption, { opacity: 1, y: 0, duration: 0.2, ease: EASE_OUT, clearProps: 'opacity,transform,willChange' });
+      gsap.to(this.stage.caption, { opacity: 1, y: 0, delay: 0.5, duration: 0.2, ease: EASE_OUT, clearProps: 'opacity,transform,willChange' });
     }
     done?.();
     return worked;

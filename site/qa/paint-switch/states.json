@@ -1,0 +1,380 @@
+{
+ "chrome": {
+  "rows": {
+   "Skip, 1.5 s into Film: finished at once": {
+    "scene": "film",
+    "hides": 0,
+    "skip": false,
+    "inert": false,
+    "tab": "film",
+    "caption": "00/10found in FilmNext: Set Design 00/50find all 50 to conta",
+    "captionOpacity": "1",
+    "brushes": 0,
+    "paints": 2
+   },
+   "Film's own tab, 1.5 s into Film: finished at once": {
+    "scene": "film",
+    "hides": 0,
+    "skip": false,
+    "inert": false,
+    "tab": "film",
+    "caption": "00/10found in FilmNext: Set Design 00/50find all 50 to conta",
+    "captionOpacity": "1",
+    "brushes": 0,
+    "paints": 2
+   },
+   "the opening scene's own tab (an address without a hash)": {
+    "after120ms": {
+     "scene": "build",
+     "hides": 0,
+     "skip": false,
+     "inert": false,
+     "tab": "build",
+     "caption": "00/10found in BuildNext: Grow 00/50find all 50 to contact Hu",
+     "captionOpacity": "1",
+     "brushes": 0,
+     "paints": 1
+    },
+    "later": {
+     "scene": "build",
+     "hides": 0,
+     "skip": false,
+     "inert": false,
+     "tab": "build",
+     "caption": "00/10found in BuildNext: Grow 00/50find all 50 to contact Hu",
+     "captionOpacity": "1",
+     "brushes": 0,
+     "paints": 1
+    }
+   },
+   "Skip under the first stroke (Film just tapped, blank paper)": {
+    "scene": "film",
+    "hides": 0,
+    "skip": false,
+    "inert": false,
+    "tab": "film",
+    "caption": "00/10found in FilmNext: Set Design 00/50find all 50 to conta",
+    "captionOpacity": "1",
+    "brushes": 0,
+    "paints": 1
+   },
+   "Film asked for while it loads, then back to Build being painted: the painting goes on": {
+    "mid": {
+     "scene": "build",
+     "hides": 0.36,
+     "skip": true,
+     "inert": true,
+     "tab": "build",
+     "caption": "00/10found in BuildNext: Grow 00/50find all 50 to contact Hu",
+     "captionOpacity": "0",
+     "brushes": 0,
+     "paints": 1
+    },
+    "end": {
+     "scene": "build",
+     "hides": 0,
+     "skip": false,
+     "inert": false,
+     "tab": "build",
+     "caption": "00/10found in BuildNext: Grow 00/50find all 50 to contact Hu",
+     "captionOpacity": "1",
+     "brushes": 0,
+     "paints": 1
+    },
+    "strokes": 1
+   },
+   "Film loads slowly, tapped at 1 s: Build is painted meanwhile, then Film": {
+    "mid": {
+     "scene": "build",
+     "hides": 0.37,
+     "skip": true,
+     "inert": true,
+     "tab": "build",
+     "caption": "00/10found in BuildNext: Grow 00/50find all 50 to contact Hu",
+     "captionOpacity": "0",
+     "brushes": 0,
+     "paints": 1
+    },
+    "then": {
+     "scene": "film",
+     "hides": 0.434,
+     "skip": true,
+     "inert": true,
+     "tab": "film",
+     "caption": "00/10found in FilmNext: Set Design 00/50find all 50 to conta",
+     "captionOpacity": "1",
+     "brushes": 0,
+     "paints": 2
+    }
+   },
+   "a scene that fails to load, asked for mid-painting: the painting goes on, Retry is offered": {
+    "mid": {
+     "scene": "build",
+     "hides": 0.372,
+     "skip": true,
+     "inert": true,
+     "tab": "build",
+     "caption": "00/10found in BuildNext: Grow 00/50find all 50 to contact Hu",
+     "captionOpacity": "0",
+     "brushes": 0,
+     "paints": 1
+    },
+    "retry": true,
+    "after": {
+     "scene": "film",
+     "hides": 0,
+     "skip": false,
+     "inert": false,
+     "tab": "film",
+     "caption": "00/10found in FilmNext: Set Design 00/50find all 50 to conta",
+     "captionOpacity": "1",
+     "brushes": 0,
+     "paints": 2
+    }
+   },
+   "a find, and the pan, kept over a reload; the painting is not skipped": {
+    "found": "sill",
+    "still": 0,
+    "panBefore": 0,
+    "panAfter": 0,
+    "during": {
+     "scene": "build",
+     "hides": 0.842,
+     "skip": true,
+     "inert": true,
+     "tab": "build",
+     "caption": "10/10found in BuildNext: Grow 10/50find all 50 to contact Hu",
+     "captionOpacity": "0",
+     "brushes": 0,
+     "paints": 1
+    }
+   },
+   "reduced motion: no brush, a fade, as before": {
+    "scene": "film",
+    "hides": 0,
+    "skip": false,
+    "inert": false,
+    "tab": "film",
+    "caption": "00/10found in FilmNext: Set Design 00/50find all 50 to conta",
+    "captionOpacity": "1",
+    "brushes": 0,
+    "paints": 0,
+    "arrivals": [
+     "build fade 0 ms",
+     "film over 183 ms",
+     "design over 183 ms",
+     "film over 184 ms"
+    ]
+   }
+  },
+  "errors": [
+   "a scene that fails to load, asked for mid-painting: the painting goes on, Retry is offered: Failed to load resource: net::ERR_FAILED",
+   "a scene that fails to load, asked for mid-painting: the painting goes on, Retry is offered: Failed to load resource: net::ERR_FAILED"
+  ]
+ },
+ "webkit": {
+  "rows": {
+   "Skip, 1.5 s into Film: finished at once": {
+    "scene": "film",
+    "hides": 0,
+    "skip": false,
+    "inert": false,
+    "tab": "film",
+    "caption": "00/10found in FilmNext: Set Design 00/50find all 50 to conta",
+    "captionOpacity": "1",
+    "brushes": 0,
+    "paints": 2
+   },
+   "Film's own tab, 1.5 s into Film: finished at once": {
+    "scene": "film",
+    "hides": 0,
+    "skip": false,
+    "inert": false,
+    "tab": "film",
+    "caption": "00/10found in FilmNext: Set Design 00/50find all 50 to conta",
+    "captionOpacity": "1",
+    "brushes": 0,
+    "paints": 2
+   },
+   "the opening scene's own tab (an address without a hash)": {
+    "after120ms": {
+     "scene": "build",
+     "hides": 0,
+     "skip": false,
+     "inert": false,
+     "tab": "build",
+     "caption": "00/10found in BuildNext: Grow 00/50find all 50 to contact Hu",
+     "captionOpacity": "1",
+     "brushes": 0,
+     "paints": 1
+    },
+    "later": {
+     "scene": "build",
+     "hides": 0,
+     "skip": false,
+     "inert": false,
+     "tab": "build",
+     "caption": "00/10found in BuildNext: Grow 00/50find all 50 to contact Hu",
+     "captionOpacity": "1",
+     "brushes": 0,
+     "paints": 1
+    }
+   },
+   "Skip under the first stroke (Film just tapped, blank paper)": {
+    "scene": "film",
+    "hides": 0,
+    "skip": false,
+    "inert": false,
+    "tab": "film",
+    "caption": "00/10found in FilmNext: Set Design 00/50find all 50 to conta",
+    "captionOpacity": "1",
+    "brushes": 0,
+    "paints": 1
+   },
+   "Film asked for while it loads, then back to Build being painted: the painting goes on": {
+    "mid": {
+     "scene": "build",
+     "hides": 0.235,
+     "skip": true,
+     "inert": true,
+     "tab": "build",
+     "caption": "00/10found in BuildNext: Grow 00/50find all 50 to contact Hu",
+     "captionOpacity": "0",
+     "brushes": 0,
+     "paints": 1
+    },
+    "end": {
+     "scene": "build",
+     "hides": 0,
+     "skip": false,
+     "inert": false,
+     "tab": "build",
+     "caption": "00/10found in BuildNext: Grow 00/50find all 50 to contact Hu",
+     "captionOpacity": "1",
+     "brushes": 0,
+     "paints": 1
+    },
+    "strokes": 1
+   },
+   "Film loads slowly, tapped at 1 s: Build is painted meanwhile, then Film": {
+    "mid": {
+     "scene": "build",
+     "hides": 0.26,
+     "skip": true,
+     "inert": true,
+     "tab": "build",
+     "caption": "00/10found in BuildNext: Grow 00/50find all 50 to contact Hu",
+     "captionOpacity": "0",
+     "brushes": 0,
+     "paints": 1
+    },
+    "then": {
+     "scene": "film",
+     "hides": 0.441,
+     "skip": true,
+     "inert": true,
+     "tab": "film",
+     "caption": "00/10found in FilmNext: Set Design 00/50find all 50 to conta",
+     "captionOpacity": "1",
+     "brushes": 0,
+     "paints": 2
+    }
+   },
+   "a scene that fails to load, asked for mid-painting: the painting goes on, Retry is offered": {
+    "mid": {
+     "scene": "build",
+     "hides": 0.268,
+     "skip": true,
+     "inert": true,
+     "tab": "build",
+     "caption": "00/10found in BuildNext: Grow 00/50find all 50 to contact Hu",
+     "captionOpacity": "0",
+     "brushes": 0,
+     "paints": 1
+    },
+    "retry": true,
+    "after": {
+     "scene": "film",
+     "hides": 0,
+     "skip": false,
+     "inert": false,
+     "tab": "film",
+     "caption": "00/10found in FilmNext: Set Design 00/50find all 50 to conta",
+     "captionOpacity": "1",
+     "brushes": 0,
+     "paints": 2
+    }
+   },
+   "a find, and the pan, kept over a reload; the painting is not skipped": {
+    "found": "sill",
+    "still": 0,
+    "panBefore": 390,
+    "panAfter": 389,
+    "during": {
+     "scene": "build",
+     "hides": 0.735,
+     "skip": true,
+     "inert": true,
+     "tab": "build",
+     "caption": "10/10found in BuildNext: Grow 10/50find all 50 to contact Hu",
+     "captionOpacity": "0",
+     "brushes": 0,
+     "paints": 1
+    }
+   },
+   "reduced motion: no brush, a fade, as before": {
+    "scene": "film",
+    "hides": 0,
+    "skip": false,
+    "inert": false,
+    "tab": "film",
+    "caption": "00/10found in FilmNext: Set Design 00/50find all 50 to conta",
+    "captionOpacity": "1",
+    "brushes": 0,
+    "paints": 0,
+    "arrivals": [
+     "build fade 0 ms",
+     "film over 183 ms",
+     "design over 183 ms",
+     "film over 183 ms"
+    ]
+   },
+   "panned in the middle of a brush-over: it goes on": {
+    "after250ms": {
+     "scene": "build",
+     "hides": 0.468,
+     "skip": true,
+     "inert": true,
+     "tab": "build",
+     "caption": "00/10found in BuildNext: Grow 00/50find all 50 to contact Hu",
+     "captionOpacity": "1",
+     "brushes": 1,
+     "paints": 2
+    },
+    "end": {
+     "scene": "build",
+     "hides": 0,
+     "skip": false,
+     "inert": false,
+     "tab": "build",
+     "caption": "00/10found in BuildNext: Grow 00/50find all 50 to contact Hu",
+     "captionOpacity": "1",
+     "brushes": 1,
+     "paints": 2
+    }
+   },
+   "turned in the middle of a brush-over: finished at once": {
+    "scene": "build",
+    "hides": 0,
+    "skip": false,
+    "inert": false,
+    "tab": "build",
+    "caption": "00/10found in BuildNext: Grow 00/50find all 50 to contact Hu",
+    "captionOpacity": "1",
+    "brushes": 1,
+    "paints": 2
+   }
+  },
+  "errors": []
+ }
+}

@@ -1,0 +1,794 @@
+{
+ "now": [
+  {
+   "rows": {
+    "opening (Build)": {
+     "ms": 4750,
+     "frames": 284,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 6
+    },
+    "switch, full (Film)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 1,
+     "droppedAt": [
+      315
+     ],
+     "longestTaskMs": 5
+    },
+    "switch, full (Café)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 4
+    },
+    "brush-over (Film)": {
+     "ms": 2700,
+     "frames": 162,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 6
+    },
+    "switch, full, cut short (Set Design)": {
+     "ms": 3049,
+     "frames": 183,
+     "dropped": 3,
+     "droppedAt": [
+      2565,
+      2648,
+      2663
+     ],
+     "longestTaskMs": 42
+    },
+    "switch after a cut (Grow)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 5,
+     "droppedAt": [
+      298,
+      1981,
+      2164,
+      2515,
+      4064
+     ],
+     "longestTaskMs": 4
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 9
+    },
+    "switch, full (Film)": {
+     "ms": 4750,
+     "frames": 284,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 3
+    },
+    "switch, full (Café)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 9
+    },
+    "brush-over (Film)": {
+     "ms": 2700,
+     "frames": 162,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 5
+    },
+    "switch, full, cut short (Set Design)": {
+     "ms": 3130,
+     "frames": 188,
+     "dropped": 5,
+     "droppedAt": [
+      2579,
+      2597,
+      2681,
+      2695,
+      2714
+     ],
+     "longestTaskMs": 49
+    },
+    "switch after a cut (Grow)": {
+     "ms": 4750,
+     "frames": 284,
+     "dropped": 5,
+     "droppedAt": [
+      301,
+      1984,
+      2166,
+      2516,
+      4067
+     ],
+     "longestTaskMs": 3
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "ms": 4750,
+     "frames": 284,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 8
+    },
+    "switch, full (Film)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 5
+    },
+    "switch, full (Café)": {
+     "ms": 4750,
+     "frames": 284,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 3
+    },
+    "brush-over (Film)": {
+     "ms": 2700,
+     "frames": 162,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 5
+    },
+    "switch, full, cut short (Set Design)": {
+     "ms": 3050,
+     "frames": 183,
+     "dropped": 2,
+     "droppedAt": [
+      2583,
+      2666
+     ],
+     "longestTaskMs": 44
+    },
+    "switch after a cut (Grow)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 4
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 9
+    },
+    "switch, full (Film)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 3
+    },
+    "switch, full (Café)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 4
+    },
+    "brush-over (Film)": {
+     "ms": 2700,
+     "frames": 162,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 4
+    },
+    "switch, full, cut short (Set Design)": {
+     "ms": 3082,
+     "frames": 185,
+     "dropped": 2,
+     "droppedAt": [
+      2597,
+      2682
+     ],
+     "longestTaskMs": 44
+    },
+    "switch after a cut (Grow)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 14
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 9
+    },
+    "switch, full (Film)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 4
+    },
+    "switch, full (Café)": {
+     "ms": 4750,
+     "frames": 284,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 3
+    },
+    "brush-over (Film)": {
+     "ms": 2700,
+     "frames": 162,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 5
+    },
+    "switch, full, cut short (Set Design)": {
+     "ms": 3065,
+     "frames": 185,
+     "dropped": 3,
+     "droppedAt": [
+      2597,
+      2613,
+      2682
+     ],
+     "longestTaskMs": 43
+    },
+    "switch after a cut (Grow)": {
+     "ms": 4750,
+     "frames": 284,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 4
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 5
+    },
+    "switch, full (Film)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 1,
+     "droppedAt": [
+      300
+     ],
+     "longestTaskMs": 3
+    },
+    "switch, full (Café)": {
+     "ms": 4750,
+     "frames": 284,
+     "dropped": 2,
+     "droppedAt": [
+      300,
+      1851
+     ],
+     "longestTaskMs": 8
+    },
+    "brush-over (Film)": {
+     "ms": 2700,
+     "frames": 162,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 5
+    },
+    "switch, full, cut short (Set Design)": {
+     "ms": 3084,
+     "frames": 186,
+     "dropped": 3,
+     "droppedAt": [
+      2598,
+      2615,
+      2683
+     ],
+     "longestTaskMs": 42
+    },
+    "switch after a cut (Grow)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 5,
+     "droppedAt": [
+      298,
+      1981,
+      2166,
+      2514,
+      4064
+     ],
+     "longestTaskMs": 3
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 7
+    },
+    "switch, full (Film)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 4
+    },
+    "switch, full (Café)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 6
+    },
+    "brush-over (Film)": {
+     "ms": 2700,
+     "frames": 162,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 4
+    },
+    "switch, full, cut short (Set Design)": {
+     "ms": 3083,
+     "frames": 185,
+     "dropped": 2,
+     "droppedAt": [
+      2617,
+      2700
+     ],
+     "longestTaskMs": 44
+    },
+    "switch after a cut (Grow)": {
+     "ms": 4750,
+     "frames": 284,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 4
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 8
+    },
+    "switch, full (Film)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 3
+    },
+    "switch, full (Café)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 5
+    },
+    "brush-over (Film)": {
+     "ms": 2700,
+     "frames": 162,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 5
+    },
+    "switch, full, cut short (Set Design)": {
+     "ms": 3051,
+     "frames": 183,
+     "dropped": 2,
+     "droppedAt": [
+      2583,
+      2665
+     ],
+     "longestTaskMs": 43
+    },
+    "switch after a cut (Grow)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 3
+    }
+   },
+   "errors": []
+  }
+ ],
+ "before": [
+  {
+   "rows": {
+    "opening (Build)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 8
+    },
+    "switch, full (Film)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 4
+    },
+    "switch, full (Café)": {
+     "ms": 4750,
+     "frames": 284,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 4
+    },
+    "switch, full, cut short (Set Design)": {
+     "ms": 3114,
+     "frames": 187,
+     "dropped": 2,
+     "droppedAt": [
+      2630,
+      2713
+     ],
+     "longestTaskMs": 41
+    },
+    "switch after a cut (Grow)": {
+     "ms": 4750,
+     "frames": 284,
+     "dropped": 4,
+     "droppedAt": [
+      1984,
+      2166,
+      2501,
+      4068
+     ],
+     "longestTaskMs": 3
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "ms": 4750,
+     "frames": 284,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 10
+    },
+    "switch, full (Film)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 4
+    },
+    "switch, full (Café)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 4
+    },
+    "switch, full, cut short (Set Design)": {
+     "ms": 3031,
+     "frames": 183,
+     "dropped": 3,
+     "droppedAt": [
+      2547,
+      2564,
+      2632
+     ],
+     "longestTaskMs": 43
+    },
+    "switch after a cut (Grow)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 4,
+     "droppedAt": [
+      1984,
+      2165,
+      2515,
+      4065
+     ],
+     "longestTaskMs": 3
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 7
+    },
+    "switch, full (Film)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 4
+    },
+    "switch, full (Café)": {
+     "ms": 4750,
+     "frames": 284,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 3
+    },
+    "switch, full, cut short (Set Design)": {
+     "ms": 3032,
+     "frames": 182,
+     "dropped": 2,
+     "droppedAt": [
+      2564,
+      2646
+     ],
+     "longestTaskMs": 43
+    },
+    "switch after a cut (Grow)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 5
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 10
+    },
+    "switch, full (Film)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 3
+    },
+    "switch, full (Café)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 5
+    },
+    "switch, full, cut short (Set Design)": {
+     "ms": 3048,
+     "frames": 183,
+     "dropped": 3,
+     "droppedAt": [
+      2582,
+      2647,
+      2663
+     ],
+     "longestTaskMs": 40
+    },
+    "switch after a cut (Grow)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 3
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 10
+    },
+    "switch, full (Film)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 4
+    },
+    "switch, full (Café)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 3
+    },
+    "switch, full, cut short (Set Design)": {
+     "ms": 3082,
+     "frames": 185,
+     "dropped": 2,
+     "droppedAt": [
+      2598,
+      2680
+     ],
+     "longestTaskMs": 45
+    },
+    "switch after a cut (Grow)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 3
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 6
+    },
+    "switch, full (Film)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 4
+    },
+    "switch, full (Café)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 4
+    },
+    "switch, full, cut short (Set Design)": {
+     "ms": 3067,
+     "frames": 184,
+     "dropped": 2,
+     "droppedAt": [
+      2598,
+      2680
+     ],
+     "longestTaskMs": 43
+    },
+    "switch after a cut (Grow)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 4
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 9
+    },
+    "switch, full (Film)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 4
+    },
+    "switch, full (Café)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 3
+    },
+    "switch, full, cut short (Set Design)": {
+     "ms": 3049,
+     "frames": 183,
+     "dropped": 3,
+     "droppedAt": [
+      2583,
+      2666,
+      2681
+     ],
+     "longestTaskMs": 42
+    },
+    "switch after a cut (Grow)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 3
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 7
+    },
+    "switch, full (Film)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 4
+    },
+    "switch, full (Café)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 3
+    },
+    "switch, full, cut short (Set Design)": {
+     "ms": 3083,
+     "frames": 185,
+     "dropped": 2,
+     "droppedAt": [
+      2616,
+      2700
+     ],
+     "longestTaskMs": 42
+    },
+    "switch after a cut (Grow)": {
+     "ms": 4750,
+     "frames": 285,
+     "dropped": 0,
+     "droppedAt": [],
+     "longestTaskMs": 3
+    }
+   },
+   "errors": []
+  }
+ ]
+}

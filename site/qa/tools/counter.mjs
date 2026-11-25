@@ -494,12 +494,13 @@ run.webkit = async () => {
 };
 
 // ---- The whole hunt, one visit: every mushroom tapped on its drawing, Next from scene to scene, to the button. ----
+// (HJ_INTRO= : with the paintings; HJ_ENGINE=webkit.)
 run.hunt = async () => {
   const report = JSON.parse(await readFile(`${out}hunt.json`, 'utf8').catch(() => '{}'));
   for (const device of Object.keys(DEVICES)) {
-    const browser = await chromium.launch({ channel: 'chrome' }); const context = await browser.newContext(DEVICES[device]); const page = await context.newPage(); const errors = errorsOf(page);
+    const browser = await (process.env.HJ_ENGINE === 'webkit' ? webkit.launch() : chromium.launch({ channel: 'chrome' })); const context = await browser.newContext(DEVICES[device]); const page = await context.newPage(); const errors = errorsOf(page);
     const touch = device !== 'desktop'; const wrong = []; const counts = [];
-    await page.goto(`${base}?debug&reset&intro=off&seed=7#build`); await ready(page);
+    await page.goto(`${base}?debug&reset${process.env.HJ_INTRO ?? '&intro=off'}&seed=7#build`); await ready(page);
     for (let n = 0; n < 5; n++) {
       const ids = await page.evaluate(() => [...document.querySelectorAll('.hj-shroom')].map((b) => b.dataset.spot));
       for (const id of ids) {

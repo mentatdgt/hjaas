@@ -377,9 +377,9 @@ run.switch = async () => {
   report['short brush, Build to Set Design'] = await measure('set', film, m.origin + m.switchStart, m.origin + m.switchEnd - 20, m.origin + m.switchStart + 5, m.origin + m.switchEnd - 5, 'switch-short-brush-60fps.mp4');
   say('short brush', report['short brush, Build to Set Design']);
 
-  // 3. A return visit: the 200 ms reveal.
+  // 3. The 200 ms reveal (since job 009 only reduced motion gets it, and ?intro=quick, used here).
   await wait(1500);
-  film = await take('return', async () => { await page.goto(`${base}?debug#set`); await ready(page); await wait(300); });
+  film = await take('return', async () => { await page.goto(`${base}?debug&intro=quick#set`); await ready(page); await wait(300); });
   m = await marks();
   report['return visit, Set Design'] = await measure('set', film, m.origin + m.introStart, m.origin + m.introStart + 260, m.origin + m.introStart - 10, m.origin + m.introStart + 255, 'return-visit-60fps.mp4');
   say('return visit', report['return visit, Set Design']);
