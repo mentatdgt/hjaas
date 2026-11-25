@@ -66,12 +66,12 @@ All original characters, described in words. Never based on a real person's phot
 - **Scene look (user 2026-11-21):** keep mock-up A's busyness: seat backs along the bottom, knotted fly ropes, dripping paint pots, paint cart.
 
 ## 5. Working rules
-- **Roles:** Wren (Claude) does art direction, QC, tasks, Higgsfield jobs and commits. Quinn (ChatGPT) draws, with read-only GitHub access. Fable (Claude Code on the Mac; Opus 5.5 by default, Fable 5.2 when chosen) builds the site. Foreman (Grok) dispatches Cursor agents for PRs into site branches. The user carries files and makes the calls.
+- **Roles:** Wren (Claude) does art direction, QC, tasks, Higgsfield jobs and commits. Quinn (ChatGPT) draws, with read-only GitHub access. **Engine** (Claude Code on the Mac; Opus 5.5 by default) builds the site. It was called Fable until 2026-11-25; the user now calls it Engine, so use that name with the user (file names like `FABLE-LOOP.md` and `fable-jobs/` stay). Foreman (Grok) dispatches Cursor agents for PRs into site branches. The user carries files and makes the calls.
 - **Money:** a cost quote and the user's approval before every paid Higgsfield job.
 - **Merging:** nothing merges into `main` without Wren's review and the user's OK.
 - **Prompts for the user:** one short paste-ready prompt per step. Details live in the repo, not the paste.
 - **Art edits:** every pose is an edit of a green anchor at the approved scene's exact size, never a redraw. Get the scene approved before drawing poses.
 - **No flicker, by construction (2026-11-21):** every animation pose is the actor's approved base image plus ONLY the part that moves, pasted and colour-matched by Wren. A generated pose is never used whole. Head turns and expressions are cuts hidden by blinks; soft fades only inside small loops. No AI video for flat-style faces.
 - **The Quinn loop:** Wren sends Quinn jobs and collects results directly (`QUINN-LOOP.md`). The user sees finished previews, not intermediate files.
-- **The Fable loop (2026-11-24):** Wren sends Fable build jobs and gets the reports back directly (`FABLE-LOOP.md`). The user starts the watcher and does phone checks.
+- **The Engine loop (2026-11-24, `FABLE-LOOP.md`):** Wren sends Engine build jobs and gets the reports back directly (`FABLE-LOOP.md`). The user starts the watcher and does phone checks.
 - **Never commit:** secrets, cookies or real people's photos used as character references.

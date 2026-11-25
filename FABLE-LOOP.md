@@ -1,4 +1,6 @@
-# The Fable loop: Wren ↔ Fable without the user pasting prompts
+# The Engine loop (file name: Fable loop): Wren ↔ Engine without the user pasting prompts
+
+The user calls the Claude Code builder **Engine** (it was "Fable" until 2026-11-25). The scripts and folders keep the old name.
 
 **Status: built 2026-11-24, smoke test passed the same day (Opus 5.5, report delivered into Wren's chat).** Fable is Claude Code on the user's Mac, run headless (`claude -p`) in `~/hjaas` with the default Claude Code model (Opus 5.5; set `FABLE_MODEL=fable` to use Fable). It mirrors the Quinn loop (`QUINN-LOOP.md`).
 
