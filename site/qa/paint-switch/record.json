@@ -80,8 +80,8 @@
  "taps chrome": {
   "file": "taps-desktop-60fps.mp4",
   "strip": "taps-desktop-strip.jpg",
-  "frames": 947,
-  "seconds": 17.3,
+  "frames": 956,
+  "seconds": 17.6,
   "strokes": [
    [
     "hj-paint",
@@ -89,45 +89,45 @@
    ],
    [
     "hj-paint",
-    3084
+    3168
    ],
    [
     "hj-paint",
-    5883
+    6017
    ],
    [
     "hj-paint",
-    8582
+    8767
    ],
    [
     "hj-brush",
-    10883
+    11151
    ],
    [
     "hj-brush",
-    13133
+    13417
    ]
   ],
   "taps": [
    [
     "Film",
-    2420
+    2451
    ],
    [
     "Café",
-    5101
+    5201
    ],
    [
     "Set Design",
-    7926
+    8073
    ],
    [
     "back to Film",
-    10600
+    10823
    ],
    [
     "back to Build",
-    12893
+    13169
    ]
   ],
   "errors": []
@@ -135,8 +135,8 @@
  "taps webkit": {
   "file": "taps-iphone-60fps.mp4",
   "strip": "taps-iphone-strip.jpg",
-  "frames": 1010,
-  "seconds": 16.8,
+  "frames": 1041,
+  "seconds": 17.3,
   "strokes": [
    [
     "hj-paint",
@@ -152,15 +152,15 @@
    ],
    [
     "hj-paint",
-    8233
+    8250
    ],
    [
     "hj-brush",
-    10417
+    10933
    ],
    [
     "hj-brush",
-    12583
+    13100
    ]
   ],
   "taps": [
@@ -178,11 +178,11 @@
    ],
    [
     "back to Film",
-    10267
+    10283
    ],
    [
     "back to Build",
-    12450
+    12967
    ]
   ],
   "errors": []
@@ -190,22 +190,22 @@
  "reload chrome": {
   "file": "reload-desktop-60fps.mp4",
   "strip": "reload-desktop-strip.jpg",
-  "frames": 732,
-  "seconds": 15.4,
+  "frames": 745,
+  "seconds": 15.3,
   "strokes": [
    [
     "hj-paint",
-    335
+    400
    ],
    [
     "hj-paint",
-    9534
+    9684
    ]
   ],
   "taps": [
    [
     "reload",
-    9175
+    9264
    ]
   ],
   "errors": [],

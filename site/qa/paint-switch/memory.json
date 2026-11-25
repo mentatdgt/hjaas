@@ -37,17 +37,7 @@
     "grow.frames": 3
    },
    "endedIn": "design",
-   "errors": [
-    "/localhost:5173/assets/scene1/rachel/frame_01.webp due to access control checks.",
-    "/localhost:5173/assets/scene1/rachel/frame_01_02.webp due to access control checks.",
-    "/localhost:5173/assets/scene1/rachel/frame_02.webp due to access control checks.",
-    "/localhost:5173/assets/scene1/rachel/frame_02_03a.webp due to access control checks.",
-    "/localhost:5173/assets/scene1/rachel/frame_02_03b.webp due to access control checks.",
-    "/localhost:5173/assets/scene1/rachel/frame_03.webp due to access control checks.",
-    "/localhost:5173/assets/scene1/rachel/frame_04.webp due to access control checks.",
-    "/localhost:5173/assets/scene1/rachel/blink_half.webp due to access control checks.",
-    "/localhost:5173/assets/scene1/rachel/blink_closed.webp due to access control checks."
-   ]
+   "errors": []
   },
   {
    "tapEveryMs": 1000,
