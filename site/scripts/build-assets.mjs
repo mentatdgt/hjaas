@@ -106,6 +106,9 @@ for (const [name, clip] of Object.entries(labFrames.clips)) {
 // - The cast is used at the size delivered: the café's is about 1.5x the plate, the sharpest there is and
 //   what a phone needs; the film scene's is the plate's own size and there is no larger master. Nothing is
 //   enlarged.
+// - A layer with a `scale` (the film scene's presenter: 2) has stills that many times its box. Decoded whole they
+//   would be most of what a phone gives the page, so its first still is kept whole and each of the others is cut to
+//   the rectangle where it differs from that one (`patches` in the page's frames.json; character.ts draws them).
 // - A clip's patches may reach outside their actor's box (the café's first `sip` started 13 px above
 //   Rachel's). The page draws an actor on a canvas the size of the box, so here the box is grown to hold
 //   every patch and the actor's stills are padded with clear pixels to match. The frames.json the page
@@ -146,6 +149,30 @@ const alphaMask = async (file) => {
   return sharp(rgba, { raw: { width: info.width, height: info.height, channels: 4 } });
 };
 const castFrame = { quality: 93, alphaQuality: 100, smartSubsample: true, effort: 6 };
+// A still and the patches over it must agree where a patch ends: at 99 they are 0.9 levels apart there on average, of
+// 255 (1.6 at 93), for a third more bytes. Lossless they would agree to the pixel, and weigh three times as much.
+const patchFrame = { ...castFrame, quality: 99 };
+// A patch's rim of unchanged picture is at least PATCH_RIM px, twice what character.ts leaves undrawn; and the patch
+// starts and ends on a multiple of it, so that the halvings a browser shrinks by fall where the whole still's do.
+const PATCH_RIM = 8;
+/** The rectangle in which two drawings of one size differ, with its rim. (Where both are clear there is no difference.) */
+const differing = async (file, base) => {
+  const [a, b] = await Promise.all([file, base].map((name) => sharp(name).ensureAlpha().raw().toBuffer({ resolveWithObject: true })));
+  const { width, height } = a.info;
+  if (width !== b.info.width || height !== b.info.height) throw new Error(`${file} is not the size of ${base}.`);
+  let [left, top, right, bottom] = [width, height, 0, 0];
+  for (let i = 0; i < a.data.length; i += 4) {
+    if (a.data[i + 3] === 0 && b.data[i + 3] === 0) continue;
+    if (a.data.readUInt32LE(i) === b.data.readUInt32LE(i)) continue;
+    const x = (i / 4) % width;
+    const y = Math.floor(i / 4 / width);
+    [left, top, right, bottom] = [Math.min(left, x), Math.min(top, y), Math.max(right, x + 1), Math.max(bottom, y + 1)];
+  }
+  if (right <= left) throw new Error(`${file} is the same drawing as ${base}.`);
+  const from = (px) => Math.max(0, Math.floor((px - PATCH_RIM) / PATCH_RIM) * PATCH_RIM);
+  const to = (px, most) => Math.min(most, Math.ceil((px + PATCH_RIM) / PATCH_RIM) * PATCH_RIM);
+  return { left: from(left), top: from(top), width: to(right, width) - from(left), height: to(bottom, height) - from(top) };
+};
 const casts = [];
 for (const pack of PACKAGES) {
   const delivered = JSON.parse(await readFile(join(repo, pack.dir, 'frames.json'), 'utf8'));
@@ -176,6 +203,10 @@ for (const pack of PACKAGES) {
       grow.bottom = Math.max(grow.bottom, clip.y + size.height - layer.h);
     }
     const grown = Object.values(grow).some((px) => px > 0);
+    const scale = layer.scale ?? 1;
+    if (scale !== 1 && (clips.length || layer.sprite_track || layer.hunt_progress !== undefined)) throw new Error(`${pack.dir}: the layer "${layer.actor}" has a "scale", which is for a layer of stills only.`);
+    // (A dissolve blends two whole drawings: character.ts.)
+    if (scale !== 1 && JSON.stringify(routines.actors?.[layer.actor] ?? {}).includes('"fade_ms":')) throw new Error(`${pack.dir}: the layer "${layer.actor}" has a "scale", so its stills are cut to patches, which cannot be dissolved ("fade_ms").`);
     const page = { ...layer, x: layer.x - grow.left, y: layer.y - grow.top, w: layer.w + grow.left + grow.right, h: layer.h + grow.top + grow.bottom };
     if (layer.sprite_track) {
       // The stagehand: WebP sprites, the masks lossless; the track is copied as delivered, further down.
@@ -197,6 +228,20 @@ for (const pack of PACKAGES) {
     }
     for (const still of layer.stills) {
       const file = delivered.stills[still];
+      if (scale !== 1) {
+        const size = await sharp(join(repo, pack.dir, file)).metadata();
+        if (size.width !== layer.w * scale || size.height !== layer.h * scale) throw new Error(`${pack.dir}/${file} is ${size.width} x ${size.height}, not ${scale} times its layer's box.`);
+        const base = layer.stills[0];
+        const where = `${pack.to}/cast/${file.replace(/\.png$/, '.webp')}`;
+        if (still === base) {
+          add(`${pack.dir}/${file}`, where, patchFrame, undefined, assets);
+          continue;
+        }
+        const area = await differing(join(repo, pack.dir, file), join(repo, pack.dir, delivered.stills[base]));
+        (page.patches ??= {})[still] = { base, x: area.left, y: area.top, w: area.width, h: area.height };
+        addMade(() => sharp(join(repo, pack.dir, file)).ensureAlpha().extract(area), where, patchFrame);
+        continue;
+      }
       const to = `${pack.to}/cast/${file.replace(/\.png$/, '.webp')}`;
       if (grown) addMade(() => sharp(join(repo, pack.dir, file)).ensureAlpha().extend({ ...grow, background: { r: 0, g: 0, b: 0, alpha: 0 } }), to, stillFrame);
       else add(`${pack.dir}/${file}`, to, stillFrame, undefined, assets);
@@ -209,6 +254,7 @@ for (const pack of PACKAGES) {
   for (const layer of forPage.layers) {
     where.boxes[layer.actor] = outward([layer.x, layer.y, layer.x + layer.w, layer.y + layer.h]);
     const original = delivered.layers.find((l) => l.actor === layer.actor);
+    const scale = original.scale ?? 1;
     const pieces = [
       ...original.stills.map((still) => ({ file: delivered.stills[still], x: original.x, y: original.y })),
       ...Object.values(delivered.clips ?? {}).filter((clip) => clip.layer === layer.actor).flatMap((clip) => [...new Set(clip.frames)].map((file) => ({ file, x: original.x + clip.x, y: original.y + clip.y }))),
@@ -221,7 +267,7 @@ for (const pack of PACKAGES) {
         for (let x = 0; x < info.width; x++) {
           if (data[y * info.width + x] < 255) solid = false;
           if (data[y * info.width + x] <= 8) continue;
-          box = [Math.min(box[0], piece.x + x), Math.min(box[1], piece.y + y), Math.max(box[2], piece.x + x + 1), Math.max(box[3], piece.y + y + 1)];
+          box = [Math.min(box[0], piece.x + x / scale), Math.min(box[1], piece.y + y / scale), Math.max(box[2], piece.x + (x + 1) / scale), Math.max(box[3], piece.y + (y + 1) / scale)];
         }
       }
     }

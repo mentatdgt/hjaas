@@ -37,12 +37,14 @@ describe("the film scene's package", () => {
     expect(leadOf(actors)?.name).toBe('rachel');
   });
 
-  it('is drawn at the size of the plate: every actor sits at its layer, pixel for pixel', () => {
+  it('is drawn at the size of the plate, the presenter at twice it: every actor sits at its layer, pixel for pixel', () => {
     expect(frames.canvas).toMatchObject({ w: 1672, h: 941 });
     for (const layer of frames.layers) {
       const { canvas } = actor(layer.actor).frames;
       expect([canvas.plate_x, canvas.plate_y, canvas.plate_w, canvas.plate_h]).toEqual([layer.x, layer.y, layer.w, layer.h]);
-      expect([canvas.w, canvas.h]).toEqual([layer.w, layer.h]);
+      const scale = layer.actor === 'presenter' ? 2 : 1;
+      expect(layer.scale ?? 1, layer.actor).toBe(scale);
+      expect([canvas.w, canvas.h]).toEqual([layer.w * scale, layer.h * scale]);
       expect(layer.x + layer.w).toBeLessThanOrEqual(1672);
       expect(layer.y + layer.h).toBeLessThanOrEqual(941);
     }
@@ -68,7 +70,7 @@ describe("the film scene's package", () => {
       for (const step of take(a.name, 800)) expect(used.has(step.pose), `${a.name} ${step.pose}`).toBe(true);
       for (const step of clipReaction(a.frames, a.routine)?.steps ?? []) expect(used.has(step.pose)).toBe(true);
     }
-    // All sixteen drawings are in use.
+    // All the drawings are in use.
     expect(actors.flatMap((a) => stillsInUse(a.frames, a.routine)).sort()).toEqual(Object.keys(frames.stills).sort());
   });
 
@@ -86,6 +88,32 @@ describe("the film scene's package", () => {
     }
     // What it shows is the presenter, not herself.
     expect(screen.source.x + screen.source.w).toBeLessThanOrEqual(rachel.x);
+  });
+});
+
+describe("the presenter's patches", () => {
+  const { frames: own, routine } = actor('presenter');
+  const layer = frames.layers.find((l) => l.actor === 'presenter')! as (typeof frames.layers)[number] & { patches: Record<string, { base: string; x: number; y: number; w: number; h: number }> };
+
+  it('are all his stills but the first, which is whole and under every one of them', () => {
+    expect(Object.keys(own.patches ?? {}).sort()).toEqual(Object.keys(own.stills).filter((name) => name !== 'M_1').sort());
+    for (const patch of Object.values(own.patches ?? {})) expect(patch.base).toBe('M_1');
+    expect(restOf(own, routine)).toBe('M_1');
+  });
+
+  it('lie inside his drawing, with a rim that falls on the same grid as it', () => {
+    for (const [name, p] of Object.entries(layer.patches)) {
+      for (const n of [p.x, p.y, p.w, p.h]) expect(n % 8, name).toBe(0);
+      expect(p.x + p.w, name).toBeLessThanOrEqual(own.canvas.w);
+      expect(p.y + p.h, name).toBeLessThanOrEqual(own.canvas.h);
+    }
+  });
+
+  it('keep his decoded stills within 12 MB of the sixteen at the plate\'s own size', () => {
+    const now = own.canvas.w * own.canvas.h * 4 + Object.values(layer.patches).reduce((sum, p) => sum + p.w * p.h * 4, 0);
+    const canvas = own.canvas.w * own.canvas.h * 4;
+    const before = 17 * layer.w * layer.h * 4; // sixteen stills and his canvas
+    expect(now + canvas - before).toBeLessThan(12e6);
   });
 });
 
@@ -115,6 +143,8 @@ describe("the Merlion's water", () => {
 describe('the presenter', () => {
   const { routine } = actor('presenter');
   // Every mouth he talks with, and its blink: the same mouth with his eyes shut (package, 15:15).
+  /** The drawings his gestures pass through. */
+  const BETWEEN = ['M_1_12', 'M_12', 'M_1_13', 'M_13'];
   const MOUTHS = ['M_1', 'M_1_mid', 'M_1_closed', 'M_2', 'M_2_closed', 'M_3', 'M_3_closed'];
   const BLINK_OF = Object.fromEntries(MOUTHS.map((mouth) => [mouth, `${mouth}_blink`]));
   const BLINKS = new Set(Object.values(BLINK_OF));
@@ -124,6 +154,7 @@ describe('the presenter', () => {
   /** What he is doing in a pose: talking with his hands open, pointing, or hands together; or the in-between. */
   const doing = (pose: string): string => {
     const mouth = isBlink(pose) ? mouthOf(pose) : pose;
+    if (BETWEEN.includes(mouth)) return mouth;
     return mouth.startsWith('M_1_') || mouth === 'M_1' ? 'talk 1' : mouth.startsWith('M_2') ? 'talk 2' : mouth.startsWith('M_3') ? 'talk 3' : mouth;
   };
   /** The widest range written for each still, over the whole routine. */
@@ -140,20 +171,20 @@ describe('the presenter', () => {
     expect(JSON.stringify(routines.actors.presenter)).not.toContain('blink_ok');
     expect(routine.blink).toMatchObject({ on: MOUTHS, still_for: BLINK_OF, ms: 110, every_ms: [2500, 6000] });
     // Never on an in-between.
-    for (const still of ['M_12', 'M_13']) expect(JSON.stringify(routine.blink)).not.toContain(`"${still}"`);
+    for (const still of BETWEEN) expect(JSON.stringify(routine.blink)).not.toContain(`"${still}"`);
     expect(actor('presenter').reacts).toBe(false);
   });
 
-  it('talks, points at the view, talks, brings his hands together, and round again, each gesture through its in-between', () => {
+  it('talks, points at the view, talks, brings his hands together, and round again, each gesture through its in-betweens', () => {
     const phases: string[] = [];
     for (const step of steps) if (phases[phases.length - 1] !== doing(step.pose)) phases.push(doing(step.pose));
-    const round = ['talk 1', 'M_12', 'talk 2', 'M_12', 'talk 1', 'M_13', 'talk 3', 'M_13'];
+    const round = ['talk 1', 'M_1_12', 'M_12', 'talk 2', 'M_12', 'M_1_12', 'talk 1', 'M_1_13', 'M_13', 'talk 3', 'M_13', 'M_1_13'];
     expect(phases.length).toBeGreaterThan(200);
     phases.forEach((phase, i) => expect(phase, `phase ${i}`).toBe(round[i % round.length]));
-    // An in-between is one frame of 100 ms, never held and never doubled.
+    // An in-between is one drawing of 60 ms, never held and never doubled.
     steps.forEach((step, i) => {
-      if (step.pose !== 'M_12' && step.pose !== 'M_13') return;
-      expect(step.ms).toBe(100);
+      if (!BETWEEN.includes(step.pose)) return;
+      expect(step.ms).toBe(60);
       expect(steps[i + 1]?.pose).not.toBe(step.pose);
     });
   });
@@ -183,7 +214,7 @@ describe('the presenter', () => {
       expect(isBlink(steps[i + 1].pose)).toBe(false);
       // The hold it blinks in carries on, on the same mouth, if 50 ms or more of it is left.
       if (steps[i + 1].pose === mouthOf(step.pose)) sameMouthAfter++;
-      else expect(MOUTHS.includes(steps[i + 1].pose) || ['M_12', 'M_13'].includes(steps[i + 1].pose)).toBe(true);
+      else expect(MOUTHS.includes(steps[i + 1].pose) || BETWEEN.includes(steps[i + 1].pose)).toBe(true);
     });
     expect(blinks).toBeGreaterThan(100);
     // Most of his holds are shorter than a blink and a 50 ms rest: there the blink is the whole hold, and he

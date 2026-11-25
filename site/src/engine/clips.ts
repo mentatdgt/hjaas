@@ -60,6 +60,11 @@ export interface ClipFrames {
   canvas: { w: number; h: number; plate_x: number; plate_y: number; plate_w: number; plate_h: number };
   /** Still name -> file. */
   stills: Readonly<Record<string, string>>;
+  /**
+   * Stills whose file is only a patch: the part of the drawing that differs from `base` (a whole still), at (x, y)
+   * on the canvas, replacing what was there. npm run assets cuts them, for a layer with a `scale` (cast.ts).
+   */
+  patches?: Readonly<Record<string, { base: string; x: number; y: number }>>;
   /** Clip name -> its base still, where its patches go on the canvas, and the patch files in order. */
   clips: Readonly<Record<string, { base: string; x: number; y: number; frames: readonly string[] }>>;
 }
@@ -174,6 +179,12 @@ export function checkClips(frames: ClipFrames, routine: ClipRoutine): string[] {
     still(entry.base, `The clip "${name}"`);
     if (!Array.isArray(entry.frames) || entry.frames.length === 0) problems.push(`The clip "${name}" has no frames.`);
   }
+  for (const [name, patch] of Object.entries(frames.patches ?? {})) {
+    still(name, '"patches"');
+    still(patch.base, `The patch "${name}"`);
+    if (frames.patches && patch.base in frames.patches) problems.push(`The patch "${name}" is drawn over "${patch.base}", which is a patch itself.`);
+    if (!(patch.x >= 0 && patch.y >= 0)) problems.push(`The patch "${name}" needs its place on the canvas: x and y.`);
+  }
   if (!Array.isArray(routine.routine) || routine.routine.length === 0) problems.push('routine.json needs a "routine" with at least one step.');
   let holds = false;
   for (const item of routine.routine ?? []) {
@@ -261,6 +272,8 @@ export function stillsInUse(frames: ClipFrames, routine: ClipRoutine): string[] 
       else if (item.blink) for (const frame of item.blink.frames ?? [{ still: item.blink.still }]) add(frame.still);
     }
   }
+  // (A patch cannot be drawn without the still under it.)
+  for (const name of [...used]) add(frames.patches?.[name]?.base);
   return [...used].filter((name) => name in frames.stills);
 }
 

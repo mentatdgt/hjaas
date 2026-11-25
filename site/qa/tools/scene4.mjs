@@ -145,8 +145,10 @@ const shown = (steps, from = -Infinity, to = Infinity) => steps.map(([pose, ms, 
 
 // The presenter's routine, as the brief describes it: talk on the M_1 mouths, the in-between M_12, talk
 // pointing (M_2), M_12, the M_1 mouths, the in-between M_13, hands together (M_3), M_13, and round again.
-const GROUP = (pose) => (pose === 'M_12' || pose === 'M_13' ? pose : pose.startsWith('M_2') ? 'M_2' : pose.startsWith('M_3') ? 'M_3' : 'M_1');
-const CYCLE = ['M_1', 'M_12', 'M_2', 'M_12', 'M_1', 'M_13', 'M_3', 'M_13'];
+// (Since job 007 each gesture has two in-betweens: M_1_12 then M_12, M_1_13 then M_13, and back.)
+const BETWEEN = ['M_1_12', 'M_12', 'M_1_13', 'M_13'];
+const GROUP = (pose) => (BETWEEN.includes(pose) ? pose : pose.startsWith('M_2') ? 'M_2' : pose.startsWith('M_3') ? 'M_3' : 'M_1');
+const CYCLE = ['M_1', 'M_1_12', 'M_12', 'M_2', 'M_12', 'M_1_12', 'M_1', 'M_1_13', 'M_13', 'M_3', 'M_13', 'M_1_13'];
 /** Everything the brief says about him, checked on a log of his steps. `first`: the log starts as he starts (his first hold may be put off by up to 0.9 s). */
 const checkPresenter = (steps, routine, first = true) => {
   const list = shown(steps).filter((s) => s.shown !== null && s.ms > 0);
@@ -160,8 +162,8 @@ const checkPresenter = (steps, routine, first = true) => {
   const fits = CYCLE.map((_, k) => runs.every((run, i) => run.group === CYCLE[(k + i) % CYCLE.length]));
   if (!fits.some(Boolean)) problems.push(`his gestures are out of order: ${runs.map((run) => run.group).join(' > ')}`);
   for (const run of runs) {
-    if (run.group !== 'M_12' && run.group !== 'M_13') continue;
-    if (run.steps.length !== 1 || Math.abs(run.steps[0].shown - 100) > 40) problems.push(`${run.group} at ${run.steps[0].at}: shown ${run.steps.map((s) => s.shown).join(' + ')} ms, not one hold of 100`);
+    if (!BETWEEN.includes(run.group)) continue;
+    if (run.steps.length !== 1 || Math.abs(run.steps[0].shown - 60) > 40) problems.push(`${run.group} at ${run.steps[0].at}: shown ${run.steps.map((s) => s.shown).join(' + ')} ms, not one hold of 60`);
   }
   // Every hold inside what routine.json allows for that still (a frame either way; holds beside a blink
   // may be cut by it).
@@ -197,7 +199,7 @@ const checkPresenter = (steps, routine, first = true) => {
   const mouths = Object.keys(blinkFor);
   const badBlink = blinks.filter((b) => {
     if (Math.abs(b.shownMs - 110) > 40) return true;
-    if (!mouths.length) return (b.before && GROUP(b.before) !== 'M_1') || (b.after && !['M_1', 'M_12', 'M_13'].includes(GROUP(b.after)));
+    if (!mouths.length) return (b.before && GROUP(b.before) !== 'M_1') || (b.after && !['M_1', ...BETWEEN].includes(GROUP(b.after)));
     const ofMouth = mouths.find((m) => blinkFor[m] === b.pose);
     return (b.before && !mouths.includes(b.before)) || (b.before && GROUP(b.before) !== GROUP(ofMouth));
   });
@@ -209,7 +211,7 @@ const checkPresenter = (steps, routine, first = true) => {
     steps: list.length, seconds: list.length ? r1((list.at(-1).at - list[0].at) / 1000) : 0,
     gestures: runs.map((run) => run.group).join(' > '),
     timesEachPoseWasShown: seen,
-    inBetweens: runs.filter((run) => run.group === 'M_12' || run.group === 'M_13').map((run) => `${run.group} ${run.steps[0].shown} ms`),
+    inBetweens: runs.filter((run) => BETWEEN.includes(run.group)).map((run) => `${run.group} ${run.steps[0].shown} ms`),
     blinks: { count: blinks.length, gapsMs: gaps, shortestGapMs: gaps.length ? Math.min(...gaps) : null, longestGapMs: gaps.length ? Math.max(...gaps) : null, meanGapMs: gaps.length ? Math.round(gaps.reduce((a, b) => a + b, 0) / gaps.length) : null, each: blinks },
     longestHold: longest && { pose: longest.pose, ms: longest.shown },
     lateFramesMadeUp: late,

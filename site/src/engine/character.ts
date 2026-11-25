@@ -10,6 +10,11 @@ export interface CharacterSetup {
   placement: Placement;
   /** The size of her frames, in their own pixels. Leave out and it is the rest frame's. */
   size?: { w: number; h: number };
+  /**
+   * Her art is larger than the canvas it stands on (a layer with a `scale`: cast.ts), so an ordinary screen shows it
+   * at less than half its size: it is then shrunk in two steps. (WebKit shrinks by more than half with jagged lines.)
+   */
+  fine?: boolean;
   /** Her element's class: `hj-rachel` (the default) for the one the scene is about, `hj-actor` for the rest of a cast. */
   className?: string;
 }
@@ -20,7 +25,18 @@ export interface Patch {
   x: number;
   y: number;
   frame: Frame;
+  /**
+   * It is one of her stills, of which only this much differs from `base` (see clips.ts, `patches`): kept as long as
+   * her stills are. Its rim is unchanged picture, RIM px of which are never drawn.
+   */
+  still?: boolean;
 }
+
+/**
+ * A still's patch is drawn this many of its own px in from its rim (npm run assets leaves at least twice as many
+ * unchanged): where a shrunken picture ends, its last px are a little off, and would show as a line.
+ */
+const RIM = 4;
 
 // The ground shadow of a standing figure, as in composite() in tools/preview_timing.py:
 // 0.95 × the frame width, about 30 plate px deep for a 455 px figure, rgba(60,30,10,0.43).
@@ -84,6 +100,17 @@ export function place(rest: Frame | null, placement: Placement, size?: { w: numb
   return { left: placement.left, top: placement.baseline - bot * scale, width: w * scale, height: h * scale, scale };
 }
 
+/**
+ * How many pixels her canvas has: the ones it covers on screen (`cssW` CSS px across), never more than her art's own
+ * (`source`; interpolated pixels are no sharper), and never more than one cheap draw's worth.
+ */
+export function backing(cssW: number, dpr: number, source: { w: number; h: number }): { w: number; h: number } {
+  const wanted = Math.min(Math.round(cssW * Math.min(dpr || 1, 3)), source.w);
+  const cap = Math.sqrt((MAX_PIXELS * source.w) / source.h);
+  const w = Math.round(Math.min(wanted, cap));
+  return { w, h: Math.round((w * source.h) / source.w) };
+}
+
 const pct = (value: number, of: number): string => `${(value / of) * 100}%`;
 
 export class Character {
@@ -109,6 +136,9 @@ export class Character {
   private patched = '';
   /** Her canvas holds two poses part-way through a dissolve (see dissolve()), not one clean frame. */
   private mixed = false;
+  private readonly fine: boolean;
+  /** For art shown at less than half its size: where it is halved on the way (see `fine`). */
+  private half: CanvasRenderingContext2D | null = null;
   private scratch: CanvasRenderingContext2D | null = null;
   private scratchIdle = 0;
   /** Stills not yet rehearsed at her canvas's real size (see resize() and rehearse()). */
@@ -117,6 +147,7 @@ export class Character {
   constructor(frames: Map<string, Frame>, config: CharacterSetup) {
     this.frames = frames;
     this.rest = config.rest;
+    this.fine = config.fine === true;
     const first = frames.get(config.rest) ?? null;
     if (!first && !config.size) throw new Error(`Character: missing rest frame "${config.rest}"`);
     this.source = config.size ?? frameSize(first!);
@@ -188,6 +219,10 @@ export class Character {
       this.scratch.canvas.width = 0;
       this.scratch.canvas.height = 0;
     }
+    if (this.half) {
+      this.half.canvas.width = 0;
+      this.half.canvas.height = 0;
+    }
     this.unrehearsed = [];
     this.drawn = '';
     this.patched = '';
@@ -199,6 +234,10 @@ export class Character {
     const old = this.patches.get(name);
     this.patches.set(name, patch);
     if (old && old.frame !== patch.frame) releaseFrame(old.frame);
+    if (!patch.still) return;
+    this.warm(patch.frame);
+    // The still her canvas was waiting for (see add()).
+    if (!this.drawn && name === this.pose) this.draw();
   }
 
   /**
@@ -225,8 +264,13 @@ export class Character {
       const { w, h } = frameSize(frame);
       stills += w * h * 4;
     }
-    const scratch = this.scratch?.canvas;
-    return { stills, canvases: this.canvas.width * this.canvas.height * 4 + (scratch ? scratch.width * scratch.height * 4 : 0) };
+    for (const patch of this.patches.values()) {
+      if (!patch.still) continue;
+      const { w, h } = frameSize(patch.frame);
+      stills += w * h * 4;
+    }
+    const canvases = [this.canvas, this.scratch?.canvas, this.half?.canvas];
+    return { stills, canvases: canvases.reduce((sum, canvas) => sum + (canvas ? canvas.width * canvas.height * 4 : 0), 0) };
   }
 
   has(name: string): boolean {
@@ -239,14 +283,9 @@ export class Character {
 
   /** Match the canvas to the pixels it covers on screen. Call after layout changes. */
   resize(): void {
-    const dpr = Math.min(window.devicePixelRatio || 1, 3);
     const cssW = this.el.clientWidth;
     if (!cssW) return;
-    // Never above the art's own resolution: extra pixels would only be interpolated.
-    const wanted = Math.min(Math.round(cssW * dpr), this.source.w);
-    const cap = Math.sqrt((MAX_PIXELS * this.source.w) / this.source.h);
-    const w = Math.round(Math.min(wanted, cap));
-    const h = Math.round((w * this.source.h) / this.source.w);
+    const { w, h } = backing(cssW, window.devicePixelRatio, this.source);
     if (this.canvas.width === w && this.canvas.height === h) return;
     const first = this.canvas.width === 0;
     this.canvas.width = w;
@@ -260,7 +299,7 @@ export class Character {
     // (Before a first-visit painting they are not left to the quiet moments: see rehearse().)
     if (first) {
       const alone = this.unrehearsed.length === 0;
-      this.unrehearsed = [...this.frames.keys()];
+      this.unrehearsed = [...this.frames.keys(), ...[...this.patches].filter(([, patch]) => patch.still).map(([name]) => name)];
       if (!alone) return;
       void (async () => {
         while (this.unrehearsed.length) {
@@ -273,7 +312,8 @@ export class Character {
 
   /** The next still waiting to be rehearsed, if it is still in memory. */
   private rehearseNext(): void {
-    const frame = this.frames.get(this.unrehearsed.shift() ?? '');
+    const name = this.unrehearsed.shift() ?? '';
+    const frame = this.frames.get(name) ?? this.patches.get(name)?.frame;
     if (frame) this.warm(frame);
   }
 
@@ -316,7 +356,7 @@ export class Character {
    * the one to the other (0 to 1; call it every frame, and at 1 she is simply showing `name`). Each pixel is
    * the weighted sum of the two drawings, colour and coverage alike, so where their outlines differ the room
    * behind shows through by exactly as much as it should: what the package's preview does (routine.json,
-   * `fade_ms`). Two whole poses only: a clip frame, or a pose not in memory, is shown at once.
+   * `fade_ms`). Two whole poses only: a patch (a clip frame, or a still kept as one), or a pose not in memory, is shown at once.
    */
   dissolve(from: string, name: string, t: number): void {
     const a = from === NOTHING ? null : this.frames.get(from);
@@ -426,6 +466,28 @@ export class Character {
     this.onDraw?.();
   }
 
+  /** Draw one of her frames at this place on her canvas, in two steps if it is `fine` and shown at less than half its size. */
+  private put(frame: Frame, x: number, y: number, w: number, h: number): void {
+    const { ctx } = this;
+    const size = frameSize(frame);
+    if (!this.fine || this.canvas.width * 2 >= this.source.w) {
+      ctx.drawImage(frame, x, y, w, h);
+      return;
+    }
+    this.half ??= document.createElement('canvas').getContext('2d')!;
+    const { canvas } = this.half;
+    const halfW = Math.ceil(this.source.w / 2);
+    if (canvas.width !== halfW) {
+      canvas.width = halfW;
+      canvas.height = Math.ceil(this.source.h / 2);
+    }
+    this.half.imageSmoothingEnabled = true;
+    this.half.imageSmoothingQuality = 'high';
+    this.half.globalCompositeOperation = 'copy';
+    this.half.drawImage(frame, 0, 0, size.w / 2, size.h / 2);
+    ctx.drawImage(canvas, 0, 0, size.w / 2, size.h / 2, x, y, w, h);
+  }
+
   private paint(): void {
     const { ctx, canvas } = this;
     const mixed = this.mixed;
@@ -449,7 +511,7 @@ export class Character {
     // single step. (Not needed when a clip frame goes onto its own still, clean or under the same clip.)
     if (!patch || this.drawn !== whole || (this.patched !== '' && this.patched !== area)) {
       ctx.globalCompositeOperation = 'copy';
-      ctx.drawImage(frame, 0, 0, canvas.width, canvas.height);
+      this.put(frame, 0, 0, canvas.width, canvas.height);
     }
     this.drawn = whole;
     this.patched = area;
@@ -459,17 +521,26 @@ export class Character {
     // shifts against the still around it. (The patch has a margin of unchanged picture on every side.)
     if (!size) return;
     const s = canvas.width / this.source.w;
-    const x0 = Math.ceil(patch.x * s);
-    const y0 = Math.ceil(patch.y * s);
-    const x1 = Math.floor((patch.x + size.w) * s);
-    const y1 = Math.floor((patch.y + size.h) * s);
+    // (A still's patch is drawn exactly as the whole still would be: to the canvas's height as well as its width.)
+    const sy = patch.still ? canvas.height / this.source.h : s;
+    let x0 = Math.ceil(patch.x * s);
+    let y0 = Math.ceil(patch.y * sy);
+    let x1 = Math.floor((patch.x + size.w) * s);
+    let y1 = Math.floor((patch.y + size.h) * sy);
+    if (patch.still) {
+      // (Where the patch ends at the edge of the canvas, so does the still.)
+      x0 = patch.x > 0 ? Math.ceil((patch.x + RIM) * s) : 0;
+      y0 = patch.y > 0 ? Math.ceil((patch.y + RIM) * sy) : 0;
+      x1 = patch.x + size.w < this.source.w ? Math.floor((patch.x + size.w - RIM) * s) : canvas.width;
+      y1 = patch.y + size.h < this.source.h ? Math.floor((patch.y + size.h - RIM) * sy) : canvas.height;
+    }
     ctx.globalCompositeOperation = 'source-over';
     ctx.save();
     ctx.beginPath();
     ctx.rect(x0, y0, x1 - x0, y1 - y0);
     ctx.clip();
     ctx.clearRect(x0, y0, x1 - x0, y1 - y0);
-    ctx.drawImage(patch.frame, patch.x * s, patch.y * s, size.w * s, size.h * s);
+    this.put(patch.frame, patch.x * s, patch.y * sy, size.w * s, size.h * sy);
     ctx.restore();
   }
 }

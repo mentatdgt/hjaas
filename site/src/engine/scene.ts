@@ -306,11 +306,17 @@ async function actorCast(
     }
     const c = frames.canvas;
     const rest = restOf(frames, routine);
-    const character = new Character(new Map(names.map((name, i) => [name, stills[i]!])), {
+    // Most are whole drawings; some are only the part that differs from one (clips.ts, `patches`).
+    const cut = frames.patches ?? {};
+    const character = new Character(new Map(names.flatMap((name, i) => (name in cut ? [] : [[name, stills[i]!] as const]))), {
       rest,
       placement: { kind: 'box', x: c.plate_x, y: c.plate_y, width: c.plate_w, height: c.plate_h },
       size: { w: c.w, h: c.h },
+      fine: frames.patches !== undefined,
       className: options.className,
+    });
+    names.forEach((name, i) => {
+      if (name in cut) character.addPatch(name, { ...cut[name], frame: stills[i]!, still: true });
     });
     if (options.name) character.el.dataset.actor = options.name;
 
@@ -387,9 +393,12 @@ async function actorCast(
         const keep = new Set(keepShown && options.keeps ? character.showing : []);
         names.forEach((name, i) => {
           if (keep.has(name) || !character.has(name)) return;
-          character.drop(name);
-          const frame = stills[i];
-          if (frame) releaseFrame(frame);
+          if (name in cut) character.dropPatch(name, true);
+          else {
+            character.drop(name);
+            const frame = stills[i];
+            if (frame) releaseFrame(frame);
+          }
           stills[i] = null;
         });
         character.sleep();
@@ -398,8 +407,10 @@ async function actorCast(
         if (awake) return Promise.resolve();
         awake = true;
         const at = generation;
-        // The frame her canvas needs comes back first: until it has, she cannot be drawn.
-        const order = [...names.keys()].sort((a, b) => Number(names[b] === character.current) - Number(names[a] === character.current));
+        // The frame her canvas needs comes back first (and the still under it): until it has, she cannot be drawn.
+        const needed = new Set(character.showing);
+        const order = [...names.keys()].sort((a, b) => Number(needed.has(names[b])) - Number(needed.has(names[a])));
+        const last = Math.max(0, names.filter((name) => needed.has(name)).length - 1);
         let shown: () => void = () => {};
         const back = new Promise<void>((resolve) => (shown = resolve));
         void (async () => {
@@ -415,9 +426,10 @@ async function actorCast(
                   return;
                 }
                 stills[i] = frame;
-                character.add(names[i], frame);
+                if (names[i] in cut) character.addPatch(names[i], { ...cut[names[i]], frame, still: true });
+                else character.add(names[i], frame);
               }
-              if (i === order[0]) shown();
+              if (i === order[last]) shown();
             }
             if (at === generation) reel.wake();
           } finally {

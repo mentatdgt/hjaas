@@ -15,6 +15,14 @@
 // holds it is on that still. It belongs to the layer those stills are from, and shows the plate and the
 // layers drawn before that one (screen.ts draws it).
 //
+// A layer may be drawn larger than the canvas it stands on (the film scene's presenter, for phones):
+//
+//   "scale": s           its stills are s × w by s × h, drawn into its box, which stays in canvas px. Its canvas on
+//                        the page has the pixels it covers on the screen, and never more than s × its box; so a phone
+//                        shows the extra sharpness and an ordinary screen costs what it did. npm run assets keeps
+//                        the layer's first still whole and cuts each of the others down to the rectangle where it
+//                        differs ("patches" in the page's own frames.json, in the layer's own px, s to a canvas px).
+//
 // And two kinds of layer that are not actors (the theatre, scene 5):
 //
 //   "hunt_progress": k   a still shown once k mushrooms of the scene are found (the backdrop, painted swath
@@ -42,6 +50,10 @@ export interface CastFrames {
     h: number;
     /** (A sprite-track layer has none: npm run assets writes an empty list for it.) */
     stills: readonly string[];
+    /** How many of its stills' px make one canvas px. Left out: 1. */
+    scale?: number;
+    /** Stills whose file holds only what differs from `base` (npm run assets writes these), in the layer's own px. */
+    patches?: Readonly<Record<string, { base: string; x: number; y: number }>>;
     scenery?: boolean;
     hunt_progress?: number;
     sprite_track?: string;
@@ -172,6 +184,11 @@ export function splitCast(frames: CastFrames, routines: CastRoutines, plateWidth
       }
       continue;
     }
+    const scale = layer.scale ?? 1;
+    if (!(scale >= 1)) {
+      problems.push(`The layer "${layer.actor}" has a "scale" of ${String(layer.scale)}: it must be 1 or more.`);
+      continue;
+    }
     const stills: Record<string, string> = {};
     for (const still of layer.stills ?? []) {
       if (frames.stills?.[still]) stills[still] = frames.stills[still];
@@ -182,8 +199,9 @@ export function splitCast(frames: CastFrames, routines: CastRoutines, plateWidth
       if (clip.layer === layer.actor) clips[name] = { base: clip.base, x: clip.x, y: clip.y, frames: clip.frames };
     }
     const own: ClipFrames = {
-      canvas: { w: layer.w, h: layer.h, plate_x: layer.x * k, plate_y: layer.y * k, plate_w: layer.w * k, plate_h: layer.h * k },
+      canvas: { w: layer.w * scale, h: layer.h * scale, plate_x: layer.x * k, plate_y: layer.y * k, plate_w: layer.w * k, plate_h: layer.h * k },
       stills,
+      ...(layer.patches ? { patches: layer.patches } : {}),
       clips,
     };
     // An actor nobody wrote a routine for simply stands there.

@@ -81,8 +81,12 @@
      ]
     },
     {
+     "still": "M_1_12",
+     "ms": 60
+    },
+    {
      "still": "M_12",
-     "ms": 100
+     "ms": 60
     },
     {
      "loop": "talk_M_2",
@@ -123,7 +127,11 @@
     },
     {
      "still": "M_12",
-     "ms": 100
+     "ms": 60
+    },
+    {
+     "still": "M_1_12",
+     "ms": 60
     },
     {
      "loop": "talk_M_1",
@@ -177,8 +185,12 @@
      ]
     },
     {
+     "still": "M_1_13",
+     "ms": 60
+    },
+    {
      "still": "M_13",
-     "ms": 100
+     "ms": 60
     },
     {
      "loop": "talk_M_3",
@@ -219,7 +231,11 @@
     },
     {
      "still": "M_13",
-     "ms": 100
+     "ms": 60
+    },
+    {
+     "still": "M_1_13",
+     "ms": 60
     }
    ],
    "blink": {
@@ -246,9 +262,9 @@
      2500,
      6000
     ],
-    "note": "Blink on any talking or gesture mouth (never on the in-betweens M_12/M_13). still_for gives the blink still for the still being held: same mouth, closed eyes, so the mouth never jumps."
+    "note": "Blink on any talking or gesture mouth (never on the in-betweens M_1_12/M_12/M_1_13/M_13). still_for gives the blink still for the still being held: same mouth, closed eyes, so the mouth never jumps."
    },
-   "note": "Talks the whole time (lip-flap: open / mid / closed with pauses). Gestures go through a 100 ms in-between (M_12, M_13). He does not react to mushroom finds."
+   "note": "Talks the whole time (lip-flap: open / mid / closed with pauses). Gestures go through two in-betweens of 60 ms each (M_1_12 and M_12; M_1_13 and M_13), in reverse on the way back. He does not react to mushroom finds."
   },
   "rachel": {
    "routine": [

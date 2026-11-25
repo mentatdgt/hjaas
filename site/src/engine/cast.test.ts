@@ -5,6 +5,7 @@ import { describe, expect, it } from 'vitest';
 import framesJson from '../../public/assets/scene3/cast/frames.json';
 import routineJson from '../../public/assets/scene3/cast/routine.json';
 import { leadOf, splitCast, type CastFrames, type CastRoutines } from './cast';
+import { backing } from './character';
 import { NOTHING, checkClips, clipReaction, clipSchedule, restOf, stillsInUse, type ClipFrames, type ClipRoutine, type Signal } from './clips';
 import { seeded, type Step } from './steps';
 
@@ -504,5 +505,55 @@ describe('splitCast', () => {
     const cat = some.find((a) => a.name === 'cat')!;
     const schedule = clipSchedule(cat.frames, cat.routine, seeded(1));
     expect(schedule.next().value.pose).toBe(frames.layers.find((layer) => layer.actor === 'cat')!.stills[0]);
+  });
+});
+
+describe('a layer with a scale', () => {
+  const pack = (layer: object = {}): CastFrames =>
+    ({
+      canvas: { w: 836, h: 470 },
+      layers: [{ actor: 'man', x: 100, y: 50, w: 40, h: 60, stills: ['a', 'b'], ...layer }],
+      stills: { a: 'a.png', b: 'b.png' },
+    }) as CastFrames;
+  const routine = { actors: { man: { routine: [{ still: 'b', ms: 100 }] } } } as unknown as CastRoutines;
+
+  it('has stills that many times its box, and the box itself stays where it was', () => {
+    const { actors: [man], problems: wrong } = splitCast(pack({ scale: 2 }), routine, 1672);
+    expect(wrong).toEqual([]);
+    expect(man.frames.canvas).toEqual({ w: 80, h: 120, plate_x: 200, plate_y: 100, plate_w: 80, plate_h: 120 });
+  });
+
+  it('is exactly as before without one, and one of 1 is the same as none', () => {
+    const { actors: [man] } = splitCast(pack(), routine, 1672);
+    expect(man.frames).toEqual({ canvas: { w: 40, h: 60, plate_x: 200, plate_y: 100, plate_w: 80, plate_h: 120 }, stills: { a: 'a.png', b: 'b.png' }, clips: {} });
+    expect(splitCast(pack({ scale: 1 }), routine, 1672).actors[0].frames).toEqual(man.frames);
+  });
+
+  it('gets the pixels it covers on the screen, up to its scale times its box; without one, up to its box', () => {
+    const twice = { w: 80, h: 120 };
+    const once = { w: 40, h: 60 };
+    // A phone: 21 CSS px across at 3 px each. A desktop at 2x. An ordinary screen. A very large one.
+    expect([[21, 3], [30, 2], [30, 1], [70, 2]].map(([css, dpr]) => backing(css, dpr, twice).w)).toEqual([63, 60, 30, 80]);
+    expect([[21, 3], [30, 2], [30, 1], [70, 2]].map(([css, dpr]) => backing(css, dpr, once).w)).toEqual([40, 40, 30, 40]);
+    expect(backing(30, 1, twice)).toEqual(backing(30, 1, once));
+  });
+
+  it('cannot be smaller than its box', () => {
+    for (const scale of [0, 0.5, -2, 'two']) expect(splitCast(pack({ scale }), routine, 1672).problems.join(' ')).toContain('"scale"');
+  });
+
+  it('may have stills that are patches over another, which comes with them', () => {
+    const { actors: [man], problems: wrong } = splitCast(pack({ scale: 2, patches: { b: { base: 'a', x: 8, y: 16 } } }), routine, 1672);
+    expect(wrong).toEqual([]);
+    expect(man.frames.patches).toEqual({ b: { base: 'a', x: 8, y: 16 } });
+    // The routine only ever names the patch.
+    expect(stillsInUse(man.frames, man.routine).sort()).toEqual(['a', 'b']);
+  });
+
+  it('says what is wrong with a patch', () => {
+    const wrong = (patches: object): string => splitCast(pack({ scale: 2, patches }), routine, 1672).problems.join(' ');
+    expect(wrong({ b: { base: 'c', x: 0, y: 0 } })).toContain('"c"');
+    expect(wrong({ a: { base: 'b', x: 0, y: 0 }, b: { base: 'a', x: 0, y: 0 } })).toContain('is a patch itself');
+    expect(wrong({ b: { base: 'a', x: -1, y: 0 } })).toContain('x and y');
   });
 });

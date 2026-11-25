@@ -23,14 +23,17 @@
    "y": 254,
    "w": 320,
    "h": 608,
+   "scale": 2,
    "stills": [
     "M_1",
     "M_1_mid",
     "M_1_closed",
     "M_1_blink",
+    "M_1_12",
     "M_12",
     "M_2",
     "M_2_closed",
+    "M_1_13",
     "M_13",
     "M_3",
     "M_3_closed",
@@ -40,7 +43,128 @@
     "M_2_closed_blink",
     "M_3_blink",
     "M_3_closed_blink"
-   ]
+   ],
+   "patches": {
+    "M_1_mid": {
+     "base": "M_1",
+     "x": 288,
+     "y": 240,
+     "w": 120,
+     "h": 88
+    },
+    "M_1_closed": {
+     "base": "M_1",
+     "x": 288,
+     "y": 240,
+     "w": 120,
+     "h": 88
+    },
+    "M_1_blink": {
+     "base": "M_1",
+     "x": 288,
+     "y": 168,
+     "w": 120,
+     "h": 56
+    },
+    "M_1_12": {
+     "base": "M_1",
+     "x": 8,
+     "y": 328,
+     "w": 632,
+     "h": 296
+    },
+    "M_12": {
+     "base": "M_1",
+     "x": 8,
+     "y": 288,
+     "w": 632,
+     "h": 336
+    },
+    "M_2": {
+     "base": "M_1",
+     "x": 0,
+     "y": 192,
+     "w": 640,
+     "h": 520
+    },
+    "M_2_closed": {
+     "base": "M_1",
+     "x": 0,
+     "y": 192,
+     "w": 640,
+     "h": 520
+    },
+    "M_1_13": {
+     "base": "M_1",
+     "x": 8,
+     "y": 344,
+     "w": 632,
+     "h": 272
+    },
+    "M_13": {
+     "base": "M_1",
+     "x": 8,
+     "y": 344,
+     "w": 632,
+     "h": 280
+    },
+    "M_3": {
+     "base": "M_1",
+     "x": 8,
+     "y": 344,
+     "w": 632,
+     "h": 288
+    },
+    "M_3_closed": {
+     "base": "M_1",
+     "x": 8,
+     "y": 240,
+     "w": 632,
+     "h": 392
+    },
+    "M_1_mid_blink": {
+     "base": "M_1",
+     "x": 288,
+     "y": 168,
+     "w": 120,
+     "h": 160
+    },
+    "M_1_closed_blink": {
+     "base": "M_1",
+     "x": 288,
+     "y": 168,
+     "w": 120,
+     "h": 160
+    },
+    "M_2_blink": {
+     "base": "M_1",
+     "x": 0,
+     "y": 168,
+     "w": 640,
+     "h": 544
+    },
+    "M_2_closed_blink": {
+     "base": "M_1",
+     "x": 0,
+     "y": 168,
+     "w": 640,
+     "h": 544
+    },
+    "M_3_blink": {
+     "base": "M_1",
+     "x": 8,
+     "y": 168,
+     "w": 632,
+     "h": 464
+    },
+    "M_3_closed_blink": {
+     "base": "M_1",
+     "x": 8,
+     "y": 168,
+     "w": 632,
+     "h": 464
+    }
+   }
   },
   {
    "actor": "rachel",
@@ -59,25 +183,27 @@
   "W_1": "water/W_1.png",
   "W_2": "water/W_2.png",
   "W_3": "water/W_3.png",
-  "M_1": "presenter/M_1.png",
-  "M_1_mid": "presenter/M_1_mid.png",
-  "M_1_closed": "presenter/M_1_closed.png",
-  "M_1_blink": "presenter/M_1_blink.png",
-  "M_12": "presenter/M_12.png",
-  "M_2": "presenter/M_2.png",
-  "M_2_closed": "presenter/M_2_closed.png",
-  "M_13": "presenter/M_13.png",
-  "M_3": "presenter/M_3.png",
-  "M_3_closed": "presenter/M_3_closed.png",
+  "M_1": "presenter2x/M_1.png",
+  "M_1_mid": "presenter2x/M_1_mid.png",
+  "M_1_closed": "presenter2x/M_1_closed.png",
+  "M_1_blink": "presenter2x/M_1_blink.png",
+  "M_1_12": "presenter2x/M_1_12.png",
+  "M_12": "presenter2x/M_12.png",
+  "M_2": "presenter2x/M_2.png",
+  "M_2_closed": "presenter2x/M_2_closed.png",
+  "M_1_13": "presenter2x/M_1_13.png",
+  "M_13": "presenter2x/M_13.png",
+  "M_3": "presenter2x/M_3.png",
+  "M_3_closed": "presenter2x/M_3_closed.png",
   "R_A1_film": "rachel/R_A1_film.png",
   "R_K0_turn": "rachel/R_K0_turn.png",
   "R_K1_look": "rachel/R_K1_look.png",
-  "M_1_mid_blink": "presenter/M_1_mid_blink.png",
-  "M_1_closed_blink": "presenter/M_1_closed_blink.png",
-  "M_2_blink": "presenter/M_2_blink.png",
-  "M_2_closed_blink": "presenter/M_2_closed_blink.png",
-  "M_3_blink": "presenter/M_3_blink.png",
-  "M_3_closed_blink": "presenter/M_3_closed_blink.png"
+  "M_1_mid_blink": "presenter2x/M_1_mid_blink.png",
+  "M_1_closed_blink": "presenter2x/M_1_closed_blink.png",
+  "M_2_blink": "presenter2x/M_2_blink.png",
+  "M_2_closed_blink": "presenter2x/M_2_closed_blink.png",
+  "M_3_blink": "presenter2x/M_3_blink.png",
+  "M_3_closed_blink": "presenter2x/M_3_closed_blink.png"
  },
  "clips": {},
  "camera_screen": {
