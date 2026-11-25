@@ -59,7 +59,7 @@ function page(status, wrong) {
 </head>
 <body>
 <form method="post" action="${LOGIN}">
-  <p>hjaas.com</p>
+  <p>www.hjaas.com</p>
   <div class="row">
     <input type="password" name="password" aria-label="Password" placeholder="password" autocomplete="current-password" autofocus required>
     <button type="submit">enter</button>
