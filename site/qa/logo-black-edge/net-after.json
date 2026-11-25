@@ -1,0 +1,317 @@
+{
+ "webkit no context": {
+  "strips": "none+fade none+fade none+fade none+fade",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 235
+  },
+  "after a switch and back": {
+   "strips": "none+fade none+fade none+fade none+fade",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 235
+   }
+  },
+  "said": [
+   "[hjaas] the painting's edge (top) could not be drawn; a plain fade stands in",
+   "[hjaas] the painting's edge (bottom) could not be drawn; a plain fade stands in",
+   "[hjaas] the painting's edge (left) could not be drawn; a plain fade stands in",
+   "[hjaas] the painting's edge (right) could not be drawn; a plain fade stands in"
+  ]
+ },
+ "webkit black": {
+  "strips": "none+fade none+fade none+fade none+fade",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 235
+  },
+  "after a switch and back": {
+   "strips": "none+fade none+fade none+fade none+fade",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 235
+   }
+  },
+  "said": [
+   "[hjaas] the painting's edge (top) could not be drawn; a plain fade stands in",
+   "[hjaas] the painting's edge (bottom) could not be drawn; a plain fade stands in",
+   "[hjaas] the painting's edge (left) could not be drawn; a plain fade stands in",
+   "[hjaas] the painting's edge (right) could not be drawn; a plain fade stands in"
+  ]
+ },
+ "webkit throws": {
+  "strips": "none+fade none+fade none+fade none+fade",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 235
+  },
+  "after a switch and back": {
+   "strips": "none+fade none+fade none+fade none+fade",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 235
+   }
+  },
+  "said": [
+   "[hjaas] the painting's edge (top) could not be drawn; a plain fade stands in",
+   "[hjaas] the painting's edge (bottom) could not be drawn; a plain fade stands in",
+   "[hjaas] the painting's edge (left) could not be drawn; a plain fade stands in",
+   "[hjaas] the painting's edge (right) could not be drawn; a plain fade stands in"
+  ]
+ },
+ "webkit lost later": {
+  "black": {
+   "off": 2632,
+   "of": 2632,
+   "darkest": 0
+  },
+  "strips": "drawn drawn drawn drawn",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 223
+  },
+  "after a switch and back": {
+   "strips": "drawn drawn drawn drawn",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   }
+  },
+  "said": []
+ },
+ "webkit once": {
+  "strips": "drawn drawn drawn drawn",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 223
+  },
+  "after a switch and back": {
+   "strips": "drawn drawn drawn drawn",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   }
+  },
+  "said": []
+ },
+ "chrome no context": {
+  "strips": "none+fade none+fade none+fade none+fade",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 236
+  },
+  "after a switch and back": {
+   "strips": "none+fade none+fade none+fade none+fade",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 236
+   }
+  },
+  "said": [
+   "[hjaas] the painting's edge (top) could not be drawn; a plain fade stands in",
+   "[hjaas] the painting's edge (bottom) could not be drawn; a plain fade stands in",
+   "[hjaas] the painting's edge (left) could not be drawn; a plain fade stands in",
+   "[hjaas] the painting's edge (right) could not be drawn; a plain fade stands in"
+  ]
+ },
+ "chrome black": {
+  "strips": "none+fade none+fade none+fade none+fade",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 236
+  },
+  "after a switch and back": {
+   "strips": "none+fade none+fade none+fade none+fade",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 236
+   }
+  },
+  "said": [
+   "[hjaas] the painting's edge (top) could not be drawn; a plain fade stands in",
+   "[hjaas] the painting's edge (bottom) could not be drawn; a plain fade stands in",
+   "[hjaas] the painting's edge (left) could not be drawn; a plain fade stands in",
+   "[hjaas] the painting's edge (right) could not be drawn; a plain fade stands in"
+  ]
+ },
+ "chrome throws": {
+  "strips": "none+fade none+fade none+fade none+fade",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 236
+  },
+  "after a switch and back": {
+   "strips": "none+fade none+fade none+fade none+fade",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 236
+   }
+  },
+  "said": [
+   "[hjaas] the painting's edge (top) could not be drawn; a plain fade stands in",
+   "[hjaas] the painting's edge (bottom) could not be drawn; a plain fade stands in",
+   "[hjaas] the painting's edge (left) could not be drawn; a plain fade stands in",
+   "[hjaas] the painting's edge (right) could not be drawn; a plain fade stands in"
+  ]
+ },
+ "chrome lost later": {
+  "black": {
+   "off": 2632,
+   "of": 2632,
+   "darkest": 0
+  },
+  "strips": "drawn drawn drawn drawn",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 224
+  },
+  "after a switch and back": {
+   "strips": "drawn drawn drawn drawn",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 224
+   }
+  },
+  "said": []
+ },
+ "chrome once": {
+  "strips": "drawn drawn drawn drawn",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 224
+  },
+  "after a switch and back": {
+   "strips": "drawn drawn drawn drawn",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 224
+   }
+  },
+  "said": []
+ },
+ "firefox no context": {
+  "strips": "none+fade none+fade none+fade none+fade",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 236
+  },
+  "after a switch and back": {
+   "strips": "none+fade none+fade none+fade none+fade",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 236
+   }
+  },
+  "said": [
+   "[hjaas] the painting's edge (top) could not be drawn; a plain fade stands in",
+   "[hjaas] the painting's edge (bottom) could not be drawn; a plain fade stands in",
+   "[hjaas] the painting's edge (left) could not be drawn; a plain fade stands in",
+   "[hjaas] the painting's edge (right) could not be drawn; a plain fade stands in"
+  ]
+ },
+ "firefox black": {
+  "strips": "none+fade none+fade none+fade none+fade",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 236
+  },
+  "after a switch and back": {
+   "strips": "none+fade none+fade none+fade none+fade",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 236
+   }
+  },
+  "said": [
+   "[hjaas] the painting's edge (top) could not be drawn; a plain fade stands in",
+   "[hjaas] the painting's edge (bottom) could not be drawn; a plain fade stands in",
+   "[hjaas] the painting's edge (left) could not be drawn; a plain fade stands in",
+   "[hjaas] the painting's edge (right) could not be drawn; a plain fade stands in"
+  ]
+ },
+ "firefox throws": {
+  "strips": "none+fade none+fade none+fade none+fade",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 236
+  },
+  "after a switch and back": {
+   "strips": "none+fade none+fade none+fade none+fade",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 236
+   }
+  },
+  "said": [
+   "[hjaas] the painting's edge (top) could not be drawn; a plain fade stands in",
+   "[hjaas] the painting's edge (bottom) could not be drawn; a plain fade stands in",
+   "[hjaas] the painting's edge (left) could not be drawn; a plain fade stands in",
+   "[hjaas] the painting's edge (right) could not be drawn; a plain fade stands in"
+  ]
+ },
+ "firefox lost later": {
+  "black": {
+   "off": 2632,
+   "of": 2632,
+   "darkest": 0
+  },
+  "strips": "drawn drawn drawn drawn",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 224
+  },
+  "after a switch and back": {
+   "strips": "drawn drawn drawn drawn",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 224
+   }
+  },
+  "said": []
+ },
+ "firefox once": {
+  "strips": "drawn drawn drawn drawn",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 224
+  },
+  "after a switch and back": {
+   "strips": "drawn drawn drawn drawn",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 224
+   }
+  },
+  "said": []
+ }
+}

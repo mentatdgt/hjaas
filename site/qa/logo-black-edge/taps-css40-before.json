@@ -1,0 +1,980 @@
+{
+ "ipad-1180x820-crios all50": {
+  "0 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 8791024,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "1 tap": {
+   "loads": 3,
+   "edge": "0,0,0,255 0,0,0,255 0,0,0,255 0,0,0,255",
+   "ring": {
+    "off": 2632,
+    "of": 2632,
+    "darkest": 0
+   },
+   "canvasBytes": 8793504,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "5 taps": {
+   "loads": 7,
+   "edge": "0,0,0,255 0,0,0,255 0,0,0,255 0,0,0,255",
+   "ring": {
+    "off": 2632,
+    "of": 2632,
+    "darkest": 0
+   },
+   "canvasBytes": 8793504,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "back": "left for /robots.txt",
+  "forward": {
+   "loads": 9,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 8791024,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "another page, and back": {
+   "loads": 11,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 8791024,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "console": []
+ },
+ "ipad-1180x820-crios fresh": {
+  "0 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 8791024,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "1 tap": {
+   "loads": 3,
+   "edge": "0,0,0,255 0,0,0,255 0,0,0,255 0,0,0,255",
+   "ring": {
+    "off": 2632,
+    "of": 2632,
+    "darkest": 0
+   },
+   "canvasBytes": 8793504,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "5 taps": {
+   "loads": 7,
+   "edge": "0,0,0,255 0,0,0,255 0,0,0,255 0,0,0,255",
+   "ring": {
+    "off": 2632,
+    "of": 2632,
+    "darkest": 0
+   },
+   "canvasBytes": 8793504,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "back": "left for /robots.txt",
+  "forward": {
+   "loads": 9,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 10018624,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "another page, and back": {
+   "loads": 11,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 10018624,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "console": []
+ },
+ "ipad-1180x820-safari all50": {
+  "0 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 8791024,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "1 tap": {
+   "loads": 3,
+   "edge": "0,0,0,255 0,0,0,255 0,0,0,255 0,0,0,255",
+   "ring": {
+    "off": 2632,
+    "of": 2632,
+    "darkest": 0
+   },
+   "canvasBytes": 8793504,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "5 taps": {
+   "loads": 7,
+   "edge": "0,0,0,255 0,0,0,255 0,0,0,255 0,0,0,255",
+   "ring": {
+    "off": 2632,
+    "of": 2632,
+    "darkest": 0
+   },
+   "canvasBytes": 8793504,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "back": "left for /robots.txt",
+  "forward": {
+   "loads": 9,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 8791024,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "another page, and back": {
+   "loads": 11,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 8791024,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "console": [
+   "warning: The resource http://127.0.0.1:50095/assets/scene1/room.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it wasn't preloaded for nothing."
+  ]
+ },
+ "ipad-1180x820-safari fresh": {
+  "0 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 8791024,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "1 tap": {
+   "loads": 3,
+   "edge": "0,0,0,255 0,0,0,255 0,0,0,255 0,0,0,255",
+   "ring": {
+    "off": 2632,
+    "of": 2632,
+    "darkest": 0
+   },
+   "canvasBytes": 8793504,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "5 taps": {
+   "loads": 7,
+   "edge": "0,0,0,255 0,0,0,255 0,0,0,255 0,0,0,255",
+   "ring": {
+    "off": 2632,
+    "of": 2632,
+    "darkest": 0
+   },
+   "canvasBytes": 8793504,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "back": "left for /robots.txt",
+  "forward": {
+   "loads": 9,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 12381904,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "another page, and back": {
+   "loads": 11,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 10018624,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "console": []
+ },
+ "ipad-1366x1024-crios all50": {
+  "0 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 9270220,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "1 tap": {
+   "loads": 3,
+   "edge": "0,0,0,255 0,0,0,255 0,0,0,255 0,0,0,255",
+   "ring": {
+    "off": 3054,
+    "of": 3054,
+    "darkest": 0
+   },
+   "canvasBytes": 9270220,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "5 taps": {
+   "loads": 7,
+   "edge": "0,0,0,255 0,0,0,255 0,0,0,255 0,0,0,255",
+   "ring": {
+    "off": 3054,
+    "of": 3054,
+    "darkest": 0
+   },
+   "canvasBytes": 9270220,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "back": "left for /robots.txt",
+  "forward": {
+   "loads": 9,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 9270220,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "another page, and back": {
+   "loads": 11,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 9270220,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "console": [
+   "warning: The resource http://127.0.0.1:50095/assets/scene1/room.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it wasn't preloaded for nothing."
+  ]
+ },
+ "ipad-1366x1024-crios fresh": {
+  "0 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 9270220,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "1 tap": {
+   "loads": 3,
+   "edge": "0,0,0,255 0,0,0,255 0,0,0,255 0,0,0,255",
+   "ring": {
+    "off": 3054,
+    "of": 3054,
+    "darkest": 0
+   },
+   "canvasBytes": 13469164,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "5 taps": {
+   "loads": 7,
+   "edge": "0,0,0,255 0,0,0,255 0,0,0,255 0,0,0,255",
+   "ring": {
+    "off": 3054,
+    "of": 3054,
+    "darkest": 0
+   },
+   "canvasBytes": 9270220,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "back": "left for /robots.txt",
+  "forward": {
+   "loads": 9,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 10918748,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "another page, and back": {
+   "loads": 11,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 10918748,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "console": []
+ },
+ "ipad-1366x1024-safari all50": {
+  "0 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 9270220,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "1 tap": {
+   "loads": 3,
+   "edge": "0,0,0,255 0,0,0,255 0,0,0,255 0,0,0,255",
+   "ring": {
+    "off": 3054,
+    "of": 3054,
+    "darkest": 0
+   },
+   "canvasBytes": 9270220,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "5 taps": {
+   "loads": 7,
+   "edge": "0,0,0,255 0,0,0,255 0,0,0,255 0,0,0,255",
+   "ring": {
+    "off": 3054,
+    "of": 3054,
+    "darkest": 0
+   },
+   "canvasBytes": 9270220,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "back": "left for /robots.txt",
+  "forward": {
+   "loads": 9,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 9270220,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "another page, and back": {
+   "loads": 11,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 9270220,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "console": []
+ },
+ "ipad-1366x1024-safari fresh": {
+  "0 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 9270220,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "1 tap": {
+   "loads": 3,
+   "edge": "0,0,0,255 0,0,0,255 0,0,0,255 0,0,0,255",
+   "ring": {
+    "off": 3054,
+    "of": 3054,
+    "darkest": 0
+   },
+   "canvasBytes": 9270220,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "5 taps": {
+   "loads": 7,
+   "edge": "0,0,0,255 0,0,0,255 0,0,0,255 0,0,0,255",
+   "ring": {
+    "off": 3054,
+    "of": 3054,
+    "darkest": 0
+   },
+   "canvasBytes": 9270220,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "back": "left for /robots.txt",
+  "forward": {
+   "loads": 9,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 10918748,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "another page, and back": {
+   "loads": 11,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 10918748,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "console": [
+   "pageerror: /127.0.0.1:50095/assets/scene1/rachel/reaction/rx_B36_B39.webp due to access control checks.",
+   "warning: [hjaas] build: reaction frames unavailable; finds still count EncodingError: Loading error."
+  ]
+ },
+ "phone-390x844 all50": {
+  "0 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 692,
+    "darkest": 226
+   },
+   "canvasBytes": 9863020,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "1 tap": {
+   "loads": 3,
+   "edge": "0,0,0,255 0,0,0,255 0,0,0,255 0,0,0,255",
+   "ring": {
+    "off": 692,
+    "of": 692,
+    "darkest": 0
+   },
+   "canvasBytes": 9863020,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "5 taps": {
+   "loads": 7,
+   "edge": "0,0,0,255 0,0,0,255 0,0,0,255 0,0,0,255",
+   "ring": {
+    "off": 692,
+    "of": 692,
+    "darkest": 0
+   },
+   "canvasBytes": 9863020,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "back": "left for /robots.txt",
+  "forward": {
+   "loads": 9,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 692,
+    "darkest": 226
+   },
+   "canvasBytes": 9863020,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "another page, and back": {
+   "loads": 11,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 692,
+    "darkest": 226
+   },
+   "canvasBytes": 9863020,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "console": []
+ },
+ "phone-390x844 fresh": {
+  "0 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 692,
+    "darkest": 226
+   },
+   "canvasBytes": 9863020,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "1 tap": {
+   "loads": 3,
+   "edge": "0,0,0,255 0,0,0,255 0,0,0,255 0,0,0,255",
+   "ring": {
+    "off": 692,
+    "of": 692,
+    "darkest": 0
+   },
+   "canvasBytes": 9863020,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "5 taps": {
+   "loads": 7,
+   "edge": "0,0,0,255 0,0,0,255 0,0,0,255 0,0,0,255",
+   "ring": {
+    "off": 692,
+    "of": 692,
+    "darkest": 0
+   },
+   "canvasBytes": 9863020,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "back": "left for /robots.txt",
+  "forward": {
+   "loads": 9,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 692,
+    "darkest": 226
+   },
+   "canvasBytes": 12226300,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "another page, and back": {
+   "loads": 11,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 692,
+    "darkest": 226
+   },
+   "canvasBytes": 12226300,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "console": [
+   "warning: The resource http://127.0.0.1:50095/assets/scene1/room.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it wasn't preloaded for nothing.",
+   "warning: [hjaas] build: reaction frames unavailable; finds still count EncodingError: Loading error."
+  ]
+ },
+ "desktop-chrome all50": {
+  "0 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 10152756,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "1 tap": {
+   "loads": 3,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 5953812,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "5 taps": {
+   "loads": 7,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 5953812,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "back": "left for /robots.txt",
+  "forward": {
+   "loads": 9,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 5953812,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "another page, and back": {
+   "loads": 11,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 5953812,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "console": []
+ },
+ "desktop-chrome fresh": {
+  "0 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 5953812,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "1 tap": {
+   "loads": 3,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 5953812,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "5 taps": {
+   "loads": 7,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 5953812,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "back": "left for /robots.txt",
+  "forward": {
+   "loads": 9,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 6413160,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "another page, and back": {
+   "loads": 11,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 6413160,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "console": []
+ },
+ "desktop-firefox all50": {
+  "0 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 5553756,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "1 tap": {
+   "loads": 3,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 5953812,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "5 taps": {
+   "loads": 7,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 5553756,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "back": "left for /robots.txt",
+  "forward": {
+   "loads": 7,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 3120156,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "another page, and back": {
+   "loads": 8,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 3120156,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "console": [
+   "pageerror: The operation is insecure."
+  ]
+ },
+ "desktop-firefox fresh": {
+  "0 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 5953812,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "1 tap": {
+   "loads": 3,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 5953812,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "5 taps": {
+   "loads": 7,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 5953812,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "back": "left for /robots.txt",
+  "forward": {
+   "loads": 7,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 3120156,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "another page, and back": {
+   "loads": 8,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 3120156,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "console": []
+ }
+}

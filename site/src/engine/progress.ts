@@ -128,6 +128,7 @@ export class Progress {
     for (const [, fade] of this.fading) {
       fade.overlay.getAnimations().forEach((a) => a.cancel());
       fade.overlay.remove();
+      fade.overlay.width = fade.overlay.height = 0;
       releaseFrame(fade.frame);
     }
     this.fading.clear();

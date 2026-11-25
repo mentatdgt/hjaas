@@ -1,0 +1,13 @@
+webkit build same edge pixels probe reads 6 ms
+webkit grow same edge pixels probe reads 4 ms
+webkit design same edge pixels probe reads 10 ms
+webkit film same edge pixels probe reads 6 ms
+webkit set same edge pixels probe reads 4 ms
+old build, boxes with the stylesheet on time and late 1180 820 identical
+old build, boxes with the stylesheet on time and late 1133 677 identical
+old build, boxes with the stylesheet on time and late 1180 690 identical
+chrome build same edge pixels probe reads 11.6 ms
+chrome grow same edge pixels probe reads 6.5 ms
+chrome design same edge pixels probe reads 12.7 ms
+chrome film same edge pixels probe reads 6.3 ms
+chrome set same edge pixels probe reads 9.9 ms

@@ -48,6 +48,7 @@
 import { PLATE } from './assets';
 import { EASE_OUT, gsap } from './motion';
 import { Painter } from './paint';
+import { paperCss } from './paper';
 import type { Scene } from './scene';
 
 export interface Stage {
@@ -97,6 +98,8 @@ export class Transition {
   private veil: Painter | null = null;
   /** The veil has its shape (it takes it from the edge, which may be drawn only after prepare()). */
   private veiled = false;
+  /** The edge, while it is kept out of sight until a painting's veil can have its shape. */
+  private hidden: HTMLElement[] = [];
   /** The blank sheet of a reveal. */
   private blank: HTMLElement | null = null;
   private tidy = 0;
@@ -207,7 +210,7 @@ export class Transition {
     const blank = document.createElement('div');
     blank.className = 'hj-blank';
     blank.setAttribute('aria-hidden', 'true');
-    blank.style.background = getComputedStyle(root).backgroundColor;
+    blank.style.background = paperCss(root);
     scene.hunt.el.inert = true;
     scene.plate.append(blank);
     this.blank = blank;
@@ -231,7 +234,7 @@ export class Transition {
     this.clear();
     this.captionDue = first;
     // The sheet has the colour of the page the painting sits on.
-    const paper = getComputedStyle(this.stage.root).backgroundColor;
+    const paper = paperCss(this.stage.root);
     this.painter = new Painter({
       width: plate.clientWidth,
       height: plate.clientHeight,
@@ -271,6 +274,7 @@ export class Transition {
       caption.style.willChange = 'opacity, transform';
     }
     if (hidden.length) gsap.set(hidden, { opacity: 0 });
+    this.hidden = edge && !this.veiled ? [edge] : [];
     // Unpainted mushrooms can't be found yet, by pointer or by keyboard.
     hunt.el.inert = true;
     root.classList.remove('is-pre');
@@ -300,7 +304,7 @@ export class Transition {
     // and let it show.
     const edge = scene.plate.querySelector<HTMLElement>('.hj-edge');
     if (!this.veiled) {
-      this.drape(scene, getComputedStyle(this.stage.root).backgroundColor);
+      this.drape(scene, paperCss(this.stage.root));
       if (edge) gsap.set(edge, { clearProps: 'opacity' });
     }
 
@@ -354,7 +358,7 @@ export class Transition {
   cover(sketch: (ctx: CanvasRenderingContext2D, origin: DOMRect, sheets: Sheets) => void, next: Scene): void {
     const { window: frame } = this.stage;
     const left: Sheets = { sheet: this.painter?.canvas ?? null, overWindow: this.overWindow !== null, veil: this.veil?.canvas ?? null };
-    this.clear();
+    this.clear(true);
     next.hunt.el.inert = true;
     const origin = frame.getBoundingClientRect();
     this.painter = new Painter({
@@ -436,8 +440,20 @@ export class Transition {
     });
   }
 
-  /** Take any sheet off the page now. */
-  clear(): void {
+  /** The page is being left: take every sheet off it, and whatever a painting that has not begun was keeping out of sight is shown. */
+  release(): void {
+    this.clear();
+    this.unhide();
+  }
+
+  /** Shown again: what prepare() kept out of sight. */
+  private unhide(): void {
+    if (this.hidden.length) gsap.set(this.hidden, { clearProps: 'opacity' });
+    this.hidden = [];
+  }
+
+  /** Take any sheet off the page now, and give their pixels back (`keep`: the caller has still to copy them). */
+  clear(keep = false): void {
     window.clearTimeout(this.tidy);
     this.finishFade?.(false);
     this.brushCrop = null;
@@ -446,12 +462,19 @@ export class Transition {
     this.timeline = null;
     this.finishBrush?.();
     this.finishBrush = null;
-    this.painter?.canvas.remove();
-    this.painter = null;
-    this.veil?.canvas.remove();
-    this.veil = null;
+    this.lift(keep);
     this.blank?.remove();
     this.blank = null;
+  }
+
+  /** The sheet and the veil come off the page. (A canvas waiting to be collected still counts against what iOS gives a page.) */
+  private lift(keep = false): void {
+    for (const sheet of [this.painter, this.veil]) {
+      if (!sheet) continue;
+      sheet.canvas.remove();
+      if (!keep) sheet.canvas.width = sheet.canvas.height = 0;
+    }
+    this.painter = this.veil = null;
   }
 
   /** A timeline that owns the brush until it completes. */
@@ -466,10 +489,7 @@ export class Transition {
         this.brushCrop = null;
         this.tidy = window.setTimeout(() => {
           if (this.painter !== painter || this.timeline) return;
-          painter.canvas.remove();
-          this.painter = null;
-          this.veil?.canvas.remove();
-          this.veil = null;
+          this.lift();
           this.stage.caption.style.willChange = '';
         }, TIDY_MS);
         done();

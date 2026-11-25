@@ -2,6 +2,7 @@
 // The highlight is clipped to the logo's own alpha, so swapping in the final PNG is only a file swap.
 import { asset, loadImage } from './assets';
 import { GLINT_MS } from './glint';
+import { plainClick, samePage } from './home';
 import { EASE_IN_OUT, gsap, reducedMotion } from './motion';
 
 const GLINT_EVERY_MS = 9000;
@@ -14,12 +15,20 @@ export class Logo {
   private sweep: gsap.core.Tween | null = null;
   private timer = 0;
 
-  private constructor(image: HTMLImageElement, homeHref?: string) {
+  private constructor(image: HTMLImageElement, homeHref?: string, onHome?: () => void) {
     this.image = image;
     // A link when the page gives it somewhere to go; otherwise just the mark.
     if (homeHref) {
       const link = document.createElement('a');
       link.href = homeHref;
+      // On the home page itself there is nothing to load. (Still a real link: a new tab, copying it, no script.)
+      if (onHome) {
+        link.addEventListener('click', (event) => {
+          if (!plainClick(event) || !samePage(link.href, location.href)) return;
+          event.preventDefault();
+          onHome();
+        });
+      }
       link.setAttribute('aria-label', 'HJaaS, Hui Jie as a Service');
       this.el = link;
     } else {
@@ -45,8 +54,9 @@ export class Logo {
     this.el.addEventListener('focus', () => this.glint());
   }
 
-  static async create(homeHref?: string): Promise<Logo> {
-    return new Logo(await loadImage(asset('shared/logo/logo.webp')), homeHref);
+  /** `onHome`: what a tap does on the page the link leads to, instead of loading it again. */
+  static async create(homeHref?: string, onHome?: () => void): Promise<Logo> {
+    return new Logo(await loadImage(asset('shared/logo/logo.webp')), homeHref, onHome);
   }
 
   /** Size the glint canvas and run the logo through it once, so the first real glint has nothing to set up. */
@@ -82,6 +92,12 @@ export class Logo {
       this.ctx.setTransform(1, 0, 0, 1, 0, 0);
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
+  }
+
+  /** The page is being left: give the canvas's pixels back (prepare() brings them back). */
+  release(): void {
+    this.stop();
+    this.canvas.width = this.canvas.height = 0;
   }
 
   /** One sweep, 650 ms, quick through the middle. A sweep already running is left to finish. */

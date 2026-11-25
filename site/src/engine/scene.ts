@@ -688,16 +688,20 @@ export class Scene {
     // sheet of paper, and over them all the painting's edge.
     plate.append(hunt.el, this.mark, this.edge.el);
 
-    this.layout = new ResizeObserver(() => {
-      if (!plate.clientWidth) return;
-      // One plate pixel in CSS pixels. Only changes on resize, never during animation.
-      plate.style.setProperty('--u', `${plate.clientWidth / PLATE.w}px`);
-      hunt.layout(plate.clientWidth / PLATE.w);
-      for (const cast of this.casts) cast.character.resize();
-      this.finder?.resize();
-      host.onLayout();
-    });
+    this.layout = new ResizeObserver(() => this.fit());
     this.layout.observe(plate);
+  }
+
+  /** The plate has changed size, or its canvases are to have their pixels again (after rest(), if it never left the page). */
+  fit(): void {
+    const { plate, hunt } = this;
+    if (!plate.clientWidth) return;
+    // One plate pixel in CSS pixels. Only changes on resize, never during animation.
+    plate.style.setProperty('--u', `${plate.clientWidth / PLATE.w}px`);
+    hunt.layout(plate.clientWidth / PLATE.w);
+    for (const cast of this.casts) cast.character.resize();
+    this.finder?.resize();
+    this.host.onLayout();
   }
 
   /**
@@ -996,8 +1000,10 @@ export class Scene {
    * give back its decoded images. Only the visible scene keeps any: the two together are more than an
    * older phone will give one page. What comes back, and when: the room's picture in ready(), the edge in
    * dress(), her frames from enter() on. All from files already downloaded.
+   *
+   * `keepRoom`: the page itself is being left (it may come back as it is), not the scene. The room's picture stays.
    */
-  rest(): void {
+  rest(keepRoom = false): void {
     if (this.destroyed) return;
     this.generation++;
     this.entering = null;
@@ -1012,8 +1018,10 @@ export class Scene {
     this.progress?.sleep();
     for (const walk of this.walks) walk.sleep();
     this.stagger();
-    this.room.removeAttribute('src');
-    this.readying = null;
+    if (!keepRoom) {
+      this.room.removeAttribute('src');
+      this.readying = null;
+    }
     this.edge.release();
   }
 
@@ -1032,6 +1040,11 @@ export class Scene {
    */
   dress(): Promise<void> {
     return this.destroyed ? Promise.resolve() : this.edge.make();
+  }
+
+  /** Back in front: draw again whatever of the edge the browser has lost meanwhile. */
+  checkEdge(): void {
+    if (!this.destroyed) this.edge.check();
   }
 
   /**

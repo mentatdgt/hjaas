@@ -21,6 +21,7 @@
 // keeps the hunt fair: every mushroom and its tap box must sit where the answer is at least 0.95 (edge.test.ts).
 import { PLATE, asset, decodeBlob, fetchBlob, frameSize, releaseFrame, type Frame } from './assets';
 import BAND from './edge-band.json';
+import type { Rgb } from './paper';
 
 /** `pencil` is the one the site ships. The others are kept for comparison (`?edge=`, dev only). */
 export type EdgeStyle = 'pencil' | 'organic' | 'a' | 'b' | 'c' | 'a-round';
@@ -573,7 +574,9 @@ export interface Edge {
   make(): Promise<void>;
   /** Give the pixels back. make() draws it again. */
   release(): void;
-  /** All of it is drawn. */
+  /** Back in front, or suspected lost: draw again what the browser no longer has. */
+  check(): void;
+  /** All of it is drawn (or, where the browser could not, the plain fade stands in). */
   readonly whole: boolean;
   /** What its canvases take, in bytes (and, while it is being made, the line map being read). */
   readonly bytes: number;
@@ -588,30 +591,60 @@ interface Strip {
   y: number;
   w: number;
   h: number;
+  /** The plain fade that stands in for it, if the browser cannot draw it. */
+  mask: HTMLElement;
 }
 
-function stripOn(el: HTMLElement, x: number, y: number, w: number, h: number): Strip {
+const masked = (strip: Pick<Strip, 'mask'>): boolean => strip.mask.classList.contains('is-on');
+/** The fade instead of the strip, or the strip instead of the fade. */
+function standIn(strip: Strip, on: boolean): void {
+  strip.mask.classList.toggle('is-on', on);
+  strip.canvas.style.display = on ? 'none' : '';
+}
+
+function stripOn(el: HTMLElement, name: string, x: number, y: number, w: number, h: number): Strip {
   const canvas = document.createElement('canvas');
   canvas.width = canvas.height = 0;
-  canvas.style.left = `${(x / PLATE.w) * 100}%`;
+  const mask = document.createElement('div');
+  mask.className = `hj-edge-mask is-${name}`;
   canvas.style.top = `${(y / PLATE.h) * 100}%`;
-  canvas.style.width = `${(w / PLATE.w) * 100}%`;
   canvas.style.height = `${(h / PLATE.h) * 100}%`;
-  el.append(canvas);
-  return { canvas, x, y, w, h };
+  // (The fade at a side runs the whole height: between it and the top one there is no corner left over.)
+  const [top, height] = name === 'left' || name === 'right' ? [0, PLATE.h] : [y, h];
+  mask.style.top = `${(top / PLATE.h) * 100}%`;
+  mask.style.height = `${(height / PLATE.h) * 100}%`;
+  for (const { style } of [canvas, mask]) {
+    style.left = `${(x / PLATE.w) * 100}%`;
+    style.width = `${(w / PLATE.w) * 100}%`;
+  }
+  el.append(canvas, mask);
+  return { canvas, x, y, w, h, mask };
 }
+
+/** The middle of a strip's outer side (its own px): paper, whole, whatever the seed. */
+const outerOf = (name: keyof typeof STRIPS, w: number, h: number): [number, number] =>
+  name === 'top' ? [w >> 1, 0] : name === 'bottom' ? [w >> 1, h - 1] : name === 'left' ? [0, h >> 1] : [w - 1, h >> 1];
+/** How far a channel there may be off the paper's (rounding). */
+const NEAR = 6;
 
 /** Lets the page take a turn (an input, a frame) and comes straight back: no timer's minimum wait. */
 function breathe(): Promise<void> {
   return new Promise((resolve) => {
     const channel = new MessageChannel();
+    // (A message posted as the browser freezes a page it may come back to can be lost.)
+    const late = setTimeout(() => {
+      channel.port1.close();
+      resolve();
+    }, LOST_MS);
     channel.port1.onmessage = () => {
+      clearTimeout(late);
       channel.port1.close();
       resolve();
     };
     channel.port2.postMessage(0);
   });
 }
+const LOST_MS = 250;
 /** The longest the page's thread is kept at one go while an edge is made, in ms. */
 const SLICE_MS = 7;
 
@@ -658,7 +691,7 @@ export function makeEdge(style: EdgeStyle, seed: number, paper: [number, number,
 
   if (style !== 'pencil') {
     // The comparison styles: one small canvas, stretched over the plate (dev only).
-    const strip = stripOn(el, 0, 0, PLATE.w, PLATE.h);
+    const strip = stripOn(el, 'flat', 0, 0, PLATE.w, PLATE.h);
     return {
       el,
       make: () => (made ??= Promise.resolve(flatEdge(strip.canvas, style, seed, paper))),
@@ -666,6 +699,7 @@ export function makeEdge(style: EdgeStyle, seed: number, paper: [number, number,
         made = null;
         strip.canvas.width = strip.canvas.height = 0;
       },
+      check: () => {},
       get whole() {
         return strip.canvas.width > 0;
       },
@@ -678,7 +712,7 @@ export function makeEdge(style: EdgeStyle, seed: number, paper: [number, number,
     };
   }
 
-  const strips = (Object.keys(STRIPS) as (keyof typeof STRIPS)[]).map((name) => ({ name, ...stripOn(el, STRIPS[name].x, STRIPS[name].y, STRIPS[name].w, STRIPS[name].h) }));
+  const strips = (Object.keys(STRIPS) as (keyof typeof STRIPS)[]).map((name) => ({ name, ...stripOn(el, name, STRIPS[name].x, STRIPS[name].y, STRIPS[name].w, STRIPS[name].h) }));
   // The line maps, as downloaded: small, and kept, so the edge can be drawn again without the network.
   const files = lines
     ? [`${lines}-tb.webp`, `${lines}-lr.webp`].map((path) => {
@@ -737,8 +771,73 @@ export function makeEdge(style: EdgeStyle, seed: number, paper: [number, number,
     }
   };
 
+  const drop = ({ canvas }: { canvas: HTMLCanvasElement }): void => void (canvas.width = canvas.height = 0);
+  // A canvas that did not get its memory, or has lost it, may show black. So what a strip holds is looked at, through
+  // a canvas of one pixel (reading a strip itself would make some browsers keep it off the GPU).
+  const probe = document.createElement('canvas').getContext('2d', { willReadFrequently: true });
+  if (probe) drop(probe);
+  const holds = ({ name, canvas, w, h }: (typeof strips)[number], ctx: CanvasRenderingContext2D): boolean => {
+    if (ctx.isContextLost?.()) return false;
+    if (!probe) return true;
+    const isPaper = (): boolean => {
+      const [r, g, b, a] = probe.getImageData(0, 0, 1, 1).data;
+      return a >= 255 - NEAR && [r, g, b].every((value, i) => Math.abs(value - paper[i]) <= NEAR);
+    };
+    const [x, y] = outerOf(name, w, h);
+    probe.canvas.width = probe.canvas.height = 1;
+    probe.fillStyle = `rgb(${paper.join(', ')})`;
+    probe.fillRect(0, 0, 1, 1);
+    // (A browser that does not give a page its canvases' true pixels: nothing can be told from them.)
+    let whole = !isPaper();
+    if (!whole) {
+      probe.globalCompositeOperation = 'copy';
+      probe.drawImage(canvas, x, y, 1, 1, 0, 0, 1, 1);
+      whole = isPaper();
+    }
+    probe.canvas.width = probe.canvas.height = 0;
+    return whole;
+  };
+  /** Give a strip its pixels: whether it has them. */
+  const put = (strip: (typeof strips)[number], image: ImageData): boolean => {
+    const { canvas, w, h } = strip;
+    try {
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return false;
+      ctx.putImageData(image, 0, 0);
+      return holds(strip, ctx);
+    } catch {
+      return false;
+    }
+  };
+  /** A strip has lost its pixels after it was drawn: the fade at once, and the edge is drawn again. */
+  const lost = (strip: (typeof strips)[number]): void => {
+    if (!strip.canvas.width) return;
+    standIn(strip, true);
+    drop(strip);
+    again();
+  };
+  const again = (): void => {
+    if (!made) return;
+    made = draw(++round);
+    made.catch(() => {});
+  };
+  /** Resolves when the edge is complete, however often it had to be started again (or is released). */
+  const complete = async (): Promise<void> => {
+    for (let last; last !== made; ) {
+      last = made;
+      await last;
+    }
+  };
+  for (const strip of strips) {
+    strip.canvas.addEventListener('contextlost', () => lost(strip));
+    strip.canvas.addEventListener('contextrestored', () => masked(strip) && again());
+  }
+
   const draw = async (mine: number): Promise<void> => {
     const scratch = document.createElement('canvas').getContext('2d', { willReadFrequently: true });
+    if (scratch) drop(scratch);
     let until = 0;
     /** Before each few rows: hand the thread back if this slice has had its time. False: called off. */
     const turn = async (): Promise<boolean> => {
@@ -769,7 +868,7 @@ export function makeEdge(style: EdgeStyle, seed: number, paper: [number, number,
           for (const strip of strips) {
             const [which, mx, my] = inMap[strip.name];
             if (which !== map) continue;
-            const { canvas, w, h } = strip;
+            const { w, h } = strip;
             const wash = pencilRows(seed, strip.x, w, keep);
             // The strip's lines, read back as numbers once (their red is the line's strength), and then
             // turned into the edge where they are.
@@ -790,10 +889,17 @@ export function makeEdge(style: EdgeStyle, seed: number, paper: [number, number,
               if (!(await turn())) return;
               fill(image.data, strip, wash, y0, Math.min(h, y0 + rows), source !== null);
             }
-            // The canvas gets its pixels only now, whole.
-            canvas.width = w;
-            canvas.height = h;
-            canvas.getContext('2d')!.putImageData(image, 0, 0);
+            // The canvas gets its pixels only now, whole. Once more if it did not; after that the plain fade stands in.
+            let drawn = put(strip, image);
+            if (!drawn) {
+              drop(strip);
+              drawn = put(strip, image);
+            }
+            if (!drawn) {
+              drop(strip);
+              console.warn(`[hjaas] the painting's edge (${strip.name}) could not be drawn; a plain fade stands in`);
+            }
+            standIn(strip, !drawn);
           }
         } finally {
           if (source) releaseFrame(source);
@@ -807,15 +913,28 @@ export function makeEdge(style: EdgeStyle, seed: number, paper: [number, number,
 
   return {
     el,
-    make: () => (made ??= draw(round)),
+    make: () => {
+      made ??= draw(round);
+      return complete();
+    },
     release: () => {
       round++;
       made = null;
-      for (const strip of strips) strip.canvas.width = strip.canvas.height = 0;
+      for (const strip of strips) {
+        drop(strip);
+        standIn(strip, false);
+      }
+    },
+    check: () => {
+      for (const strip of strips) {
+        if (!strip.canvas.width) continue;
+        const ctx = strip.canvas.getContext('2d');
+        if (!ctx || !holds(strip, ctx)) lost(strip);
+      }
     },
     get whole() {
       // (Each strip's canvas gets its pixels only when they are all worked out.)
-      return strips.every((strip) => strip.canvas.width > 0);
+      return strips.every((strip) => strip.canvas.width > 0 || masked(strip));
     },
     get bytes() {
       return strips.reduce((sum, strip) => sum + strip.canvas.width * strip.canvas.height * 4, working);
@@ -825,9 +944,26 @@ export function makeEdge(style: EdgeStyle, seed: number, paper: [number, number,
       const ky = height / PLATE.h;
       for (const strip of strips) {
         if (strip.canvas.width) ctx.drawImage(strip.canvas, left + strip.x * kx, top + strip.y * ky, strip.w * kx, strip.h * ky);
+        else if (masked(strip)) drawMask(ctx, strip, paper, left, top, kx, ky);
       }
     },
   };
+}
+
+/** The plain fade, as site.css draws it (.hj-edge-mask). */
+function drawMask(ctx: CanvasRenderingContext2D, strip: Strip & { name: keyof typeof STRIPS }, [r, g, b]: Rgb, left: number, top: number, kx: number, ky: number): void {
+  const { name } = strip;
+  const side = name === 'left' || name === 'right';
+  const x = left + strip.x * kx;
+  const y = side ? top : top + strip.y * ky;
+  const w = strip.w * kx;
+  const h = side ? PLATE.h * ky : strip.h * ky;
+  const [x0, y0, x1, y1] = { top: [x, y, x, y + h], bottom: [x, y + h, x, y], left: [x, y, x + w, y], right: [x + w, y, x, y] }[name];
+  const fade = ctx.createLinearGradient(x0, y0, x1, y1);
+  fade.addColorStop(0.18, `rgb(${r}, ${g}, ${b})`);
+  fade.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
+  ctx.fillStyle = fade;
+  ctx.fillRect(x, y, w, h);
 }
 
 /**

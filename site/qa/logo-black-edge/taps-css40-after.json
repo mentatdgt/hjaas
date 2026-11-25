@@ -1,0 +1,1142 @@
+{
+ "ipad-1180x820-crios all50": {
+  "0 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 3992512,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "1 tap": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 3992512,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "5 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 3992512,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "back": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 3992512,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "forward": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 3992512,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "another page, and back": {
+   "loads": 4,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 8791024,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "console": []
+ },
+ "ipad-1180x820-crios fresh": {
+  "0 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 3992512,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "1 tap": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 3992512,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "5 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 3992512,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "back": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 3992512,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "forward": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 3992512,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "another page, and back": {
+   "loads": 4,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 10018624,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "console": []
+ },
+ "ipad-1180x820-safari all50": {
+  "0 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 3992512,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "1 tap": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 3992512,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "5 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 3992512,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "back": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 3992512,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "forward": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 3992512,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "another page, and back": {
+   "loads": 4,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 8791024,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "console": []
+ },
+ "ipad-1180x820-safari fresh": {
+  "0 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 3992512,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "1 tap": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 3992512,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "5 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 3992512,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "back": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 3992512,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "forward": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 3992512,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "another page, and back": {
+   "loads": 4,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 2632,
+    "darkest": 223
+   },
+   "canvasBytes": 10018624,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "console": []
+ },
+ "ipad-1366x1024-crios all50": {
+  "0 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 4470208,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "1 tap": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 4470208,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "5 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 4470208,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "back": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 4470208,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "forward": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 4470208,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "another page, and back": {
+   "loads": 4,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 9270220,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "console": []
+ },
+ "ipad-1366x1024-crios fresh": {
+  "0 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 4470208,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "1 tap": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 4470208,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "5 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 4470208,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "back": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 4470208,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "forward": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 4470208,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "another page, and back": {
+   "loads": 4,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 10918748,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "console": []
+ },
+ "ipad-1366x1024-safari all50": {
+  "0 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 4470208,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "1 tap": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 4470208,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "5 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 4470208,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "back": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 4470208,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "forward": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 4470208,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "another page, and back": {
+   "loads": 4,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 9270220,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "console": []
+ },
+ "ipad-1366x1024-safari fresh": {
+  "0 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 4470208,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "1 tap": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 4470208,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "5 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 4470208,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "back": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 4470208,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "forward": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 4470208,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "another page, and back": {
+   "loads": 4,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3054,
+    "darkest": 226
+   },
+   "canvasBytes": 10918748,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "console": []
+ },
+ "phone-390x844 all50": {
+  "0 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 692,
+    "darkest": 226
+   },
+   "canvasBytes": 5063008,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "1 tap": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 692,
+    "darkest": 226
+   },
+   "canvasBytes": 5063008,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "5 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 692,
+    "darkest": 226
+   },
+   "canvasBytes": 5063008,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "back": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 692,
+    "darkest": 226
+   },
+   "canvasBytes": 5063008,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "forward": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 692,
+    "darkest": 226
+   },
+   "canvasBytes": 5063008,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "another page, and back": {
+   "loads": 4,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 692,
+    "darkest": 226
+   },
+   "canvasBytes": 9863020,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "console": []
+ },
+ "phone-390x844 fresh": {
+  "0 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 692,
+    "darkest": 226
+   },
+   "canvasBytes": 5063008,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "1 tap": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 692,
+    "darkest": 226
+   },
+   "canvasBytes": 5063008,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "5 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 692,
+    "darkest": 226
+   },
+   "canvasBytes": 5063008,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "back": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 692,
+    "darkest": 226
+   },
+   "canvasBytes": 5063008,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "forward": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 692,
+    "darkest": 226
+   },
+   "canvasBytes": 5063008,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "another page, and back": {
+   "loads": 4,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 692,
+    "darkest": 226
+   },
+   "canvasBytes": 12226300,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "console": []
+ },
+ "desktop-chrome all50": {
+  "0 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 3120156,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "1 tap": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 3120156,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "5 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 3120156,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "back": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 3120156,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "forward": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 3120156,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "another page, and back": {
+   "loads": 4,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 5953812,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "console": [
+   "warning: Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+  ]
+ },
+ "desktop-chrome fresh": {
+  "0 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 3120156,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "1 tap": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 3120156,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "5 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 3120156,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "back": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 3120156,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "forward": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 3120156,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "another page, and back": {
+   "loads": 4,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 6413160,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "console": [
+   "warning: Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+  ]
+ },
+ "desktop-firefox all50": {
+  "0 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 3120156,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "1 tap": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 3120156,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "5 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 3120156,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "back": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 3120156,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "forward": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 3120156,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "another page, and back": {
+   "loads": 3,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 3120156,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "console": [
+   "pageerror: The operation is insecure."
+  ]
+ },
+ "desktop-firefox fresh": {
+  "0 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 3120156,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "1 tap": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 3120156,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "5 taps": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 3120156,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "back": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 3120156,
+   "url": "/",
+   "scene": "build",
+   "logo": 1
+  },
+  "forward": {
+   "loads": 2,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 3120156,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "another page, and back": {
+   "loads": 3,
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 0,
+    "of": 3220,
+    "darkest": 229
+   },
+   "canvasBytes": 3120156,
+   "url": "/#build",
+   "scene": "build",
+   "logo": 1
+  },
+  "console": []
+ }
+}

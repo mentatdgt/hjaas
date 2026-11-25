@@ -75,6 +75,7 @@ function alphaRows(frame: Frame): { top: number; bot: number } {
   const ctx = canvas.getContext('2d', { willReadFrequently: true })!;
   ctx.drawImage(frame, 0, 0);
   const data = ctx.getImageData(0, 0, w, h).data;
+  canvas.width = canvas.height = 0;
   const rowHasInk = (y: number): boolean => {
     const end = (y + 1) * w * 4;
     for (let i = y * w * 4 + 3; i < end; i += 4) if (data[i] > 10) return true;
