@@ -1,6 +1,6 @@
 """Café package v10 (user requests 2026-11-26): the old man blinks and turns his page in six drawn steps (O_1 > T1 > T2 > T2b > T3 > T3b > T4 > O_1,
 one reading pose, so the newspaper never changes); the barista's polish runs through three in-betweens (cloth circles the cup);
-the mum sips her coffee once per loop; the cat's tail flicks (F1/F2, cat_3 dropped).
+the mum sips her coffee once per loop (v10b: at the start of her loop); the cat's tail flicks (F1/F2, cat_3 dropped).
 
 Built like v7 (tools/cafe_build7.py): every pose = the layer's rest pose + ONLY the zone that moves. The zone is where Quinn's
 pose differs from Quinn's own copy of the master (both brought back onto the canvas by tools/quinn_register.place, so the
@@ -201,7 +201,7 @@ json.dump(man, open(f'{OUT}/frames.json', 'w'), indent=1)
 json.dump({'stability': stab, 'registration': reg}, open(f'{OUT}/stability.json', 'w'), indent=1)
 # ---------------- routines ----------------
 rt = {'note': None, 'actors': {}}
-rt['note'] = ("Scene 3 (café) routines, v10. Holds in ms; [a,b] = random in range. Each actor runs independently and out of sync. "
+rt['note'] = ("Scene 3 (café) routines, v10b. Holds in ms; [a,b] = random in range. Each actor runs independently and out of sync. "
     "RULE: fade_ms (a true cross-dissolve into a still) applies ONLY between two stills of the same loop. Every other change is an instant cut. "
     "Within a layer every still is pixel-identical to the first outside the part that moves, so cuts never flicker. "
     "The fan is part of the room: play its loop forever, do not apply the 'fully painted under actors' edge rule to it, and let the edge fade it like the plate. "
@@ -209,8 +209,9 @@ rt['note'] = ("Scene 3 (café) routines, v10. Holds in ms; [a,b] = random in ran
     "O_1 > T1 (corner lifted) > T2 (page rising) > T2b (page carried) > T3 (page laid on the left) > T3b (arm on its way back) > T4 (hand back) > O_1, "
     "130/130/140/160/150/130 ms (0.84 s; the longer holds come before the longer moves, so the hand travels at an even speed); he blinks on O_1 only, about every 3-6 s (O_blink, 100 ms). "
     "BARISTA polishes in a circle, cuts at 140-200 ms: B_1 > B_P1 > B_2_polish > B_P2 > B_3_polish > B_P3, 3-6 rounds, then her pause and glance (B_4_glance) as before. "
-    "MUM (part of the plate; her layer holds patches only) sips once per loop of about 18-24 s: rest > M_S1 (220 ms) > M_S2 (sip, eyes closed, 1.4-1.8 s) > M_S1 > rest; "
-    "her blinks are scripted at four points in the loop, never during the sip. "
+    "v10b (2026-11-26): MUM (part of the plate; her layer holds patches only) sips at the START of her loop of about 22-23 s (21-25 s at the extremes): "
+    "nothing for 50 ms (so her rest pose stays the plate) > M_S1 (220 ms) > M_S2 (sip, eyes closed, 1.4-1.8 s) > M_S1 > rest; then her four blinks spread through the rest of the loop "
+    "(the first 2.3-2.9 s after the sip, then every 4.3-5.1 s, the last 2.7-3.3 s before the next sip), never during the sip. "
     "CAT: cat_3 is gone. Its tail flicks twice per loop: cat_1 > cat_F1 (110 ms) > cat_F2 (500 ms) > cat_F1 (110 ms) > cat_1, at the start of the loop and again after "
     "3 breaths (2 more follow), so at about 60% of the loop. It breathes (cat_1/cat_2, 1 s dissolves) the rest of the time, never during a flick; "
     "each breathing loop ends on cat_1 so the flick starts with a cut from an identical body.")
@@ -239,11 +240,16 @@ rt['actors']['cat'] = {
     'note': 'Flick at the start of the loop and after 3 breaths (about 60% of the loop). Each breathe loop is cat_1 > cat_2 > cat_1: the two cat_1 holds meet when it repeats (an identical still, so nothing shows) and it always ends on cat_1, ready for the flick.',
     'routine': FL + [breathe('breathe', 3)] + FL + [breathe('breathe_more', 2)]}
 BL = [{'still': 'M_blink_half', 'ms': 60}, {'still': 'M_blink_closed', 'ms': 90}, {'still': 'M_blink_half', 'ms': 60}]
+N = lambda ms: {'still': None, 'ms': ms}
 rt['actors']['mum'] = {
-    'note': 'Part of the plate: null = nothing drawn. One sip per loop of about 18-24 s; her blinks are written into the loop (four, 4-6 s apart), never during the sip.',
-    'routine': [{'still': None, 'ms': [4200, 5600]}] + BL + [{'still': None, 'ms': [4200, 5600]}] + BL +
-               [{'still': None, 'ms': [900, 1300]}, {'still': 'M_S1', 'ms': 220}, {'still': 'M_S2', 'ms': [1400, 1800]}, {'still': 'M_S1', 'ms': 220},
-                {'still': None, 'ms': [1800, 2500]}] + BL + [{'still': None, 'ms': [4200, 5600]}] + BL}
+    'note': ('Part of the plate: null = nothing drawn. v10b: her loop opens with the sip (after 50 ms of nothing, so that her rest pose, the routine\'s first still, '
+             'stays the plate), then four blinks spread through the rest, never during the sip. Loop 21.8-23.4 s (5th-95th percentile). '
+             'Each actor runs on its own random clock, so nothing in the engine can keep her sip away from Rachel\'s blinks for good. '
+             'What the timing does: each time the scene starts (the café cast starts afresh on every visit, mum 0-0.9 s after Rachel) her first sip is over before '
+             'Rachel can first blink (3.0 s at the earliest): clear by 0.2 s at worst, by 1 s or more 97% of the time. After that the two drift apart at random: '
+             'measured with the engine\'s clipSchedule over 100 h, about 62% of sips come within 1 s of one of Rachel\'s blinks and about 33% overlap one, whatever the loop length.'),
+    'routine': [N(50), {'still': 'M_S1', 'ms': 220}, {'still': 'M_S2', 'ms': [1400, 1800]}, {'still': 'M_S1', 'ms': 220}, N([2300, 2900])] + BL +
+               [N([4300, 5100])] + BL + [N([4300, 5100])] + BL + [N([4300, 5100])] + BL + [N([2700, 3300])]}
 order = [l['actor'] for l in man['layers']]
 rt['actors'] = {a: rt['actors'][a] for a in ['fan', 'rachel', 'barista', 'child', 'oldman', 'cat', 'mum'] if a in order}
 json.dump(rt, open(f'{OUT}/routine.json', 'w'), indent=1)
