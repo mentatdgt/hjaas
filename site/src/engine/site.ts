@@ -14,6 +14,7 @@ import { freshScene, huntView, isProgressKey, loadProgress, presetAll, resetProg
 import { seeded } from './steps';
 import { Transition } from './transition';
 import type { SceneConfig, Spot } from './types';
+import { Visit, tabFinishes } from './visit';
 
 declare global {
   interface Window {
@@ -180,7 +181,9 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   const progress = loadProgress(scenes);
   const stateOf = (id: string): SceneProgress => (progress.scenes[id] ??= freshScene());
   const first = sceneInAddress();
-  /** Nothing has been painted for this visitor before: their first visit. */
+  /** Which scenes have been painted in this visit. Nothing saved skips a painting. */
+  const visit = new Visit();
+  /** Nothing has been painted for this visitor before: their first visit. (All the saved `seen` is for.) */
   const newcomer = Object.values(progress.scenes).every((scene) => !scene.seen);
   // QA presets. `?all=N`: the first N mushrooms of the whole site, scene by scene in menu order (it wins over
   // `?found`). `?found=N`: the opening scene starts with this many found.
@@ -227,7 +230,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       get hunt() { return current?.hunt; },
       get logo() { return logo; },
       get ready() { return ready; },
-      get busy() { return busy; },
+      get busy() { return busy(); },
       caption: null as Caption | null,
       /** What the page's decoded images and canvases take, in bytes, from their sizes. */
       get memory() {
@@ -365,13 +368,21 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     if (focused === skip && !shown(skip) && shown(replay)) replay.focus({ preventScroll: true });
     if (focused === replay && !shown(replay) && shown(skip)) skip.focus({ preventScroll: true });
   };
+  /** Aborted by Skip (and whatever else asks for the finished picture at once). */
   let paintWait = new AbortController();
-  let leaving: Animation | undefined;
+  /** Aborted by that, and by another scene being asked for: whatever only waits for a calm moment waits no longer. */
+  let hurry = new AbortController();
+  const hasten = (): void => {
+    hurry.abort();
+    hurry = new AbortController();
+  };
+  let leaving: Animation[] = [];
   const rush = (signal: AbortSignal): boolean => signal.aborted || document.hidden;
   const finishTransition = (): void => {
     paintWait.abort();
     paintWait = new AbortController();
-    leaving?.finish();
+    hasten();
+    for (const fade of leaving) fade.finish();
     transition.skip();
   };
   const startLogoIdle = (): void => {
@@ -395,18 +406,14 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     startLogoIdle();
   }));
 
-  // How the opening scene arrives. A first visit gets the painting. A return visit, or reduced motion,
-  // gets the edge's pencil and then everything else together, in 300 ms.
+  // How the opening scene arrives: every visit gets the painting. With reduced motion everything is there
+  // together, in 200 ms.
   const opening: 'paint' | 'reveal' | 'off' =
     flags.intro === 'off'
       ? 'off'
-      : reducedMotion()
+      : reducedMotion() || flags.intro === 'quick'
         ? 'reveal'
-        : flags.intro === 'full'
-          ? 'paint'
-          : flags.intro === 'quick' || stateOf(first.id).seen
-            ? 'reveal'
-            : 'paint';
+        : 'paint';
   // "Skip" is there from the first moment of a painting, even while the art is still loading.
   show(skip, opening === 'paint');
   skip.addEventListener('click', finishTransition);
@@ -420,7 +427,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   let begun = false; // the opening's painting (or reveal) has started
   let settled = false; // the opening has finished
   const hintClock = window.setInterval(() => {
-    if (document.hidden || !settled || busy || !current || current.hunt.remaining === 0) return;
+    if (document.hidden || !settled || busy() || !current || current.hunt.remaining === 0) return;
     quietSeconds++;
     if (quietSeconds >= hintAfter) {
       // With none on screen it skips, and is due again after another quiet minute.
@@ -555,9 +562,16 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
 
   // ---- Moving between scenes. ----
 
-  /** A painting or a switch is under way. A click on the menu, or Skip, finishes it at once. */
-  let busy = true;
+  /** A scene is being fetched, or put in the window (up to the first stroke of its painting). */
+  let moving = false;
+  /** The painting, brush-over or fade under way in the window, if there is one. */
+  let playing: Scene | null = null;
+  /** Counts them, so that one that was left does not end another. */
+  let plays = 0;
+  const busy = (): boolean => moving || playing !== null;
   let wanted = first;
+  /** Aborted when another scene is asked for: whatever fetches the one asked for before gives way. */
+  let asking = new AbortController();
   const retry = document.createElement('button');
   retry.type = 'button';
   retry.className = 'hj-link';
@@ -570,38 +584,119 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     if (destroyed) return;
     retry.hidden = false;
     retry.setAttribute('aria-label', `Retry ${config.label}`);
-    show(skip, false);
+    if (!playing) show(skip, false);
+  };
+
+  /** A picture is finished, and the page is quiet again. */
+  const arrived = (scene: Scene): void => {
+    visit.finished(scene.config.id);
+    seen(scene);
+    if (!settled) marks.introEnd = Math.round(performance.now());
+    else marks.switchEnd = Math.round(performance.now());
+    settled = true;
+    quietSeconds = 0;
+    showControls(false);
+    void scene.loadMore().then(() => void (ready = true));
+  };
+  /** Start a scene's painting, brush-over or fade. It is not waited for: another scene may be asked for meanwhile. */
+  const play = (scene: Scene, motion: () => Promise<void>, then?: () => void): void => {
+    const mine = ++plays;
+    playing = scene;
+    void motion().then(() => {
+      if (destroyed || !playing || plays !== mine) return;
+      playing = null;
+      arrived(scene);
+      then?.();
+    });
+  };
+  /** The scene asked for is ready to take this one's place. A painting under way stops where it is, its sheet still on. */
+  const cutShort = (): void => {
+    const cut = playing;
+    playing = null;
+    if (!cut) return;
+    settled = true;
+    const worked = transition.brushing;
+    if (worked === null) transition.skip();
+    else transition.halt();
+    if (worked === null) visit.finished(cut.config.id);
+    if (worked === null || visit.left(cut.config.id, worked)) seen(cut);
   };
 
   const frame1 = (signal: AbortSignal): Promise<void> => waitForFrames(signal, 0, 1);
-  const leaveRoom = (plate: HTMLElement, signal: AbortSignal): Animation | undefined => {
+  /** The picture on show fades off, whatever sheets still lie over it. */
+  const leaveRoom = (plate: HTMLElement, signal: AbortSignal): Promise<unknown> | undefined => {
     if (rush(signal)) return;
-    leaving = plate.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 160, easing: 'ease', fill: 'forwards' });
-    return leaving;
+    const parts = [plate, transition.overWindow].filter((el) => el !== null);
+    leaving = parts.map((el) => el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 160, easing: 'ease', fill: 'forwards' }));
+    return Promise.all(leaving.map((fade) => fade.finished));
+  };
+  /** The next picture is in its place. */
+  const left = (): void => {
+    for (const fade of leaving) fade.cancel();
+    leaving = [];
   };
   const warn = (config: SceneConfig) => (error: unknown) => console.warn(`[hjaas] ${config.id}: the character could not be loaded; the room is shown without her`, error);
   const WAIT_TO_DRAW_MS = 1500;
   /**
    * Everything a painting will uncover, drawn once under its sheet before its clock starts. It never waits for
-   * long: a painting that starts a little roughly is better than a page that stays blank.
+   * long: a painting that starts a little roughly is better than a page that stays blank. Nor for a scene that
+   * is about to be left for another.
    */
-  const allDrawn = (scene: Scene): Promise<void> => Promise.race([scene.drawn().catch(() => {}), new Promise<void>((resolve) => window.setTimeout(resolve, WAIT_TO_DRAW_MS))]);
+  const allDrawn = (scene: Scene, signal: AbortSignal): Promise<void> =>
+    signal.aborted
+      ? Promise.resolve()
+      : Promise.race([
+          scene.drawn().catch(() => {}),
+          new Promise<void>((resolve) => {
+            window.setTimeout(resolve, WAIT_TO_DRAW_MS);
+            signal.addEventListener('abort', () => resolve(), { once: true });
+          }),
+        ]);
   /** How long a switch waits, under the old picture, for the new scene's character before going on without her. */
   const WAIT_FOR_HER_MS = 600;
 
+  /**
+   * A scene, ready to go in the window: its room decoded and, before a first painting, its first frames' files
+   * here. The picture on show stays as it is meanwhile, painting and all. Null if another scene is asked for
+   * first; what this one brings after that is given back at once, so that it is never kept beside another's.
+   */
+  const bring = async (config: SceneConfig): Promise<Scene | null> => {
+    const asked = asking.signal;
+    const bringing = (async () => {
+      const next = await sceneFor(config);
+      // Fetch her first frames once this room has been requested.
+      next.preload();
+      if (visit.isNew(config.id)) await next.loaded().catch(warn(config));
+      // A scene out of sight holds no decoded picture: its room is decoded again here, from the browser's
+      // own copy of the file, before anything is put on the page.
+      if (!asked.aborted) await next.ready();
+      return next;
+    })();
+    const next = await Promise.race([
+      bringing,
+      new Promise<null>((resolve) => asked.addEventListener('abort', () => resolve(null), { once: true })),
+    ]);
+    if (next && !asked.aborted) return next;
+    void bringing.then(
+      (late) => {
+        if (late !== current && wanted.id !== config.id) late.rest();
+      },
+      () => {},
+    );
+    return null;
+  };
+
   const switchTo = async (config: SceneConfig): Promise<void> => {
+    const next = await bring(config);
+    if (destroyed || !next) return;
+    // From here to the first stroke nothing turns back: the new scene goes in the window, and if another has been
+    // asked for by then, its painting is left for that one's.
     const signal = paintWait.signal;
+    const soon = hurry.signal;
     const old = current!;
-    const next = await sceneFor(config);
-    if (destroyed) return;
-    // Fetch her first frames once this room has been requested.
-    next.preload();
-    // A scene out of sight holds no decoded picture: its room is decoded again here, from the browser's
-    // own copy of the file, before anything is put on the page.
-    await next.ready();
-    if (destroyed) return;
-    const firstVisit = !stateOf(config.id).seen && flags.intro !== 'quick';
+    const firstTime = visit.isNew(config.id) && flags.intro !== 'quick';
     const calm = reducedMotion() || flags.intro === 'off' || rush(signal);
+    cutShort();
     /** The caption for the scene arrived at. Its state is read as it goes up: a find may land meanwhile. */
     const retitle = (): void => {
       const view = viewOf(config);
@@ -623,19 +718,15 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       return next.dress().catch(warn(config)).then(() => void (marks.dressMs = Math.round(performance.now() - from)));
     };
 
-    if (firstVisit && !calm) {
-      // A scene never seen before gets its full painting, from a blank sheet. She is painted with the room,
-      // so it waits for her frames; the picture being left stays up until they are here.
-      await next.loaded().catch(warn(config));
-      if (destroyed) return;
-      marks.switchStart = Math.round(performance.now());
-      old.hold();
-      const leave = leaveRoom(old.plate, signal);
-      await leave?.finished;
-      leaving = undefined;
+    marks.switchStart = Math.round(performance.now());
+    old.hold();
+    if (firstTime && !calm) {
+      // A scene's first appearance in this visit is its full painting, from a blank sheet. She is painted with
+      // the room, so her frames' files are here already.
+      await leaveRoom(old.plate, signal);
       if (destroyed) return;
       place(next);
-      leave?.cancel();
+      left();
       transition.prepare(next);
       retitle();
       if (!rush(signal)) showControls(true);
@@ -646,64 +737,48 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       await frame1(signal);
       // Its own edge is drawn now that the other scene's has been given back, under the blank sheet.
       await Promise.all([her(), dress()]);
-      await allDrawn(next);
-      await waitForFrames(signal);
-      if (destroyed) return;
-      if (rush(signal)) transition.finish(next);
-      else await transition.paint(next, false);
-    } else {
-      marks.switchStart = Math.round(performance.now());
-      old.hold();
-      // A copy of the old picture goes over the window, and the new one is put together underneath it.
-      transition.cover((ctx, origin) => old.sketch(ctx, origin), next);
-      place(next);
-      retitle();
-      if (!calm) showControls(true);
-      await frame1(signal);
-      // The old picture is on the sheet now, as a copy: the scene itself gives its decoded images back
-      // before the new scene's arrive, so the two sets are never in memory together. (A frame of its own:
-      // not in the tap's.)
-      old.rest();
-      await frame1(signal);
-      // Her frames are usually decoded by now. If the network is slow the brush does not wait for long:
-      // she fades in when she arrives.
-      // The new scene's edge is drawn meanwhile, now that the old one's has been given back: nothing of the
-      // new picture shows until it is complete.
-      const dressed = dress();
-      const inTime = await Promise.race([her().then(() => true), new Promise<boolean>((resolve) => window.setTimeout(() => resolve(false), WAIT_FOR_HER_MS))]);
-      if (!inTime) next.arriveSoftly();
-      await dressed;
+      await allDrawn(next, soon);
+      await waitForFrames(soon);
       if (destroyed) return;
       if (rush(signal)) {
         transition.finish(next);
-      } else if (calm) {
-        // No brushwork: the old picture fades off the new one in 200 ms.
-        await transition.fadeOver(next);
-      } else {
-        // A scene seen before is brushed in over the one being left.
-        await waitForFrames(signal, 70);
-        if (destroyed) return;
-        if (rush(signal)) transition.finish(next);
-        else await transition.brushOver(next, pan.view);
-      }
-    }
-    if (destroyed) return;
-    marks.switchEnd = Math.round(performance.now());
-    seen(next);
-    showControls(false);
-    quietSeconds = 0;
-    void next.loadMore();
-  };
-
-  /** Go to a scene. Asked again while a brush is at work, it finishes that picture at once and carries on. */
-  const go = async (config: SceneConfig): Promise<void> => {
-    wanted = config;
-    if (busy) {
-      finishTransition();
+        arrived(next);
+      } else play(next, () => transition.paint(next, false));
       return;
     }
-    busy = true;
-    retry.hidden = true;
+    // A copy of the old picture, as it stands, goes over the window, and the new one is put together underneath it.
+    transition.cover((ctx, origin, sheets) => old.sketch(ctx, origin, sheets), next);
+    place(next);
+    retitle();
+    if (!calm) showControls(true);
+    await frame1(signal);
+    // The old picture is on the sheet now, as a copy: the scene itself gives its decoded images back
+    // before the new scene's arrive, so the two sets are never in memory together. (A frame of its own:
+    // not in the tap's.)
+    old.rest();
+    await frame1(signal);
+    // Her frames are usually decoded by now. If the network is slow the brush does not wait for long:
+    // she fades in when she arrives.
+    // The new scene's edge is drawn meanwhile, now that the old one's has been given back: nothing of the
+    // new picture shows until it is complete.
+    const dressed = dress();
+    const inTime = await Promise.race([her().then(() => true), new Promise<boolean>((resolve) => window.setTimeout(() => resolve(false), WAIT_FOR_HER_MS))]);
+    if (!inTime) next.arriveSoftly();
+    await dressed;
+    // Without brushwork (reduced motion) the old picture fades off the new one in 200 ms. Otherwise a scene
+    // painted before in this visit is brushed in over the one being left.
+    if (!calm) await waitForFrames(soon, 70);
+    if (destroyed) return;
+    if (rush(signal)) {
+      transition.finish(next);
+      arrived(next);
+    } else play(next, () => (calm ? transition.fadeOver(next) : transition.brushOver(next, pan.view)));
+  };
+
+  /** Go to the scene asked for last, and to whichever is asked for on the way. */
+  const travel = async (): Promise<void> => {
+    if (moving) return;
+    moving = true;
     try {
       while (!destroyed && current && wanted.id !== current.config.id) {
         const requested = wanted;
@@ -716,54 +791,70 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
         }
       }
     } finally {
-      busy = false;
+      moving = false;
     }
+  };
+  /**
+   * Ask for a scene. Asked while another is being painted, that painting goes on until this one is ready to take
+   * its place, and is then left for it. (It never jumps to the finished picture: only Skip and the painted
+   * scene's own tab do that.)
+   */
+  const go = (config: SceneConfig): void => {
+    if (wanted.id !== config.id) {
+      wanted = config;
+      asking.abort();
+      asking = new AbortController();
+      // (If one is on its way to the window, it need not be as carefully prepared.)
+      if (moving) hasten();
+    }
+    retry.hidden = true;
+    void travel();
   };
 
   // The address names the scene (#grow), so links and the back button work. A click on the menu changes
   // the address; the address changing is what moves the picture.
   const onAddress = (): void => {
     const config = sceneInAddress();
-    if (!current && !busy) void open(config);
-    else void go(config);
+    if (!current && !moving) void open(config);
+    else go(config);
   };
   window.addEventListener('hashchange', onAddress);
   cleanup.push(() => window.removeEventListener('hashchange', onAddress));
   for (const tab of tabs) {
-    // Clicking again while the brush is at work skips to the finished picture.
     tab.addEventListener('click', () => {
-      if (busy) finishTransition();
+      // The tab of the scene being painted: straight to the finished picture (but not for a double tap).
+      if (tabFinishes(tab.dataset.scene!, current?.config.id, wanted.id, playing ? transition.brushing : undefined)) finishTransition();
+      // The scene in the address already, though not in the window: its room could not be loaded, or another was asked for since.
       else if (tab.hash === location.hash) onAddress();
     });
   }
   // "Replay painting": she stops, the picture clears to a blank sheet, and it is painted again.
   replay.addEventListener('click', () => {
     const scene = current;
-    if (!scene || busy) return;
-    busy = true;
+    if (!scene || busy()) return;
+    moving = true;
     const signal = paintWait.signal;
+    const soon = hurry.signal;
     scene.settle();
     const leave = leaveRoom(scene.plate, signal);
     void (async () => {
-      await leave?.finished;
-      leaving = undefined;
+      await leave;
       if (destroyed) return;
-      leave?.cancel();
-      if (rush(signal)) transition.finish(scene);
-      else {
+      left();
+      if (!rush(signal)) {
         transition.prepare(scene);
         showControls(true);
-        await allDrawn(scene);
-        await waitForFrames(signal, 70);
+        await allDrawn(scene, soon);
+        await waitForFrames(soon, 70);
         if (destroyed) return;
-        if (rush(signal)) transition.finish(scene);
-        else await transition.paint(scene);
       }
-      if (destroyed) return;
-      showControls(false);
-      busy = false;
-      // A scene asked for while this one was being painted.
-      if (wanted.id !== scene.config.id) void go(wanted);
+      if (rush(signal)) {
+        transition.finish(scene);
+        arrived(scene);
+      } else play(scene, () => transition.paint(scene));
+      moving = false;
+      // A scene asked for while this one was being prepared.
+      void travel();
     })();
   });
 
@@ -779,8 +870,9 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   // ---- The opening. ----
 
   const open = async (config: SceneConfig): Promise<void> => {
-    busy = true;
+    moving = true;
     const signal = paintWait.signal;
+    const soon = hurry.signal;
     retry.hidden = true;
     wanted = config;
     let scene: Scene;
@@ -791,7 +883,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
         Logo.create(options.homeHref).catch(() => undefined),
       ]);
     } catch (error) {
-      busy = false;
+      moving = false;
       roomFailed(config, error);
       return;
     }
@@ -824,12 +916,12 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     if (painting) {
       transition.prepare(scene);
       await frame1(signal);
-      await allDrawn(scene);
+      await allDrawn(scene, soon);
     }
     // Let the setup above reach the screen before any motion starts. Before a painting that includes the
     // whole picture being drawn for the first time, under the blank sheet: wait until frames arrive on time.
-    await waitForFrames(signal, painting ? 130 : 0);
-    // Opened in a background tab, or left while it loads: the first visit's painting is kept for when it is seen.
+    await waitForFrames(soon, painting ? 130 : 0);
+    // Opened in a background tab, or left while it loads: the painting is kept for when it is seen.
     while (painting && document.hidden && !signal.aborted && !destroyed) {
       await whenVisible(signal);
       await waitForFrames(signal);
@@ -837,37 +929,35 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     if (destroyed) return;
     begun = true;
     marks.introStart = Math.round(performance.now());
-    if (rush(signal)) transition.finish(scene);
-    else if (painting) await transition.paint(scene);
-    else if (opening === 'reveal') await transition.reveal(scene);
-    else transition.show(scene);
-    if (destroyed) return;
-    marks.introEnd = Math.round(performance.now());
-    settled = true;
-    showControls(false);
-    // A new visitor on a phone sees, once, that the room can be panned: a moment after the paint is dry.
-    if (painting && newcomer) {
-      window.setTimeout(() => {
-        if (!destroyed && !busy && !paused && current === scene && !rush(signal)) pan.drift();
-      }, DRIFT_AFTER_MS);
+    const opened = (): void => {
+      // A new visitor on a phone sees, once, that the room can be panned: a moment after the paint is dry.
+      if (painting && newcomer) {
+        window.setTimeout(() => {
+          if (!destroyed && !busy() && !paused && current === scene && !rush(signal)) pan.drift();
+        }, DRIFT_AFTER_MS);
+      }
+      const nextId = viewOf(config).next?.id;
+      const likelyNext = nextId && sceneById(nextId);
+      if (likelyNext && !moving) {
+        void warmPlate(likelyNext.assets + likelyNext.plate, () =>
+          !destroyed && !busy() && !document.hidden && current === scene,
+        );
+      }
+    };
+    if (painting && !rush(signal)) play(scene, () => transition.paint(scene), opened);
+    else if (opening === 'reveal' && !rush(signal)) play(scene, () => transition.reveal(scene), opened);
+    else {
+      if (rush(signal)) transition.finish(scene);
+      else transition.show(scene);
+      arrived(scene);
+      opened();
     }
-    seen(scene);
-    busy = false;
-    // A scene asked for while the opening was being painted.
-    if (wanted.id !== scene.config.id) void go(wanted);
-
-    const nextId = viewOf(config).next?.id;
-    const likelyNext = nextId && sceneById(nextId);
-    if (likelyNext) {
-      void warmPlate(likelyNext.assets + likelyNext.plate, () =>
-        !destroyed && !busy && !document.hidden && current === scene,
-      );
-    }
-    await scene.loadMore();
-    ready = true;
+    moving = false;
+    // A scene asked for while the opening was being prepared.
+    void travel();
   };
   retry.addEventListener('click', () => {
-    if (current) void go(wanted);
+    if (current) go(wanted);
     else void open(wanted);
   });
   void open(first);
@@ -877,7 +967,9 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       if (destroyed) return;
       destroyed = true;
       paintWait.abort();
-      leaving?.finish();
+      for (const fade of leaving) fade.finish();
+      asking.abort();
+      hurry.abort();
       transition.clear();
       cleanup.forEach((fn) => fn());
       for (const scene of scenesLoaded.values()) scene.destroy();

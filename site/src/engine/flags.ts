@@ -1,6 +1,6 @@
 // Switches read from the page URL. They exist for QA and for Wren's reviews; visitors never need them.
 //   ?seed=7        repeatable hammer rhythm and brush strokes
-//   ?intro=full    force the first-visit painting   (quick: the 200 ms reveal of a return visit | off: no intro)
+//   ?intro=quick   the 200 ms reveal, and the brush-over for every switch   (off: no painting at all; full: as without it)
 //   ?reset         forget saved progress before starting
 //   ?found=9       start with this many mushrooms already found in the opening scene (not saved)
 //   ?all=49        start with this many found across the whole site, scene by scene in menu order (not saved).

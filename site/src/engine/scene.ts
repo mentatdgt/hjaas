@@ -14,6 +14,7 @@ import { Progress } from './progress';
 import { Walk, type TrackFile } from './walk';
 import { checkRoutine, routineFrames, routineSchedule, type RoutineManifest } from './routine';
 import { holdSchedule, type Rng, type Step } from './steps';
+import type { Sheets } from './transition';
 import type { ClipCast, FrameCast, SceneConfig, Spot, Troupe } from './types';
 
 /** What a scene needs from the page it is shown on. */
@@ -490,6 +491,8 @@ export class Scene {
   private progress: Progress | null = null;
   /** Its walkers (the stagehand), if it has any. */
   private walks: Walk[] = [];
+  /** The room's picture is being decoded again. */
+  private readying: Promise<unknown> | null = null;
   /** She is being put on the plate. */
   private entering: Promise<void> | null = null;
   private soft = false;
@@ -764,13 +767,15 @@ export class Scene {
     for (const walk of this.walks) walk.sleep();
     this.stagger();
     this.room.removeAttribute('src');
+    this.readying = null;
     this.edge.release();
   }
 
   /** The scene is about to go on the page: resolves when its room's picture is decoded again. */
   async ready(): Promise<void> {
-    if (this.room.getAttribute('src')) return;
-    await requiredAsset(() => loadImage(this.roomSrc, this.room));
+    if (!this.room.getAttribute('src')) this.readying = requiredAsset(() => loadImage(this.roomSrc, this.room));
+    // (Asked for again while it is still being decoded: the same wait.)
+    await this.readying;
   }
 
   /**
@@ -900,9 +905,10 @@ export class Scene {
 
   /**
    * Copy the scene, as it looks now, onto another canvas: the sheet the brush rubs away when the visitor
-   * leaves for another scene. `origin` is that canvas's place on the page; the context works in CSS px.
+   * leaves for another scene. `origin` is that canvas's place on the page; the context works in CSS px. `left`: what
+   * still lies over it, if its painting was left part way.
    */
-  sketch(ctx: CanvasRenderingContext2D, origin: DOMRect): void {
+  sketch(ctx: CanvasRenderingContext2D, origin: DOMRect, left?: Sheets): void {
     const { room } = this;
     const r = this.plate.getBoundingClientRect();
     ctx.imageSmoothingQuality = 'high';
@@ -916,8 +922,16 @@ export class Scene {
     this.hunt.sketch(ctx, origin);
     for (const cast of this.casts) cast.character.sketch(ctx, origin);
     this.finder?.sketch(ctx, origin);
+    // Its painting was left part way: the sheet still over it, in its place under the edge, and the pencil's veil over that.
+    const over = (canvas: HTMLCanvasElement | null | undefined): void => {
+      if (canvas) ctx.drawImage(canvas, r.left - origin.left, r.top - origin.top, r.width, r.height);
+    };
+    if (!left?.overWindow) over(left?.sheet);
     // A pixel wider all round, so no sliver of the room shows where the two drawings' rims meet.
     this.edge.draw(ctx, r.left - origin.left - 1, r.top - origin.top - 1, r.width + 2, r.height + 2);
+    over(left?.veil);
+    // A brush-over's sheet is as large as the window, which is what is being drawn on.
+    if (left?.overWindow && left.sheet) ctx.drawImage(left.sheet, 0, 0, origin.width, origin.height);
   }
 
   destroy(): void {

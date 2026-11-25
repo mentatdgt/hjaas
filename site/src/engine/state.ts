@@ -8,7 +8,7 @@ const KEY_V1 = 'hjaas:scene1:v1';
 
 export interface SceneProgress {
   found: string[];
-  /** The scene has been painted in for this visitor, so it is not painted in full again. */
+  /** This visitor has seen the scene, in this visit or an earlier one. It only says who is new here: it skips no painting (visit.ts). */
   seen: boolean;
   /** Where they left the room on a phone: the plate x at the middle of the window. Null until they pan. */
   panX: number | null;

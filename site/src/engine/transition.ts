@@ -1,6 +1,8 @@
-// How a picture arrives in the window. Three ways, one clock each:
+// How a picture arrives in the window. Three ways, one clock each. "Painted" is for this visit only: site.ts keeps
+// it in memory, and nothing saved from an earlier visit ever skips a painting.
 //
-// 1. The first visit to a scene: its room is painted in over about five seconds, then the page goes quiet.
+// 1. A scene's first appearance in a visit, the opening one's too: its room is painted in over about five
+//    seconds, then the page goes quiet.
 //
 //   Element             Role        Starts    Lasts    Motion                      Relationship
 //   Brush strokes       Lead        0         4.32 s   paint, region by region     uneven and overlapping
@@ -11,11 +13,21 @@
 //   Caption             Support     4.56 s    0.20 s   fade + 4 px rise            just behind the wash (first showing only)
 //   Idle routine        -           4.74 s    -        first move at about 5.0 s   0.26 s after the wash: the paint is dry
 //
-// 2. A switch to a scene already seen: the new picture is brushed in over the old one with the same
-//    strokes, played quickly: about 1.2 s of brush and a 0.25 s wash, 1.45 s in all.
+// 2. A return to a scene already painted in this visit: the new picture is brushed in over the old one with
+//    the same strokes, played faster.
 //
-// 3. A return visit, or reduced motion: no brushwork. Everything shows together in 200 ms, the colour and
-//    the pencil of the edge alike: a blank sheet fades off the finished picture.
+//   Element             Role        Starts    Lasts    Motion                      Relationship
+//   Brush strokes       Lead        0         2.40 s   the old picture comes off   the first painting's, 1.8 times as fast
+//   The wash            Support     2.30 s    0.35 s   the rest of the old fades   overlaps the last strokes
+//   Character           -           2.65 s    -        carries on                  as the last of the old picture goes
+//
+// 3. Reduced motion: no brushwork. Everything shows together in 200 ms, the colour and the pencil of the edge
+//    alike: a blank sheet (or a copy of the picture being left) fades off the finished picture.
+//
+// A painting may be left for another scene at any moment: halt() stops the brush and leaves its sheet where it
+// is. The half-painted picture fades off whole, sheet and all, before a first painting; before a brush-over it
+// is what the copy shows, as it stands. Either way it is never seen finished, and the next scene is painted.
+// Only Skip, or a tap on the tab of the scene being painted, jumps to the finished picture (skip()).
 //
 // What stays still, and why: the page, the logo and the frame never move (the picture is the only event);
 // neither the mushrooms nor the character has an entrance of its own. They are painted by the same strokes as
@@ -23,13 +35,13 @@
 // still to fill would give itself away (review: scene-5-build-round4.md).
 //
 // How it is built: the finished picture is on the page from the start, under a sheet that the brush rubs
-// away (paint.ts): blank paper for a first visit, a copy of the picture being left for a switch. She is under
+// away (paint.ts): blank paper for a first painting, a copy of the picture being left for a brush-over. She is under
 // it too, drawn once and not again until it is gone, so a frame of painting costs only its strokes. The
 // picture's one-off cost of being drawn is paid before the clock starts (site.ts, Scene.drawn()), and nothing is swapped or cleared
 // when the brush stops: the sheet, by then clear, is taken away a little later.
 //
 // The pencil of the edge lies over that sheet (the edge is what stops the paint at the painting's shape),
-// so in a first-visit painting it has a veil of its own: a second, coarse sheet of blank paper, only where
+// so in a first painting it has a veil of its own: a second, coarse sheet of blank paper, only where
 // the edge holds the colour back. The same strokes take it away, each about 70 px wider than its paint and
 // a little softer in time (paint.ts, VEIL): the pencil beyond the colour is sketched in beside each stroke
 // as it gets there, over about a fifth of a second, and never shows where the paint has not come yet.
@@ -60,9 +72,18 @@ const VEIL_PIXELS = 100_000;
 const VEIL_DOUBLINGS = 4;
 /** How long the clear sheet stays on after the brush stops, before it is taken off the page. */
 const TIDY_MS = 2500;
-/** A switch between scenes: the brush, then the wash, in seconds. */
-const SWITCH_BRUSH_S = 1.2;
-const SWITCH_WASH_S = 0.25;
+/** A return to a scene already painted in this visit: the brush, then the wash, in seconds. */
+const SWITCH_BRUSH_S = 2.4;
+const SWITCH_WASH_S = 0.35;
+
+/** What lies over a picture whose painting has been left part way. */
+export interface Sheets {
+  /** The sheet the brush was rubbing away. */
+  sheet: HTMLCanvasElement | null;
+  /** The sheet lies over the window (a brush-over's), not over the plate. */
+  overWindow: boolean;
+  veil: HTMLCanvasElement | null;
+}
 
 export class Transition {
   private readonly stage: Stage;
@@ -81,6 +102,8 @@ export class Transition {
   private tidy = 0;
   /** The painting about to play is the page's first showing, so the caption arrives with it. */
   private withCaption = false;
+  /** The caption has yet to arrive with the painting under way. */
+  private captionDue = false;
 
   constructor(stage: Stage) {
     this.stage = stage;
@@ -94,6 +117,37 @@ export class Transition {
   /** True while a brush is at work. */
   get running(): boolean {
     return this.timeline !== null || this.fade !== null;
+  }
+
+  /** How long the brush at work has been at it, in seconds. Null when there is none (a fade is not one). */
+  get brushing(): number | null {
+    return this.timeline?.time() ?? null;
+  }
+
+  /** The sheet over the window, if there is one: it does not go when the plate does. */
+  get overWindow(): HTMLElement | null {
+    return this.painter && !this.veil ? this.painter.canvas : null;
+  }
+
+  /**
+   * Another scene is about to take this one's place: the brush stops where it is. Its sheet stays on the page, for
+   * the old picture to leave under, until prepare() or cover(). Returns how long it had been at work, in seconds.
+   */
+  halt(): number {
+    const worked = this.brushing ?? 0;
+    this.timeline?.kill();
+    this.timeline = null;
+    this.brushCrop = null;
+    window.clearTimeout(this.tidy);
+    const done = this.finishBrush;
+    this.finishBrush = null;
+    // The page's first painting has not brought the caption yet: it comes now, by itself.
+    if (this.captionDue) {
+      this.captionDue = false;
+      gsap.to(this.stage.caption, { opacity: 1, y: 0, duration: 0.2, ease: EASE_OUT, clearProps: 'opacity,transform,willChange' });
+    }
+    done?.();
+    return worked;
   }
 
   /** Jump to the finished picture, at any point. */
@@ -114,17 +168,25 @@ export class Transition {
       const edge = scene.plate.querySelector<HTMLElement>('.hj-edge');
       if (edge) gsap.set(edge, { clearProps: 'opacity' });
       if (this.withCaption) gsap.set(this.stage.caption, { clearProps: 'opacity,transform' });
+      this.captionDue = false;
     }
     this.clear();
     this.show(scene);
   }
 
-  /** Move on promptly when the crop under the short brush no longer matches its sampled geometry. */
+  /**
+   * The room under a brush-over has moved in its window. Panned, the brush follows it: what is left of the old
+   * picture stays where it is, and the strokes still to come go where the new one has got to. With the window
+   * itself another shape (the phone turned), the sheet no longer fits it: straight to the finished picture.
+   */
   cropChanged(view: { x: number; width: number }): void {
     const crop = this.brushCrop;
-    const frame = this.stage.window;
-    if (crop && (crop.x !== view.x || crop.width !== view.width || crop.w !== frame.clientWidth || crop.h !== frame.clientHeight)) {
-      this.skip();
+    if (!crop) return;
+    const { clientWidth: w, clientHeight: h } = this.stage.window;
+    if (crop.width !== view.width || crop.w !== w || crop.h !== h) this.skip();
+    else if (crop.x !== view.x) {
+      crop.x = view.x;
+      this.painter?.aim(w / Math.min(view.width, PLATE.w), view.x);
     }
   }
 
@@ -135,7 +197,7 @@ export class Transition {
     scene.work();
   }
 
-  /** A return visit, or reduced motion: everything together in 200 ms. */
+  /** Reduced motion: everything together in 200 ms. */
   reveal(scene: Scene): Promise<void> {
     const { root } = this.stage;
     this.clear();
@@ -157,7 +219,7 @@ export class Transition {
   }
 
   /**
-   * Set the page up for a first-visit painting about to start: a blank sheet over the finished picture, the
+   * Set the page up for a first painting about to start: a blank sheet over the finished picture, the
    * character and all. Call it a moment before paint(), so the picture under the sheet is drawn before
    * the clock starts and not in the painting's first frame.
    */
@@ -167,6 +229,7 @@ export class Transition {
     const first = root.classList.contains('is-pre');
     this.withCaption = first;
     this.clear();
+    this.captionDue = first;
     // The sheet has the colour of the page the painting sits on.
     const paper = getComputedStyle(this.stage.root).backgroundColor;
     this.painter = new Painter({
@@ -226,7 +289,7 @@ export class Transition {
     });
   }
 
-  /** The first-visit painting. Resolves when everything is settled. */
+  /** The first painting of a visit. Resolves when everything is settled, or when it is left (halt()). */
   paint(scene: Scene, collectDuringWash = true): Promise<void> {
     const { caption } = this.stage;
     const { hunt } = scene;
@@ -274,6 +337,7 @@ export class Transition {
 
       // The caption, as the wash ends.
       if (this.withCaption) {
+        timeline.call(() => void (this.captionDue = false), undefined, captionAt + 0.2);
         timeline.fromTo(caption, { opacity: 0, y: 4 }, { opacity: 1, y: 0, duration: 0.2, ease: EASE_OUT }, captionAt);
       } else {
         // Keeps the painting the same length whether or not the caption arrives with it.
@@ -284,23 +348,27 @@ export class Transition {
 
   /**
    * The start of a switch between scenes: lay a copy of the picture as it is now (`sketch` draws it) over
-   * the window. Whatever is then changed underneath stays out of sight until brushOver() or fadeOver().
+   * the window. Whatever is then changed underneath stays out of sight until brushOver() or fadeOver(). If its
+   * painting was left part way, the copy shows it so: `sketch` is given the sheets still over it.
    */
-  cover(sketch: (ctx: CanvasRenderingContext2D, origin: DOMRect) => void, next: Scene): void {
+  cover(sketch: (ctx: CanvasRenderingContext2D, origin: DOMRect, sheets: Sheets) => void, next: Scene): void {
     const { window: frame } = this.stage;
+    const left: Sheets = { sheet: this.painter?.canvas ?? null, overWindow: this.overWindow !== null, veil: this.veil?.canvas ?? null };
     this.clear();
     next.hunt.el.inert = true;
     const origin = frame.getBoundingClientRect();
     this.painter = new Painter({
       width: frame.clientWidth,
       height: frame.clientHeight,
-      fill: (ctx) => sketch(ctx, origin),
+      fill: (ctx) => sketch(ctx, origin, left),
       strokes: next.config.strokes,
       pace: Math.max(...next.config.strokes.map((stroke) => stroke.at + stroke.takes)) / SWITCH_BRUSH_S,
       // It holds a picture, so it needs the picture's detail.
       maxPixels: 2_000_000,
       seed: this.stage.seed,
     });
+    // (Their pixels go back now, and not when the browser gets round to it.)
+    for (const canvas of [left.sheet, left.veil]) if (canvas) canvas.width = canvas.height = 0;
     this.painter.canvas.classList.add('is-over-window');
     frame.append(this.painter.canvas);
   }
@@ -318,6 +386,7 @@ export class Transition {
     const { clientWidth: w, clientHeight: h } = this.stage.window;
     this.brushCrop = { ...view, w, h };
     painter.aim(w / Math.min(view.width, PLATE.w), view.x);
+    performance.mark('hj-brush');
     return new Promise((resolve) => {
       const clock = { t: 0 };
       const timeline = this.clock(painter, resolve);

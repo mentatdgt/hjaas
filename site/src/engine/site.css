@@ -355,7 +355,7 @@
   visibility: hidden;
 }
 
-/* A return visit, or reduced motion: no brushwork, everything shows together in 200 ms. The picture is put
+/* Reduced motion: no brushwork, everything shows together in 200 ms. The picture is put
    up whole under a blank sheet in the paper's colour (transition.ts), which fades off it: colour and pencil
    alike, and nothing past the edge. The caption is outside the picture and fades up alongside. */
 .hj-blank {

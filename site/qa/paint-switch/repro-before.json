@@ -1,0 +1,1062 @@
+{
+ "build": "http://localhost:4196/",
+ "fresh visit, each tab tapped when the painting is over": {
+  "taps": [
+   [
+    "film",
+    8141
+   ],
+   [
+    "design",
+    17248
+   ],
+   [
+    "set",
+    26348
+   ],
+   [
+    "film",
+    35408
+   ],
+   [
+    "build",
+    44475
+   ]
+  ],
+  "arrivals": [
+   {
+    "scene": "build",
+    "at": 375,
+    "sheet": "-",
+    "paintedOverMs": 0,
+    "partlyPaintedFrames": 0,
+    "unfinished": false,
+    "shownForMs": 26
+   },
+   {
+    "scene": "build",
+    "at": 420,
+    "sheet": "paper",
+    "paintedOverMs": 2848,
+    "partlyPaintedFrames": 171,
+    "unfinished": false,
+    "shownForMs": 8028
+   },
+   {
+    "scene": "film",
+    "at": 8466,
+    "sheet": "paper",
+    "paintedOverMs": 3235,
+    "partlyPaintedFrames": 194,
+    "unfinished": false,
+    "shownForMs": 9133
+   },
+   {
+    "scene": "design",
+    "at": 17616,
+    "sheet": "paper",
+    "paintedOverMs": 2783,
+    "partlyPaintedFrames": 167,
+    "unfinished": false,
+    "shownForMs": 9083
+   },
+   {
+    "scene": "set",
+    "at": 26716,
+    "sheet": "paper",
+    "paintedOverMs": 3150,
+    "partlyPaintedFrames": 189,
+    "unfinished": false,
+    "shownForMs": 8799
+   },
+   {
+    "scene": "film",
+    "at": 35532,
+    "sheet": "over",
+    "paintedOverMs": 900,
+    "partlyPaintedFrames": 54,
+    "unfinished": false,
+    "shownForMs": 8968
+   },
+   {
+    "scene": "build",
+    "at": 44516,
+    "sheet": "over",
+    "paintedOverMs": 783,
+    "partlyPaintedFrames": 47,
+    "unfinished": false,
+    "shownForMs": 8999
+   }
+  ],
+  "hidden": false,
+  "reducedMotion": false,
+  "errors": []
+ },
+ "(a) fresh visit, Film tapped 400 ms before the first stroke (nothing painted yet)": {
+  "taps": [
+   [
+    "film",
+    426
+   ]
+  ],
+  "arrivals": [
+   {
+    "scene": "build",
+    "at": 371,
+    "sheet": "-",
+    "paintedOverMs": 0,
+    "partlyPaintedFrames": 0,
+    "unfinished": false,
+    "shownForMs": 33
+   },
+   {
+    "scene": "build",
+    "at": 422,
+    "sheet": "paper",
+    "paintedOverMs": 0,
+    "partlyPaintedFrames": 0,
+    "unfinished": false,
+    "shownForMs": 265
+   },
+   {
+    "scene": "film",
+    "at": 704,
+    "sheet": "paper",
+    "paintedOverMs": 3217,
+    "partlyPaintedFrames": 193,
+    "unfinished": false,
+    "shownForMs": 8783
+   }
+  ],
+  "hidden": false,
+  "reducedMotion": false,
+  "errors": []
+ },
+ "(a) fresh visit, Film tapped 100 ms into the opening": {
+  "taps": [
+   [
+    "film",
+    758
+   ]
+  ],
+  "arrivals": [
+   {
+    "scene": "build",
+    "at": 398,
+    "sheet": "-",
+    "paintedOverMs": 0,
+    "partlyPaintedFrames": 0,
+    "unfinished": false,
+    "shownForMs": 27
+   },
+   {
+    "scene": "build",
+    "at": 445,
+    "sheet": "paper",
+    "paintedOverMs": 185,
+    "partlyPaintedFrames": 13,
+    "unfinished": false,
+    "shownForMs": 614
+   },
+   {
+    "scene": "film",
+    "at": 1075,
+    "sheet": "paper",
+    "paintedOverMs": 3216,
+    "partlyPaintedFrames": 193,
+    "unfinished": false,
+    "shownForMs": 8768
+   }
+  ],
+  "hidden": false,
+  "reducedMotion": false,
+  "errors": []
+ },
+ "(a) fresh visit, Film tapped 1000 ms into the opening": {
+  "taps": [
+   [
+    "film",
+    1613
+   ]
+  ],
+  "arrivals": [
+   {
+    "scene": "build",
+    "at": 343,
+    "sheet": "-",
+    "paintedOverMs": 0,
+    "partlyPaintedFrames": 0,
+    "unfinished": false,
+    "shownForMs": 34
+   },
+   {
+    "scene": "build",
+    "at": 395,
+    "sheet": "paper",
+    "paintedOverMs": 1092,
+    "partlyPaintedFrames": 67,
+    "unfinished": false,
+    "shownForMs": 1531
+   },
+   {
+    "scene": "film",
+    "at": 1943,
+    "sheet": "paper",
+    "paintedOverMs": 3217,
+    "partlyPaintedFrames": 193,
+    "unfinished": false,
+    "shownForMs": 8783
+   }
+  ],
+  "hidden": false,
+  "reducedMotion": false,
+  "errors": []
+ },
+ "(a) fresh visit, Film tapped 2000 ms into the opening": {
+  "taps": [
+   [
+    "film",
+    2628
+   ]
+  ],
+  "arrivals": [
+   {
+    "scene": "build",
+    "at": 373,
+    "sheet": "-",
+    "paintedOverMs": 0,
+    "partlyPaintedFrames": 0,
+    "unfinished": false,
+    "shownForMs": 33
+   },
+   {
+    "scene": "build",
+    "at": 423,
+    "sheet": "paper",
+    "paintedOverMs": 2051,
+    "partlyPaintedFrames": 125,
+    "unfinished": false,
+    "shownForMs": 2482
+   },
+   {
+    "scene": "film",
+    "at": 2922,
+    "sheet": "paper",
+    "paintedOverMs": 3216,
+    "partlyPaintedFrames": 193,
+    "unfinished": false,
+    "shownForMs": 8765
+   }
+  ],
+  "hidden": false,
+  "reducedMotion": false,
+  "errors": []
+ },
+ "(a) fresh visit, Film tapped 3500 ms into the opening": {
+  "taps": [
+   [
+    "film",
+    4143
+   ]
+  ],
+  "arrivals": [
+   {
+    "scene": "build",
+    "at": 373,
+    "sheet": "-",
+    "paintedOverMs": 0,
+    "partlyPaintedFrames": 0,
+    "unfinished": false,
+    "shownForMs": 28
+   },
+   {
+    "scene": "build",
+    "at": 425,
+    "sheet": "paper",
+    "paintedOverMs": 2850,
+    "partlyPaintedFrames": 171,
+    "unfinished": false,
+    "shownForMs": 3992
+   },
+   {
+    "scene": "film",
+    "at": 4432,
+    "sheet": "paper",
+    "paintedOverMs": 3217,
+    "partlyPaintedFrames": 193,
+    "unfinished": false,
+    "shownForMs": 8785
+   }
+  ],
+  "hidden": false,
+  "reducedMotion": false,
+  "errors": []
+ },
+ "(a) fresh visit, a tab tapped 2 s into each painting": {
+  "taps": [
+   [
+    "film",
+    2617
+   ],
+   [
+    "design",
+    5435
+   ],
+   [
+    "set",
+    8382
+   ],
+   [
+    "build",
+    11216
+   ]
+  ],
+  "arrivals": [
+   {
+    "scene": "build",
+    "at": 346,
+    "sheet": "-",
+    "paintedOverMs": 0,
+    "partlyPaintedFrames": 0,
+    "unfinished": false,
+    "shownForMs": 34
+   },
+   {
+    "scene": "build",
+    "at": 401,
+    "sheet": "paper",
+    "paintedOverMs": 2089,
+    "partlyPaintedFrames": 127,
+    "unfinished": false,
+    "shownForMs": 2512
+   },
+   {
+    "scene": "film",
+    "at": 2930,
+    "sheet": "paper",
+    "paintedOverMs": 1708,
+    "partlyPaintedFrames": 104,
+    "unfinished": false,
+    "shownForMs": 2782
+   },
+   {
+    "scene": "design",
+    "at": 5730,
+    "sheet": "paper",
+    "paintedOverMs": 1687,
+    "partlyPaintedFrames": 103,
+    "unfinished": false,
+    "shownForMs": 2965
+   },
+   {
+    "scene": "set",
+    "at": 8713,
+    "sheet": "paper",
+    "paintedOverMs": 1676,
+    "partlyPaintedFrames": 103,
+    "unfinished": true,
+    "shownForMs": 2543
+   },
+   {
+    "scene": "build",
+    "at": 11282,
+    "sheet": "over",
+    "paintedOverMs": 783,
+    "partlyPaintedFrames": 47,
+    "unfinished": false,
+    "shownForMs": 8995
+   }
+  ],
+  "hidden": false,
+  "reducedMotion": false,
+  "errors": []
+ },
+ "(a) fresh visit, tabs tapped one after another, 400 ms apart": {
+  "taps": [
+   [
+    "film",
+    8100
+   ],
+   [
+    "design",
+    8574
+   ],
+   [
+    "set",
+    9036
+   ],
+   [
+    "film",
+    21488
+   ],
+   [
+    "design",
+    29562
+   ]
+  ],
+  "arrivals": [
+   {
+    "scene": "build",
+    "at": 324,
+    "sheet": "-",
+    "paintedOverMs": 0,
+    "partlyPaintedFrames": 0,
+    "unfinished": false,
+    "shownForMs": 27
+   },
+   {
+    "scene": "build",
+    "at": 371,
+    "sheet": "paper",
+    "paintedOverMs": 2850,
+    "partlyPaintedFrames": 171,
+    "unfinished": false,
+    "shownForMs": 8013
+   },
+   {
+    "scene": "film",
+    "at": 8401,
+    "sheet": "paper",
+    "paintedOverMs": 0,
+    "partlyPaintedFrames": 0,
+    "unfinished": false,
+    "shownForMs": 550
+   },
+   {
+    "scene": "design",
+    "at": 8968,
+    "sheet": "paper",
+    "paintedOverMs": 0,
+    "partlyPaintedFrames": 0,
+    "unfinished": false,
+    "shownForMs": 733
+   },
+   {
+    "scene": "set",
+    "at": 9718,
+    "sheet": "paper",
+    "paintedOverMs": 3149,
+    "partlyPaintedFrames": 189,
+    "unfinished": false,
+    "shownForMs": 11865
+   },
+   {
+    "scene": "film",
+    "at": 21606,
+    "sheet": "over",
+    "paintedOverMs": 900,
+    "partlyPaintedFrames": 54,
+    "unfinished": false,
+    "shownForMs": 7978
+   },
+   {
+    "scene": "design",
+    "at": 29600,
+    "sheet": "over",
+    "paintedOverMs": 768,
+    "partlyPaintedFrames": 46,
+    "unfinished": false,
+    "shownForMs": 8015
+   }
+  ],
+  "hidden": false,
+  "reducedMotion": false,
+  "errors": []
+ },
+ "(a) fresh visit, the same tab tapped twice, 300 ms apart (a double tap)": {
+  "taps": [
+   [
+    "film",
+    8132
+   ],
+   [
+    "film again",
+    8531
+   ]
+  ],
+  "arrivals": [
+   {
+    "scene": "build",
+    "at": 369,
+    "sheet": "-",
+    "paintedOverMs": 0,
+    "partlyPaintedFrames": 0,
+    "unfinished": false,
+    "shownForMs": 33
+   },
+   {
+    "scene": "build",
+    "at": 419,
+    "sheet": "paper",
+    "paintedOverMs": 2849,
+    "partlyPaintedFrames": 171,
+    "unfinished": false,
+    "shownForMs": 8032
+   },
+   {
+    "scene": "film",
+    "at": 8467,
+    "sheet": "paper",
+    "paintedOverMs": 0,
+    "partlyPaintedFrames": 0,
+    "unfinished": false,
+    "shownForMs": 9084
+   }
+  ],
+  "hidden": false,
+  "reducedMotion": false,
+  "errors": []
+ },
+ "(b) a second visit: every scene marked seen by the first": {
+  "taps": [
+   [
+    "film",
+    4563
+   ],
+   [
+    "design",
+    9638
+   ],
+   [
+    "set",
+    14704
+   ],
+   [
+    "build",
+    19759
+   ]
+  ],
+  "arrivals": [
+   {
+    "scene": "set",
+    "at": 394,
+    "sheet": "fade",
+    "paintedOverMs": 0,
+    "partlyPaintedFrames": 0,
+    "unfinished": false,
+    "shownForMs": 4279
+   },
+   {
+    "scene": "film",
+    "at": 4693,
+    "sheet": "over",
+    "paintedOverMs": 902,
+    "partlyPaintedFrames": 54,
+    "unfinished": false,
+    "shownForMs": 4997
+   },
+   {
+    "scene": "design",
+    "at": 9706,
+    "sheet": "over",
+    "paintedOverMs": 766,
+    "partlyPaintedFrames": 46,
+    "unfinished": false,
+    "shownForMs": 5049
+   },
+   {
+    "scene": "set",
+    "at": 14773,
+    "sheet": "over",
+    "paintedOverMs": 866,
+    "partlyPaintedFrames": 52,
+    "unfinished": false,
+    "shownForMs": 5048
+   },
+   {
+    "scene": "build",
+    "at": 19838,
+    "sheet": "over",
+    "paintedOverMs": 784,
+    "partlyPaintedFrames": 47,
+    "unfinished": false,
+    "shownForMs": 4968
+   }
+  ],
+  "hidden": false,
+  "reducedMotion": false,
+  "errors": []
+ },
+ "(b) a scene seen before, the opening one not (Build new, the others seen)": {
+  "taps": [
+   [
+    "film",
+    8060
+   ],
+   [
+    "design",
+    13122
+   ]
+  ],
+  "arrivals": [
+   {
+    "scene": "build",
+    "at": 305,
+    "sheet": "-",
+    "paintedOverMs": 0,
+    "partlyPaintedFrames": 0,
+    "unfinished": false,
+    "shownForMs": 35
+   },
+   {
+    "scene": "build",
+    "at": 358,
+    "sheet": "paper",
+    "paintedOverMs": 2850,
+    "partlyPaintedFrames": 171,
+    "unfinished": false,
+    "shownForMs": 7780
+   },
+   {
+    "scene": "film",
+    "at": 8157,
+    "sheet": "over",
+    "paintedOverMs": 900,
+    "partlyPaintedFrames": 54,
+    "unfinished": false,
+    "shownForMs": 5064
+   },
+   {
+    "scene": "design",
+    "at": 13238,
+    "sheet": "over",
+    "paintedOverMs": 783,
+    "partlyPaintedFrames": 47,
+    "unfinished": false,
+    "shownForMs": 4934
+   }
+  ],
+  "hidden": false,
+  "reducedMotion": false,
+  "errors": []
+ },
+ "phone: a cross-origin frame": {
+  "taps": [
+   [
+    "film",
+    8309
+   ],
+   [
+    "design",
+    17467
+   ],
+   [
+    "film",
+    26540
+   ]
+  ],
+  "arrivals": [
+   {
+    "scene": "build",
+    "at": 516,
+    "sheet": "-",
+    "paintedOverMs": 0,
+    "partlyPaintedFrames": 0,
+    "unfinished": false,
+    "shownForMs": 31
+   },
+   {
+    "scene": "build",
+    "at": 570,
+    "sheet": "paper",
+    "paintedOverMs": 2850,
+    "partlyPaintedFrames": 171,
+    "unfinished": false,
+    "shownForMs": 8095
+   },
+   {
+    "scene": "film",
+    "at": 8682,
+    "sheet": "paper",
+    "paintedOverMs": 3215,
+    "partlyPaintedFrames": 193,
+    "unfinished": false,
+    "shownForMs": 9133
+   },
+   {
+    "scene": "design",
+    "at": 17831,
+    "sheet": "paper",
+    "paintedOverMs": 2784,
+    "partlyPaintedFrames": 167,
+    "unfinished": false,
+    "shownForMs": 8816
+   },
+   {
+    "scene": "film",
+    "at": 26664,
+    "sheet": "over",
+    "paintedOverMs": 901,
+    "partlyPaintedFrames": 54,
+    "unfinished": false,
+    "shownForMs": 8950
+   }
+  ],
+  "hidden": false,
+  "reducedMotion": false,
+  "errors": []
+ },
+ "phone: a sandboxed frame, storage blocked": {
+  "taps": [
+   [
+    "film",
+    8105
+   ],
+   [
+    "design",
+    17274
+   ],
+   [
+    "film",
+    26393
+   ]
+  ],
+  "arrivals": [
+   {
+    "scene": "build",
+    "at": 330,
+    "sheet": "-",
+    "paintedOverMs": 0,
+    "partlyPaintedFrames": 0,
+    "unfinished": false,
+    "shownForMs": 33
+   },
+   {
+    "scene": "build",
+    "at": 383,
+    "sheet": "paper",
+    "paintedOverMs": 2849,
+    "partlyPaintedFrames": 171,
+    "unfinished": false,
+    "shownForMs": 8096
+   },
+   {
+    "scene": "film",
+    "at": 8496,
+    "sheet": "paper",
+    "paintedOverMs": 3216,
+    "partlyPaintedFrames": 193,
+    "unfinished": false,
+    "shownForMs": 9150
+   },
+   {
+    "scene": "design",
+    "at": 17662,
+    "sheet": "paper",
+    "paintedOverMs": 2784,
+    "partlyPaintedFrames": 167,
+    "unfinished": false,
+    "shownForMs": 8983
+   }
+  ],
+  "hidden": false,
+  "reducedMotion": false,
+  "errors": [
+   "Unable to get image data from canvas because the canvas has been tainted by cross-origin data.",
+   "The operation is insecure."
+  ]
+ },
+ "phone: slow network, each tab tapped once": {
+  "taps": [
+   [
+    "film",
+    8124
+   ],
+   [
+    "design",
+    20228
+   ]
+  ],
+  "arrivals": [
+   {
+    "scene": "build",
+    "at": 349,
+    "sheet": "-",
+    "paintedOverMs": 0,
+    "partlyPaintedFrames": 0,
+    "unfinished": false,
+    "shownForMs": 34
+   },
+   {
+    "scene": "build",
+    "at": 401,
+    "sheet": "paper",
+    "paintedOverMs": 2849,
+    "partlyPaintedFrames": 171,
+    "unfinished": false,
+    "shownForMs": 10898
+   },
+   {
+    "scene": "film",
+    "at": 11316,
+    "sheet": "paper",
+    "paintedOverMs": 3217,
+    "partlyPaintedFrames": 193,
+    "unfinished": false,
+    "shownForMs": 11399
+   },
+   {
+    "scene": "design",
+    "at": 22732,
+    "sheet": "paper",
+    "paintedOverMs": 2782,
+    "partlyPaintedFrames": 167,
+    "unfinished": false,
+    "shownForMs": 9550
+   }
+  ],
+  "hidden": false,
+  "reducedMotion": false,
+  "errors": []
+ },
+ "phone: slow network, each tab tapped again after 1 s, as nothing has happened yet": {
+  "taps": [
+   [
+    "film",
+    8066
+   ],
+   [
+    "film again",
+    9156
+   ],
+   [
+    "design",
+    20207
+   ],
+   [
+    "design again",
+    21308
+   ],
+   [
+    "set",
+    32386
+   ],
+   [
+    "set again",
+    33535
+   ]
+  ],
+  "arrivals": [
+   {
+    "scene": "build",
+    "at": 292,
+    "sheet": "-",
+    "paintedOverMs": 0,
+    "partlyPaintedFrames": 0,
+    "unfinished": false,
+    "shownForMs": 25
+   },
+   {
+    "scene": "build",
+    "at": 335,
+    "sheet": "paper",
+    "paintedOverMs": 2850,
+    "partlyPaintedFrames": 171,
+    "unfinished": false,
+    "shownForMs": 10748
+   },
+   {
+    "scene": "film",
+    "at": 11122,
+    "sheet": "paper",
+    "paintedOverMs": 0,
+    "partlyPaintedFrames": 0,
+    "unfinished": false,
+    "shownForMs": 11477
+   },
+   {
+    "scene": "design",
+    "at": 22640,
+    "sheet": "paper",
+    "paintedOverMs": 0,
+    "partlyPaintedFrames": 0,
+    "unfinished": false,
+    "shownForMs": 15858
+   },
+   {
+    "scene": "set",
+    "at": 38572,
+    "sheet": "paper",
+    "paintedOverMs": 0,
+    "partlyPaintedFrames": 0,
+    "unfinished": false,
+    "shownForMs": 5994
+   }
+  ],
+  "hidden": false,
+  "reducedMotion": false,
+  "errors": []
+ },
+ "phone: document.hidden true from after the opening": {
+  "taps": [
+   [
+    "film",
+    8150
+   ],
+   [
+    "design",
+    14246
+   ]
+  ],
+  "arrivals": [
+   {
+    "scene": "build",
+    "at": 378,
+    "sheet": "-",
+    "paintedOverMs": 0,
+    "partlyPaintedFrames": 0,
+    "unfinished": false,
+    "shownForMs": 32
+   },
+   {
+    "scene": "build",
+    "at": 428,
+    "sheet": "paper",
+    "paintedOverMs": 2848,
+    "partlyPaintedFrames": 171,
+    "unfinished": false,
+    "shownForMs": 7832
+   },
+   {
+    "scene": "film",
+    "at": 8283,
+    "sheet": "over",
+    "paintedOverMs": 0,
+    "partlyPaintedFrames": 0,
+    "unfinished": false,
+    "shownForMs": 6060
+   },
+   {
+    "scene": "design",
+    "at": 14363,
+    "sheet": "over",
+    "paintedOverMs": 0,
+    "partlyPaintedFrames": 0,
+    "unfinished": false,
+    "shownForMs": 5913
+   }
+  ],
+  "hidden": true,
+  "reducedMotion": false,
+  "errors": []
+ },
+ "phone: clicked, not tapped": {
+  "taps": [
+   [
+    "film",
+    8083
+   ],
+   [
+    "design",
+    17105
+   ]
+  ],
+  "arrivals": [
+   {
+    "scene": "build",
+    "at": 312,
+    "sheet": "-",
+    "paintedOverMs": 0,
+    "partlyPaintedFrames": 0,
+    "unfinished": false,
+    "shownForMs": 33
+   },
+   {
+    "scene": "build",
+    "at": 365,
+    "sheet": "paper",
+    "paintedOverMs": 2849,
+    "partlyPaintedFrames": 171,
+    "unfinished": false,
+    "shownForMs": 7980
+   },
+   {
+    "scene": "film",
+    "at": 8362,
+    "sheet": "paper",
+    "paintedOverMs": 3217,
+    "partlyPaintedFrames": 193,
+    "unfinished": false,
+    "shownForMs": 9016
+   },
+   {
+    "scene": "design",
+    "at": 17395,
+    "sheet": "paper",
+    "paintedOverMs": 2782,
+    "partlyPaintedFrames": 167,
+    "unfinished": false,
+    "shownForMs": 8731
+   }
+  ],
+  "hidden": false,
+  "reducedMotion": false,
+  "errors": []
+ },
+ "phone: 30 frames a second": {
+  "taps": [
+   [
+    "film",
+    9570
+   ],
+   [
+    "design",
+    18655
+   ],
+   [
+    "film",
+    27747
+   ]
+  ],
+  "arrivals": [
+   {
+    "scene": "build",
+    "at": 328,
+    "sheet": "-",
+    "paintedOverMs": 0,
+    "partlyPaintedFrames": 0,
+    "unfinished": false,
+    "shownForMs": 66
+   },
+   {
+    "scene": "build",
+    "at": 427,
+    "sheet": "paper",
+    "paintedOverMs": 2833,
+    "partlyPaintedFrames": 85,
+    "unfinished": false,
+    "shownForMs": 9432
+   },
+   {
+    "scene": "film",
+    "at": 9910,
+    "sheet": "paper",
+    "paintedOverMs": 3233,
+    "partlyPaintedFrames": 97,
+    "unfinished": false,
+    "shownForMs": 9049
+   },
+   {
+    "scene": "design",
+    "at": 19009,
+    "sheet": "paper",
+    "paintedOverMs": 2801,
+    "partlyPaintedFrames": 84,
+    "unfinished": false,
+    "shownForMs": 8883
+   },
+   {
+    "scene": "film",
+    "at": 27961,
+    "sheet": "over",
+    "paintedOverMs": 901,
+    "partlyPaintedFrames": 27,
+    "unfinished": false,
+    "shownForMs": 8882
+   }
+  ],
+  "hidden": false,
+  "reducedMotion": false,
+  "errors": []
+ }
+}
