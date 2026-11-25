@@ -16,3 +16,11 @@ The engineering passes: patches, memory peak of 78.1 MB, hunt 50/50, no seams. T
 - Change the reaction steps of 25 and 30 ms to 33 ms, an even two frames at 60 Hz.
 
 **Memory:** the margin is under 2 MB. Any further in-between in Build or Grow ships as a patch.
+
+## Quinn 038 checked by Wren (2026-11-25)
+- **frame_01_02:** the cut line, ragged outlines and loose pixels are gone. The steps measure 46 and 49, as before.
+- **rx_B36:** the hand is crisp, with no green tint. **rx_A52:** the whites are clean. **rx_K1_B36:** the hammer edge is smooth.
+- **frame_02_03b:** both eyes now stay visible. But the arm has gone 95% of the way to frame_03, so the step from 02_03a is 117 against 40 after it, and 92 if 02_03b were skipped.
+  - Quinn job 039 is drawing `frame_02_03ab` halfway between them, with the fist beside her temple, outside her face.
+  - The swing becomes 02 → 02_03a → 02_03ab → 02_03b → 03.
+- **Pasting:** only the changed zone went in, keyed with a soft 3 px edge. Nothing outside the zone changed (0 levels).
