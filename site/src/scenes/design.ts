@@ -45,17 +45,20 @@ const SPOTS: Spot[] = [
   { id: 'corner', art: 2, x: 1575, y: 815, h: 28, tint: LIT, grounded: true },
 ];
 
-// Ceiling and fan -> the window wall -> the counter wall and the niche -> the floor, left to right -> the
-// palm and the table on the right. The same unhurried pace as the other rooms: 4.32 s.
+// Ceiling and fan -> the top of the window wall and of the counter wall -> across the middle of both, and the niche
+// -> the floor, left to right -> the palm and the table on the right. The same unhurried pace as the other rooms: 4.32 s.
+// Her head (813 to 1010 across, 391 to 578 down) is painted by one stroke, the long one across the middle, which is at
+// its quickest there; no other stroke may reach it before (qa/tools/face.mjs).
 const STROKES: StrokePlan[] = [
   // Ceiling, beams and the fan
   { via: [[1690, 50], [-10, 55], [-10, 160], [620, 165]], width: 200, at: 0, takes: 1.16 },
   { via: [[700, 110], [1280, 120], [1310, 250]], width: 190, at: 0.3, takes: 0.7 },
-  // The window wall
-  { via: [[60, 260], [680, 255], [700, 400], [70, 410], [50, 550], [700, 555]], width: 240, at: 0.62, takes: 1.28 },
-  // The doorway, the shelves of cups and the counter
-  { via: [[790, 250], [800, 600]], width: 200, at: 1.3, takes: 0.6 },
-  { via: [[900, 270], [1280, 265], [1290, 410], [900, 420], [890, 560], [1290, 565]], width: 240, at: 1.5, takes: 1.24 },
+  // The top of the window wall
+  { via: [[60, 260], [720, 255]], width: 220, at: 0.62, takes: 0.8 },
+  // The top of the doorway and the shelves of cups
+  { via: [[740, 242], [1290, 240]], width: 200, at: 1, takes: 0.8 },
+  // Across the windows, the doorway, her head and the counter
+  { via: [[-60, 488], [700, 486], [1310, 478]], width: 290, at: 1.4, takes: 1.1 },
   // The niche, the palm and the right-hand wall
   { via: [[1400, 190], [1650, 210], [1640, 370], [1400, 360], [1395, 520], [1660, 540]], width: 240, at: 2.1, takes: 1.04 },
   // The floor

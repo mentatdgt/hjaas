@@ -1,0 +1,41 @@
+{
+ "build": {
+  "seconds": 4.32,
+  "face": {
+   "over5pcAt": 1.704,
+   "over95pcAt": 1.75,
+   "partlyMs": 46
+  },
+  "head": {
+   "over5pcAt": 1.688,
+   "over95pcAt": 1.746,
+   "partlyMs": 58
+  },
+  "headAtEnd": 1,
+  "steps": [
+   "1.70: face 2 head 36",
+   "1.73: face 52 head 82",
+   "1.75: face 97 head 99"
+  ]
+ },
+ "design": {
+  "seconds": 4.32,
+  "face": {
+   "over5pcAt": 1.963,
+   "over95pcAt": 1.988,
+   "partlyMs": 25
+  },
+  "head": {
+   "over5pcAt": 1.958,
+   "over95pcAt": 2.029,
+   "partlyMs": 71
+  },
+  "headAtEnd": 1,
+  "steps": [
+   "1.95: face 0 head 1",
+   "1.98: face 66 head 39",
+   "2.00: face 100 head 81",
+   "2.02: face 100 head 94"
+  ]
+ }
+}

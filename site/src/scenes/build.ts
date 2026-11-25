@@ -28,14 +28,18 @@ const SPOTS: Spot[] = [
 
 // Back wall -> window light -> floor -> props. Walls and floor leave the props' corners for the last strokes.
 // Unhurried: each stroke takes 0.48 to 1.28 s, and they overlap unevenly, so the painting runs 4.32 s.
+// Her head (712 to 882 across, 412 to 640 down) is painted by one stroke, the long one across the middle of the
+// wall, which is at its quickest there; no other stroke may reach it before (qa/tools/face.mjs).
 const STROKES: StrokePlan[] = [
   // Back wall
-  { via: [[890, 80], [1250, 95], [1275, 255], [905, 265], [890, 425], [1275, 440]], width: 250, at: 0, takes: 1.24 },
+  { via: [[890, 80], [1250, 95], [1275, 235], [905, 245]], width: 245, at: 0, takes: 1 },
   { via: [[1690, 40], [-10, 45], [-10, 165], [700, 170]], width: 195, at: 0.28, takes: 1.12 },
-  { via: [[1275, 590], [900, 565]], width: 225, at: 0.72, takes: 0.6 },
   // Window light
-  { via: [[30, 265], [700, 255], [725, 400], [40, 405], [20, 545], [720, 545]], width: 235, at: 1.12, takes: 1.28 },
-  { via: [[805, 130], [795, 640]], width: 245, at: 1.68, takes: 0.68 },
+  { via: [[30, 265], [900, 255]], width: 225, at: 0.8, takes: 0.8 },
+  // Across the windows, her head and the wall beside her
+  { via: [[-120, 520], [700, 520], [1290, 515]], width: 290, at: 1.2, takes: 1 },
+  { via: [[1275, 400], [1100, 400]], width: 150, at: 1.7, takes: 0.5 },
+  { via: [[1275, 610], [900, 600]], width: 190, at: 1.8, takes: 0.6 },
   // Floor
   { via: [[900, 690], [545, 655], [545, 765], [1265, 775]], width: 195, at: 2.12, takes: 1 },
   { via: [[1275, 880], [520, 870]], width: 225, at: 2.48, takes: 0.8 },

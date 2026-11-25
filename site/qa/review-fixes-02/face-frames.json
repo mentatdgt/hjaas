@@ -1,0 +1,66 @@
+{
+ "build desktop": {
+  "errors": [],
+  "face": {
+   "over5pcAt": 1.731,
+   "over95pcAt": 1.764,
+   "partlyMs": 33,
+   "framesPartly": "1731 ms: 37%, 1748 ms: 71%"
+  },
+  "head": {
+   "over5pcAt": 1.714,
+   "over95pcAt": 1.764,
+   "partlyMs": 50,
+   "framesPartly": "1714 ms: 33%, 1731 ms: 74%, 1748 ms: 92%"
+  },
+  "longestGapBetweenRecordedFramesMs": 17
+ },
+ "build phone": {
+  "errors": [],
+  "face": {
+   "over5pcAt": 1.732,
+   "over95pcAt": 1.766,
+   "partlyMs": 33,
+   "framesPartly": "1732 ms: 40%, 1749 ms: 70%"
+  },
+  "head": {
+   "over5pcAt": 1.716,
+   "over95pcAt": 1.766,
+   "partlyMs": 50,
+   "framesPartly": "1716 ms: 35%, 1732 ms: 77%, 1749 ms: 92%"
+  },
+  "longestGapBetweenRecordedFramesMs": 50
+ },
+ "design desktop": {
+  "errors": [],
+  "face": {
+   "over5pcAt": 1.982,
+   "over95pcAt": 2.015,
+   "partlyMs": 33,
+   "framesPartly": "1982 ms: 23%, 1998 ms: 92%"
+  },
+  "head": {
+   "over5pcAt": 1.982,
+   "over95pcAt": 2.048,
+   "partlyMs": 67,
+   "framesPartly": "1982 ms: 22%, 1998 ms: 50%, 2015 ms: 77%, 2032 ms: 92%"
+  },
+  "longestGapBetweenRecordedFramesMs": 17
+ },
+ "design phone": {
+  "errors": [],
+  "face": {
+   "over5pcAt": 1.981,
+   "over95pcAt": 2.014,
+   "partlyMs": 33,
+   "framesPartly": "1981 ms: 18%, 1998 ms: 90%"
+  },
+  "head": {
+   "over5pcAt": 1.981,
+   "over95pcAt": 2.048,
+   "partlyMs": 67,
+   "framesPartly": "1981 ms: 21%, 1998 ms: 47%, 2014 ms: 76%, 2031 ms: 90%"
+  },
+  "longestGapBetweenRecordedFramesMs": 50
+ }
+}
