@@ -8,6 +8,7 @@ import { ContactForm } from './form';
 import { Logo } from './logo';
 import { onReducedMotionChange, reducedMotion } from './motion';
 import { Pan } from './pan';
+import { RESET_WAIT_MS, resetTap } from './reset';
 import { Scene } from './scene';
 import { freshScene, huntView, isProgressKey, loadProgress, presetAll, resetProgress, saveFind, savePan, saveSeen, type HuntView, type Progress, type SceneProgress } from './state';
 import { seeded } from './steps';
@@ -37,8 +38,6 @@ export interface Site {
 const HINT_AFTER_S = 60;
 /** The first visit's drift (pan.ts), after the painting has ended. */
 const DRIFT_AFTER_MS = 700;
-/** How long "Tap again to reset" waits for the second tap. */
-const RESET_WAIT_MS = 4000;
 /** The first find's mushroom has landed and the counter has had its moment: the way to reset them comes. */
 const RESET_OFFER_MS = 650;
 /** Another tab's reset takes its keys away one after another. */
@@ -353,6 +352,8 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   controls.append(resetSaid);
   /** While Reset waits for its second tap: the timer that gives up waiting. */
   let armed = 0;
+  /** When its first tap came. */
+  let armedAt = 0;
   const disarm = (): void => {
     if (!armed) return;
     window.clearTimeout(armed);
@@ -939,12 +940,15 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       else if (tab.hash === location.hash) onAddress();
     });
   }
-  // "Reset mushrooms", tapped twice: every mushroom of every scene is hidden again and nothing found is kept. She
-  // stops, the picture clears to a blank sheet, and it is painted again, its mushrooms with it.
-  reset.addEventListener('click', () => {
+  // "Reset mushrooms", tapped twice (but not a double tap): every mushroom of every scene is hidden again and nothing
+  // found is kept. She stops, the picture clears to a blank sheet, and it is painted again, its mushrooms with it.
+  reset.addEventListener('click', (event) => {
     const scene = current;
     if (!scene || busy() || !resettable()) return;
-    if (!armed) {
+    const tap = resetTap(armed ? armedAt : undefined, event.timeStamp);
+    if (tap === 'ignore') return;
+    if (tap === 'arm') {
+      armedAt = event.timeStamp;
       armed = window.setTimeout(disarm, RESET_WAIT_MS);
       reset.textContent = resetSaid.textContent = resetArmed;
       return;

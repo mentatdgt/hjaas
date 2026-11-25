@@ -148,12 +148,12 @@ const run = {
       await page.evaluate(() => { const b = document.querySelector('.hj-reset'); b.click(); b.click(); }); await page.waitForFunction(() => document.querySelector('.hj-plate').dataset.scene === 'film', null, { timeout: 20000 }); await settled(page);
       r.whileChangingScene = { red: (await state(page)).red, reset: (await state(page)).reset };
       await goTo(page, 'grow');
-      await press(page); await wait(500); await press(page); await wait(60); r.secondTapAt60ms = await state(page);
+      await press(page); await wait(700); await press(page); await wait(60); r.secondTapAt60ms = await state(page);
       await wait(motion === 'reduce' ? 600 : 1500); r.duringThePainting = await state(page);
       await settled(page); await wait(600); r.twoTaps = await state(page);
       await goTo(page, 'build'); r.build = await state(page);
       await find(page, 1); await wait(900); r.findAgain = await state(page);
-      await press(page); await wait(300); await press(page); await settled(page);
+      await press(page); await wait(700); await press(page); await settled(page);
       await page.reload(); await settled(page); r.reloaded = await state(page);
       r.errors = own(errors); await browser.close();
     }
@@ -162,11 +162,11 @@ const run = {
       const browser = await start(); const context = await browser.newContext({ ...PHONE }); const { page, errors } = await open(context, all(10), 'set'); const r = (report[`${engine} phone, all 50`] = {});
       const shot = (name) => page.locator('.hj-window').screenshot({ path: join(out, `set-${engine}-${name}.jpg`), type: 'jpeg', quality: 85 });
       r.before = await state(page); await shot('1-all-found');
-      await press(page); await wait(300); await press(page); await wait(2000); await settled(page); r.after = await state(page); await shot('2-reset');
+      await press(page); await wait(700); await press(page); await wait(2000); await settled(page); r.after = await state(page); await shot('2-reset');
       r.formOpens = await page.evaluate(() => { const b = document.querySelector('.hj-contact'); return getComputedStyle(b).visibility; });
       // Its backdrop restarts: one find brings the first swath.
       await find(page, 1); await wait(1500); await shot('3-one-found-again'); r.oneFound = await state(page);
-      await press(page); await wait(300); await press(page); await settled(page);
+      await press(page); await wait(700); await press(page); await settled(page);
       await page.reload(); await settled(page); r.reloaded = await state(page); r.errors = own(errors); await browser.close();
     }
     save('reset.json', report);
@@ -179,7 +179,7 @@ const run = {
       const browser = await start(); const context = await browser.newContext(DESKTOP); const { page, errors } = await open(context, null, 'set', { base: `${dev}?debug&all=50` }); const r = (report[engine] = {});
       const pieces = () => page.evaluate(() => window.__hj.scene.progress.state);
       r.before = { ...(await state(page)), pieces: await pieces() };
-      await press(page); await wait(300); r.oneTap = { ...(await state(page)), pieces: await pieces() };
+      await press(page); await wait(700); r.oneTap = { ...(await state(page)), pieces: await pieces() };
       await press(page); await wait(1200); r.painting = { pieces: await pieces() }; await settled(page); r.after = { ...(await state(page)), pieces: await pieces() };
       await find(page, 3); await wait(1500); r.threeFound = { ...(await state(page)), pieces: await pieces() };
       await goTo(page, 'design'); r.design = await state(page); r.errors = own(errors); await browser.close();
@@ -194,13 +194,13 @@ const run = {
       const browser = await start(); const context = await browser.newContext(DESKTOP);
       const a = await open(context, { build: 3, grow: 2 }, 'grow'); const b = await open(context, null, 'build'); const c = await open(context, null, 'set'); const r = (report[engine] = {});
       r.before = { b: await state(b.page), c: await state(c.page) };
-      await a.page.bringToFront(); await press(a.page); await wait(300); r.oneTap = { b: (await state(b.page)).red }; await press(a.page); await wait(1500);
+      await a.page.bringToFront(); await press(a.page); await wait(700); r.oneTap = { b: (await state(b.page)).red }; await press(a.page); await wait(1500);
       r.after = { b: await state(b.page), c: await state(c.page) };
       await b.page.bringToFront(); await settled(b.page); await find(b.page, 1); await wait(500); await a.page.bringToFront(); await settled(a.page); r.findInTheSecond = { a: (await state(a.page)).red, b: (await state(b.page)).red };
       // All 50, and the second tab with its Contact button.
       await b.page.evaluate((v) => localStorage.setItem('hjaas:site:v2', v), progress(all(10))); await wait(500); await a.page.reload(); await settled(a.page); await c.page.bringToFront(); await wait(300);
       r.all50 = { a: await state(a.page), c: await state(c.page) };
-      await a.page.bringToFront(); await wait(800); await press(a.page); await wait(300); await press(a.page); await wait(1500); r.all50after = { c: await state(c.page) };
+      await a.page.bringToFront(); await wait(800); await press(a.page); await wait(700); await press(a.page); await wait(1500); r.all50after = { c: await state(c.page) };
       await c.page.bringToFront(); await wait(1500); await c.page.screenshot({ path: join(out, `second-tab-${engine}.jpg`), type: 'jpeg', quality: 80 });
       r.errors = [a, b, c].flatMap((x) => own(x.errors)); await browser.close();
     }
@@ -294,7 +294,7 @@ const run = {
     for (const [engine, start] of Object.entries(launch)) for (const motion of ['no-preference', 'reduce']) {
       const browser = await start(); const context = await browser.newContext({ ...DESKTOP, reducedMotion: motion }); const { page, errors } = await open(context, { build: 3 }); const r = (report[`${engine}${motion === 'reduce' ? ', reduced motion' : ''}`] = {});
       const on = () => page.evaluate(() => document.activeElement.textContent.trim());
-      await page.focus('.hj-reset'); await page.keyboard.press('Enter'); await wait(100); r.armed = await on(); await page.keyboard.press('Enter'); await wait(700); r.afterTheSecond = await on();
+      await page.focus('.hj-reset'); await page.keyboard.press('Enter'); await wait(100); r.armed = await on(); await wait(600); await page.keyboard.press('Enter'); await wait(700); r.afterTheSecond = await on();
       if (motion !== 'reduce') { await page.keyboard.press('Enter'); await wait(400); r.skipEndsIt = await state(page); }
       await settled(page); r.settled = await on(); r.spotsInOrder = await page.evaluate(() => [...document.querySelectorAll('.hj-shroom')].map((b) => b.dataset.spot)); r.sameOrderAsTheSite = r.spotsInOrder.join() === SPOTS.build.join(); delete r.spotsInOrder; r.end = await state(page); r.errors = own(errors);
       await browser.close();

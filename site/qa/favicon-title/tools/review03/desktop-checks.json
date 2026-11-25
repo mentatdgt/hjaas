@@ -1,0 +1,153 @@
+{
+ "skip": {
+  "linksAtStart": [
+   "Skip",
+   "Retry room"
+  ],
+  "during": {
+   "caption": "0",
+   "rachel": "1",
+   "mushroomsFindable": false,
+   "paperSheets": 2,
+   "count": "0/10"
+  },
+  "mushroomsHiddenWhileUnpainted": true,
+  "after80ms": {
+   "caption": "1",
+   "rachel": "1",
+   "mushroomsFindable": true,
+   "paperSheets": 2,
+   "count": "0/10"
+  },
+  "linksAfter": [
+   "Pause animation",
+   "Retry room"
+  ],
+  "findRightAfterSkip": "1/10",
+  "errors": []
+ },
+ "reset": {
+  "resetting": {
+   "caption": "1",
+   "rachel": "1",
+   "mushroomsFindable": false,
+   "paperSheets": 2,
+   "count": "0/10",
+   "links": [
+    "Skip",
+    "Retry room"
+   ]
+  },
+  "reset": {
+   "caption": "1",
+   "rachel": "1",
+   "mushroomsFindable": true,
+   "paperSheets": 2,
+   "count": "0/10",
+   "links": [
+    "Pause animation",
+    "Retry room"
+   ]
+  },
+  "errors": []
+ },
+ "returnVisit": {
+  "firstVisitPainted": true,
+  "secondVisit": {
+   "caption": "1",
+   "rachel": "1",
+   "mushroomsFindable": true,
+   "paperSheets": 2,
+   "count": "2/10"
+  },
+  "revealMs": 0,
+  "framesInBetween": 0,
+  "panBefore": 40,
+  "panAfter": 40,
+  "links": [
+   "Pause animation",
+   "Reset mushrooms",
+   "Retry room"
+  ]
+ },
+ "pause": {
+  "posesBefore": [
+   "frame_01",
+   "frame_01_02",
+   "frame_02",
+   "frame_02_03a",
+   "frame_02_03ab",
+   "frame_02_03b",
+   "frame_03",
+   "frame_04"
+  ],
+  "posesWhilePaused": [
+   "frame_01"
+  ],
+  "linksWhilePaused": [
+   "Play animation",
+   "Retry room"
+  ],
+  "posesOnFindWhilePaused": [
+   "reaction/rx_K2.png",
+   "frame_01"
+  ],
+  "posesAfterPlay": [
+   "frame_01",
+   "frame_01_02",
+   "frame_02",
+   "frame_02_03a",
+   "frame_02_03ab",
+   "frame_02_03b",
+   "frame_03",
+   "frame_04"
+  ],
+  "errors": []
+ },
+ "reducedMotion": {
+  "first": {
+   "caption": "1",
+   "rachel": "1",
+   "mushroomsFindable": true,
+   "paperSheets": 0,
+   "count": "0/10",
+   "links": [
+    "Retry room"
+   ]
+  },
+  "posesBeforeAnyFind": [
+   "frame_01"
+  ],
+  "countRightAfterClick": "1/10",
+  "flyerTransforms": [
+   "none"
+  ],
+  "poseDuringFind": "reaction/rx_K2.png",
+  "poseAfter": "frame_01",
+  "logoGlintPixels": 0,
+  "errors": []
+ },
+ "cursorAndKeyboard": {
+  "mushroom": "auto",
+  "room": "auto",
+  "titles": 0,
+  "hoverChangesPixels": false,
+  "tabOrder": [
+   "page",
+   "logo",
+   "Build",
+   "Grow",
+   "Design",
+   "Film",
+   "Set Design",
+   "sill",
+   "drape",
+   "skirting",
+   "screed",
+   "tiles",
+   "conduit",
+   "socket"
+  ],
+  "errors": []
+ }
+}

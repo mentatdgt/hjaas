@@ -6,7 +6,7 @@
 //   node qa/tools/paint-in.mjs record [scene]  the first-visit painting at 60 fps, 1440×900 and 390×844; the strip of 1:1 crops around her;
 //                                              and, on every recorded frame, that the room around her is never painted while she is not
 //   node qa/tools/paint-in.mjs switch          a first-visit switch, the short brush and a return visit, recorded; what shows of her, frame by frame
-//   node qa/tools/paint-in.mjs states          what is drawn while the brush is at work (nothing of the cast); Skip, Replay, a slow network, intro=off, reduced motion
+//   node qa/tools/paint-in.mjs states          what is drawn while the brush is at work (nothing of the cast); Skip, Reset, a slow network, intro=off, reduced motion
 //   node qa/tools/paint-in.mjs trace [scene]   a Chrome trace of the painting, phone, processor slowed four times, production build
 //   node qa/tools/paint-in.mjs webkit [scene]  frame times of the painting in WebKit (iPhone profile), production build
 import { chromium, webkit, devices } from 'playwright';
@@ -390,7 +390,7 @@ run.switch = async () => {
 };
 
 // What must not change, and what must hold: nothing of the cast is drawn while it is being painted; Skip and
-// Replay; she arrives late on a slow network and fades in; ?intro=off; reduced motion.
+// Reset; she arrives late on a slow network and fades in; ?intro=off; reduced motion.
 run.states = async () => {
   const report = {};
   const errors = [];
@@ -415,7 +415,7 @@ run.states = async () => {
     say(id, report[id]);
     await context.close();
   }
-  // Skip in the middle, then Replay, then Skip again.
+  // Skip in the middle; then one mushroom found and Reset, tapped twice, which paints the scene again.
   {
     const context = await browser.newContext({ viewport: { width: 1440, height: 900 } }); const page = await context.newPage(); errors.push(...errorsOf(page));
     await page.goto(`${base}?debug&reset#set`);
@@ -423,10 +423,13 @@ run.states = async () => {
     await page.getByText('Skip', { exact: true }).click(); await wait(300); const skipped = await look(page);
     const opaque = await page.evaluate(() => { const c = document.querySelector('.hj-plate > .hj-paint:not(.is-veil)'); if (!c) return 0; const x = document.createElement('canvas'); x.width = 80; x.height = 45; const g = x.getContext('2d'); g.drawImage(c, 0, 0, 80, 45); return Math.max(...g.getImageData(0, 0, 80, 45).data.filter((_, i) => i % 4 === 3)); });
     await ready(page); await wait(2500);
-    await page.getByText('Replay painting').click(); await wait(900); const replay = await look(page); const resting = await page.evaluate(() => window.__hj.rachel.current === window.__hj.rachel.rest);
+    await page.locator('[data-spot="boards"]').click({ force: true }); await page.waitForSelector('.hj-reset:not(.is-off)'); await wait(600);
+    const painted = await page.evaluate(() => performance.getEntriesByName('hj-paint').length);
+    await page.click('.hj-reset'); await wait(700); await page.click('.hj-reset');
+    await page.waitForFunction((n) => performance.getEntriesByName('hj-paint').length > n, painted, { timeout: 20000 }); await wait(900); const reset = await look(page); const resting = await page.evaluate(() => window.__hj.rachel.current === window.__hj.rachel.rest);
     await page.waitForFunction(() => !window.__hj.busy, null, { timeout: 20000 });
-    report.skipAndReplay = { afterSkip: skipped, sheetLeftAfterSkip: opaque, duringReplay: replay, atRestDuringReplay: resting, afterReplay: await look(page) };
-    say('skip and replay', report.skipAndReplay); await context.close();
+    report.skipAndReset = { afterSkip: skipped, sheetLeftAfterSkip: opaque, duringReset: reset, atRestDuringReset: resting, afterReset: await look(page) };
+    say('skip and reset', report.skipAndReset); await context.close();
   }
   // A slow network: she arrives after the picture is on show.
   {

@@ -433,14 +433,18 @@ const run = {
       report.skip = { linksAtStart: atStart, during, mushroomsHiddenWhileUnpainted: !clickable, after80ms: after, linksAfter: afterLinks, findRightAfterSkip: (await state(page)).count, errors };
       say('skip', report.skip);
 
-      // Replay painting.
-      await page.getByRole('button', { name: 'Replay painting' }).click();
+      // Reset mushrooms, tapped twice (a second tap under 500 ms after the first is ignored): painted again.
+      const painted = await page.evaluate(() => performance.getEntriesByName('hj-paint').length);
+      await page.getByRole('button', { name: 'Reset mushrooms' }).click();
+      await page.waitForTimeout(700);
+      await page.locator('.hj-reset').click();
+      await page.waitForFunction((n) => performance.getEntriesByName('hj-paint').length > n, painted, { timeout: 20000 });
       await page.waitForTimeout(1500);
-      const replaying = { ...(await state(page)), links: await links(page) };
+      const resetting = { ...(await state(page)), links: await links(page) };
       await page.waitForTimeout(4200);
-      const replayed = { ...(await state(page)), links: await links(page) };
-      report.replay = { replaying, replayed, errors };
-      say('replay', report.replay);
+      const reset = { ...(await state(page)), links: await links(page) };
+      report.reset = { resetting, reset, errors };
+      say('reset', report.reset);
       await context.close();
     }
 

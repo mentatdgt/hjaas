@@ -1,0 +1,30 @@
+{
+ "files": {
+  "favicon.ico": "as delivered",
+  "favicon-32.png": "as delivered",
+  "favicon-16.png": "as delivered",
+  "icon-192.png": "as delivered",
+  "apple-touch-icon.png": "as delivered"
+ },
+ "index": {
+  "links": [
+   "rel=\"icon\" href=\"/favicon.ico\" sizes=\"48x48\"",
+   "rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"/favicon-32.png\"",
+   "rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"/favicon-16.png\"",
+   "rel=\"icon\" type=\"image/png\" sizes=\"192x192\" href=\"/icon-192.png\"",
+   "rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"/apple-touch-icon.png\""
+  ],
+  "title": "Hui Jie as a Service (HJaaS)",
+  "ogTitle": "Hui Jie as a Service (HJaaS)"
+ },
+ "missing": {
+  "links": [
+   "rel=\"icon\" href=\"/favicon.ico\" sizes=\"48x48\"",
+   "rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"/favicon-32.png\"",
+   "rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"/favicon-16.png\"",
+   "rel=\"icon\" type=\"image/png\" sizes=\"192x192\" href=\"/icon-192.png\"",
+   "rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"/apple-touch-icon.png\""
+  ],
+  "title": "Page not found · HJaaS"
+ }
+}
