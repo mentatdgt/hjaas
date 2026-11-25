@@ -1,0 +1,238 @@
+{
+ "webkit 375x812": {
+  "panned": 317,
+  "build": {
+   "pixelsThatDiffer": 0,
+   "outsideTheSideRows": 0,
+   "biggestDifference": 0
+  },
+  "grow": {
+   "pixelsThatDiffer": 0,
+   "outsideTheSideRows": 0,
+   "biggestDifference": 0
+  },
+  "design": {
+   "pixelsThatDiffer": 0,
+   "outsideTheSideRows": 0,
+   "biggestDifference": 0
+  },
+  "film": {
+   "pixelsThatDiffer": 0,
+   "outsideTheSideRows": 0,
+   "biggestDifference": 0
+  },
+  "set": {
+   "pixelsThatDiffer": 0,
+   "outsideTheSideRows": 0,
+   "biggestDifference": 0
+  }
+ },
+ "webkit 390x844": {
+  "panned": 330,
+  "build": {
+   "pixelsThatDiffer": 0,
+   "outsideTheSideRows": 0,
+   "biggestDifference": 0
+  },
+  "grow": {
+   "pixelsThatDiffer": 0,
+   "outsideTheSideRows": 0,
+   "biggestDifference": 0
+  },
+  "design": {
+   "pixelsThatDiffer": 0,
+   "outsideTheSideRows": 0,
+   "biggestDifference": 0
+  },
+  "film": {
+   "pixelsThatDiffer": 0,
+   "outsideTheSideRows": 0,
+   "biggestDifference": 0
+  },
+  "set": {
+   "pixelsThatDiffer": 0,
+   "outsideTheSideRows": 0,
+   "biggestDifference": 0
+  }
+ },
+ "webkit 844x390": {
+  "panned": false,
+  "build": {
+   "pixelsThatDiffer": 0,
+   "outsideTheSideRows": 0,
+   "biggestDifference": 0
+  },
+  "grow": {
+   "pixelsThatDiffer": 0,
+   "outsideTheSideRows": 0,
+   "biggestDifference": 0
+  },
+  "design": {
+   "pixelsThatDiffer": 57,
+   "outsideTheSideRows": 0,
+   "biggestDifference": 4
+  },
+  "film": {
+   "pixelsThatDiffer": 38,
+   "outsideTheSideRows": 0,
+   "biggestDifference": 3
+  },
+  "set": {
+   "pixelsThatDiffer": 22,
+   "outsideTheSideRows": 0,
+   "biggestDifference": 1
+  }
+ },
+ "webkit 810x1080": {
+  "panned": false,
+  "build": {
+   "pixelsThatDiffer": 0,
+   "outsideTheSideRows": 0,
+   "biggestDifference": 0
+  },
+  "grow": {
+   "pixelsThatDiffer": 0,
+   "outsideTheSideRows": 0,
+   "biggestDifference": 0
+  },
+  "design": {
+   "pixelsThatDiffer": 31,
+   "outsideTheSideRows": 0,
+   "biggestDifference": 2
+  },
+  "film": {
+   "pixelsThatDiffer": 22,
+   "outsideTheSideRows": 0,
+   "biggestDifference": 2
+  },
+  "set": {
+   "pixelsThatDiffer": 12,
+   "outsideTheSideRows": 0,
+   "biggestDifference": 1
+  }
+ },
+ "webkit 820x1180": {
+  "panned": false,
+  "build": {
+   "pixelsThatDiffer": 0,
+   "outsideTheSideRows": 0,
+   "biggestDifference": 0
+  },
+  "grow": {
+   "pixelsThatDiffer": 0,
+   "outsideTheSideRows": 0,
+   "biggestDifference": 0
+  },
+  "design": {
+   "pixelsThatDiffer": 7,
+   "outsideTheSideRows": 0,
+   "biggestDifference": 1
+  },
+  "film": {
+   "pixelsThatDiffer": 6,
+   "outsideTheSideRows": 0,
+   "biggestDifference": 1
+  },
+  "set": {
+   "pixelsThatDiffer": 5,
+   "outsideTheSideRows": 0,
+   "biggestDifference": 1
+  }
+ },
+ "chrome 820x1180": {
+  "panned": false,
+  "build": {
+   "pixelsThatDiffer": 127,
+   "outsideTheSideRows": 125,
+   "biggestDifference": 11,
+   "oldAgainstItself": {
+    "channelsThatDiffer": 0,
+    "biggestDifference": 0
+   }
+  },
+  "grow": {
+   "pixelsThatDiffer": 275,
+   "outsideTheSideRows": 275,
+   "biggestDifference": 1,
+   "oldAgainstItself": {
+    "channelsThatDiffer": 0,
+    "biggestDifference": 0
+   }
+  },
+  "design": {
+   "pixelsThatDiffer": 156,
+   "outsideTheSideRows": 156,
+   "biggestDifference": 1,
+   "oldAgainstItself": {
+    "channelsThatDiffer": 0,
+    "biggestDifference": 0
+   }
+  },
+  "film": {
+   "pixelsThatDiffer": 3887,
+   "outsideTheSideRows": 3887,
+   "biggestDifference": 43,
+   "oldAgainstItself": {
+    "channelsThatDiffer": 0,
+    "biggestDifference": 0
+   }
+  },
+  "set": {
+   "pixelsThatDiffer": 148,
+   "outsideTheSideRows": 148,
+   "biggestDifference": 1,
+   "oldAgainstItself": {
+    "channelsThatDiffer": 0,
+    "biggestDifference": 0
+   }
+  }
+ },
+ "chrome 1440x900": {
+  "panned": false,
+  "build": {
+   "pixelsThatDiffer": 350,
+   "outsideTheSideRows": 350,
+   "biggestDifference": 1,
+   "oldAgainstItself": {
+    "channelsThatDiffer": 0,
+    "biggestDifference": 0
+   }
+  },
+  "grow": {
+   "pixelsThatDiffer": 349,
+   "outsideTheSideRows": 349,
+   "biggestDifference": 1,
+   "oldAgainstItself": {
+    "channelsThatDiffer": 0,
+    "biggestDifference": 0
+   }
+  },
+  "design": {
+   "pixelsThatDiffer": 195,
+   "outsideTheSideRows": 195,
+   "biggestDifference": 1,
+   "oldAgainstItself": {
+    "channelsThatDiffer": 0,
+    "biggestDifference": 0
+   }
+  },
+  "film": {
+   "pixelsThatDiffer": 265,
+   "outsideTheSideRows": 265,
+   "biggestDifference": 1,
+   "oldAgainstItself": {
+    "channelsThatDiffer": 0,
+    "biggestDifference": 0
+   }
+  },
+  "set": {
+   "pixelsThatDiffer": 246,
+   "outsideTheSideRows": 246,
+   "biggestDifference": 1,
+   "oldAgainstItself": {
+    "channelsThatDiffer": 0,
+    "biggestDifference": 0
+   }
+  }
+ }
+}

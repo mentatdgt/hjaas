@@ -252,16 +252,17 @@
 
 
 /* The window onto the room. Wide screens show the whole plate. Unpainted, it is the bare page.
-   The plate's top and bottom rows are paper (the edge's rim). Where the window sits at a fraction of a pixel
-   (a phone whose menu wraps onto two rows), WebKit snaps the room's picture to the screen's pixels and not
-   the edge, and the room's own top row showed as a hairline: the window leaves out its top and bottom pixel.
-   (Not its sides: on a phone they cut through the middle of the room.) */
+   The plate's outermost rows and columns are paper (the edge's rim). WebKit draws a canvas at whole CSS px and a
+   picture at whole screen px: where the window sits at a fraction of a CSS px, the edge lies up to half a px off
+   the room, and the room's own outermost row or column showed as a hairline. So the window leaves out its
+   outermost px on each side (the edge is paper there). A phone's crop leaves out only the top and bottom one:
+   its sides cut through the middle of the room. */
 .hj-viewport {
   position: relative;
   width: var(--pic-w);
   aspect-ratio: 1672 / 941;
   overflow: hidden;
-  clip-path: inset(1px 0);
+  clip-path: inset(1px);
 }
 
 /* The plate is the scene's coordinate system: children are placed in percentages of 1672 × 941. */
@@ -1525,10 +1526,11 @@ a.hj-logo:active {
   }
 }
 
-/* ---------- Phones: a tall crop of the room, panned sideways ---------- */
+/* ---------- Phones and iPad mini, upright: a tall crop of the room, panned sideways ---------- */
 
+/* (Every full-size iPad is 810 px wide or more upright, and keeps the whole room.) */
 @media (orientation: portrait) {
-  @container (max-width: 600px) {
+  @container (max-width: 799px) {
     .hj-page {
       --page-margin: 18px;
       --logo-w: clamp(120px, 33cqw, 140px);
@@ -1623,6 +1625,7 @@ a.hj-logo:active {
       aspect-ratio: auto;
       overflow-x: auto;
       overflow-y: hidden;
+      clip-path: inset(1px 0);
       overscroll-behavior-x: contain;
       touch-action: pan-x pan-y;
       scrollbar-width: none;
@@ -1765,6 +1768,68 @@ a.hj-logo:active {
       .hj-controls.has-reset::before {
         font-size: 13.5px;
       }
+    }
+  }
+
+  /* iPad mini: the same page with room to spare. The line takes one row beside the logo, and the type, the
+     counters and the gaps grow with the sheet, so the crop stays 55 to 65% of the screen and the page fills it. */
+  @container (600px < width <= 799px) {
+    .hj-page {
+      --page-margin: clamp(24px, 3.8cqw, 30px);
+      --logo-w: clamp(150px, 24cqw, 184px);
+      --mast-gap: 20px;
+      /* (22.15em long, on one row.) */
+      --line-size: min(18px, calc((100cqw - 2 * var(--page-margin) - var(--logo-w) - var(--mast-gap)) / 22.5));
+      --ident-h: calc(34px * 1.08 + 4px + var(--line-size) * 1.3);
+      --tab-size: 18px;
+      --pad-top: 26px;
+      --pad-bottom: 26px;
+      --gap-head: 18px;
+      --gap-caption: 16px;
+      --caption-h: 128px;
+    }
+
+    .hj-page:has(.hj-menu) {
+      --menu-h: 50px;
+    }
+
+    .hj-name {
+      font-size: 34px;
+    }
+
+    .hj-menu {
+      --tab-gap: 34px;
+      margin-top: 8px;
+    }
+
+    .hj-caption-main {
+      min-height: 80px;
+    }
+
+    .hj-row {
+      --mush: 34px;
+      --mush-scale: 1.1333;
+      min-height: 38px;
+      gap: 12px;
+    }
+
+    .hj-num {
+      font-size: 25px;
+    }
+
+    .hj-label,
+    .hj-next,
+    .hj-prize-note {
+      font-size: 17px;
+    }
+
+    .hj-next {
+      line-height: 38px;
+    }
+
+    .hj-link,
+    .hj-controls.has-reset::before {
+      font-size: 16px;
     }
   }
 }

@@ -1,0 +1,54 @@
+{
+ "old": {
+  "sizes": 844,
+  "withALine": 261,
+  "worst": {
+   "build 1133": {
+    "withALine": 190,
+    "rows": 919,
+    "at": "1133x677"
+   },
+   "build 1180": {
+    "withALine": 14,
+    "rows": 940,
+    "at": "1180x690"
+   },
+   "build 1194": {
+    "withALine": 15,
+    "rows": 958,
+    "at": "1194x700"
+   },
+   "build 1366": {
+    "withALine": 42,
+    "rows": 1102,
+    "at": "1366x784"
+   }
+  }
+ },
+ "new": {
+  "sizes": 844,
+  "withALine": 0,
+  "worst": {
+   "build 1133": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "build 1180": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "build 1194": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "build 1366": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   }
+  }
+ }
+}

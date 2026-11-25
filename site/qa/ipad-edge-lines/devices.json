@@ -1,0 +1,524 @@
+{
+ "820x1180": {
+  "old": {
+   "build": {
+    "left": 0,
+    "right": 0
+   },
+   "grow": {
+    "left": 0,
+    "right": 0
+   },
+   "design": {
+    "left": 0,
+    "right": 0
+   },
+   "film": {
+    "left": 0,
+    "right": 0
+   },
+   "set": {
+    "left": 0,
+    "right": 0
+   }
+  },
+  "new": {
+   "build": {
+    "left": 0,
+    "right": 0
+   },
+   "grow": {
+    "left": 0,
+    "right": 0
+   },
+   "design": {
+    "left": 0,
+    "right": 0
+   },
+   "film": {
+    "left": 0,
+    "right": 0
+   },
+   "set": {
+    "left": 0,
+    "right": 0
+   }
+  }
+ },
+ "1180x820": {
+  "old": {
+   "build": {
+    "left": 0,
+    "right": 0
+   },
+   "grow": {
+    "left": 0,
+    "right": 0
+   },
+   "design": {
+    "left": 0,
+    "right": 0
+   },
+   "film": {
+    "left": 0,
+    "right": 0
+   },
+   "set": {
+    "left": 0,
+    "right": 0
+   }
+  },
+  "new": {
+   "build": {
+    "left": 0,
+    "right": 0
+   },
+   "grow": {
+    "left": 0,
+    "right": 0
+   },
+   "design": {
+    "left": 0,
+    "right": 0
+   },
+   "film": {
+    "left": 0,
+    "right": 0
+   },
+   "set": {
+    "left": 0,
+    "right": 0
+   }
+  }
+ },
+ "810x1080": {
+  "old": {
+   "build": {
+    "left": 0,
+    "right": 0
+   },
+   "grow": {
+    "left": 0,
+    "right": 0
+   },
+   "design": {
+    "left": 0,
+    "right": 0
+   },
+   "film": {
+    "left": 0,
+    "right": 0
+   },
+   "set": {
+    "left": 0,
+    "right": 0
+   }
+  },
+  "new": {
+   "build": {
+    "left": 0,
+    "right": 0
+   },
+   "grow": {
+    "left": 0,
+    "right": 0
+   },
+   "design": {
+    "left": 0,
+    "right": 0
+   },
+   "film": {
+    "left": 0,
+    "right": 0
+   },
+   "set": {
+    "left": 0,
+    "right": 0
+   }
+  }
+ },
+ "1080x810": {
+  "old": {
+   "build": {
+    "left": 0,
+    "right": 0
+   },
+   "grow": {
+    "left": 0,
+    "right": 0
+   },
+   "design": {
+    "left": 0,
+    "right": 0
+   },
+   "film": {
+    "left": 0,
+    "right": 0
+   },
+   "set": {
+    "left": 0,
+    "right": 0
+   }
+  },
+  "new": {
+   "build": {
+    "left": 0,
+    "right": 0
+   },
+   "grow": {
+    "left": 0,
+    "right": 0
+   },
+   "design": {
+    "left": 0,
+    "right": 0
+   },
+   "film": {
+    "left": 0,
+    "right": 0
+   },
+   "set": {
+    "left": 0,
+    "right": 0
+   }
+  }
+ },
+ "768x1024": {
+  "old": {
+   "build": {
+    "left": 791,
+    "right": 0
+   },
+   "grow": {
+    "left": 791,
+    "right": 0
+   },
+   "design": {
+    "left": 791,
+    "right": 0
+   },
+   "film": {
+    "left": 791,
+    "right": 0
+   },
+   "set": {
+    "left": 791,
+    "right": 0
+   }
+  },
+  "new": {
+   "build": "panned",
+   "grow": "panned",
+   "design": "panned",
+   "film": "panned",
+   "set": "panned"
+  }
+ },
+ "1024x768": {
+  "old": {
+   "build": {
+    "left": 0,
+    "right": 0
+   },
+   "grow": {
+    "left": 0,
+    "right": 0
+   },
+   "design": {
+    "left": 0,
+    "right": 0
+   },
+   "film": {
+    "left": 0,
+    "right": 0
+   },
+   "set": {
+    "left": 0,
+    "right": 0
+   }
+  },
+  "new": {
+   "build": {
+    "left": 0,
+    "right": 0
+   },
+   "grow": {
+    "left": 0,
+    "right": 0
+   },
+   "design": {
+    "left": 0,
+    "right": 0
+   },
+   "film": {
+    "left": 0,
+    "right": 0
+   },
+   "set": {
+    "left": 0,
+    "right": 0
+   }
+  }
+ },
+ "744x1133": {
+  "old": {
+   "build": {
+    "left": 0,
+    "right": 0
+   },
+   "grow": {
+    "left": 0,
+    "right": 0
+   },
+   "design": {
+    "left": 0,
+    "right": 0
+   },
+   "film": {
+    "left": 0,
+    "right": 0
+   },
+   "set": {
+    "left": 0,
+    "right": 0
+   }
+  },
+  "new": {
+   "build": "panned",
+   "grow": "panned",
+   "design": "panned",
+   "film": "panned",
+   "set": "panned"
+  }
+ },
+ "1133x744": {
+  "old": {
+   "build": {
+    "left": 919,
+    "right": 919
+   },
+   "grow": {
+    "left": 919,
+    "right": 919
+   },
+   "design": {
+    "left": 919,
+    "right": 919
+   },
+   "film": {
+    "left": 919,
+    "right": 919
+   },
+   "set": {
+    "left": 919,
+    "right": 919
+   }
+  },
+  "new": {
+   "build": {
+    "left": 0,
+    "right": 0
+   },
+   "grow": {
+    "left": 0,
+    "right": 0
+   },
+   "design": {
+    "left": 0,
+    "right": 0
+   },
+   "film": {
+    "left": 0,
+    "right": 0
+   },
+   "set": {
+    "left": 0,
+    "right": 0
+   }
+  }
+ },
+ "834x1194": {
+  "old": {
+   "build": {
+    "left": 0,
+    "right": 0
+   },
+   "grow": {
+    "left": 0,
+    "right": 0
+   },
+   "design": {
+    "left": 1,
+    "right": 0
+   },
+   "film": {
+    "left": 0,
+    "right": 0
+   },
+   "set": {
+    "left": 0,
+    "right": 0
+   }
+  },
+  "new": {
+   "build": {
+    "left": 0,
+    "right": 0
+   },
+   "grow": {
+    "left": 0,
+    "right": 0
+   },
+   "design": {
+    "left": 0,
+    "right": 0
+   },
+   "film": {
+    "left": 0,
+    "right": 0
+   },
+   "set": {
+    "left": 0,
+    "right": 0
+   }
+  }
+ },
+ "1194x834": {
+  "old": {
+   "build": {
+    "left": 0,
+    "right": 0
+   },
+   "grow": {
+    "left": 0,
+    "right": 0
+   },
+   "design": {
+    "left": 0,
+    "right": 0
+   },
+   "film": {
+    "left": 0,
+    "right": 0
+   },
+   "set": {
+    "left": 0,
+    "right": 0
+   }
+  },
+  "new": {
+   "build": {
+    "left": 0,
+    "right": 0
+   },
+   "grow": {
+    "left": 0,
+    "right": 0
+   },
+   "design": {
+    "left": 0,
+    "right": 0
+   },
+   "film": {
+    "left": 0,
+    "right": 0
+   },
+   "set": {
+    "left": 0,
+    "right": 0
+   }
+  }
+ },
+ "1024x1366": {
+  "old": {
+   "build": {
+    "left": 0,
+    "right": 0
+   },
+   "grow": {
+    "left": 0,
+    "right": 0
+   },
+   "design": {
+    "left": 0,
+    "right": 0
+   },
+   "film": {
+    "left": 0,
+    "right": 0
+   },
+   "set": {
+    "left": 0,
+    "right": 0
+   }
+  },
+  "new": {
+   "build": {
+    "left": 0,
+    "right": 0
+   },
+   "grow": {
+    "left": 0,
+    "right": 0
+   },
+   "design": {
+    "left": 0,
+    "right": 0
+   },
+   "film": {
+    "left": 0,
+    "right": 0
+   },
+   "set": {
+    "left": 0,
+    "right": 0
+   }
+  }
+ },
+ "1366x1024": {
+  "old": {
+   "build": {
+    "left": 0,
+    "right": 0
+   },
+   "grow": {
+    "left": 0,
+    "right": 0
+   },
+   "design": {
+    "left": 0,
+    "right": 0
+   },
+   "film": {
+    "left": 0,
+    "right": 0
+   },
+   "set": {
+    "left": 0,
+    "right": 0
+   }
+  },
+  "new": {
+   "build": {
+    "left": 0,
+    "right": 0
+   },
+   "grow": {
+    "left": 0,
+    "right": 0
+   },
+   "design": {
+    "left": 0,
+    "right": 0
+   },
+   "film": {
+    "left": 0,
+    "right": 0
+   },
+   "set": {
+    "left": 0,
+    "right": 0
+   }
+  }
+ }
+}
