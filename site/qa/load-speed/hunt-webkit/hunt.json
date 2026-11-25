@@ -1,0 +1,71 @@
+{
+ "desktop": {
+  "afterEachScene": [
+   "10 · 10",
+   "10 · 20",
+   "10 · 30",
+   "10 · 40",
+   "10 · 50"
+  ],
+  "tapsThatMissed": [],
+  "dots": [
+   "build",
+   "grow",
+   "design",
+   "film",
+   "set"
+  ],
+  "button": "BUTTON",
+  "counterShown": false,
+  "formOpens": true,
+  "errors": [
+   "Failed to load resource: resource unavailable"
+  ]
+ },
+ "portrait": {
+  "afterEachScene": [
+   "10 · 10",
+   "10 · 20",
+   "10 · 30",
+   "10 · 40",
+   "10 · 50"
+  ],
+  "tapsThatMissed": [],
+  "dots": [
+   "build",
+   "grow",
+   "design",
+   "film",
+   "set"
+  ],
+  "button": "BUTTON",
+  "counterShown": false,
+  "formOpens": true,
+  "errors": [
+   "Failed to load resource: resource unavailable"
+  ]
+ },
+ "landscape": {
+  "afterEachScene": [
+   "10 · 10",
+   "10 · 20",
+   "10 · 30",
+   "10 · 40",
+   "10 · 50"
+  ],
+  "tapsThatMissed": [],
+  "dots": [
+   "build",
+   "grow",
+   "design",
+   "film",
+   "set"
+  ],
+  "button": "BUTTON",
+  "counterShown": false,
+  "formOpens": true,
+  "errors": [
+   "Failed to load resource: resource unavailable"
+  ]
+ }
+}

@@ -13,9 +13,10 @@
 // drawn afresh each time from the routine's ranges. Time only counts while the scene is at work and shown:
 // paused, it holds the frame it is on (and carries on from there); with reduced motion he never shows; out of
 // sight it starts again from the first wait, and every picture is given back (the body's drawings are 9 MB):
-// they are decoded again, from the downloaded files, as the scene goes on. There is no loop of its own: each
+// they are decoded again, from the downloaded files, as the scene goes on. (The first time, they are downloaded
+// once the scene has been painted: there is all of the first wait for it.) There is no loop of its own: each
 // frame of the lead's player moves it on (player.ts, onFrame).
-import { decodeBlob, decodePart, releaseFrame, type Frame } from './assets';
+import { decodeBlob, decodePart, idle, releaseFrame, type Frame } from './assets';
 import type { Walker } from './cast';
 import { reducedMotion } from './motion';
 import type { Rng } from './steps';
@@ -224,7 +225,12 @@ export class Walk {
     const pictures: Pictures = { sprites, gap: null, body: null };
     const jobs = [...this.files.sprites].map(async ([name, blob]) => {
       const frame = await decodeBlob(blob);
-      sprites.set(name, { near: frame, far: far.has(name) ? darker(frame) : null, w: frame.width, h: frame.height });
+      const sprite: Sprite = { near: frame, far: null, w: frame.width, h: frame.height };
+      sprites.set(name, sprite);
+      if (!far.has(name)) return;
+      // (Each in a quiet moment: she is at work.)
+      await idle();
+      sprite.far = darker(frame);
     });
     const masks = async (): Promise<void> => {
       if (this.files.mask) pictures.gap = { frame: await decodeBlob(this.files.mask), x: this.gapAt[0], y: this.gapAt[1] };

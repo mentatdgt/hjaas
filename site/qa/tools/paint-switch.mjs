@@ -15,7 +15,8 @@ import sharp from 'sharp';
 
 const prod = process.env.HJ_PROD ?? 'http://localhost:4173/';
 const old = process.env.HJ_OLD_PROD ?? 'http://localhost:4196/';
-const out = new URL('../paint-switch/', import.meta.url).pathname;
+// (HJ_OUT: another folder for the results, e.g. ../load-speed/switch/)
+const out = new URL(process.env.HJ_OUT ?? '../paint-switch/', import.meta.url).pathname;
 await mkdir(out, { recursive: true });
 const phone = { ...devices['iPhone 14'], viewport: { width: 390, height: 844 } };
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

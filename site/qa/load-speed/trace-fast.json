@@ -1,0 +1,684 @@
+{
+ "now": [
+  {
+   "rows": {
+    "opening (Build)": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 11,
+     "tasksOver16": 0
+    },
+    "Grow": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 11,
+     "tasksOver16": 0
+    },
+    "Design": {
+     "frames": 285,
+     "dropped": 3,
+     "beforeTheWash": 2,
+     "droppedAt": [
+      313,
+      1863,
+      4496
+     ],
+     "longestTaskMs": 37,
+     "tasksOver16": 2
+    },
+    "Film": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 4,
+     "tasksOver16": 0
+    },
+    "Set": {
+     "frames": 285,
+     "dropped": 4,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4478,
+      4495,
+      4512,
+      4528
+     ],
+     "longestTaskMs": 76,
+     "tasksOver16": 2
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "frames": 285,
+     "dropped": 7,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4064,
+      4080,
+      4564,
+      4597,
+      4614,
+      4630,
+      4647
+     ],
+     "longestTaskMs": 44,
+     "tasksOver16": 1
+    },
+    "Grow": {
+     "frames": 285,
+     "dropped": 4,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4479,
+      4496,
+      4513,
+      4529
+     ],
+     "longestTaskMs": 75,
+     "tasksOver16": 2
+    },
+    "Design": {
+     "frames": 285,
+     "dropped": 4,
+     "beforeTheWash": 2,
+     "droppedAt": [
+      313,
+      1863,
+      4497,
+      4513
+     ],
+     "longestTaskMs": 63,
+     "tasksOver16": 2
+    },
+    "Film": {
+     "frames": 285,
+     "dropped": 4,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4479,
+      4496,
+      4513,
+      4529
+     ],
+     "longestTaskMs": 75,
+     "tasksOver16": 1
+    },
+    "Set": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 8,
+     "tasksOver16": 0
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 6,
+     "tasksOver16": 0
+    },
+    "Grow": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 7,
+     "tasksOver16": 0
+    },
+    "Design": {
+     "frames": 285,
+     "dropped": 1,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4481
+     ],
+     "longestTaskMs": 31,
+     "tasksOver16": 2
+    },
+    "Film": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 10,
+     "tasksOver16": 0
+    },
+    "Set": {
+     "frames": 285,
+     "dropped": 3,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4480,
+      4497,
+      4513
+     ],
+     "longestTaskMs": 51,
+     "tasksOver16": 1
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 5,
+     "tasksOver16": 0
+    },
+    "Grow": {
+     "frames": 285,
+     "dropped": 1,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4479
+     ],
+     "longestTaskMs": 15,
+     "tasksOver16": 0
+    },
+    "Design": {
+     "frames": 285,
+     "dropped": 3,
+     "beforeTheWash": 3,
+     "droppedAt": [
+      297,
+      314,
+      1864
+     ],
+     "longestTaskMs": 44,
+     "tasksOver16": 1
+    },
+    "Film": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 13,
+     "tasksOver16": 0
+    },
+    "Set": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 10,
+     "tasksOver16": 0
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 4,
+     "tasksOver16": 0
+    },
+    "Grow": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 7,
+     "tasksOver16": 0
+    },
+    "Design": {
+     "frames": 285,
+     "dropped": 2,
+     "beforeTheWash": 2,
+     "droppedAt": [
+      313,
+      1863
+     ],
+     "longestTaskMs": 31,
+     "tasksOver16": 2
+    },
+    "Film": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 4,
+     "tasksOver16": 0
+    },
+    "Set": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 5,
+     "tasksOver16": 0
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "frames": 285,
+     "dropped": 36,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4062,
+      4079,
+      4096,
+      4112,
+      4129,
+      4146,
+      4162,
+      4179,
+      4196,
+      4212,
+      4229,
+      4246,
+      4262,
+      4279,
+      4296,
+      4312,
+      4329,
+      4346,
+      4362,
+      4379,
+      4462,
+      4479,
+      4496,
+      4512,
+      4529,
+      4546,
+      4562,
+      4596,
+      4612,
+      4629
+     ],
+     "longestTaskMs": 349,
+     "tasksOver16": 2
+    },
+    "Grow": {
+     "frames": 285,
+     "dropped": 4,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4481,
+      4497,
+      4514,
+      4531
+     ],
+     "longestTaskMs": 79,
+     "tasksOver16": 2
+    },
+    "Design": {
+     "frames": 285,
+     "dropped": 5,
+     "beforeTheWash": 2,
+     "droppedAt": [
+      298,
+      1864,
+      4498,
+      4514,
+      4531
+     ],
+     "longestTaskMs": 71,
+     "tasksOver16": 2
+    },
+    "Film": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 10,
+     "tasksOver16": 0
+    },
+    "Set": {
+     "frames": 286,
+     "dropped": 6,
+     "beforeTheWash": 2,
+     "droppedAt": [
+      7,
+      24,
+      4474,
+      4490,
+      4507,
+      4524
+     ],
+     "longestTaskMs": 79,
+     "tasksOver16": 1
+    }
+   },
+   "errors": []
+  }
+ ],
+ "before": [
+  {
+   "rows": {
+    "opening (Build)": {
+     "frames": 285,
+     "dropped": 2,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4065,
+      4565
+     ],
+     "longestTaskMs": 30,
+     "tasksOver16": 1
+    },
+    "Grow": {
+     "frames": 285,
+     "dropped": 1,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4480
+     ],
+     "longestTaskMs": 16,
+     "tasksOver16": 1
+    },
+    "Design": {
+     "frames": 285,
+     "dropped": 5,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4064,
+      4497,
+      4514,
+      4530,
+      4547
+     ],
+     "longestTaskMs": 87,
+     "tasksOver16": 2
+    },
+    "Film": {
+     "frames": 285,
+     "dropped": 1,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4476
+     ],
+     "longestTaskMs": 20,
+     "tasksOver16": 1
+    },
+    "Set": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 13,
+     "tasksOver16": 0
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "frames": 285,
+     "dropped": 2,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4064,
+      4564
+     ],
+     "longestTaskMs": 18,
+     "tasksOver16": 1
+    },
+    "Grow": {
+     "frames": 285,
+     "dropped": 4,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4480,
+      4497,
+      4513,
+      4530
+     ],
+     "longestTaskMs": 77,
+     "tasksOver16": 1
+    },
+    "Design": {
+     "frames": 285,
+     "dropped": 1,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4480
+     ],
+     "longestTaskMs": 31,
+     "tasksOver16": 1
+    },
+    "Film": {
+     "frames": 285,
+     "dropped": 1,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4479
+     ],
+     "longestTaskMs": 27,
+     "tasksOver16": 1
+    },
+    "Set": {
+     "frames": 285,
+     "dropped": 2,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4477,
+      4494
+     ],
+     "longestTaskMs": 39,
+     "tasksOver16": 1
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 11,
+     "tasksOver16": 0
+    },
+    "Grow": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 4,
+     "tasksOver16": 0
+    },
+    "Design": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 4,
+     "tasksOver16": 0
+    },
+    "Film": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 8,
+     "tasksOver16": 0
+    },
+    "Set": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 11,
+     "tasksOver16": 0
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "frames": 285,
+     "dropped": 2,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4064,
+      4564
+     ],
+     "longestTaskMs": 20,
+     "tasksOver16": 1
+    },
+    "Grow": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 5,
+     "tasksOver16": 0
+    },
+    "Design": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 14,
+     "tasksOver16": 0
+    },
+    "Film": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 3,
+     "tasksOver16": 0
+    },
+    "Set": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 11,
+     "tasksOver16": 0
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 4,
+     "tasksOver16": 0
+    },
+    "Grow": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 8,
+     "tasksOver16": 0
+    },
+    "Design": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 3,
+     "tasksOver16": 0
+    },
+    "Film": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 5,
+     "tasksOver16": 0
+    },
+    "Set": {
+     "frames": 285,
+     "dropped": 6,
+     "beforeTheWash": 2,
+     "droppedAt": [
+      2097,
+      2114,
+      4497,
+      4514,
+      4531,
+      4681
+     ],
+     "longestTaskMs": 78,
+     "tasksOver16": 3
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "frames": 285,
+     "dropped": 1,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4564
+     ],
+     "longestTaskMs": 8,
+     "tasksOver16": 0
+    },
+    "Grow": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 7,
+     "tasksOver16": 0
+    },
+    "Design": {
+     "frames": 285,
+     "dropped": 1,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4480
+     ],
+     "longestTaskMs": 31,
+     "tasksOver16": 1
+    },
+    "Film": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 5,
+     "tasksOver16": 0
+    },
+    "Set": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 13,
+     "tasksOver16": 0
+    }
+   },
+   "errors": []
+  }
+ ]
+}

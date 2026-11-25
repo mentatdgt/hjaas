@@ -1,0 +1,506 @@
+{
+ "webkit, fast: opening Build": {
+  "before": {
+   "ms": [
+    3535,
+    3353,
+    3626
+   ],
+   "median": 3535,
+   "bytes": {
+    "requests": 30,
+    "kB": 2495
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    2477,
+    2517,
+    2496
+   ],
+   "median": 2496,
+   "bytes": {
+    "requests": 29,
+    "kB": 2007
+   },
+   "errors": []
+  }
+ },
+ "webkit, fast: opening grow": {
+  "before": {
+   "ms": [
+    3392,
+    3414,
+    3298
+   ],
+   "median": 3392,
+   "bytes": {
+    "requests": 27,
+    "kB": 2605
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    2498,
+    2545,
+    2459
+   ],
+   "median": 2498,
+   "bytes": {
+    "requests": 27,
+    "kB": 1968
+   },
+   "errors": []
+  }
+ },
+ "webkit, fast: opening design": {
+  "before": {
+   "ms": [
+    4047,
+    4124,
+    4087
+   ],
+   "median": 4087,
+   "bytes": {
+    "requests": 66,
+    "kB": 3145
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    2878,
+    2741,
+    2703
+   ],
+   "median": 2741,
+   "bytes": {
+    "requests": 34,
+    "kB": 2222
+   },
+   "errors": []
+  }
+ },
+ "webkit, fast: opening film": {
+  "before": {
+   "ms": [
+    4299,
+    4373,
+    4312
+   ],
+   "median": 4312,
+   "bytes": {
+    "requests": 45,
+    "kB": 3709
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    2696,
+    2699,
+    2645
+   ],
+   "median": 2696,
+   "bytes": {
+    "requests": 38,
+    "kB": 2053
+   },
+   "errors": []
+  }
+ },
+ "webkit, fast: opening set": {
+  "before": {
+   "ms": [
+    5050,
+    5208,
+    5058
+   ],
+   "median": 5058,
+   "bytes": {
+    "requests": 139,
+    "kB": 3773
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    2563,
+    2525,
+    2557
+   ],
+   "median": 2557,
+   "bytes": {
+    "requests": 35,
+    "kB": 1913
+   },
+   "errors": []
+  }
+ },
+ "webkit, fast: cold switch to grow": {
+  "before": {
+   "ms": [
+    2859,
+    2855,
+    2866
+   ],
+   "median": 2859,
+   "bytes": {
+    "requests": 15,
+    "kB": 2452
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    1894,
+    1932,
+    1926
+   ],
+   "median": 1926,
+   "bytes": {
+    "requests": 12,
+    "kB": 1693
+   },
+   "errors": []
+  }
+ },
+ "webkit, fast: cold switch to design": {
+  "before": {
+   "ms": [
+    3771,
+    3726,
+    3774
+   ],
+   "median": 3771,
+   "bytes": {
+    "requests": 53,
+    "kB": 3084
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    2200,
+    2213,
+    2077
+   ],
+   "median": 2200,
+   "bytes": {
+    "requests": 17,
+    "kB": 1917
+   },
+   "errors": []
+  }
+ },
+ "webkit, fast: cold switch to set": {
+  "before": {
+   "ms": [
+    5214,
+    5151,
+    5106
+   ],
+   "median": 5151,
+   "bytes": {
+    "requests": 129,
+    "kB": 3944
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    1947,
+    1967,
+    1929
+   ],
+   "median": 1947,
+   "bytes": {
+    "requests": 19,
+    "kB": 1690
+   },
+   "errors": []
+  }
+ },
+ "webkit, fast: switch to grow, its room fetched ahead": {
+  "before": {
+   "ms": [
+    1658,
+    1659,
+    1655
+   ],
+   "median": 1658,
+   "bytes": {
+    "requests": 11,
+    "kB": 1104
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    817,
+    779,
+    774
+   ],
+   "median": 779,
+   "bytes": {
+    "requests": 12,
+    "kB": 462
+   },
+   "errors": []
+  }
+ },
+ "webkit, slow: opening Build": {
+  "before": {
+   "ms": [
+    13935,
+    13786,
+    13751
+   ],
+   "median": 13786,
+   "bytes": {
+    "requests": 30,
+    "kB": 2495
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    9745,
+    9618,
+    9564
+   ],
+   "median": 9618,
+   "bytes": {
+    "requests": 27,
+    "kB": 1788
+   },
+   "errors": []
+  }
+ },
+ "webkit, slow: opening grow": {
+  "before": {
+   "ms": [
+    14204,
+    14256,
+    14236
+   ],
+   "median": 14236,
+   "bytes": {
+    "requests": 27,
+    "kB": 2605
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    9956,
+    10075,
+    9904
+   ],
+   "median": 9956,
+   "bytes": {
+    "requests": 27,
+    "kB": 1818
+   },
+   "errors": []
+  }
+ },
+ "webkit, slow: opening design": {
+  "before": {
+   "ms": [
+    16910,
+    17091,
+    16879
+   ],
+   "median": 16910,
+   "bytes": {
+    "requests": 66,
+    "kB": 3145
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    10105,
+    9887,
+    9931
+   ],
+   "median": 9931,
+   "bytes": {
+    "requests": 34,
+    "kB": 1823
+   },
+   "errors": []
+  }
+ },
+ "webkit, slow: opening film": {
+  "before": {
+   "ms": [
+    19666,
+    19493,
+    19481
+   ],
+   "median": 19493,
+   "bytes": {
+    "requests": 45,
+    "kB": 3709
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    9968,
+    9965,
+    9747
+   ],
+   "median": 9965,
+   "bytes": {
+    "requests": 32,
+    "kB": 1809
+   },
+   "errors": []
+  }
+ },
+ "webkit, slow: opening set": {
+  "before": {
+   "ms": [
+    20190,
+    20050,
+    20198
+   ],
+   "median": 20190,
+   "bytes": {
+    "requests": 139,
+    "kB": 3773
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    9102,
+    9217,
+    9175
+   ],
+   "median": 9175,
+   "bytes": {
+    "requests": 29,
+    "kB": 1674
+   },
+   "errors": []
+  }
+ },
+ "webkit, slow: cold switch to grow": {
+  "before": {
+   "ms": [
+    16446,
+    16439,
+    16408
+   ],
+   "median": 16439,
+   "bytes": {
+    "requests": 22,
+    "kB": 3209
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    8136,
+    8137,
+    8212
+   ],
+   "median": 8137,
+   "bytes": {
+    "requests": 12,
+    "kB": 1516
+   },
+   "errors": []
+  }
+ },
+ "webkit, slow: cold switch to design": {
+  "before": {
+   "ms": [
+    18533,
+    18501,
+    18537
+   ],
+   "median": 18533,
+   "bytes": {
+    "requests": 58,
+    "kB": 3622
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    8303,
+    8304,
+    8486
+   ],
+   "median": 8304,
+   "bytes": {
+    "requests": 17,
+    "kB": 1543
+   },
+   "errors": []
+  }
+ },
+ "webkit, slow: cold switch to set": {
+  "before": {
+   "ms": [
+    23982,
+    24022,
+    24150
+   ],
+   "median": 24022,
+   "bytes": {
+    "requests": 135,
+    "kB": 4533
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    7749,
+    7658,
+    7639
+   ],
+   "median": 7658,
+   "bytes": {
+    "requests": 13,
+    "kB": 1422
+   },
+   "errors": []
+  }
+ },
+ "webkit, slow: switch to grow, its room fetched ahead": {
+  "before": {
+   "ms": [
+    6239,
+    6242,
+    6259
+   ],
+   "median": 6242,
+   "bytes": {
+    "requests": 11,
+    "kB": 1104
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    1986,
+    2074,
+    1982
+   ],
+   "median": 1986,
+   "bytes": {
+    "requests": 12,
+    "kB": 293
+   },
+   "errors": []
+  }
+ }
+}

@@ -30,7 +30,7 @@ export async function requiredAsset<T>(load: () => Promise<T>): Promise<T> {
   try {
     return await load();
   } catch (error) {
-    if (error instanceof DeadlineError) throw error;
+    if (error instanceof DeadlineError || (error as Error)?.name === 'TimeoutError') throw error;
     return load();
   }
 }
@@ -62,15 +62,33 @@ export function assetSignal(): AbortSignal {
   return AbortSignal.timeout(NETWORK_DEADLINE_MS);
 }
 
+/** Runs a request under the network deadline, and gives it up at once if `signal` says so. */
+async function underDeadline<T>(signal: AbortSignal | undefined, request: (signal: AbortSignal) => Promise<T>): Promise<T> {
+  if (!signal) return request(assetSignal());
+  const control = new AbortController();
+  const deadline = assetSignal();
+  const stop = (): void => control.abort(signal.reason);
+  const expire = (): void => control.abort(deadline.reason);
+  signal.addEventListener('abort', stop, { once: true });
+  deadline.addEventListener('abort', expire, { once: true });
+  if (signal.aborted) stop();
+  try {
+    return await request(control.signal);
+  } finally {
+    signal.removeEventListener('abort', stop);
+    deadline.removeEventListener('abort', expire);
+  }
+}
+
 /** Compressed bytes can be reused across rooms and are evicted least-recently used. */
 const BLOB_CACHE_LIMIT = 192;
 const blobCache = new Map<string, Promise<Blob>>();
 
-function blobOf(url: string): Promise<Blob> {
+function blobOf(url: string, signal?: AbortSignal): Promise<Blob> {
   let blob = blobCache.get(url);
   if (blob) blobCache.delete(url);
   else {
-    blob = fetchBlob(url);
+    blob = fetchBlob(url, undefined, signal);
     const pending = blob;
     void pending.catch(() => {
       if (blobCache.get(url) === pending) blobCache.delete(url);
@@ -108,8 +126,8 @@ export class FrameStore {
 }
 
 /** Download a frame without decoding it. */
-export function fetchFrame(url: string): Promise<void> {
-  return blobOf(url).then(() => {});
+export function fetchFrame(url: string, signal?: AbortSignal): Promise<void> {
+  return blobOf(url, signal).then(() => {});
 }
 
 async function decodeFrame(url: string): Promise<Frame> {
@@ -122,10 +140,21 @@ async function decodeFrame(url: string): Promise<Frame> {
 }
 
 /** A file's bytes, as downloaded: an image kept this way takes a fraction of its decoded size. */
-export async function fetchBlob(url: string, priority?: RequestInit['priority']): Promise<Blob> {
-  const response = await fetch(url, { signal: assetSignal(), priority });
-  if (!response.ok) throw new Error(`${url}: ${response.status}`);
-  return response.blob();
+export function fetchBlob(url: string, priority?: RequestInit['priority'], signal?: AbortSignal): Promise<Blob> {
+  return underDeadline(signal, async (limit) => {
+    const response = await fetch(url, { signal: limit, priority });
+    if (!response.ok) throw new Error(`${url}: ${response.status}`);
+    return response.blob();
+  });
+}
+
+/** A small JSON file. */
+export function fetchJson<T>(url: string, signal?: AbortSignal): Promise<T> {
+  return underDeadline(signal, async (limit) => {
+    const response = await fetch(url, { signal: limit });
+    if (!response.ok) throw new Error(`${url}: ${response.status}`);
+    return (await response.json()) as T;
+  });
 }
 
 // Decode off the main thread. Browsers that cannot run the worker decode on the page instead.
@@ -255,7 +284,8 @@ export function releaseFrame(frame: Frame): void {
 const stalled = new Map<string, number>();
 
 /** A scene's plate, downloaded and decoded. Resolves with the address to give the scene's <img>. */
-export function loadPlate(path: string): Promise<HTMLImageElement> {
+export async function loadPlate(path: string): Promise<HTMLImageElement> {
+  await warming.get(path)?.catch(() => {});
   // An <img> request is the only kind WebKit matches to the document's image preload.
   // After a stall it is asked for under another address: under its own it would be given the same stalled request,
   // which the document's preload keeps open.
@@ -270,13 +300,67 @@ export function loadPlate(path: string): Promise<HTMLImageElement> {
   });
 }
 
-/** Warm a single likely room when the browser has time and the opening room is still on show. */
-export async function warmPlate(path: string, stillHere: () => boolean): Promise<void> {
-  await idle();
-  if (!stillHere()) return;
-  const img = new Image();
-  img.setAttribute('fetchpriority', 'low');
-  await loadImage(asset(path), img).catch(() => {});
+/** Rooms being downloaded ahead of time (see warmRoom). */
+const warming = new Map<string, Promise<void>>();
+/** A download ahead of time that brings nothing for this long is given up: the room's own request starts afresh. */
+const WARM_STALL_MS = 8000;
+
+/**
+ * Download a room's picture into the browser's own cache, at low priority, and keep nothing of it: the bytes are let
+ * go as they arrive and nothing is decoded. Should its scene be asked for meanwhile, loadPlate() waits for this to
+ * finish and takes the file from the cache, so that it never crosses the network twice.
+ */
+export function warmRoom(path: string, signal: AbortSignal): Promise<void> {
+  const under = warming.get(path);
+  if (under) return under;
+  const control = new AbortController();
+  const stop = (): void => control.abort();
+  const job = (async () => {
+    let stall: ReturnType<typeof setTimeout> | undefined;
+    const alive = (): void => {
+      clearTimeout(stall);
+      stall = setTimeout(stop, WARM_STALL_MS);
+    };
+    signal.addEventListener('abort', stop, { once: true });
+    if (signal.aborted) stop();
+    try {
+      alive();
+      const response = await fetch(asset(path), { signal: control.signal, priority: 'low' });
+      const body = response.body?.getReader();
+      if (!body) return;
+      while (!(await body.read()).done) alive();
+    } finally {
+      clearTimeout(stall);
+      signal.removeEventListener('abort', stop);
+      warming.delete(path);
+    }
+  })();
+  warming.set(path, job);
+  return job;
+}
+
+/**
+ * Whether this browser keeps a room it has downloaded: asked of its cache alone, never of the network. A private tab
+ * in Safari (and some apps' own browsers) keeps nothing of what fetch() brings, and a room fetched ahead there would
+ * be downloaded twice.
+ */
+export async function keepsRooms(path: string): Promise<boolean> {
+  const control = new AbortController();
+  try {
+    const { ok } = await fetch(asset(path), { cache: 'only-if-cached', mode: 'same-origin', signal: control.signal });
+    return ok;
+  } catch {
+    return false;
+  } finally {
+    // (The answer is enough.)
+    control.abort();
+  }
+}
+
+/** The visitor has asked the browser to use less data. */
+export function savesData(): boolean {
+  const { connection } = navigator as Navigator & { connection?: { saveData?: boolean } };
+  return connection?.saveData === true || matchMedia('(prefers-reduced-data: reduce)').matches;
 }
 
 /** Resolves when the browser has a quiet moment (or soon enough anyway). */

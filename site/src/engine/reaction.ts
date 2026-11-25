@@ -1,7 +1,7 @@
 // The reaction (look up -> beam -> thumbs-up -> back to work) is data. Wren's reaction.json lists the
 // frames and their hold times; new in-betweens or the wink (tasks/015) arrive as a new manifest plus
 // image files, with no code changes.
-import { asset, assetSignal, idle } from './assets';
+import { asset, fetchJson, idle } from './assets';
 import type { Step } from './steps';
 
 interface ReactionManifest {
@@ -25,12 +25,11 @@ export async function loadReaction(
   dir: string,
   active: () => boolean,
   loadPose: (pose: string, url: string) => Promise<void>,
+  signal?: AbortSignal,
 ): Promise<Reaction | null> {
   const DIR = sceneDir + dir;
-  const sharing = loadShared(DIR);
-  const response = await fetch(asset(`${DIR}reaction.json`), { signal: assetSignal() });
-  if (!response.ok) throw new Error(`reaction.json: ${response.status}`);
-  const manifest = (await response.json()) as ReactionManifest;
+  const sharing = loadShared(DIR, signal);
+  const manifest = await fetchJson<ReactionManifest>(asset(`${DIR}reaction.json`), signal);
   const shared = await sharing;
 
   // Frames with ms 0 only mark where the loop hands over and takes back (the contact frame).
@@ -50,10 +49,9 @@ export async function loadReaction(
 }
 
 /** Reaction files that are byte-identical to an upscaled frame, mapped to that one copy (made by `npm run assets`). */
-async function loadShared(DIR: string): Promise<Record<string, string>> {
+async function loadShared(DIR: string, signal?: AbortSignal): Promise<Record<string, string>> {
   try {
-    const response = await fetch(asset(`${DIR}shared.json`), { signal: assetSignal() });
-    return response.ok ? ((await response.json()) as Record<string, string>) : {};
+    return await fetchJson<Record<string, string>>(asset(`${DIR}shared.json`), signal);
   } catch {
     return {};
   }

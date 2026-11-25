@@ -1,7 +1,7 @@
 import '@fontsource-variable/bricolage-grotesque';
 import '@fontsource/spectral/latin-400.css';
 import './site.css';
-import { retainAssets, setAssetBase, warmPlate } from './assets';
+import { idle, keepsRooms, retainAssets, savesData, setAssetBase, warmRoom } from './assets';
 import { Caption, MUSHROOM_ICON, type CaptionCopy } from './caption';
 import { DEFAULT_EDGE, EDGE_STYLES, edgeSeed, type EdgeStyle } from './edge';
 import { flags } from './flags';
@@ -9,7 +9,7 @@ import { ContactForm } from './form';
 import { Logo } from './logo';
 import { onReducedMotionChange, reducedMotion } from './motion';
 import { Pan } from './pan';
-import { Scene } from './scene';
+import { Casting, Scene, type SceneHost } from './scene';
 import { freshScene, huntView, isProgressKey, loadProgress, presetAll, resetProgress, saveFind, savePan, saveSeen, type HuntView, type SceneProgress } from './state';
 import { seeded } from './steps';
 import { Transition } from './transition';
@@ -442,6 +442,8 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
 
   const loading = new Map<string, Promise<Scene>>();
   const scenesLoaded = new Map<string, Scene>();
+  /** Each scene's cast being downloaded, from when the scene is first asked for. */
+  const castings = new Map<string, Casting>();
   /** A scene, loaded once. Its mushrooms report back here. */
   const sceneFor = (config: SceneConfig): Promise<Scene> => {
     let scene = loading.get(config.id);
@@ -449,10 +451,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     const found = foundIn.get(config.id)!;
     const of = config.spots.length;
     let self: Scene | undefined;
-    // The opening scene comes with its character; any other scene fetches hers when it is first opened.
-    scene = Scene.load(
-      config,
-      {
+    const sceneHost: SceneHost = {
       flyLayer,
       found,
       target: () => caption.targetRect(),
@@ -493,9 +492,11 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       },
       onPose: flags.debug ? (pose, at) => poses.push([pose, Math.round(at)]) : undefined,
       edge: { style: edgeStyle, seed: edgeSeed, paper },
-      },
-      !current,
-    ).then((loaded) => {
+    };
+    const casting = castings.get(config.id) ?? new Casting(config, sceneHost);
+    castings.set(config.id, casting);
+    // The opening scene's character is decoded with it; any other scene's, when it goes in the window.
+    scene = Scene.load(config, sceneHost, !current, casting).then((loaded) => {
       if (destroyed) {
         loaded.destroy();
         return loaded;
@@ -543,6 +544,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   /** Put a scene in the window: its plate, its pan position, its name. */
   const place = (scene: Scene): void => {
     current = scene;
+    shownScenes.add(scene.config.id);
     scene.hunt.el.inert = true;
     viewport.replaceChildren(scene.plate);
     figure.setAttribute('aria-label', scene.config.picture);
@@ -585,6 +587,52 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     retry.hidden = false;
     retry.setAttribute('aria-label', `Retry ${config.label}`);
     if (!playing) show(skip, false);
+    current?.resume();
+  };
+
+  /** The scenes that have been in the window in this visit. */
+  const shownScenes = new Set<string>();
+  /** The next room being downloaded ahead of its tap (one at a time), and those already here. */
+  let ahead: { id: string; control: AbortController } | null = null;
+  const aheadOf = new Set<string>();
+  /** The browser keeps no rooms: none is downloaded ahead. */
+  let cacheless = false;
+  /**
+   * A scene has settled: once its routine is running, the room of the next tab not visited yet is downloaded into the
+   * browser's cache, at low priority. It is given up as soon as another scene is asked for.
+   */
+  const lookAhead = async (scene: Scene): Promise<void> => {
+    if (savesData() || cacheless) return;
+    await scene.stock();
+    await idle();
+    const stays = (): boolean => !destroyed && !ahead && !busy() && !document.hidden && current === scene && wanted === scene.config;
+    if (!stays()) return;
+    const from = scenes.indexOf(scene.config);
+    const next = [...scenes.slice(from + 1), ...scenes.slice(0, from)].find((each) => !shownScenes.has(each.id));
+    // (Asked for already, though not shown: its room has been downloaded.)
+    if (!next || loading.has(next.id) || aheadOf.has(next.id)) return;
+    // The room on show has been downloaded: if the browser has not kept it, it would not keep this one either.
+    if (!(await keepsRooms(scene.config.assets + scene.config.plate))) {
+      cacheless = true;
+      return;
+    }
+    if (!stays()) return;
+    const mine = { id: next.id, control: new AbortController() };
+    ahead = mine;
+    try {
+      await warmRoom(next.assets + next.plate, mine.control.signal);
+      aheadOf.add(next.id);
+    } catch {
+      // Called off, or it failed: the room is downloaded when it is asked for.
+    } finally {
+      if (ahead === mine) ahead = null;
+    }
+  };
+  /** `config` is asked for: nothing else is downloaded meanwhile. (Its own room, if that is under way, is what it waits for.) */
+  const makeWay = (config: SceneConfig): void => {
+    if (ahead && ahead.id !== config.id) ahead.control.abort();
+    if (config.id === current?.config.id) current.resume();
+    else current?.pause();
   };
 
   /** A picture is finished, and the page is quiet again. */
@@ -597,11 +645,15 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     quietSeconds = 0;
     showControls(false);
     void scene.loadMore().then(() => void (ready = true));
+    void lookAhead(scene);
   };
   /** Start a scene's painting, brush-over or fade. It is not waited for: another scene may be asked for meanwhile. */
   const play = (scene: Scene, motion: () => Promise<void>, then?: () => void): void => {
     const mine = ++plays;
     playing = scene;
+    // Her other drawings come while the brush is at work (unless another scene has been asked for meanwhile).
+    if (wanted.id === scene.config.id) void scene.stock();
+    else scene.pause();
     void motion().then(() => {
       if (destroyed || !playing || plays !== mine) return;
       playing = null;
@@ -673,9 +725,11 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     };
     const overtaken = new Promise<null>((resolve) => asked.addEventListener('abort', () => resolve(null), { once: true }));
     const bringing = (async () => {
-      const next = await sceneFor(config);
+      const coming = sceneFor(config);
+      // Her first frames' files with the room. (Asked for before, and called off: they are asked for again.)
+      castings.get(config.id)?.start().catch(() => {});
+      const next = await coming;
       if (asked.aborted) return next;
-      // Fetch her first frames once this room has been requested.
       next.preload();
       if (paintsInFull(config) && !reducedMotion()) await Promise.race([next.loaded().catch(warn(config)), overtaken]);
       // A scene out of sight holds no decoded picture: its room is decoded again here, from the browser's
@@ -694,6 +748,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     })();
     const next = await Promise.race([bringing, overtaken]);
     if (next && !asked.aborted) return next;
+    if (wanted.id !== config.id) castings.get(config.id)?.cancel();
     void bringing.then(drop, () => {});
     return null;
   };
@@ -803,6 +858,8 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       }
     } finally {
       moving = false;
+      // (The visitor has stayed after all.)
+      if (current && !playing && settled && wanted.id === current.config.id) void lookAhead(current);
     }
   };
   /**
@@ -818,6 +875,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       // (If one is on its way to the window, it need not be as carefully prepared.)
       if (moving) hasten();
     }
+    makeWay(config);
     retry.hidden = true;
     void travel();
   };
@@ -874,6 +932,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     if (!document.hidden) startLogoIdle();
     else if (begun) settleMotion(false);
     current?.visibility();
+    if (!document.hidden && settled && current && !busy()) void lookAhead(current);
   };
   document.addEventListener('visibilitychange', onVisibility);
   cleanup.push(() => document.removeEventListener('visibilitychange', onVisibility));
@@ -947,13 +1006,6 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
           if (!destroyed && !busy() && !paused && current === scene && !rush(signal)) pan.drift();
         }, DRIFT_AFTER_MS);
       }
-      const nextId = viewOf(config).next?.id;
-      const likelyNext = nextId && sceneById(nextId);
-      if (likelyNext && wanted === config) {
-        void warmPlate(likelyNext.assets + likelyNext.plate, () =>
-          !destroyed && !busy() && !document.hidden && current === scene,
-        );
-      }
     };
     moving = false;
     if (painting && !rush(signal)) play(scene, () => transition.paint(scene), opened);
@@ -980,6 +1032,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       paintWait.abort();
       for (const fade of leaving) fade.finish();
       asking.abort();
+      ahead?.control.abort();
       hurry.abort();
       transition.clear();
       cleanup.forEach((fn) => fn());

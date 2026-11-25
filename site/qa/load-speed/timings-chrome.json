@@ -1,0 +1,506 @@
+{
+ "chrome, fast: opening Build": {
+  "before": {
+   "ms": [
+    3220,
+    3226,
+    3357
+   ],
+   "median": 3226,
+   "bytes": {
+    "requests": 31,
+    "kB": 2498
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    2336,
+    2356,
+    2367
+   ],
+   "median": 2356,
+   "bytes": {
+    "requests": 29,
+    "kB": 1991
+   },
+   "errors": []
+  }
+ },
+ "chrome, fast: opening grow": {
+  "before": {
+   "ms": [
+    3289,
+    3263,
+    3224
+   ],
+   "median": 3263,
+   "bytes": {
+    "requests": 28,
+    "kB": 2608
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    2408,
+    2394,
+    2355
+   ],
+   "median": 2394,
+   "bytes": {
+    "requests": 28,
+    "kB": 2031
+   },
+   "errors": []
+  }
+ },
+ "chrome, fast: opening design": {
+  "before": {
+   "ms": [
+    3998,
+    4045,
+    3963
+   ],
+   "median": 3998,
+   "bytes": {
+    "requests": 67,
+    "kB": 3148
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    2622,
+    2633,
+    2581
+   ],
+   "median": 2622,
+   "bytes": {
+    "requests": 35,
+    "kB": 2227
+   },
+   "errors": []
+  }
+ },
+ "chrome, fast: opening film": {
+  "before": {
+   "ms": [
+    3220,
+    3285,
+    3280
+   ],
+   "median": 3280,
+   "bytes": {
+    "requests": 46,
+    "kB": 2478
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    2722,
+    2709,
+    2656
+   ],
+   "median": 2709,
+   "bytes": {
+    "requests": 39,
+    "kB": 2070
+   },
+   "errors": []
+  }
+ },
+ "chrome, fast: opening set": {
+  "before": {
+   "ms": [
+    4874,
+    4820,
+    4702
+   ],
+   "median": 4820,
+   "bytes": {
+    "requests": 140,
+    "kB": 3776
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    2417,
+    2380,
+    2396
+   ],
+   "median": 2396,
+   "bytes": {
+    "requests": 35,
+    "kB": 1941
+   },
+   "errors": []
+  }
+ },
+ "chrome, fast: cold switch to grow": {
+  "before": {
+   "ms": [
+    2713,
+    2698,
+    2699
+   ],
+   "median": 2699,
+   "bytes": {
+    "requests": 16,
+    "kB": 2564
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    1875,
+    1882,
+    1851
+   ],
+   "median": 1875,
+   "bytes": {
+    "requests": 12,
+    "kB": 1691
+   },
+   "errors": []
+  }
+ },
+ "chrome, fast: cold switch to design": {
+  "before": {
+   "ms": [
+    3613,
+    3588,
+    3677
+   ],
+   "median": 3613,
+   "bytes": {
+    "requests": 53,
+    "kB": 3084
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    2068,
+    2118,
+    2037
+   ],
+   "median": 2068,
+   "bytes": {
+    "requests": 17,
+    "kB": 1900
+   },
+   "errors": []
+  }
+ },
+ "chrome, fast: cold switch to set": {
+  "before": {
+   "ms": [
+    5104,
+    5090,
+    5179
+   ],
+   "median": 5104,
+   "bytes": {
+    "requests": 130,
+    "kB": 4054
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    1912,
+    1879,
+    1877
+   ],
+   "median": 1879,
+   "bytes": {
+    "requests": 19,
+    "kB": 1689
+   },
+   "errors": []
+  }
+ },
+ "chrome, fast: switch to grow, its room fetched ahead": {
+  "before": {
+   "ms": [
+    1655,
+    1628,
+    1645
+   ],
+   "median": 1645,
+   "bytes": {
+    "requests": 12,
+    "kB": 1104
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    783,
+    774,
+    768
+   ],
+   "median": 774,
+   "bytes": {
+    "requests": 12,
+    "kB": 444
+   },
+   "errors": []
+  }
+ },
+ "chrome, slow: opening Build": {
+  "before": {
+   "ms": [
+    13633,
+    13595,
+    13620
+   ],
+   "median": 13620,
+   "bytes": {
+    "requests": 31,
+    "kB": 2498
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    9560,
+    9632,
+    9492
+   ],
+   "median": 9560,
+   "bytes": {
+    "requests": 28,
+    "kB": 1777
+   },
+   "errors": []
+  }
+ },
+ "chrome, slow: opening grow": {
+  "before": {
+   "ms": [
+    14018,
+    14176,
+    14038
+   ],
+   "median": 14038,
+   "bytes": {
+    "requests": 28,
+    "kB": 2608
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    10129,
+    9797,
+    9790
+   ],
+   "median": 9797,
+   "bytes": {
+    "requests": 28,
+    "kB": 1790
+   },
+   "errors": []
+  }
+ },
+ "chrome, slow: opening design": {
+  "before": {
+   "ms": [
+    16915,
+    16989,
+    16912
+   ],
+   "median": 16915,
+   "bytes": {
+    "requests": 67,
+    "kB": 3148
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    9873,
+    9755,
+    9813
+   ],
+   "median": 9813,
+   "bytes": {
+    "requests": 35,
+    "kB": 1807
+   },
+   "errors": []
+  }
+ },
+ "chrome, slow: opening film": {
+  "before": {
+   "ms": [
+    13864,
+    13660,
+    13750
+   ],
+   "median": 13750,
+   "bytes": {
+    "requests": 46,
+    "kB": 2478
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    9980,
+    10125,
+    10037
+   ],
+   "median": 10037,
+   "bytes": {
+    "requests": 33,
+    "kB": 1804
+   },
+   "errors": []
+  }
+ },
+ "chrome, slow: opening set": {
+  "before": {
+   "ms": [
+    20171,
+    20164,
+    20172
+   ],
+   "median": 20171,
+   "bytes": {
+    "requests": 140,
+    "kB": 3776
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    9174,
+    9240,
+    9310
+   ],
+   "median": 9240,
+   "bytes": {
+    "requests": 30,
+    "kB": 1673
+   },
+   "errors": []
+  }
+ },
+ "chrome, slow: cold switch to grow": {
+  "before": {
+   "ms": [
+    16237,
+    16271,
+    16240
+   ],
+   "median": 16240,
+   "bytes": {
+    "requests": 22,
+    "kB": 3223
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    8181,
+    8161,
+    8222
+   ],
+   "median": 8181,
+   "bytes": {
+    "requests": 12,
+    "kB": 1512
+   },
+   "errors": []
+  }
+ },
+ "chrome, slow: cold switch to design": {
+  "before": {
+   "ms": [
+    19069,
+    19107,
+    18987
+   ],
+   "median": 19069,
+   "bytes": {
+    "requests": 59,
+    "kB": 3746
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    8292,
+    8336,
+    8338
+   ],
+   "median": 8336,
+   "bytes": {
+    "requests": 17,
+    "kB": 1550
+   },
+   "errors": []
+  }
+ },
+ "chrome, slow: cold switch to set": {
+  "before": {
+   "ms": [
+    23712,
+    23759,
+    23858
+   ],
+   "median": 23759,
+   "bytes": {
+    "requests": 135,
+    "kB": 4533
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    7617,
+    7648,
+    7657
+   ],
+   "median": 7648,
+   "bytes": {
+    "requests": 13,
+    "kB": 1415
+   },
+   "errors": []
+  }
+ },
+ "chrome, slow: switch to grow, its room fetched ahead": {
+  "before": {
+   "ms": [
+    6368,
+    6388,
+    6676
+   ],
+   "median": 6388,
+   "bytes": {
+    "requests": 12,
+    "kB": 1104
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    1940,
+    2161,
+    2004
+   ],
+   "median": 2004,
+   "bytes": {
+    "requests": 12,
+    "kB": 275
+   },
+   "errors": []
+  }
+ }
+}

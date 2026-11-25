@@ -1,0 +1,61 @@
+{
+ "desktop Chrome": {
+  "switches": 25,
+  "cutShort": 9,
+  "framesChecked": {
+   "build paper": 423,
+   "grow paper": 404,
+   "design paper": 417,
+   "film paper": 411,
+   "set paper": 401,
+   "build over": 856,
+   "set over": 694,
+   "film over": 695,
+   "design over": 696,
+   "grow over": 799
+  },
+  "framesWithTheRoomPaintedAndSheNot": 0,
+  "examples": [],
+  "errors": []
+ },
+ "phone Chrome, 4x slower": {
+  "switches": 25,
+  "cutShort": 9,
+  "framesChecked": {
+   "build paper": 416,
+   "grow paper": 403,
+   "design paper": 428,
+   "film paper": 416,
+   "set paper": 392,
+   "build over": 863,
+   "set over": 639,
+   "film over": 649,
+   "design over": 645,
+   "grow over": 745
+  },
+  "framesWithTheRoomPaintedAndSheNot": 0,
+  "examples": [],
+  "errors": []
+ },
+ "iPhone WebKit": {
+  "switches": 25,
+  "cutShort": 9,
+  "framesChecked": {
+   "build paper": 413,
+   "grow paper": 400,
+   "design paper": 412,
+   "film paper": 412,
+   "set paper": 400,
+   "build over": 854,
+   "set over": 641,
+   "film over": 649,
+   "design over": 643,
+   "grow over": 744
+  },
+  "framesWithTheRoomPaintedAndSheNot": 0,
+  "examples": [],
+  "errors": [
+   "Failed to load resource: resource unavailable"
+  ]
+ }
+}

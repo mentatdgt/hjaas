@@ -23,6 +23,9 @@ export interface HuntOptions {
   onLand: (spot: Spot) => void;
 }
 
+/** For each mushroom drawing, the one shown for it and its shape (its own, unless its file is lost). */
+export type HuntArt = ReadonlyMap<number, { art: number; aspect: number }>;
+
 export class Hunt {
   readonly el: HTMLDivElement;
   private readonly options: HuntOptions;
@@ -31,8 +34,7 @@ export class Hunt {
   /** Each drawing's centre and size, in plate px. */
   private readonly art = new Map<string, { cx: number; cy: number; w: number; h: number }>();
 
-  /** `drawn`: for each mushroom drawing, the one shown for it and its shape (its own, unless its file is lost). */
-  private constructor(options: HuntOptions, drawn: Map<number, { art: number; aspect: number }>) {
+  constructor(options: HuntOptions, drawn: HuntArt) {
     this.options = options;
     this.el = document.createElement('div');
     this.el.className = 'hj-mushrooms';
@@ -94,8 +96,8 @@ export class Hunt {
    * Decodes the drawings first, so sizes are known and nothing pops in. A drawing that cannot be had is stood in
    * for by another of the scene's, so its mushroom is still there to find; with none at all there is no hunt.
    */
-  static async create(options: HuntOptions): Promise<Hunt> {
-    const arts = [...new Set(options.spots.map((spot) => spot.art))];
+  static async art(spots: readonly Spot[]): Promise<HuntArt> {
+    const arts = [...new Set(spots.map((spot) => spot.art))];
     const images = await Promise.allSettled(arts.map((art) => requiredAsset(() => loadImage(artUrl(art)))));
     const drawn = new Map<number, { art: number; aspect: number }>();
     images.forEach((image, i) => {
@@ -108,7 +110,7 @@ export class Hunt {
       console.warn('[hjaas] a mushroom drawing could not be loaded; another stands in for it', image.reason);
       drawn.set(arts[i], standIn);
     });
-    return new Hunt(options, drawn);
+    return drawn;
   }
 
   destroy(): void {

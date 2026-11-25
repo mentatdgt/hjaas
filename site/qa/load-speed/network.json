@@ -1,0 +1,376 @@
+{
+ "webkit: tour, each tab when the line has gone quiet": {
+  "rooms": {
+   "scene1": [
+    "200 1256 kB"
+   ],
+   "scene2": [
+    "200 1236 kB (ahead)",
+    "304 0 kB"
+   ],
+   "scene3": [
+    "200 1181 kB (ahead)",
+    "304 0 kB"
+   ],
+   "scene4": [
+    "200 1235 kB (ahead)",
+    "304 0 kB",
+    "304 0 kB"
+   ],
+   "scene5": [
+    "200 1224 kB (ahead)",
+    "304 0 kB"
+   ]
+  },
+  "aheadAt": [
+   "grow's room ahead; others ahead: 0",
+   "design's room ahead; others ahead: 0",
+   "film's room ahead; others ahead: 0",
+   "set's room ahead; others ahead: 0"
+  ],
+  "bytesTwice": [],
+  "errors": []
+ },
+ "webkit, private: tour, each tab when the line has gone quiet": {
+  "rooms": {
+   "scene1": [
+    "200 1256 kB"
+   ],
+   "scene2": [
+    "200 1236 kB"
+   ],
+   "scene3": [
+    "200 1181 kB"
+   ],
+   "scene4": [
+    "200 1235 kB",
+    "200 1235 kB"
+   ],
+   "scene5": [
+    "200 1224 kB"
+   ]
+  },
+  "aheadAt": [
+   "grow's room not ahead; others ahead: 0",
+   "design's room not ahead; others ahead: 0",
+   "film's room not ahead; others ahead: 0",
+   "set's room not ahead; others ahead: 0"
+  ],
+  "bytesTwice": [
+   "/assets/scene4/room.webp x2"
+  ],
+  "errors": [
+   "Failed to load resource: resource unavailable"
+  ]
+ },
+ "webkit, slow: Grow's room under way, Set tapped: called off; Grow tapped later": {
+  "called": [
+   "scene2/room.webp 200 called off 90 kB after 127 ms"
+  ],
+  "setStrokeAfterMs": 7691,
+  "rooms": {
+   "scene1": [
+    "200 1256 kB"
+   ],
+   "scene2": [
+    "200 called off 90 kB",
+    "200 1236 kB",
+    "304 0 kB"
+   ],
+   "scene5": [
+    "200 1224 kB"
+   ]
+  },
+  "errors": []
+ },
+ "webkit, slow: Grow's room under way, Grow tapped: that very room is waited for": {
+  "growStrokeAfterMs": 6445,
+  "rooms": {
+   "scene1": [
+    "200 1256 kB"
+   ],
+   "scene2": [
+    "200 1236 kB",
+    "304 0 kB"
+   ]
+  },
+  "errors": []
+ },
+ "webkit, slow, before: Grow's clips under way, Build tapped": {
+  "strokeAfterMs": 13230,
+  "clipsAskedForBeforeTheTap": 8,
+  "inTheMeantime": 3,
+  "calledOff": 0,
+  "growRequestsAfterTap": 3,
+  "errors": []
+ },
+ "webkit, slow, now: Grow's clips under way, Build tapped": {
+  "strokeAfterMs": 8132,
+  "clipsAskedForBeforeTheTap": 8,
+  "inTheMeantime": 0,
+  "calledOff": 1,
+  "growRequestsAfterTap": 0,
+  "clipsCarryOnAfterComingBack": 10,
+  "clipFilesTwice": 0,
+  "errors": []
+ },
+ "webkit: Theatre's backdrop, 0 found, then 3 found and a reload": {
+  "fresh": {
+   "byTheFirstStroke": [
+    "01"
+   ],
+   "then": [
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10"
+   ]
+  },
+  "threeFound": {
+   "byTheFirstStroke": [
+    "02",
+    "03",
+    "01",
+    "04"
+   ],
+   "then": [
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10"
+   ]
+  },
+  "errors": []
+ },
+ "webkit, slow: a find in Theatre straight after the painting, the other pieces still to come": {
+  "here": [
+   "scene5/cast/backdrop_01/P_01.webp 200 86 kB",
+   "scene5/cast/backdrop_02/P_02.webp 200 35 kB"
+  ],
+  "pieceBakedAfterMs": [
+   739,
+   951
+  ],
+  "errors": []
+ },
+ "webkit, fast: a cold switch to Design, when each part was asked for (ms after the first)": {
+  "room": [
+   2
+  ],
+  "manifests": [
+   0,
+   0
+  ],
+  "restArt": [
+   83,
+   83,
+   83,
+   138,
+   217,
+   237
+  ],
+  "pencil": [
+   1,
+   1
+  ],
+  "errors": []
+ },
+ "chrome: tour, each tab when the line has gone quiet": {
+  "rooms": {
+   "scene1": [
+    "200 1256 kB"
+   ],
+   "scene2": [
+    "200 1236 kB (ahead)",
+    "304 0 kB"
+   ],
+   "scene3": [
+    "200 1181 kB (ahead)",
+    "304 0 kB"
+   ],
+   "scene4": [
+    "200 1235 kB (ahead)",
+    "304 0 kB",
+    "304 0 kB"
+   ],
+   "scene5": [
+    "200 1224 kB (ahead)",
+    "304 0 kB"
+   ]
+  },
+  "aheadAt": [
+   "grow's room ahead; others ahead: 0",
+   "design's room ahead; others ahead: 0",
+   "film's room ahead; others ahead: 0",
+   "set's room ahead; others ahead: 0"
+  ],
+  "bytesTwice": [],
+  "errors": []
+ },
+ "chrome, private: tour, each tab when the line has gone quiet": {
+  "rooms": {
+   "scene1": [
+    "200 1256 kB"
+   ],
+   "scene2": [
+    "200 1236 kB (ahead)",
+    "304 0 kB"
+   ],
+   "scene3": [
+    "200 1181 kB (ahead)",
+    "304 0 kB"
+   ],
+   "scene4": [
+    "200 1235 kB (ahead)",
+    "304 0 kB",
+    "304 0 kB"
+   ],
+   "scene5": [
+    "200 1224 kB (ahead)",
+    "304 0 kB"
+   ]
+  },
+  "aheadAt": [
+   "grow's room ahead; others ahead: 0",
+   "design's room ahead; others ahead: 0",
+   "film's room ahead; others ahead: 0",
+   "set's room ahead; others ahead: 0"
+  ],
+  "bytesTwice": [],
+  "errors": []
+ },
+ "chrome, slow: Grow's room under way, Set tapped: called off; Grow tapped later": {
+  "called": [
+   "scene2/room.webp 200 called off 88 kB after 131 ms"
+  ],
+  "setStrokeAfterMs": 7636,
+  "rooms": {
+   "scene1": [
+    "200 1256 kB"
+   ],
+   "scene2": [
+    "200 called off 88 kB",
+    "200 1236 kB",
+    "304 0 kB"
+   ],
+   "scene5": [
+    "200 1224 kB"
+   ]
+  },
+  "errors": []
+ },
+ "chrome, slow: Grow's room under way, Grow tapped: that very room is waited for": {
+  "growStrokeAfterMs": 6327,
+  "rooms": {
+   "scene1": [
+    "200 1256 kB"
+   ],
+   "scene2": [
+    "200 1236 kB",
+    "304 0 kB"
+   ]
+  },
+  "errors": []
+ },
+ "chrome: Theatre's backdrop, 0 found, then 3 found and a reload": {
+  "fresh": {
+   "byTheFirstStroke": [
+    "01"
+   ],
+   "then": [
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10"
+   ]
+  },
+  "threeFound": {
+   "byTheFirstStroke": [
+    "01",
+    "02",
+    "03",
+    "04"
+   ],
+   "then": [
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10"
+   ]
+  },
+  "errors": []
+ },
+ "chrome, slow: a find in Theatre straight after the painting, the other pieces still to come": {
+  "here": [
+   "scene5/cast/backdrop_01/P_01.webp 200 86 kB",
+   "scene5/cast/backdrop_02/P_02.webp 200 66 kB"
+  ],
+  "pieceBakedAfterMs": [
+   736,
+   841
+  ],
+  "errors": []
+ },
+ "chrome, slow, before: Grow's clips under way, Build tapped": {
+  "strokeAfterMs": 13071,
+  "clipsAskedForBeforeTheTap": 8,
+  "inTheMeantime": 3,
+  "calledOff": 0,
+  "growRequestsAfterTap": 3,
+  "errors": []
+ },
+ "chrome, slow, now: Grow's clips under way, Build tapped": {
+  "strokeAfterMs": 8054,
+  "clipsAskedForBeforeTheTap": 8,
+  "inTheMeantime": 0,
+  "calledOff": 1,
+  "growRequestsAfterTap": 0,
+  "clipsCarryOnAfterComingBack": 11,
+  "clipFilesTwice": 0,
+  "errors": []
+ },
+ "chrome, fast: a cold switch to Design, when each part was asked for (ms after the first)": {
+  "room": [
+   0
+  ],
+  "manifests": [
+   0,
+   0
+  ],
+  "restArt": [
+   89,
+   89,
+   89,
+   201,
+   216,
+   226
+  ],
+  "pencil": [
+   0,
+   0
+  ],
+  "errors": []
+ },
+ "chrome: the browser asks to save data": {
+  "rooms": {
+   "scene1": [
+    "200 1256 kB"
+   ]
+  },
+  "errors": []
+ }
+}
