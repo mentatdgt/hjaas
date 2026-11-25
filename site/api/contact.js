@@ -5,15 +5,17 @@
 // RESEND_API_KEY, MAIL_FROM and CONTACT_TO. If one is missing, every request is answered 503.
 //
 // Nothing a visitor writes is ever logged or returned: only a status code is logged.
+// The form's choices come from src/engine/needs.js, the one list of them (Vercel bundles the import).
 // Keep tests out of this folder (they are in scripts/contact.test.mjs): Vercel makes a function of every file in api/.
+
+import { NEEDS } from '../src/engine/needs.js';
 
 const RESEND = 'https://api.resend.com/emails';
 const RESEND_TIMEOUT_MS = 10_000;
 const MAX_BODY = 16 * 1024;
 
-/** The same as CONTACT_LIMITS in src/engine/submit.ts and NEEDS in src/engine/form.ts; the tests compare them. */
+/** The same as CONTACT_LIMITS in src/engine/submit.ts; a test compares them. */
 export const LIMITS = { name: 100, email: 254, needs: 500, message: 4000 };
-export const NEEDS = ['Build', 'Design', 'Film', 'Grow', 'Set Design', 'Something else'];
 
 const RATE_LIMIT = 5;
 const RATE_WINDOW_MS = 60_000;

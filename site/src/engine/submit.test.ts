@@ -2,7 +2,7 @@ import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import type { ContactPayload } from './submit';
 
 const endpoint = 'https://forms.example.org/contact';
-const valid = { name: 'Wren', email: 'wren@example.org', needs: ['Build'], message: 'Hello', website: '' };
+const valid = { name: 'Wren', email: 'wren@example.org', needs: ['Building or renovating'], message: 'Hello', website: '' };
 
 beforeEach(() => {
   vi.resetModules();

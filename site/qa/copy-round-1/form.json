@@ -1,0 +1,256 @@
+{
+ "chrome": [
+  {
+   "picked": [
+    "Building or renovating"
+   ],
+   "says": "I'll reply to wren@example.org.",
+   "toResend": [
+    {
+     "from": "HJaaS <from@example.org>",
+     "to": [
+      "inbox@example.org"
+     ],
+     "reply_to": "wren@example.org",
+     "subject": "HJaaS: Wren",
+     "text": "Name: Wren\nEmail: wren@example.org\nNeeds: Building or renovating\n\nA shelf for the mushroom lab, please.\n"
+    }
+   ]
+  },
+  {
+   "picked": [
+    "Mushrooms"
+   ],
+   "says": "I'll reply to wren@example.org.",
+   "toResend": [
+    {
+     "from": "HJaaS <from@example.org>",
+     "to": [
+      "inbox@example.org"
+     ],
+     "reply_to": "wren@example.org",
+     "subject": "HJaaS: Wren",
+     "text": "Name: Wren\nEmail: wren@example.org\nNeeds: Mushrooms\n\nA shelf for the mushroom lab, please.\n"
+    }
+   ]
+  },
+  {
+   "picked": [
+    "Designing a space"
+   ],
+   "says": "I'll reply to wren@example.org.",
+   "toResend": [
+    {
+     "from": "HJaaS <from@example.org>",
+     "to": [
+      "inbox@example.org"
+     ],
+     "reply_to": "wren@example.org",
+     "subject": "HJaaS: Wren",
+     "text": "Name: Wren\nEmail: wren@example.org\nNeeds: Designing a space\n\nA shelf for the mushroom lab, please.\n"
+    }
+   ]
+  },
+  {
+   "picked": [
+    "Production for a shoot"
+   ],
+   "says": "I'll reply to wren@example.org.",
+   "toResend": [
+    {
+     "from": "HJaaS <from@example.org>",
+     "to": [
+      "inbox@example.org"
+     ],
+     "reply_to": "wren@example.org",
+     "subject": "HJaaS: Wren",
+     "text": "Name: Wren\nEmail: wren@example.org\nNeeds: Production for a shoot\n\nA shelf for the mushroom lab, please.\n"
+    }
+   ]
+  },
+  {
+   "picked": [
+    "Designing a set"
+   ],
+   "says": "I'll reply to wren@example.org.",
+   "toResend": [
+    {
+     "from": "HJaaS <from@example.org>",
+     "to": [
+      "inbox@example.org"
+     ],
+     "reply_to": "wren@example.org",
+     "subject": "HJaaS: Wren",
+     "text": "Name: Wren\nEmail: wren@example.org\nNeeds: Designing a set\n\nA shelf for the mushroom lab, please.\n"
+    }
+   ]
+  },
+  {
+   "picked": [
+    "Something else"
+   ],
+   "says": "I'll reply to wren@example.org.",
+   "toResend": [
+    {
+     "from": "HJaaS <from@example.org>",
+     "to": [
+      "inbox@example.org"
+     ],
+     "reply_to": "wren@example.org",
+     "subject": "HJaaS: Wren",
+     "text": "Name: Wren\nEmail: wren@example.org\nNeeds: Something else\n\nA shelf for the mushroom lab, please.\n"
+    }
+   ]
+  },
+  {
+   "picked": [
+    "Building or renovating",
+    "Mushrooms",
+    "Designing a space",
+    "Production for a shoot",
+    "Designing a set",
+    "Something else"
+   ],
+   "says": "I'll reply to wren@example.org.",
+   "toResend": [
+    {
+     "from": "HJaaS <from@example.org>",
+     "to": [
+      "inbox@example.org"
+     ],
+     "reply_to": "wren@example.org",
+     "subject": "HJaaS: Wren",
+     "text": "Name: Wren\nEmail: wren@example.org\nNeeds: Building or renovating, Mushrooms, Designing a space, Production for a shoot, Designing a set, Something else\n\nA shelf for the mushroom lab, please.\n"
+    }
+   ]
+  }
+ ],
+ "chrome errors": [],
+ "webkit": [
+  {
+   "picked": [
+    "Building or renovating"
+   ],
+   "says": "I'll reply to wren@example.org.",
+   "toResend": [
+    {
+     "from": "HJaaS <from@example.org>",
+     "to": [
+      "inbox@example.org"
+     ],
+     "reply_to": "wren@example.org",
+     "subject": "HJaaS: Wren",
+     "text": "Name: Wren\nEmail: wren@example.org\nNeeds: Building or renovating\n\nA shelf for the mushroom lab, please.\n"
+    }
+   ]
+  },
+  {
+   "picked": [
+    "Mushrooms"
+   ],
+   "says": "I'll reply to wren@example.org.",
+   "toResend": [
+    {
+     "from": "HJaaS <from@example.org>",
+     "to": [
+      "inbox@example.org"
+     ],
+     "reply_to": "wren@example.org",
+     "subject": "HJaaS: Wren",
+     "text": "Name: Wren\nEmail: wren@example.org\nNeeds: Mushrooms\n\nA shelf for the mushroom lab, please.\n"
+    }
+   ]
+  },
+  {
+   "picked": [
+    "Designing a space"
+   ],
+   "says": "I'll reply to wren@example.org.",
+   "toResend": [
+    {
+     "from": "HJaaS <from@example.org>",
+     "to": [
+      "inbox@example.org"
+     ],
+     "reply_to": "wren@example.org",
+     "subject": "HJaaS: Wren",
+     "text": "Name: Wren\nEmail: wren@example.org\nNeeds: Designing a space\n\nA shelf for the mushroom lab, please.\n"
+    }
+   ]
+  },
+  {
+   "picked": [
+    "Production for a shoot"
+   ],
+   "says": "I'll reply to wren@example.org.",
+   "toResend": [
+    {
+     "from": "HJaaS <from@example.org>",
+     "to": [
+      "inbox@example.org"
+     ],
+     "reply_to": "wren@example.org",
+     "subject": "HJaaS: Wren",
+     "text": "Name: Wren\nEmail: wren@example.org\nNeeds: Production for a shoot\n\nA shelf for the mushroom lab, please.\n"
+    }
+   ]
+  },
+  {
+   "picked": [
+    "Designing a set"
+   ],
+   "says": "I'll reply to wren@example.org.",
+   "toResend": [
+    {
+     "from": "HJaaS <from@example.org>",
+     "to": [
+      "inbox@example.org"
+     ],
+     "reply_to": "wren@example.org",
+     "subject": "HJaaS: Wren",
+     "text": "Name: Wren\nEmail: wren@example.org\nNeeds: Designing a set\n\nA shelf for the mushroom lab, please.\n"
+    }
+   ]
+  },
+  {
+   "picked": [
+    "Something else"
+   ],
+   "says": "I'll reply to wren@example.org.",
+   "toResend": [
+    {
+     "from": "HJaaS <from@example.org>",
+     "to": [
+      "inbox@example.org"
+     ],
+     "reply_to": "wren@example.org",
+     "subject": "HJaaS: Wren",
+     "text": "Name: Wren\nEmail: wren@example.org\nNeeds: Something else\n\nA shelf for the mushroom lab, please.\n"
+    }
+   ]
+  },
+  {
+   "picked": [
+    "Building or renovating",
+    "Mushrooms",
+    "Designing a space",
+    "Production for a shoot",
+    "Designing a set",
+    "Something else"
+   ],
+   "says": "I'll reply to wren@example.org.",
+   "toResend": [
+    {
+     "from": "HJaaS <from@example.org>",
+     "to": [
+      "inbox@example.org"
+     ],
+     "reply_to": "wren@example.org",
+     "subject": "HJaaS: Wren",
+     "text": "Name: Wren\nEmail: wren@example.org\nNeeds: Building or renovating, Mushrooms, Designing a space, Production for a shoot, Designing a set, Something else\n\nA shelf for the mushroom lab, please.\n"
+    }
+   ]
+  }
+ ],
+ "webkit errors": []
+}

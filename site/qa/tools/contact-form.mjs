@@ -25,7 +25,7 @@ const ask = (body, headers = {}, ip = '203.0.113.1') => contact.fetch(new Reques
 }));
 
 async function handler() {
-  const good = { name: 'Wren', email: 'wren@example.org', needs: ['Build', 'Set Design'], message: 'A shelf, please.\nNo hurry.', website: '' };
+  const good = { name: 'Wren', email: 'wren@example.org', needs: ['Building or renovating', 'Designing a set'], message: 'A shelf, please.\nNo hurry.', website: '' };
   const cases = [['good', good], ['no needs', { ...good, needs: [] }], ['honeypot', { ...good, website: 'https://spam.example' }],
     ['bad email', { ...good, email: 'wren@example.org\r\nBcc: other@example.org' }], ['other site', good, { Origin: 'https://example.org' }]];
   const results = [];

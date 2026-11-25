@@ -1,14 +1,14 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import { loadEnv } from 'vite';
-import { NEEDS as FORM_NEEDS } from '../src/engine/form.ts';
+import { NEEDS } from '../src/engine/needs.js';
 import { CONTACT_LIMITS } from '../src/engine/submit.ts';
 
 const KEY = 're_test_not_a_real_key';
 const valid = {
   name: 'Wren',
   email: 'wren@example.org',
-  needs: ['Build', 'Set Design'],
+  needs: ['Building or renovating', 'Designing a set'],
   message: 'A shelf, please.\nNo hurry.',
   website: '',
 };
@@ -67,7 +67,7 @@ it('sends Resend exactly this', async () => {
     to: ['inbox@example.org'],
     reply_to: 'wren@example.org',
     subject: 'HJaaS: Wren',
-    text: 'Name: Wren\nEmail: wren@example.org\nNeeds: Build, Set Design\n\nA shelf, please.\nNo hurry.\n',
+    text: 'Name: Wren\nEmail: wren@example.org\nNeeds: Building or renovating, Designing a set\n\nA shelf, please.\nNo hurry.\n',
   });
   expect(everythingLogged()).toBe('[]');
 });
@@ -82,10 +82,17 @@ it('takes no needs, trims, evens out line breaks, and an older page without the 
   });
 });
 
-it('has the form\'s own choices and limits, and takes a message at all of them', async () => {
-  const { LIMITS, NEEDS } = await import('../api/contact.js');
+it.each(NEEDS)('takes the form\'s choice "%s", and puts it in the mail', async (need) => {
+  await expectAnswer(await contact(request({ ...valid, needs: [need] })), 200);
+  expect(JSON.parse(resend.mock.calls[0][1].body).text).toContain(`\nNeeds: ${need}\n`);
+});
+
+it.each(['Build', 'Design', 'Film', 'Grow', 'Set Design'])('no longer takes the old choice "%s"', (need) =>
+  expectRefused({ ...valid, needs: [need] }));
+
+it('has the form\'s own limits, and takes a message at all of them, with every choice picked', async () => {
+  const { LIMITS } = await import('../api/contact.js');
   expect(LIMITS).toEqual(CONTACT_LIMITS);
-  expect(NEEDS).toEqual([...FORM_NEEDS]);
   const email = `${'e'.repeat(254 - '@example.org'.length)}@example.org`;
   await expectAnswer(await contact(request({ name: '名'.repeat(100), email, needs: NEEDS, message: '文'.repeat(4000), website: '' })), 200);
 });
@@ -113,10 +120,10 @@ it.each([
   ['an email ending in a line break', { email: 'wren@example.org\n' }],
   ['an email with a NUL', { email: 'wren\u0000@example.org' }],
   ['no needs', { needs: undefined }],
-  ['needs that are not a list', { needs: 'Build' }],
-  ['a need the form does not have', { needs: ['Build', 'Plumbing'] }],
-  ['a need that is not text', { needs: [['Build']] }],
-  ['too many needs', { needs: Array(100).fill('Build') }],
+  ['needs that are not a list', { needs: 'Mushrooms' }],
+  ['a need the form does not have', { needs: ['Mushrooms', 'Plumbing'] }],
+  ['a need that is not text', { needs: [['Mushrooms']] }],
+  ['too many needs', { needs: Array(100).fill('Mushrooms') }],
   ['no message', { message: undefined }],
   ['a blank message', { message: ' \n ' }],
   ['a message that is not text', { message: 7 }],

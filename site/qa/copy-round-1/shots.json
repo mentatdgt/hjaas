@@ -1,0 +1,170 @@
+{
+ "desktop-chrome": {
+  "0-found": {
+   "cream": "0/10 hiding in Build",
+   "red": "0/50 find all 50 to contact Hui Jie",
+   "button": null,
+   "tagline": "I design rooms and sets, build them, film them, and grow mushrooms in between."
+  },
+  "3-found": {
+   "cream": "3/10 found in Build",
+   "red": "3/50 find all 50 to contact Hui Jie",
+   "button": null,
+   "tagline": "I design rooms and sets, build them, film them, and grow mushrooms in between."
+  },
+  "10-found": {
+   "cream": "10/10 Build complete",
+   "red": "10/50 find all 50 to contact Hui Jie",
+   "button": null,
+   "tagline": "I design rooms and sets, build them, film them, and grow mushrooms in between."
+  },
+  "50-found": {
+   "cream": "10/10 Build complete",
+   "red": "50/50 All 50. Good eye.",
+   "button": "Contact Hui Jie · All 50. Good eye.",
+   "tagline": "I design rooms and sets, build them, film them, and grow mushrooms in between."
+  },
+  "empty": {
+   "name": "What should I call you?",
+   "email": "I need an email to reply to.",
+   "message": "A few words, so I know where to start."
+  },
+  "typo": {
+   "name": null,
+   "email": "That email looks a bit off. Typo?",
+   "message": null
+  },
+  "failed": "That didn't go through. Check your connection and try again?",
+  "sent": [
+   "Got it, thank you.",
+   "I'll reply to wren@example.org.",
+   "Back to the scenes"
+  ]
+ },
+ "phone-chrome": {
+  "0-found": {
+   "cream": "0/10 hiding in Build",
+   "red": "0/50 find all 50 to contact Hui Jie",
+   "button": null,
+   "tagline": "I design rooms and sets, build them, film them, and grow mushrooms in between."
+  },
+  "3-found": {
+   "cream": "3/10 found in Build",
+   "red": "3/50 find all 50 to contact Hui Jie",
+   "button": null,
+   "tagline": "I design rooms and sets, build them, film them, and grow mushrooms in between."
+  },
+  "10-found": {
+   "cream": "10/10 Build complete",
+   "red": "10/50 find all 50 to contact Hui Jie",
+   "button": null,
+   "tagline": "I design rooms and sets, build them, film them, and grow mushrooms in between."
+  },
+  "50-found": {
+   "cream": "10/10 Build complete",
+   "red": "50/50 All 50. Good eye.",
+   "button": "Contact Hui Jie · All 50. Good eye.",
+   "tagline": "I design rooms and sets, build them, film them, and grow mushrooms in between."
+  },
+  "empty": {
+   "name": "What should I call you?",
+   "email": "I need an email to reply to.",
+   "message": "A few words, so I know where to start."
+  },
+  "typo": {
+   "name": null,
+   "email": "That email looks a bit off. Typo?",
+   "message": null
+  },
+  "failed": "That didn't go through. Check your connection and try again?",
+  "sent": [
+   "Got it, thank you.",
+   "I'll reply to wren@example.org.",
+   "Back to the scenes"
+  ]
+ },
+ "desktop-webkit": {
+  "0-found": {
+   "cream": "0/10 hiding in Build",
+   "red": "0/50 find all 50 to contact Hui Jie",
+   "button": null,
+   "tagline": "I design rooms and sets, build them, film them, and grow mushrooms in between."
+  },
+  "3-found": {
+   "cream": "3/10 found in Build",
+   "red": "3/50 find all 50 to contact Hui Jie",
+   "button": null,
+   "tagline": "I design rooms and sets, build them, film them, and grow mushrooms in between."
+  },
+  "10-found": {
+   "cream": "10/10 Build complete",
+   "red": "10/50 find all 50 to contact Hui Jie",
+   "button": null,
+   "tagline": "I design rooms and sets, build them, film them, and grow mushrooms in between."
+  },
+  "50-found": {
+   "cream": "10/10 Build complete",
+   "red": "50/50 All 50. Good eye.",
+   "button": "Contact Hui Jie · All 50. Good eye.",
+   "tagline": "I design rooms and sets, build them, film them, and grow mushrooms in between."
+  },
+  "empty": {
+   "name": "What should I call you?",
+   "email": "I need an email to reply to.",
+   "message": "A few words, so I know where to start."
+  },
+  "typo": {
+   "name": null,
+   "email": "That email looks a bit off. Typo?",
+   "message": null
+  },
+  "failed": "That didn't go through. Check your connection and try again?",
+  "sent": [
+   "Got it, thank you.",
+   "I'll reply to wren@example.org.",
+   "Back to the scenes"
+  ]
+ },
+ "phone-webkit": {
+  "0-found": {
+   "cream": "0/10 hiding in Build",
+   "red": "0/50 find all 50 to contact Hui Jie",
+   "button": null,
+   "tagline": "I design rooms and sets, build them, film them, and grow mushrooms in between."
+  },
+  "3-found": {
+   "cream": "3/10 found in Build",
+   "red": "3/50 find all 50 to contact Hui Jie",
+   "button": null,
+   "tagline": "I design rooms and sets, build them, film them, and grow mushrooms in between."
+  },
+  "10-found": {
+   "cream": "10/10 Build complete",
+   "red": "10/50 find all 50 to contact Hui Jie",
+   "button": null,
+   "tagline": "I design rooms and sets, build them, film them, and grow mushrooms in between."
+  },
+  "50-found": {
+   "cream": "10/10 Build complete",
+   "red": "50/50 All 50. Good eye.",
+   "button": "Contact Hui Jie · All 50. Good eye.",
+   "tagline": "I design rooms and sets, build them, film them, and grow mushrooms in between."
+  },
+  "empty": {
+   "name": "What should I call you?",
+   "email": "I need an email to reply to.",
+   "message": "A few words, so I know where to start."
+  },
+  "typo": {
+   "name": null,
+   "email": "That email looks a bit off. Typo?",
+   "message": null
+  },
+  "failed": "That didn't go through. Check your connection and try again?",
+  "sent": [
+   "Got it, thank you.",
+   "I'll reply to wren@example.org.",
+   "Back to the scenes"
+  ]
+ }
+}

@@ -232,8 +232,9 @@ The function's settings are environment variables in the Vercel project, never i
 | `503` | A setting is missing. An empty POST shows it without sending anything: 503 means missing, 400 all there |
 
 `npm run dev` has no endpoint: the form shows its success state in **test mode** and says nothing was sent.
-A build made with `VITE_FORM_ENDPOINT=` (empty) says up front that it cannot send. The limits and the choices
-are written in both the page and the function; a test compares them.
+A build made with `VITE_FORM_ENDPOINT=` (empty) says up front that it cannot send. The choices
+are in `src/engine/needs.js`, which the page and the function both import. The limits are written in both; a test
+compares them.
 
 The build also writes `_headers` (for Netlify or Cloudflare Pages). It adds an external endpoint's origin to
 `connect-src`; `/api/contact` is the same origin, so `connect-src 'self'` stays as it is.

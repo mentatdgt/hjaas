@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import { ContactForm } from './form';
+import { NEEDS } from './needs.js';
 import { submitContact } from './submit';
 
 vi.mock('./submit', async (original) => ({
@@ -44,7 +45,7 @@ function setup() {
   sent.hidden = alert.hidden = true;
   const values = { name: 'Wren', email: 'before@example.org', message: 'Hello' };
   for (const [name, value] of Object.entries(values)) node.querySelector(name).value = value;
-  const needs = ['Build'];
+  const needs = ['Building or renovating'];
   vi.stubGlobal('window', window);
   vi.stubGlobal('document', { createElement: () => dialog });
   vi.stubGlobal('FormData', class {
@@ -98,7 +99,7 @@ it('ignores a closed submission and leaves the newer submission in control', asy
   resolveNew('sent');
   await Promise.resolve();
   expect(sent.hidden).toBe(false);
-  expect(sent.querySelector('.hj-sent-line').textContent).toContain('after@example.org');
+  expect(sent.querySelector('.hj-sent-line').textContent).toBe("I'll reply to after@example.org.");
   expect(send.attrs.has('aria-disabled')).toBe(false);
 });
 
@@ -128,4 +129,39 @@ it('hides the honeypot from visitors and sends what is in it', () => {
   node.querySelector('website').value = 'https://spam.example';
   sendForm();
   expect(submitContact).toHaveBeenCalledWith(expect.objectContaining({ website: 'https://spam.example' }), expect.anything());
+});
+
+it('offers the six choices, in tab order, and says what the brief says', () => {
+  const { dialog } = setup();
+  const boxes = [...dialog.innerHTML.matchAll(/<input type="checkbox" name="need" value="([^"]*)" \/><span><svg[\s\S]*?<\/svg>([^<]*)<\/span>/g)];
+  const labels = ['Building or renovating', 'Mushrooms', 'Designing a space', 'Production for a shoot', 'Designing a set', 'Something else'];
+  expect(NEEDS).toEqual(labels);
+  expect(boxes.map((box) => box[1])).toEqual(labels);
+  expect(boxes.map((box) => box[2])).toEqual(labels);
+  for (const words of [
+    'tabindex="-1">Hi! What have you got in mind?</h2>', '>Your name</label>', '>Where should I reply?</label>',
+    '<legend>What can I help with? <span class="hj-hint">Pick any</span></legend>', '>Tell me about it</label>',
+    'placeholder="The space, the timeline, the feeling you\'re after. Rough is fine."', '>Send it</span>',
+    '>Got it, thank you.</h3>', '>Back to the scenes</span>', 'aria-label="Close"',
+  ]) expect(dialog.innerHTML).toContain(words);
+});
+
+it('asks for what is missing, and says when a message did not go through', async () => {
+  const { dialog, node, alert, sendForm } = setup();
+  for (const name of ['name', 'email', 'message']) node.querySelector(name).value = ' ';
+  sendForm();
+  const said = (name: string): string => dialog.querySelector(`#hj-${name}-err`).textContent;
+  expect(said('name')).toBe('What should I call you?');
+  expect(said('email')).toBe('I need an email to reply to.');
+  expect(said('message')).toBe('A few words, so I know where to start.');
+  node.querySelector('email').value = 'wren@example';
+  sendForm();
+  expect(said('email')).toBe('That email looks a bit off. Typo?');
+  expect(submitContact).not.toHaveBeenCalled();
+
+  Object.entries({ name: 'Wren', email: 'wren@example.org', message: 'Hello' }).forEach(([name, value]) => (node.querySelector(name).value = value));
+  vi.mocked(submitContact).mockRejectedValueOnce(new Error('offline'));
+  sendForm();
+  await Promise.resolve();
+  expect(alert.textContent).toBe("That didn't go through. Check your connection and try again?");
 });

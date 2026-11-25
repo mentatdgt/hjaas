@@ -263,7 +263,7 @@ run.states = async () => {
       const s = await page.evaluate(SHOWN);
       const counts = await page.evaluate(() => Object.fromEntries(Object.entries(JSON.parse(localStorage.getItem('hjaas:site:v2')).scenes).map(([k, v]) => [k, v.found.length])));
       const sum = Object.values(counts).reduce((a, b) => a + b, 0); const here = counts[id];
-      const left = 10 - here; const want = { cream: `${here}/10`, red: `${sum}/50`, creamLabel: left === 0 ? `${LABEL[id]} complete` : here < left ? `found in ${LABEL[id]}` : `${left} more in ${LABEL[id]}`, redLabel: sum === 50 ? 'You found all 50' : 50 - sum > 25 ? 'find all 50 to contact Hui Jie' : `${50 - sum} more to contact Hui Jie`, dots: IDS.filter((k) => counts[k] === 10), button: sum === 50 ? 'BUTTON' : null };
+      const left = 10 - here; const want = { cream: `${here}/10`, red: `${sum}/50`, creamLabel: left === 0 ? `${LABEL[id]} complete` : here === 0 ? `hiding in ${LABEL[id]}` : here < left ? `found in ${LABEL[id]}` : `${left} more in ${LABEL[id]}`, redLabel: sum === 50 ? 'All 50. Good eye.' : 50 - sum > 25 ? 'find all 50 to contact Hui Jie' : `${50 - sum} more to contact Hui Jie`, dots: IDS.filter((k) => counts[k] === 10), button: sum === 50 ? 'BUTTON' : null };
       const got = { cream: s.cream.number, red: s.red.number, creamLabel: s.cream.label, redLabel: s.red.label, dots: s.dots, button: s.button };
       if (JSON.stringify(got) !== JSON.stringify(want)) bad(`saved ${n} at ${id}`, { got, want });
       if (s.cream.aria !== `${here} of 10 found in ${LABEL[id]}` || s.red.aria !== `${sum} of 50 found in all scenes`) bad('aria', s);

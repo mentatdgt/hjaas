@@ -1,0 +1,324 @@
+{
+ "bytes": {
+  "before, chrome": {
+   "files": [
+    [
+     "spectral-latin-400-normal-CTVgUekv.woff2",
+     21696
+    ],
+    [
+     "bricolage-grotesque-latin-wght-normal-DLoelf7F.woff2",
+     41344
+    ]
+   ],
+   "total": 63040
+  },
+  "before, webkit": {
+   "files": [
+    [
+     "spectral-latin-400-normal-CTVgUekv.woff2",
+     21696
+    ],
+    [
+     "bricolage-grotesque-latin-wght-normal-DLoelf7F.woff2",
+     41344
+    ]
+   ],
+   "total": 63040
+  },
+  "after, chrome": {
+   "files": [
+    [
+     "instrument-sans-latin-wght-normal-BbzFLZTg.woff2",
+     30092
+    ]
+   ],
+   "total": 30092
+  },
+  "after, webkit": {
+   "files": [
+    [
+     "instrument-sans-latin-wght-normal-BbzFLZTg.woff2",
+     30092
+    ]
+   ],
+   "total": 30092
+  }
+ },
+ "style": {
+  "chrome": {
+   ".hj-name": {
+    "first": "\"Instrument Sans Variable\"",
+    "weight": "500",
+    "size": "38.88px",
+    "instrumentSans": true
+   },
+   ".hj-tagline": {
+    "first": "\"Instrument Sans Variable\"",
+    "weight": "400",
+    "size": "15.552px",
+    "instrumentSans": true
+   },
+   ".hj-tab": {
+    "first": "\"Instrument Sans Variable\"",
+    "weight": "500",
+    "size": "16.56px",
+    "instrumentSans": true
+   },
+   ".hj-num": {
+    "first": "\"Instrument Sans Variable\"",
+    "weight": "400",
+    "size": "22px",
+    "instrumentSans": true
+   },
+   ".hj-label": {
+    "first": "\"Instrument Sans Variable\"",
+    "weight": "400",
+    "size": "15px",
+    "instrumentSans": true
+   },
+   ".hj-next": {
+    "first": "\"Instrument Sans Variable\"",
+    "weight": "400",
+    "size": "15px",
+    "instrumentSans": true
+   },
+   ".hj-link": {
+    "first": "\"Instrument Sans Variable\"",
+    "weight": "400",
+    "size": "14.5px",
+    "instrumentSans": true
+   },
+   ".hj-contact": {
+    "first": "\"Instrument Sans Variable\"",
+    "weight": "600",
+    "size": "16px",
+    "instrumentSans": true
+   },
+   ".hj-prize-note": {
+    "first": "\"Instrument Sans Variable\"",
+    "weight": "400",
+    "size": "15px",
+    "instrumentSans": true
+   },
+   "#hj-form-title": {
+    "first": "\"Instrument Sans Variable\"",
+    "weight": "500",
+    "size": "20px",
+    "instrumentSans": true
+   },
+   ".hj-field label": {
+    "first": "\"Instrument Sans Variable\"",
+    "weight": "500",
+    "size": "14.5px",
+    "instrumentSans": true
+   },
+   ".hj-hint": {
+    "first": "\"Instrument Sans Variable\"",
+    "weight": "400",
+    "size": "14.5px",
+    "instrumentSans": true
+   },
+   "#hj-name": {
+    "first": "\"Instrument Sans Variable\"",
+    "weight": "400",
+    "size": "16px",
+    "instrumentSans": true
+   },
+   "#hj-message": {
+    "first": "\"Instrument Sans Variable\"",
+    "weight": "400",
+    "size": "16px",
+    "instrumentSans": true
+   },
+   ".hj-chip span": {
+    "first": "\"Instrument Sans Variable\"",
+    "weight": "500",
+    "size": "15px",
+    "instrumentSans": true
+   },
+   ".hj-form .hj-send": {
+    "first": "\"Instrument Sans Variable\"",
+    "weight": "600",
+    "size": "16.5px",
+    "instrumentSans": true
+   },
+   ".hj-err": {
+    "first": "\"Instrument Sans Variable\"",
+    "weight": "400",
+    "size": "14px",
+    "instrumentSans": true
+   },
+   ".hj-sent h3": {
+    "first": "\"Instrument Sans Variable\"",
+    "weight": "500",
+    "size": "22px",
+    "instrumentSans": true
+   },
+   ".hj-sent-line": {
+    "first": "\"Instrument Sans Variable\"",
+    "weight": "400",
+    "size": "16px",
+    "instrumentSans": true
+   },
+   ".hj-sent .hj-send": {
+    "first": "\"Instrument Sans Variable\"",
+    "weight": "600",
+    "size": "16.5px",
+    "instrumentSans": true
+   }
+  },
+  "webkit": {
+   ".hj-name": {
+    "first": "Instrument Sans Variable",
+    "weight": "500",
+    "size": "38.880001px",
+    "instrumentSans": true
+   },
+   ".hj-tagline": {
+    "first": "Instrument Sans Variable",
+    "weight": "400",
+    "size": "15.552px",
+    "instrumentSans": true
+   },
+   ".hj-tab": {
+    "first": "Instrument Sans Variable",
+    "weight": "500",
+    "size": "16.559999px",
+    "instrumentSans": true
+   },
+   ".hj-num": {
+    "first": "Instrument Sans Variable",
+    "weight": "400",
+    "size": "22px",
+    "instrumentSans": true
+   },
+   ".hj-label": {
+    "first": "Instrument Sans Variable",
+    "weight": "400",
+    "size": "15px",
+    "instrumentSans": true
+   },
+   ".hj-next": {
+    "first": "Instrument Sans Variable",
+    "weight": "400",
+    "size": "15px",
+    "instrumentSans": true
+   },
+   ".hj-link": {
+    "first": "Instrument Sans Variable",
+    "weight": "400",
+    "size": "14.5px",
+    "instrumentSans": true
+   },
+   ".hj-contact": {
+    "first": "Instrument Sans Variable",
+    "weight": "600",
+    "size": "16px",
+    "instrumentSans": true
+   },
+   ".hj-prize-note": {
+    "first": "Instrument Sans Variable",
+    "weight": "400",
+    "size": "15px",
+    "instrumentSans": true
+   },
+   "#hj-form-title": {
+    "first": "Instrument Sans Variable",
+    "weight": "500",
+    "size": "20px",
+    "instrumentSans": true
+   },
+   ".hj-field label": {
+    "first": "Instrument Sans Variable",
+    "weight": "500",
+    "size": "14.5px",
+    "instrumentSans": true
+   },
+   ".hj-hint": {
+    "first": "Instrument Sans Variable",
+    "weight": "400",
+    "size": "14.5px",
+    "instrumentSans": true
+   },
+   "#hj-name": {
+    "first": "Instrument Sans Variable",
+    "weight": "400",
+    "size": "16px",
+    "instrumentSans": true
+   },
+   "#hj-message": {
+    "first": "Instrument Sans Variable",
+    "weight": "400",
+    "size": "16px",
+    "instrumentSans": true
+   },
+   ".hj-chip span": {
+    "first": "Instrument Sans Variable",
+    "weight": "500",
+    "size": "15px",
+    "instrumentSans": true
+   },
+   ".hj-form .hj-send": {
+    "first": "Instrument Sans Variable",
+    "weight": "600",
+    "size": "16.5px",
+    "instrumentSans": true
+   },
+   ".hj-err": {
+    "first": "Instrument Sans Variable",
+    "weight": "400",
+    "size": "14px",
+    "instrumentSans": true
+   },
+   ".hj-sent h3": {
+    "first": "Instrument Sans Variable",
+    "weight": "500",
+    "size": "22px",
+    "instrumentSans": true
+   },
+   ".hj-sent-line": {
+    "first": "Instrument Sans Variable",
+    "weight": "400",
+    "size": "16px",
+    "instrumentSans": true
+   },
+   ".hj-sent .hj-send": {
+    "first": "Instrument Sans Variable",
+    "weight": "600",
+    "size": "16.5px",
+    "instrumentSans": true
+   }
+  }
+ },
+ "painted": {
+  ".hj-name": "Instrument Sans (web)",
+  ".hj-tagline": "Instrument Sans (web)",
+  ".hj-tab": "Instrument Sans (web)",
+  ".hj-num": "Instrument Sans (web)",
+  ".hj-label": "Instrument Sans (web)",
+  ".hj-next": "",
+  ".hj-link": "Instrument Sans (web)",
+  ".hj-contact": "Instrument Sans (web)",
+  ".hj-prize-note": "Instrument Sans (web)",
+  "#hj-form-title": "Instrument Sans (web)",
+  ".hj-field label": "Instrument Sans (web)",
+  ".hj-hint": "Instrument Sans (web)",
+  "#hj-name": "",
+  "#hj-message": "Instrument Sans (web)",
+  ".hj-chip span": "Instrument Sans (web)",
+  ".hj-form .hj-send": "Instrument Sans (web)",
+  ".hj-err": "",
+  ".hj-sent h3": "",
+  ".hj-sent-line": "",
+  ".hj-sent .hj-send": ""
+ },
+ "loaded": {
+  "chrome": [
+   "Instrument Sans Variable 400 700 loaded"
+  ],
+  "webkit": [
+   "Instrument Sans Variable 400 700 loaded"
+  ]
+ }
+}
