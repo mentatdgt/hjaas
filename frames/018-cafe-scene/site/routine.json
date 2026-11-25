@@ -1,5 +1,5 @@
 {
- "note": "Scene 3 (caf\u00e9) routines, v7. Holds in ms; [a,b] = random in range. Each actor runs independently and out of sync. RULE: fade_ms (a true cross-dissolve into a still) applies ONLY between two stills of the same loop. Every other change is an instant cut. Within a layer every still is pixel-identical to the first outside the part that moves, so cuts never flicker. The fan is part of the room: play its loop forever, do not apply the 'fully painted under actors' edge rule to it, and let the edge fade it like the plate.",
+ "note": "Scene 3 (caf\u00e9) routines, v10. Holds in ms; [a,b] = random in range. Each actor runs independently and out of sync. RULE: fade_ms (a true cross-dissolve into a still) applies ONLY between two stills of the same loop. Every other change is an instant cut. Within a layer every still is pixel-identical to the first outside the part that moves, so cuts never flicker. The fan is part of the room: play its loop forever, do not apply the 'fully painted under actors' edge rule to it, and let the edge fade it like the plate. v10 (2026-11-26): OLD MAN reads on O_1 only (the newspaper never changes) and turns a page every 5-7 s in four drawn steps, cuts: O_1 > T1 (corner lifted) > T2 (page rising) > T3 (page carried across) > T4 (hand back) > O_1, 140/140/160/140 ms; he blinks on O_1 only, about every 3-6 s (O_blink, 100 ms). BARISTA polishes in a circle, cuts at 140-200 ms: B_1 > B_P1 > B_2_polish > B_P2 > B_3_polish > B_P3, 3-6 rounds, then her pause and glance (B_4_glance) as before. MUM (part of the plate; her layer holds patches only) sips once per loop of about 18-24 s: rest > M_S1 (220 ms) > M_S2 (sip, eyes closed, 1.4-1.8 s) > M_S1 > rest; her blinks are scripted at four points in the loop, never during the sip. CAT: cat_3 is gone. Its tail flicks twice per loop: cat_1 > cat_F1 (110 ms) > cat_F2 (500 ms) > cat_F1 (110 ms) > cat_1, at the start of the loop and again after 3 breaths (2 more follow), so at about 60% of the loop. It breathes (cat_1/cat_2, 1 s dissolves) the rest of the time, never during a flick; each breathing loop ends on cat_1 so the flick starts with a cut from an identical body.",
  "actors": {
   "fan": {
    "routine": [
@@ -219,7 +219,7 @@
    "note": "The coffee sip is four drawn poses with cuts: A1 > S1 (stylus down, hand to cup) > S2 (cup lifted, eyes half closed) > B1 (sip) and back. No blink during S1/S2/B1. If a mushroom is found mid-sip, finish the sip (B1 300 ms > S2 > S1 > A1) and then play the reaction."
   },
   "barista": {
-   "note": "Polishing: cuts between drawn poses at a calm pace (no dissolves: the cloth moves too far for a clean fade). Glance: eyes only.",
+   "note": "Polishing: the cloth circles the cup through three drawn in-betweens, cuts at 140-200 ms (dissolves were tried and looked muddier: the cloth moves too far between neighbours). Glance: eyes only.",
    "routine": [
     {
      "loop": "polish",
@@ -231,29 +231,43 @@
       {
        "still": "B_1",
        "ms": [
-        700,
-        1000
+        140,
+        200
+       ]
+      },
+      {
+       "still": "B_P1",
+       "ms": [
+        140,
+        200
        ]
       },
       {
        "still": "B_2_polish",
        "ms": [
-        700,
-        1000
+        140,
+        200
        ]
       },
       {
-       "still": "B_1",
+       "still": "B_P2",
        "ms": [
-        600,
-        900
+        140,
+        200
        ]
       },
       {
        "still": "B_3_polish",
        "ms": [
-        700,
-        1000
+        140,
+        200
+       ]
+      },
+      {
+       "still": "B_P3",
+       "ms": [
+        140,
+        200
        ]
       }
      ]
@@ -333,41 +347,87 @@
    ]
   },
   "oldman": {
+   "note": "Reads on O_1, the only reading pose, then turns the page in four drawn steps with cuts. O_1 is three holds in a row (the same still, so nothing shows between them) because the engine fits at most one blink into a hold: this way he blinks every 3-6.5 s (measured over 50 min of the engine rules) and turns a page every 5-7 s. He blinks only on O_1, never mid-turn.",
    "routine": [
     {
      "still": "O_1",
      "ms": [
-      8000,
-      14000
-     ]
+      1300,
+      2300
+     ],
+     "blink_ok": true
     },
     {
-     "still": "O_2",
-     "ms": 450
-    },
-    {
-     "still": "O_3",
+     "still": "O_1",
      "ms": [
-      8000,
-      14000
-     ]
+      1300,
+      2300
+     ],
+     "blink_ok": true
+    },
+    {
+     "still": "O_1",
+     "ms": [
+      1300,
+      2300
+     ],
+     "blink_ok": true
+    },
+    {
+     "still": "T1",
+     "ms": 140
+    },
+    {
+     "still": "T2",
+     "ms": 140
+    },
+    {
+     "still": "T3",
+     "ms": 160
+    },
+    {
+     "still": "T4",
+     "ms": 140
     }
-   ]
+   ],
+   "blink": {
+    "on": "O_1",
+    "frames": [
+     {
+      "still": "O_blink",
+      "ms": 100
+     }
+    ],
+    "every_ms": [
+     2500,
+     5000
+    ]
+   }
   },
   "cat": {
+   "note": "Flick at the start of the loop and after 3 breaths (about 60% of the loop). Each breathe loop is cat_1 > cat_2 > cat_1: the two cat_1 holds meet when it repeats (an identical still, so nothing shows) and it always ends on cat_1, ready for the flick.",
    "routine": [
     {
+     "still": "cat_F1",
+     "ms": 110
+    },
+    {
+     "still": "cat_F2",
+     "ms": 500
+    },
+    {
+     "still": "cat_F1",
+     "ms": 110
+    },
+    {
      "loop": "breathe",
-     "repeat": [
-      3,
-      6
-     ],
+     "repeat": 3,
      "steps": [
       {
        "still": "cat_1",
        "ms": [
-        1400,
-        1800
+        700,
+        900
        ],
        "fade_ms": 1000
       },
@@ -378,22 +438,148 @@
         1800
        ],
        "fade_ms": 1000
+      },
+      {
+       "still": "cat_1",
+       "ms": [
+        700,
+        900
+       ],
+       "fade_ms": 1000
       }
      ]
     },
     {
-     "still": "cat_3",
+     "still": "cat_F1",
+     "ms": 110
+    },
+    {
+     "still": "cat_F2",
      "ms": 500
+    },
+    {
+     "still": "cat_F1",
+     "ms": 110
+    },
+    {
+     "loop": "breathe_more",
+     "repeat": 2,
+     "steps": [
+      {
+       "still": "cat_1",
+       "ms": [
+        700,
+        900
+       ],
+       "fade_ms": 1000
+      },
+      {
+       "still": "cat_2",
+       "ms": [
+        1400,
+        1800
+       ],
+       "fade_ms": 1000
+      },
+      {
+       "still": "cat_1",
+       "ms": [
+        700,
+        900
+       ],
+       "fade_ms": 1000
+      }
+     ]
     }
    ]
   },
   "mum": {
+   "note": "Part of the plate: null = nothing drawn. One sip per loop of about 18-24 s; her blinks are written into the loop (four, 4-6 s apart), never during the sip.",
    "routine": [
     {
      "still": null,
      "ms": [
-      4000,
-      8000
+      4200,
+      5600
+     ]
+    },
+    {
+     "still": "M_blink_half",
+     "ms": 60
+    },
+    {
+     "still": "M_blink_closed",
+     "ms": 90
+    },
+    {
+     "still": "M_blink_half",
+     "ms": 60
+    },
+    {
+     "still": null,
+     "ms": [
+      4200,
+      5600
+     ]
+    },
+    {
+     "still": "M_blink_half",
+     "ms": 60
+    },
+    {
+     "still": "M_blink_closed",
+     "ms": 90
+    },
+    {
+     "still": "M_blink_half",
+     "ms": 60
+    },
+    {
+     "still": null,
+     "ms": [
+      900,
+      1300
+     ]
+    },
+    {
+     "still": "M_S1",
+     "ms": 220
+    },
+    {
+     "still": "M_S2",
+     "ms": [
+      1400,
+      1800
+     ]
+    },
+    {
+     "still": "M_S1",
+     "ms": 220
+    },
+    {
+     "still": null,
+     "ms": [
+      1800,
+      2500
+     ]
+    },
+    {
+     "still": "M_blink_half",
+     "ms": 60
+    },
+    {
+     "still": "M_blink_closed",
+     "ms": 90
+    },
+    {
+     "still": "M_blink_half",
+     "ms": 60
+    },
+    {
+     "still": null,
+     "ms": [
+      4200,
+      5600
      ]
     },
     {
