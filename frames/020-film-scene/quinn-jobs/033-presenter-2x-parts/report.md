@@ -1,0 +1,7 @@
+- `mouth_mid.png` — Half-open smile with teeth and tongue, with the mouth outline within 2 px of the reference bounds and exact base pixels outside the mouth patch.
+- `mouth_closed.png` — Closed smile with the original open mouth cleared, with the smile outline within 2 px of the reference bounds and exact base pixels outside the mouth patch.
+- `blink.png` — Two closed lids behind the original glasses, with exact base pixels outside the lid and pupil patches and lid bounds within 2 px of the reference.
+- `arms_12.png` — Diagonal point and inward bent watch arm from the second edit, with the watch-side fingers extending about 5 px lower than the reference and exact base pixels outside the arm composite.
+- `arms_2.png` — Upward point and watch hand on hip, with the visible skin bounds within 2 px of the reference and exact base pixels outside the arm composite.
+- `arms_13.png` — Both hands raised toward the chest with the red watch on the viewer-right wrist, with minor finger and cuff contour differences and exact base pixels outside the arm composite.
+- `arms_3.png` — Overlapping hands across the chest from the second edit, with minor finger and cuff contour differences and exact base pixels outside the arm composite.
