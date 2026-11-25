@@ -1,0 +1,11 @@
+{
+ "webkit 0-20 ms": "reloads: 0 of 20 black; first visits: 0 of 10",
+ "webkit 0-60 ms": "reloads: 0 of 20 black; first visits: 0 of 10",
+ "webkit 0-150 ms": "reloads: 0 of 20 black; first visits: 0 of 10",
+ "chrome 0-20 ms": "reloads: 0 of 20 black; first visits: 0 of 10",
+ "chrome 0-60 ms": "reloads: 0 of 20 black; first visits: 0 of 10",
+ "chrome 0-150 ms": "reloads: 0 of 20 black; first visits: 0 of 10",
+ "firefox 0-20 ms": "reloads: 0 of 20 black; first visits: 0 of 10",
+ "firefox 0-60 ms": "reloads: 0 of 20 black; first visits: 0 of 10",
+ "firefox 0-150 ms": "reloads: 0 of 20 black; first visits: 0 of 10"
+}

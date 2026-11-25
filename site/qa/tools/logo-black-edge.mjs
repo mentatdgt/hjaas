@@ -190,6 +190,8 @@ const run = {
     cssLate = 0;
     const report = {};
     for (const name of pick(Object.keys(engines))) for (const [how, scene] of [['cache', ''], ['cache', '#film'], ['events', ''], ['events', '#grow'], ['events', '#film'], ['events', '#set'], ['painting', ''], ['switching', ''], ...[0, 60, 150, 400].map((ms) => [`cache-switch+${ms}`, '']), ['cache-twice', '#set']]) {
+      // (Playwright's WebKit keeps no pages to come back to.)
+      if (name === 'webkit' && how === 'cache-twice') continue;
       const browser = await engines[name](name === 'chrome' ? { ignoreDefaultArgs: ['--disable-back-forward-cache'] } : {});
       const context = await browser.newContext({ viewport: { width: 1180, height: 820 }, deviceScaleFactor: 2 }); await prepare(context); const page = await context.newPage();
       const said = []; page.on('pageerror', (e) => said.push(`pageerror: ${e.message}`)); page.on('console', (m) => m.type() !== 'log' && said.push(m.text()));

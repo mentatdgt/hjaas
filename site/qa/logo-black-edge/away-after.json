@@ -1,0 +1,959 @@
+{
+ "webkit cache #build": {
+  "before": 5220112,
+  "restored": "loaded afresh",
+  "hidden": null,
+  "after": 3992512,
+  "scene": "build",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 223
+  },
+  "her": "drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 211
+   }
+  }
+ },
+ "webkit cache #film": {
+  "before": 5753160,
+  "restored": "loaded afresh",
+  "hidden": null,
+  "after": 5753160,
+  "scene": "film",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 106,
+   "of": 2632,
+   "darkest": 199
+  },
+  "her": "drawn drawn drawn drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 211
+   }
+  }
+ },
+ "webkit events #build": {
+  "before": 5220112,
+  "hidden": 0,
+  "still hidden": 0,
+  "after": 3992512,
+  "scene": "build",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 223
+  },
+  "her": "drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 211
+   }
+  }
+ },
+ "webkit events #grow": {
+  "before": 4172912,
+  "hidden": 0,
+  "still hidden": 0,
+  "after": 4172912,
+  "scene": "grow",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 225
+  },
+  "her": "drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 211
+   }
+  }
+ },
+ "webkit events #film": {
+  "before": 5753160,
+  "hidden": 0,
+  "still hidden": 0,
+  "after": 5753160,
+  "scene": "film",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 106,
+   "of": 2632,
+   "darkest": 199
+  },
+  "her": "drawn drawn drawn drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 211
+   }
+  }
+ },
+ "webkit events #set": {
+  "before": 9586848,
+  "hidden": 0,
+  "still hidden": 0,
+  "after": 9586848,
+  "scene": "set",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 78,
+   "of": 2632,
+   "darkest": 186
+  },
+  "her": "drawn drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 211
+   }
+  }
+ },
+ "webkit painting #build": {
+  "before": 10018624,
+  "hidden": 0,
+  "still hidden": 0,
+  "after": 3992512,
+  "scene": "build",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 223
+  },
+  "her": "drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 211
+   }
+  }
+ },
+ "webkit switching #build": {
+  "before": 3992512,
+  "hidden": 0,
+  "still hidden": 0,
+  "after": 4580880,
+  "scene": "design",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 12,
+   "of": 2632,
+   "darkest": 211
+  },
+  "her": "drawn drawn drawn drawn drawn drawn empty",
+  "room": 1672,
+  "said": [
+   "The resource http://127.0.0.1:62005/assets/scene3/room.webp was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it wasn't preloaded for nothing."
+  ],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 211
+   }
+  }
+ },
+ "webkit cache-switch+0 #build": {
+  "before": 5220112,
+  "restored": "loaded afresh",
+  "hidden": null,
+  "after": 3992512,
+  "scene": "build",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 223
+  },
+  "her": "drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 211
+   }
+  }
+ },
+ "webkit cache-switch+60 #build": {
+  "before": 5220112,
+  "restored": "loaded afresh",
+  "hidden": null,
+  "after": 3992512,
+  "scene": "build",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 223
+  },
+  "her": "drawn",
+  "room": 1672,
+  "said": [
+   "Cannot load blob:http://127.0.0.1:62005/8f5348ab-5e70-40a6-8525-bcd19131a3f0 due to access control checks.",
+   "pageerror: ttp://127.0.0.1:62005/5d4af9e3-1a39-432d-b4c2-24891a1f3afa due to access control checks.",
+   "pageerror: ttp://127.0.0.1:62005/25809fd1-a06f-490b-8e5a-b5cb696cc6b4 due to access control checks.",
+   "Cannot load blob:http://127.0.0.1:62005/a9256a90-22a0-4625-8d73-1a5393b3442d due to access control checks.",
+   "pageerror: ttp://127.0.0.1:62005/89058f21-0998-43e9-97e4-76f643b7dea9 due to access control checks.",
+   "Cannot load blob:http://127.0.0.1:62005/c684fcf3-65b6-457d-94ab-964a7b2bc3aa due to access control checks.",
+   "pageerror: ttp://127.0.0.1:62005/87a84748-683e-4c95-a72a-16bfe43e1dcc due to access control checks."
+  ],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 211
+   }
+  }
+ },
+ "webkit cache-switch+150 #build": {
+  "before": 3992512,
+  "restored": "loaded afresh",
+  "hidden": null,
+  "after": 3992512,
+  "scene": "build",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 223
+  },
+  "her": "drawn",
+  "room": 1672,
+  "said": [
+   "Cannot load blob:http://127.0.0.1:62005/3be2c9cd-219e-47fa-8426-3b1026696ddd due to access control checks.",
+   "pageerror: ttp://127.0.0.1:62005/58944a13-a459-41cc-9851-5010e73ed4c2 due to access control checks.",
+   "Cannot load blob:http://127.0.0.1:62005/ac07837c-7b15-41de-acf5-f16fc492b7e3 due to access control checks.",
+   "pageerror: ttp://127.0.0.1:62005/50d165c7-0caf-4149-9e9f-fc60f2e88ef6 due to access control checks.",
+   "Cannot load blob:http://127.0.0.1:62005/14979308-133f-45aa-bee0-24904ab4f04a due to access control checks.",
+   "pageerror: ttp://127.0.0.1:62005/70a4c94e-e729-4d9a-b091-7a7e96c54e83 due to access control checks.",
+   "Cannot load blob:http://127.0.0.1:62005/48aac605-082c-4e0b-9eb1-7d65b5837c31 due to access control checks.",
+   "pageerror: ttp://127.0.0.1:62005/b3ea8fe1-04e7-4f27-918d-3305b85297f7 due to access control checks.",
+   "Cannot load blob:http://127.0.0.1:62005/2a73693f-e5ff-470c-a7ef-2a957cbde525 due to access control checks.",
+   "pageerror: ttp://127.0.0.1:62005/5f619094-b6e4-4e48-946d-fb4eb22f2610 due to access control checks.",
+   "Cannot load blob:http://127.0.0.1:62005/7c4a682b-0299-4e8e-ac38-359d691ea5dd due to access control checks.",
+   "pageerror: ttp://127.0.0.1:62005/c895f234-7fce-4710-adbe-c96e19215289 due to access control checks.",
+   "Cannot load blob:http://127.0.0.1:62005/99720447-11ea-46c4-b3e6-a7fd0f64701c due to access control checks.",
+   "pageerror: ttp://127.0.0.1:62005/53d81ee1-0c51-4f5a-914b-04e90e77ca22 due to access control checks.",
+   "Cannot load blob:http://127.0.0.1:62005/5e2c9a87-0988-4191-a547-4af96418ebe9 due to access control checks.",
+   "pageerror: ttp://127.0.0.1:62005/8f73a323-f9c8-4e84-b9a1-bcee6671f749 due to access control checks.",
+   "Cannot load blob:http://127.0.0.1:62005/89cccc79-3070-4f09-96d7-7dedde12f27c due to access control checks.",
+   "pageerror: ttp://127.0.0.1:62005/58e112b8-f0d1-4f4f-b210-3285d9b5b9e8 due to access control checks.",
+   "Cannot load blob:http://127.0.0.1:62005/6b1c288e-7679-40cd-8d2c-1be2d9663115 due to access control checks.",
+   "pageerror: ttp://127.0.0.1:62005/f2e9f622-0821-4cbc-86a6-f07b4da4a5be due to access control checks.",
+   "Cannot load blob:http://127.0.0.1:62005/16aa5ce7-9c6b-4f5a-b25d-b9ab061ac095 due to access control checks.",
+   "pageerror: ttp://127.0.0.1:62005/14d20a95-4aea-49e6-b1ee-66b6ebe1286e due to access control checks.",
+   "Cannot load blob:http://127.0.0.1:62005/9b3a19f6-5996-4d5d-b5b8-b58f3053b115 due to access control checks.",
+   "pageerror: ttp://127.0.0.1:62005/a597488f-0b18-4640-a8e0-d9b0b59de53c due to access control checks.",
+   "Cannot load blob:http://127.0.0.1:62005/ce05f38d-7e3a-45dd-a1a9-474a28d909f8 due to access control checks.",
+   "pageerror: ttp://127.0.0.1:62005/9855d685-dbbc-4939-b0a5-e1aeeab09a13 due to access control checks.",
+   "Cannot load blob:http://127.0.0.1:62005/a298bbae-0b24-403e-a5e7-4e0ec4e8ec87 due to access control checks.",
+   "pageerror: ttp://127.0.0.1:62005/ac269ebe-064a-4950-946d-1c824120c197 due to access control checks.",
+   "Cannot load blob:http://127.0.0.1:62005/a118439d-437a-4763-b484-c472b95e4820 due to access control checks.",
+   "pageerror: ttp://127.0.0.1:62005/fc68fc9d-9ed5-416c-b8e2-0a4134ef7128 due to access control checks.",
+   "Cannot load blob:http://127.0.0.1:62005/b8d60fa0-7217-47bb-9225-4efce136f352 due to access control checks.",
+   "pageerror: ttp://127.0.0.1:62005/72db2850-eb0f-44a9-93c0-fb112f8f1539 due to access control checks.",
+   "Cannot load blob:http://127.0.0.1:62005/8c2ef6b2-e481-463f-9011-917940bcf19f due to access control checks.",
+   "pageerror: ttp://127.0.0.1:62005/b686560e-0ca6-44d3-9624-e4bda760e139 due to access control checks."
+  ],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 211
+   }
+  }
+ },
+ "webkit cache-switch+400 #build": {
+  "before": 3992512,
+  "restored": "loaded afresh",
+  "hidden": null,
+  "after": 3992512,
+  "scene": "build",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 223
+  },
+  "her": "drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 211
+   }
+  }
+ },
+ "chrome cache #build": {
+  "before": 3992512,
+  "restored": "as it was",
+  "hidden": 0,
+  "after": 3992512,
+  "scene": "build",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 224
+  },
+  "her": "drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 212
+   }
+  }
+ },
+ "chrome cache #film": {
+  "before": 5753160,
+  "restored": "as it was",
+  "hidden": 0,
+  "after": 5753160,
+  "scene": "film",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 104,
+   "of": 2632,
+   "darkest": 199
+  },
+  "her": "drawn drawn drawn drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 212
+   }
+  }
+ },
+ "chrome events #build": {
+  "before": 3992512,
+  "hidden": 0,
+  "still hidden": 0,
+  "after": 3992512,
+  "scene": "build",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 224
+  },
+  "her": "drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 212
+   }
+  }
+ },
+ "chrome events #grow": {
+  "before": 4172912,
+  "hidden": 0,
+  "still hidden": 0,
+  "after": 4172912,
+  "scene": "grow",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 225
+  },
+  "her": "drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 212
+   }
+  }
+ },
+ "chrome events #film": {
+  "before": 5753160,
+  "hidden": 0,
+  "still hidden": 0,
+  "after": 5753160,
+  "scene": "film",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 104,
+   "of": 2632,
+   "darkest": 199
+  },
+  "her": "drawn drawn drawn drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 212
+   }
+  }
+ },
+ "chrome events #set": {
+  "before": 9586848,
+  "hidden": 0,
+  "still hidden": 0,
+  "after": 9586848,
+  "scene": "set",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 77,
+   "of": 2632,
+   "darkest": 187
+  },
+  "her": "drawn drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 212
+   }
+  }
+ },
+ "chrome painting #build": {
+  "before": 10018624,
+  "hidden": 0,
+  "still hidden": 0,
+  "after": 3992512,
+  "scene": "build",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 224
+  },
+  "her": "drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 212
+   }
+  }
+ },
+ "chrome switching #build": {
+  "before": 3992512,
+  "hidden": 0,
+  "still hidden": 0,
+  "after": 4580880,
+  "scene": "design",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 12,
+   "of": 2632,
+   "darkest": 212
+  },
+  "her": "drawn drawn drawn drawn drawn drawn empty",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 212
+   }
+  }
+ },
+ "chrome cache-switch+0 #build": {
+  "before": 3992512,
+  "restored": "loaded afresh",
+  "hidden": null,
+  "after": 3992512,
+  "scene": "build",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 224
+  },
+  "her": "drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 212
+   }
+  }
+ },
+ "chrome cache-switch+60 #build": {
+  "before": 3992512,
+  "restored": "loaded afresh",
+  "hidden": null,
+  "after": 3992512,
+  "scene": "build",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 224
+  },
+  "her": "drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 212
+   }
+  }
+ },
+ "chrome cache-switch+150 #build": {
+  "before": 3992512,
+  "restored": "loaded afresh",
+  "hidden": null,
+  "after": 3992512,
+  "scene": "build",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 224
+  },
+  "her": "drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 212
+   }
+  }
+ },
+ "chrome cache-switch+400 #build": {
+  "before": 3992512,
+  "restored": "as it was",
+  "hidden": 0,
+  "after": 3992512,
+  "scene": "build",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 224
+  },
+  "her": "drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 212
+   }
+  }
+ },
+ "chrome cache-twice #set": {
+  "before": 9586848,
+  "restored": "loaded afresh",
+  "hidden": null,
+  "after": 9586848,
+  "scene": "set",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 77,
+   "of": 2632,
+   "darkest": 186
+  },
+  "her": "drawn drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 212
+   }
+  }
+ },
+ "firefox cache #build": {
+  "before": 3992512,
+  "restored": "as it was",
+  "hidden": 0,
+  "after": 3992512,
+  "scene": "build",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 224
+  },
+  "her": "drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 210
+   }
+  }
+ },
+ "firefox cache #film": {
+  "before": 5753012,
+  "restored": "as it was",
+  "hidden": 0,
+  "after": 5753012,
+  "scene": "film",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 104,
+   "of": 2632,
+   "darkest": 199
+  },
+  "her": "drawn drawn drawn drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 210
+   }
+  }
+ },
+ "firefox events #build": {
+  "before": 3992512,
+  "hidden": 0,
+  "still hidden": 0,
+  "after": 3992512,
+  "scene": "build",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 224
+  },
+  "her": "drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 210
+   }
+  }
+ },
+ "firefox events #grow": {
+  "before": 4172912,
+  "hidden": 0,
+  "still hidden": 0,
+  "after": 4172912,
+  "scene": "grow",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 225
+  },
+  "her": "drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 210
+   }
+  }
+ },
+ "firefox events #film": {
+  "before": 5753012,
+  "hidden": 0,
+  "still hidden": 0,
+  "after": 5753012,
+  "scene": "film",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 104,
+   "of": 2632,
+   "darkest": 199
+  },
+  "her": "drawn drawn drawn drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 210
+   }
+  }
+ },
+ "firefox events #set": {
+  "before": 9586848,
+  "hidden": 0,
+  "still hidden": 0,
+  "after": 9586848,
+  "scene": "set",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 77,
+   "of": 2632,
+   "darkest": 185
+  },
+  "her": "drawn drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 210
+   }
+  }
+ },
+ "firefox painting #build": {
+  "before": 10018624,
+  "hidden": 0,
+  "still hidden": 0,
+  "after": 3992512,
+  "scene": "build",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 224
+  },
+  "her": "drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 210
+   }
+  }
+ },
+ "firefox switching #build": {
+  "before": 3992512,
+  "hidden": 0,
+  "still hidden": 0,
+  "after": 4580880,
+  "scene": "design",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 12,
+   "of": 2632,
+   "darkest": 210
+  },
+  "her": "drawn drawn drawn drawn drawn drawn empty",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 210
+   }
+  }
+ },
+ "firefox cache-switch+0 #build": {
+  "before": 3992512,
+  "restored": "loaded afresh",
+  "hidden": null,
+  "after": 3992512,
+  "scene": "build",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 224
+  },
+  "her": "drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 210
+   }
+  }
+ },
+ "firefox cache-switch+60 #build": {
+  "before": 3992512,
+  "restored": "loaded afresh",
+  "hidden": null,
+  "after": 3992512,
+  "scene": "build",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 224
+  },
+  "her": "drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 210
+   }
+  }
+ },
+ "firefox cache-switch+150 #build": {
+  "before": 3992512,
+  "restored": "loaded afresh",
+  "hidden": null,
+  "after": 3992512,
+  "scene": "build",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 224
+  },
+  "her": "drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 210
+   }
+  }
+ },
+ "firefox cache-switch+400 #build": {
+  "before": 3992512,
+  "restored": "as it was",
+  "hidden": 0,
+  "after": 3992512,
+  "scene": "build",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 0,
+   "of": 2632,
+   "darkest": 224
+  },
+  "her": "drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 210
+   }
+  }
+ },
+ "firefox cache-twice #set": {
+  "before": 9586848,
+  "restored": "loaded afresh",
+  "hidden": null,
+  "after": 9586848,
+  "scene": "set",
+  "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+  "ring": {
+   "off": 77,
+   "of": 2632,
+   "darkest": 185
+  },
+  "her": "drawn drawn",
+  "room": 1672,
+  "said": [],
+  "then": {
+   "edge": "246,243,236,255 246,243,236,255 246,243,236,255 246,243,236,255",
+   "ring": {
+    "off": 12,
+    "of": 2632,
+    "darkest": 210
+   }
+  }
+ }
+}

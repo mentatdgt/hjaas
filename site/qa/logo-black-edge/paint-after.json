@@ -1,0 +1,62 @@
+{
+ "webkit css+0": {
+  "frames": [
+   "0 ms: sheet covers 99%",
+   "500 ms: sheet covers 88%",
+   "1500 ms: sheet covers 58%",
+   "3000 ms: sheet covers 23%"
+  ],
+  "mount": "rgb(246, 243, 236)",
+  "seconds": 4.767
+ },
+ "webkit css+600": {
+  "frames": [
+   "0 ms: sheet covers 99%",
+   "500 ms: sheet covers 88%",
+   "1500 ms: sheet covers 58%",
+   "3000 ms: sheet covers 23%"
+  ],
+  "mount": "rgb(246, 243, 236)",
+  "seconds": 4.752
+ },
+ "chrome css+0": {
+  "frames": [
+   "0 ms: sheet covers 99%",
+   "500 ms: sheet covers 88%",
+   "1500 ms: sheet covers 58%",
+   "3000 ms: sheet covers 23%"
+  ],
+  "mount": "rgb(246, 243, 236)",
+  "seconds": 4.761
+ },
+ "chrome css+600": {
+  "frames": [
+   "0 ms: sheet covers 99%",
+   "500 ms: sheet covers 88%",
+   "1500 ms: sheet covers 58%",
+   "3000 ms: sheet covers 23%"
+  ],
+  "mount": "rgb(246, 243, 236)",
+  "seconds": 4.759
+ },
+ "firefox css+0": {
+  "frames": [
+   "0 ms: sheet covers 99%",
+   "500 ms: sheet covers 88%",
+   "1500 ms: sheet covers 58%",
+   "3000 ms: sheet covers 23%"
+  ],
+  "mount": "rgb(246, 243, 236)",
+  "seconds": 4.758
+ },
+ "firefox css+600": {
+  "frames": [
+   "0 ms: sheet covers 99%",
+   "500 ms: sheet covers 88%",
+   "1500 ms: sheet covers 58%",
+   "3000 ms: sheet covers 23%"
+  ],
+  "mount": "rgb(246, 243, 236)",
+  "seconds": 4.758
+ }
+}
