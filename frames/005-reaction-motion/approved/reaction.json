@@ -51,9 +51,19 @@
    "beat": "beam"
   },
   {
+   "file": "rx_K1_B36.png",
+   "ms": 30,
+   "beat": "in-between: hand leaves the box (Quinn 037)"
+  },
+  {
    "file": "rx_B36.png",
-   "ms": 60,
+   "ms": 30,
    "beat": "thumbs-up swing"
+  },
+  {
+   "file": "rx_B36_B39.png",
+   "ms": 30,
+   "beat": "in-between: thumb comes up (Quinn 037)"
   },
   {
    "file": "rx_B39.png",
@@ -96,9 +106,19 @@
    "beat": "back"
   },
   {
+   "file": "rx_B36_B39.png",
+   "ms": 25,
+   "beat": "in-between, going back down"
+  },
+  {
    "file": "rx_B36.png",
-   "ms": 50,
+   "ms": 30,
    "beat": "back"
+  },
+  {
+   "file": "rx_K1_B36.png",
+   "ms": 30,
+   "beat": "in-between, back to the box"
   },
   {
    "file": "rx_K1.png",

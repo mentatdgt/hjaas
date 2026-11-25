@@ -23,3 +23,7 @@ Asked for by the user: find jerky movement, especially Rachel's, and fill it in 
 1. **Quinn 036:** presenter `M_1_12`, `M_1_13` at 2x. Engine adds them to the Film routine (`M_1 → M_1_12 → M_12 → M_2`, `M_1 → M_1_13 → M_13 → M_3`, about 60 ms each, so the gesture keeps its pace).
 2. **Quinn 037, after the no-glasses roll-out (035):** Build hammer in-betweens (contact→lift ×1, lift→wind-up ×2) and reaction thumb in-betweens (K1→B36 ×1, B36→B39 ×1), as edits of the no-glasses drawings: only the arm, hand and hammer change. Engine adds them to `build-rhythm.ts` and `reaction.json` with the same total time per move.
 3. Grow: in the model-sheet pass.
+
+## Done (2026-11-25)
+- Quinn 036: presenter `M_1_12`, `M_1_13` (2x). Steps into a gesture now ~30 then ~11-16 px (was ~51). In Engine job 007.
+- Quinn 037: Build `frame_01_02`, `frame_02_03a`, `frame_02_03b` (hammer rising: 24, 26, 31, 40, 43 px per step; it was 31 then 46) and reaction `rx_K1_B36`, `rx_B36_B39` (thumb: 31, 18, 34, 32; was 40 then 43). `reaction.json` already threads them both ways; Engine job 008 adds the hammer steps to `build-rhythm.ts`.
