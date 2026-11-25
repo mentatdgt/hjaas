@@ -1,0 +1,75 @@
+{
+ "note": "Loop order, holds in ms. \"arm\" names the arm patch shown. A blink shows blink.webp for 130 ms in the middle of the hold marked blink:true. Loop forever. prefers-reduced-motion: show the rest pose only, no loop.",
+ "steps": [
+  {
+   "arm": "S1",
+   "ms": 400
+  },
+  {
+   "arm": "S2",
+   "ms": 90
+  },
+  {
+   "arm": "S3",
+   "ms": 90
+  },
+  {
+   "arm": "S4",
+   "ms": 110
+  },
+  {
+   "arm": "S1",
+   "ms": 260
+  },
+  {
+   "arm": "S2",
+   "ms": 90
+  },
+  {
+   "arm": "S3",
+   "ms": 90
+  },
+  {
+   "arm": "S4",
+   "ms": 110
+  },
+  {
+   "arm": "S1",
+   "ms": 120
+  },
+  {
+   "arm": "S5",
+   "ms": 100
+  },
+  {
+   "arm": "S1",
+   "ms": 100
+  },
+  {
+   "arm": "S5",
+   "ms": 100
+  },
+  {
+   "arm": "S1",
+   "ms": 700,
+   "blink": true
+  },
+  {
+   "arm": "S2",
+   "ms": 90
+  },
+  {
+   "arm": "S3",
+   "ms": 90
+  },
+  {
+   "arm": "S4",
+   "ms": 110
+  },
+  {
+   "arm": "S1",
+   "ms": 900
+  }
+ ],
+ "blink_ms": 130
+}
