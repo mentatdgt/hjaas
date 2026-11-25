@@ -1,0 +1,214 @@
+{
+ "old": {
+  "sizes": 4220,
+  "withALine": 1305,
+  "worst": {
+   "build 1133": {
+    "withALine": 190,
+    "rows": 919,
+    "at": "1133x677"
+   },
+   "build 1180": {
+    "withALine": 14,
+    "rows": 940,
+    "at": "1180x690"
+   },
+   "build 1194": {
+    "withALine": 15,
+    "rows": 958,
+    "at": "1194x700"
+   },
+   "build 1366": {
+    "withALine": 42,
+    "rows": 1102,
+    "at": "1366x784"
+   },
+   "grow 1133": {
+    "withALine": 190,
+    "rows": 919,
+    "at": "1133x677"
+   },
+   "grow 1180": {
+    "withALine": 14,
+    "rows": 940,
+    "at": "1180x690"
+   },
+   "grow 1194": {
+    "withALine": 15,
+    "rows": 958,
+    "at": "1194x700"
+   },
+   "grow 1366": {
+    "withALine": 42,
+    "rows": 1102,
+    "at": "1366x784"
+   },
+   "design 1133": {
+    "withALine": 190,
+    "rows": 919,
+    "at": "1133x677"
+   },
+   "design 1180": {
+    "withALine": 14,
+    "rows": 940,
+    "at": "1180x690"
+   },
+   "design 1194": {
+    "withALine": 15,
+    "rows": 958,
+    "at": "1194x700"
+   },
+   "design 1366": {
+    "withALine": 42,
+    "rows": 1102,
+    "at": "1366x784"
+   },
+   "film 1133": {
+    "withALine": 190,
+    "rows": 919,
+    "at": "1133x677"
+   },
+   "film 1180": {
+    "withALine": 14,
+    "rows": 940,
+    "at": "1180x690"
+   },
+   "film 1194": {
+    "withALine": 15,
+    "rows": 958,
+    "at": "1194x700"
+   },
+   "film 1366": {
+    "withALine": 42,
+    "rows": 1102,
+    "at": "1366x784"
+   },
+   "set 1133": {
+    "withALine": 190,
+    "rows": 919,
+    "at": "1133x677"
+   },
+   "set 1180": {
+    "withALine": 14,
+    "rows": 940,
+    "at": "1180x690"
+   },
+   "set 1194": {
+    "withALine": 15,
+    "rows": 958,
+    "at": "1194x700"
+   },
+   "set 1366": {
+    "withALine": 42,
+    "rows": 1102,
+    "at": "1366x784"
+   }
+  }
+ },
+ "new": {
+  "sizes": 4220,
+  "withALine": 0,
+  "worst": {
+   "build 1133": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "build 1180": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "build 1194": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "build 1366": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "grow 1133": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "grow 1180": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "grow 1194": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "grow 1366": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "design 1133": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "design 1180": {
+    "withALine": 0,
+    "rows": 1,
+    "at": "1180x650"
+   },
+   "design 1194": {
+    "withALine": 0,
+    "rows": 1,
+    "at": "1194x650"
+   },
+   "design 1366": {
+    "withALine": 0,
+    "rows": 1,
+    "at": "1366x662"
+   },
+   "film 1133": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "film 1180": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "film 1194": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "film 1366": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "set 1133": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "set 1180": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "set 1194": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "set 1366": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   }
+  }
+ }
+}

@@ -1,0 +1,883 @@
+{
+ "1180x820 safari old": {
+  "grow, opened": {
+   "left": 0,
+   "right": 0,
+   "window": "164.015625 1015.96875 115.796875 595.265625",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 9,
+   "cornerOffPaper": 0
+  },
+  "build, by its tab": {
+   "left": 0,
+   "right": 0,
+   "window": "164.015625 1015.96875 115.796875 595.265625",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "reloaded": true,
+  "after 1 tap": {
+   "left": 0,
+   "right": 0,
+   "window": "164.015625 1015.96875 115.796875 595.265625",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "after 5 taps": {
+   "left": 0,
+   "right": 0,
+   "window": "164.015625 1015.96875 115.796875 595.265625",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "back": {
+   "left": 0,
+   "right": 0,
+   "window": "164.015625 1015.96875 115.796875 595.265625",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "forward": {
+   "left": 0,
+   "right": 0,
+   "window": "164.015625 1015.96875 115.796875 595.265625",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 4,
+   "cornerOffPaper": 0
+  },
+  "console": [
+   "[hjaas] build: reaction frames unavailable; finds still count EncodingError: Loading error.",
+   "Fetch API cannot load http: /127.0.0.1:52213/assets/scene1/rachel-1.5x/reaction/rx_B36_B39.webp due to access control checks.",
+   "[hjaas] build: reaction frames unavailable; finds still count EncodingError: Loading error."
+  ]
+ },
+ "1180x820 safari new": {
+  "grow, opened": {
+   "left": 0,
+   "right": 0,
+   "window": "164.015625 1015.96875 115.796875 595.265625",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 9,
+   "cornerOffPaper": 0
+  },
+  "build, by its tab": {
+   "left": 0,
+   "right": 0,
+   "window": "164.015625 1015.96875 115.796875 595.265625",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "reloaded": true,
+  "after 1 tap": {
+   "left": 0,
+   "right": 0,
+   "window": "164.015625 1015.96875 115.796875 595.265625",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "after 5 taps": {
+   "left": 0,
+   "right": 0,
+   "window": "164.015625 1015.96875 115.796875 595.265625",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "back": {
+   "left": 0,
+   "right": 0,
+   "window": "164.015625 1015.96875 115.796875 595.265625",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "forward": {
+   "left": 0,
+   "right": 0,
+   "window": "164.015625 1015.96875 115.796875 595.265625",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 4,
+   "cornerOffPaper": 0
+  },
+  "console": [
+   "Fetch API cannot load http: /127.0.0.1:52219/assets/scene1/rachel-1.5x/reaction/rx_B36.webp due to access control checks.",
+   "[hjaas] build: reaction frames unavailable; finds still count EncodingError: Loading error.",
+   "Fetch API cannot load http: /127.0.0.1:52219/assets/scene1/rachel-1.5x/reaction/rx_B39.webp due to access control checks.",
+   "[hjaas] build: reaction frames unavailable; finds still count EncodingError: Loading error.",
+   "[hjaas] build: reaction frames unavailable; finds still count EncodingError: Loading error."
+  ]
+ },
+ "1180x820 crios old": {
+  "grow, opened": {
+   "left": 0,
+   "right": 0,
+   "window": "164.015625 1015.96875 115.796875 595.265625",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 9,
+   "cornerOffPaper": 0
+  },
+  "build, by its tab": {
+   "left": 0,
+   "right": 0,
+   "window": "164.015625 1015.96875 115.796875 595.265625",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "reloaded": true,
+  "after 1 tap": {
+   "left": 0,
+   "right": 0,
+   "window": "164.015625 1015.96875 115.796875 595.265625",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "after 5 taps": {
+   "left": 0,
+   "right": 0,
+   "window": "164.015625 1015.96875 115.796875 595.265625",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "back": {
+   "left": 0,
+   "right": 0,
+   "window": "164.015625 1015.96875 115.796875 595.265625",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "forward": {
+   "left": 0,
+   "right": 0,
+   "window": "164.015625 1015.96875 115.796875 595.265625",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 4,
+   "cornerOffPaper": 0
+  },
+  "console": [
+   "Fetch API cannot load http: /127.0.0.1:52213/assets/scene1/rachel-1.5x/reaction/rx_B36.webp due to access control checks.",
+   "[hjaas] build: reaction frames unavailable; finds still count EncodingError: Loading error.",
+   "[hjaas] build: reaction frames unavailable; finds still count EncodingError: Loading error."
+  ]
+ },
+ "1180x820 crios new": {
+  "grow, opened": {
+   "left": 0,
+   "right": 0,
+   "window": "164.015625 1015.96875 115.796875 595.265625",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 9,
+   "cornerOffPaper": 0
+  },
+  "build, by its tab": {
+   "left": 0,
+   "right": 0,
+   "window": "164.015625 1015.96875 115.796875 595.265625",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "reloaded": true,
+  "after 1 tap": {
+   "left": 0,
+   "right": 0,
+   "window": "164.015625 1015.96875 115.796875 595.265625",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "after 5 taps": {
+   "left": 0,
+   "right": 0,
+   "window": "164.015625 1015.96875 115.796875 595.265625",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "back": {
+   "left": 0,
+   "right": 0,
+   "window": "164.015625 1015.96875 115.796875 595.265625",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "forward": {
+   "left": 0,
+   "right": 0,
+   "window": "164.015625 1015.96875 115.796875 595.265625",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 4,
+   "cornerOffPaper": 0
+  },
+  "console": [
+   "Fetch API cannot load http: /127.0.0.1:52219/assets/scene1/rachel-1.5x/reaction/rx_K1_B36.webp due to access control checks.",
+   "[hjaas] build: reaction frames unavailable; finds still count EncodingError: Loading error.",
+   "[hjaas] build: reaction frames unavailable; finds still count EncodingError: Loading error."
+  ]
+ },
+ "1180x690 safari old": {
+  "grow, opened": {
+   "left": 940,
+   "right": 0,
+   "window": "170.703125 1009.296875 115.796875 587.75",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.9,
+   "cornerOffPaper": 0
+  },
+  "build, by its tab": {
+   "left": 940,
+   "right": 0,
+   "window": "170.703125 1009.296875 115.796875 587.75",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "reloaded": true,
+  "after 1 tap": {
+   "left": 940,
+   "right": 0,
+   "window": "170.703125 1009.296875 115.796875 587.75",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "after 5 taps": {
+   "left": 940,
+   "right": 0,
+   "window": "170.703125 1009.296875 115.796875 587.75",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "back": {
+   "left": 940,
+   "right": 0,
+   "window": "170.703125 1009.296875 115.796875 587.75",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "forward": {
+   "left": 940,
+   "right": 0,
+   "window": "170.703125 1009.296875 115.796875 587.75",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 4,
+   "cornerOffPaper": 0
+  },
+  "console": [
+   "[hjaas] build: reaction frames unavailable; finds still count EncodingError: Loading error."
+  ]
+ },
+ "1180x690 safari new": {
+  "grow, opened": {
+   "left": 0,
+   "right": 0,
+   "window": "170.703125 1009.296875 115.796875 587.75",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.9,
+   "cornerOffPaper": 0
+  },
+  "build, by its tab": {
+   "left": 0,
+   "right": 0,
+   "window": "170.703125 1009.296875 115.796875 587.75",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "reloaded": true,
+  "after 1 tap": {
+   "left": 0,
+   "right": 0,
+   "window": "170.703125 1009.296875 115.796875 587.75",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "after 5 taps": {
+   "left": 0,
+   "right": 0,
+   "window": "170.703125 1009.296875 115.796875 587.75",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "back": {
+   "left": 0,
+   "right": 0,
+   "window": "170.703125 1009.296875 115.796875 587.75",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "forward": {
+   "left": 0,
+   "right": 0,
+   "window": "170.703125 1009.296875 115.796875 587.75",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 4,
+   "cornerOffPaper": 0
+  },
+  "console": [
+   "Fetch API cannot load http: /127.0.0.1:52219/assets/scene1/rachel-1.5x/reaction/rx_K1_B36.webp due to access control checks."
+  ]
+ },
+ "1180x690 crios old": {
+  "grow, opened": {
+   "left": 940,
+   "right": 0,
+   "window": "170.703125 1009.296875 115.796875 587.75",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.9,
+   "cornerOffPaper": 0
+  },
+  "build, by its tab": {
+   "left": 940,
+   "right": 0,
+   "window": "170.703125 1009.296875 115.796875 587.75",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "reloaded": true,
+  "after 1 tap": {
+   "left": 940,
+   "right": 0,
+   "window": "170.703125 1009.296875 115.796875 587.75",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "after 5 taps": {
+   "left": 940,
+   "right": 0,
+   "window": "170.703125 1009.296875 115.796875 587.75",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "back": {
+   "left": 940,
+   "right": 0,
+   "window": "170.703125 1009.296875 115.796875 587.75",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "forward": {
+   "left": 940,
+   "right": 0,
+   "window": "170.703125 1009.296875 115.796875 587.75",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 4,
+   "cornerOffPaper": 0
+  },
+  "console": [
+   "[hjaas] build: reaction frames unavailable; finds still count EncodingError: Loading error."
+  ]
+ },
+ "1180x690 crios new": {
+  "grow, opened": {
+   "left": 0,
+   "right": 0,
+   "window": "170.703125 1009.296875 115.796875 587.75",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.9,
+   "cornerOffPaper": 0
+  },
+  "build, by its tab": {
+   "left": 0,
+   "right": 0,
+   "window": "170.703125 1009.296875 115.796875 587.75",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "reloaded": true,
+  "after 1 tap": {
+   "left": 0,
+   "right": 0,
+   "window": "170.703125 1009.296875 115.796875 587.75",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "after 5 taps": {
+   "left": 0,
+   "right": 0,
+   "window": "170.703125 1009.296875 115.796875 587.75",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "back": {
+   "left": 0,
+   "right": 0,
+   "window": "170.703125 1009.296875 115.796875 587.75",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.8,
+   "cornerOffPaper": 0
+  },
+  "forward": {
+   "left": 0,
+   "right": 0,
+   "window": "170.703125 1009.296875 115.796875 587.75",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 4,
+   "cornerOffPaper": 0
+  },
+  "console": [
+   "Fetch API cannot load http: /127.0.0.1:52219/assets/scene1/rachel-1.5x/reaction/rx_K1_B36.webp due to access control checks.",
+   "[hjaas] build: reaction frames unavailable; finds still count EncodingError: Loading error.",
+   "[hjaas] build: reaction frames unavailable; finds still count EncodingError: Loading error."
+  ]
+ },
+ "1133x677 safari old": {
+  "grow, opened": {
+   "left": 919,
+   "right": 919,
+   "window": "156.5 976.5 114.0625 575.546875",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.9,
+   "cornerOffPaper": 0
+  },
+  "build, by its tab": {
+   "left": 919,
+   "right": 919,
+   "window": "156.5 976.5 114.0625 575.546875",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.7,
+   "cornerOffPaper": 0
+  },
+  "reloaded": true,
+  "after 1 tap": {
+   "left": 919,
+   "right": 919,
+   "window": "156.5 976.5 114.0625 575.546875",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.7,
+   "cornerOffPaper": 0
+  },
+  "after 5 taps": {
+   "left": 919,
+   "right": 919,
+   "window": "156.5 976.5 114.0625 575.546875",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.7,
+   "cornerOffPaper": 0
+  },
+  "back": {
+   "left": 919,
+   "right": 919,
+   "window": "156.5 976.5 114.0625 575.546875",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.7,
+   "cornerOffPaper": 0
+  },
+  "forward": {
+   "left": 919,
+   "right": 919,
+   "window": "156.5 976.5 114.0625 575.546875",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 3.9,
+   "cornerOffPaper": 0
+  },
+  "console": [
+   "[hjaas] build: reaction frames unavailable; finds still count EncodingError: Loading error."
+  ]
+ },
+ "1133x677 safari new": {
+  "grow, opened": {
+   "left": 0,
+   "right": 0,
+   "window": "156.5 976.5 114.0625 575.546875",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.9,
+   "cornerOffPaper": 0
+  },
+  "build, by its tab": {
+   "left": 0,
+   "right": 0,
+   "window": "156.5 976.5 114.0625 575.546875",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.7,
+   "cornerOffPaper": 0
+  },
+  "reloaded": true,
+  "after 1 tap": {
+   "left": 0,
+   "right": 0,
+   "window": "156.5 976.5 114.0625 575.546875",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.7,
+   "cornerOffPaper": 0
+  },
+  "after 5 taps": {
+   "left": 0,
+   "right": 0,
+   "window": "156.5 976.5 114.0625 575.546875",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.7,
+   "cornerOffPaper": 0
+  },
+  "back": {
+   "left": 0,
+   "right": 0,
+   "window": "156.5 976.5 114.0625 575.546875",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 3.9,
+   "cornerOffPaper": 0
+  },
+  "forward": {
+   "left": 0,
+   "right": 0,
+   "window": "156.5 976.5 114.0625 575.546875",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 3.9,
+   "cornerOffPaper": 0
+  },
+  "console": [
+   "Cannot load blob: ttp://127.0.0.1:52219/2f4e71b3-c8d8-4301-b16f-4cec96f67b38 due to access control checks.",
+   "[hjaas] build: reaction frames unavailable; finds still count EncodingError: Loading error.",
+   "Fetch API cannot load http: /127.0.0.1:52219/assets/scene1/rachel-1.5x/reaction/rx_K1_B36.webp due to access control checks.",
+   "[hjaas] build: reaction frames unavailable; finds still count EncodingError: Loading error."
+  ]
+ },
+ "1133x677 crios old": {
+  "grow, opened": {
+   "left": 919,
+   "right": 919,
+   "window": "156.5 976.5 114.0625 575.546875",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.9,
+   "cornerOffPaper": 0
+  },
+  "build, by its tab": {
+   "left": 919,
+   "right": 919,
+   "window": "156.5 976.5 114.0625 575.546875",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.7,
+   "cornerOffPaper": 0
+  },
+  "reloaded": true,
+  "after 1 tap": {
+   "left": 919,
+   "right": 919,
+   "window": "156.5 976.5 114.0625 575.546875",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.7,
+   "cornerOffPaper": 0
+  },
+  "after 5 taps": {
+   "left": 919,
+   "right": 919,
+   "window": "156.5 976.5 114.0625 575.546875",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.7,
+   "cornerOffPaper": 0
+  },
+  "back": {
+   "left": 919,
+   "right": 919,
+   "window": "156.5 976.5 114.0625 575.546875",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.7,
+   "cornerOffPaper": 0
+  },
+  "forward": {
+   "left": 919,
+   "right": 919,
+   "window": "156.5 976.5 114.0625 575.546875",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 3.9,
+   "cornerOffPaper": 0
+  },
+  "console": [
+   "Fetch API cannot load http: /127.0.0.1:52213/assets/scene1/rachel-1.5x/reaction/rx_B36_B39.webp due to access control checks.",
+   "[hjaas] build: reaction frames unavailable; finds still count EncodingError: Loading error."
+  ]
+ },
+ "1133x677 crios new": {
+  "grow, opened": {
+   "left": 0,
+   "right": 0,
+   "window": "156.5 976.5 114.0625 575.546875",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.9,
+   "cornerOffPaper": 0
+  },
+  "build, by its tab": {
+   "left": 0,
+   "right": 0,
+   "window": "156.5 976.5 114.0625 575.546875",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.7,
+   "cornerOffPaper": 0
+  },
+  "reloaded": true,
+  "after 1 tap": {
+   "left": 0,
+   "right": 0,
+   "window": "156.5 976.5 114.0625 575.546875",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.7,
+   "cornerOffPaper": 0
+  },
+  "after 5 taps": {
+   "left": 0,
+   "right": 0,
+   "window": "156.5 976.5 114.0625 575.546875",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.7,
+   "cornerOffPaper": 0
+  },
+  "back": {
+   "left": 0,
+   "right": 0,
+   "window": "156.5 976.5 114.0625 575.546875",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 8.7,
+   "cornerOffPaper": 0
+  },
+  "forward": {
+   "left": 0,
+   "right": 0,
+   "window": "156.5 976.5 114.0625 575.546875",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 3.9,
+   "cornerOffPaper": 0
+  },
+  "console": []
+ },
+ "1366x1024 safari old": {
+  "grow, opened": {
+   "left": 0,
+   "right": 0,
+   "window": "189.875 1176.125 123.40625 678.453125",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 9.5,
+   "cornerOffPaper": 0
+  },
+  "build, by its tab": {
+   "left": 0,
+   "right": 0,
+   "window": "189.875 1176.125 123.40625 678.453125",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 9.3,
+   "cornerOffPaper": 0
+  },
+  "reloaded": true,
+  "after 1 tap": {
+   "left": 0,
+   "right": 0,
+   "window": "189.875 1176.125 123.40625 678.453125",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 9.3,
+   "cornerOffPaper": 0
+  },
+  "after 5 taps": {
+   "left": 0,
+   "right": 0,
+   "window": "189.875 1176.125 123.40625 678.453125",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 9.3,
+   "cornerOffPaper": 0
+  },
+  "back": {
+   "left": 0,
+   "right": 0,
+   "window": "189.875 1176.125 123.40625 678.453125",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 9.3,
+   "cornerOffPaper": 0
+  },
+  "forward": {
+   "left": 0,
+   "right": 0,
+   "window": "189.875 1176.125 123.40625 678.453125",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 4.5,
+   "cornerOffPaper": 0
+  },
+  "console": []
+ },
+ "1366x1024 safari new": {
+  "grow, opened": {
+   "left": 0,
+   "right": 0,
+   "window": "189.875 1176.125 123.40625 678.453125",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 9.5,
+   "cornerOffPaper": 0
+  },
+  "build, by its tab": {
+   "left": 0,
+   "right": 0,
+   "window": "189.875 1176.125 123.40625 678.453125",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 9.3,
+   "cornerOffPaper": 0
+  },
+  "reloaded": true,
+  "after 1 tap": {
+   "left": 0,
+   "right": 0,
+   "window": "189.875 1176.125 123.40625 678.453125",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 9.3,
+   "cornerOffPaper": 0
+  },
+  "after 5 taps": {
+   "left": 0,
+   "right": 0,
+   "window": "189.875 1176.125 123.40625 678.453125",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 9.3,
+   "cornerOffPaper": 0
+  },
+  "back": {
+   "left": 0,
+   "right": 0,
+   "window": "189.875 1176.125 123.40625 678.453125",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 9.3,
+   "cornerOffPaper": 0
+  },
+  "forward": {
+   "left": 0,
+   "right": 0,
+   "window": "189.875 1176.125 123.40625 678.453125",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 4.5,
+   "cornerOffPaper": 0
+  },
+  "console": [
+   "Fetch API cannot load http: /127.0.0.1:52219/assets/scene1/rachel/reaction/rx_K1_B36.webp due to access control checks.",
+   "[hjaas] build: reaction frames unavailable; finds still count EncodingError: Loading error."
+  ]
+ },
+ "1366x1024 crios old": {
+  "grow, opened": {
+   "left": 0,
+   "right": 0,
+   "window": "189.875 1176.125 123.40625 678.453125",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 9.5,
+   "cornerOffPaper": 0
+  },
+  "build, by its tab": {
+   "left": 0,
+   "right": 0,
+   "window": "189.875 1176.125 123.40625 678.453125",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 9.3,
+   "cornerOffPaper": 0
+  },
+  "reloaded": true,
+  "after 1 tap": {
+   "left": 0,
+   "right": 0,
+   "window": "189.875 1176.125 123.40625 678.453125",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 9.3,
+   "cornerOffPaper": 0
+  },
+  "after 5 taps": {
+   "left": 0,
+   "right": 0,
+   "window": "189.875 1176.125 123.40625 678.453125",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 9.3,
+   "cornerOffPaper": 0
+  },
+  "back": {
+   "left": 0,
+   "right": 0,
+   "window": "189.875 1176.125 123.40625 678.453125",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 9.3,
+   "cornerOffPaper": 0
+  },
+  "forward": {
+   "left": 0,
+   "right": 0,
+   "window": "189.875 1176.125 123.40625 678.453125",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 4.5,
+   "cornerOffPaper": 0
+  },
+  "console": [
+   "[hjaas] build: reaction frames unavailable; finds still count EncodingError: Loading error."
+  ]
+ },
+ "1366x1024 crios new": {
+  "grow, opened": {
+   "left": 0,
+   "right": 0,
+   "window": "189.875 1176.125 123.40625 678.453125",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 9.5,
+   "cornerOffPaper": 0
+  },
+  "build, by its tab": {
+   "left": 0,
+   "right": 0,
+   "window": "189.875 1176.125 123.40625 678.453125",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 9.3,
+   "cornerOffPaper": 0
+  },
+  "reloaded": true,
+  "after 1 tap": {
+   "left": 0,
+   "right": 0,
+   "window": "189.875 1176.125 123.40625 678.453125",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 9.3,
+   "cornerOffPaper": 0
+  },
+  "after 5 taps": {
+   "left": 0,
+   "right": 0,
+   "window": "189.875 1176.125 123.40625 678.453125",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 9.3,
+   "cornerOffPaper": 0
+  },
+  "back": {
+   "left": 0,
+   "right": 0,
+   "window": "189.875 1176.125 123.40625 678.453125",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 9.3,
+   "cornerOffPaper": 0
+  },
+  "forward": {
+   "left": 0,
+   "right": 0,
+   "window": "189.875 1176.125 123.40625 678.453125",
+   "edge": "1672x152 1672x112 152x685 152x685",
+   "canvasMB": 4.5,
+   "cornerOffPaper": 0
+  },
+  "console": [
+   "[hjaas] build: reaction frames unavailable; finds still count EncodingError: Loading error.",
+   "Fetch API cannot load http: /127.0.0.1:52219/assets/scene1/rachel/reaction/rx_B36.webp due to access control checks.",
+   "[hjaas] build: reaction frames unavailable; finds still count EncodingError: Loading error.",
+   "[hjaas] build: reaction frames unavailable; finds still count EncodingError: Loading error.",
+   "[hjaas] build: reaction frames unavailable; finds still count EncodingError: Loading error."
+  ]
+ }
+}

@@ -1,0 +1,214 @@
+{
+ "old": {
+  "sizes": 4220,
+  "withALine": 40,
+  "worst": {
+   "build 1133": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "build 1180": {
+    "withALine": 4,
+    "rows": 690,
+    "at": "1180x697"
+   },
+   "build 1194": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "build 1366": {
+    "withALine": 4,
+    "rows": 688,
+    "at": "1366x710"
+   },
+   "grow 1133": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "grow 1180": {
+    "withALine": 4,
+    "rows": 690,
+    "at": "1180x697"
+   },
+   "grow 1194": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "grow 1366": {
+    "withALine": 4,
+    "rows": 688,
+    "at": "1366x710"
+   },
+   "design 1133": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "design 1180": {
+    "withALine": 4,
+    "rows": 690,
+    "at": "1180x697"
+   },
+   "design 1194": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "design 1366": {
+    "withALine": 4,
+    "rows": 688,
+    "at": "1366x710"
+   },
+   "film 1133": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "film 1180": {
+    "withALine": 4,
+    "rows": 690,
+    "at": "1180x697"
+   },
+   "film 1194": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "film 1366": {
+    "withALine": 4,
+    "rows": 688,
+    "at": "1366x710"
+   },
+   "set 1133": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "set 1180": {
+    "withALine": 4,
+    "rows": 690,
+    "at": "1180x697"
+   },
+   "set 1194": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "set 1366": {
+    "withALine": 4,
+    "rows": 688,
+    "at": "1366x710"
+   }
+  }
+ },
+ "new": {
+  "sizes": 4220,
+  "withALine": 0,
+  "worst": {
+   "build 1133": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "build 1180": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "build 1194": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "build 1366": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "grow 1133": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "grow 1180": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "grow 1194": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "grow 1366": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "design 1133": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "design 1180": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "design 1194": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "design 1366": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "film 1133": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "film 1180": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "film 1194": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "film 1366": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "set 1133": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "set 1180": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "set 1194": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   },
+   "set 1366": {
+    "withALine": 0,
+    "rows": 0,
+    "at": null
+   }
+  }
+ }
+}

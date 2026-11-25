@@ -1,0 +1,38 @@
+{
+ "ipad 1180x820": {
+  "found": "50",
+  "contact": "visible",
+  "missed": [],
+  "console": []
+ },
+ "ipad 1133x677": {
+  "found": "50",
+  "contact": "visible",
+  "missed": [],
+  "console": []
+ },
+ "mini 744x1133": {
+  "found": "50",
+  "contact": "visible",
+  "missed": [],
+  "console": []
+ },
+ "mini 768x1024": {
+  "found": "50",
+  "contact": "visible",
+  "missed": [],
+  "console": []
+ },
+ "mini 1133x744": {
+  "found": "50",
+  "contact": "visible",
+  "missed": [],
+  "console": []
+ },
+ "phone 390x844": {
+  "found": "50",
+  "contact": "visible",
+  "missed": [],
+  "console": []
+ }
+}

@@ -1,0 +1,150 @@
+{
+ "744x1133": {
+  "build": {
+   "panned": true,
+   "heightOfScreen": 0.65,
+   "roomInView": 0.52,
+   "page": 1133,
+   "sideways": 744
+  },
+  "grow": {
+   "panned": true,
+   "heightOfScreen": 0.65,
+   "roomInView": 0.52,
+   "page": 1133,
+   "sideways": 744
+  },
+  "design": {
+   "panned": true,
+   "heightOfScreen": 0.65,
+   "roomInView": 0.52,
+   "page": 1133,
+   "sideways": 744
+  },
+  "film": {
+   "panned": true,
+   "heightOfScreen": 0.65,
+   "roomInView": 0.52,
+   "page": 1133,
+   "sideways": 744
+  },
+  "set": {
+   "panned": true,
+   "heightOfScreen": 0.65,
+   "roomInView": 0.52,
+   "page": 1133,
+   "sideways": 744
+  }
+ },
+ "768x1024": {
+  "build": {
+   "panned": true,
+   "heightOfScreen": 0.65,
+   "roomInView": 0.6,
+   "page": 1024,
+   "sideways": 768
+  },
+  "grow": {
+   "panned": true,
+   "heightOfScreen": 0.65,
+   "roomInView": 0.6,
+   "page": 1024,
+   "sideways": 768
+  },
+  "design": {
+   "panned": true,
+   "heightOfScreen": 0.65,
+   "roomInView": 0.6,
+   "page": 1024,
+   "sideways": 768
+  },
+  "film": {
+   "panned": true,
+   "heightOfScreen": 0.65,
+   "roomInView": 0.6,
+   "page": 1024,
+   "sideways": 768
+  },
+  "set": {
+   "panned": true,
+   "heightOfScreen": 0.65,
+   "roomInView": 0.6,
+   "page": 1024,
+   "sideways": 768
+  }
+ },
+ "810x1080": {
+  "build": {
+   "panned": false,
+   "heightOfScreen": 0.388,
+   "roomInView": 1,
+   "page": 1080,
+   "sideways": 810
+  },
+  "grow": {
+   "panned": false,
+   "heightOfScreen": 0.388,
+   "roomInView": 1,
+   "page": 1080,
+   "sideways": 810
+  },
+  "design": {
+   "panned": false,
+   "heightOfScreen": 0.388,
+   "roomInView": 1,
+   "page": 1080,
+   "sideways": 810
+  },
+  "film": {
+   "panned": false,
+   "heightOfScreen": 0.388,
+   "roomInView": 1,
+   "page": 1080,
+   "sideways": 810
+  },
+  "set": {
+   "panned": false,
+   "heightOfScreen": 0.388,
+   "roomInView": 1,
+   "page": 1080,
+   "sideways": 810
+  }
+ },
+ "820x1180": {
+  "build": {
+   "panned": false,
+   "heightOfScreen": 0.36,
+   "roomInView": 1,
+   "page": 1180,
+   "sideways": 820
+  },
+  "grow": {
+   "panned": false,
+   "heightOfScreen": 0.36,
+   "roomInView": 1,
+   "page": 1180,
+   "sideways": 820
+  },
+  "design": {
+   "panned": false,
+   "heightOfScreen": 0.36,
+   "roomInView": 1,
+   "page": 1180,
+   "sideways": 820
+  },
+  "film": {
+   "panned": false,
+   "heightOfScreen": 0.36,
+   "roomInView": 1,
+   "page": 1180,
+   "sideways": 820
+  },
+  "set": {
+   "panned": false,
+   "heightOfScreen": 0.36,
+   "roomInView": 1,
+   "page": 1180,
+   "sideways": 820
+  }
+ }
+}

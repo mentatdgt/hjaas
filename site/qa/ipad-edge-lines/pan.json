@@ -1,0 +1,447 @@
+{
+ "744x1133": {
+  "drift": {
+   "most": 40,
+   "backAtRest": true
+  },
+  "opensAt": {
+   "build": {
+    "centre": 900,
+    "max": 622,
+    "height": 0.65
+   },
+   "grow": {
+    "centre": 1005,
+    "max": 622,
+    "height": 0.65
+   },
+   "design": {
+    "centre": 900,
+    "max": 622,
+    "height": 0.65
+   },
+   "film": {
+    "centre": 977,
+    "max": 622,
+    "height": 0.65
+   },
+   "set": {
+    "centre": 864,
+    "max": 622,
+    "height": 0.65
+   }
+  },
+  "smallestTapBox": 44,
+  "smallestControl": 44,
+  "panMemory": {
+   "opened": 864,
+   "panned": 1171,
+   "back": 1171,
+   "reloaded": 1171
+  },
+  "turns": [
+   {
+    "onItsSide": {
+     "pansBy": 0,
+     "lines": {
+      "left": 0,
+      "right": 0
+     },
+     "scroll": 0
+    },
+    "uprightCentre": 1171,
+    "height": 0.65
+   },
+   {
+    "onItsSide": {
+     "pansBy": 0,
+     "lines": {
+      "left": 0,
+      "right": 0
+     },
+     "scroll": 0
+    },
+    "uprightCentre": 1171,
+    "height": 0.65
+   },
+   {
+    "onItsSide": {
+     "pansBy": 0,
+     "lines": {
+      "left": 0,
+      "right": 0
+     },
+     "scroll": 0
+    },
+    "uprightCentre": 900,
+    "height": 0.65
+   }
+  ],
+  "mushroomsInPlace": true,
+  "console": []
+ },
+ "768x1024": {
+  "drift": {
+   "most": 40,
+   "backAtRest": true
+  },
+  "opensAt": {
+   "build": {
+    "centre": 899,
+    "max": 473,
+    "height": 0.65
+   },
+   "grow": {
+    "centre": 1005,
+    "max": 473,
+    "height": 0.65
+   },
+   "design": {
+    "centre": 899,
+    "max": 473,
+    "height": 0.65
+   },
+   "film": {
+    "centre": 977,
+    "max": 473,
+    "height": 0.65
+   },
+   "set": {
+    "centre": 865,
+    "max": 473,
+    "height": 0.65
+   }
+  },
+  "smallestTapBox": 44,
+  "smallestControl": 44,
+  "panMemory": {
+   "opened": 865,
+   "panned": 1170,
+   "back": 1169,
+   "reloaded": 1169
+  },
+  "turns": [
+   {
+    "onItsSide": {
+     "pansBy": 0,
+     "lines": {
+      "left": 0,
+      "right": 0
+     },
+     "scroll": 0
+    },
+    "uprightCentre": 1169,
+    "height": 0.65
+   },
+   {
+    "onItsSide": {
+     "pansBy": 0,
+     "lines": {
+      "left": 0,
+      "right": 0
+     },
+     "scroll": 0
+    },
+    "uprightCentre": 1169,
+    "height": 0.65
+   },
+   {
+    "onItsSide": {
+     "pansBy": 0,
+     "lines": {
+      "left": 0,
+      "right": 0
+     },
+     "scroll": 0
+    },
+    "uprightCentre": 899,
+    "height": 0.65
+   }
+  ],
+  "mushroomsInPlace": true,
+  "console": []
+ },
+ "744x1040": {
+  "drift": {
+   "most": 40,
+   "backAtRest": true
+  },
+  "opensAt": {
+   "build": {
+    "centre": 899,
+    "max": 514,
+    "height": 0.65
+   },
+   "grow": {
+    "centre": 1004,
+    "max": 514,
+    "height": 0.65
+   },
+   "design": {
+    "centre": 899,
+    "max": 514,
+    "height": 0.65
+   },
+   "film": {
+    "centre": 977,
+    "max": 514,
+    "height": 0.65
+   },
+   "set": {
+    "centre": 864,
+    "max": 514,
+    "height": 0.65
+   }
+  },
+  "smallestTapBox": 44,
+  "smallestControl": 44,
+  "panMemory": {
+   "opened": 864,
+   "panned": 1194,
+   "back": 1194,
+   "reloaded": 1194
+  },
+  "turns": [
+   {
+    "onItsSide": {
+     "pansBy": 0,
+     "lines": {
+      "left": 0,
+      "right": 0
+     },
+     "scroll": 0
+    },
+    "uprightCentre": 1194,
+    "height": 0.65
+   },
+   {
+    "onItsSide": {
+     "pansBy": 0,
+     "lines": {
+      "left": 0,
+      "right": 0
+     },
+     "scroll": 0
+    },
+    "uprightCentre": 1194,
+    "height": 0.65
+   },
+   {
+    "onItsSide": {
+     "pansBy": 0,
+     "lines": {
+      "left": 0,
+      "right": 0
+     },
+     "scroll": 0
+    },
+    "uprightCentre": 899,
+    "height": 0.65
+   }
+  ],
+  "mushroomsInPlace": true,
+  "console": []
+ },
+ "601x900": {
+  "drift": {
+   "most": 40,
+   "backAtRest": true
+  },
+  "opensAt": {
+   "build": {
+    "centre": 899,
+    "max": 465,
+    "height": 0.637
+   },
+   "grow": {
+    "centre": 1004,
+    "max": 465,
+    "height": 0.637
+   },
+   "design": {
+    "centre": 899,
+    "max": 465,
+    "height": 0.637
+   },
+   "film": {
+    "centre": 976,
+    "max": 465,
+    "height": 0.637
+   },
+   "set": {
+    "centre": 865,
+    "max": 465,
+    "height": 0.637
+   }
+  },
+  "smallestTapBox": 44,
+  "smallestControl": 44,
+  "panMemory": {
+   "opened": 865,
+   "panned": 1218,
+   "back": 1218,
+   "reloaded": 1218
+  },
+  "turns": [
+   {
+    "onItsSide": {
+     "pansBy": 0,
+     "lines": {
+      "left": 0,
+      "right": 0
+     },
+     "scroll": 0
+    },
+    "uprightCentre": 1218,
+    "height": 0.637
+   },
+   {
+    "onItsSide": {
+     "pansBy": 0,
+     "lines": {
+      "left": 0,
+      "right": 0
+     },
+     "scroll": 0
+    },
+    "uprightCentre": 1218,
+    "height": 0.637
+   },
+   {
+    "onItsSide": {
+     "pansBy": 0,
+     "lines": {
+      "left": 0,
+      "right": 0
+     },
+     "scroll": 0
+    },
+    "uprightCentre": 899,
+    "height": 0.637
+   }
+  ],
+  "mushroomsInPlace": true,
+  "console": []
+ },
+ "799x1100": {
+  "drift": {
+   "most": 40,
+   "backAtRest": true
+  },
+  "opensAt": {
+   "build": {
+    "centre": 900,
+    "max": 531,
+    "height": 0.65
+   },
+   "grow": {
+    "centre": 1004,
+    "max": 531,
+    "height": 0.65
+   },
+   "design": {
+    "centre": 900,
+    "max": 531,
+    "height": 0.65
+   },
+   "film": {
+    "centre": 976,
+    "max": 531,
+    "height": 0.65
+   },
+   "set": {
+    "centre": 864,
+    "max": 531,
+    "height": 0.65
+   }
+  },
+  "smallestTapBox": 44,
+  "smallestControl": 44,
+  "panMemory": {
+   "opened": 864,
+   "panned": 1180,
+   "back": 1179,
+   "reloaded": 1179
+  },
+  "turns": [
+   {
+    "onItsSide": {
+     "pansBy": 0,
+     "lines": {
+      "left": 0,
+      "right": 0
+     },
+     "scroll": 0
+    },
+    "uprightCentre": 1179,
+    "height": 0.65
+   },
+   {
+    "onItsSide": {
+     "pansBy": 0,
+     "lines": {
+      "left": 0,
+      "right": 0
+     },
+     "scroll": 0
+    },
+    "uprightCentre": 1179,
+    "height": 0.65
+   },
+   {
+    "onItsSide": {
+     "pansBy": 0,
+     "lines": {
+      "left": 0,
+      "right": 0
+     },
+     "scroll": 0
+    },
+    "uprightCentre": 900,
+    "height": 0.65
+   }
+  ],
+  "mushroomsInPlace": true,
+  "console": []
+ },
+ "touch": {
+  "744x1133": {
+   "opened": {
+    "room": 443,
+    "page": 0,
+    "pageCanScroll": 0
+   },
+   "swipedRight": {
+    "room": 225,
+    "page": 0
+   },
+   "swipedLeft": {
+    "room": 575,
+    "page": 0
+   },
+   "swipedUp": {
+    "room": 575,
+    "page": 0
+   }
+  },
+  "620x640": {
+   "opened": {
+    "room": 59,
+    "page": 0,
+    "pageCanScroll": 41
+   },
+   "swipedRight": {
+    "room": 0,
+    "page": 0
+   },
+   "swipedLeft": {
+    "room": 59,
+    "page": 0
+   },
+   "swipedUp": {
+    "room": 59,
+    "page": 41
+   }
+  }
+ }
+}
