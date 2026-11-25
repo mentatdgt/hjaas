@@ -33,7 +33,7 @@ There were no tests of the rhythm, so I wrote them: `build-rhythm.test.ts`, 7 te
 | ✅ | Patches on her real canvas, 7 windows, Chrome and WebKit (`seam.json`) | Where the drawing does not move: 0.5 levels of 255 on average, 17 at most. Coming from any other drawing: identical. |
 | ✅ | Recordings, 60 fps: desktop, phone (390, CSS px) and a 3x phone window (500 wide) | Three swings, a tap and the reaction in each. Where nothing should move, the eyes included, no frame differs from the last by more than 16 levels on one px (JPEG). No drawing skipped. |
 | ✅ | The rise and the thumb (`*-rise.jpg`, `*-thumb-up.jpg`, `*-thumb-down.jpg`, also `*-tap`, `*-wink`) | Every new step shows, in order. |
-| ✅ | On screen, 60 s each: desktop, phone 4x slower, WebKit (`held.json`) | Swing steps 2 to 4 frames of 60 Hz, one of 1 in the slowed run. No drawing missed. 33 swings and 9 taps in each, no other move (the WebKit log begins mid-swing). |
+| ✅ | On screen, 60 s each: desktop, phone 4x slower, WebKit (`held.json`) | The hammer's three in-betweens: 2 to 4 frames of 60 Hz (one of 1 in the slowed run). No drawing missed. 33 swings and 9 taps in each, no other move (the WebKit log begins mid-swing). |
 | ✅ | Left while a patch is on her canvas, and back (`leave.json`) | The same picture; every frame returns; the reaction plays through the new drawings. |
 | ✅ | "Room painted but she isn't" | 0 frames, Chrome and WebKit, desktop and phone (`paint/`). |
 | ✅ | Her face in one stroke (`face/`) | Partly painted for 33 ms, as in job 006. |
