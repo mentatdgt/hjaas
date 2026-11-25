@@ -1,5 +1,5 @@
 // Production build check: the form must not claim a send when no endpoint is configured.
-// Run `npm run build && npm run preview` first. node qa/tools/prod-form.mjs out.png
+// Run `VITE_FORM_ENDPOINT= npm run build && npm run preview` first (.env.production names one). node qa/tools/prod-form.mjs out.png
 import { chromium } from 'playwright';
 import { readFileSync } from 'node:fs';
 const out = process.argv[2] ?? 'qa/prod-form-error.png';

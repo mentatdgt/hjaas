@@ -33,6 +33,7 @@ For a phone session, use `npm run dev:lan` or `npm run preview:lan` and open the
 | `src/main.ts`, `index.html` | The host page. It only mounts the site. |
 | `src/engine/` | Everything that shows a scene and the page around it. It knows nothing about any one scene. |
 | `src/scenes/` | One file per scene, which only describes it, and `index.ts`, the list of scenes in menu order. |
+| `api/contact.js` | The Vercel Function that emails the contact form (below). |
 | `public/assets/` | WebP copies of the approved art, made by `npm run assets`: `scene1/` to `scene5/`, and `shared/` (mushrooms, logo). Never edit these by hand. |
 | `scripts/build-assets.mjs` | Reads `frames/`, `scene/`, `reference/` and `assets/` (never writes there) and makes the WebP copies, the favicon and the link-preview image (`og-image.png`). |
 | `public/robots.txt` | Blocks all crawling until launch. Open it up then, and give `og:image` in `index.html` the full address (`TODO(launch)`). |
@@ -211,19 +212,31 @@ A reaction frame that is byte-identical to an upscaled frame (today `rx_frame_01
 copied twice: the script lists it in `rachel/reaction/shared.json`, and the page downloads and decodes that
 one copy once. `reaction.json` is still copied exactly as delivered.
 
-## Wiring the contact form
+## The contact form
 
-`src/engine/submit.ts` is the only place that sends anything, marked `TODO(form-endpoint)`. Put the
-form service's URL in `site/.env` as `VITE_FORM_ENDPOINT=https://…` and adjust the request body there
-if the service wants a different shape. Until then:
+The form (`src/engine/form.ts`) posts through `src/engine/submit.ts`, the only place in the page that sends
+anything, to `VITE_FORM_ENDPOINT`. `.env.production` sets that to `/api/contact`, so every production build
+uses the site's own Vercel Function, `api/contact.js`. It checks every field again and sends the message with
+Resend. Its tests are `scripts/contact.test.mjs`, outside `api/`, because Vercel makes a function of every file there.
 
-- `npm run dev`: the form shows its success state in **test mode** and says nothing was sent.
-- A production build: the form shows an error and never claims a message was sent.
+The function's settings are environment variables in the Vercel project, never in the repo:
+`RESEND_API_KEY`, `MAIL_FROM` and `CONTACT_TO`. If one is missing it answers 503 and sends nothing.
 
-When publishing `site/dist/` to Netlify or Cloudflare Pages, the build includes `_headers`. Set
-`VITE_FORM_ENDPOINT` in the build environment or in `site/.env` before `npm run build`. The build adds
-the URL's origin to `connect-src` for an external HTTP(S) endpoint. A relative path such as `/api/contact`
-uses the existing same-origin allowance. Rebuild after changing the endpoint.
+| Answer | When |
+|---|---|
+| `200 {"ok":true}` | Sent. Also when the honeypot (`website`) is filled in, and then nothing is sent |
+| `400 {"ok":false}` | Not JSON, over 16 KB, or a field the form could not have sent |
+| `403` | Not from hjaas.com, www.hjaas.com or the deployment's own `vercel.app` address |
+| `405`, `429` | Not a POST; more than five a minute from one address (best effort) |
+| `502` | Resend refused it, could not be reached, or took more than 10 s. Only its status code is logged (0: no answer) |
+| `503` | A setting is missing. An empty POST shows it without sending anything: 503 means missing, 400 all there |
+
+`npm run dev` has no endpoint: the form shows its success state in **test mode** and says nothing was sent.
+A build made with `VITE_FORM_ENDPOINT=` (empty) says up front that it cannot send. The limits and the choices
+are written in both the page and the function; a test compares them.
+
+The build also writes `_headers` (for Netlify or Cloudflare Pages). It adds an external endpoint's origin to
+`connect-src`; `/api/contact` is the same origin, so `connect-src 'self'` stays as it is.
 
 ## URL switches (for review, not for visitors)
 

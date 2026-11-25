@@ -119,3 +119,13 @@ it('ignores a late error after close, and removes its window listener on teardow
   window.dispatchEvent(new Event('resize'));
   expect(trigger.getBoundingClientRect).toHaveBeenCalledOnce();
 });
+
+it('hides the honeypot from visitors and sends what is in it', () => {
+  const { dialog, node, sendForm } = setup();
+  const [, trap] = dialog.innerHTML.match(/<div class="hj-trap" aria-hidden="true">([\s\S]*?)<\/div>/)!;
+  expect(trap).toMatch(/name="website"[^>]*tabindex="-1"[^>]*autocomplete="off"/);
+  vi.mocked(submitContact).mockResolvedValue('sent');
+  node.querySelector('website').value = 'https://spam.example';
+  sendForm();
+  expect(submitContact).toHaveBeenCalledWith(expect.objectContaining({ website: 'https://spam.example' }), expect.anything());
+});

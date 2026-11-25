@@ -3,7 +3,8 @@
 import { MUSHROOM_ICON } from './caption';
 import { CONTACT_LIMITS, SendError, canSend, needsLength, submitContact, type ContactPayload } from './submit';
 
-const NEEDS = ['Build', 'Design', 'Film', 'Grow', 'Set Design', 'Something else'] as const;
+/** Every choice there is: api/contact.js takes no other. */
+export const NEEDS = ['Build', 'Design', 'Film', 'Grow', 'Set Design', 'Something else'] as const;
 
 const CLOSE_ICON = `<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.5 3.5l9 9m0-9l-9 9"/></svg>`;
 const TICK_ICON = `<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.6 8.4l2.9 2.9 5.9-6.2"/></svg>`;
@@ -78,6 +79,10 @@ export class ContactForm {
               <label for="hj-message">Message</label>
               <textarea id="hj-message" name="message" rows="4" maxlength="${CONTACT_LIMITS.message}" required aria-describedby="hj-message-err"></textarea>
               <p class="hj-err" id="hj-message-err" aria-live="polite" hidden></p>
+            </div>
+            <div class="hj-trap" aria-hidden="true">
+              <label for="hj-website">Website</label>
+              <input id="hj-website" name="website" type="text" tabindex="-1" autocomplete="off" data-1p-ignore data-lpignore="true" data-bwignore />
             </div>
             <p class="hj-alert hj-failure" role="alert" hidden></p>
             <button type="submit" class="hj-send"><span class="hj-send-label">${COPY.send}</span></button>
@@ -250,6 +255,7 @@ export class ContactForm {
       email: String(data.get('email') ?? '').trim(),
       needs: data.getAll('need').map(String),
       message: String(data.get('message') ?? '').trim(),
+      website: String(data.get('website') ?? ''),
     };
 
     if (needsLength(payload.needs) > CONTACT_LIMITS.needs) {

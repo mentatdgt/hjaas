@@ -2,7 +2,7 @@ import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import type { ContactPayload } from './submit';
 
 const endpoint = 'https://forms.example.org/contact';
-const valid = { name: 'Wren', email: 'wren@example.org', needs: ['Build'], message: 'Hello' };
+const valid = { name: 'Wren', email: 'wren@example.org', needs: ['Build'], message: 'Hello', website: '' };
 
 beforeEach(() => {
   vi.resetModules();
@@ -33,7 +33,7 @@ it('sends a payload at the field limits and accepts only a successful response',
     .mockResolvedValueOnce(new Response(null, { status: 503 }));
   vi.stubGlobal('fetch', fetch);
   const { submitContact } = await import('./submit');
-  const payload = { name: 'a'.repeat(100), email: 'b'.repeat(254), needs: ['c'.repeat(500)], message: 'd'.repeat(4000) };
+  const payload = { name: 'a'.repeat(100), email: 'b'.repeat(254), needs: ['c'.repeat(500)], message: 'd'.repeat(4000), website: '' };
   await expect(submitContact(payload)).resolves.toBe('sent');
   expect(fetch).toHaveBeenCalledWith(endpoint, expect.objectContaining({ method: 'POST', body: JSON.stringify(payload) }));
   await expect(submitContact(valid)).rejects.toMatchObject({ reason: 'failed' });

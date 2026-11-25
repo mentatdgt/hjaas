@@ -5,6 +5,8 @@ export interface ContactPayload {
   email: string;
   needs: string[];
   message: string;
+  /** The honeypot: empty from a visitor, who never sees the field. Only api/contact.js judges it. */
+  website: string;
 }
 
 export const CONTACT_LIMITS = { name: 100, email: 254, needs: 500, message: 4000 } as const;
@@ -30,9 +32,8 @@ export class SendError extends Error {
   }
 }
 
-// TODO(form-endpoint): the form service gets chosen together with the hosting (Formspree, Netlify Forms,
-// a small serverless function...). Put its URL in VITE_FORM_ENDPOINT (site/.env) and adjust the request
-// below to the shape that service expects. Until then nothing is ever sent.
+// Production posts to the site's own function, api/contact.js (VITE_FORM_ENDPOINT in .env.production), which
+// checks the same fields and limits again. The dev server has no endpoint, so there nothing is ever sent.
 export const CONTACT_ENDPOINT: string | undefined = import.meta.env.VITE_FORM_ENDPOINT || undefined;
 
 /** False in a production build with no endpoint: the form then says so up front and Send is off. */

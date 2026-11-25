@@ -1084,6 +1084,16 @@ a.hj-logo:active {
   display: none;
 }
 
+/* The honeypot (form.ts): off-screen, so only something filling in forms by itself finds it. Out of the flow. */
+.hj-trap {
+  position: absolute;
+  top: 0;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 .hj-field {
   display: flex;
   flex-direction: column;
