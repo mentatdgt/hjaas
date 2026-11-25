@@ -19,3 +19,7 @@
 - **Never use a returned image whole.** Wren pastes only the part that moves onto the approved base and colour-matches it (`tools/cafe_build5.py`). Whatever else Quinn changed is discarded.
 - **One job = one character's poses.** Say what must not change, name every output file, ask for an honest report.
 - No paid Higgsfield job is ever started from the loop without the user's approval.
+
+
+## Subagents and QC (user, 2026-11-25)
+Quinn uses Codex subagents: one per independent output, in parallel, and a separate QC subagent that didn't make the outputs checks them before they're saved. The rules live in `wren-inbox/quinn/jobs/AGENTS.md` (source: `tools/quinn/AGENTS.md`), which Codex reads for every job; Wren also repeats them in each job.md.
