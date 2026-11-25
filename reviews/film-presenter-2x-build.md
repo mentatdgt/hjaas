@@ -24,3 +24,14 @@ The 2x stills are in **`frames/020-film-scene/site/presenter2x/`**: the same 16 
 
 ## Report
 `reviews/film-presenter-2x-01.md`. Push to `site/review-fixes`. Don't merge anything.
+
+## Wren review of Engine job 007 (2026-11-25): approved
+- Build `60f19b8` on `site/review-fixes` is now in the phone preview.
+- He is crisp on the phone (543 px wide, was 320). The memory, hunt, camera screen and trace checks pass.
+- **Timing:** keep 60 + 60 ms. The extra 20 ms reads smoother.
+- **Arm steps of 37–76 px after the first in-between:** accepted for now. The arcs read correctly at 60 ms. Add a second in-between only if the user sees a jump.
+- **Wristband:** plain in `M_1` is correct, because the palm faces up there and the watch face is on the back of the wrist.
+- **Follow-ups for the next art pass:**
+  1. Remove the cyan speck in his hair by the temple. It is the same in all 18 stills, so fix it the same way in every one.
+  2. Clean the dotted white line and black bits by the sleeve in `M_1_12` and `M_1_13`.
+  3. Optional: a closed-mouth version of each in-between, for when he gestures from `M_1_closed`.
