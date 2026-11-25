@@ -9,7 +9,7 @@ import { Logo } from './logo';
 import { onReducedMotionChange, reducedMotion } from './motion';
 import { Pan } from './pan';
 import { Scene } from './scene';
-import { freshScene, huntView, isProgressKey, loadProgress, presetAll, resetProgress, saveFind, savePan, saveSeen, type HuntView, type SceneProgress } from './state';
+import { freshScene, huntView, isProgressKey, loadProgress, presetAll, resetProgress, saveFind, savePan, saveSeen, type HuntView, type Progress, type SceneProgress } from './state';
 import { seeded } from './steps';
 import { Transition } from './transition';
 import type { SceneConfig, Spot } from './types';
@@ -37,19 +37,26 @@ export interface Site {
 const HINT_AFTER_S = 60;
 /** The first visit's drift (pan.ts), after the painting has ended. */
 const DRIFT_AFTER_MS = 700;
+/** How long "Tap again to reset" waits for the second tap. */
+const RESET_WAIT_MS = 4000;
+/** The first find's mushroom has landed and the counter has had its moment: the way to reset them comes. */
+const RESET_OFFER_MS = 650;
+/** Another tab's reset takes its keys away one after another. */
+const RESET_SYNC_MS = 60;
 // QA: the nine mushroom drawings, decoded (see scripts/build-assets.mjs for their size).
 const SPRITE_BYTES = 9 * 166 * 154 * 4;
 
 // The words on the page are all here, except the scene names (src/scenes/) and the form's (form.ts, needs.js).
-// Name, tagline, counter: reviews/copy-round-1-build.md.
+// Name, counter: reviews/copy-round-1-build.md. Tagline, reset: reviews/copy-round-2-build.md.
 const COPY = {
   name: 'Hui Jie',
-  tagline: 'I design rooms and sets, build them, film them, and grow mushrooms in between.',
+  tagline: 'I design, build and film spaces. Also, mushrooms.',
   menu: 'Scenes',
   skip: 'Skip',
   pause: 'Pause animation',
   play: 'Play animation',
-  replay: 'Replay painting',
+  reset: 'Reset mushrooms',
+  resetArmed: (total: number) => `Tap again to reset all ${total}`,
   /** A tab whose scene is finished, for screen readers (its mushroom says it to everyone else). */
   tabDone: (scene: string) => `${scene}, scene complete`,
 };
@@ -320,21 +327,52 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
 
   // ---- The quiet controls at the end of the caption. ----
 
-  // All three are laid out from the start and swapped by visibility alone (site.css), so showing or hiding
-  // one never moves anything on the page.
+  // Skip and Pause are laid out from the start and swapped by visibility alone (site.css), so showing or hiding
+  // one never moves anything on the page. Reset takes no room at all until there is something to reset.
+  const controls = q<HTMLDivElement>('.hj-controls');
   const control = (label: string): HTMLButtonElement => {
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'hj-link is-off';
     button.textContent = label;
-    q('.hj-controls').append(button);
+    controls.append(button);
     return button;
   };
   const show = (button: HTMLButtonElement, on: boolean): void => void button.classList.toggle('is-off', !on);
   const shown = (button: HTMLButtonElement): boolean => !button.classList.contains('is-off');
   const skip = control(COPY.skip);
   const pause = control(COPY.pause);
-  const replay = control(COPY.replay);
+  const reset = control(COPY.reset);
+  reset.classList.add('hj-reset');
+  const resetArmed = COPY.resetArmed(viewOf(first).site.total);
+  controls.dataset.armed = resetArmed;
+  const resetSaid = document.createElement('p');
+  resetSaid.className = 'hj-sr';
+  resetSaid.setAttribute('role', 'status');
+  resetSaid.setAttribute('aria-live', 'polite');
+  controls.append(resetSaid);
+  /** While Reset waits for its second tap: the timer that gives up waiting. */
+  let armed = 0;
+  const disarm = (): void => {
+    if (!armed) return;
+    window.clearTimeout(armed);
+    armed = 0;
+    reset.textContent = COPY.reset;
+    resetSaid.textContent = '';
+  };
+  /** Something has been found, so there is something to reset. */
+  const resettable = (): boolean => viewOf(first).site.found > 0;
+  const offerReset = (painting: boolean): void => {
+    const on = resettable();
+    if (painting || !on) disarm();
+    controls.classList.toggle('has-reset', on);
+    show(reset, on && !painting);
+  };
+  let resetOffer = 0;
+  cleanup.push(() => {
+    disarm();
+    window.clearTimeout(resetOffer);
+  });
 
   // "Pause animation" stops everything that moves by itself: the character's routine and the logo's idle
   // glint. (A find still gets its short answer, and the logo still glints under the pointer.)
@@ -356,17 +394,18 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     viewport.removeEventListener('scroll', cropChanged);
   });
   /**
-   * Skip while a brush is at work; afterwards, Pause and the way to see the room painted again.
-   * With reduced motion nothing moves by itself and nothing is painted, so neither is offered.
+   * Skip while a brush is at work; afterwards, Pause and (once something is found) Reset.
+   * With reduced motion nothing moves by itself and nothing is painted: only Reset is offered.
    */
   const showControls = (painting: boolean): void => {
     const focused = document.activeElement;
     show(skip, painting);
     show(pause, !painting && !reducedMotion());
-    show(replay, !painting && !reducedMotion());
-    // Keyboard focus follows the control that took the other's place.
-    if (focused === skip && !shown(skip) && shown(replay)) replay.focus({ preventScroll: true });
-    if (focused === replay && !shown(replay) && shown(skip)) skip.focus({ preventScroll: true });
+    offerReset(painting);
+    // Keyboard focus follows the control that took the other's place (or goes to the menu, if there is none).
+    const to = (button: HTMLElement | undefined): void => button?.focus({ preventScroll: true });
+    if (focused === skip && !shown(skip)) to(shown(pause) ? pause : undefined);
+    if (focused === reset && !shown(reset)) to(shown(skip) ? skip : shown(pause) ? pause : tabs.find((tab) => tab.dataset.scene === current?.config.id));
   };
   /** Aborted by Skip (and whatever else asks for the finished picture at once). */
   let paintWait = new AbortController();
@@ -416,6 +455,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
         : 'paint';
   // "Skip" is there from the first moment of a painting, even while the art is still loading.
   show(skip, opening === 'paint');
+  offerReset(true);
   skip.addEventListener('click', finishTransition);
 
   // ---- The hunt. ----
@@ -475,7 +515,8 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
         if (found.size === of && wasReacting) {
           const signal = paintWait.signal;
           void done.then(() => {
-            if (!rush(signal) && current === self) return self?.react();
+            // (Unless it has been reset meanwhile.)
+            if (!rush(signal) && current === self && found.size === of) return self?.react();
           });
         }
       },
@@ -484,6 +525,13 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
         if (destroyed || !self || self !== current) return;
         unlockEarned = false;
         caption.land(viewOf(config));
+        if (shown(reset)) return;
+        window.clearTimeout(resetOffer);
+        resetOffer = window.setTimeout(() => {
+          if (shown(skip) || shown(reset) || !resettable()) return;
+          offerReset(false);
+          reset.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 260, easing: 'ease' });
+        }, RESET_OFFER_MS);
       },
       onLayout: () => {
         if (self === current) {
@@ -510,8 +558,49 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     return scene;
   };
 
+  /**
+   * The hunt starts over: every find that `kept` does not have is forgotten, in memory. `hold` is a scene whose picture
+   * is to follow later (its syncFinds()).
+   */
+  const forget = (kept: Progress, hold?: Scene): void => {
+    window.clearTimeout(resetOffer);
+    // A mushroom still in the air lands first, so that nothing of it is left to come.
+    for (const scene of scenesLoaded.values()) scene.hunt.finishMotion();
+    unlockEarned = false;
+    quietSeconds = 0;
+    for (const { id } of scenes) {
+      const state = (progress.scenes[id] = kept.scenes[id] ?? freshScene());
+      // (The set itself is every scene's own: it is never replaced.)
+      const found = foundIn.get(id)!;
+      found.clear();
+      for (const spot of state.found) found.add(spot);
+    }
+    progress.unlocked = viewOf(first).unlocked;
+    for (const scene of scenesLoaded.values()) if (scene !== hold) scene.syncFinds();
+  };
+
+  let resetSync = 0;
+  cleanup.push(() => window.clearTimeout(resetSync));
+  /** Another tab has reset the hunt: this one follows, and keeps whatever has been found since. */
+  const followReset = (): void => {
+    resetSync = 0;
+    forget(loadProgress(scenes));
+    caption.set(viewOf(current?.config ?? first));
+    markTabs();
+    offerReset(shown(skip));
+    // (What she answers a find with was left out if there was nothing left to find here.)
+    if (settled && !busy()) void current?.loadMore();
+  };
+
   const syncProgress = (event: StorageEvent): void => {
     if (preset || event.storageArea !== localStorage || !isProgressKey(event.key)) return;
+    // Another tab has reset the hunt: it takes its keys away one by one, and this tab follows when they are all gone.
+    if (event.key === null || event.newValue === null) {
+      window.clearTimeout(resetSync);
+      resetSync = window.setTimeout(followReset, RESET_SYNC_MS);
+      return;
+    }
+    if (resetSync) return;
     const saved = loadProgress(scenes);
     progress.panned ||= saved.panned;
     if (progress.panned) pan.markPanned();
@@ -535,6 +624,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       unlockEarned = false;
       caption.set(view);
       markTabs();
+      offerReset(shown(skip));
     }
   };
   window.addEventListener('storage', syncProgress);
@@ -849,22 +939,39 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       else if (tab.hash === location.hash) onAddress();
     });
   }
-  // "Replay painting": she stops, the picture clears to a blank sheet, and it is painted again.
-  replay.addEventListener('click', () => {
+  // "Reset mushrooms", tapped twice: every mushroom of every scene is hidden again and nothing found is kept. She
+  // stops, the picture clears to a blank sheet, and it is painted again, its mushrooms with it.
+  reset.addEventListener('click', () => {
     const scene = current;
-    if (!scene || busy()) return;
+    if (!scene || busy() || !resettable()) return;
+    if (!armed) {
+      armed = window.setTimeout(disarm, RESET_WAIT_MS);
+      reset.textContent = resetSaid.textContent = resetArmed;
+      return;
+    }
     moving = true;
     const signal = paintWait.signal;
     const soon = hurry.signal;
+    const calm = reducedMotion();
+    window.clearTimeout(panSave);
+    pendingPan.clear();
+    resetProgress();
+    // (Its own mushrooms come back once it is out of sight, not over the picture on its way out.)
+    forget({ scenes: {}, unlocked: false, panned: progress.panned }, scene);
+    const view = viewOf(scene.config);
+    caption.change(view, `${COUNTER.hereSpoken(view.here.found, view.here.total, view.label)}. ${COUNTER.siteSpoken(view.site.found, view.site.total)}.`);
+    markTabs();
+    showControls(!calm && !rush(signal));
+    scene.hunt.el.inert = true;
     scene.settle();
     const leave = leaveRoom(scene.plate, signal);
     void (async () => {
       await leave;
       if (destroyed) return;
       left();
-      if (!rush(signal)) {
+      scene.syncFinds();
+      if (!calm && !rush(signal)) {
         transition.prepare(scene);
-        showControls(true);
         await allDrawn(scene, soon);
         await waitForFrames(soon, 70);
         if (destroyed) return;
@@ -872,7 +979,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       if (rush(signal)) {
         transition.finish(scene);
         arrived(scene);
-      } else play(scene, () => transition.paint(scene));
+      } else play(scene, () => (calm ? transition.reveal(scene) : transition.paint(scene)));
       moving = false;
       // A scene asked for while this one was being prepared.
       void travel();

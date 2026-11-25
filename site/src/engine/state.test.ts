@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { loadProgress, saveFind, savePan, saveSeen } from './state';
+import { isProgressKey, loadProgress, resetProgress, saveFind, savePan, saveSeen } from './state';
 
 const scenes = [
   { id: 'build', spots: [{ id: 'a' }, { id: 'b' }], replaced: { original: 'a' } },
@@ -12,6 +12,9 @@ beforeEach(() => {
   vi.stubGlobal('localStorage', {
     getItem: (key: string) => storage.get(key) ?? null,
     setItem: (key: string, value: string) => storage.set(key, value),
+    removeItem: (key: string) => storage.delete(key),
+    key: (i: number) => [...storage.keys()][i] ?? null,
+    get length() { return storage.size; },
   });
 });
 afterEach(() => vi.unstubAllGlobals());
@@ -51,4 +54,20 @@ describe('saved progress across tabs', () => {
     saveFind('grow', 'a');
     expect(loadProgress(scenes)).toMatchObject({ unlocked: true, scenes: { build: { found: ['a', 'b'] } } });
   });
+});
+
+it('a reset forgets every find of every version, and nothing that is not the site\'s', () => {
+  storage.set('hjaas:scene1:v1', JSON.stringify({ found: ['a'] }));
+  storage.set('hjaas:site:v2', JSON.stringify({ scenes: { build: { found: ['b'], seen: true } }, panned: true }));
+  storage.set('someone-else', '1');
+  saveFind('build', 'a');
+  saveFind('grow', 'a');
+  saveSeen('grow');
+  savePan('build', 280);
+  expect(loadProgress(scenes).unlocked).toBe(true);
+  const kept = [...storage.keys()].filter((key) => !isProgressKey(key));
+  resetProgress();
+  expect([...storage.keys()]).toEqual(kept);
+  expect(kept).toEqual(['someone-else']);
+  expect(loadProgress(scenes)).toMatchObject({ unlocked: false, panned: false, scenes: { build: { found: [], seen: false, panX: null }, grow: { found: [] } } });
 });

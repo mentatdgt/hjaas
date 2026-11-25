@@ -86,12 +86,19 @@ export class Progress {
 
   /**
    * The hunt has moved on: show every piece it has reached that is not shown yet, fading in (each from now,
-   * over the package's fade_ms, ease-out), or at once with reduced motion or out of sight.
+   * over the package's fade_ms, ease-out), or at once with reduced motion or out of sight. (Back, if it has been
+   * reset: the canvas is drawn again from the start.)
    */
   reach(): void {
     if (!this.awake) return;
-    const at = this.generation;
     const want = Math.min(this.pieces.length, this.found());
+    if (want < this.shown) {
+      this.sleep();
+      this.shown = want;
+      void this.wake();
+      return;
+    }
+    const at = this.generation;
     while (this.shown < want) {
       const index = this.shown++;
       this.work = this.work.then(async () => {

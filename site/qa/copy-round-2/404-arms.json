@@ -1,0 +1,18 @@
+{
+ "filmFrames": 42,
+ "seconds": 7.9,
+ "matchedTo": {
+  "not here yet": 1,
+  "S1": 14,
+  "S2": 7,
+  "S3": 7,
+  "S4": 7,
+  "S5": 4,
+  "S1, blink": 2
+ },
+ "worstPixelChannelsOff": 0,
+ "notOneSinglePose": [],
+ "pageSamples": 482,
+ "samplesWithoutExactlyOneArm": 0,
+ "blinks": 2
+}
