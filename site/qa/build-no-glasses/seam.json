@@ -1,0 +1,1052 @@
+{
+ "chrome, phone 390×844, 3x": {
+  "rows": [
+   {
+    "pose": "frame_01_02",
+    "current": "frame_01_02",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 13,
+    "unmovedMean": 0.231,
+    "movedPx": 28688,
+    "movedMeanFromDelivered": 3.96,
+    "movedOver48": 21,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03a",
+    "current": "frame_02_03a",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.335,
+    "movedPx": 40304,
+    "movedMeanFromDelivered": 3.46,
+    "movedOver48": 24,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03b",
+    "current": "frame_02_03b",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 12,
+    "unmovedMean": 0.525,
+    "movedPx": 46989,
+    "movedMeanFromDelivered": 3.58,
+    "movedOver48": 45,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_K1_B36.png",
+    "current": "reaction/rx_K1_B36.png",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 14,
+    "unmovedMean": 0.163,
+    "movedPx": 20471,
+    "movedMeanFromDelivered": 4.45,
+    "movedOver48": 12,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_B36_B39.png",
+    "current": "reaction/rx_B36_B39.png",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 10,
+    "unmovedMean": 0.072,
+    "movedPx": 21063,
+    "movedMeanFromDelivered": 2.92,
+    "movedOver48": 14,
+    "comingFromAnotherDrawingDiffers": 0
+   }
+  ],
+  "errors": []
+ },
+ "chrome, phone 360×740, 3x": {
+  "rows": [
+   {
+    "pose": "frame_01_02",
+    "current": "frame_01_02",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 13,
+    "unmovedMean": 0.231,
+    "movedPx": 28688,
+    "movedMeanFromDelivered": 3.96,
+    "movedOver48": 21,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03a",
+    "current": "frame_02_03a",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.335,
+    "movedPx": 40304,
+    "movedMeanFromDelivered": 3.46,
+    "movedOver48": 24,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03b",
+    "current": "frame_02_03b",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 12,
+    "unmovedMean": 0.525,
+    "movedPx": 46989,
+    "movedMeanFromDelivered": 3.58,
+    "movedOver48": 45,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_K1_B36.png",
+    "current": "reaction/rx_K1_B36.png",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 14,
+    "unmovedMean": 0.163,
+    "movedPx": 20471,
+    "movedMeanFromDelivered": 4.45,
+    "movedOver48": 12,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_B36_B39.png",
+    "current": "reaction/rx_B36_B39.png",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 10,
+    "unmovedMean": 0.072,
+    "movedPx": 21063,
+    "movedMeanFromDelivered": 2.92,
+    "movedOver48": 14,
+    "comingFromAnotherDrawingDiffers": 0
+   }
+  ],
+  "errors": []
+ },
+ "chrome, phone 412×915, 2.625x": {
+  "rows": [
+   {
+    "pose": "frame_01_02",
+    "current": "frame_01_02",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 13,
+    "unmovedMean": 0.231,
+    "movedPx": 28688,
+    "movedMeanFromDelivered": 3.96,
+    "movedOver48": 21,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03a",
+    "current": "frame_02_03a",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.335,
+    "movedPx": 40304,
+    "movedMeanFromDelivered": 3.46,
+    "movedOver48": 24,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03b",
+    "current": "frame_02_03b",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 12,
+    "unmovedMean": 0.525,
+    "movedPx": 46989,
+    "movedMeanFromDelivered": 3.58,
+    "movedOver48": 45,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_K1_B36.png",
+    "current": "reaction/rx_K1_B36.png",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 14,
+    "unmovedMean": 0.163,
+    "movedPx": 20471,
+    "movedMeanFromDelivered": 4.45,
+    "movedOver48": 12,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_B36_B39.png",
+    "current": "reaction/rx_B36_B39.png",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 10,
+    "unmovedMean": 0.072,
+    "movedPx": 21063,
+    "movedMeanFromDelivered": 2.92,
+    "movedOver48": 14,
+    "comingFromAnotherDrawingDiffers": 0
+   }
+  ],
+  "errors": []
+ },
+ "chrome, phone on its side 844×390, 3x": {
+  "rows": [
+   {
+    "pose": "frame_01_02",
+    "current": "frame_01_02",
+    "canvas": [
+     507,
+     405
+    ],
+    "unmovedMax": 16,
+    "unmovedMean": 0.204,
+    "movedPx": 10170,
+    "movedMeanFromDelivered": 4.51,
+    "movedOver48": 5,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03a",
+    "current": "frame_02_03a",
+    "canvas": [
+     507,
+     405
+    ],
+    "unmovedMax": 17,
+    "unmovedMean": 0.294,
+    "movedPx": 14259,
+    "movedMeanFromDelivered": 3.69,
+    "movedOver48": 4,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03b",
+    "current": "frame_02_03b",
+    "canvas": [
+     507,
+     405
+    ],
+    "unmovedMax": 17,
+    "unmovedMean": 0.457,
+    "movedPx": 16674,
+    "movedMeanFromDelivered": 3.83,
+    "movedOver48": 37,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_K1_B36.png",
+    "current": "reaction/rx_K1_B36.png",
+    "canvas": [
+     507,
+     405
+    ],
+    "unmovedMax": 16,
+    "unmovedMean": 0.167,
+    "movedPx": 7280,
+    "movedMeanFromDelivered": 5.27,
+    "movedOver48": 10,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_B36_B39.png",
+    "current": "reaction/rx_B36_B39.png",
+    "canvas": [
+     507,
+     405
+    ],
+    "unmovedMax": 17,
+    "unmovedMean": 0.067,
+    "movedPx": 7426,
+    "movedMeanFromDelivered": 3.47,
+    "movedOver48": 4,
+    "comingFromAnotherDrawingDiffers": 0
+   }
+  ],
+  "errors": []
+ },
+ "chrome, desktop 1440×900, 1x": {
+  "rows": [
+   {
+    "pose": "frame_01_02",
+    "current": "frame_01_02",
+    "canvas": [
+     379,
+     303
+    ],
+    "unmovedMax": 7,
+    "unmovedMean": 0.13,
+    "movedPx": 5747,
+    "movedMeanFromDelivered": 2.74,
+    "movedOver48": 0,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03a",
+    "current": "frame_02_03a",
+    "canvas": [
+     379,
+     303
+    ],
+    "unmovedMax": 8,
+    "unmovedMean": 0.189,
+    "movedPx": 8102,
+    "movedMeanFromDelivered": 2.25,
+    "movedOver48": 1,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03b",
+    "current": "frame_02_03b",
+    "canvas": [
+     379,
+     303
+    ],
+    "unmovedMax": 7,
+    "unmovedMean": 0.307,
+    "movedPx": 9490,
+    "movedMeanFromDelivered": 2.27,
+    "movedOver48": 1,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_K1_B36.png",
+    "current": "reaction/rx_K1_B36.png",
+    "canvas": [
+     379,
+     303
+    ],
+    "unmovedMax": 6,
+    "unmovedMean": 0.071,
+    "movedPx": 4142,
+    "movedMeanFromDelivered": 3.23,
+    "movedOver48": 1,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_B36_B39.png",
+    "current": "reaction/rx_B36_B39.png",
+    "canvas": [
+     379,
+     303
+    ],
+    "unmovedMax": 5,
+    "unmovedMean": 0.041,
+    "movedPx": 4210,
+    "movedMeanFromDelivered": 2.35,
+    "movedOver48": 1,
+    "comingFromAnotherDrawingDiffers": 0
+   }
+  ],
+  "errors": []
+ },
+ "chrome, desktop 1440×900, 2x": {
+  "rows": [
+   {
+    "pose": "frame_01_02",
+    "current": "frame_01_02",
+    "canvas": [
+     758,
+     606
+    ],
+    "unmovedMax": 9,
+    "unmovedMean": 0.164,
+    "movedPx": 22382,
+    "movedMeanFromDelivered": 3.01,
+    "movedOver48": 120,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03a",
+    "current": "frame_02_03a",
+    "canvas": [
+     758,
+     606
+    ],
+    "unmovedMax": 9,
+    "unmovedMean": 0.221,
+    "movedPx": 31477,
+    "movedMeanFromDelivered": 2.49,
+    "movedOver48": 66,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03b",
+    "current": "frame_02_03b",
+    "canvas": [
+     758,
+     606
+    ],
+    "unmovedMax": 9,
+    "unmovedMean": 0.375,
+    "movedPx": 36654,
+    "movedMeanFromDelivered": 2.48,
+    "movedOver48": 104,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_K1_B36.png",
+    "current": "reaction/rx_K1_B36.png",
+    "canvas": [
+     758,
+     606
+    ],
+    "unmovedMax": 7,
+    "unmovedMean": 0.089,
+    "movedPx": 15941,
+    "movedMeanFromDelivered": 3.53,
+    "movedOver48": 93,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_B36_B39.png",
+    "current": "reaction/rx_B36_B39.png",
+    "canvas": [
+     758,
+     606
+    ],
+    "unmovedMax": 9,
+    "unmovedMean": 0.052,
+    "movedPx": 16437,
+    "movedMeanFromDelivered": 2.47,
+    "movedOver48": 77,
+    "comingFromAnotherDrawingDiffers": 0
+   }
+  ],
+  "errors": []
+ },
+ "chrome, desktop 2560×1440, 2x": {
+  "rows": [
+   {
+    "pose": "frame_01_02",
+    "current": "frame_01_02",
+    "canvas": [
+     1146,
+     916
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.208,
+    "movedPx": 50634,
+    "movedMeanFromDelivered": 3.16,
+    "movedOver48": 331,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03a",
+    "current": "frame_02_03a",
+    "canvas": [
+     1146,
+     916
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.281,
+    "movedPx": 71129,
+    "movedMeanFromDelivered": 2.63,
+    "movedOver48": 263,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03b",
+    "current": "frame_02_03b",
+    "canvas": [
+     1146,
+     916
+    ],
+    "unmovedMax": 12,
+    "unmovedMean": 0.469,
+    "movedPx": 82885,
+    "movedMeanFromDelivered": 2.58,
+    "movedOver48": 326,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_K1_B36.png",
+    "current": "reaction/rx_K1_B36.png",
+    "canvas": [
+     1146,
+     916
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.118,
+    "movedPx": 35963,
+    "movedMeanFromDelivered": 3.69,
+    "movedOver48": 314,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_B36_B39.png",
+    "current": "reaction/rx_B36_B39.png",
+    "canvas": [
+     1146,
+     916
+    ],
+    "unmovedMax": 14,
+    "unmovedMean": 0.067,
+    "movedPx": 37200,
+    "movedMeanFromDelivered": 2.53,
+    "movedOver48": 240,
+    "comingFromAnotherDrawingDiffers": 0
+   }
+  ],
+  "errors": []
+ },
+ "webkit, phone 390×844, 3x": {
+  "rows": [
+   {
+    "pose": "frame_01_02",
+    "current": "frame_01_02",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 13,
+    "unmovedMean": 0.231,
+    "movedPx": 28688,
+    "movedMeanFromDelivered": 4.14,
+    "movedOver48": 25,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03a",
+    "current": "frame_02_03a",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.335,
+    "movedPx": 40304,
+    "movedMeanFromDelivered": 3.42,
+    "movedOver48": 24,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03b",
+    "current": "frame_02_03b",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 12,
+    "unmovedMean": 0.525,
+    "movedPx": 46989,
+    "movedMeanFromDelivered": 3.78,
+    "movedOver48": 56,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_K1_B36.png",
+    "current": "reaction/rx_K1_B36.png",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 14,
+    "unmovedMean": 0.163,
+    "movedPx": 20471,
+    "movedMeanFromDelivered": 4.82,
+    "movedOver48": 29,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_B36_B39.png",
+    "current": "reaction/rx_B36_B39.png",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 10,
+    "unmovedMean": 0.071,
+    "movedPx": 21063,
+    "movedMeanFromDelivered": 2.79,
+    "movedOver48": 15,
+    "comingFromAnotherDrawingDiffers": 0
+   }
+  ],
+  "errors": []
+ },
+ "webkit, phone 360×740, 3x": {
+  "rows": [
+   {
+    "pose": "frame_01_02",
+    "current": "frame_01_02",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 13,
+    "unmovedMean": 0.231,
+    "movedPx": 28688,
+    "movedMeanFromDelivered": 4.14,
+    "movedOver48": 25,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03a",
+    "current": "frame_02_03a",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.335,
+    "movedPx": 40304,
+    "movedMeanFromDelivered": 3.42,
+    "movedOver48": 24,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03b",
+    "current": "frame_02_03b",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 12,
+    "unmovedMean": 0.525,
+    "movedPx": 46989,
+    "movedMeanFromDelivered": 3.78,
+    "movedOver48": 56,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_K1_B36.png",
+    "current": "reaction/rx_K1_B36.png",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 14,
+    "unmovedMean": 0.163,
+    "movedPx": 20471,
+    "movedMeanFromDelivered": 4.82,
+    "movedOver48": 29,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_B36_B39.png",
+    "current": "reaction/rx_B36_B39.png",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 10,
+    "unmovedMean": 0.071,
+    "movedPx": 21063,
+    "movedMeanFromDelivered": 2.79,
+    "movedOver48": 15,
+    "comingFromAnotherDrawingDiffers": 0
+   }
+  ],
+  "errors": []
+ },
+ "webkit, phone 412×915, 2.625x": {
+  "rows": [
+   {
+    "pose": "frame_01_02",
+    "current": "frame_01_02",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 13,
+    "unmovedMean": 0.231,
+    "movedPx": 28688,
+    "movedMeanFromDelivered": 4.14,
+    "movedOver48": 25,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03a",
+    "current": "frame_02_03a",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.335,
+    "movedPx": 40304,
+    "movedMeanFromDelivered": 3.42,
+    "movedOver48": 24,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03b",
+    "current": "frame_02_03b",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 12,
+    "unmovedMean": 0.525,
+    "movedPx": 46989,
+    "movedMeanFromDelivered": 3.78,
+    "movedOver48": 56,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_K1_B36.png",
+    "current": "reaction/rx_K1_B36.png",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 14,
+    "unmovedMean": 0.163,
+    "movedPx": 20471,
+    "movedMeanFromDelivered": 4.82,
+    "movedOver48": 29,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_B36_B39.png",
+    "current": "reaction/rx_B36_B39.png",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 10,
+    "unmovedMean": 0.071,
+    "movedPx": 21063,
+    "movedMeanFromDelivered": 2.79,
+    "movedOver48": 15,
+    "comingFromAnotherDrawingDiffers": 0
+   }
+  ],
+  "errors": []
+ },
+ "webkit, phone on its side 844×390, 3x": {
+  "rows": [
+   {
+    "pose": "frame_01_02",
+    "current": "frame_01_02",
+    "canvas": [
+     507,
+     405
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.184,
+    "movedPx": 10170,
+    "movedMeanFromDelivered": 5.44,
+    "movedOver48": 50,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03a",
+    "current": "frame_02_03a",
+    "canvas": [
+     507,
+     405
+    ],
+    "unmovedMax": 9,
+    "unmovedMean": 0.274,
+    "movedPx": 14259,
+    "movedMeanFromDelivered": 4.32,
+    "movedOver48": 34,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03b",
+    "current": "frame_02_03b",
+    "canvas": [
+     507,
+     405
+    ],
+    "unmovedMax": 9,
+    "unmovedMean": 0.434,
+    "movedPx": 16674,
+    "movedMeanFromDelivered": 5.23,
+    "movedOver48": 150,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_K1_B36.png",
+    "current": "reaction/rx_K1_B36.png",
+    "canvas": [
+     507,
+     405
+    ],
+    "unmovedMax": 10,
+    "unmovedMean": 0.13,
+    "movedPx": 7280,
+    "movedMeanFromDelivered": 6.29,
+    "movedOver48": 34,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_B36_B39.png",
+    "current": "reaction/rx_B36_B39.png",
+    "canvas": [
+     507,
+     405
+    ],
+    "unmovedMax": 9,
+    "unmovedMean": 0.057,
+    "movedPx": 7426,
+    "movedMeanFromDelivered": 3.17,
+    "movedOver48": 4,
+    "comingFromAnotherDrawingDiffers": 0
+   }
+  ],
+  "errors": []
+ },
+ "webkit, desktop 1440×900, 1x": {
+  "rows": [
+   {
+    "pose": "frame_01_02",
+    "current": "frame_01_02",
+    "canvas": [
+     379,
+     303
+    ],
+    "unmovedMax": 8,
+    "unmovedMean": 0.163,
+    "movedPx": 5747,
+    "movedMeanFromDelivered": 8.77,
+    "movedOver48": 218,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03a",
+    "current": "frame_02_03a",
+    "canvas": [
+     379,
+     303
+    ],
+    "unmovedMax": 8,
+    "unmovedMean": 0.228,
+    "movedPx": 8102,
+    "movedMeanFromDelivered": 6.96,
+    "movedOver48": 219,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03b",
+    "current": "frame_02_03b",
+    "canvas": [
+     379,
+     303
+    ],
+    "unmovedMax": 9,
+    "unmovedMean": 0.384,
+    "movedPx": 9490,
+    "movedMeanFromDelivered": 7.63,
+    "movedOver48": 360,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_K1_B36.png",
+    "current": "reaction/rx_K1_B36.png",
+    "canvas": [
+     379,
+     303
+    ],
+    "unmovedMax": 8,
+    "unmovedMean": 0.093,
+    "movedPx": 4142,
+    "movedMeanFromDelivered": 10.23,
+    "movedOver48": 182,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_B36_B39.png",
+    "current": "reaction/rx_B36_B39.png",
+    "canvas": [
+     379,
+     303
+    ],
+    "unmovedMax": 8,
+    "unmovedMean": 0.054,
+    "movedPx": 4210,
+    "movedMeanFromDelivered": 6.46,
+    "movedOver48": 112,
+    "comingFromAnotherDrawingDiffers": 0
+   }
+  ],
+  "errors": []
+ },
+ "webkit, desktop 1440×900, 2x": {
+  "rows": [
+   {
+    "pose": "frame_01_02",
+    "current": "frame_01_02",
+    "canvas": [
+     758,
+     606
+    ],
+    "unmovedMax": 9,
+    "unmovedMean": 0.172,
+    "movedPx": 22382,
+    "movedMeanFromDelivered": 3.69,
+    "movedOver48": 146,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03a",
+    "current": "frame_02_03a",
+    "canvas": [
+     758,
+     606
+    ],
+    "unmovedMax": 9,
+    "unmovedMean": 0.233,
+    "movedPx": 31477,
+    "movedMeanFromDelivered": 3,
+    "movedOver48": 87,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03b",
+    "current": "frame_02_03b",
+    "canvas": [
+     758,
+     606
+    ],
+    "unmovedMax": 9,
+    "unmovedMean": 0.394,
+    "movedPx": 36654,
+    "movedMeanFromDelivered": 3.19,
+    "movedOver48": 137,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_K1_B36.png",
+    "current": "reaction/rx_K1_B36.png",
+    "canvas": [
+     758,
+     606
+    ],
+    "unmovedMax": 7,
+    "unmovedMean": 0.094,
+    "movedPx": 15941,
+    "movedMeanFromDelivered": 4.34,
+    "movedOver48": 125,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_B36_B39.png",
+    "current": "reaction/rx_B36_B39.png",
+    "canvas": [
+     758,
+     606
+    ],
+    "unmovedMax": 9,
+    "unmovedMean": 0.055,
+    "movedPx": 16437,
+    "movedMeanFromDelivered": 2.68,
+    "movedOver48": 83,
+    "comingFromAnotherDrawingDiffers": 0
+   }
+  ],
+  "errors": []
+ },
+ "webkit, desktop 2560×1440, 2x": {
+  "rows": [
+   {
+    "pose": "frame_01_02",
+    "current": "frame_01_02",
+    "canvas": [
+     1146,
+     916
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.208,
+    "movedPx": 50634,
+    "movedMeanFromDelivered": 3.17,
+    "movedOver48": 331,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03a",
+    "current": "frame_02_03a",
+    "canvas": [
+     1146,
+     916
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.282,
+    "movedPx": 71129,
+    "movedMeanFromDelivered": 2.64,
+    "movedOver48": 263,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03b",
+    "current": "frame_02_03b",
+    "canvas": [
+     1146,
+     916
+    ],
+    "unmovedMax": 12,
+    "unmovedMean": 0.469,
+    "movedPx": 82885,
+    "movedMeanFromDelivered": 2.58,
+    "movedOver48": 327,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_K1_B36.png",
+    "current": "reaction/rx_K1_B36.png",
+    "canvas": [
+     1146,
+     916
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.118,
+    "movedPx": 35963,
+    "movedMeanFromDelivered": 3.7,
+    "movedOver48": 316,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_B36_B39.png",
+    "current": "reaction/rx_B36_B39.png",
+    "canvas": [
+     1146,
+     916
+    ],
+    "unmovedMax": 14,
+    "unmovedMean": 0.067,
+    "movedPx": 37200,
+    "movedMeanFromDelivered": 2.54,
+    "movedOver48": 241,
+    "comingFromAnotherDrawingDiffers": 0
+   }
+  ],
+  "errors": []
+ }
+}

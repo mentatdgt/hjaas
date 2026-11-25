@@ -1,0 +1,158 @@
+{
+ "desktop": {
+  "recordedFrames": 181,
+  "seconds": 12.1,
+  "framePx": [
+   1440,
+   900
+  ],
+  "longestGapMs": 850,
+  "skippedPoses": 0,
+  "errors": [],
+  "whereNothingMovesInTheLoop": {
+   "px": 20154,
+   "framesCompared": 26,
+   "worstMean": {
+    "mean": 2.48,
+    "pose": "frame_01",
+    "atMs": 2733
+   },
+   "worstSinglePx": 14
+  },
+  "eyesInTheLoop": {
+   "px": 1341,
+   "framesCompared": 14,
+   "worstMean": {
+    "mean": 2.82,
+    "pose": "frame_01",
+    "atMs": 633
+   },
+   "worstSinglePx": 10
+  },
+  "eyesAsTheThumbComesUp": {
+   "px": 2656,
+   "framesCompared": 8,
+   "worstMean": {
+    "mean": 2.69,
+    "pose": "reaction/rx_K1_B36.png",
+    "atMs": 5733
+   },
+   "worstSinglePx": 10
+  },
+  "bodyAsTheThumbComesUp": {
+   "px": 34513,
+   "framesCompared": 8,
+   "worstMean": {
+    "mean": 2.17,
+    "pose": "reaction/rx_K1_B36.png",
+    "atMs": 5733
+   },
+   "worstSinglePx": 13
+  },
+  "poses": "frame_01_02 49, frame_02 67, frame_02_03a 34, frame_02_03b 50, frame_03 366, frame_04 67, frame_01 484, frame_01_02 66, frame_02 84, frame_02_03a 49, frame_02_03b 51, frame_03 367, frame_04 82, frame_01 351, frame_01_02 51, frame_02 48, frame_02_03a 51, frame_02_03b 34, frame_03 317, frame_04 67, frame_01 150, frame_01_02 50, frame_02 67, frame_01_02 33, frame_01 267, frame_01_02 50, frame_02 67, frame_02_03a 49, frame_02_03b 34, frame_03 283, frame_04 67, rx_A24 49, rx_A25 151, rx_A49 67, rx_A52 49, rx_A53 51, rx_A55 67, rx_A58 83, rx_K1 150, rx_K1_B36 15, rx_B36 35, rx_B36_B39 34, rx_B39 65, rx_B41 68, rx_K2 298, rx_wink_half 50, rx_wink 252, rx_wink_half 50, rx_K2 250, rx_B39 49, rx_B36_B39 17, rx_B36 34, rx_K1_B36 34, rx_K1 82, rx_A55 51, rx_A49 50, rx_A25 83, rx_A24 50, frame_01 465, frame_01_02 50, frame_02 66, frame_02_03a 68, frame_02_03b 50, frame_03 417, frame_04 65, frame_01 668, blink_half 34, blink_closed 67, blink_half 49, frame_01 851, frame_01_02 33, frame_02 65, frame_02_03a 50, frame_02_03b 66, frame_03 318, frame_04 66, frame_01 334, frame_01_02 50, frame_02 67, frame_02_03a 48, frame_02_03b 51, frame_03 432, frame_04 67, frame_01 419, frame_01_02 49, frame_02 67, frame_02_03a 48, frame_02_03b 52, frame_03 317, frame_04 67, frame_01 317, frame_01_02 50, frame_02 67, frame_02_03a 50, frame_02_03b 50, frame_03 null"
+ },
+ "phone": {
+  "recordedFrames": 171,
+  "seconds": 12.1,
+  "framePx": [
+   390,
+   844
+  ],
+  "longestGapMs": 850,
+  "skippedPoses": 0,
+  "errors": [],
+  "whereNothingMovesInTheLoop": {
+   "px": 16582,
+   "framesCompared": 25,
+   "worstMean": {
+    "mean": 2.5,
+    "pose": "frame_01",
+    "atMs": 2717
+   },
+   "worstSinglePx": 16
+  },
+  "eyesInTheLoop": {
+   "px": 1094,
+   "framesCompared": 13,
+   "worstMean": {
+    "mean": 2.77,
+    "pose": "frame_01_02",
+    "atMs": 2983
+   },
+   "worstSinglePx": 12
+  },
+  "eyesAsTheThumbComesUp": {
+   "px": 2157,
+   "framesCompared": 8,
+   "worstMean": {
+    "mean": 2.27,
+    "pose": "reaction/rx_B39.png",
+    "atMs": 4583
+   },
+   "worstSinglePx": 11
+  },
+  "bodyAsTheThumbComesUp": {
+   "px": 28362,
+   "framesCompared": 8,
+   "worstMean": {
+    "mean": 2.25,
+    "pose": "reaction/rx_B39.png",
+    "atMs": 4583
+   },
+   "worstSinglePx": 14
+  },
+  "poses": "frame_01_02 33, frame_02 67, frame_02_03a 50, frame_02_03b 33, frame_03 367, frame_04 67, frame_01 500, frame_01_02 50, frame_02 84, frame_02_03a 49, frame_02_03b 50, frame_03 367, frame_04 83, frame_01 350, frame_01_02 50, frame_02 50, frame_02_03a 50, frame_02_03b 50, frame_03 300, frame_04 67, frame_01 150, frame_01_02 50, frame_02 67, frame_01_02 33, frame_01 283, frame_01_02 33, frame_02 67, frame_02_03a 50, frame_02_03b 50, frame_03 267, frame_04 67, rx_A24 50, rx_A25 151, rx_A49 82, rx_A52 33, rx_A53 67, rx_A55 51, rx_A58 83, rx_K1 150, rx_K1_B36 33, rx_B36 33, rx_B36_B39 16, rx_B39 66, rx_B41 67, rx_K2 300, rx_wink_half 52, rx_wink 265, rx_wink_half 50, rx_K2 235, rx_B39 48, rx_B36_B39 34, rx_B36 17, rx_K1_B36 34, rx_K1 84, rx_A55 50, rx_A49 67, rx_A25 65, rx_A24 50, frame_01 416, frame_01_02 51, frame_02 82, frame_02_03a 51, frame_02_03b 49, frame_03 419, frame_04 65, frame_01 669, blink_half 33, blink_closed 83, blink_half 32, frame_01 851, frame_01_02 49, frame_02 68, frame_02_03a 50, frame_02_03b 48, frame_03 316, frame_04 86, frame_01 333, frame_01_02 49, frame_02 68, frame_02_03a 50, frame_02_03b 50, frame_03 417, frame_04 84, frame_01 400, frame_01_02 50, frame_02 67, frame_02_03a 50, frame_02_03b 50, frame_03 317, frame_04 67, frame_01 317, frame_01_02 50, frame_02 67, frame_02_03a 50, frame_02_03b 67, frame_03 null"
+ },
+ "phone-3x": {
+  "recordedFrames": 169,
+  "seconds": 12.1,
+  "framePx": [
+   1500,
+   3246
+  ],
+  "longestGapMs": 850,
+  "skippedPoses": 0,
+  "errors": [],
+  "whereNothingMovesInTheLoop": {
+   "px": 256105,
+   "framesCompared": 25,
+   "worstMean": {
+    "mean": 1.51,
+    "pose": "frame_01_02",
+    "atMs": 2983
+   },
+   "worstSinglePx": 12
+  },
+  "eyesInTheLoop": {
+   "px": 17265,
+   "framesCompared": 14,
+   "worstMean": {
+    "mean": 2.78,
+    "pose": "frame_02_03a",
+    "atMs": 1250
+   },
+   "worstSinglePx": 12
+  },
+  "eyesAsTheThumbComesUp": {
+   "px": 33715,
+   "framesCompared": 9,
+   "worstMean": {
+    "mean": 1.33,
+    "pose": "reaction/rx_B39.png",
+    "atMs": 4600
+   },
+   "worstSinglePx": 13
+  },
+  "bodyAsTheThumbComesUp": {
+   "px": 438815,
+   "framesCompared": 9,
+   "worstMean": {
+    "mean": 1.4,
+    "pose": "reaction/rx_B39.png",
+    "atMs": 4600
+   },
+   "worstSinglePx": 14
+  },
+  "poses": "frame_01_02 50, frame_02 50, frame_02_03a 50, frame_02_03b 50, frame_03 350, frame_04 83, frame_01 483, frame_01_02 50, frame_02 83, frame_02_03a 67, frame_02_03b 50, frame_03 367, frame_04 67, frame_01 367, frame_01_02 33, frame_02 67, frame_02_03a 50, frame_02_03b 33, frame_03 317, frame_04 50, frame_01 167, frame_01_02 33, frame_02 67, frame_01_02 50, frame_01 267, frame_01_02 67, frame_02 34, frame_02_03a 49, frame_02_03b 50, frame_03 295, frame_04 55, rx_A24 50, rx_A25 151, rx_A49 67, rx_A52 33, rx_A53 67, rx_A55 67, rx_A58 67, rx_K1 150, rx_K1_B36 33, rx_B36 33, rx_B36_B39 33, rx_B39 51, rx_B41 83, rx_K2 300, rx_wink_half 50, rx_wink 250, rx_wink_half 50, rx_K2 250, rx_B39 50, rx_B36_B39 17, rx_B36 32, rx_K1_B36 33, rx_K1 84, rx_A55 51, rx_A49 50, rx_A25 83, rx_A24 49, frame_01 450, frame_01_02 50, frame_02 82, frame_02_03a 51, frame_02_03b 49, frame_03 418, frame_04 67, frame_01 667, blink_half 33, blink_closed 66, blink_half 51, frame_01 850, frame_01_02 49, frame_02 67, frame_02_03a 50, frame_02_03b 50, frame_03 317, frame_04 83, frame_01 317, frame_01_02 50, frame_02 67, frame_02_03a 67, frame_02_03b 50, frame_03 417, frame_04 66, frame_01 417, frame_01_02 50, frame_02 68, frame_02_03a 48, frame_02_03b 51, frame_03 318, frame_04 65, frame_01 317, frame_01_02 51, frame_02 66, frame_02_03a 50, frame_02_03b 51, frame_03 null"
+ }
+}

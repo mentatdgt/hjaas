@@ -1,26 +1,36 @@
 // Scene 1's idle routine: the hammer rhythm, ported from schedule() in tools/preview_timing.py. The site
 // never plays the frames at a fixed rate: every swing is rolled fresh, so the loop never repeats.
-// (It stays as code, not a routine manifest, so that it keeps matching the script it was ported from.)
+// (It stays as code, not a routine manifest, as the script it was ported from; the hammer's in-betweens are
+// newer than that script.)
 
 import type { Rng, Step } from '../engine/steps';
 
 type Range = readonly [number, number];
 
 const CONTACT = 'frame_01';
+const RISING = 'frame_01_02'; // halfway from the contact to the lift
 const LIFT = 'frame_02';
+const RAISED_A = 'frame_02_03a'; // a third of the way from the lift to the wind-up
+const RAISED_B = 'frame_02_03b'; // and two thirds
 const WIND_UP = 'frame_03';
 const DOWN_SWING = 'frame_04';
 
 // Milliseconds per pose.
 const SWING: ReadonlyArray<readonly [string, Range]> = [
   [CONTACT, [260, 460]],
-  [LIFT, [110, 150]],
+  // The hammer rises through these, about 50 ms each. (The fall has no in-between: it snaps.)
+  [RISING, [45, 55]],
+  [LIFT, [60, 80]],
+  [RAISED_A, [45, 55]],
+  [RAISED_B, [45, 55]],
   [WIND_UP, [240, 420]],
   [DOWN_SWING, [60, 80]], // kept snappy for impact
 ];
 const TAP: ReadonlyArray<readonly [string, Range]> = [
-  [CONTACT, [160, 220]], // small tap: contact -> lift -> contact
-  [LIFT, [80, 100]],
+  [CONTACT, [160, 220]], // small tap: contact -> lift -> contact, by way of the drawing between
+  [RISING, [40, 40]],
+  [LIFT, [50, 70]],
+  [RISING, [40, 40]],
 ];
 const PAUSE: Range = [1100, 2000]; // stop and look at the work
 const BLINK: ReadonlyArray<Step> = [
@@ -67,3 +77,5 @@ export function* hammerSchedule(rnd: Rng = Math.random): Generator<Step, never> 
 }
 
 export const CONTACT_POSE = CONTACT;
+/** Every drawing the rhythm shows. */
+export const HAMMER_FRAMES = [CONTACT, RISING, LIFT, RAISED_A, RAISED_B, WIND_UP, DOWN_SWING, 'blink_half', 'blink_closed'];

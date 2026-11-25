@@ -1,0 +1,535 @@
+{
+ "full": {
+  "frame_01": {
+   "loosePieces": [],
+   "specksDelivered": 0,
+   "specksBuilt": 0,
+   "eyesBuiltFromDelivered": {
+    "mean": 3.44,
+    "max": 42
+   }
+  },
+  "frame_01_02": {
+   "loosePieces": [
+    {
+     "n": 2,
+     "b": [
+      481,
+      473,
+      481,
+      474
+     ]
+    }
+   ],
+   "specksDelivered": 0,
+   "specksBuilt": 0,
+   "eyesBuiltFromDelivered": {
+    "mean": 3.44,
+    "max": 42
+   }
+  },
+  "frame_02": {
+   "loosePieces": [],
+   "specksDelivered": 0,
+   "specksBuilt": 0,
+   "eyesBuiltFromDelivered": {
+    "mean": 3.39,
+    "max": 40
+   }
+  },
+  "frame_02_03a": {
+   "loosePieces": [],
+   "specksDelivered": 0,
+   "specksBuilt": 0,
+   "eyesBuiltFromDelivered": {
+    "mean": 3.16,
+    "max": 38
+   }
+  },
+  "frame_02_03b": {
+   "loosePieces": [],
+   "specksDelivered": 0,
+   "specksBuilt": 0,
+   "eyesBuiltFromDelivered": {
+    "mean": 3.19,
+    "max": 51
+   }
+  },
+  "frame_03": {
+   "loosePieces": [],
+   "specksDelivered": 0,
+   "specksBuilt": 0,
+   "eyesBuiltFromDelivered": {
+    "mean": 3.49,
+    "max": 51
+   }
+  },
+  "frame_04": {
+   "loosePieces": [
+    {
+     "n": 1,
+     "b": [
+      226,
+      103,
+      226,
+      103
+     ]
+    }
+   ],
+   "specksDelivered": 0,
+   "specksBuilt": 0,
+   "eyesBuiltFromDelivered": {
+    "mean": 3.39,
+    "max": 41
+   }
+  },
+  "blink_half": {
+   "loosePieces": [],
+   "specksDelivered": 0,
+   "specksBuilt": 0,
+   "eyesBuiltFromDelivered": {
+    "mean": 3.07,
+    "max": 38
+   }
+  },
+  "blink_closed": {
+   "loosePieces": [],
+   "specksDelivered": 0,
+   "specksBuilt": 0,
+   "eyesBuiltFromDelivered": {
+    "mean": 2.93,
+    "max": 60
+   }
+  },
+  "K1": {
+   "loosePieces": [],
+   "specksDelivered": 1,
+   "specksBuilt": 1,
+   "eyesBuiltFromDelivered": {
+    "mean": 3.15,
+    "max": 32
+   }
+  },
+  "K2": {
+   "loosePieces": [],
+   "specksDelivered": 1,
+   "specksBuilt": 1,
+   "eyesBuiltFromDelivered": {
+    "mean": 3.17,
+    "max": 36
+   }
+  },
+  "rx_frame_01": {
+   "loosePieces": [],
+   "specksDelivered": 0,
+   "specksBuilt": 0,
+   "eyesBuiltFromDelivered": {
+    "mean": 3.44,
+    "max": 42
+   }
+  },
+  "rx_A24": {
+   "loosePieces": [],
+   "specksDelivered": 0,
+   "specksBuilt": 0,
+   "eyesBuiltFromDelivered": {
+    "mean": 3.21,
+    "max": 27
+   }
+  },
+  "rx_A25": {
+   "loosePieces": [],
+   "specksDelivered": 0,
+   "specksBuilt": 0,
+   "eyesBuiltFromDelivered": {
+    "mean": 3.38,
+    "max": 44
+   }
+  },
+  "rx_A49": {
+   "loosePieces": [],
+   "specksDelivered": 0,
+   "specksBuilt": 0,
+   "eyesBuiltFromDelivered": {
+    "mean": 3.19,
+    "max": 55
+   }
+  },
+  "rx_A52": {
+   "loosePieces": [
+    {
+     "n": 1,
+     "b": [
+      252,
+      278,
+      252,
+      278
+     ]
+    }
+   ],
+   "specksDelivered": 0,
+   "specksBuilt": 0,
+   "eyesBuiltFromDelivered": {
+    "mean": 3.03,
+    "max": 27
+   }
+  },
+  "rx_A53": {
+   "loosePieces": [
+    {
+     "n": 1,
+     "b": [
+      299,
+      363,
+      299,
+      363
+     ]
+    },
+    {
+     "n": 1,
+     "b": [
+      457,
+      407,
+      457,
+      407
+     ]
+    }
+   ],
+   "specksDelivered": 0,
+   "specksBuilt": 0,
+   "eyesBuiltFromDelivered": {
+    "mean": 3.35,
+    "max": 36
+   }
+  },
+  "rx_A55": {
+   "loosePieces": [
+    {
+     "n": 1,
+     "b": [
+      299,
+      363,
+      299,
+      363
+     ]
+    }
+   ],
+   "specksDelivered": 0,
+   "specksBuilt": 0,
+   "eyesBuiltFromDelivered": {
+    "mean": 3.33,
+    "max": 35
+   }
+  },
+  "rx_A58": {
+   "loosePieces": [
+    {
+     "n": 1,
+     "b": [
+      409,
+      114,
+      409,
+      114
+     ]
+    },
+    {
+     "n": 1,
+     "b": [
+      299,
+      363,
+      299,
+      363
+     ]
+    }
+   ],
+   "specksDelivered": 0,
+   "specksBuilt": 0,
+   "eyesBuiltFromDelivered": {
+    "mean": 3.36,
+    "max": 36
+   }
+  },
+  "rx_K1": {
+   "loosePieces": [],
+   "specksDelivered": 1,
+   "specksBuilt": 1,
+   "eyesBuiltFromDelivered": {
+    "mean": 3.15,
+    "max": 32
+   }
+  },
+  "rx_K1_B36": {
+   "loosePieces": [
+    {
+     "n": 1,
+     "b": [
+      410,
+      526,
+      410,
+      526
+     ]
+    }
+   ],
+   "specksDelivered": 1,
+   "specksBuilt": 1,
+   "eyesBuiltFromDelivered": {
+    "mean": 3.15,
+    "max": 32
+   }
+  },
+  "rx_B36": {
+   "loosePieces": [
+    {
+     "n": 1,
+     "b": [
+      517,
+      583,
+      517,
+      583
+     ]
+    }
+   ],
+   "specksDelivered": 1,
+   "specksBuilt": 1,
+   "eyesBuiltFromDelivered": {
+    "mean": 3.15,
+    "max": 31
+   }
+  },
+  "rx_B36_B39": {
+   "loosePieces": [
+    {
+     "n": 1,
+     "b": [
+      517,
+      583,
+      517,
+      583
+     ]
+    }
+   ],
+   "specksDelivered": 1,
+   "specksBuilt": 1,
+   "eyesBuiltFromDelivered": {
+    "mean": 3.13,
+    "max": 31
+   }
+  },
+  "rx_B39": {
+   "loosePieces": [
+    {
+     "n": 1,
+     "b": [
+      512,
+      323,
+      512,
+      323
+     ]
+    },
+    {
+     "n": 1,
+     "b": [
+      480,
+      523,
+      480,
+      523
+     ]
+    }
+   ],
+   "specksDelivered": 1,
+   "specksBuilt": 1,
+   "eyesBuiltFromDelivered": {
+    "mean": 3.16,
+    "max": 31
+   }
+  },
+  "rx_B41": {
+   "loosePieces": [],
+   "specksDelivered": 1,
+   "specksBuilt": 1,
+   "eyesBuiltFromDelivered": {
+    "mean": 3.16,
+    "max": 33
+   }
+  },
+  "rx_K2": {
+   "loosePieces": [],
+   "specksDelivered": 1,
+   "specksBuilt": 1,
+   "eyesBuiltFromDelivered": {
+    "mean": 3.17,
+    "max": 36
+   }
+  },
+  "rx_wink_half": {
+   "loosePieces": [],
+   "specksDelivered": 1,
+   "specksBuilt": 1,
+   "eyesBuiltFromDelivered": {
+    "mean": 3.25,
+    "max": 38
+   }
+  },
+  "rx_wink": {
+   "loosePieces": [],
+   "specksDelivered": 1,
+   "specksBuilt": 1,
+   "eyesBuiltFromDelivered": {
+    "mean": 3.29,
+    "max": 36
+   }
+  }
+ },
+ "1.5x": {
+  "frame_01": {
+   "loosePieces": [],
+   "specksDelivered": 0,
+   "specksBuilt": 0
+  },
+  "frame_01_02": {
+   "loosePieces": [
+    {
+     "n": 3,
+     "b": [
+      360,
+      355,
+      361,
+      356
+     ]
+    }
+   ],
+   "specksDelivered": 0,
+   "specksBuilt": 0
+  },
+  "frame_02": {
+   "loosePieces": [],
+   "specksDelivered": 0,
+   "specksBuilt": 0
+  },
+  "frame_02_03a": {
+   "loosePieces": [],
+   "specksDelivered": 0,
+   "specksBuilt": 0
+  },
+  "frame_02_03b": {
+   "loosePieces": [],
+   "specksDelivered": 0,
+   "specksBuilt": 0
+  },
+  "frame_03": {
+   "loosePieces": [],
+   "specksDelivered": 0,
+   "specksBuilt": 0
+  },
+  "frame_04": {
+   "loosePieces": [],
+   "specksDelivered": 0,
+   "specksBuilt": 0
+  },
+  "blink_half": {
+   "loosePieces": [],
+   "specksDelivered": 0,
+   "specksBuilt": 0
+  },
+  "blink_closed": {
+   "loosePieces": [],
+   "specksDelivered": 0,
+   "specksBuilt": 0
+  },
+  "K1": {
+   "loosePieces": [],
+   "specksDelivered": 1,
+   "specksBuilt": 2
+  },
+  "K2": {
+   "loosePieces": [],
+   "specksDelivered": 1,
+   "specksBuilt": 2
+  },
+  "rx_frame_01": {
+   "loosePieces": [],
+   "specksDelivered": 0,
+   "specksBuilt": 0
+  },
+  "rx_A24": {
+   "loosePieces": [],
+   "specksDelivered": 0,
+   "specksBuilt": 0
+  },
+  "rx_A25": {
+   "loosePieces": [],
+   "specksDelivered": 0,
+   "specksBuilt": 0
+  },
+  "rx_A49": {
+   "loosePieces": [],
+   "specksDelivered": 0,
+   "specksBuilt": 0
+  },
+  "rx_A52": {
+   "loosePieces": [],
+   "specksDelivered": 0,
+   "specksBuilt": 0
+  },
+  "rx_A53": {
+   "loosePieces": [],
+   "specksDelivered": 0,
+   "specksBuilt": 0
+  },
+  "rx_A55": {
+   "loosePieces": [],
+   "specksDelivered": 0,
+   "specksBuilt": 0
+  },
+  "rx_A58": {
+   "loosePieces": [],
+   "specksDelivered": 0,
+   "specksBuilt": 0
+  },
+  "rx_K1": {
+   "loosePieces": [],
+   "specksDelivered": 1,
+   "specksBuilt": 2
+  },
+  "rx_K1_B36": {
+   "loosePieces": [],
+   "specksDelivered": 1,
+   "specksBuilt": 2
+  },
+  "rx_B36": {
+   "loosePieces": [],
+   "specksDelivered": 1,
+   "specksBuilt": 2
+  },
+  "rx_B36_B39": {
+   "loosePieces": [],
+   "specksDelivered": 1,
+   "specksBuilt": 2
+  },
+  "rx_B39": {
+   "loosePieces": [],
+   "specksDelivered": 1,
+   "specksBuilt": 2
+  },
+  "rx_B41": {
+   "loosePieces": [],
+   "specksDelivered": 1,
+   "specksBuilt": 2
+  },
+  "rx_K2": {
+   "loosePieces": [],
+   "specksDelivered": 1,
+   "specksBuilt": 2
+  },
+  "rx_wink_half": {
+   "loosePieces": [],
+   "specksDelivered": 1,
+   "specksBuilt": 2
+  },
+  "rx_wink": {
+   "loosePieces": [],
+   "specksDelivered": 1,
+   "specksBuilt": 2
+  }
+ }
+}

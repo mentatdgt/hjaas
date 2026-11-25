@@ -1,0 +1,119 @@
+{
+ "webkit, iPhone 14 profile": {
+  "before": {
+   "atRestMB": {
+    "build.frames": 47.27,
+    "build.canvases": 2.36,
+    "build.room": 6.29,
+    "build.edge": 2.6
+   },
+   "atRestBuildMB": 58.52,
+   "mostMB": {
+    "build.frames": 47.27,
+    "build.canvases": 4.73,
+    "build.room": 6.29,
+    "build.edge": 2.6,
+    "buildTotal": 60.88,
+    "page": 67.28
+   },
+   "errors": []
+  },
+  "now": {
+   "atRestMB": {
+    "build.frames": 48.9,
+    "build.canvases": 2.36,
+    "build.room": 6.29,
+    "build.edge": 2.6
+   },
+   "atRestBuildMB": 60.15,
+   "mostMB": {
+    "build.frames": 48.9,
+    "build.canvases": 4.73,
+    "build.room": 6.29,
+    "build.edge": 2.6,
+    "buildTotal": 62.52,
+    "page": 68.91
+   },
+   "errors": []
+  },
+  "buildAddsAtRestMB": 1.63
+ },
+ "chrome, phone 3x": {
+  "before": {
+   "atRestMB": {
+    "build.frames": 47.27,
+    "build.canvases": 2.36,
+    "build.room": 6.29,
+    "build.edge": 2.6
+   },
+   "atRestBuildMB": 58.52,
+   "mostMB": {
+    "build.frames": 47.27,
+    "build.canvases": 4.73,
+    "build.room": 6.29,
+    "build.edge": 2.6,
+    "buildTotal": 60.88,
+    "page": 67.28
+   },
+   "errors": []
+  },
+  "now": {
+   "atRestMB": {
+    "build.frames": 48.9,
+    "build.canvases": 2.36,
+    "build.room": 6.29,
+    "build.edge": 2.6
+   },
+   "atRestBuildMB": 60.15,
+   "mostMB": {
+    "build.frames": 48.9,
+    "build.canvases": 4.73,
+    "build.room": 6.29,
+    "build.edge": 2.6,
+    "buildTotal": 62.52,
+    "page": 68.91
+   },
+   "errors": []
+  },
+  "buildAddsAtRestMB": 1.63
+ },
+ "chrome, desktop 2x": {
+  "before": {
+   "atRestMB": {
+    "build.frames": 83.98,
+    "build.canvases": 1.84,
+    "build.room": 6.29,
+    "build.edge": 2.6
+   },
+   "atRestBuildMB": 94.71,
+   "mostMB": {
+    "build.frames": 83.98,
+    "build.canvases": 3.67,
+    "build.room": 6.29,
+    "build.edge": 2.6,
+    "buildTotal": 96.55,
+    "page": 103.09
+   },
+   "errors": []
+  },
+  "now": {
+   "atRestMB": {
+    "build.frames": 86.72,
+    "build.canvases": 1.84,
+    "build.room": 6.29,
+    "build.edge": 2.6
+   },
+   "atRestBuildMB": 97.45,
+   "mostMB": {
+    "build.frames": 86.72,
+    "build.canvases": 3.67,
+    "build.room": 6.29,
+    "build.edge": 2.6,
+    "buildTotal": 99.28,
+    "page": 105.83
+   },
+   "errors": []
+  },
+  "buildAddsAtRestMB": 2.74
+ }
+}

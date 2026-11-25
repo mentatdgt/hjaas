@@ -21,6 +21,8 @@ vi.mock('./character', () => ({
     has(name: string) { return this.frames.has(name); }
     add(name: string, frame: unknown) { this.frames.set(name, frame); }
     drop(name: string) { this.frames.delete(name); }
+    addPatch(name: string, patch: { frame: unknown }) { this.frames.set(name, patch.frame); }
+    dropPatch(name: string) { this.frames.delete(name); }
     resize() {}
     sleep() {}
     show() {}

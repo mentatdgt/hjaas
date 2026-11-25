@@ -99,7 +99,8 @@ when someone opens its address directly.
 
 **A character** comes in one of three forms:
 
-- **Whole frames** (scene 1): every pose is one image. The idle routine is code (scene 1's hammer rhythm,
+- **Whole frames** (scene 1): every pose is one image. (An in-between that is another drawing but for an arm is cut to
+  the part that differs and drawn over that drawing, to save memory: `PATCHES` in `scripts/build-assets.mjs` lists them.) The idle routine is code (scene 1's hammer rhythm,
   ported from `tools/preview_timing.py`) or a loop manifest (format at the top of `src/engine/routine.ts`),
   and the reaction is a `reaction.json`.
 - **Stills and clips** (scene 2), as Wren's pipeline delivers them in `frames/NNN-…/site/`: `frames.json`

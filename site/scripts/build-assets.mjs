@@ -155,9 +155,13 @@ const patchFrame = { ...castFrame, quality: 99 };
 // A patch's rim of unchanged picture is at least PATCH_RIM px, twice what character.ts leaves undrawn; and the patch
 // starts and ends on a multiple of it, so that the halvings a browser shrinks by fall where the whole still's do.
 const PATCH_RIM = 8;
-/** The rectangle in which two drawings of one size differ, with its rim. (Where both are clear there is no difference.) */
-const differing = async (file, base) => {
-  const [a, b] = await Promise.all([file, base].map((name) => sharp(name).ensureAlpha().raw().toBuffer({ resolveWithObject: true })));
+/**
+ * The rectangle in which two drawings of one size differ, with its rim. (Where both are clear there is no difference.)
+ * `shrink`: the drawings as resized to this size, on whose px the rectangle then is.
+ */
+const differing = async (file, base, shrink) => {
+  const picture = (name) => (shrink ? sharp(name).resize(shrink.width, shrink.height, { kernel: 'lanczos3' }) : sharp(name));
+  const [a, b] = await Promise.all([file, base].map((name) => picture(name).ensureAlpha().raw().toBuffer({ resolveWithObject: true })));
   const { width, height } = a.info;
   if (width !== b.info.width || height !== b.info.height) throw new Error(`${file} is not the size of ${base}.`);
   let [left, top, right, bottom] = [width, height, 0, 0];
@@ -356,9 +360,21 @@ for (const [map, dir, moving] of [['build-lines.png', 'scene1'], ['grow-lines.pn
 }
 
 const loop = 'frames/016-upscale/approved';
-const loopFrames = ['frame_01', 'frame_02', 'frame_03', 'frame_04', 'blink_half', 'blink_closed'];
+const reaction = 'frames/005-reaction-motion/approved';
+// In-betweens that are another drawing but for an arm: only the part that differs is shipped, cut out and drawn over
+// that other drawing (character.ts), or the decoded frames of five more whole drawings would not fit a phone's memory.
+// What each is in the page (its pose), and the one it is drawn over. src/scenes/build-patches.json says where they go.
+const PATCHES = [
+  { pose: 'frame_01_02', base: 'frame_01', from: `${loop}/frame_01_02.png`, over: `${loop}/frame_01.png` },
+  { pose: 'frame_02_03a', base: 'frame_02', from: `${loop}/frame_02_03a.png`, over: `${loop}/frame_02.png` },
+  { pose: 'frame_02_03b', base: 'frame_02', from: `${loop}/frame_02_03b.png`, over: `${loop}/frame_02.png` },
+  { pose: 'reaction/rx_K1_B36.png', base: 'reaction/rx_K1.png', from: `${reaction}/rx_K1_B36.png`, over: `${reaction}/rx_K1.png` },
+  { pose: 'reaction/rx_B36_B39.png', base: 'reaction/rx_B36.png', from: `${reaction}/rx_B36_B39.png`, over: `${reaction}/rx_B36.png` },
+];
+const cutOut = (file) => PATCHES.some((patch) => patch.from === file);
+const loopFrames = ['frame_01', 'frame_01_02', 'frame_02', 'frame_02_03a', 'frame_02_03b', 'frame_03', 'frame_04', 'blink_half', 'blink_closed'];
 for (const f of loopFrames) {
-  add(`${loop}/${f}.png`, `rachel/${f}.webp`, frame);
+  if (!cutOut(`${loop}/${f}.png`)) add(`${loop}/${f}.png`, `rachel/${f}.webp`, frame);
 }
 
 // A reaction frame that is byte-identical to one of the upscaled frames (rx_frame_01 = frame_01, rx_K1 = K1, ...)
@@ -368,7 +384,6 @@ const upscaled = new Map();
 for (const f of await readdir(join(repo, loop))) {
   if (f.endsWith('.png')) upscaled.set(await digest(`${loop}/${f}`), f.replace('.png', ''));
 }
-const reaction = 'frames/005-reaction-motion/approved';
 const shared = {};
 for (const f of (await readdir(join(repo, reaction))).sort()) {
   if (!f.startsWith('rx_') || !f.endsWith('.png')) continue;
@@ -377,7 +392,7 @@ for (const f of (await readdir(join(repo, reaction))).sort()) {
     shared[f] = `rachel/${same}.webp`;
     if (!loopFrames.includes(same) && !jobs.some((job) => job.to === join(out, shared[f]))) add(`${loop}/${same}.png`, shared[f], frame);
     await rm(join(out, 'rachel/reaction', f.replace('.png', '.webp')), { force: true });
-  } else {
+  } else if (!cutOut(`${reaction}/${f}`)) {
     add(`${reaction}/${f}`, `rachel/reaction/${f.replace('.png', '.webp')}`, frame);
   }
 }
@@ -401,6 +416,24 @@ for (const job of jobs.filter((j) => j.from && j.to.startsWith(join(out, 'rachel
     to: join(small1, job.to.slice(join(out, 'rachel').length + 1)),
     opts: job.opts,
   });
+}
+
+const buildPatches = { note: 'Made by npm run assets: the drawings of Build that are kept as patches, and where on their base they go. Do not edit.' };
+for (const [dir, scale] of [['rachel/', 1], ['rachel-1.5x/', SMALL]]) {
+  buildPatches[dir] = {};
+  for (const { pose, base, from, over } of PATCHES) {
+    const size = await sharp(join(repo, from)).metadata();
+    // (Of the smaller set, cut from the whole drawing as it is shrunk, so that it lines up with its base to the pixel.)
+    const shrink = scale === 1 ? undefined : { width: Math.round(size.width * scale), height: Math.round(size.height * scale) };
+    const area = await differing(join(repo, from), join(repo, over), shrink);
+    buildPatches[dir][pose] = { base, x: area.left, y: area.top };
+    addMade(async () => {
+      const whole = sharp(join(repo, from)).ensureAlpha();
+      if (!shrink) return whole.extract(area);
+      const { data, info } = await whole.resize(shrink.width, shrink.height, { kernel: 'lanczos3' }).raw().toBuffer({ resolveWithObject: true });
+      return sharp(data, { raw: { width: info.width, height: info.height, channels: info.channels } }).extract(area);
+    }, `scene1/${dir}${pose.replace(/\.png$/, '')}.webp`, patchFrame);
+  }
 }
 
 // Several at a time: encoding is slow (a few seconds for one of Rachel's frames) and each uses one core.
@@ -436,6 +469,8 @@ for (const { pack, forPage, where, delivered } of casts) {
 await copyFile(join(repo, lab, 'frames.json'), join(assets, 'scene2/rachel/frames.json'));
 await copyFile(join(repo, lab, 'routine.json'), join(assets, 'scene2/rachel/routine.json'));
 await writeFile(join(assets, smallDir, 'frames.json'), `${JSON.stringify(smallFrames, null, 1)}\n`);
+
+await writeFile(join(site, 'src/scenes/build-patches.json'), `${JSON.stringify(buildPatches, null, 1)}\n`);
 
 // The reaction manifest is used as delivered; the player swaps .png for .webp itself.
 await copyFile(join(repo, reaction, 'reaction.json'), join(out, 'rachel/reaction/reaction.json'));

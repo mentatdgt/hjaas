@@ -72,6 +72,11 @@ export interface FrameCast {
    * than `below` CSS px wide: phones, where memory is short.
    */
   small?: { dir: string; below: number };
+  /**
+   * Poses whose file is only the part of the drawing that differs from another, whole pose's (`base`), and where in it
+   * that part goes, in the drawing's own px: for each folder (`dir`, and the lighter one's), by pose. (Memory.)
+   */
+  patches?: Readonly<Record<string, Readonly<Record<string, { base: string; x: number; y: number }>>>>;
 }
 
 /**

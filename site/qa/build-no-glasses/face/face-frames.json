@@ -1,0 +1,34 @@
+{
+ "build desktop": {
+  "errors": [],
+  "face": {
+   "over5pcAt": 1.731,
+   "over95pcAt": 1.764,
+   "partlyMs": 33,
+   "framesPartly": "1731 ms: 36%, 1748 ms: 69%"
+  },
+  "head": {
+   "over5pcAt": 1.714,
+   "over95pcAt": 1.764,
+   "partlyMs": 50,
+   "framesPartly": "1714 ms: 33%, 1731 ms: 73%, 1748 ms: 91%"
+  },
+  "longestGapBetweenRecordedFramesMs": 17
+ },
+ "build phone": {
+  "errors": [],
+  "face": {
+   "over5pcAt": 1.733,
+   "over95pcAt": 1.766,
+   "partlyMs": 33,
+   "framesPartly": "1733 ms: 40%, 1750 ms: 73%"
+  },
+  "head": {
+   "over5pcAt": 1.7,
+   "over95pcAt": 1.766,
+   "partlyMs": 67,
+   "framesPartly": "1700 ms: 6%, 1716 ms: 38%, 1733 ms: 78%, 1750 ms: 93%"
+  },
+  "longestGapBetweenRecordedFramesMs": 50
+ }
+}

@@ -113,7 +113,7 @@ const webp = (file: string): string => file.replace(/\.png$/i, '.webp');
  */
 type Decode<T> = () => Promise<T>;
 
-/** A character whose every pose is one whole image (scene 1). */
+/** A character whose every pose is one image (scene 1): the whole drawing, or the part of it that differs from another. */
 async function frameCast(config: SceneConfig, cast: FrameCast, host: SceneHost): Promise<Decode<Cast>> {
   let names = [...cast.frames];
   let routine: () => Schedule;
@@ -136,12 +136,18 @@ async function frameCast(config: SceneConfig, cast: FrameCast, host: SceneHost):
   const dir = await (light ? fetchAll(light).catch(() => fetchAll(cast.dir)) : fetchAll(cast.dir));
   // Every pose's file, routine first: the order they are brought back in after a sleep.
   const files = new Map(names.map((name) => [name, asset(`${config.assets}${dir}${name}.webp`)]));
+  const cut = cast.patches?.[dir] ?? {};
   return async () => {
     const decoded = new FrameStore();
     let character: Character;
+    const put = (pose: string, frame: Frame): void => {
+      if (pose in cut) character.addPatch(pose, { ...cut[pose], frame, still: true });
+      else character.add(pose, frame);
+    };
     try {
       const poses = await Promise.all(names.map(async (name) => [name, await decoded.load(files.get(name)!)] as const));
-      character = new Character(new Map(poses), cast);
+      character = new Character(new Map(poses.filter(([name]) => !(name in cut))), cast);
+      for (const [name, frame] of poses) if (name in cut) put(name, frame);
     } catch (error) {
       decoded.releaseExcept(new Set());
       throw error;
@@ -153,7 +159,7 @@ async function frameCast(config: SceneConfig, cast: FrameCast, host: SceneHost):
     const loadPose = async (pose: string, url: string, at: number): Promise<void> => {
       files.set(pose, url);
       const frame = await decoded.load(url);
-      if (at === generation && awake) character.add(pose, frame);
+      if (at === generation && awake) put(pose, frame);
     };
     return {
       character,
@@ -184,7 +190,11 @@ async function frameCast(config: SceneConfig, cast: FrameCast, host: SceneHost):
         loading = null;
         const keep = new Set(keepShown ? character.showing : []);
         const kept = new Set([...keep].map((name) => files.get(name)).filter((url): url is string => url !== undefined));
-        for (const name of files.keys()) if (!keep.has(name)) character.drop(name);
+        for (const name of files.keys()) {
+          if (keep.has(name)) continue;
+          if (name in cut) character.dropPatch(name, true);
+          else character.drop(name);
+        }
         decoded.releaseExcept(kept);
         character.sleep();
       },

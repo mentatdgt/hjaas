@@ -1,7 +1,8 @@
 // Scene 1, "Build": Rachel hammering a box together in a flat under renovation.
 // Everything here is data for the engine in src/engine/; nothing in this file draws or moves anything.
 import type { SceneConfig, Spot, StrokePlan } from '../engine/types';
-import { CONTACT_POSE, hammerSchedule } from './build-rhythm';
+import PATCHES from './build-patches.json';
+import { CONTACT_POSE, HAMMER_FRAMES, hammerSchedule } from './build-rhythm';
 
 // Left to right, which is also the Tab order.
 // Sizes follow depth: about 18 px at the back wall, about 42 px at the front edge of the floor.
@@ -61,7 +62,7 @@ export const build: SceneConfig = {
   character: {
     kind: 'frames',
     dir: 'rachel/',
-    frames: ['frame_01', 'frame_02', 'frame_03', 'frame_04', 'blink_half', 'blink_closed'],
+    frames: HAMMER_FRAMES,
     rest: CONTACT_POSE,
     // Where Rachel sits on the plate (HANDOVER §2), ported from composite() in tools/preview_timing.py:
     // the figure is 455 plate px tall, her frame's left edge is at x = 600 and her feet line is at y = 868.
@@ -70,6 +71,8 @@ export const build: SceneConfig = {
     reaction: 'reaction/',
     // Under 900 px she is drawn from the 1.5x set: a little over half the memory.
     small: { dir: 'rachel-1.5x/', below: 900 },
+    // The in-betweens are kept as the part of them that differs from the drawing they are nearest to.
+    patches: { 'rachel/': PATCHES['rachel/'], 'rachel-1.5x/': PATCHES['rachel-1.5x/'] },
   },
   spots: SPOTS,
   // Of the edges this room could have, the one that keeps the colour solid under every pixel Rachel ever

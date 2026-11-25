@@ -1,0 +1,57 @@
+{
+ "note": "Made by npm run assets: the drawings of Build that are kept as patches, and where on their base they go. Do not edit.",
+ "rachel/": {
+  "frame_01_02": {
+   "base": "frame_01",
+   "x": 184,
+   "y": 448
+  },
+  "frame_02_03a": {
+   "base": "frame_02",
+   "x": 176,
+   "y": 264
+  },
+  "frame_02_03b": {
+   "base": "frame_02",
+   "x": 160,
+   "y": 128
+  },
+  "reaction/rx_K1_B36.png": {
+   "base": "reaction/rx_K1.png",
+   "x": 352,
+   "y": 376
+  },
+  "reaction/rx_B36_B39.png": {
+   "base": "reaction/rx_B36.png",
+   "x": 352,
+   "y": 336
+  }
+ },
+ "rachel-1.5x/": {
+  "frame_01_02": {
+   "base": "frame_01",
+   "x": 136,
+   "y": 336
+  },
+  "frame_02_03a": {
+   "base": "frame_02",
+   "x": 128,
+   "y": 192
+  },
+  "frame_02_03b": {
+   "base": "frame_02",
+   "x": 120,
+   "y": 88
+  },
+  "reaction/rx_K1_B36.png": {
+   "base": "reaction/rx_K1.png",
+   "x": 264,
+   "y": 280
+  },
+  "reaction/rx_B36_B39.png": {
+   "base": "reaction/rx_B36.png",
+   "x": 264,
+   "y": 248
+  }
+ }
+}
