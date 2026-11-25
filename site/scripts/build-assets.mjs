@@ -362,17 +362,18 @@ for (const [map, dir, moving] of [['build-lines.png', 'scene1'], ['grow-lines.pn
 const loop = 'frames/016-upscale/approved';
 const reaction = 'frames/005-reaction-motion/approved';
 // In-betweens that are another drawing but for an arm: only the part that differs is shipped, cut out and drawn over
-// that other drawing (character.ts), or the decoded frames of five more whole drawings would not fit a phone's memory.
+// that other drawing (character.ts), or the decoded frames of six more whole drawings would not fit a phone's memory.
 // What each is in the page (its pose), and the one it is drawn over. src/scenes/build-patches.json says where they go.
 const PATCHES = [
   { pose: 'frame_01_02', base: 'frame_01', from: `${loop}/frame_01_02.png`, over: `${loop}/frame_01.png` },
   { pose: 'frame_02_03a', base: 'frame_02', from: `${loop}/frame_02_03a.png`, over: `${loop}/frame_02.png` },
+  { pose: 'frame_02_03ab', base: 'frame_02', from: `${loop}/frame_02_03ab.png`, over: `${loop}/frame_02.png` },
   { pose: 'frame_02_03b', base: 'frame_02', from: `${loop}/frame_02_03b.png`, over: `${loop}/frame_02.png` },
   { pose: 'reaction/rx_K1_B36.png', base: 'reaction/rx_K1.png', from: `${reaction}/rx_K1_B36.png`, over: `${reaction}/rx_K1.png` },
   { pose: 'reaction/rx_B36_B39.png', base: 'reaction/rx_B36.png', from: `${reaction}/rx_B36_B39.png`, over: `${reaction}/rx_B36.png` },
 ];
 const cutOut = (file) => PATCHES.some((patch) => patch.from === file);
-const loopFrames = ['frame_01', 'frame_01_02', 'frame_02', 'frame_02_03a', 'frame_02_03b', 'frame_03', 'frame_04', 'blink_half', 'blink_closed'];
+const loopFrames = ['frame_01', 'frame_01_02', 'frame_02', 'frame_02_03a', 'frame_02_03ab', 'frame_02_03b', 'frame_03', 'frame_04', 'blink_half', 'blink_closed'];
 for (const f of loopFrames) {
   if (!cutOut(`${loop}/${f}.png`)) add(`${loop}/${f}.png`, `rachel/${f}.webp`, frame);
 }

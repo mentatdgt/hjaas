@@ -1,0 +1,1248 @@
+{
+ "chrome, phone 390×844, 3x": {
+  "rows": [
+   {
+    "pose": "frame_01_02",
+    "current": "frame_01_02",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 13,
+    "unmovedMean": 0.243,
+    "movedPx": 29609,
+    "movedMeanFromDelivered": 3.94,
+    "movedOver48": 6,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03a",
+    "current": "frame_02_03a",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.335,
+    "movedPx": 40304,
+    "movedMeanFromDelivered": 3.46,
+    "movedOver48": 24,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03ab",
+    "current": "frame_02_03ab",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 12,
+    "unmovedMean": 0.553,
+    "movedPx": 47744,
+    "movedMeanFromDelivered": 3.74,
+    "movedOver48": 34,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03b",
+    "current": "frame_02_03b",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 13,
+    "unmovedMean": 0.61,
+    "movedPx": 55841,
+    "movedMeanFromDelivered": 3.91,
+    "movedOver48": 68,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_K1_B36.png",
+    "current": "reaction/rx_K1_B36.png",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 12,
+    "unmovedMean": 0.161,
+    "movedPx": 20673,
+    "movedMeanFromDelivered": 4.38,
+    "movedOver48": 10,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_B36_B39.png",
+    "current": "reaction/rx_B36_B39.png",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.071,
+    "movedPx": 21026,
+    "movedMeanFromDelivered": 2.94,
+    "movedOver48": 14,
+    "comingFromAnotherDrawingDiffers": 0
+   }
+  ],
+  "errors": []
+ },
+ "chrome, phone 360×740, 3x": {
+  "rows": [
+   {
+    "pose": "frame_01_02",
+    "current": "frame_01_02",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 13,
+    "unmovedMean": 0.243,
+    "movedPx": 29609,
+    "movedMeanFromDelivered": 3.94,
+    "movedOver48": 6,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03a",
+    "current": "frame_02_03a",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.335,
+    "movedPx": 40304,
+    "movedMeanFromDelivered": 3.46,
+    "movedOver48": 24,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03ab",
+    "current": "frame_02_03ab",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 12,
+    "unmovedMean": 0.553,
+    "movedPx": 47744,
+    "movedMeanFromDelivered": 3.74,
+    "movedOver48": 34,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03b",
+    "current": "frame_02_03b",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 13,
+    "unmovedMean": 0.61,
+    "movedPx": 55841,
+    "movedMeanFromDelivered": 3.91,
+    "movedOver48": 68,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_K1_B36.png",
+    "current": "reaction/rx_K1_B36.png",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 12,
+    "unmovedMean": 0.161,
+    "movedPx": 20673,
+    "movedMeanFromDelivered": 4.38,
+    "movedOver48": 10,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_B36_B39.png",
+    "current": "reaction/rx_B36_B39.png",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.071,
+    "movedPx": 21026,
+    "movedMeanFromDelivered": 2.94,
+    "movedOver48": 14,
+    "comingFromAnotherDrawingDiffers": 0
+   }
+  ],
+  "errors": []
+ },
+ "chrome, phone 412×915, 2.625x": {
+  "rows": [
+   {
+    "pose": "frame_01_02",
+    "current": "frame_01_02",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 13,
+    "unmovedMean": 0.243,
+    "movedPx": 29609,
+    "movedMeanFromDelivered": 3.94,
+    "movedOver48": 6,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03a",
+    "current": "frame_02_03a",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.335,
+    "movedPx": 40304,
+    "movedMeanFromDelivered": 3.46,
+    "movedOver48": 24,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03ab",
+    "current": "frame_02_03ab",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 12,
+    "unmovedMean": 0.553,
+    "movedPx": 47744,
+    "movedMeanFromDelivered": 3.74,
+    "movedOver48": 34,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03b",
+    "current": "frame_02_03b",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 13,
+    "unmovedMean": 0.61,
+    "movedPx": 55841,
+    "movedMeanFromDelivered": 3.91,
+    "movedOver48": 68,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_K1_B36.png",
+    "current": "reaction/rx_K1_B36.png",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 12,
+    "unmovedMean": 0.161,
+    "movedPx": 20673,
+    "movedMeanFromDelivered": 4.38,
+    "movedOver48": 10,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_B36_B39.png",
+    "current": "reaction/rx_B36_B39.png",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.071,
+    "movedPx": 21026,
+    "movedMeanFromDelivered": 2.94,
+    "movedOver48": 14,
+    "comingFromAnotherDrawingDiffers": 0
+   }
+  ],
+  "errors": []
+ },
+ "chrome, phone on its side 844×390, 3x": {
+  "rows": [
+   {
+    "pose": "frame_01_02",
+    "current": "frame_01_02",
+    "canvas": [
+     507,
+     405
+    ],
+    "unmovedMax": 15,
+    "unmovedMean": 0.216,
+    "movedPx": 10458,
+    "movedMeanFromDelivered": 4.57,
+    "movedOver48": 4,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03a",
+    "current": "frame_02_03a",
+    "canvas": [
+     507,
+     405
+    ],
+    "unmovedMax": 17,
+    "unmovedMean": 0.294,
+    "movedPx": 14259,
+    "movedMeanFromDelivered": 3.69,
+    "movedOver48": 4,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03ab",
+    "current": "frame_02_03ab",
+    "canvas": [
+     507,
+     405
+    ],
+    "unmovedMax": 17,
+    "unmovedMean": 0.485,
+    "movedPx": 16889,
+    "movedMeanFromDelivered": 4.17,
+    "movedOver48": 17,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03b",
+    "current": "frame_02_03b",
+    "canvas": [
+     507,
+     405
+    ],
+    "unmovedMax": 16,
+    "unmovedMean": 0.574,
+    "movedPx": 19940,
+    "movedMeanFromDelivered": 4.22,
+    "movedOver48": 38,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_K1_B36.png",
+    "current": "reaction/rx_K1_B36.png",
+    "canvas": [
+     507,
+     405
+    ],
+    "unmovedMax": 15,
+    "unmovedMean": 0.166,
+    "movedPx": 7353,
+    "movedMeanFromDelivered": 5.19,
+    "movedOver48": 9,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_B36_B39.png",
+    "current": "reaction/rx_B36_B39.png",
+    "canvas": [
+     507,
+     405
+    ],
+    "unmovedMax": 17,
+    "unmovedMean": 0.066,
+    "movedPx": 7429,
+    "movedMeanFromDelivered": 3.48,
+    "movedOver48": 4,
+    "comingFromAnotherDrawingDiffers": 0
+   }
+  ],
+  "errors": []
+ },
+ "chrome, desktop 1440×900, 1x": {
+  "rows": [
+   {
+    "pose": "frame_01_02",
+    "current": "frame_01_02",
+    "canvas": [
+     379,
+     303
+    ],
+    "unmovedMax": 7,
+    "unmovedMean": 0.123,
+    "movedPx": 5927,
+    "movedMeanFromDelivered": 2.58,
+    "movedOver48": 0,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03a",
+    "current": "frame_02_03a",
+    "canvas": [
+     379,
+     303
+    ],
+    "unmovedMax": 8,
+    "unmovedMean": 0.189,
+    "movedPx": 8102,
+    "movedMeanFromDelivered": 2.25,
+    "movedOver48": 1,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03ab",
+    "current": "frame_02_03ab",
+    "canvas": [
+     379,
+     303
+    ],
+    "unmovedMax": 7,
+    "unmovedMean": 0.329,
+    "movedPx": 9582,
+    "movedMeanFromDelivered": 2.24,
+    "movedOver48": 0,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03b",
+    "current": "frame_02_03b",
+    "canvas": [
+     379,
+     303
+    ],
+    "unmovedMax": 8,
+    "unmovedMean": 0.364,
+    "movedPx": 11375,
+    "movedMeanFromDelivered": 2.23,
+    "movedOver48": 0,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_K1_B36.png",
+    "current": "reaction/rx_K1_B36.png",
+    "canvas": [
+     379,
+     303
+    ],
+    "unmovedMax": 6,
+    "unmovedMean": 0.07,
+    "movedPx": 4183,
+    "movedMeanFromDelivered": 3.2,
+    "movedOver48": 1,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_B36_B39.png",
+    "current": "reaction/rx_B36_B39.png",
+    "canvas": [
+     379,
+     303
+    ],
+    "unmovedMax": 6,
+    "unmovedMean": 0.04,
+    "movedPx": 4210,
+    "movedMeanFromDelivered": 2.36,
+    "movedOver48": 1,
+    "comingFromAnotherDrawingDiffers": 0
+   }
+  ],
+  "errors": []
+ },
+ "chrome, desktop 1440×900, 2x": {
+  "rows": [
+   {
+    "pose": "frame_01_02",
+    "current": "frame_01_02",
+    "canvas": [
+     758,
+     606
+    ],
+    "unmovedMax": 9,
+    "unmovedMean": 0.159,
+    "movedPx": 23085,
+    "movedMeanFromDelivered": 2.72,
+    "movedOver48": 50,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03a",
+    "current": "frame_02_03a",
+    "canvas": [
+     758,
+     606
+    ],
+    "unmovedMax": 9,
+    "unmovedMean": 0.221,
+    "movedPx": 31477,
+    "movedMeanFromDelivered": 2.49,
+    "movedOver48": 66,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03ab",
+    "current": "frame_02_03ab",
+    "canvas": [
+     758,
+     606
+    ],
+    "unmovedMax": 9,
+    "unmovedMean": 0.401,
+    "movedPx": 37211,
+    "movedMeanFromDelivered": 2.35,
+    "movedOver48": 22,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03b",
+    "current": "frame_02_03b",
+    "canvas": [
+     758,
+     606
+    ],
+    "unmovedMax": 9,
+    "unmovedMean": 0.45,
+    "movedPx": 43614,
+    "movedMeanFromDelivered": 2.34,
+    "movedOver48": 39,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_K1_B36.png",
+    "current": "reaction/rx_K1_B36.png",
+    "canvas": [
+     758,
+     606
+    ],
+    "unmovedMax": 7,
+    "unmovedMean": 0.087,
+    "movedPx": 16100,
+    "movedMeanFromDelivered": 3.47,
+    "movedOver48": 88,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_B36_B39.png",
+    "current": "reaction/rx_B36_B39.png",
+    "canvas": [
+     758,
+     606
+    ],
+    "unmovedMax": 9,
+    "unmovedMean": 0.052,
+    "movedPx": 16420,
+    "movedMeanFromDelivered": 2.49,
+    "movedOver48": 77,
+    "comingFromAnotherDrawingDiffers": 0
+   }
+  ],
+  "errors": []
+ },
+ "chrome, desktop 2560×1440, 2x": {
+  "rows": [
+   {
+    "pose": "frame_01_02",
+    "current": "frame_01_02",
+    "canvas": [
+     1146,
+     916
+    ],
+    "unmovedMax": 12,
+    "unmovedMean": 0.202,
+    "movedPx": 52236,
+    "movedMeanFromDelivered": 2.72,
+    "movedOver48": 160,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03a",
+    "current": "frame_02_03a",
+    "canvas": [
+     1146,
+     916
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.281,
+    "movedPx": 71129,
+    "movedMeanFromDelivered": 2.63,
+    "movedOver48": 263,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03ab",
+    "current": "frame_02_03ab",
+    "canvas": [
+     1146,
+     916
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.504,
+    "movedPx": 84203,
+    "movedMeanFromDelivered": 2.31,
+    "movedOver48": 91,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03b",
+    "current": "frame_02_03b",
+    "canvas": [
+     1146,
+     916
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.561,
+    "movedPx": 98285,
+    "movedMeanFromDelivered": 2.33,
+    "movedOver48": 161,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_K1_B36.png",
+    "current": "reaction/rx_K1_B36.png",
+    "canvas": [
+     1146,
+     916
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.115,
+    "movedPx": 36324,
+    "movedMeanFromDelivered": 3.61,
+    "movedOver48": 304,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_B36_B39.png",
+    "current": "reaction/rx_B36_B39.png",
+    "canvas": [
+     1146,
+     916
+    ],
+    "unmovedMax": 14,
+    "unmovedMean": 0.066,
+    "movedPx": 37132,
+    "movedMeanFromDelivered": 2.54,
+    "movedOver48": 240,
+    "comingFromAnotherDrawingDiffers": 0
+   }
+  ],
+  "errors": []
+ },
+ "webkit, phone 390×844, 3x": {
+  "rows": [
+   {
+    "pose": "frame_01_02",
+    "current": "frame_01_02",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 13,
+    "unmovedMean": 0.243,
+    "movedPx": 29609,
+    "movedMeanFromDelivered": 4.19,
+    "movedOver48": 12,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03a",
+    "current": "frame_02_03a",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.335,
+    "movedPx": 40304,
+    "movedMeanFromDelivered": 3.42,
+    "movedOver48": 24,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03ab",
+    "current": "frame_02_03ab",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 12,
+    "unmovedMean": 0.554,
+    "movedPx": 47744,
+    "movedMeanFromDelivered": 3.85,
+    "movedOver48": 60,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03b",
+    "current": "frame_02_03b",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 13,
+    "unmovedMean": 0.61,
+    "movedPx": 55841,
+    "movedMeanFromDelivered": 4.27,
+    "movedOver48": 241,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_K1_B36.png",
+    "current": "reaction/rx_K1_B36.png",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 12,
+    "unmovedMean": 0.161,
+    "movedPx": 20673,
+    "movedMeanFromDelivered": 4.77,
+    "movedOver48": 28,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_B36_B39.png",
+    "current": "reaction/rx_B36_B39.png",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.071,
+    "movedPx": 21026,
+    "movedMeanFromDelivered": 2.81,
+    "movedOver48": 15,
+    "comingFromAnotherDrawingDiffers": 0
+   }
+  ],
+  "errors": []
+ },
+ "webkit, phone 360×740, 3x": {
+  "rows": [
+   {
+    "pose": "frame_01_02",
+    "current": "frame_01_02",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 13,
+    "unmovedMean": 0.243,
+    "movedPx": 29609,
+    "movedMeanFromDelivered": 4.19,
+    "movedOver48": 12,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03a",
+    "current": "frame_02_03a",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.335,
+    "movedPx": 40304,
+    "movedMeanFromDelivered": 3.42,
+    "movedOver48": 24,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03ab",
+    "current": "frame_02_03ab",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 12,
+    "unmovedMean": 0.554,
+    "movedPx": 47744,
+    "movedMeanFromDelivered": 3.85,
+    "movedOver48": 60,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03b",
+    "current": "frame_02_03b",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 13,
+    "unmovedMean": 0.61,
+    "movedPx": 55841,
+    "movedMeanFromDelivered": 4.27,
+    "movedOver48": 241,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_K1_B36.png",
+    "current": "reaction/rx_K1_B36.png",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 12,
+    "unmovedMean": 0.161,
+    "movedPx": 20673,
+    "movedMeanFromDelivered": 4.77,
+    "movedOver48": 28,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_B36_B39.png",
+    "current": "reaction/rx_B36_B39.png",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.071,
+    "movedPx": 21026,
+    "movedMeanFromDelivered": 2.81,
+    "movedOver48": 15,
+    "comingFromAnotherDrawingDiffers": 0
+   }
+  ],
+  "errors": []
+ },
+ "webkit, phone 412×915, 2.625x": {
+  "rows": [
+   {
+    "pose": "frame_01_02",
+    "current": "frame_01_02",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 13,
+    "unmovedMean": 0.243,
+    "movedPx": 29609,
+    "movedMeanFromDelivered": 4.19,
+    "movedOver48": 12,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03a",
+    "current": "frame_02_03a",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.335,
+    "movedPx": 40304,
+    "movedMeanFromDelivered": 3.42,
+    "movedOver48": 24,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03ab",
+    "current": "frame_02_03ab",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 12,
+    "unmovedMean": 0.554,
+    "movedPx": 47744,
+    "movedMeanFromDelivered": 3.85,
+    "movedOver48": 60,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03b",
+    "current": "frame_02_03b",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 13,
+    "unmovedMean": 0.61,
+    "movedPx": 55841,
+    "movedMeanFromDelivered": 4.27,
+    "movedOver48": 241,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_K1_B36.png",
+    "current": "reaction/rx_K1_B36.png",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 12,
+    "unmovedMean": 0.161,
+    "movedPx": 20673,
+    "movedMeanFromDelivered": 4.77,
+    "movedOver48": 28,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_B36_B39.png",
+    "current": "reaction/rx_B36_B39.png",
+    "canvas": [
+     860,
+     687
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.071,
+    "movedPx": 21026,
+    "movedMeanFromDelivered": 2.81,
+    "movedOver48": 15,
+    "comingFromAnotherDrawingDiffers": 0
+   }
+  ],
+  "errors": []
+ },
+ "webkit, phone on its side 844×390, 3x": {
+  "rows": [
+   {
+    "pose": "frame_01_02",
+    "current": "frame_01_02",
+    "canvas": [
+     507,
+     405
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.198,
+    "movedPx": 10458,
+    "movedMeanFromDelivered": 5.47,
+    "movedOver48": 53,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03a",
+    "current": "frame_02_03a",
+    "canvas": [
+     507,
+     405
+    ],
+    "unmovedMax": 9,
+    "unmovedMean": 0.274,
+    "movedPx": 14259,
+    "movedMeanFromDelivered": 4.32,
+    "movedOver48": 34,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03ab",
+    "current": "frame_02_03ab",
+    "canvas": [
+     507,
+     405
+    ],
+    "unmovedMax": 9,
+    "unmovedMean": 0.458,
+    "movedPx": 16889,
+    "movedMeanFromDelivered": 5.03,
+    "movedOver48": 103,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03b",
+    "current": "frame_02_03b",
+    "canvas": [
+     507,
+     405
+    ],
+    "unmovedMax": 10,
+    "unmovedMean": 0.504,
+    "movedPx": 19940,
+    "movedMeanFromDelivered": 6.43,
+    "movedOver48": 389,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_K1_B36.png",
+    "current": "reaction/rx_K1_B36.png",
+    "canvas": [
+     507,
+     405
+    ],
+    "unmovedMax": 9,
+    "unmovedMean": 0.128,
+    "movedPx": 7353,
+    "movedMeanFromDelivered": 6.22,
+    "movedOver48": 31,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_B36_B39.png",
+    "current": "reaction/rx_B36_B39.png",
+    "canvas": [
+     507,
+     405
+    ],
+    "unmovedMax": 10,
+    "unmovedMean": 0.056,
+    "movedPx": 7429,
+    "movedMeanFromDelivered": 3.2,
+    "movedOver48": 4,
+    "comingFromAnotherDrawingDiffers": 0
+   }
+  ],
+  "errors": []
+ },
+ "webkit, desktop 1440×900, 1x": {
+  "rows": [
+   {
+    "pose": "frame_01_02",
+    "current": "frame_01_02",
+    "canvas": [
+     379,
+     303
+    ],
+    "unmovedMax": 8,
+    "unmovedMean": 0.157,
+    "movedPx": 5927,
+    "movedMeanFromDelivered": 8.9,
+    "movedOver48": 231,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03a",
+    "current": "frame_02_03a",
+    "canvas": [
+     379,
+     303
+    ],
+    "unmovedMax": 8,
+    "unmovedMean": 0.228,
+    "movedPx": 8102,
+    "movedMeanFromDelivered": 6.96,
+    "movedOver48": 219,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03ab",
+    "current": "frame_02_03ab",
+    "canvas": [
+     379,
+     303
+    ],
+    "unmovedMax": 10,
+    "unmovedMean": 0.416,
+    "movedPx": 9582,
+    "movedMeanFromDelivered": 7.74,
+    "movedOver48": 336,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03b",
+    "current": "frame_02_03b",
+    "canvas": [
+     379,
+     303
+    ],
+    "unmovedMax": 9,
+    "unmovedMean": 0.461,
+    "movedPx": 11375,
+    "movedMeanFromDelivered": 8.77,
+    "movedOver48": 546,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_K1_B36.png",
+    "current": "reaction/rx_K1_B36.png",
+    "canvas": [
+     379,
+     303
+    ],
+    "unmovedMax": 8,
+    "unmovedMean": 0.091,
+    "movedPx": 4183,
+    "movedMeanFromDelivered": 10.2,
+    "movedOver48": 180,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_B36_B39.png",
+    "current": "reaction/rx_B36_B39.png",
+    "canvas": [
+     379,
+     303
+    ],
+    "unmovedMax": 8,
+    "unmovedMean": 0.053,
+    "movedPx": 4210,
+    "movedMeanFromDelivered": 6.49,
+    "movedOver48": 112,
+    "comingFromAnotherDrawingDiffers": 0
+   }
+  ],
+  "errors": []
+ },
+ "webkit, desktop 1440×900, 2x": {
+  "rows": [
+   {
+    "pose": "frame_01_02",
+    "current": "frame_01_02",
+    "canvas": [
+     758,
+     606
+    ],
+    "unmovedMax": 9,
+    "unmovedMean": 0.167,
+    "movedPx": 23085,
+    "movedMeanFromDelivered": 3.44,
+    "movedOver48": 77,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03a",
+    "current": "frame_02_03a",
+    "canvas": [
+     758,
+     606
+    ],
+    "unmovedMax": 9,
+    "unmovedMean": 0.233,
+    "movedPx": 31477,
+    "movedMeanFromDelivered": 3,
+    "movedOver48": 87,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03ab",
+    "current": "frame_02_03ab",
+    "canvas": [
+     758,
+     606
+    ],
+    "unmovedMax": 9,
+    "unmovedMean": 0.421,
+    "movedPx": 37211,
+    "movedMeanFromDelivered": 3.04,
+    "movedOver48": 54,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03b",
+    "current": "frame_02_03b",
+    "canvas": [
+     758,
+     606
+    ],
+    "unmovedMax": 9,
+    "unmovedMean": 0.471,
+    "movedPx": 43614,
+    "movedMeanFromDelivered": 3.37,
+    "movedOver48": 97,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_K1_B36.png",
+    "current": "reaction/rx_K1_B36.png",
+    "canvas": [
+     758,
+     606
+    ],
+    "unmovedMax": 8,
+    "unmovedMean": 0.092,
+    "movedPx": 16100,
+    "movedMeanFromDelivered": 4.26,
+    "movedOver48": 118,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_B36_B39.png",
+    "current": "reaction/rx_B36_B39.png",
+    "canvas": [
+     758,
+     606
+    ],
+    "unmovedMax": 9,
+    "unmovedMean": 0.054,
+    "movedPx": 16420,
+    "movedMeanFromDelivered": 2.7,
+    "movedOver48": 83,
+    "comingFromAnotherDrawingDiffers": 0
+   }
+  ],
+  "errors": []
+ },
+ "webkit, desktop 2560×1440, 2x": {
+  "rows": [
+   {
+    "pose": "frame_01_02",
+    "current": "frame_01_02",
+    "canvas": [
+     1146,
+     916
+    ],
+    "unmovedMax": 12,
+    "unmovedMean": 0.202,
+    "movedPx": 52236,
+    "movedMeanFromDelivered": 2.73,
+    "movedOver48": 160,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03a",
+    "current": "frame_02_03a",
+    "canvas": [
+     1146,
+     916
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.282,
+    "movedPx": 71129,
+    "movedMeanFromDelivered": 2.64,
+    "movedOver48": 263,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03ab",
+    "current": "frame_02_03ab",
+    "canvas": [
+     1146,
+     916
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.504,
+    "movedPx": 84203,
+    "movedMeanFromDelivered": 2.31,
+    "movedOver48": 91,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "frame_02_03b",
+    "current": "frame_02_03b",
+    "canvas": [
+     1146,
+     916
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.561,
+    "movedPx": 98285,
+    "movedMeanFromDelivered": 2.33,
+    "movedOver48": 161,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_K1_B36.png",
+    "current": "reaction/rx_K1_B36.png",
+    "canvas": [
+     1146,
+     916
+    ],
+    "unmovedMax": 11,
+    "unmovedMean": 0.115,
+    "movedPx": 36324,
+    "movedMeanFromDelivered": 3.62,
+    "movedOver48": 306,
+    "comingFromAnotherDrawingDiffers": 0
+   },
+   {
+    "pose": "reaction/rx_B36_B39.png",
+    "current": "reaction/rx_B36_B39.png",
+    "canvas": [
+     1146,
+     916
+    ],
+    "unmovedMax": 14,
+    "unmovedMean": 0.066,
+    "movedPx": 37132,
+    "movedMeanFromDelivered": 2.55,
+    "movedOver48": 241,
+    "comingFromAnotherDrawingDiffers": 0
+   }
+  ],
+  "errors": []
+ }
+}

@@ -1,0 +1,64 @@
+{
+ "build desktop": {
+  "file": "scene1-paint-60fps.mp4",
+  "strip": "scene1-rachel-strip.jpg",
+  "recordedFrames": 308,
+  "framesInThePainting": 277,
+  "longestRecordedGapMs": 400,
+  "recordedGapsOver34ms": "100@-69 83@4498 150@4781 50@4931 50@4981 50@5031 333@5081 50@5414 83@5464 50@5548 50@5598 167@5681 67@5848 400@5914 50@6314 67@6364 50@6431",
+  "herPaintedMs": {
+   "p10": 1714,
+   "p50": 2414,
+   "p90": 2731,
+   "p98": 2764
+  },
+  "roomAroundHerMs": {
+   "p10": 1698,
+   "p50": 2048,
+   "p90": 2781,
+   "p98": 2931
+  },
+  "blankFrameHer": 0,
+  "sheGoesBackBy": 0,
+  "wholeOfHer_framesWithTheRoomPaintedAndSheNot": 0,
+  "outline": {
+   "framesWithTheRoomPaintedAndSheNot": 0,
+   "mostTheRoomIsAheadOfHer": 0.034,
+   "sectorsTested": 17,
+   "sectorFramesWithTheRoomPaintedAndSheNot": 0,
+   "examples": []
+  },
+  "errors": []
+ },
+ "build phone": {
+  "file": "scene1-paint-phone-60fps.mp4",
+  "strip": "scene1-rachel-strip-phone.jpg",
+  "recordedFrames": 343,
+  "framesInThePainting": 263,
+  "longestRecordedGapMs": 283.3,
+  "recordedGapsOver34ms": "83@-52 50@1015 50@1598 83@4015 283@4515 100@4798 67@4931 50@4998 83@5048 83@5165 50@5248 50@5298 133@5381",
+  "herPaintedMs": {
+   "p10": 1732,
+   "p50": 2398,
+   "p90": 2732,
+   "p98": 2765
+  },
+  "roomAroundHerMs": {
+   "p10": 1698,
+   "p50": 1898,
+   "p90": 2782,
+   "p98": 2932
+  },
+  "blankFrameHer": 0,
+  "sheGoesBackBy": 0,
+  "wholeOfHer_framesWithTheRoomPaintedAndSheNot": 0,
+  "outline": {
+   "framesWithTheRoomPaintedAndSheNot": 0,
+   "mostTheRoomIsAheadOfHer": 0.04,
+   "sectorsTested": 17,
+   "sectorFramesWithTheRoomPaintedAndSheNot": 0,
+   "examples": []
+  },
+  "errors": []
+ }
+}

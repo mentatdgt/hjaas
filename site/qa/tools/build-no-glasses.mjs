@@ -1,19 +1,20 @@
 // Job 008: Build without glasses, the hammer's and the thumb's in-betweens (reviews/build-no-glasses-01.md).
-// Results: qa/build-no-glasses/. `npm run dev` for this build (HJ_URL, 5173) and the one before (HJ_OLD_URL, 5174; 60f19b8).
+// And job 010, the fixed art and frame_02_03ab (reviews/build-no-glasses-02.md): HJ_OUT=../build-no-glasses-02/, the one before is 3e13a58.
+// Results: qa/build-no-glasses/ (HJ_OUT). `npm run dev` for this build (HJ_URL, 5173) and the one before (HJ_OLD_URL, 5174; 60f19b8).
 //   node qa/tools/build-no-glasses.mjs faces     every Build drawing's face at 1:1, as built, both sizes; specks; what the eyes are like from drawing to drawing
 //   node qa/tools/build-no-glasses.mjs record    60 fps: three swings, a tap, a find (thumbs-up and wink); strips of the rise and of the thumb; what flickers
 //   node qa/tools/build-no-glasses.mjs memory    what Build holds on its own, before and now (the 30 orders: scene5.mjs memory)
-//   node qa/tools/build-no-glasses.mjs seam      the five drawings kept as patches, on her real canvas, 7 windows, Chrome and WebKit
+//   node qa/tools/build-no-glasses.mjs seam      the drawings kept as patches, on her real canvas, 7 windows, Chrome and WebKit
 //   node qa/tools/build-no-glasses.mjs held [s]  how long each in-between is really on screen: desktop, the phone slowed four times, WebKit
 import { chromium, webkit, devices } from 'playwright';
 import { execFileSync } from 'node:child_process';
-import { mkdir, writeFile, rm } from 'node:fs/promises';
+import { link, mkdir, writeFile, rm } from 'node:fs/promises';
 import { readFileSync } from 'node:fs';
 import sharp from 'sharp';
 
 const base = process.env.HJ_URL ?? 'http://127.0.0.1:5173/';
 const old = process.env.HJ_OLD_URL ?? 'http://127.0.0.1:5174/';
-const out = new URL('../build-no-glasses/', import.meta.url).pathname;
+const out = new URL(process.env.HJ_OUT ?? '../build-no-glasses/', import.meta.url).pathname;
 const repo = new URL('../../../', import.meta.url).pathname;
 const assets = `${repo}site/public/assets/scene1/`;
 await mkdir(out, { recursive: true });
@@ -30,10 +31,10 @@ const sheet = async (tiles, w, h, per, file) => {
   const parts = tiles.flatMap(([t, input], i) => { const left = (i % per) * (w + 6); const top = Math.floor(i / per) * (h + 28); return [{ input: label(t, w), left, top }, { input, left, top: top + 24 }]; });
   await sharp({ create: { width: per * (w + 6), height: Math.ceil(tiles.length / per) * (h + 28), channels: 3, background: '#e9e5dc' } }).composite(parts).png().toFile(`${out}${file}`);
 };
-const LOOP = ['frame_01', 'frame_01_02', 'frame_02', 'frame_02_03a', 'frame_02_03b', 'frame_03', 'frame_04', 'blink_half', 'blink_closed'];
+const LOOP = ['frame_01', 'frame_01_02', 'frame_02', 'frame_02_03a', 'frame_02_03ab', 'frame_02_03b', 'frame_03', 'frame_04', 'blink_half', 'blink_closed'];
 const RX = ['frame_01', 'A24', 'A25', 'A49', 'A52', 'A53', 'A55', 'A58', 'K1', 'K1_B36', 'B36', 'B36_B39', 'B39', 'B41', 'K2', 'wink_half', 'wink'];
 const SHARED = { frame_01: 'frame_01', K1: 'K1', K2: 'K2' };
-/** The 28: what it is called, the built file inside a set, the delivered one. */
+/** The 29: what it is called, the built file inside a set, the delivered one. */
 const DRAWINGS = [...[...LOOP, 'K1', 'K2'].map((n) => [n, `${n}.webp`, `016-upscale/approved/${n}.png`]), ...RX.map((n) => [`rx_${n}`, SHARED[n] ? `${SHARED[n]}.webp` : `reaction/rx_${n}.webp`, `005-reaction-motion/approved/rx_${n}.png`])];
 const W = 1146; const H = 916;
 const PATCHES = JSON.parse(readFileSync(`${repo}site/src/scenes/build-patches.json`, 'utf8'));
@@ -104,11 +105,14 @@ const filmOf = async (page, dir) => {
   cdp.on('Page.screencastFrame', ({ data, metadata, sessionId }) => { const file = `${dir}${String(frames.length).padStart(5, '0')}.jpg`; frames.push({ at: metadata.timestamp * 1000, file }); writes.push(writeFile(file, Buffer.from(data, 'base64'))); void cdp.send('Page.screencastFrameAck', { sessionId }).catch(() => {}); });
   return { frames, start: () => cdp.send('Page.startScreencast', { format: 'jpeg', quality: 95, everyNthFrame: 1 }), stop: async () => { await cdp.send('Page.stopScreencast'); await Promise.all(writes); } };
 };
+// Each frame of the film is the last one recorded by then. (ffmpeg's own concat list of pictures, used until job 010, rounds
+// their times to 25 a second: the drawings of a move came out 33 or 83 ms long.)
 const toMp4 = async (frames, mp4) => {
-  const list = `${mp4}.txt`; frames = frames.filter((f, i) => !frames[i + 1] || frames[i + 1].at > f.at);
-  await writeFile(list, `ffconcat version 1.0\n${frames.map((f, i) => `file '${f.file}'\nduration ${(((frames[i + 1]?.at ?? f.at + 16.7) - f.at) / 1000).toFixed(6)}`).join('\n')}\n`);
-  execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', list, '-vf', 'fps=60,scale=trunc(iw/2)*2:trunc(ih/2)*2', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '18', '-movflags', '+faststart', mp4]);
-  await rm(list);
+  frames = frames.filter((f, i) => !frames[i + 1] || frames[i + 1].at > f.at);
+  const list = []; for (let t = frames[0].at + 8, i = 0; t < frames.at(-1).at + 25; t += 1000 / 60) { while (frames[i + 1]?.at <= t) i++; list.push(frames[i].file); }
+  const dir = `${mp4}.frames/`; await rm(dir, { recursive: true, force: true }); await mkdir(dir); await Promise.all(list.map((file, i) => link(file, `${dir}${String(i).padStart(6, '0')}.jpg`)));
+  execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-framerate', '60', '-i', `${dir}%06d.jpg`, '-vf', 'scale=trunc(iw/2)*2:trunc(ih/2)*2', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '18', '-movflags', '+faststart', mp4]);
+  await rm(dir, { recursive: true, force: true });
 };
 /** What is solid and the same in all these delivered drawings, less a rim, as a mask of her frame: nothing there may change on screen. */
 const steady = async (names, from, r = 8) => {
@@ -120,17 +124,17 @@ const steady = async (names, from, r = 8) => {
   return mask;
 };
 const watchPoses = (page) => page.evaluate(() => { const c = window.__hj.rachel; const w = (window.__steps = [[c.current, performance.timeOrigin + performance.now()]]); const show = c.show.bind(c); c.show = (p) => { if (p !== c.current) w.push([p, performance.timeOrigin + performance.now()]); show(p); }; });
-const RISE = 'frame_01_02 frame_02 frame_02_03a frame_02_03b frame_03 frame_04';
+const RISE = 'frame_01_02 frame_02 frame_02_03a frame_02_03ab frame_02_03b frame_03 frame_04';
 const TAP = 'frame_01_02 frame_02 frame_01_02';
 const movesOf = (steps) => { const list = []; let m = null; for (const [i, [pose, at]] of steps.entries()) { if (pose === 'frame_01' || pose.startsWith('blink')) { m = null; continue; } if (!m) list.push((m = { at, poses: [] })); m.poses.push(pose); m.end = steps[i + 1]?.[1]; } return list.map((x) => ({ ...x, name: x.poses.join(' ') })); };
 const DEVICE = { desktop: { viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 }, phone: PHONE, 'phone-3x': { viewport: null } };
 
 run.record = async () => {
   const report = {};
-  // Her eyes: the same in every drawing in which no arm is before them.
-  const CLEAR = ['frame_01', 'frame_01_02', 'frame_02', 'frame_02_03a', 'frame_04', 'frame_03'];
+  // Her eyes: open and the same in every drawing of a swing (since job 010 no arm is before them in any).
+  const CLEAR = LOOP.filter((n) => !n.startsWith('blink'));
   const THUMB = ['rx_K1', 'rx_K1_B36', 'rx_B36', 'rx_B36_B39', 'rx_B39', 'rx_B41'];
-  const masks = { loop: await steady([...CLEAR, 'frame_02_03b'], '016-upscale/approved'), loopEyes: await steady(CLEAR, '016-upscale/approved', 4), thumb: await steady(THUMB, '005-reaction-motion/approved', 4) };
+  const masks = { loop: await steady(CLEAR, '016-upscale/approved'), loopEyes: await steady(CLEAR, '016-upscale/approved', 4), thumb: await steady(THUMB, '005-reaction-motion/approved', 4) };
   const eyeOnly = (mask, [x0, y0, w, h]) => mask.map((v, i) => { const x = i % W; const y = (i / W) | 0; return v && x >= x0 && x < x0 + w && y >= y0 && y < y0 + h ? 1 : 0; });
   masks.loopEyes = eyeOnly(masks.loopEyes, EYES.loop); masks.thumbEyes = eyeOnly(masks.thumb, EYES.rx);
   for (const [name, options] of Object.entries(DEVICE).filter(([n]) => !process.argv[3] || n === process.argv[3])) {
@@ -166,6 +170,8 @@ run.record = async () => {
     const strip = async (a, b, file) => { const list = kept.filter((f) => f.at >= a && f.at <= b).slice(0, 48); const w = name === 'phone' ? cut.width : 300; const c = { ...cut, height: tileH }; const h = Math.round((w / c.width) * c.height); await sheet(await Promise.all(list.map(async (f) => [`${Math.round(f.at - a)} ms ${poseAt(f.at).replace('reaction/', '').replace('.png', '')}`, await sharp(f.file).extract(c).resize(w, h).png().toBuffer()])), w, h, 8, `${file}.png`); await sharp(`${out}${file}.png`).jpeg({ quality: 86 }).toFile(`${out}${file}.jpg`); await rm(`${out}${file}.png`); };
     const swing = before.findLast((m) => m.name === RISE); const tap = before.findLast((m) => m.name === TAP);
     await strip(swing.at - 40, swing.end + 60, `${name}-rise`); await strip(tap.at - 40, tap.end + 60, `${name}-tap`);
+    // And every drawing of that rise, from the contact to the wind-up, at the recording's own px: her head, arm and hammer.
+    { const d = steps.filter((s) => s[1] >= swing.at - 1 && s[1] < swing.end).map(([pose, at], i, l) => ({ pose, at: (at + (l[i + 1]?.[1] ?? swing.end)) / 2 })).slice(0, 7); const px = (x) => Math.round(((x / W) * box.width + box.x) * k); const py = (y) => Math.round(((y / H) * box.height + box.y) * k); const c = { left: Math.max(cut.left, px(20)), top: Math.max(cut.top, py(0)) }; c.width = px(720) - c.left; c.height = py(640) - c.top; const tiles = await Promise.all(d.map(async ({ pose, at }) => [pose, await sharp(film.frames.findLast((f) => f.at <= at + 12 && poseAt(f.at - 6) === pose)?.file ?? film.frames.findLast((f) => f.at <= at).file).extract(c).png().toBuffer()])); await sheet(tiles, c.width, c.height, 4, `${name}-rise-1to1.png`); await sharp(`${out}${name}-rise-1to1.png`).jpeg({ quality: 93, chromaSubsampling: '4:4:4' }).toFile(`${out}${name}-rise-1to1.jpg`); await rm(`${out}${name}-rise-1to1.png`); }
     const up = shown.find((s) => s.pose.includes('rx_K1_B36')); const down = shown.findLast((s) => s.pose.includes('rx_B36_B39') && s.at > up.at + 500);
     await strip(up.at - 40, up.at + 260, `${name}-thumb-up`); await strip(down.at - 80, down.at + 200, `${name}-thumb-down`);
     const wink = shown.find((s) => s.pose.includes('rx_wink')); if (wink) await strip(wink.at - 40, wink.at + 330, `${name}-wink`);
@@ -175,7 +181,7 @@ run.record = async () => {
   }
 };
 
-// The five drawings kept as patches, on her real canvas: where the delivered drawing is its base's, the canvas must be
+// The drawings kept as patches, on her real canvas: where the delivered drawing is its base's, the canvas must be
 // the base's (a seam or a flicker otherwise); and inside, against the whole delivered drawing. Along the patch's rim: a step.
 run.seam = async () => {
   const report = {}; const uri = async (f) => `data:image/png;base64,${readFileSync(`${repo}frames/${f}`).toString('base64')}`;
@@ -255,7 +261,7 @@ run.memory = async () => {
 // Left while one of the patches is on her canvas, and come back to: she is drawn as she was, then carries on, with every frame back.
 run.leave = async () => {
   const report = {};
-  for (const [en, engine] of [['chrome', chromium], ['webkit', webkit]]) for (const pose of ['frame_01_02', 'frame_02_03b']) {
+  for (const [en, engine] of [['chrome', chromium], ['webkit', webkit]]) for (const pose of ['frame_01_02', 'frame_02_03ab', 'frame_02_03b']) {
     const browser = await engine.launch(engine === chromium ? { channel: 'chrome' } : {}); const { page, errors } = await open(browser, base, PHONE, '?debug&reset&intro=quick&seed=7');
     const go = async (id) => { await page.locator(`.hj-tab[data-scene="${id}"]`).tap(); await page.waitForFunction((x) => window.__hj.scene?.config.id === x && !window.__hj.busy, id, { timeout: 60000 }); };
     await page.evaluate(async (p) => { const { rachel, player } = window.__hj; window.__was = rachel; player.stop(); rachel.show(p); window.__pic = (() => { const c = rachel.el.querySelector('canvas'); return c.toDataURL(); })(); }, pose);

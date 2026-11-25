@@ -10,8 +10,9 @@ type Range = readonly [number, number];
 const CONTACT = 'frame_01';
 const RISING = 'frame_01_02'; // halfway from the contact to the lift
 const LIFT = 'frame_02';
-const RAISED_A = 'frame_02_03a'; // a third of the way from the lift to the wind-up
-const RAISED_B = 'frame_02_03b'; // and two thirds
+const RAISED_A = 'frame_02_03a'; // the fist at her shoulder
+const RAISED_AB = 'frame_02_03ab'; // beside her temple
+const RAISED_B = 'frame_02_03b'; // over her head, all but at the wind-up
 const WIND_UP = 'frame_03';
 const DOWN_SWING = 'frame_04';
 
@@ -22,8 +23,9 @@ const SWING: ReadonlyArray<readonly [string, Range]> = [
   [RISING, [45, 55]],
   [LIFT, [60, 80]],
   [RAISED_A, [45, 55]],
-  [RAISED_B, [45, 55]],
-  [WIND_UP, [240, 420]],
+  [RAISED_AB, [45, 55]],
+  [RAISED_B, [35, 45]],
+  [WIND_UP, [130, 270]], // shorter by what the in-betweens take: a whole swing is about 890 ms, before its tempo
   [DOWN_SWING, [60, 80]], // kept snappy for impact
 ];
 const TAP: ReadonlyArray<readonly [string, Range]> = [
@@ -78,4 +80,4 @@ export function* hammerSchedule(rnd: Rng = Math.random): Generator<Step, never> 
 
 export const CONTACT_POSE = CONTACT;
 /** Every drawing the rhythm shows. */
-export const HAMMER_FRAMES = [CONTACT, RISING, LIFT, RAISED_A, RAISED_B, WIND_UP, DOWN_SWING, 'blink_half', 'blink_closed'];
+export const HAMMER_FRAMES = [CONTACT, RISING, LIFT, RAISED_A, RAISED_AB, RAISED_B, WIND_UP, DOWN_SWING, 'blink_half', 'blink_closed'];

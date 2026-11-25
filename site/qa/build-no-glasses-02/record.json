@@ -1,0 +1,158 @@
+{
+ "desktop": {
+  "recordedFrames": 202,
+  "seconds": 13.6,
+  "framePx": [
+   1440,
+   900
+  ],
+  "longestGapMs": 916.6,
+  "skippedPoses": 0,
+  "errors": [],
+  "whereNothingMovesInTheLoop": {
+   "px": 21153,
+   "framesCompared": 31,
+   "worstMean": {
+    "mean": 2.5,
+    "pose": "frame_01",
+    "atMs": 609
+   },
+   "worstSinglePx": 14
+  },
+  "eyesInTheLoop": {
+   "px": 1181,
+   "framesCompared": 31,
+   "worstMean": {
+    "mean": 3.29,
+    "pose": "frame_03",
+    "atMs": 342
+   },
+   "worstSinglePx": 15
+  },
+  "eyesAsTheThumbComesUp": {
+   "px": 2656,
+   "framesCompared": 25,
+   "worstMean": {
+    "mean": 2.74,
+    "pose": "reaction/rx_B36.png",
+    "atMs": 5259
+   },
+   "worstSinglePx": 13
+  },
+  "bodyAsTheThumbComesUp": {
+   "px": 34513,
+   "framesCompared": 25,
+   "worstMean": {
+    "mean": 2.16,
+    "pose": "reaction/rx_B36.png",
+    "atMs": 5259
+   },
+   "worstSinglePx": 14
+  },
+  "poses": "frame_01 92, frame_01_02 65, frame_02 84, frame_02_03a 34, frame_02_03ab 49, frame_02_03b 52, frame_03 199, frame_04 69, frame_01 566, blink_half 32, blink_closed 67, blink_half 50, frame_01 916, frame_01_02 51, frame_02 67, frame_02_03a 48, frame_02_03ab 51, frame_02_03b 33, frame_03 267, frame_04 68, frame_01 167, frame_01_02 50, frame_02 67, frame_01_02 33, frame_01 201, frame_01_02 31, frame_02 69, frame_01_02 33, frame_01 350, frame_01_02 50, frame_02 67, frame_02_03a 49, frame_02_03ab 51, frame_02_03b 34, frame_03 250, frame_04 65, frame_01 178, rx_A24 40, rx_A25 149, rx_A49 85, rx_A52 33, rx_A53 66, rx_A55 50, rx_A58 84, rx_K1 151, rx_K1_B36 33, rx_B36 33, rx_B36_B39 33, rx_B39 65, rx_B41 68, rx_K2 301, rx_wink_half 50, rx_wink 250, rx_wink_half 48, rx_K2 252, rx_B39 48, rx_B36_B39 35, rx_B36 32, rx_K1_B36 34, rx_K1 83, rx_A55 50, rx_A49 51, rx_A25 82, rx_A24 50, frame_01 334, frame_01_02 33, frame_02 67, frame_02_03a 50, frame_02_03ab 48, frame_02_03b 35, frame_03 184, frame_04 83, frame_01 417, frame_01_02 50, frame_02 67, frame_02_03a 50, frame_02_03ab 50, frame_02_03b 50, frame_03 267, frame_04 65, frame_01 485, blink_half 49, blink_closed 68, blink_half 33, frame_01 850, frame_01_02 48, frame_02 85, frame_02_03a 67, frame_02_03ab 67, frame_02_03b 33, frame_03 317, frame_04 65, frame_01 335, frame_01_02 33, frame_02 66, frame_02_03a 50, frame_02_03ab 51, frame_02_03b 51, frame_03 248, frame_04 69, frame_01 167, blink_half 50, blink_closed 65, blink_half 35, frame_01 83, frame_01_02 66, frame_02 82, frame_02_03a 52, frame_02_03ab 66, frame_02_03b 51, frame_03 217, frame_04 83, frame_01 83, blink_half 34, blink_closed 83, blink_half 32, frame_01 118, frame_01_02 49, frame_02 68, frame_02_03a 33, frame_02_03ab 65, frame_02_03b 35, frame_03 150, frame_04 50, frame_01 null"
+ },
+ "phone": {
+  "recordedFrames": 192,
+  "seconds": 13.5,
+  "framePx": [
+   390,
+   844
+  ],
+  "longestGapMs": 916.6,
+  "skippedPoses": 0,
+  "errors": [],
+  "whereNothingMovesInTheLoop": {
+   "px": 17414,
+   "framesCompared": 31,
+   "worstMean": {
+    "mean": 2.56,
+    "pose": "frame_04",
+    "atMs": 564
+   },
+   "worstSinglePx": 15
+  },
+  "eyesInTheLoop": {
+   "px": 959,
+   "framesCompared": 31,
+   "worstMean": {
+    "mean": 3.95,
+    "pose": "frame_03",
+    "atMs": 364
+   },
+   "worstSinglePx": 14
+  },
+  "eyesAsTheThumbComesUp": {
+   "px": 2157,
+   "framesCompared": 25,
+   "worstMean": {
+    "mean": 2.22,
+    "pose": "reaction/rx_B39.png",
+    "atMs": 5313
+   },
+   "worstSinglePx": 11
+  },
+  "bodyAsTheThumbComesUp": {
+   "px": 28362,
+   "framesCompared": 25,
+   "worstMean": {
+    "mean": 2.27,
+    "pose": "reaction/rx_B36_B39.png",
+    "atMs": 6397
+   },
+   "worstSinglePx": 16
+  },
+  "poses": "frame_01 110, frame_01_02 67, frame_02 84, frame_02_03a 33, frame_02_03ab 48, frame_02_03b 52, frame_03 199, frame_04 69, frame_01 565, blink_half 35, blink_closed 67, blink_half 50, frame_01 917, frame_01_02 50, frame_02 67, frame_02_03a 50, frame_02_03ab 48, frame_02_03b 35, frame_03 267, frame_04 67, frame_01 167, frame_01_02 49, frame_02 67, frame_01_02 32, frame_01 200, frame_01_02 34, frame_02 67, frame_01_02 33, frame_01 351, frame_01_02 49, frame_02 67, frame_02_03a 51, frame_02_03ab 48, frame_02_03b 34, frame_03 249, frame_04 68, frame_01 152, rx_A24 32, rx_A25 166, rx_A49 67, rx_A52 33, rx_A53 66, rx_A55 49, rx_A58 85, rx_K1 149, rx_K1_B36 33, rx_B36 35, rx_B36_B39 33, rx_B39 67, rx_B41 67, rx_K2 298, rx_wink_half 52, rx_wink 250, rx_wink_half 50, rx_K2 250, rx_B39 50, rx_B36_B39 32, rx_B36 34, rx_K1_B36 34, rx_K1 83, rx_A55 50, rx_A49 49, rx_A25 84, rx_A24 49, frame_01 368, frame_01_02 32, frame_02 67, frame_02_03a 50, frame_02_03ab 50, frame_02_03b 34, frame_03 184, frame_04 66, frame_01 434, frame_01_02 50, frame_02 66, frame_02_03a 50, frame_02_03ab 49, frame_02_03b 51, frame_03 250, frame_04 82, frame_01 484, blink_half 52, blink_closed 67, blink_half 33, frame_01 833, frame_01_02 67, frame_02 83, frame_02_03a 67, frame_02_03ab 50, frame_02_03b 50, frame_03 301, frame_04 83, frame_01 317, frame_01_02 48, frame_02 68, frame_02_03a 49, frame_02_03ab 51, frame_02_03b 50, frame_03 250, frame_04 67, frame_01 166, blink_half 34, blink_closed 84, blink_half 32, frame_01 85, frame_01_02 67, frame_02 83, frame_02_03a 50, frame_02_03ab 66, frame_02_03b 35, frame_03 233, frame_04 84, frame_01 83, blink_half 33, blink_closed 68, blink_half 50, frame_01 117, frame_01_02 50, frame_02 48, frame_02_03a 52, frame_02_03ab 50, frame_02_03b 49, frame_03 135, frame_04 null"
+ },
+ "phone-3x": {
+  "recordedFrames": 190,
+  "seconds": 13.5,
+  "framePx": [
+   1500,
+   3246
+  ],
+  "longestGapMs": 916.6,
+  "skippedPoses": 0,
+  "errors": [],
+  "whereNothingMovesInTheLoop": {
+   "px": 268806,
+   "framesCompared": 31,
+   "worstMean": {
+    "mean": 1.57,
+    "pose": "frame_03",
+    "atMs": 4103
+   },
+   "worstSinglePx": 13
+  },
+  "eyesInTheLoop": {
+   "px": 15173,
+   "framesCompared": 31,
+   "worstMean": {
+    "mean": 2.78,
+    "pose": "frame_03",
+    "atMs": 370
+   },
+   "worstSinglePx": 13
+  },
+  "eyesAsTheThumbComesUp": {
+   "px": 33715,
+   "framesCompared": 25,
+   "worstMean": {
+    "mean": 1.35,
+    "pose": "reaction/rx_B39.png",
+    "atMs": 5303
+   },
+   "worstSinglePx": 13
+  },
+  "bodyAsTheThumbComesUp": {
+   "px": 438815,
+   "framesCompared": 25,
+   "worstMean": {
+    "mean": 1.41,
+    "pose": "reaction/rx_B39.png",
+    "atMs": 5303
+   },
+   "worstSinglePx": 14
+  },
+  "poses": "frame_01 110, frame_01_02 66, frame_02 83, frame_02_03a 34, frame_02_03ab 48, frame_02_03b 52, frame_03 200, frame_04 66, frame_01 568, blink_half 33, blink_closed 66, blink_half 49, frame_01 918, frame_01_02 49, frame_02 66, frame_02_03a 50, frame_02_03ab 50, frame_02_03b 34, frame_03 265, frame_04 68, frame_01 165, frame_01_02 51, frame_02 67, frame_01_02 31, frame_01 202, frame_01_02 32, frame_02 68, frame_01_02 34, frame_01 349, frame_01_02 51, frame_02 67, frame_02_03a 50, frame_02_03ab 50, frame_02_03b 34, frame_03 249, frame_04 68, frame_01 134, rx_A24 31, rx_A25 151, rx_A49 84, rx_A52 33, rx_A53 67, rx_A55 49, rx_A58 85, rx_K1 150, rx_K1_B36 33, rx_B36 33, rx_B36_B39 33, rx_B39 66, rx_B41 67, rx_K2 301, rx_wink_half 50, rx_wink 250, rx_wink_half 50, rx_K2 248, rx_B39 51, rx_B36_B39 34, rx_B36 33, rx_K1_B36 33, rx_K1 83, rx_A55 50, rx_A49 49, rx_A25 84, rx_A24 50, frame_01 484, frame_01_02 33, frame_02 66, frame_02_03a 49, frame_02_03ab 51, frame_02_03b 32, frame_03 185, frame_04 65, frame_01 436, frame_01_02 50, frame_02 66, frame_02_03a 49, frame_02_03ab 52, frame_02_03b 49, frame_03 266, frame_04 68, frame_01 483, blink_half 49, blink_closed 66, blink_half 35, frame_01 849, frame_01_02 51, frame_02 83, frame_02_03a 67, frame_02_03ab 66, frame_02_03b 34, frame_03 317, frame_04 66, frame_01 317, frame_01_02 48, frame_02 66, frame_02_03a 52, frame_02_03ab 50, frame_02_03b 49, frame_03 250, frame_04 68, frame_01 167, blink_half 49, blink_closed 68, blink_half 33, frame_01 84, frame_01_02 65, frame_02 85, frame_02_03a 50, frame_02_03ab 67, frame_02_03b 33, frame_03 232, frame_04 84, frame_01 84, blink_half 32, blink_closed 85, blink_half 33, frame_01 117, frame_01_02 50, frame_02 49, frame_02_03a 50, frame_02_03ab 49, frame_02_03b 52, frame_03 null"
+ }
+}

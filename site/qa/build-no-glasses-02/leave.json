@@ -1,0 +1,50 @@
+{
+ "chrome frame_01_02": {
+  "heldAwayMB": 2.62,
+  "draws": true,
+  "missed": 0,
+  "samePictureAsBefore": true,
+  "reactionReachesTheNewDrawing": true,
+  "errors": []
+ },
+ "chrome frame_02_03ab": {
+  "heldAwayMB": 2.95,
+  "draws": true,
+  "missed": 0,
+  "samePictureAsBefore": true,
+  "reactionReachesTheNewDrawing": true,
+  "errors": []
+ },
+ "chrome frame_02_03b": {
+  "heldAwayMB": 3.08,
+  "draws": true,
+  "missed": 0,
+  "samePictureAsBefore": true,
+  "reactionReachesTheNewDrawing": true,
+  "errors": []
+ },
+ "webkit frame_01_02": {
+  "heldAwayMB": 2.62,
+  "draws": true,
+  "missed": 0,
+  "samePictureAsBefore": true,
+  "reactionReachesTheNewDrawing": true,
+  "errors": []
+ },
+ "webkit frame_02_03ab": {
+  "heldAwayMB": 2.95,
+  "draws": true,
+  "missed": 0,
+  "samePictureAsBefore": true,
+  "reactionReachesTheNewDrawing": true,
+  "errors": []
+ },
+ "webkit frame_02_03b": {
+  "heldAwayMB": 3.08,
+  "draws": true,
+  "missed": 0,
+  "samePictureAsBefore": true,
+  "reactionReachesTheNewDrawing": true,
+  "errors": []
+ }
+}

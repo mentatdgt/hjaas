@@ -11,10 +11,15 @@
    "x": 176,
    "y": 264
   },
+  "frame_02_03ab": {
+   "base": "frame_02",
+   "x": 168,
+   "y": 152
+  },
   "frame_02_03b": {
    "base": "frame_02",
    "x": 160,
-   "y": 128
+   "y": 24
   },
   "reaction/rx_K1_B36.png": {
    "base": "reaction/rx_K1.png",
@@ -30,7 +35,7 @@
  "rachel-1.5x/": {
   "frame_01_02": {
    "base": "frame_01",
-   "x": 136,
+   "x": 128,
    "y": 336
   },
   "frame_02_03a": {
@@ -38,10 +43,15 @@
    "x": 128,
    "y": 192
   },
+  "frame_02_03ab": {
+   "base": "frame_02",
+   "x": 128,
+   "y": 104
+  },
   "frame_02_03b": {
    "base": "frame_02",
-   "x": 120,
-   "y": 88
+   "x": 112,
+   "y": 8
   },
   "reaction/rx_K1_B36.png": {
    "base": "reaction/rx_K1.png",
