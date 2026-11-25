@@ -1,0 +1,2 @@
+- `M_1_12.png` — Built-in ImageGen edit, 1024×1536. Pixels outside the arm composite match M_1 exactly. The pointing-side arm sits between the references, while the red watch is already close to its M_12 height.
+- `M_1_13.png` — Built-in ImageGen edit, 1024×1536. Pixels outside the arm composite match M_1 exactly. Both hands move inward between the references, with their palms still more open and outward-facing than at a precise halfway pose.
