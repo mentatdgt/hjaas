@@ -1,5 +1,5 @@
 import type { Character } from './character';
-import type { Entry } from './clips';
+import { planOf, type Entry, type Planned } from './clips';
 import type { Step } from './steps';
 
 /** A routine. It is told, each time it is asked for a step, whether a reaction is waiting (clips.ts uses that). */
@@ -22,6 +22,8 @@ export class Player {
   private readonly rachel: Character;
   private readonly rest: string;
   private loop: Schedule;
+  /** The schedule the step on show came from (none: the rest pose before her first step, or a reaction's). */
+  private from: Schedule | null = null;
   private step: Step;
   private elapsed = 0;
   private last = 0;
@@ -77,6 +79,34 @@ export class Player {
     return this.reaction !== null || this.queued !== null;
   }
 
+  /** How long ago, in ms of play, the step she is on began (less than 0 while a delay puts her next move off). */
+  get since(): number {
+    return this.elapsed + this.lag();
+  }
+
+  /**
+   * The time since her last frame, as her next one will count it: so that two players read in the same frame
+   * agree, whichever of them has run its own frame yet.
+   */
+  private lag(): number {
+    return this.running ? Math.min(Math.max(0, performance.now() - this.last), MAX_CATCH_UP_MS) : 0;
+  }
+
+  /**
+   * What her routine will show, in ms from now (clips.ts, Planned: another actor's blink `avoid` asks). From the
+   * routine she is playing; or from the one waiting to start, which begins as the step on show ends (her own
+   * routine, once her drawings are in). Null while she reacts or holds still: then nobody knows.
+   */
+  planned(): Planned | null {
+    if (this.reacting) return null;
+    const playing = this.from !== null && this.from === this.loop;
+    const plan = planOf(this.loop);
+    if (!plan) return null;
+    // How long ago the plan's first step began (its step on show), or, for one waiting, less than 0: until this step ends.
+    const at = playing ? this.since : this.since - this.step.ms;
+    return { busy: (stills, from, to) => plan(stills, from + at, to + at).map(([a, b]) => [a - at, b - at] as const) };
+  }
+
   start(): void {
     if (this.running) return;
     this.running = true;
@@ -110,6 +140,7 @@ export class Player {
     this.elapsed = 0;
     this.shown = 0;
     this.fadingFrom = null;
+    this.from = null;
     this.step = { pose: this.rest, ms: 0 };
     this.rachel.show(this.rest);
     this.onStep?.(this.step);
@@ -235,6 +266,7 @@ export class Player {
   }
 
   private beginReaction(): void {
+    this.from = null;
     this.reaction = this.queued;
     this.queued = null;
     this.settling = false;
@@ -246,6 +278,7 @@ export class Player {
     for (;;) {
       const { value } = this.loop.next(this.queued ? 'react' : undefined);
       const step = value as Step;
+      this.from = this.loop;
       if (step.ms > 0) return step;
     }
   }

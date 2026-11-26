@@ -1,0 +1,3558 @@
+{
+ "coverage": {
+  "new visitor": {
+   "orders": 10,
+   "opens": {
+    "build": 2,
+    "grow": 2,
+    "design": 2,
+    "film": 2,
+    "set": 2
+   },
+   "pairsCovered": 20,
+   "of": 20
+  },
+  "return visitor": {
+   "orders": 20,
+   "opens": {
+    "build": 4,
+    "grow": 4,
+    "design": 4,
+    "film": 4,
+    "set": 4
+   },
+   "pairsCovered": 20,
+   "of": 20
+  }
+ },
+ "new visitor (full paintings)": {
+  "Build → Grow → Design → Film → Set": {
+   "highestMB": 78.1,
+   "stages": [
+    {
+     "scene": "build",
+     "peakMB": 69.7,
+     "at": "build, pose frame_02_03a",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "grow",
+     "peakMB": 78.1,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "build.frames": 2.6,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "design",
+     "peakMB": 75.1,
+     "at": "design, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "build.frames": 2.6,
+      "grow.frames": 47.7,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6,
+      "design.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "film",
+     "peakMB": 71.5,
+     "at": "film, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "build.frames": 2.6,
+      "grow.frames": 3,
+      "design.frames": 40,
+      "design.canvases": 4.2,
+      "design.room": 6.3,
+      "design.edge": 2.6,
+      "film.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set",
+     "peakMB": 59.7,
+     "at": "set, pose R_A2_stroke_low",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "build.frames": 2.6,
+      "grow.frames": 3,
+      "film.canvases": 0.4,
+      "set.frames": 18,
+      "set.canvases": 20.4,
+      "set.room": 6.3,
+      "set.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "build again",
+     "peakMB": 71.3,
+     "at": "build, during a painting or a switch, pose frame_01_02",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6,
+      "grow.frames": 3,
+      "film.canvases": 0.4
+     },
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  "Build → Film → Grow → Set → Design": {
+   "highestMB": 78.2,
+   "stages": [
+    {
+     "scene": "build",
+     "peakMB": 69.7,
+     "at": "build, pose frame_02_03ab",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "film",
+     "peakMB": 73.6,
+     "at": "film, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "build.frames": 49.6,
+      "build.canvases": 2.4,
+      "build.room": 6.3,
+      "build.edge": 2.6,
+      "film.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "grow",
+     "peakMB": 78.2,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "build.frames": 2.4,
+      "film.canvases": 0.4,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set",
+     "peakMB": 75.2,
+     "at": "set, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "build.frames": 2.4,
+      "film.canvases": 0.4,
+      "grow.frames": 47.7,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6,
+      "set.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "design",
+     "peakMB": 69.6,
+     "at": "design, during a painting or a switch, pose R_A1_sketch",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "build.frames": 2.4,
+      "film.canvases": 0.4,
+      "grow.frames": 3,
+      "design.frames": 40,
+      "design.canvases": 8.6,
+      "design.room": 6.3,
+      "design.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "build again",
+     "peakMB": 71.3,
+     "at": "build, during a painting or a switch, pose frame_01",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6,
+      "film.canvases": 0.4,
+      "grow.frames": 3
+     },
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  "Grow → Film → Build → Design → Set": {
+   "highestMB": 78.9,
+   "stages": [
+    {
+     "scene": "grow",
+     "peakMB": 75.5,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "film",
+     "peakMB": 72.4,
+     "at": "film, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "grow.frames": 47.7,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6,
+      "film.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "build",
+     "peakMB": 73.1,
+     "at": "build, pose frame_02_03a",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "grow.frames": 3,
+      "film.canvases": 0.4,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "design",
+     "peakMB": 77,
+     "at": "design, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "grow.frames": 3,
+      "film.canvases": 0.4,
+      "build.frames": 49.6,
+      "build.canvases": 2.4,
+      "build.room": 6.3,
+      "build.edge": 2.6,
+      "design.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set",
+     "peakMB": 72.3,
+     "at": "set, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "grow.frames": 3,
+      "film.canvases": 0.4,
+      "build.frames": 3.1,
+      "design.frames": 40,
+      "design.canvases": 4.2,
+      "design.room": 6.3,
+      "design.edge": 2.6,
+      "set.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "grow again",
+     "peakMB": 78.9,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6,
+      "film.canvases": 0.4,
+      "build.frames": 3.1
+     },
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  "Grow → Build → Set → Film → Design": {
+   "highestMB": 78.2,
+   "stages": [
+    {
+     "scene": "grow",
+     "peakMB": 75.5,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "build",
+     "peakMB": 72.7,
+     "at": "build, pose frame_02_03ab",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "grow.frames": 3,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set",
+     "peakMB": 76.6,
+     "at": "set, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "grow.frames": 3,
+      "build.frames": 49.6,
+      "build.canvases": 2.4,
+      "build.room": 6.3,
+      "build.edge": 2.6,
+      "set.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "film",
+     "peakMB": 64.5,
+     "at": "film, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "grow.frames": 3,
+      "build.frames": 2.4,
+      "set.frames": 18,
+      "set.canvases": 19.5,
+      "set.room": 6.3,
+      "set.edge": 2.6,
+      "film.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "design",
+     "peakMB": 69.6,
+     "at": "design, during a painting or a switch, pose R_A1_sketch",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "grow.frames": 3,
+      "build.frames": 2.4,
+      "film.canvases": 0.4,
+      "design.frames": 40,
+      "design.canvases": 8.6,
+      "design.room": 6.3,
+      "design.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "grow again",
+     "peakMB": 78.2,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6,
+      "build.frames": 2.4,
+      "film.canvases": 0.4
+     },
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  "Design → Build → Film → Grow → Set": {
+   "highestMB": 78.2,
+   "stages": [
+    {
+     "scene": "design",
+     "peakMB": 63.8,
+     "at": "design, during a painting or a switch, pose R_A1_sketch",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "design.frames": 40,
+      "design.canvases": 8.6,
+      "design.room": 6.3,
+      "design.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "build",
+     "peakMB": 69.7,
+     "at": "build, pose frame_02_03a",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "film",
+     "peakMB": 73.6,
+     "at": "film, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "build.frames": 49.6,
+      "build.canvases": 2.4,
+      "build.room": 6.3,
+      "build.edge": 2.6,
+      "film.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "grow",
+     "peakMB": 78.2,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "build.frames": 2.4,
+      "film.canvases": 0.4,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set",
+     "peakMB": 75.2,
+     "at": "set, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "build.frames": 2.4,
+      "film.canvases": 0.4,
+      "grow.frames": 47.7,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6,
+      "set.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "design again",
+     "peakMB": 67.7,
+     "at": "design, during a painting or a switch, pose R_A1_sketch",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "design.frames": 40,
+      "design.canvases": 8.4,
+      "design.room": 6.3,
+      "design.edge": 2.6,
+      "build.frames": 2.4,
+      "film.canvases": 0.4,
+      "grow.frames": 3
+     },
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  "Design → Film → Set → Build → Grow": {
+   "highestMB": 78.2,
+   "stages": [
+    {
+     "scene": "design",
+     "peakMB": 63.8,
+     "at": "design, during a painting or a switch, pose R_A1_sketch",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "design.frames": 40,
+      "design.canvases": 8.6,
+      "design.room": 6.3,
+      "design.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "film",
+     "peakMB": 65.8,
+     "at": "film, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "design.frames": 40,
+      "design.canvases": 4.2,
+      "design.room": 6.3,
+      "design.edge": 2.6,
+      "film.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set",
+     "peakMB": 54,
+     "at": "set, pose R_A1",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "film.canvases": 0.4,
+      "set.frames": 18,
+      "set.canvases": 20.4,
+      "set.room": 6.3,
+      "set.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "build",
+     "peakMB": 70,
+     "at": "build, pose frame_04",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "film.canvases": 0.4,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "grow",
+     "peakMB": 78.2,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "film.canvases": 0.4,
+      "build.frames": 2.4,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "design again",
+     "peakMB": 73.4,
+     "at": "design, during a painting or a switch, pose R_A1_sketch",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "design.room": 6.3,
+      "film.canvases": 0.4,
+      "build.frames": 2.4,
+      "grow.frames": 47.7,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  "Film → Design → Grow → Build → Set": {
+   "highestMB": 77,
+   "stages": [
+    {
+     "scene": "film",
+     "peakMB": 43.7,
+     "at": "film, during a painting or a switch, pose R_A1_film",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "film.frames": 20.9,
+      "film.canvases": 7.5,
+      "film.room": 6.3,
+      "film.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "design",
+     "peakMB": 64.2,
+     "at": "design, during a painting or a switch, pose R_A1_sketch",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "film.canvases": 0.4,
+      "design.frames": 40,
+      "design.canvases": 8.6,
+      "design.room": 6.3,
+      "design.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "grow",
+     "peakMB": 75.9,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "film.canvases": 0.4,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "build",
+     "peakMB": 73.1,
+     "at": "build, pose frame_01",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "film.canvases": 0.4,
+      "grow.frames": 3,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set",
+     "peakMB": 77,
+     "at": "set, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "film.canvases": 0.4,
+      "grow.frames": 3,
+      "build.frames": 49.6,
+      "build.canvases": 2.4,
+      "build.room": 6.3,
+      "build.edge": 2.6,
+      "set.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "film again",
+     "peakMB": 63,
+     "at": "film, during a painting or a switch, pose R_A1_film",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "film.canvases": 0.4,
+      "film.room": 6.3,
+      "grow.frames": 3,
+      "build.frames": 2.4,
+      "set.frames": 18,
+      "set.canvases": 19.5,
+      "set.room": 6.3,
+      "set.edge": 2.6
+     },
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  "Film → Build → Design → Set → Grow": {
+   "highestMB": 78.2,
+   "stages": [
+    {
+     "scene": "film",
+     "peakMB": 43.7,
+     "at": "film, during a painting or a switch, pose R_A1_film",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "film.frames": 20.9,
+      "film.canvases": 7.5,
+      "film.room": 6.3,
+      "film.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "build",
+     "peakMB": 70,
+     "at": "build, pose frame_01",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "film.canvases": 0.4,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "design",
+     "peakMB": 74,
+     "at": "design, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "film.canvases": 0.4,
+      "build.frames": 49.6,
+      "build.canvases": 2.4,
+      "build.room": 6.3,
+      "build.edge": 2.6,
+      "design.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set",
+     "peakMB": 68.5,
+     "at": "set, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "film.canvases": 0.4,
+      "build.frames": 2.4,
+      "design.frames": 40,
+      "design.canvases": 4.2,
+      "design.room": 6.3,
+      "design.edge": 2.6,
+      "set.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "grow",
+     "peakMB": 78.2,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "film.canvases": 0.4,
+      "build.frames": 2.4,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "film again",
+     "peakMB": 73.4,
+     "at": "film, during a painting or a switch, pose R_A1_film",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "film.canvases": 0.4,
+      "film.room": 6.3,
+      "build.frames": 2.4,
+      "grow.frames": 47.7,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  "Set → Build → Grow → Design → Film": {
+   "highestMB": 77.9,
+   "stages": [
+    {
+     "scene": "set",
+     "peakMB": 53.7,
+     "at": "set, pose R_A2_stroke_low",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "set.frames": 18,
+      "set.canvases": 20.4,
+      "set.room": 6.3,
+      "set.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "build",
+     "peakMB": 69.7,
+     "at": "build, pose frame_02_03a",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "grow",
+     "peakMB": 77.9,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "build.frames": 2.4,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "design",
+     "peakMB": 74.8,
+     "at": "design, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "build.frames": 2.4,
+      "grow.frames": 47.7,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6,
+      "design.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "film",
+     "peakMB": 71.2,
+     "at": "film, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "build.frames": 2.4,
+      "grow.frames": 3,
+      "design.frames": 40,
+      "design.canvases": 4.2,
+      "design.room": 6.3,
+      "design.edge": 2.6,
+      "film.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set again",
+     "peakMB": 57.6,
+     "at": "set, during a painting or a switch, pose R_A1",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "set.frames": 18,
+      "set.canvases": 20.3,
+      "set.room": 6.3,
+      "set.edge": 2.6,
+      "build.frames": 2.4,
+      "grow.frames": 3,
+      "film.canvases": 0.4
+     },
+     "framesSheSkipped": 0
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  "Set → Design → Build → Film → Grow": {
+   "highestMB": 78.8,
+   "stages": [
+    {
+     "scene": "set",
+     "peakMB": 53.7,
+     "at": "set, pose R_A2_stroke_low",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "set.frames": 18,
+      "set.canvases": 20.4,
+      "set.room": 6.3,
+      "set.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "design",
+     "peakMB": 63.8,
+     "at": "design, during a painting or a switch, pose R_A1_sketch",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "design.frames": 40,
+      "design.canvases": 8.6,
+      "design.room": 6.3,
+      "design.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "build",
+     "peakMB": 69.7,
+     "at": "build, pose frame_01",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "film",
+     "peakMB": 73.6,
+     "at": "film, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 4.8,
+      "build.frames": 49.6,
+      "build.canvases": 2.4,
+      "build.room": 6.3,
+      "build.edge": 2.6,
+      "film.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "grow",
+     "peakMB": 78.8,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "build.frames": 3,
+      "film.canvases": 0.4,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set again",
+     "peakMB": 74,
+     "at": "set, during a painting or a switch, pose R_A1",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "set.room": 6.3,
+      "build.frames": 3,
+      "film.canvases": 0.4,
+      "grow.frames": 47.7,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "framesSheSkipped": 0
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  }
+ },
+ "summary": {
+  "ordersRun": 30,
+  "highestMB": 78.9,
+  "budgetMB": 80,
+  "underTheBudget": true,
+  "highestWasIn": "grow, pose mist_to_write#3",
+  "setItself": {
+   "peakMB": 77,
+   "at": "set, during a painting or a switch, pose -",
+   "partsMB": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "sheet": 4.8,
+    "film.canvases": 0.4,
+    "grow.frames": 3,
+    "build.frames": 49.6,
+    "build.canvases": 2.4,
+    "build.room": 6.3,
+    "build.edge": 2.6,
+    "set.room": 6.3
+   }
+  },
+  "setHoldsWhenAway": {
+   "mostMB": 0,
+   "parts": {}
+  },
+  "everyReactionInFull": true
+ },
+ "return visitor (the short brush)": {
+  "Build → Grow → Design → Film → Set": {
+   "highestMB": 77.9,
+   "stages": [
+    {
+     "scene": "build",
+     "peakMB": 64.9,
+     "at": "build, pose frame_01",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "grow",
+     "peakMB": 77.9,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "build.frames": 2.4,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 4,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "design",
+     "peakMB": 73,
+     "at": "design, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "build.frames": 2.4,
+      "grow.frames": 47.7,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6,
+      "design.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "film",
+     "peakMB": 69.4,
+     "at": "film, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "build.frames": 2.4,
+      "grow.frames": 3,
+      "design.frames": 40,
+      "design.canvases": 4.2,
+      "design.room": 6.3,
+      "design.edge": 2.6,
+      "film.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set",
+     "peakMB": 58,
+     "at": "set, pose R_A2_stroke_low",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "build.frames": 2.4,
+      "grow.frames": 3,
+      "film.canvases": 0.4,
+      "set.frames": 18,
+      "set.canvases": 20.7,
+      "set.room": 6.3,
+      "set.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "build again",
+     "peakMB": 71.3,
+     "at": "build, during a painting or a switch, pose frame_01",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6,
+      "grow.frames": 3,
+      "film.canvases": 0.4
+     },
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  "Grow → Design → Film → Set → Build": {
+   "highestMB": 78.6,
+   "stages": [
+    {
+     "scene": "grow",
+     "peakMB": 75.5,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "design",
+     "peakMB": 70.6,
+     "at": "design, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "grow.frames": 47.7,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6,
+      "design.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "film",
+     "peakMB": 67,
+     "at": "film, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "grow.frames": 3,
+      "design.frames": 40,
+      "design.canvases": 4.2,
+      "design.room": 6.3,
+      "design.edge": 2.6,
+      "film.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set",
+     "peakMB": 55.6,
+     "at": "set, pose R_A1",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "grow.frames": 3,
+      "film.canvases": 0.4,
+      "set.frames": 18,
+      "set.canvases": 20.7,
+      "set.room": 6.3,
+      "set.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "build",
+     "peakMB": 71.3,
+     "at": "build, pose frame_01",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "grow.frames": 3,
+      "film.canvases": 0.4,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "grow again",
+     "peakMB": 78.6,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6,
+      "film.canvases": 0.4,
+      "build.frames": 2.8
+     },
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  "Design → Film → Set → Build → Grow": {
+   "highestMB": 78.2,
+   "stages": [
+    {
+     "scene": "design",
+     "peakMB": 60,
+     "at": "design, pose R_A1_sketch",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "design.frames": 40,
+      "design.canvases": 9.5,
+      "design.room": 6.3,
+      "design.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "film",
+     "peakMB": 64,
+     "at": "film, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "design.frames": 40,
+      "design.canvases": 4.2,
+      "design.room": 6.3,
+      "design.edge": 2.6,
+      "film.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set",
+     "peakMB": 52.6,
+     "at": "set, pose R_A2_stroke_low",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "film.canvases": 0.4,
+      "set.frames": 18,
+      "set.canvases": 20.7,
+      "set.room": 6.3,
+      "set.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "build",
+     "peakMB": 68.2,
+     "at": "build, pose frame_02_03ab",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "film.canvases": 0.4,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "grow",
+     "peakMB": 78.2,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "film.canvases": 0.4,
+      "build.frames": 2.4,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 2,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "design again",
+     "peakMB": 73.4,
+     "at": "design, during a painting or a switch, pose R_A1_sketch",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "design.room": 6.3,
+      "film.canvases": 0.4,
+      "build.frames": 2.4,
+      "grow.frames": 47.7,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  "Film → Set → Build → Grow → Design": {
+   "highestMB": 78.2,
+   "stages": [
+    {
+     "scene": "film",
+     "peakMB": 39.2,
+     "at": "film, pose R_A1_film",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "film.frames": 20.9,
+      "film.canvases": 7.7,
+      "film.room": 6.3,
+      "film.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set",
+     "peakMB": 50,
+     "at": "set, pose R_A2_stroke_low",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "film.canvases": 0.4,
+      "set.frames": 18,
+      "set.canvases": 21.1,
+      "set.room": 6.3,
+      "set.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "build",
+     "peakMB": 68.2,
+     "at": "build, pose frame_01",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "film.canvases": 0.4,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "grow",
+     "peakMB": 78.2,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "film.canvases": 0.4,
+      "build.frames": 2.4,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "design",
+     "peakMB": 73.4,
+     "at": "design, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "film.canvases": 0.4,
+      "build.frames": 2.4,
+      "grow.frames": 47.7,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6,
+      "design.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "film again",
+     "peakMB": 69.8,
+     "at": "film, during a painting or a switch, pose R_A1_film",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "film.canvases": 0.4,
+      "film.room": 6.3,
+      "build.frames": 2.4,
+      "grow.frames": 3,
+      "design.frames": 40,
+      "design.canvases": 4.2,
+      "design.room": 6.3,
+      "design.edge": 2.6
+     },
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  "Set → Build → Grow → Design → Film": {
+   "highestMB": 77.9,
+   "stages": [
+    {
+     "scene": "set",
+     "peakMB": 49.6,
+     "at": "set, pose R_T_A1_A2_2",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "set.frames": 18,
+      "set.canvases": 21.1,
+      "set.room": 6.3,
+      "set.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "build",
+     "peakMB": 67.9,
+     "at": "build, pose frame_01_02",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "grow",
+     "peakMB": 77.9,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "build.frames": 2.4,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "design",
+     "peakMB": 73,
+     "at": "design, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "build.frames": 2.4,
+      "grow.frames": 47.7,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6,
+      "design.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "film",
+     "peakMB": 69.4,
+     "at": "film, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "build.frames": 2.4,
+      "grow.frames": 3,
+      "design.frames": 40,
+      "design.canvases": 4.2,
+      "design.room": 6.3,
+      "design.edge": 2.6,
+      "film.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set again",
+     "peakMB": 57.6,
+     "at": "set, during a painting or a switch, pose R_A1",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "set.frames": 18,
+      "set.canvases": 20.3,
+      "set.room": 6.3,
+      "set.edge": 2.6,
+      "build.frames": 2.4,
+      "grow.frames": 3,
+      "film.canvases": 0.4
+     },
+     "framesSheSkipped": 0
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  "Build → Design → Set → Grow → Film": {
+   "highestMB": 77.9,
+   "stages": [
+    {
+     "scene": "build",
+     "peakMB": 64.9,
+     "at": "build, pose frame_01",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "design",
+     "peakMB": 71.8,
+     "at": "design, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "build.frames": 49.6,
+      "build.canvases": 2.4,
+      "build.room": 6.3,
+      "build.edge": 2.6,
+      "design.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set",
+     "peakMB": 66.4,
+     "at": "set, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "build.frames": 2.4,
+      "design.frames": 40,
+      "design.canvases": 4.2,
+      "design.room": 6.3,
+      "design.edge": 2.6,
+      "set.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "grow",
+     "peakMB": 77.9,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "build.frames": 2.4,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "film",
+     "peakMB": 73,
+     "at": "film, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "build.frames": 2.4,
+      "grow.frames": 47.7,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6,
+      "film.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "build again",
+     "peakMB": 71.3,
+     "at": "build, during a painting or a switch, pose frame_01",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6,
+      "grow.frames": 3,
+      "film.canvases": 0.4
+     },
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  "Grow → Film → Build → Design → Set": {
+   "highestMB": 78.2,
+   "stages": [
+    {
+     "scene": "grow",
+     "peakMB": 75.5,
+     "at": "grow, pose mist_to_write#5",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 1,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "film",
+     "peakMB": 70.6,
+     "at": "film, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "grow.frames": 47.7,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6,
+      "film.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "build",
+     "peakMB": 71.3,
+     "at": "build, pose frame_02",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "grow.frames": 3,
+      "film.canvases": 0.4,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "design",
+     "peakMB": 75.2,
+     "at": "design, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "grow.frames": 3,
+      "film.canvases": 0.4,
+      "build.frames": 49.6,
+      "build.canvases": 2.4,
+      "build.room": 6.3,
+      "build.edge": 2.6,
+      "design.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set",
+     "peakMB": 69.8,
+     "at": "set, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "grow.frames": 3,
+      "film.canvases": 0.4,
+      "build.frames": 2.4,
+      "design.frames": 40,
+      "design.canvases": 4.2,
+      "design.room": 6.3,
+      "design.edge": 2.6,
+      "set.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "grow again",
+     "peakMB": 78.2,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6,
+      "film.canvases": 0.4,
+      "build.frames": 2.4
+     },
+     "framesSheSkipped": 1,
+     "setHoldsMB": {}
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  "Design → Set → Grow → Film → Build": {
+   "highestMB": 75.5,
+   "stages": [
+    {
+     "scene": "design",
+     "peakMB": 60,
+     "at": "design, pose R_A1_sketch",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "design.frames": 40,
+      "design.canvases": 9.5,
+      "design.room": 6.3,
+      "design.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set",
+     "peakMB": 64,
+     "at": "set, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "design.frames": 40,
+      "design.canvases": 4.2,
+      "design.room": 6.3,
+      "design.edge": 2.6,
+      "set.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "grow",
+     "peakMB": 75.5,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 3,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "film",
+     "peakMB": 70.6,
+     "at": "film, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "grow.frames": 47.7,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6,
+      "film.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "build",
+     "peakMB": 71.3,
+     "at": "build, pose frame_02_03a",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "grow.frames": 3,
+      "film.canvases": 0.4,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "design again",
+     "peakMB": 75.2,
+     "at": "design, during a painting or a switch, pose R_A1_sketch",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "design.room": 6.3,
+      "grow.frames": 3,
+      "film.canvases": 0.4,
+      "build.frames": 49.6,
+      "build.canvases": 2.4,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  "Film → Build → Design → Set → Grow": {
+   "highestMB": 78.9,
+   "stages": [
+    {
+     "scene": "film",
+     "peakMB": 39.2,
+     "at": "film, pose R_A1_film",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "film.frames": 20.9,
+      "film.canvases": 7.7,
+      "film.room": 6.3,
+      "film.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "build",
+     "peakMB": 68.2,
+     "at": "build, pose frame_01",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "film.canvases": 0.4,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "design",
+     "peakMB": 72.2,
+     "at": "design, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "film.canvases": 0.4,
+      "build.frames": 49.6,
+      "build.canvases": 2.4,
+      "build.room": 6.3,
+      "build.edge": 2.6,
+      "design.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set",
+     "peakMB": 67.5,
+     "at": "set, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "film.canvases": 0.4,
+      "build.frames": 3.1,
+      "design.frames": 40,
+      "design.canvases": 4.2,
+      "design.room": 6.3,
+      "design.edge": 2.6,
+      "set.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "grow",
+     "peakMB": 78.9,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "film.canvases": 0.4,
+      "build.frames": 3.1,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "film again",
+     "peakMB": 74.1,
+     "at": "film, during a painting or a switch, pose R_A1_film",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "film.canvases": 0.4,
+      "film.room": 6.3,
+      "build.frames": 3.1,
+      "grow.frames": 47.7,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  "Set → Grow → Film → Build → Design": {
+   "highestMB": 75.5,
+   "stages": [
+    {
+     "scene": "set",
+     "peakMB": 49.6,
+     "at": "set, pose R_A1",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "set.frames": 18,
+      "set.canvases": 21.1,
+      "set.room": 6.3,
+      "set.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "grow",
+     "peakMB": 75.5,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "film",
+     "peakMB": 70.6,
+     "at": "film, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "grow.frames": 47.7,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6,
+      "film.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "build",
+     "peakMB": 71.3,
+     "at": "build, pose frame_02_03a",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "grow.frames": 3,
+      "film.canvases": 0.4,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "design",
+     "peakMB": 75.2,
+     "at": "design, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "grow.frames": 3,
+      "film.canvases": 0.4,
+      "build.frames": 49.6,
+      "build.canvases": 2.4,
+      "build.room": 6.3,
+      "build.edge": 2.6,
+      "design.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set again",
+     "peakMB": 69.8,
+     "at": "set, during a painting or a switch, pose R_A1",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "set.room": 6.3,
+      "grow.frames": 3,
+      "film.canvases": 0.4,
+      "build.frames": 2.4,
+      "design.frames": 40,
+      "design.canvases": 4.2,
+      "design.room": 6.3,
+      "design.edge": 2.6
+     },
+     "framesSheSkipped": 0
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  "Build → Film → Grow → Set → Design": {
+   "highestMB": 78.5,
+   "stages": [
+    {
+     "scene": "build",
+     "peakMB": 64.9,
+     "at": "build, pose frame_01",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "film",
+     "peakMB": 71.8,
+     "at": "film, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "build.frames": 49.6,
+      "build.canvases": 2.4,
+      "build.room": 6.3,
+      "build.edge": 2.6,
+      "film.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "grow",
+     "peakMB": 78.5,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "build.frames": 2.6,
+      "film.canvases": 0.4,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set",
+     "peakMB": 73.6,
+     "at": "set, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "build.frames": 2.6,
+      "film.canvases": 0.4,
+      "grow.frames": 47.7,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6,
+      "set.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "design",
+     "peakMB": 69,
+     "at": "design, during a painting or a switch, pose R_A1_sketch",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "build.frames": 2.6,
+      "film.canvases": 0.4,
+      "grow.frames": 3,
+      "design.frames": 40,
+      "design.canvases": 9.5,
+      "design.room": 6.3,
+      "design.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "build again",
+     "peakMB": 71.3,
+     "at": "build, during a painting or a switch, pose frame_01_02",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6,
+      "film.canvases": 0.4,
+      "grow.frames": 3
+     },
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  "Grow → Set → Design → Build → Film": {
+   "highestMB": 78.2,
+   "stages": [
+    {
+     "scene": "grow",
+     "peakMB": 75.5,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set",
+     "peakMB": 70.6,
+     "at": "set, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "grow.frames": 47.7,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6,
+      "set.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "design",
+     "peakMB": 66,
+     "at": "design, during a painting or a switch, pose R_A1_sketch",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "grow.frames": 3,
+      "design.frames": 40,
+      "design.canvases": 9.5,
+      "design.room": 6.3,
+      "design.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "build",
+     "peakMB": 70.9,
+     "at": "build, pose frame_01_02",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "grow.frames": 3,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "film",
+     "peakMB": 74.8,
+     "at": "film, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "grow.frames": 3,
+      "build.frames": 49.6,
+      "build.canvases": 2.4,
+      "build.room": 6.3,
+      "build.edge": 2.6,
+      "film.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "grow again",
+     "peakMB": 78.2,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6,
+      "build.frames": 2.4,
+      "film.canvases": 0.4
+     },
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  "Design → Build → Film → Grow → Set": {
+   "highestMB": 78.2,
+   "stages": [
+    {
+     "scene": "design",
+     "peakMB": 60,
+     "at": "design, pose R_A1_sketch",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "design.frames": 40,
+      "design.canvases": 9.5,
+      "design.room": 6.3,
+      "design.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "build",
+     "peakMB": 67.9,
+     "at": "build, pose frame_03",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "film",
+     "peakMB": 71.8,
+     "at": "film, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "build.frames": 49.6,
+      "build.canvases": 2.4,
+      "build.room": 6.3,
+      "build.edge": 2.6,
+      "film.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "grow",
+     "peakMB": 78.2,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "build.frames": 2.4,
+      "film.canvases": 0.4,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set",
+     "peakMB": 73.4,
+     "at": "set, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "build.frames": 2.4,
+      "film.canvases": 0.4,
+      "grow.frames": 47.7,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6,
+      "set.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "design again",
+     "peakMB": 67.7,
+     "at": "design, during a painting or a switch, pose R_A1_sketch",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "design.frames": 40,
+      "design.canvases": 8.4,
+      "design.room": 6.3,
+      "design.edge": 2.6,
+      "build.frames": 2.4,
+      "film.canvases": 0.4,
+      "grow.frames": 3
+     },
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  "Film → Grow → Set → Design → Build": {
+   "highestMB": 75.9,
+   "stages": [
+    {
+     "scene": "film",
+     "peakMB": 39.2,
+     "at": "film, pose R_A1_film",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "film.frames": 20.9,
+      "film.canvases": 7.7,
+      "film.room": 6.3,
+      "film.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "grow",
+     "peakMB": 75.9,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "film.canvases": 0.4,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set",
+     "peakMB": 71,
+     "at": "set, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "film.canvases": 0.4,
+      "grow.frames": 47.7,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6,
+      "set.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "design",
+     "peakMB": 66.4,
+     "at": "design, during a painting or a switch, pose R_A1_sketch",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "film.canvases": 0.4,
+      "grow.frames": 3,
+      "design.frames": 40,
+      "design.canvases": 9.5,
+      "design.room": 6.3,
+      "design.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "build",
+     "peakMB": 71.3,
+     "at": "build, pose frame_02",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "film.canvases": 0.4,
+      "grow.frames": 3,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "film again",
+     "peakMB": 75.2,
+     "at": "film, during a painting or a switch, pose R_A1_film",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "film.canvases": 0.4,
+      "film.room": 6.3,
+      "grow.frames": 3,
+      "build.frames": 49.6,
+      "build.canvases": 2.4,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  "Set → Design → Build → Film → Grow": {
+   "highestMB": 78.2,
+   "stages": [
+    {
+     "scene": "set",
+     "peakMB": 49.6,
+     "at": "set, pose R_A2_stroke_low",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "set.frames": 18,
+      "set.canvases": 21.1,
+      "set.room": 6.3,
+      "set.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "design",
+     "peakMB": 63,
+     "at": "design, during a painting or a switch, pose R_A1_sketch",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "design.frames": 40,
+      "design.canvases": 9.5,
+      "design.room": 6.3,
+      "design.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "build",
+     "peakMB": 67.9,
+     "at": "build, pose frame_01",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "film",
+     "peakMB": 71.8,
+     "at": "film, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "build.frames": 49.6,
+      "build.canvases": 2.4,
+      "build.room": 6.3,
+      "build.edge": 2.6,
+      "film.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "grow",
+     "peakMB": 78.2,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "build.frames": 2.4,
+      "film.canvases": 0.4,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set again",
+     "peakMB": 73.4,
+     "at": "set, during a painting or a switch, pose R_A1",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "set.room": 6.3,
+      "build.frames": 2.4,
+      "film.canvases": 0.4,
+      "grow.frames": 47.7,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "framesSheSkipped": 0
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  "Build → Set → Film → Design → Grow": {
+   "highestMB": 78.2,
+   "stages": [
+    {
+     "scene": "build",
+     "peakMB": 64.9,
+     "at": "build, pose frame_01",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set",
+     "peakMB": 71.8,
+     "at": "set, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "build.frames": 49.6,
+      "build.canvases": 2.4,
+      "build.room": 6.3,
+      "build.edge": 2.6,
+      "set.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "film",
+     "peakMB": 59.6,
+     "at": "film, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "build.frames": 2.4,
+      "set.frames": 18,
+      "set.canvases": 19.5,
+      "set.room": 6.3,
+      "set.edge": 2.6,
+      "film.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "design",
+     "peakMB": 65.7,
+     "at": "design, during a painting or a switch, pose R_A1_sketch",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "build.frames": 2.4,
+      "film.canvases": 0.4,
+      "design.frames": 40,
+      "design.canvases": 9.5,
+      "design.room": 6.3,
+      "design.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "grow",
+     "peakMB": 78.2,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "build.frames": 2.4,
+      "film.canvases": 0.4,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "build again",
+     "peakMB": 73.4,
+     "at": "build, during a painting or a switch, pose frame_01",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "build.frames": 2.4,
+      "build.room": 6.3,
+      "film.canvases": 0.4,
+      "grow.frames": 47.7,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  "Grow → Build → Set → Film → Design": {
+   "highestMB": 78.2,
+   "stages": [
+    {
+     "scene": "grow",
+     "peakMB": 75.5,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "build",
+     "peakMB": 70.9,
+     "at": "build, pose frame_01_02",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "grow.frames": 3,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set",
+     "peakMB": 74.8,
+     "at": "set, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "grow.frames": 3,
+      "build.frames": 49.6,
+      "build.canvases": 2.4,
+      "build.room": 6.3,
+      "build.edge": 2.6,
+      "set.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "film",
+     "peakMB": 62.7,
+     "at": "film, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "grow.frames": 3,
+      "build.frames": 2.4,
+      "set.frames": 18,
+      "set.canvases": 19.5,
+      "set.room": 6.3,
+      "set.edge": 2.6,
+      "film.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "design",
+     "peakMB": 68.8,
+     "at": "design, during a painting or a switch, pose R_A1_sketch",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "grow.frames": 3,
+      "build.frames": 2.4,
+      "film.canvases": 0.4,
+      "design.frames": 40,
+      "design.canvases": 9.5,
+      "design.room": 6.3,
+      "design.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "grow again",
+     "peakMB": 78.2,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6,
+      "build.frames": 2.4,
+      "film.canvases": 0.4
+     },
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  "Design → Grow → Build → Set → Film": {
+   "highestMB": 75.5,
+   "stages": [
+    {
+     "scene": "design",
+     "peakMB": 60,
+     "at": "design, pose R_A1_sketch",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "design.frames": 40,
+      "design.canvases": 9.5,
+      "design.room": 6.3,
+      "design.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "grow",
+     "peakMB": 75.5,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "build",
+     "peakMB": 70.9,
+     "at": "build, pose frame_01",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "grow.frames": 3,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set",
+     "peakMB": 74.8,
+     "at": "set, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "grow.frames": 3,
+      "build.frames": 49.6,
+      "build.canvases": 2.4,
+      "build.room": 6.3,
+      "build.edge": 2.6,
+      "set.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "film",
+     "peakMB": 62.7,
+     "at": "film, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "grow.frames": 3,
+      "build.frames": 2.4,
+      "set.frames": 18,
+      "set.canvases": 19.5,
+      "set.room": 6.3,
+      "set.edge": 2.6,
+      "film.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "design again",
+     "peakMB": 67.7,
+     "at": "design, during a painting or a switch, pose R_A1_sketch",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "design.frames": 40,
+      "design.canvases": 8.4,
+      "design.room": 6.3,
+      "design.edge": 2.6,
+      "grow.frames": 3,
+      "build.frames": 2.4,
+      "film.canvases": 0.4
+     },
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  "Film → Design → Grow → Build → Set": {
+   "highestMB": 75.9,
+   "stages": [
+    {
+     "scene": "film",
+     "peakMB": 39.2,
+     "at": "film, pose R_A1_film",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "film.frames": 20.9,
+      "film.canvases": 7.7,
+      "film.room": 6.3,
+      "film.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "design",
+     "peakMB": 63.4,
+     "at": "design, during a painting or a switch, pose R_A1_sketch",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "film.canvases": 0.4,
+      "design.frames": 40,
+      "design.canvases": 9.5,
+      "design.room": 6.3,
+      "design.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "grow",
+     "peakMB": 75.9,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "film.canvases": 0.4,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "build",
+     "peakMB": 71.3,
+     "at": "build, pose frame_01",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "film.canvases": 0.4,
+      "grow.frames": 3,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set",
+     "peakMB": 75.2,
+     "at": "set, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "film.canvases": 0.4,
+      "grow.frames": 3,
+      "build.frames": 49.6,
+      "build.canvases": 2.4,
+      "build.room": 6.3,
+      "build.edge": 2.6,
+      "set.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "film again",
+     "peakMB": 63.6,
+     "at": "film, during a painting or a switch, pose R_A1_film",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "film.canvases": 0.4,
+      "film.room": 6.3,
+      "grow.frames": 3,
+      "build.frames": 3,
+      "set.frames": 18,
+      "set.canvases": 19.5,
+      "set.room": 6.3,
+      "set.edge": 2.6
+     },
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  "Set → Film → Design → Grow → Build": {
+   "highestMB": 75.9,
+   "stages": [
+    {
+     "scene": "set",
+     "peakMB": 49.6,
+     "at": "set, pose R_A2_stroke_low",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "set.frames": 18,
+      "set.canvases": 21.1,
+      "set.room": 6.3,
+      "set.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0
+    },
+    {
+     "scene": "film",
+     "peakMB": 57.3,
+     "at": "film, during a painting or a switch, pose -",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "set.frames": 18,
+      "set.canvases": 19.5,
+      "set.room": 6.3,
+      "set.edge": 2.6,
+      "film.room": 6.3
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "design",
+     "peakMB": 63.4,
+     "at": "design, during a painting or a switch, pose R_A1_sketch",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "film.canvases": 0.4,
+      "design.frames": 40,
+      "design.canvases": 9.5,
+      "design.room": 6.3,
+      "design.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "grow",
+     "peakMB": 75.9,
+     "at": "grow, pose mist_to_write#3",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "film.canvases": 0.4,
+      "grow.frames": 61.9,
+      "grow.canvases": 3.1,
+      "grow.room": 6.3,
+      "grow.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "build",
+     "peakMB": 71.3,
+     "at": "build, pose frame_02_03a",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "film.canvases": 0.4,
+      "grow.frames": 3,
+      "build.frames": 49.6,
+      "build.canvases": 4.7,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "fullReaction": true,
+     "framesSheSkipped": 0,
+     "setHoldsMB": {}
+    },
+    {
+     "scene": "set again",
+     "peakMB": 75.2,
+     "at": "set, during a painting or a switch, pose R_A1",
+     "partsMB": {
+      "sprites": 0.9,
+      "logo": 0.7,
+      "sheet": 3,
+      "set.room": 6.3,
+      "film.canvases": 0.4,
+      "grow.frames": 3,
+      "build.frames": 49.6,
+      "build.canvases": 2.4,
+      "build.room": 6.3,
+      "build.edge": 2.6
+     },
+     "framesSheSkipped": 0
+    }
+   ],
+   "errors": [
+    "Failed to load resource: resource unavailable",
+    "Failed to load resource: resource unavailable"
+   ]
+  }
+ }
+}

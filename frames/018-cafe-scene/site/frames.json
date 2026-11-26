@@ -42,11 +42,12 @@
    "x": 1845,
    "y": 1234,
    "w": 246,
-   "h": 141,
+   "h": 166,
    "stills": [
     "cat_1",
     "cat_2",
-    "cat_3"
+    "cat_F1",
+    "cat_F2"
    ]
   },
   {
@@ -69,8 +70,12 @@
    "h": 562,
    "stills": [
     "O_1",
-    "O_2",
-    "O_3"
+    "O_blink",
+    "T1",
+    "T2",
+    "R0",
+    "R1",
+    "R2"
    ]
   },
   {
@@ -81,8 +86,11 @@
    "h": 280,
    "stills": [
     "B_1",
+    "B_P1",
     "B_2_polish",
+    "B_P2",
     "B_3_polish",
+    "B_P3",
     "B_4_glance"
    ]
   },
@@ -106,13 +114,15 @@
   },
   {
    "actor": "mum",
-   "x": 672,
-   "y": 591,
-   "w": 90,
-   "h": 69,
+   "x": 671,
+   "y": 590,
+   "w": 186,
+   "h": 229,
    "stills": [
     "M_blink_half",
-    "M_blink_closed"
+    "M_blink_closed",
+    "M_S1",
+    "M_S2"
    ]
   }
  ],
@@ -139,16 +149,24 @@
   "fan_19": "fan/fan_19.png",
   "cat_1": "cat/cat_1.png",
   "cat_2": "cat/cat_2.png",
-  "cat_3": "cat/cat_3.png",
+  "cat_F1": "cat/cat_F1.png",
+  "cat_F2": "cat/cat_F2.png",
   "C_1": "child/C_1.png",
   "C_2": "child/C_2.png",
   "C_3": "child/C_3.png",
   "O_1": "oldman/O_1.png",
-  "O_2": "oldman/O_2.png",
-  "O_3": "oldman/O_3.png",
+  "O_blink": "oldman/O_blink.png",
+  "T1": "oldman/T1.png",
+  "T2": "oldman/T2.png",
+  "R0": "oldman/R0.png",
+  "R1": "oldman/R1.png",
+  "R2": "oldman/R2.png",
   "B_1": "barista/B_1.png",
+  "B_P1": "barista/B_P1.png",
   "B_2_polish": "barista/B_2_polish.png",
+  "B_P2": "barista/B_P2.png",
   "B_3_polish": "barista/B_3_polish.png",
+  "B_P3": "barista/B_P3.png",
   "B_4_glance": "barista/B_4_glance.png",
   "R_A1_sketch": "rachel/R_A1_sketch.png",
   "R_A2_stroke": "rachel/R_A2_stroke.png",
@@ -160,7 +178,9 @@
   "R_K1_blink": "rachel/R_K1_blink.png",
   "R_K2_smile": "rachel/R_K2_smile.png",
   "M_blink_half": "mum/M_blink_half.png",
-  "M_blink_closed": "mum/M_blink_closed.png"
+  "M_blink_closed": "mum/M_blink_closed.png",
+  "M_S1": "mum/M_S1.png",
+  "M_S2": "mum/M_S2.png"
  },
  "clips": {}
 }
