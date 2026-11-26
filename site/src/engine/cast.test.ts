@@ -301,7 +301,19 @@ describe('the rest of the café (package v10)', () => {
     expect(steps.some((step) => step.pose === 'O_2' || step.pose === 'O_3')).toBe(false);
   });
 
-  it('the cat flicks her tail out and back twice a loop, at its start and about 60% through, and breathes in between', () => {
+  it('the cat rests on cat_1, tail in: her routine opens on a short cat_1 hold before the flick (job 024)', () => {
+    const { frames: own, routine } = actor('cat');
+    // Her rest pose is what the paint-in, a pause and reduced motion show.
+    expect(restOf(own, routine)).toBe('cat_1');
+    const first = take('cat', 1)[0];
+    expect(first.pose).toBe('cat_1');
+    expect(first.ms).toBeGreaterThanOrEqual(600);
+    expect(first.ms).toBeLessThanOrEqual(900);
+    expect(first.fade).toBeUndefined();
+    for (let seed = 1; seed <= 20; seed++) expect(take('cat', 2, seed).map((step) => step.pose)).toEqual(['cat_1', 'cat_F1']);
+  });
+
+  it('the cat flicks her tail out and back twice a loop, near its start and about 60% through, and breathes in between', () => {
     const steps = take('cat', 2100);
     const FLICK: Array<[string, number]> = [['cat_F1', 110], ['cat_F2', 500], ['cat_F1', 110]];
     let flicks = 0;
@@ -390,7 +402,8 @@ describe('fade_ms: a dissolve into a still', () => {
     } as unknown as ClipRoutine;
     const schedule = clipSchedule(own, wrong, seeded(3));
     const steps = Array.from({ length: 300 }, () => schedule.next().value);
-    for (const step of steps) if (step.fade !== undefined) expect(step.fade).toBe(1000);
+    // Only her breathing loop's own dissolves survive (1 s into cat_2, 600 ms into cat_1), never the 400 ms written outside it.
+    for (const step of steps) if (step.fade !== undefined) expect(step.fade).toBe(step.pose === 'cat_2' ? 1000 : 600);
     const reaction = clipReaction(own, wrong)!;
     for (const step of [...reaction.steps, ...reaction.roll(seeded(2))]) expect(step.fade).toBeUndefined();
   });
@@ -400,23 +413,24 @@ describe('fade_ms: a dissolve into a still', () => {
       for (const item of a.routine.routine) if (!('steps' in item)) expect((item as { fade_ms?: number }).fade_ms, `${a.name}, outside a loop`).toBeUndefined();
       for (const item of a.routine.reaction?.steps ?? []) expect((item as { fade_ms?: number }).fade_ms, `${a.name}'s reaction`).toBeUndefined();
     }
-    // The cat breathes on dissolves; her flick, the mum's sip and blink and the old man's page turn cut.
-    expect(take('cat', 210).filter((step) => step.fade === 1000).length).toBeGreaterThan(120);
+    // The cat breathes on dissolves (1 s into cat_2, 600 ms back into cat_1); her flick, the mum's sip and blink and the old man's page turn cut.
+    const catFades = take('cat', 210).filter((step) => step.fade !== undefined);
+    expect(catFades.length).toBeGreaterThan(120);
+    for (const step of catFades) expect(step.fade).toBe(step.pose === 'cat_2' ? 1000 : 600);
     expect(take('mum', 50).every((step) => step.fade === undefined)).toBe(true);
     expect(take('oldman', 50).every((step) => step.fade === undefined)).toBe(true);
   });
 
-  it('never outlasts the hold it opens, but for the cat breathing back to cat_1', () => {
-    // Package v10 (approved with its preview, which plays it the same way): the cat's cat_1 holds are 700-900 ms
-    // and her dissolves 1 s, so the one from cat_2 back to cat_1 is ended at 70-90% by the next step: the same
-    // still again (the loop repeating) or her flick, both cuts.
+  it('never outlasts the hold it opens: every dissolve finishes before the next step', () => {
+    // Job 024: the cat's cat_1 holds are 700-900 ms and her dissolves back into cat_1 are 600 ms, so they finish
+    // (before, at 1 s, the next step cut them at 70-90% and cat_1 snapped in). Her cat_2 dissolves are 1 s in 1.4-1.8 s holds.
     for (const a of actors) {
-      const steps = take(a.name, 400);
-      steps.forEach((step, i) => {
-        if (!step.fade || step.fade <= step.ms) return;
-        // (cat_1 > cat_1: the loop repeating, where the player draws no dissolve at all.)
-        expect(['cat cat_2 > cat_1', 'cat cat_1 > cat_1']).toContain(`${a.name} ${steps[i - 1]?.pose} > ${step.pose}`);
-      });
+      for (let seed = 1; seed <= 5; seed++) {
+        const steps = take(a.name, 400, seed);
+        steps.forEach((step) => {
+          if (step.fade) expect(step.fade, `${a.name} ${step.pose} (${step.ms} ms)`).toBeLessThan(step.ms);
+        });
+      }
     }
   });
 });

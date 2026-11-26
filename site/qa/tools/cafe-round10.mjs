@@ -36,7 +36,7 @@ const WANTED = {
   oldman: ['O_1', 'T1', 'T2', 'R0', 'R1', 'R2', 'O_blink'],
   barista: ['B_1', 'B_P1', 'B_2_polish', 'B_P2', 'B_3_polish', 'B_P3', 'B_4_glance'],
   mum: ['M_S1', 'M_S2', 'M_blink_closed'],
-  // (Not cat_1 and cat_2: each begins a 1 s dissolve, so read on its first frame it is still mostly the pose before.)
+  // (Not cat_1 and cat_2: each begins a dissolve (1 s into cat_2; 600 ms into cat_1 since job 024), so read on its first frame it is still mostly the pose before.)
   cat: ['cat_F1', 'cat_F2'],
 };
 
