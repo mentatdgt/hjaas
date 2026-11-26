@@ -3,8 +3,8 @@
 From: Fable. For: Wren. 2026-11-27. Job 024 (`024-cafe-cat-fix`).
 - **Branch:** `site/review-fixes`. `main` and `deploy` were not touched. The working tree was clean at the start, so nothing was stashed.
 - **Commits:**
-  - fix, tests and first evidence: `e7755bd`
-  - QA tool fix after review, re-recorded evidence, and this report: the commit after it
+  - fix, tests and first evidence: `d4b4030`
+  - QA tool fix after review, re-recorded evidence, and this report: `664dd70` (plus a one-line hash fix after it)
 - **Art:** `origin/art/cafe-round10` `b47801e` (only the edits were copied; the file was not checked out).
 - **Tool:** `site/qa/tools/cafe-cat.mjs` (`rest`, `film`, `sheets`).
 - **Evidence:** `site/qa/cafe-cat-fix/`.
@@ -31,7 +31,7 @@ From: Fable. For: Wren. 2026-11-27. Job 024 (`024-cafe-cat-fix`).
 ## Checks
 | Check | Result | Where |
 |---|---|---|
-| Package and assets | Only `actors.cat` differs in `routine.json`, in both places. No PNG or WebP changed. Rachel's `avoid` is present. | `git diff 7001996 e7755bd --stat` |
+| Package and assets | Only `actors.cat` differs in `routine.json`, in both places. No PNG or WebP changed. Rachel's `avoid` is present. | `git diff 7001996 d4b4030 --stat` |
 | Rest pose, paint-in | 11 shots taken while the painting ran, every one `cat_1`. The canvas is nearest the `cat_1` still (1.94, against 4.69 for `cat_F1`). | `rest-painting-cat-mid.png`, `rest-painting-cat-late.png`, `rest-webkit.json` |
 | Rest pose, paused | Pause was clicked while the cat showed `cat_F2`; it held `cat_1`. | `rest-paused-cat.png`, `rest-paused-page.png` |
 | Rest pose, reduced motion | The cat stayed on `cat_1` for all 6 s. | `rest-reduced-motion-cat.png`, `rest-reduced-motion-page.png` |
