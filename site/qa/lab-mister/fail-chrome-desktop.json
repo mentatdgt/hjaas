@@ -1,0 +1,139 @@
+{
+ "normal": {
+  "readyMs": 3717,
+  "state": {
+   "scene": "grow",
+   "order": [
+    "mister",
+    "rachel"
+   ],
+   "classes": [
+    "hj-actor",
+    "hj-rachel"
+   ],
+   "leadIsRachel": true,
+   "mist": {
+    "current": "M1",
+    "stocked": true,
+    "has": [
+     "M1",
+     "M2",
+     "M3",
+     "M4"
+    ]
+   },
+   "rachelPose": "A1_mist_aim"
+  },
+  "rachelPosesIn8s": 17,
+  "rachelPoses": [
+   "A1_mist_aim",
+   "A1_blink_half",
+   "A2_mist_squeeze",
+   "A3_mist_lift"
+  ],
+  "found": 1,
+  "mistElements": 1,
+  "warnings": [],
+  "errors": [
+   "request failed: assets/scene2/room.webp (net::ERR_ABORTED)"
+  ],
+  "blockedErrors": 0
+ },
+ "blocked": {
+  "readyMs": 2735,
+  "state": {
+   "scene": "grow",
+   "order": [
+    "rachel"
+   ],
+   "classes": [
+    "hj-rachel"
+   ],
+   "leadIsRachel": true,
+   "mist": null,
+   "rachelPose": "A1_mist_aim"
+  },
+  "rachelPosesIn8s": 15,
+  "rachelPoses": [
+   "A1_mist_aim",
+   "A2_mist_squeeze",
+   "A3_mist_lift",
+   "A1_blink_half"
+  ],
+  "found": 1,
+  "mistElements": 0,
+  "warnings": [
+   "[hjaas] grow: the room's moving parts could not be loaded; it is shown as painted TypeError: Failed to fetch\n    at http://127.0.0.1:5191/src/engine/assets.ts:139:26\n    at underDeadline (http://127.0.0.1:5191/src/engine/assets.ts:64:16)\n    at fetchJson (http://127.0.0.1:5191/src/engine/assets.ts:138:9)\n    at json (http://127.0.0.1:5191/src/engine/scene.ts:24:32)\n    at troupe (http://127.0.0.1:5191/src/engine/scene.ts:242:48)\n    at Casting.scenery (http://127.0.0.1:5191/src/engine/scene.ts:625:25)\n    at Casting.fetch (http://127.0.0.1:5191/src/engine/scene.ts:599:61)\n    at Casting.start (http://127.0.0.1:5191/src/engine/scene.ts:575:21)\n    at Scene.load (http://127.0.0.1:5191/src/engine/scene.ts:724:11)\n    at sceneFor (http://127.0.0.1:5191/src/engine/site.ts:537:17)"
+  ],
+  "errors": [
+   "request failed: assets/scene2/room.webp (net::ERR_CACHE_MISS)"
+  ],
+  "blockedErrors": 5,
+  "shot": "fail-chrome-desktop-blocked.png"
+ },
+ "blocked-stills": {
+  "readyMs": 3356,
+  "state": {
+   "scene": "grow",
+   "order": [
+    "rachel"
+   ],
+   "classes": [
+    "hj-rachel"
+   ],
+   "leadIsRachel": true,
+   "mist": null,
+   "rachelPose": "A1_mist_aim"
+  },
+  "rachelPosesIn8s": 15,
+  "rachelPoses": [
+   "A1_mist_aim",
+   "A2_mist_squeeze",
+   "A3_mist_lift",
+   "A1_blink_half"
+  ],
+  "found": 1,
+  "mistElements": 0,
+  "warnings": [
+   "[hjaas] grow: the room's moving parts could not be loaded; it is shown as painted TypeError: Failed to fetch\n    at http://127.0.0.1:5191/src/engine/assets.ts:128:26\n    at underDeadline (http://127.0.0.1:5191/src/engine/assets.ts:64:16)\n    at fetchBlob (http://127.0.0.1:5191/src/engine/assets.ts:127:9)\n    at load (http://127.0.0.1:5191/src/engine/scene.ts:247:39)\n    at http://127.0.0.1:5191/src/engine/scene.ts:325:36\n    at requiredAsset (http://127.0.0.1:5191/src/engine/assets.ts:28:10)"
+  ],
+  "errors": [
+   "request failed: assets/scene2/room.webp (net::ERR_CACHE_MISS)"
+  ],
+  "blockedErrors": 5,
+  "shot": "fail-chrome-desktop-blocked-stills.png"
+ },
+ "stalled": {
+  "readyMs": 4983,
+  "state": {
+   "scene": "grow",
+   "order": [
+    "rachel"
+   ],
+   "classes": [
+    "hj-rachel"
+   ],
+   "leadIsRachel": true,
+   "mist": null,
+   "rachelPose": "A1_mist_aim"
+  },
+  "rachelPosesIn8s": 15,
+  "rachelPoses": [
+   "A1_mist_aim",
+   "A2_mist_squeeze",
+   "A3_mist_lift",
+   "A1_blink_half"
+  ],
+  "found": 1,
+  "mistElements": 0,
+  "warnings": [
+   "[hjaas] grow: the room's moving parts are late; it is shown as painted"
+  ],
+  "errors": [
+   "request failed: assets/scene2/room.webp (net::ERR_CACHE_MISS)"
+  ],
+  "blockedErrors": 1,
+  "shot": "fail-chrome-desktop-stalled.png"
+ },
+ "ok": false
+}

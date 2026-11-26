@@ -216,6 +216,19 @@ async function samples(page) {
   return { sheet: file, screenPxPerPlatePx: Math.round(s * 100) / 100, seams };
 }
 
+/**
+ * No seam: nothing changes outside the box (a few levels where WebKit's phone layers meet), and what changes at its
+ * rim is the same whichever pose is on (the canvas's own resampling of the room it repeats, static). A seam that
+ * moved with the mist would differ from pose to pose.
+ */
+const seamOk = (seams) => {
+  const all = Object.values(seams);
+  const spread = (key) => Math.max(...all.map((s) => s.rim[key])) - Math.min(...all.map((s) => s.rim[key]));
+  return all.every((s) => s.outside.max <= 8) && spread('p99') <= 2 && spread('mean') <= 0.2;
+};
+/** A request every load of the site has failed, before this job too (WebKit and Chrome: the room's picture asked for twice). */
+const known = (e) => /room\.webp/.test(e) || /Failed to load resource: resource unavailable/.test(e);
+
 const run = {};
 run.cycle = async () => {
   const { browser, page, errors, warnings } = await open();
@@ -236,7 +249,7 @@ run.cycle = async () => {
   }, BOX);
   const loop = await readLoop(page, 6000);
   const shots = await samples(page);
-  const row = { view, state, tapThrough, loop, shots, errors, warnings, ok: (!tapThrough.overlaps || tapThrough.hit === 'switch-box') && loop.posesSeen.join() === POSES.join() && loop.roundAndRound && loop.gapsOver160 === 0 && Object.values(shots.seams).every((s) => s.rim.p99 <= 4 && s.outside.max <= 2) };
+  const row = { view, state, tapThrough, loop, shots, errors, warnings, ok: (!tapThrough.overlaps || tapThrough.hit === 'switch-box') && loop.posesSeen.join() === POSES.join() && loop.roundAndRound && loop.gapsOver160 === 0 && seamOk(shots.seams) };
   say(tag, row);
   await save(`cycle-${tag}.json`, row);
   await browser.close();
@@ -247,6 +260,8 @@ run.record = async () => {
   await rm(dir, { recursive: true, force: true });
   // A first visit: the painting, then the scene at work.
   const { browser, context, page, errors, warnings, opened } = await open({ url: `${base}?debug&reset&seed=4#grow`, video: dir });
+  // (Without ?debug's tap outlines: the film is of the scene as a visitor sees it.)
+  await page.evaluate(() => document.querySelectorAll('.hj-mushrooms').forEach((el) => el.classList.remove('is-debug')));
   // (The painting is over when the page marks its intro's end.)
   const painted = await page.waitForFunction(() => window.__hj.marks.introEnd > 0, null, { timeout: 30000, polling: 50 }).then(() => Date.now()).catch(() => null);
   const paintingMs = await page.evaluate(() => window.__hj.marks.introEnd - window.__hj.marks.introStart);
@@ -321,8 +336,11 @@ run.fail = async () => {
     const after = await page.evaluate(() => window.__hj.hunt.remaining);
     // The room as painted where the mist is: the screen there against the room's own picture's px (nothing drawn over it).
     const mistElements = await page.evaluate(() => document.querySelectorAll('.hj-plate[data-scene="grow"] [data-actor="mister"]').length);
-    const row = { readyMs, state, rachelPosesIn8s: poses.length, rachelPoses: [...new Set(poses)].slice(0, 12), found: before - after, mistElements, warnings, errors: errors.filter((e) => !/scene2\/cast/.test(e) && !/Failed to load resource/.test(e)), blockedErrors: errors.filter((e) => /scene2\/cast|Failed to load resource/.test(e)).length };
+    const row = { readyMs, state, rachelPosesIn8s: poses.length, rachelPoses: [...new Set(poses)].slice(0, 12), found: before - after, mistElements, warnings, errors: errors.filter((e) => !/scene2\/cast/.test(e) && !/Failed to load resource/.test(e) && !known(e)), blockedErrors: errors.filter((e) => /scene2\/cast|Failed to load resource/.test(e)).length, knownErrors: errors.filter(known).length };
     if (label !== 'normal') {
+      // (The find's scrollIntoView pans a phone's view, and the window, away from the mist: back to it.)
+      await page.evaluate(() => window.scrollTo(0, 0));
+      await bringIntoView(page);
       const { u, ...clip } = await boxOnScreen(page, 4);
       await page.screenshot({ path: `${out}fail-${tag}-${label}.png`, clip: { x: clip.left, y: clip.top, width: clip.width, height: clip.height } });
       row.shot = `fail-${tag}-${label}.png`;
@@ -339,6 +357,62 @@ run.fail = async () => {
     && n.state.order.join() === 'mister,rachel';
   say(tag, report);
   await save(`fail-${tag}.json`, report);
+};
+
+// Chrome on the phone profile, the processor 4x slower, the production builds (HJ_PROD: this one, HJ_OLD_PROD: the one
+// before the mist moved) in turn. Build opens (its painting), then Grow by its tab: its painting, then the window is
+// panned to the mist and 12 s of the scene at work are traced. `trace [rounds]`.
+run.trace = async () => {
+  const builds = { now: process.env.HJ_PROD ?? 'http://127.0.0.1:4173/', before: process.env.HJ_OLD_PROD ?? 'http://127.0.0.1:4174/' };
+  const PHONE = { viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true };
+  const r1 = (n) => Math.round(n * 10) / 10;
+  const report = { machine: execFileSync('uptime').toString().trim(), now: [], before: [] };
+  const rounds = Number(process.argv[3] ?? 4);
+  for (let i = 0; i < rounds; i++) for (const which of i % 2 ? ['now', 'before'] : ['before', 'now']) {
+    const browser = await chromium.launch({ channel: 'chrome' });
+    const page = await (await browser.newContext(PHONE)).newPage();
+    const errors = [];
+    page.on('pageerror', (e) => errors.push(String(e)));
+    await page.goto(`${builds[which]}#build`);
+    await wait(9000);
+    const tab = await page.locator('.hj-tab[data-scene="grow"]').boundingBox();
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
+    await wait(1500);
+    await browser.startTracing(page, { categories: ['-*', 'devtools.timeline', 'disabled-by-default-devtools.timeline', 'disabled-by-default-devtools.timeline.frame', 'blink.user_timing', 'toplevel', 'loading', 'devtools.timeline.frame'] });
+    const point = [{ x: tab.x + tab.width / 2, y: tab.y + tab.height / 2 }];
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: point });
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+    await wait(9000);
+    // The mist into view (an instant scroll, as a swipe ends), then the scene at work.
+    const view = await page.evaluate((box) => {
+      const viewport = document.querySelector('.hj-viewport');
+      const plate = document.querySelector('.hj-plate[data-scene="grow"]');
+      const u = plate.clientWidth / 1672;
+      viewport.scrollLeft = (box.x + box.w / 2) * u - viewport.clientWidth / 2;
+      performance.mark('hj-mist-in-view');
+      const r = viewport.getBoundingClientRect(); const p = plate.getBoundingClientRect();
+      return { inView: p.left + box.x * u >= r.left && p.left + (box.x + box.w) * u <= r.right, mist: document.querySelectorAll('.hj-plate[data-scene="grow"] [data-actor="mister"]').length };
+    }, BOX);
+    await wait(14000);
+    const raw = await browser.stopTracing();
+    await browser.close();
+    const { traceEvents: ev } = JSON.parse(raw.toString());
+    const tap = ev.find((e) => e.name === 'EventDispatch' && e.args?.data?.type === 'touchstart') ?? ev.find((e) => e.name === 'EventDispatch' && e.args?.data?.type === 'click');
+    const t = (e) => (e.ts - tap.ts) / 1000;
+    const drops = ev.filter((e) => e.name === 'DroppedFrame' && e.pid === tap.pid).map(t);
+    const tasks = ev.filter((e) => e.name === 'RunTask' && e.ph === 'X' && e.pid === tap.pid && e.tid === tap.tid);
+    const part = (from, to) => { const inside = tasks.filter((e) => t(e) >= from && t(e) < to); return { longestTaskMs: r1(Math.max(0, ...inside.map((e) => e.dur)) / 1000), tasksOver50: inside.filter((e) => e.dur > 50000).length, busyMsPerSecond: r1(inside.reduce((a, e) => a + e.dur, 0) / 1000 / ((to - from) / 1000)), dropped: drops.filter((d) => d >= from && d < to).length, framesBegun: ev.filter((e) => e.name === 'BeginFrame' && e.pid === tap.pid && t(e) >= from && t(e) < to).length }; };
+    const paint = ev.find((e) => e.name === 'hj-paint' && String(e.cat).includes('user_timing') && e.ts > tap.ts);
+    const inView = ev.find((e) => e.name === 'hj-mist-in-view' && String(e.cat).includes('user_timing'));
+    const clock = paint ? t(paint) : 0;
+    const seen = inView ? t(inView) : 9000;
+    report[which].push({ view, firstStrokeAtMs: Math.round(clock), painting: part(clock, clock + 4750), mistInView12s: part(seen + 1000, seen + 13000), droppedInViewAtMs: drops.filter((d) => d >= seen + 1000 && d < seen + 13000).map((d) => Math.round(d - seen)), errors });
+    say(`${which} ${i + 1}`, report[which].at(-1));
+    const keep = process.env.HJ_TRACES ? `${process.env.HJ_TRACES}${which}-${i + 1}.json` : i === 0 ? `${out}trace-grow-phone-4x-${which}.json` : null;
+    if (keep) { await writeFile(keep, raw); execFileSync('gzip', ['-f', keep]); }
+    await save('trace.json', report);
+  }
 };
 
 if (!run[cmd]) {

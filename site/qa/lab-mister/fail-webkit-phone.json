@@ -1,0 +1,171 @@
+{
+ "normal": {
+  "readyMs": 8799,
+  "state": {
+   "scene": "grow",
+   "order": [
+    "mister",
+    "rachel"
+   ],
+   "classes": [
+    "hj-actor",
+    "hj-rachel"
+   ],
+   "leadIsRachel": true,
+   "mist": {
+    "current": "M2",
+    "stocked": true,
+    "has": [
+     "M1",
+     "M2",
+     "M3",
+     "M4"
+    ]
+   },
+   "rachelPose": "A1_mist_aim"
+  },
+  "rachelPosesIn8s": 50,
+  "rachelPoses": [
+   "A1_mist_aim",
+   "A2_mist_squeeze",
+   "A3_mist_lift",
+   "A1_blink_half",
+   "mist_to_write#0",
+   "mist_to_write#1",
+   "mist_to_write#2",
+   "mist_to_write#3",
+   "mist_to_write#4",
+   "mist_to_write#5",
+   "mist_to_write#6",
+   "mist_to_write#7"
+  ],
+  "found": 1,
+  "mistElements": 1,
+  "warnings": [],
+  "errors": [
+   "request failed: assets/scene2/room.webp (resource unavailable)"
+  ],
+  "blockedErrors": 1
+ },
+ "blocked": {
+  "readyMs": 8186,
+  "state": {
+   "scene": "grow",
+   "order": [
+    "rachel"
+   ],
+   "classes": [
+    "hj-rachel"
+   ],
+   "leadIsRachel": true,
+   "mist": null,
+   "rachelPose": "A2_mist_squeeze"
+  },
+  "rachelPosesIn8s": 48,
+  "rachelPoses": [
+   "A2_mist_squeeze",
+   "A3_mist_lift",
+   "A1_mist_aim",
+   "A1_blink_half",
+   "mist_to_write#0",
+   "mist_to_write#1",
+   "mist_to_write#2",
+   "mist_to_write#3",
+   "mist_to_write#4",
+   "mist_to_write#5",
+   "mist_to_write#6",
+   "mist_to_write#7"
+  ],
+  "found": 1,
+  "mistElements": 0,
+  "warnings": [
+   "[hjaas] grow: the room's moving parts could not be loaded; it is shown as painted TypeError: Load failed"
+  ],
+  "errors": [
+   "request failed: assets/scene2/room.webp (cancelled)"
+  ],
+  "blockedErrors": 2,
+  "shot": "fail-webkit-phone-blocked.png"
+ },
+ "blocked-stills": {
+  "readyMs": 8155,
+  "state": {
+   "scene": "grow",
+   "order": [
+    "rachel"
+   ],
+   "classes": [
+    "hj-rachel"
+   ],
+   "leadIsRachel": true,
+   "mist": null,
+   "rachelPose": "A2_mist_squeeze"
+  },
+  "rachelPosesIn8s": 47,
+  "rachelPoses": [
+   "A2_mist_squeeze",
+   "A3_mist_lift",
+   "A1_mist_aim",
+   "A1_blink_half",
+   "mist_to_write#0",
+   "mist_to_write#1",
+   "mist_to_write#2",
+   "mist_to_write#3",
+   "mist_to_write#4",
+   "mist_to_write#5",
+   "mist_to_write#6",
+   "mist_to_write#7"
+  ],
+  "found": 1,
+  "mistElements": 0,
+  "warnings": [
+   "[hjaas] grow: the room's moving parts could not be loaded; it is shown as painted TypeError: Load failed"
+  ],
+  "errors": [
+   "request failed: assets/scene2/room.webp (cancelled)"
+  ],
+  "blockedErrors": 2,
+  "shot": "fail-webkit-phone-blocked-stills.png"
+ },
+ "stalled": {
+  "readyMs": 11282,
+  "state": {
+   "scene": "grow",
+   "order": [
+    "rachel"
+   ],
+   "classes": [
+    "hj-rachel"
+   ],
+   "leadIsRachel": true,
+   "mist": null,
+   "rachelPose": "A2_mist_squeeze"
+  },
+  "rachelPosesIn8s": 48,
+  "rachelPoses": [
+   "A2_mist_squeeze",
+   "A3_mist_lift",
+   "A1_mist_aim",
+   "A1_blink_half",
+   "mist_to_write#0",
+   "mist_to_write#1",
+   "mist_to_write#2",
+   "mist_to_write#3",
+   "mist_to_write#4",
+   "mist_to_write#5",
+   "mist_to_write#6",
+   "mist_to_write#7"
+  ],
+  "found": 1,
+  "mistElements": 0,
+  "warnings": [
+   "[hjaas] grow: the room's moving parts are late; it is shown as painted"
+  ],
+  "errors": [
+   "request failed: assets/scene2/room.webp (cancelled)"
+  ],
+  "blockedErrors": 0,
+  "shot": "fail-webkit-phone-stalled.png"
+ },
+ "ok": false
+}
