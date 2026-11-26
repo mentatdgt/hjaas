@@ -1,0 +1,30 @@
+{
+ "canvas": {
+  "w": 1672,
+  "h": 941
+ },
+ "layers": [
+  {
+   "actor": "mister",
+   "x": 1245,
+   "y": 336,
+   "w": 123,
+   "h": 159,
+   "stills": [
+    "M1",
+    "M2",
+    "M3",
+    "M4"
+   ],
+   "scenery": true
+  }
+ ],
+ "stills": {
+  "M1": "mister/M1.png",
+  "M2": "mister/M2.png",
+  "M3": "mister/M3.png",
+  "M4": "mister/M4.png"
+ },
+ "clips": {},
+ "note": "Made by npm run assets from frames/024-lab-mister/site/frames.json: the same cast, with each actor's box grown to hold its clips' patches. Do not edit; edit the delivered file and run npm run assets."
+}

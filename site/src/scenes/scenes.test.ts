@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { SCENES } from '.';
 import cast from './design-cast.json';
 import filmCast from './film-cast.json';
+import growCast from './grow-cast.json';
 import setCast from './set-cast.json';
 
 /** The area of a `polygon(x% y%, ...)` clip-path, as a share of the drawing's box. */
@@ -83,6 +84,29 @@ describe('every scene\'s hunt', () => {
     for (const spot of easy) expect([1, 2, 3], spot.id).toContain(spot.art);
     expect(design.spots.some((spot) => spot.art === 5)).toBe(false);
   });
+  it('Grow keeps every mushroom out of the mister\'s mist: none is on, behind or inside its box', () => {
+    const grow = SCENES.find((scene) => scene.id === 'grow')!;
+    expect(Object.keys(growCast.boxes)).toEqual(['mister']);
+    expect(growCast.boxes.mister).toEqual([1245, 336, 1368, 495]);
+    // (Widest drawing: 166 px to 154 of height.)
+    const widest = 166 / 154;
+    for (const spot of grow.spots) {
+      const left = spot.x - (spot.h * widest) / 2;
+      const right = spot.x + (spot.h * widest) / 2;
+      for (const [actor, [l, t, r, b]] of Object.entries(growCast.boxes)) {
+        const apart = right < l || left > r || spot.y < t || spot.y - spot.h > b;
+        expect(apart, `${spot.id} is in ${actor}'s box`).toBe(true);
+      }
+    }
+  });
+
+  it('Grow\'s mist is scenery: the edge fades it with the plate, and nothing of it is held whole', () => {
+    const grow = SCENES.find((scene) => scene.id === 'grow')!;
+    expect(growCast.room).toEqual(['mister']);
+    expect(growCast.covers).toEqual({});
+    expect(grow.keep).toBeUndefined();
+  });
+
   it('Film keeps every mushroom off its cast: none is on, behind or inside the box of the water, the presenter or Rachel', () => {
     const film = SCENES.find((scene) => scene.id === 'film')!;
     expect(Object.keys(filmCast.boxes).sort()).toEqual(['presenter', 'rachel', 'water']);

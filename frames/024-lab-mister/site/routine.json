@@ -1,0 +1,35 @@
+{
+ "note": "Scene 2 (Grow) room loops. Holds in ms. Every change is an instant cut (no fade_ms). Within the layer every still is the room itself outside the mist, so cuts never flicker.",
+ "actors": {
+  "mister": {
+   "routine": [
+    {
+     "loop": "mist",
+     "repeat": [
+      1000,
+      1000
+     ],
+     "steps": [
+      {
+       "still": "M1",
+       "ms": 140
+      },
+      {
+       "still": "M2",
+       "ms": 140
+      },
+      {
+       "still": "M3",
+       "ms": 140
+      },
+      {
+       "still": "M4",
+       "ms": 140
+      }
+     ]
+    }
+   ],
+   "note": "The humidifier's mist rising: a hand-drawn loop (Quinn, round 10), forever. Part of the scenery: let the edge treat it like the plate."
+  }
+ }
+}

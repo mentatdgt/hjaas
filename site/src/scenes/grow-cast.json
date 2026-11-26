@@ -1,0 +1,15 @@
+{
+ "note": "Made by npm run assets from frames/024-lab-mister/site/frames.json. Do not edit.",
+ "boxes": {
+  "mister": [
+   1245,
+   336,
+   1368,
+   495
+  ]
+ },
+ "covers": {},
+ "room": [
+  "mister"
+ ]
+}

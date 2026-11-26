@@ -332,12 +332,13 @@ async function clipCast(config: SceneConfig, cast: ClipCast, host: SceneHost, si
  * A whole cast delivered in one package (scene 3; see cast.ts): every actor is played by the same code as the
  * lab's Rachel, each from its own share of the two manifests. Bottom to top.
  */
-async function troupe(config: SceneConfig, cast: Troupe, host: SceneHost, signal: AbortSignal): Promise<Decode<CastList>> {
+async function troupe(config: SceneConfig, cast: Troupe, host: SceneHost, signal: AbortSignal, scenery = false): Promise<Decode<CastList>> {
   const dir = config.assets + cast.dir;
   const [frames, routines] = await Promise.all([json<CastFrames>(dir + cast.frames, signal), json<CastRoutines>(dir + cast.routine, signal)]);
   const { actors, problems, screen, progress, progressFade, walkers } = splitCast(frames, routines, PLATE.w);
   if (problems.length) throw new Error(`${config.id}: ${problems.join(' ')}`);
-  const lead = leadOf(actors);
+  // (Scenery has no lead: the lab's mist is a part of the room, and `hj-rachel` is Rachel's alone.)
+  const lead = scenery ? undefined : leadOf(actors);
   const load: LoadFile = (file, priority, by) => fetchBlob(asset(dir + webp(file)), priority, by);
   const [fetched, pieceFiles] = await Promise.all([
     Promise.all(
@@ -397,6 +398,9 @@ async function troupe(config: SceneConfig, cast: Troupe, host: SceneHost, signal
     return casts;
   };
 }
+
+/** How long after her first drawing is here the room's moving parts are waited for (see Casting.fetch). */
+const SCENERY_GRACE_MS = 2000;
 
 type LoadFile = (file: string, priority?: RequestInit['priority'], signal?: AbortSignal) => Promise<Blob>;
 
@@ -687,8 +691,45 @@ export class Casting {
     const cast = config.character;
     if (!cast) return null;
     if (cast.kind === 'cast') return troupe(config, cast, host, signal);
+    // The room's moving parts, if it has any (the lab's mist), alongside her. Never at her cost: if they cannot be
+    // had, the room shows as it is painted, and she goes on without them.
+    const room = cast.kind === 'clips' && cast.scenery ? this.scenery(cast.scenery, signal) : null;
     const one = await (cast.kind === 'clips' ? clipCast(config, cast, host, signal) : frameCast(config, cast, host, signal));
-    return async (room) => [await one(room)];
+    // (They are a few small files, here long before her drawing as a rule. Stalled, they are not waited for long.)
+    let late: ReturnType<typeof setTimeout> | undefined;
+    const moving = room && await Promise.race([
+      room,
+      new Promise<null>((resolve) => (late = setTimeout(() => {
+        console.warn(`[hjaas] ${config.id}: the room's moving parts are late; it is shown as painted`);
+        resolve(null);
+      }, SCENERY_GRACE_MS))),
+    ]);
+    clearTimeout(late);
+    return async (plate) => {
+      const [scenery, her] = await Promise.allSettled([moving ? moving(plate) : [], one(plate)]);
+      if (her.status === 'rejected') {
+        if (scenery.status === 'fulfilled') for (const actor of scenery.value) actor.sleep(false);
+        throw her.reason;
+      }
+      return [...(scenery.status === 'fulfilled' ? scenery.value : []), her.value];
+    };
+  }
+
+  /** The room's moving parts: downloaded, then decoded, as a troupe of scenery. Nothing (and a warning) if they fail. */
+  private async scenery(scenery: NonNullable<ClipCast['scenery']>, signal: AbortSignal): Promise<Decode<Cast[]> | null> {
+    const { config, host } = this;
+    const failed = (error: unknown): [] => {
+      if (!signal.aborted) console.warn(`[hjaas] ${config.id}: the room's moving parts could not be loaded; it is shown as painted`, error);
+      return [];
+    };
+    try {
+      const decode = await troupe(config, { kind: 'cast', ...scenery }, host, signal, true);
+      // (troupe() gives back what it decoded, if any of it fails.)
+      return (plate) => decode(plate).then((casts) => [...casts], failed);
+    } catch (error) {
+      failed(error);
+      return null;
+    }
   }
 }
 

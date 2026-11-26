@@ -5,6 +5,8 @@ import setRoutine from '../../public/assets/scene5/cast/routine.json';
 import setWalk from '../../public/assets/scene5/cast/stagehand/walk.json';
 import growFrames from '../../public/assets/scene2/rachel/frames.json';
 import growRoutine from '../../public/assets/scene2/rachel/routine.json';
+import misterFrames from '../../public/assets/scene2/cast/frames.json';
+import misterRoutine from '../../public/assets/scene2/cast/routine.json';
 import { Casting, Scene } from './scene';
 import { SCENES } from '../scenes';
 
@@ -67,6 +69,15 @@ const host = () => ({
   edge: { style: 'pencil' as const, seed: () => 0, paper: [255, 255, 255] as [number, number, number] },
 });
 const load = (room = config) => Scene.load(room, host(), true);
+/** Grow's manifests: Rachel's (rachel/), and the room's moving parts' (cast/, the mist). Null for any other file. */
+const growManifest = (url: string): Response | null => {
+  const mist = url.includes('/scene2/cast/');
+  if (url.endsWith('/frames.json')) return new Response(JSON.stringify(mist ? misterFrames : growFrames));
+  if (url.endsWith('/routine.json')) return new Response(JSON.stringify(mist ? misterRoutine : growRoutine));
+  return null;
+};
+/** Everyone on a scene's plate, bottom to top. */
+const castOf = (scene: Scene): Array<{ character: { rest: string; el: { dataset: Record<string, string> } } }> => (scene as unknown as { casts: [] }).casts;
 
 describe('recoverable room assets', () => {
   beforeEach(() => {
@@ -237,17 +248,20 @@ describe('recoverable room assets', () => {
     vi.stubGlobal('createImageBitmap', bitmaps);
     vi.stubGlobal('fetch', vi.fn(async (url: string) => {
       requested.push(url.split('/').pop()!);
-      if (url.endsWith('/frames.json')) return new Response(JSON.stringify(growFrames));
-      if (url.endsWith('/routine.json')) return new Response(JSON.stringify(growRoutine));
+      const manifest = growManifest(url);
+      if (manifest) return manifest;
       return new Response(url);
     }));
     let roomHere!: () => void;
     decode.mockImplementation((src) => (src.endsWith('/room.webp') ? new Promise((resolve) => { roomHere = resolve; }) : Promise.resolve()));
     const coming = Scene.load(SCENES[1], host(), false);
-    // The room is still on its way: her manifests and the drawing she rests on have been asked for (and nothing else).
-    await vi.waitFor(() => expect(requested).toHaveLength(3));
-    expect(requested.slice(0, 2).sort()).toEqual(['frames.json', 'routine.json']);
-    expect(requested[2]).toMatch(/\.webp$/);
+    // The room is still on its way: her manifests and the drawing she rests on have been asked for, and the mist's
+    // manifests and its first drawing (and nothing else).
+    await vi.waitFor(() => expect(requested).toHaveLength(6));
+    expect(requested.filter((name) => name.endsWith('.json')).sort()).toEqual(['frames.json', 'frames.json', 'routine.json', 'routine.json']);
+    const drawings = requested.filter((name) => name.endsWith('.webp'));
+    expect(drawings).toHaveLength(2);
+    expect(drawings).toContain('M1.webp');
     roomHere();
     const scene = await coming;
     await scene.loaded();
@@ -255,7 +269,11 @@ describe('recoverable room assets', () => {
     expect(scene.character).toBeNull();
     await scene.enter();
     expect(scene.character).not.toBeNull();
-    expect(requested.filter((name) => name === requested[2])).toHaveLength(1);
+    for (const drawing of drawings) expect(requested.filter((name) => name === drawing)).toHaveLength(1);
+    // The mist under her; she is the lead.
+    expect(castOf(scene).map((cast) => cast.character.el.dataset.actor ?? 'rachel')).toEqual(['mister', 'rachel']);
+    expect(castOf(scene)[1].character).toBe(scene.character);
+    expect(castOf(scene)[0].character.rest).toBe('M1');
     scene.destroy();
   });
 
@@ -409,8 +427,8 @@ describe('recoverable room assets', () => {
     vi.stubGlobal('requestIdleCallback', (fn: () => void) => queueMicrotask(fn));
     vi.stubGlobal('createImageBitmap', async () => ({ width: 100, height: 100, close() {} }));
     vi.stubGlobal('fetch', vi.fn(async (url: string, init?: RequestInit) => {
-      if (url.endsWith('/frames.json')) return new Response(JSON.stringify(growFrames));
-      if (url.endsWith('/routine.json')) return new Response(JSON.stringify(growRoutine));
+      const manifest = growManifest(url);
+      if (manifest) return manifest;
       if (init?.priority !== 'low') return new Response(url);
       requested.push(url);
       nextRequest(url);
@@ -442,8 +460,8 @@ describe('recoverable room assets', () => {
     vi.stubGlobal('requestIdleCallback', (fn: () => void) => queueMicrotask(fn));
     vi.stubGlobal('createImageBitmap', async () => ({ width: 100, height: 100, close() {} }));
     vi.stubGlobal('fetch', vi.fn(async (url: string, init?: RequestInit) => {
-      if (url.endsWith('/frames.json')) return new Response(JSON.stringify(growFrames));
-      if (url.endsWith('/routine.json')) return new Response(JSON.stringify(growRoutine));
+      const manifest = growManifest(url);
+      if (manifest) return manifest;
       if (init?.priority !== 'low') return new Response(url);
       return new Promise<Response>((resolve, reject) => {
         const signal = init.signal!;
@@ -467,6 +485,78 @@ describe('recoverable room assets', () => {
     pending[1].arrive();
     await vi.waitFor(() => expect(pending).toHaveLength(3));
     expect(pending[2].url).not.toBe(pending[0].url);
+    scene.destroy();
+  });
+
+  it('shows Grow without its mist, and Rachel as ever, when the mist\'s files cannot be had', async () => {
+    vi.stubGlobal('requestIdleCallback', (fn: () => void) => queueMicrotask(fn));
+    vi.stubGlobal('createImageBitmap', async () => ({ width: 100, height: 100, close() {} }));
+    for (const lost of ['/scene2/cast/frames.json', '/scene2/cast/routine.json', '/scene2/cast/mister/M1.webp']) {
+      vi.mocked(console.warn).mockClear();
+      vi.stubGlobal('fetch', vi.fn(async (url: string) => {
+        if (url.includes(lost)) return new Response(null, { status: 404 });
+        return growManifest(url) ?? new Response(url);
+      }));
+      const scene = await load(SCENES[1]);
+      expect(scene.character, lost).not.toBeNull();
+      expect(castOf(scene), lost).toHaveLength(1);
+      expect(castOf(scene)[0].character).toBe(scene.character);
+      expect(console.warn).toHaveBeenCalledWith(expect.stringContaining('moving parts could not be loaded'), expect.anything());
+      await scene.stock();
+      await scene.loadMore();
+      scene.destroy();
+      retainAssets()();
+    }
+  });
+
+  it('keeps Rachel playing when only the mist\'s later drawings fail: it holds its first', async () => {
+    vi.stubGlobal('requestIdleCallback', (fn: () => void) => queueMicrotask(fn));
+    vi.stubGlobal('createImageBitmap', async () => ({ width: 100, height: 100, close() {} }));
+    vi.stubGlobal('fetch', vi.fn(async (url: string) => {
+      if (/\/scene2\/cast\/mister\/M[234]\.webp/.test(url)) return new Response(null, { status: 404 });
+      return growManifest(url) ?? new Response(url);
+    }));
+    const scene = await load(SCENES[1]);
+    expect(castOf(scene)).toHaveLength(2);
+    await scene.stock();
+    expect(scene.character?.has('frame_01') || scene.character !== null).toBe(true);
+    expect((castOf(scene)[0].character as unknown as { has: (name: string) => boolean }).has('M1')).toBe(true);
+    expect((castOf(scene)[0].character as unknown as { has: (name: string) => boolean }).has('M2')).toBe(false);
+    scene.destroy();
+  });
+
+  it('does not wait long for a stalled mist: Rachel goes on, the room as painted', async () => {
+    vi.stubGlobal('createImageBitmap', async () => ({ width: 100, height: 100, close() {} }));
+    vi.stubGlobal('fetch', vi.fn(async (url: string, init?: RequestInit) => {
+      if (url.includes('/scene2/cast/')) {
+        return new Promise<Response>((_, reject) => init?.signal?.addEventListener('abort', () => reject(init.signal!.reason)));
+      }
+      return growManifest(url) ?? new Response(url);
+    }));
+    const started = performance.now();
+    const scene = await load(SCENES[1]);
+    expect(performance.now() - started).toBeLessThan(3500);
+    expect(scene.character).not.toBeNull();
+    expect(castOf(scene)).toHaveLength(1);
+    expect(console.warn).toHaveBeenCalledWith(expect.stringContaining('moving parts are late'));
+    scene.destroy();
+  });
+
+  it('gives back the mist\'s drawing if Rachel\'s cannot be decoded', async () => {
+    const closed: string[] = [];
+    vi.stubGlobal('createImageBitmap', async (blob: Blob) => {
+      const url = await blob.text();
+      if (url.includes('/rachel/')) throw new Error('cannot decode');
+      return { width: 100, height: 100, close() { closed.push(url); } };
+    });
+    // (Nor by the page's own <img>, which a failed bitmap falls back to.)
+    decode.mockImplementation(async (src) => {
+      if (src.startsWith('blob:')) throw new Error('cannot decode');
+    });
+    vi.stubGlobal('fetch', vi.fn(async (url: string) => growManifest(url) ?? new Response(url)));
+    const scene = await load(SCENES[1]);
+    expect(scene.character).toBeNull();
+    await vi.waitFor(() => expect(closed.some((url) => url.endsWith('/M1.webp'))).toBe(true));
     scene.destroy();
   });
 
