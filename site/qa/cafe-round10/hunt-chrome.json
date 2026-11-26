@@ -1,0 +1,88 @@
+{
+ "chrome": {
+  "desktop": {
+   "afterEachScene": [
+    "10 · 10",
+    "10 · 20",
+    "10 · 30",
+    "10 · 40",
+    "10 · 50"
+   ],
+   "found": 50,
+   "missed": [],
+   "dots": [
+    "build",
+    "grow",
+    "design",
+    "film",
+    "set"
+   ],
+   "button": true,
+   "findsStored": 50,
+   "afterReload": {
+    "button": true,
+    "dots": 5,
+    "mushroomsLeft": 0
+   },
+   "formOpens": true,
+   "errors": [],
+   "ok": true
+  },
+  "portrait": {
+   "afterEachScene": [
+    "10 · 10",
+    "10 · 20",
+    "10 · 30",
+    "10 · 40",
+    "10 · 50"
+   ],
+   "found": 50,
+   "missed": [],
+   "dots": [
+    "build",
+    "grow",
+    "design",
+    "film",
+    "set"
+   ],
+   "button": true,
+   "findsStored": 50,
+   "afterReload": {
+    "button": true,
+    "dots": 5,
+    "mushroomsLeft": 0
+   },
+   "formOpens": true,
+   "errors": [],
+   "ok": true
+  },
+  "landscape": {
+   "afterEachScene": [
+    "10 · 10",
+    "10 · 20",
+    "10 · 30",
+    "10 · 40",
+    "10 · 50"
+   ],
+   "found": 50,
+   "missed": [],
+   "dots": [
+    "build",
+    "grow",
+    "design",
+    "film",
+    "set"
+   ],
+   "button": true,
+   "findsStored": 50,
+   "afterReload": {
+    "button": true,
+    "dots": 5,
+    "mushroomsLeft": 0
+   },
+   "formOpens": true,
+   "errors": [],
+   "ok": true
+  }
+ }
+}
