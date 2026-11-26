@@ -1,0 +1,52 @@
+[
+ {
+  "state": "painting",
+  "pose": "cat_1",
+  "busy": true,
+  "nearest": "cat_1",
+  "scores": {
+   "cat_1": 1.94,
+   "cat_2": 4.8,
+   "cat_F1": 4.69,
+   "cat_F2": 7.1
+  },
+  "ok": true,
+  "shotsWhilePainting": 11,
+  "poseInEveryShot": [
+   "cat_1"
+  ],
+  "posesDuringPainting": [
+   "cat_1"
+  ]
+ },
+ {
+  "state": "paused",
+  "pose": "cat_1",
+  "busy": false,
+  "nearest": "cat_1",
+  "scores": {
+   "cat_1": 1.94,
+   "cat_2": 4.8,
+   "cat_F1": 4.69,
+   "cat_F2": 7.1
+  },
+  "ok": true,
+  "poseWhenPauseClicked": "cat_F2"
+ },
+ {
+  "state": "reduced-motion",
+  "pose": "cat_1",
+  "busy": false,
+  "nearest": "cat_1",
+  "scores": {
+   "cat_1": 1.94,
+   "cat_2": 4.8,
+   "cat_F1": 4.69,
+   "cat_F2": 7.1
+  },
+  "ok": true,
+  "posesOver6s": [
+   "cat_1"
+  ]
+ }
+]

@@ -245,11 +245,11 @@ rt['actors']['oldman'] = {
 FL = [{'still': 'cat_F1', 'ms': 110}, {'still': 'cat_F2', 'ms': 500}, {'still': 'cat_F1', 'ms': 110}]
 def breathe(name, n):
     return {'loop': name, 'repeat': n, 'steps': [
-        {'still': 'cat_1', 'ms': [700, 900], 'fade_ms': 1000}, {'still': 'cat_2', 'ms': [1400, 1800], 'fade_ms': 1000},
-        {'still': 'cat_1', 'ms': [700, 900], 'fade_ms': 1000}]}
+        {'still': 'cat_1', 'ms': [700, 900], 'fade_ms': 600}, {'still': 'cat_2', 'ms': [1400, 1800], 'fade_ms': 1000},
+        {'still': 'cat_1', 'ms': [700, 900], 'fade_ms': 600}]}
 rt['actors']['cat'] = {
-    'note': 'Flick at the start of the loop and after 3 breaths (about 60% of the loop). Each breathe loop is cat_1 > cat_2 > cat_1: the two cat_1 holds meet when it repeats (an identical still, so nothing shows) and it always ends on cat_1, ready for the flick.',
-    'routine': FL + [breathe('breathe', 3)] + FL + [breathe('breathe_more', 2)]}
+    'note': 'v10e: opens on a short cat_1 rest (so its resting pose, shown during the paint-in, pause and reduced motion, is cat_1, not mid-flick), then flicks; cat_1 fades are 600 ms so they finish inside their 700-900 ms holds (no snap). Flick at the start of the loop and after 3 breaths (about 60% of the loop). Each breathe loop is cat_1 > cat_2 > cat_1: the two cat_1 holds meet when it repeats (an identical still, so nothing shows) and it always ends on cat_1, ready for the flick.',
+    'routine': [{'still': 'cat_1', 'ms': [600, 900]}] + FL + [breathe('breathe', 3)] + FL + [breathe('breathe_more', 2)]}
 BL = [{'still': 'M_blink_half', 'ms': 60}, {'still': 'M_blink_closed', 'ms': 90}, {'still': 'M_blink_half', 'ms': 60}]
 N = lambda ms: {'still': None, 'ms': ms}
 rt['actors']['mum'] = {
