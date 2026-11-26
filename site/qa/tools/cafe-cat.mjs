@@ -269,7 +269,10 @@ run.film = async () => {
       t_last: last[1],
       leftOnLastFrame: Math.round((Math.abs(last[1] - target) / Math.abs(ends.cat_2 - ends.cat_1)) * 1000) / 10 + '%',
       reachedAfterMs: done ? Math.round(done[0] - s.at) : null,
-      ok: Math.abs(last[1] - target) <= TOL,
+      // Finished within the shortest hold the routine can give it (cat_1 700 ms, cat_2 1400 ms), and still there on
+      // its last frame. (A run of one pose may be two holds: the breathing loop repeating, or the routine wrapping to its
+      // opening cat_1, are the same still again and invisible here; so its last frame alone proves nothing.)
+      ok: done !== undefined && done[0] - s.at < (s.pose === 'cat_1' ? 700 : 1400) && Math.abs(last[1] - target) <= TOL,
     });
   });
   const result = {
@@ -343,7 +346,7 @@ run.sheets = async () => {
   const sheet = (name, fromMs, toMs) => {
     const n = Math.round(((toMs - fromMs) / 1000) * 25);
     const cols = 10;
-    execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-ss', String(Math.max(0, (fromMs + best.offset) / 1000)), '-i', mp4, '-t', String((toMs - fromMs) / 1000), '-vf', `fps=25,${crop},scale=192:-1:flags=lanczos,pad=iw+4:ih+4:2:2:white,tile=${cols}x${Math.ceil(n / cols)}`, '-frames:v', '1', `${out}${name}.png`]);
+    execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-ss', String(Math.max(0, (fromMs + best.offset) / 1000)), '-t', String((toMs - fromMs) / 1000), '-i', mp4, '-vf', `fps=25,${crop},scale=192:-1:flags=lanczos,pad=iw+4:ih+4:2:2:white,tile=${cols}x${Math.ceil(n / cols)}`, '-frames:v', '1', `${out}${name}.png`]);
     return `${name}.png: ${n} frames from ${Math.round(fromMs)} ms page time, 40 ms apart, left to right, top to bottom`;
   };
   const sheets = [];
