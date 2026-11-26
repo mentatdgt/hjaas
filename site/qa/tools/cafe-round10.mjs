@@ -263,4 +263,58 @@ print(json.dumps({a: [[t, p, ms] for (t, p, ms, f) in TL[a]] for a in TL}))`;
   say('sheets', sheets);
 };
 
+// The phone profile in Chrome with its processor slowed 4x: 20 s of the café at work, traced (Chrome's own
+// trace, summarised by analyze-trace.mjs), and every frame's time read on the page with the poses changed in it.
+// A late frame is put down to the new loops only if one of their poses changed in it.
+run.trace = async () => {
+  const browser = await chromium.launch({ channel: 'chrome' });
+  const context = await browser.newContext({ ...DEVICES.phone });
+  const page = await context.newPage();
+  const cdp = await context.newCDPSession(page);
+  await page.goto(`${base}?debug&reset&seed=7#design`);
+  await page.waitForFunction(() => window.__hj?.ready === true && window.__hj.scene?.config.id === 'design' && window.__hj.busy === false, null, { timeout: 120000 });
+  await page.waitForTimeout(3000);
+  await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
+  const file = `${out}trace-chrome-phone-4x.json`;
+  await browser.startTracing(page, { path: file, screenshots: false });
+  const frames = await page.evaluate(() => new Promise((resolve) => {
+    performance.mark('hj-cafe-work');
+    const scene = window.__hj.scene;
+    const last = new Map();
+    const list = [];
+    let prev = 0;
+    const t0 = performance.now();
+    const frame = (now) => {
+      const changed = [];
+      for (const cast of scene.casts) {
+        const name = cast.character.el.dataset.actor ?? 'rachel';
+        const pose = cast.character.current;
+        if (last.has(name) && last.get(name) !== pose) changed.push(`${name}:${pose}`);
+        last.set(name, pose);
+      }
+      if (prev) list.push([Math.round((now - t0) * 10) / 10, Math.round((now - prev) * 10) / 10, changed]);
+      prev = now;
+      if (now - t0 < 20000) requestAnimationFrame(frame);
+      else resolve(list);
+    };
+    requestAnimationFrame(frame);
+  }));
+  await browser.stopTracing();
+  await cdp.send('Emulation.setCPUThrottlingRate', { rate: 1 });
+  await context.close();
+  await browser.close();
+  execFileSync('gzip', ['-f', file]);
+  const summary = execFileSync('node', [new URL('./analyze-trace.mjs', import.meta.url).pathname, `${file}.gz`, '--mark', 'hj-cafe-work', '--span', '20000', '--tasks']).toString();
+  const NEW = ['oldman', 'barista', 'mum', 'cat'];
+  const intervals = frames.map(([, ms]) => ms).sort((a, b) => a - b);
+  const typical = intervals[Math.floor(intervals.length / 2)];
+  const late = frames.filter(([, ms]) => ms > typical * 1.5);
+  const lateNew = late.filter(([, , changed]) => changed.some((c) => NEW.includes(c.split(':')[0])));
+  const newChanges = frames.filter(([, , changed]) => changed.some((c) => NEW.includes(c.split(':')[0]))).length;
+  const result = { frames: frames.length, typicalMs: typical, late: late.length, lateWithANewLoopsPose: lateNew, framesWithANewLoopsPose: newChanges, slowest: [...frames].sort((a, b) => b[1] - a[1]).slice(0, 5), trace: summary.trim().split('\n') };
+  await save('trace-chrome-phone-4x-frames.json', result);
+  say('frames', { frames: frames.length, typical, late: late.length, lateWithANewLoopsPose: lateNew.length, framesWithANewLoopsPose: newChanges });
+  console.log(summary);
+};
+
 await run[cmd]();
