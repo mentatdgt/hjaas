@@ -53,7 +53,9 @@ run.film = async () => {
   page.on('pageerror', (e) => errors.push(String(e)));
   page.on('console', (m) => m.type() === 'error' && errors.push(m.text().slice(0, 200)));
   const started = Date.now();
-  await page.goto(`${base}?debug&reset&seed=7#design`);
+  // (Each engine and device its own seed, so that the four films are four different schedules: HJ_SEED to choose.)
+  const seed = process.env.HJ_SEED ?? { 'chrome-desktop': 7, 'webkit-desktop': 3, 'chrome-phone': 5, 'webkit-phone': 9 }[tag] ?? 7;
+  await page.goto(`${base}?debug&reset&seed=${seed}#design`);
   await page.waitForFunction(() => window.__hj?.ready === true && window.__hj.scene?.config.id === 'design' && window.__hj.busy === false, null, { timeout: 90000 });
   const paintedAt = (Date.now() - started) / 1000;
   // Every frame: each actor's pose; the first few times each wanted pose is on, its canvas, read as it is shown.
@@ -182,7 +184,7 @@ run.film = async () => {
   const blinks = runs(rachel, ['R_A1_blink']);
   const rule = { blinks: blinks.length, sips: sips.length, clashes: blinks.filter(([a, b]) => sips.some(([s, e]) => a < e + 1000 && b > s - 1000)).map(([a]) => a) };
 
-  const result = { tag, paintedAt, readings, matched: `${readings.filter((r) => r.ok).length} of ${readings.length}`, order, rule, errors, log };
+  const result = { tag, seed, paintedAt, readings, matched: `${readings.filter((r) => r.ok).length} of ${readings.length}`, order, rule, errors, log };
   await save(`film-${tag}.json`, result);
   say(`${tag} canvases nearest their own still`, result.matched);
   for (const r of readings.filter((x) => !x.ok)) say('  not nearest', r);

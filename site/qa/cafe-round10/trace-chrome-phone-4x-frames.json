@@ -1,0 +1,68 @@
+{
+ "frames": 1201,
+ "typicalMs": 16.7,
+ "late": 1,
+ "lateWithANewLoopsPose": [],
+ "framesWithANewLoopsPose": 126,
+ "slowest": [
+  [
+   13,
+   33.4,
+   [
+    "fan:fan_04"
+   ]
+  ],
+  [
+   346.3,
+   16.8,
+   []
+  ],
+  [
+   496.3,
+   16.8,
+   [
+    "fan:fan_16"
+   ]
+  ],
+  [
+   746.3,
+   16.8,
+   [
+    "fan:fan_02"
+   ]
+  ],
+  [
+   1229.6,
+   16.8,
+   [
+    "oldman:O_1"
+   ]
+  ]
+ ],
+ "trace": [
+  "{",
+  " \"window\": [",
+  "  170,",
+  "  20170",
+  " ],",
+  " \"frames\": {",
+  "  \"BeginFrame\": 1200,",
+  "  \"DrawFrame\": 977,",
+  "  \"DroppedFrame\": 0,",
+  "  \"BeginMainThreadFrame\": 1201,",
+  "  \"Commit\": 3229",
+  " },",
+  " \"frameStates\": {",
+  "  \"STATE_PRESENTED_ALL\": 977,",
+  "  \"STATE_PRESENTED_PARTIAL\": 60,",
+  "  \"STATE_NO_UPDATE_DESIRED\": 224",
+  " },",
+  " \"droppedAffectingSmoothness\": 0,",
+  " \"droppedFrameEvents\": [],",
+  " \"mainThreadTasks\": 8590,",
+  " \"longTasksOver50ms\": 0,",
+  " \"longestTaskMs\": 17,",
+  " \"longTasks\": []",
+  "}"
+ ]
+}
