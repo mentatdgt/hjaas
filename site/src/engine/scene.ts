@@ -4,7 +4,7 @@ import { FrameStore, PLATE, type Frame, asset, cutFrom, decodeBlob, fetchBlob, f
 import { leadOf, splitCast, type CastFrames, type CastRoutines, type CastScreen } from './cast';
 import { Character } from './character';
 import { edgeAlpha, edgeName, makeEdge, type Edge, type EdgeStyle } from './edge';
-import { checkClips, clipEntry, clipPose, clipReaction, clipSchedule, clipsInUse, restOf, stillsInUse, type ClipFrames, type ClipRoutine, type Entry } from './clips';
+import { checkClips, clipEntry, clipPose, clipReaction, clipSchedule, clipsInUse, restOf, stillsInUse, type ClipFrames, type ClipRoutine, type Entry, type Stage } from './clips';
 import { Hunt, type HuntArt } from './mushrooms';
 import { Player, type Schedule } from './player';
 import { Reel } from './reel';
@@ -49,7 +49,8 @@ export interface SceneHost {
  */
 interface Cast {
   character: Character;
-  routine: () => Schedule;
+  /** `stage`: the rest of the cast, for a routine that keeps clear of another actor (clips.ts, Avoid). */
+  routine: (stage?: Stage) => Schedule;
   /** Every drawing her routine shows has been decoded once. */
   stocked: () => boolean;
   /** Download those drawings (no decoding). Called off by the signal, it carries on from there the next time. */
@@ -565,7 +566,7 @@ async function actorCast(
         }
         return stocking.done;
       },
-      routine: () => clipSchedule(frames, routine, host.rnd, (name) => loaded.has(name)),
+      routine: (stage) => clipSchedule(frames, routine, host.rnd, (name) => loaded.has(name), stage),
       reacts: full !== null,
       keeps: options.keeps,
       // The full reaction needs every clip: its own, decoded, and the routine's for the way back from writing.
@@ -1373,6 +1374,20 @@ export class Scene {
   }
 
   private rhythm(cast: Cast): Schedule {
-    return this.host.still() || !cast.stocked() ? holdSchedule(cast.character.rest) : cast.routine();
+    return this.host.still() || !cast.stocked() ? holdSchedule(cast.character.rest) : cast.routine(this.stage(cast));
+  }
+
+  /**
+   * The rest of the cast as one actor's routine sees it (clips.ts, Stage): her own player's place in its step,
+   * and another's plan by name, from that one's player. Nobody's plan while she is not on the plate.
+   */
+  private stage(cast: Cast): Stage {
+    return {
+      since: () => this.players.get(cast)?.since ?? 0,
+      other: (actor) => {
+        const them = this.casts.find((each) => each !== cast && each.character.el.dataset.actor === actor);
+        return (them && this.players.get(them)?.planned()) ?? null;
+      },
+    };
   }
 }

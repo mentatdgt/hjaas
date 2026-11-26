@@ -223,7 +223,10 @@ rt['note'] = ("Scene 3 (café) routines, v10d. Holds in ms; [a,b] = random in ra
     "CAT: cat_3 is gone. Its tail flicks twice per loop: cat_1 > cat_F1 (110 ms) > cat_F2 (500 ms) > cat_F1 (110 ms) > cat_1, at the start of the loop and again after "
     "3 breaths (2 more follow), so at about 60% of the loop. It breathes (cat_1/cat_2, 1 s dissolves) the rest of the time, never during a flick; "
     "each breathing loop ends on cat_1 so the flick starts with a cut from an identical body.")
-for a in ['fan', 'rachel', 'child']: rt['actors'][a] = rt0['actors'][a]
+for a in ['fan', 'rachel', 'child']: rt['actors'][a] = json.loads(json.dumps(rt0['actors'][a]))
+# Rachel doesn't blink while the mum sips (job 023b, reviews/cafe-round10-build.md section 2): her blink waits while the mum
+# shows M_S1 or M_S2, or is within 1 s of starting or ending one, and comes as soon as it is clear (the engine's blink "avoid").
+rt['actors']['rachel']['blink']['avoid'] = {'actor': 'mum', 'stills': ['M_S1', 'M_S2'], 'margin_ms': 1000}
 rt['actors']['barista'] = {
     'note': 'Polishing: the cloth circles the cup through three drawn in-betweens, cuts at 140-200 ms (dissolves were tried and looked muddier: the cloth moves too far between neighbours). Glance: eyes only.',
     'routine': [

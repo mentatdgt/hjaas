@@ -36,7 +36,7 @@
 // Nothing here knows who the actors are. This file only takes the package apart: each actor becomes a pair
 // of manifests in the form clips.ts already plays, as if it were alone on the plate. So a new delivery in
 // the same layout, with other actors, stills, clips or routines, is played without any code changing.
-import { checkClips, type ClipFrames, type ClipRoutine } from './clips';
+import { checkClips, type Avoid, type ClipFrames, type ClipRoutine } from './clips';
 
 export interface CastFrames {
   /** The canvas the scene was drawn on. The plate is the same picture, whatever size the page shows it at. */
@@ -209,6 +209,17 @@ export function splitCast(frames: CastFrames, routines: CastRoutines, plateWidth
     const routine: ClipRoutine = (routines?.actors?.[layer.actor] as ClipRoutine | undefined) ?? { routine: [{ still: first ?? null, ms: 1000 }] };
     for (const problem of checkClips(own, routine)) problems.push(`${layer.actor}: ${problem}`);
     actors.push({ name: layer.actor, frames: own, routine, reacts: routine.reaction !== undefined });
+  }
+  // A blink that keeps clear of another actor's stills (clips.ts, Avoid): she must be in the cast, with those stills.
+  for (const actor of actors) {
+    const rules = actor.routine.blink ? (Array.isArray(actor.routine.blink) ? actor.routine.blink : [actor.routine.blink]) : [];
+    for (const rule of rules as ReadonlyArray<{ avoid?: Avoid | readonly Avoid[] }>) {
+      for (const avoid of rule.avoid ? (Array.isArray(rule.avoid) ? rule.avoid : [rule.avoid]) as readonly Avoid[] : []) {
+        const other = actors.find((each) => each.name === avoid?.actor);
+        if (!other || other === actor) problems.push(`${actor.name}: "blink.avoid" names "${String(avoid?.actor)}", who is not another actor of the cast.`);
+        else for (const still of avoid.stills ?? []) if (!(still in other.frames.stills)) problems.push(`${actor.name}: "blink.avoid" names the still "${still}", which ${other.name} does not have.`);
+      }
+    }
   }
   progress.sort((a, b) => a.at - b.at);
   for (let i = 0; i < progress.length; i++) if (progress[i].at !== i + 1) problems.push(`The "hunt_progress" layers must be numbered 1 to ${progress.length}, one each.`);

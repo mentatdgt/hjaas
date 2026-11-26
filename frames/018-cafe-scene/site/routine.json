@@ -171,7 +171,15 @@
     "every_ms": [
      3000,
      6000
-    ]
+    ],
+    "avoid": {
+     "actor": "mum",
+     "stills": [
+      "M_S1",
+      "M_S2"
+     ],
+     "margin_ms": 1000
+    }
    },
    "reaction": {
     "note": "On a mushroom find. Stills only; the head lift is hidden inside a blink.",

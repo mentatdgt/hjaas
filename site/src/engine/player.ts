@@ -1,5 +1,5 @@
 import type { Character } from './character';
-import type { Entry } from './clips';
+import { planOf, type Entry, type Planned } from './clips';
 import type { Step } from './steps';
 
 /** A routine. It is told, each time it is asked for a step, whether a reaction is waiting (clips.ts uses that). */
@@ -22,6 +22,8 @@ export class Player {
   private readonly rachel: Character;
   private readonly rest: string;
   private loop: Schedule;
+  /** The schedule the step on show came from (none: the rest pose before her first step, or a reaction's). */
+  private from: Schedule | null = null;
   private step: Step;
   private elapsed = 0;
   private last = 0;
@@ -77,6 +79,21 @@ export class Player {
     return this.reaction !== null || this.queued !== null;
   }
 
+  /** How long ago, in ms of play, the step she is on began (less than 0 while a delay puts her next move off). */
+  get since(): number {
+    return this.elapsed;
+  }
+
+  /**
+   * What her routine will show, in ms from now (clips.ts, Planned: another actor's blink `avoid` asks). Null while she
+   * reacts, holds still, or is about to change schedules: then nobody knows.
+   */
+  planned(): Planned | null {
+    const plan = this.from && this.from === this.loop && !this.reacting ? planOf(this.from) : undefined;
+    if (!plan) return null;
+    return { busy: (stills, from, to) => plan(stills, from + this.elapsed, to + this.elapsed).map(([a, b]) => [a - this.elapsed, b - this.elapsed] as const) };
+  }
+
   start(): void {
     if (this.running) return;
     this.running = true;
@@ -110,6 +127,7 @@ export class Player {
     this.elapsed = 0;
     this.shown = 0;
     this.fadingFrom = null;
+    this.from = null;
     this.step = { pose: this.rest, ms: 0 };
     this.rachel.show(this.rest);
     this.onStep?.(this.step);
@@ -235,6 +253,7 @@ export class Player {
   }
 
   private beginReaction(): void {
+    this.from = null;
     this.reaction = this.queued;
     this.queued = null;
     this.settling = false;
@@ -246,6 +265,7 @@ export class Player {
     for (;;) {
       const { value } = this.loop.next(this.queued ? 'react' : undefined);
       const step = value as Step;
+      this.from = this.loop;
       if (step.ms > 0) return step;
     }
   }

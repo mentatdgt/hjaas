@@ -85,7 +85,43 @@ interface BlinkRule {
   still_for?: Readonly<Record<string, string>>;
   ms?: number;
   every_ms?: Ms;
+  /** Another actor's stills the blink keeps clear of (see `Avoid`). */
+  avoid?: Avoid | readonly Avoid[];
 }
+
+/**
+ * A blink waits while another actor (`actor`) is showing one of `stills`, and while she is within
+ * `margin_ms` of starting or ending one: it happens as soon as it is clear (postponed, never dropped). The
+ * café: Rachel does not blink while the mum sips. It needs a Stage (see clipSchedule); without one, or while
+ * the other actor is not playing her routine (not loaded, held still), it is ignored.
+ */
+export interface Avoid {
+  actor: string;
+  stills: readonly string[];
+  margin_ms?: number;
+}
+
+/** What a routine may ask about the rest of the stage (a blink's `avoid`). scene.ts makes one per actor from the players. */
+export interface Stage {
+  /** How long ago, in ms of play, the step this actor's player is on (or is just entering) began. */
+  since(): number;
+  /** Another actor's plan, or null when she is not playing a routine of her own just now. */
+  other(actor: string): Planned | null;
+}
+
+/** An actor's routine as rolled so far (and further, when asked). */
+export interface Planned {
+  /** When any of `stills` is on show between `from` and `to`, in ms from now: [start, end] each, in order. */
+  busy(stills: readonly string[], from: number, to: number): Array<readonly [number, number]>;
+}
+
+/** The plan of a schedule clipSchedule made, in ms since the step its player is on began (a player adds its own `since`). */
+export type Plan = Planned['busy'];
+const plans = new WeakMap<object, Plan>();
+/** What a schedule made by clipSchedule will show next (see Planned); undefined for any other schedule. */
+export const planOf = (schedule: object): Plan | undefined => plans.get(schedule);
+
+const avoidsOf = (rule: BlinkRule): readonly Avoid[] => (!rule.avoid ? [] : Array.isArray(rule.avoid) ? rule.avoid : [rule.avoid as Avoid]);
 
 type ReactionItem =
   | { clip: string; ms: number; reverse?: boolean; first_ms?: number; first_n?: number }
@@ -209,6 +245,12 @@ export function checkClips(frames: ClipFrames, routine: ClipRoutine): string[] {
       if (!Array.isArray(rule.frames) || rule.frames.length === 0) problems.push('"blink.frames" must list the blink\'s frames (or "blink.still_for" a blink still for each still).');
       for (const frame of rule.frames ?? []) still(frame.still, '"blink.frames"');
     }
+    for (const avoid of avoidsOf(rule)) {
+      if (typeof avoid?.actor !== 'string' || !Array.isArray(avoid.stills) || avoid.stills.length === 0 || !avoid.stills.every((name) => typeof name === 'string')) {
+        problems.push('"blink.avoid" needs an "actor" and the "stills" of hers that the blink keeps clear of.');
+      }
+      if (avoid?.margin_ms !== undefined && !(typeof avoid.margin_ms === 'number' && avoid.margin_ms >= 0)) problems.push('"blink.avoid.margin_ms" must be a time in ms.');
+    }
   }
   if (routine.reaction) {
     if (routine.reaction.enter_from !== undefined) still(routine.reaction.enter_from, '"reaction.enter_from"');
@@ -289,12 +331,50 @@ function clipSteps(frames: ClipFrames, clip: string, ms: number, reverse = false
  * `has(clip)` says whether a clip's frames have loaded. Until every clip the routine uses is there, she
  * keeps to her stills (clips and loops of clips are passed over), so the scene can start on the stills alone.
  * The generator is told, through next(), when a reaction is waiting (see the reaction entry rule above).
+ *
+ * `stage`: the rest of the cast, for a blink rule with `avoid`. Such a routine decides each blink as its hold
+ * begins (not when it is rolled, a few steps ahead), so that it knows where the other actor is. A routine
+ * without `avoid` is rolled exactly as before. Each schedule also keeps its plan where another's `avoid` can
+ * read it: planOf.
  */
-export function* clipSchedule(
+export function clipSchedule(
   frames: ClipFrames,
   routine: ClipRoutine,
   rnd: Rng = Math.random,
   has: (clip: string) => boolean = () => true,
+  stage?: Stage,
+): Generator<Step, never, Signal> {
+  const plan: { busy: Plan } = { busy: () => [] };
+  const schedule = runSchedule(frames, routine, rnd, has, stage, plan);
+  plans.set(schedule, (stills, from, to) => plan.busy(stills, from, to));
+  return schedule;
+}
+
+/** A moment a routine with `avoid` has not decided yet: a hold of a still that may blink, decided as it begins. */
+interface Pending {
+  rule: BlinkRule;
+  frames: BlinkFrames;
+  blinkMs: number;
+  /** How far into the hold a blink may come at the soonest (after the dissolve into it). */
+  lead: number;
+  fade: { fade?: number };
+  /** The pose before it (for a routine that leaves blinking to its rule: see `hold`). */
+  before: string;
+}
+
+/** How far back a schedule's plan remembers what it has shown (another actor's `avoid` margin reaches back). */
+const PAST_MS = 5000;
+
+/** The end of a pass through the routine, among the moments rolled ahead. */
+const END = Symbol('end of pass');
+
+function* runSchedule(
+  frames: ClipFrames,
+  routine: ClipRoutine,
+  rnd: Rng,
+  has: (clip: string) => boolean,
+  stage: Stage | undefined,
+  plan: { busy: Plan },
 ): Generator<Step, never, Signal> {
   const problems = checkClips(frames, routine);
   if (problems.length) throw new Error(`routine: ${problems.join(' ')}`);
@@ -320,11 +400,20 @@ export function* clipSchedule(
   const free = !routine.routine.some((item) => ('steps' in item ? item.steps.some((step) => step.blink_ok !== undefined) : 'still' in item && item.blink_ok !== undefined));
   /** The pose of the step before the one being rolled. */
   let last = '';
+  // A blink that keeps clear of another actor is decided as its hold begins; and then the time since the last
+  // blink is counted as the steps are shown, not as they are rolled.
+  const deferred = rules.some((rule) => avoidsOf(rule).length > 0);
+  /** A blink was due and had to wait: the next chance takes it as soon as it is clear. */
+  let postponed = false;
 
   /** A moment of the routine: the step to show, and the steps that lead from it back to the rest still. */
   interface Moment {
     step: Step;
     home: Step[];
+    /** (A routine with `avoid`: a hold whose blink is decided as it begins.) */
+    pending?: Pending;
+    /** (A routine with `avoid`: false for the part of a hold before its blink, and the blink, which the time since the last blink leaves out.) */
+    count?: boolean;
   }
 
   /**
@@ -348,6 +437,14 @@ export function* clipSchedule(
     const blinkMs = frames.reduce((sum, frame) => sum + frame.ms, 0);
     // (A blink waits for the dissolve into the pose to finish.)
     const lead = Math.max(BLINK_MARGIN_MS, fadeMs ?? 0);
+    if (deferred) {
+      // Decided as the hold begins (see decide). (Only a hold that could blink at all: one too short for
+      // either kind of blink stays as it is.)
+      const could = blink && (ms >= blinkMs + lead + BLINK_MARGIN_MS || (free && !fade.fade && blinksOn(blink, before)));
+      const step: Step = home ? { pose, ms, brief: BRIEF_MS, ...fade } : { pose, ms, ...fade };
+      yield could ? { step, home: home ?? [], pending: { rule: blink, frames, blinkMs, lead, fade, before } } : { step, home: home ?? [] };
+      return;
+    }
     if (blink && ms >= blinkMs + lead + BLINK_MARGIN_MS && sinceBlink + ms / 2 >= nextBlink) {
       const first = lead + rnd() * (ms - blinkMs - lead - BLINK_MARGIN_MS);
       yield { step: { pose, ms: first, ...fade }, home: [] };
@@ -412,7 +509,7 @@ export function* clipSchedule(
         const home = back ? clipSteps(frames, back.clip, back.ms, true) : [];
         for (let n = Math.max(1, count(item.repeat)); n > 0; n--) {
           for (const step of clipSteps(frames, item.clip, item.ms)) {
-            sinceBlink += step.ms;
+            if (!deferred) sinceBlink += step.ms;
             last = step.pose;
             yield { step, home };
           }
@@ -422,7 +519,7 @@ export function* clipSchedule(
         const steps = clipSteps(frames, item.clip, item.ms, item.reverse);
         const forwards = clipSteps(frames, item.clip, item.ms);
         for (let i = 0; i < steps.length; i++) {
-          sinceBlink += steps[i].ms;
+          if (!deferred) sinceBlink += steps[i].ms;
           last = steps[i].pose;
           // Part-way through a transition, the way home is back along it to its first frame: what is left of
           // it when it is already running backwards, what has been played, reversed, when it runs forwards.
@@ -442,35 +539,157 @@ export function* clipSchedule(
   /** The clip frames among these steps. */
   const clipFrames = (steps: readonly Step[]): string[] => [...new Set(steps.map((step) => step.pose).filter((pose) => pose !== NOTHING && !(pose in frames.stills)))];
 
-  for (;;) {
-    // A pass is rolled a few steps ahead of where she is, so that every step can say what follows it. (Not
-    // all at once: a loop may run a thousand times, as the café's fan does.)
-    const rolling = pass();
-    const ahead: Moment[] = [];
-    const rollAhead = (): void => {
-      while (ahead.length <= AHEAD) {
-        const next = rolling.next();
-        if (next.done) return;
-        ahead.push(next.value);
+  /**
+   * A hold of a routine with `avoid`, as it begins: the moments it is shown as. Its blink comes when it is
+   * due, as it would have been rolled; but never while the other actor is on the stills it avoids, or within
+   * the margin of them. Then it waits for the first clear moment of this hold, or of the next that may blink.
+   */
+  const decide = (moment: Moment): Moment[] => {
+    const { step, home } = moment;
+    const { rule, frames: blink, blinkMs, lead, fade, before } = moment.pending!;
+    const ms = step.ms;
+    const pose = step.pose;
+    // The other actor's stills to keep clear of, from `from` to `to` ms into this hold: none in the way, or
+    // the first moment at or after `at` that is clear for the whole blink (null: none before `latest`).
+    const clearFrom = (at: number, latest: number): number | null => {
+      const since = stage?.since() ?? 0;
+      const ways = avoidsOf(rule).flatMap((avoid) => {
+        const other = stage?.other(avoid.actor);
+        const m = avoid.margin_ms ?? 0;
+        return other ? other.busy(avoid.stills, at - since - m, latest + blinkMs - since + m).map(([a, b]) => [a + since - m, b + since + m] as const) : [];
+      });
+      ways.sort((a, b) => a[0] - b[0]);
+      for (let moved = true; moved; ) {
+        moved = false;
+        for (const [a, b] of ways) {
+          if (at < b && at + blinkMs > a) {
+            at = b;
+            moved = true;
+          }
+        }
       }
+      return at <= latest ? at : null;
     };
-    for (rollAhead(); ahead.length; rollAhead()) {
-      const { step, home } = ahead.shift()!;
-      rollAhead();
-      const soon = clipFrames([
-        ...ahead.slice(0, AHEAD).map((moment) => moment.step),
-        // Should a reaction be asked for during this step or the next: the start of the way home from each.
-        ...home.slice(0, HOME_READY),
-        ...(ahead[0]?.home.slice(0, HOME_READY) ?? []),
-      ]);
-      const signal = yield { ...step, soon };
-      if (signal !== 'react' || !rest || step.pose === rest) continue;
-      // A reaction is waiting: go home, then offer the rest still. The player starts the reaction on it,
-      // and afterwards the routine begins again from the top.
-      for (let j = 0; j < home.length; j++) yield { ...home[j], soon: clipFrames(home.slice(j + 1, j + 1 + AHEAD)) };
-      yield { pose: rest, ms: 300 };
-      break;
+    if (ms >= blinkMs + lead + BLINK_MARGIN_MS && sinceBlink + ms / 2 >= nextBlink) {
+      const latest = ms - blinkMs - BLINK_MARGIN_MS;
+      const first = clearFrom(postponed ? lead : lead + rnd() * (latest - lead), latest);
+      if (first !== null) {
+        postponed = false;
+        sinceBlink = 0;
+        nextBlink = roll(every!);
+        return [
+          { step: { pose, ms: first, ...fade }, home: [], count: false },
+          ...blink.map((frame) => ({ step: { pose: frame.still, ms: frame.ms }, home: [], count: false })),
+          { step: { pose, ms: ms - first - blinkMs }, home: [] },
+        ];
+      }
+      postponed = true;
+    } else if (free && !fade.fade && sinceBlink >= nextBlink && blinksOn(rule, before)) {
+      const left = ms - blinkMs;
+      // (Here only with something of the hold left after it: the blink is never the step before the next one.)
+      if (left >= BLINK_REST_MS && clearFrom(0, 0) === 0) {
+        postponed = false;
+        sinceBlink = 0;
+        nextBlink = roll(every!);
+        return [...blink.map((frame) => ({ step: { pose: frame.still, ms: frame.ms }, home: [], count: false })), { step: { pose, ms: left }, home: [] }];
+      }
+      postponed ||= sinceBlink >= nextBlink;
     }
+    return [{ step, home }];
+  };
+
+  // The routine, pass after pass, each pass ended by END. It is rolled a few steps ahead of where she is, so
+  // that every step can say what follows it. (Not all at once: a loop may run a thousand times, as the café's
+  // fan does.) A pass is begun when the one before it has been shown, unless another actor's `avoid` asks
+  // further ahead (see the plan below).
+  function* passes(): Generator<Moment | typeof END, never> {
+    for (;;) {
+      yield* pass();
+      yield END;
+    }
+  }
+  let rolling = passes();
+  let ahead: Array<Moment | typeof END> = [];
+  const rollAhead = (): void => {
+    while (ahead.length <= AHEAD && ahead[ahead.length - 1] !== END) ahead.push(rolling.next().value);
+  };
+  /** This pass's moments rolled ahead: what the steps say follows them. */
+  const thisPass = (): Moment[] => {
+    const end = ahead.indexOf(END);
+    return (end < 0 ? ahead : ahead.slice(0, end)) as Moment[];
+  };
+
+  // The plan, for another actor's `avoid`: from the step last given out (the one the player is on), the
+  // moments rolled ahead, rolling further when asked to look further. (Unknown on the way home to a reaction.)
+  // (And the steps shown before it, a few seconds of them: the margin after a still reaches back.)
+  let shown: Step | null = null;
+  let homing = false;
+  const past: Step[] = [];
+  const show = (step: Step): void => {
+    if (shown) past.unshift(shown);
+    for (let kept = 0, i = 0; i < past.length; i++) {
+      kept += past[i].ms;
+      if (kept > PAST_MS || i >= 63) {
+        past.length = i + 1;
+        break;
+      }
+    }
+    shown = step;
+  };
+  plan.busy = (stills, from, to) => {
+    const found: Array<readonly [number, number]> = [];
+    if (!shown || homing) return found;
+    let back = 0;
+    for (const step of past) {
+      back -= step.ms;
+      if (back + step.ms <= from) break;
+      if (stills.includes(step.pose) && back < to) found.unshift([back, back + step.ms]);
+    }
+    let t = 0;
+    const visit = (step: Step): void => {
+      if (stills.includes(step.pose) && t < to && t + step.ms > from) found.push([t, t + step.ms]);
+      t += step.ms;
+    };
+    visit(shown);
+    for (let i = 0; t < to && i < 10_000; i++) {
+      if (i >= ahead.length) ahead.push(rolling.next().value);
+      const moment = ahead[i];
+      if (moment !== END) visit(moment.step);
+    }
+    return found;
+  };
+
+  for (;;) {
+    rollAhead();
+    let moment = ahead.shift()!;
+    if (moment === END) continue;
+    if (moment.pending) {
+      ahead.unshift(...decide(moment));
+      moment = ahead.shift() as Moment;
+    }
+    rollAhead();
+    const { step, home } = moment;
+    if (deferred && moment.count !== false) sinceBlink += step.ms;
+    const next = thisPass();
+    const soon = clipFrames([
+      ...next.slice(0, AHEAD).map((each) => each.step),
+      // Should a reaction be asked for during this step or the next: the start of the way home from each.
+      ...home.slice(0, HOME_READY),
+      ...(next[0]?.home.slice(0, HOME_READY) ?? []),
+    ]);
+    show(step);
+    const signal = yield { ...step, soon };
+    if (signal !== 'react' || !rest || step.pose === rest) continue;
+    // A reaction is waiting: go home, then offer the rest still. The player starts the reaction on it,
+    // and afterwards the routine begins again from the top.
+    homing = true;
+    for (let j = 0; j < home.length; j++) yield { ...home[j], soon: clipFrames(home.slice(j + 1, j + 1 + AHEAD)) };
+    yield { pose: rest, ms: 300 };
+    homing = false;
+    shown = null;
+    past.length = 0;
+    rolling = passes();
+    ahead = [];
   }
 }
 

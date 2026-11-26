@@ -81,17 +81,27 @@ describe('every actor plays by themselves', () => {
     });
   }
 
-  it('the mum is part of the plate: nothing is drawn of her but a blink now and then', () => {
-    const steps = take('mum', 400);
+  it('the mum is part of the plate: nothing is drawn of her but a sip at the start of her loop, then four blinks', () => {
+    const steps = take('mum', 600);
     expect(restOf(actor('mum').frames, actor('mum').routine)).toBe(NOTHING);
-    const nothing = steps.filter((step) => step.pose === NOTHING);
-    for (const step of nothing) {
-      expect(step.ms).toBeGreaterThanOrEqual(4000);
-      expect(step.ms).toBeLessThanOrEqual(8000);
+    const shown = steps.filter((step) => step.pose !== NOTHING);
+    // Each pass (package v10): M_S1 220, M_S2 1.4-1.8 s, M_S1 220, then four blinks of three frames each.
+    const PASS = ['M_S1', 'M_S2', 'M_S1', ...Array(4).fill(['M_blink_half', 'M_blink_closed', 'M_blink_half']).flat()];
+    const passes = Math.floor(shown.length / PASS.length);
+    expect(passes).toBeGreaterThan(20);
+    for (let n = 0; n < passes; n++) expect(shown.slice(n * PASS.length, (n + 1) * PASS.length).map((step) => step.pose)).toEqual(PASS);
+    for (const step of steps) {
+      if (step.pose === 'M_S2') {
+        expect(step.ms).toBeGreaterThanOrEqual(1400);
+        expect(step.ms).toBeLessThanOrEqual(1800);
+      }
+      if (step.pose === 'M_S1') expect(step.ms).toBe(220);
     }
-    const shown = steps.filter((step) => step.pose !== NOTHING).reduce((sum, step) => sum + step.ms, 0);
+    // A loop of about 22 s, a little over a tenth of it with anything of her drawn.
     const all = steps.reduce((sum, step) => sum + step.ms, 0);
-    expect(shown / all).toBeLessThan(0.06);
+    expect(all / passes / 1000).toBeGreaterThan(21);
+    expect(all / passes / 1000).toBeLessThan(23.5);
+    expect(shown.reduce((sum, step) => sum + step.ms, 0) / all).toBeLessThan(0.15);
   });
 
   it('they are out of step: no two actors change pose at the same moments', () => {
@@ -229,16 +239,91 @@ describe('Rachel in the café', () => {
   });
 });
 
-describe('the rest of the café (package v7)', () => {
-  it('the barista polishes a glass on cuts alone, then glances up', () => {
+describe('the rest of the café (package v10)', () => {
+  it('the barista circles the cup with her cloth on cuts alone, a few rounds, then pauses and glances up', () => {
     const steps = take('barista', 600);
     const seen = new Set(steps.map((step) => step.pose));
-    expect([...seen].sort()).toEqual(['B_1', 'B_2_polish', 'B_3_polish', 'B_4_glance']);
+    expect([...seen].sort()).toEqual(['B_1', 'B_2_polish', 'B_3_polish', 'B_4_glance', 'B_P1', 'B_P2', 'B_P3']);
     for (const step of steps) expect(step.fade).toBeUndefined();
-    // Each polishing pose comes from, and goes back to, the pose between them.
+    // The circle: always in this order, each pose 140-200 ms.
+    const CIRCLE = ['B_1', 'B_P1', 'B_2_polish', 'B_P2', 'B_3_polish', 'B_P3'];
     steps.forEach((step, i) => {
-      if (i > 0 && i < steps.length - 1 && step.pose !== 'B_1') expect([steps[i - 1].pose, steps[i + 1].pose]).toEqual(['B_1', 'B_1']);
+      const at = CIRCLE.indexOf(step.pose);
+      if (at > 0) expect(steps[i - 1]?.pose ?? CIRCLE[at - 1]).toBe(CIRCLE[at - 1]);
+      if (at > 0) {
+        expect(step.ms).toBeGreaterThanOrEqual(140);
+        expect(step.ms).toBeLessThanOrEqual(200);
+      }
     });
+    // Between the rounds and the glance, a long B_1; the glance comes from it and goes back to it.
+    steps.forEach((step, i) => {
+      if (step.pose !== 'B_4_glance' || i === 0) return;
+      expect(steps[i - 1]).toMatchObject({ pose: 'B_1' });
+      expect(steps[i - 1].ms).toBeGreaterThanOrEqual(1500);
+      expect(steps[i + 1]?.pose ?? 'B_1').toBe('B_1');
+    });
+  });
+
+  it('the old man blinks on his reading pose only, and turns his page in five drawn steps, on cuts', () => {
+    const steps = take('oldman', 3000);
+    const TURN = ['T1', 'T2', 'R0', 'R1', 'R2'];
+    const MS: Record<string, number> = { T1: 130, T2: 140, R0: 130, R1: 170, R2: 160 };
+    let turns = 0;
+    let blinks = 0;
+    let readSince = 0;
+    let t = 0;
+    let lastTurn = -1;
+    const gaps: number[] = [];
+    steps.forEach((step, i) => {
+      expect(step.fade).toBeUndefined();
+      if (step.pose === 'O_blink') {
+        blinks++;
+        expect(step.ms).toBe(100);
+        expect([steps[i - 1].pose, steps[i + 1]?.pose ?? 'O_1']).toEqual(['O_1', 'O_1']);
+      }
+      if (step.pose === 'T1' && i + 5 < steps.length) {
+        turns++;
+        expect(steps.slice(i, i + 5).map((each) => [each.pose, each.ms])).toEqual(TURN.map((pose) => [pose, MS[pose]]));
+        expect(steps[i + 5]?.pose ?? 'O_1').toBe('O_1');
+        if (lastTurn >= 0) gaps.push(t - lastTurn);
+        lastTurn = t;
+      }
+      if (step.pose === 'O_1') readSince += step.ms;
+      t += step.ms;
+    });
+    expect(turns).toBeGreaterThan(100);
+    expect(blinks).toBeGreaterThan(100);
+    expect(readSince).toBeGreaterThan(0);
+    // A page every 5-7 s (and the old O_2/O_3 are gone).
+    gaps.sort((a, b) => a - b);
+    expect(gaps[Math.floor(gaps.length * 0.05)]).toBeGreaterThan(4500);
+    expect(gaps[Math.floor(gaps.length * 0.95)]).toBeLessThan(7200);
+    expect(steps.some((step) => step.pose === 'O_2' || step.pose === 'O_3')).toBe(false);
+  });
+
+  it('the cat flicks her tail out and back twice a loop, at its start and about 60% through, and breathes in between', () => {
+    const steps = take('cat', 2100);
+    const FLICK: Array<[string, number]> = [['cat_F1', 110], ['cat_F2', 500], ['cat_F1', 110]];
+    let flicks = 0;
+    let t = 0;
+    const starts: number[] = [];
+    steps.forEach((step, i) => {
+      if (step.pose === 'cat_F2') {
+        flicks++;
+        expect([steps[i - 1], step, steps[i + 1]].map((each) => [each.pose, each.ms])).toEqual(FLICK);
+        starts.push(t - steps[i - 1].ms);
+      }
+      if (step.pose.startsWith('cat_F')) expect(step.fade).toBeUndefined();
+      t += step.ms;
+    });
+    expect(flicks).toBeGreaterThan(150);
+    expect(steps.some((step) => step.pose === 'cat_3')).toBe(false);
+    // Every other flick opens a pass; the one between comes at about 60% of it.
+    for (let n = 0; n + 2 < starts.length; n += 2) {
+      const share = (starts[n + 1] - starts[n]) / (starts[n + 2] - starts[n]);
+      expect(share).toBeGreaterThan(0.5);
+      expect(share).toBeLessThan(0.7);
+    }
   });
 
   it('the child colours with his head down, then looks up at his mum and back, on cuts', () => {
@@ -275,17 +360,18 @@ describe('fade_ms: a dissolve into a still', () => {
         const loop = loops.find((stills) => stills.has(step.pose) && stills.has(before.pose));
         expect(loop, `${a.name}: ${before.pose} into ${step.pose}`).toBeDefined();
         expect(step.fade).toBe(loop!.get(step.pose));
-        expect(before.pose).not.toBe(step.pose);
+        // (A still held twice in a row, as the cat's cat_1 when her breathing loop repeats: the player draws no
+        // dissolve for it, there being nothing to dissolve from.)
       });
       if (loops.some((stills) => [...stills.values()].some((ms) => ms))) expect(fades, a.name).toBeGreaterThan(50);
     }
   });
 
-  it('is not played coming into a loop: from the stretch the cat comes back to breathing on a cut', () => {
+  it('is not played coming into a loop: from the flick the cat comes back to breathing on a cut', () => {
     const cat = take('cat', 400);
     let returns = 0;
     cat.forEach((step, i) => {
-      if (i === 0 || cat[i - 1].pose !== 'cat_3') return;
+      if (i < 2 || cat[i - 1].pose !== 'cat_F1' || cat[i - 2].pose !== 'cat_F2') return;
       returns++;
       expect(step.pose).toBe('cat_1');
       expect(step.fade).toBeUndefined();
@@ -300,7 +386,7 @@ describe('fade_ms: a dissolve into a still', () => {
     const { frames: own, routine } = actor('cat');
     const wrong = {
       routine: [...routine.routine.map((item) => ('steps' in item ? item : { ...item, fade_ms: 400 })), { still: 'cat_2', ms: 500, fade_ms: 400 }],
-      reaction: { steps: [{ still: 'cat_3', ms: 500, fade_ms: 400 }, { still: 'cat_1', ms: 300, fade_ms: 400 }] },
+      reaction: { steps: [{ still: 'cat_F2', ms: 500, fade_ms: 400 }, { still: 'cat_1', ms: 300, fade_ms: 400 }] },
     } as unknown as ClipRoutine;
     const schedule = clipSchedule(own, wrong, seeded(3));
     const steps = Array.from({ length: 300 }, () => schedule.next().value);
@@ -314,14 +400,24 @@ describe('fade_ms: a dissolve into a still', () => {
       for (const item of a.routine.routine) if (!('steps' in item)) expect((item as { fade_ms?: number }).fade_ms, `${a.name}, outside a loop`).toBeUndefined();
       for (const item of a.routine.reaction?.steps ?? []) expect((item as { fade_ms?: number }).fade_ms, `${a.name}'s reaction`).toBeUndefined();
     }
-    // The cat breathes on dissolves; the mum's blink and the old man's page turn cut.
-    expect(take('cat', 50).filter((step) => step.fade === 1000).length).toBeGreaterThan(30);
+    // The cat breathes on dissolves; her flick, the mum's sip and blink and the old man's page turn cut.
+    expect(take('cat', 210).filter((step) => step.fade === 1000).length).toBeGreaterThan(120);
     expect(take('mum', 50).every((step) => step.fade === undefined)).toBe(true);
     expect(take('oldman', 50).every((step) => step.fade === undefined)).toBe(true);
   });
 
-  it('never outlasts the hold it opens', () => {
-    for (const a of actors) for (const step of take(a.name, 400)) if (step.fade) expect(step.fade, `${a.name} ${step.pose}`).toBeLessThanOrEqual(step.ms);
+  it('never outlasts the hold it opens, but for the cat breathing back to cat_1', () => {
+    // Package v10 (approved with its preview, which plays it the same way): the cat's cat_1 holds are 700-900 ms
+    // and her dissolves 1 s, so the one from cat_2 back to cat_1 is ended at 70-90% by the next step: the same
+    // still again (the loop repeating) or her flick, both cuts.
+    for (const a of actors) {
+      const steps = take(a.name, 400);
+      steps.forEach((step, i) => {
+        if (!step.fade || step.fade <= step.ms) return;
+        // (cat_1 > cat_1: the loop repeating, where the player draws no dissolve at all.)
+        expect(['cat cat_2 > cat_1', 'cat cat_1 > cat_1']).toContain(`${a.name} ${steps[i - 1]?.pose} > ${step.pose}`);
+      });
+    }
   });
 });
 
