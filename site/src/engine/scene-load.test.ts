@@ -519,7 +519,9 @@ describe('recoverable room assets', () => {
     const scene = await load(SCENES[1]);
     expect(castOf(scene)).toHaveLength(2);
     await scene.stock();
-    expect(scene.character?.has('frame_01') || scene.character !== null).toBe(true);
+    // She is on the plate, the lead, over the mist.
+    expect(scene.character).not.toBeNull();
+    expect(castOf(scene)[1].character).toBe(scene.character);
     expect((castOf(scene)[0].character as unknown as { has: (name: string) => boolean }).has('M1')).toBe(true);
     expect((castOf(scene)[0].character as unknown as { has: (name: string) => boolean }).has('M2')).toBe(false);
     scene.destroy();
