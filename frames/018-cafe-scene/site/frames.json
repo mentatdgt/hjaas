@@ -73,6 +73,7 @@
     "O_blink",
     "T1",
     "T2",
+    "R0",
     "R1",
     "R2"
    ]
@@ -157,6 +158,7 @@
   "O_blink": "oldman/O_blink.png",
   "T1": "oldman/T1.png",
   "T2": "oldman/T2.png",
+  "R0": "oldman/R0.png",
   "R1": "oldman/R1.png",
   "R2": "oldman/R2.png",
   "B_1": "barista/B_1.png",

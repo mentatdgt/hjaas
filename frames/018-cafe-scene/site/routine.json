@@ -1,5 +1,5 @@
 {
- "note": "Scene 3 (caf\u00e9) routines, v10c. Holds in ms; [a,b] = random in range. Each actor runs independently and out of sync. RULE: fade_ms (a true cross-dissolve into a still) applies ONLY between two stills of the same loop. Every other change is an instant cut. Within a layer every still is pixel-identical to the first outside the part that moves, so cuts never flicker. The fan is part of the room: play its loop forever, do not apply the 'fully painted under actors' edge rule to it, and let the edge fade it like the plate. v10c (2026-11-26): OLD MAN reads on O_1 only (the newspaper never changes) and turns a page every 5-7 s in four drawn steps, cuts: O_1 > T1 (corner lifted) > T2 (page upright in the middle) > R1 (he has let go: the page falls to the left on its own, his hand halfway back outside the paper's right edge) > R2 (page almost flat over the left page, hand back in its reading grip) > O_1, 130/140/170/160 ms (0.60 s; R1 a little longer while the page falls, R2 long enough to see it settle). His arm never crosses the front of the paper (v10.1's T2b/T3/T3b/T4 are gone). He blinks on O_1 only, about every 3-6.5 s (O_blink, 100 ms), never mid-turn. BARISTA polishes in a circle, cuts at 140-200 ms: B_1 > B_P1 > B_2_polish > B_P2 > B_3_polish > B_P3, 3-6 rounds, then her pause and glance (B_4_glance) as before. v10b (2026-11-26): MUM (part of the plate; her layer holds patches only) sips at the START of her loop of about 22-23 s (21-25 s at the extremes): nothing for 50 ms (so her rest pose stays the plate) > M_S1 (220 ms) > M_S2 (sip, eyes closed, 1.4-1.8 s) > M_S1 > rest; then her four blinks spread through the rest of the loop (the first 2.3-2.9 s after the sip, then every 4.3-5.1 s, the last 2.7-3.3 s before the next sip), never during the sip. CAT: cat_3 is gone. Its tail flicks twice per loop: cat_1 > cat_F1 (110 ms) > cat_F2 (500 ms) > cat_F1 (110 ms) > cat_1, at the start of the loop and again after 3 breaths (2 more follow), so at about 60% of the loop. It breathes (cat_1/cat_2, 1 s dissolves) the rest of the time, never during a flick; each breathing loop ends on cat_1 so the flick starts with a cut from an identical body.",
+ "note": "Scene 3 (caf\u00e9) routines, v10d. Holds in ms; [a,b] = random in range. Each actor runs independently and out of sync. RULE: fade_ms (a true cross-dissolve into a still) applies ONLY between two stills of the same loop. Every other change is an instant cut. Within a layer every still is pixel-identical to the first outside the part that moves, so cuts never flicker. The fan is part of the room: play its loop forever, do not apply the 'fully painted under actors' edge rule to it, and let the edge fade it like the plate. v10d (2026-11-26): OLD MAN reads on O_1 only (the newspaper never changes) and turns a page every 5-7 s in five drawn steps, cuts: O_1 > T1 (corner lifted) > T2 (page curled up on the right of the fold) > R0 (page standing upright over the fold, his fingers just leaving it) > R1 (he has let go: the page falls to the left on its own, his hand halfway back outside the paper's right edge) > R2 (page almost flat over the left page, hand back in its reading grip) > O_1, 130/140/130/170/160 ms (0.73 s; R0 short so the page passes upright quickly but visibly, R1 a little longer while the page falls, R2 long enough to see it settle). His arm never crosses the front of the paper (v10.1's T2b/T3/T3b/T4 are gone). He blinks on O_1 only, about every 3-6.5 s (O_blink, 100 ms), never mid-turn. BARISTA polishes in a circle, cuts at 140-200 ms: B_1 > B_P1 > B_2_polish > B_P2 > B_3_polish > B_P3, 3-6 rounds, then her pause and glance (B_4_glance) as before. v10b (2026-11-26): MUM (part of the plate; her layer holds patches only) sips at the START of her loop of about 22-23 s (21-25 s at the extremes): nothing for 50 ms (so her rest pose stays the plate) > M_S1 (220 ms) > M_S2 (sip, eyes closed, 1.4-1.8 s) > M_S1 > rest; then her four blinks spread through the rest of the loop (the first 2.3-2.9 s after the sip, then every 4.3-5.1 s, the last 2.7-3.3 s before the next sip), never during the sip. CAT: cat_3 is gone. Its tail flicks twice per loop: cat_1 > cat_F1 (110 ms) > cat_F2 (500 ms) > cat_F1 (110 ms) > cat_1, at the start of the loop and again after 3 breaths (2 more follow), so at about 60% of the loop. It breathes (cat_1/cat_2, 1 s dissolves) the rest of the time, never during a flick; each breathing loop ends on cat_1 so the flick starts with a cut from an identical body.",
  "actors": {
   "fan": {
    "routine": [
@@ -347,29 +347,29 @@
    ]
   },
   "oldman": {
-   "note": "v10c. Reads on O_1, the only reading pose, then turns the page in four drawn steps with cuts: he lifts the corner (T1), raises the page upright (T2), lets go so it falls to the left on its own while his hand comes back outside the paper (R1), and the page settles as his hand takes its grip again (R2). O_1 is three holds in a row (the same still, so nothing shows between them) because the engine fits at most one blink into a hold: this way he blinks every 3.0-6.3 s and turns a page every 5.2-6.6 s (5th-95th percentile; extremes 4.6-7.1 s), measured with the engine's splitCast/clipSchedule over 100 h. He blinks only on O_1, never mid-turn.",
+   "note": "v10d. Reads on O_1, the only reading pose, then turns the page in five drawn steps with cuts: he lifts the corner (T1), raises the page (T2), the page stands upright over the fold as his fingers leave it (R0), it falls to the left on its own while his hand comes back outside the paper (R1), and the page settles as his hand takes its grip again (R2). O_1 is three holds in a row (the same still, so nothing shows between them) because the engine fits at most one blink into a hold: this way he blinks every 3.0-6.3 s and turns a page every 5.2-6.6 s (5th-95th percentile; extremes 4.6-7.1 s; holds trimmed to 3 x [1287, 2137] ms for the longer turn), measured with the engine's splitCast/clipSchedule over 100 h. He blinks only on O_1, never mid-turn.",
    "routine": [
     {
      "still": "O_1",
      "ms": [
-      1330,
-      2180
+      1287,
+      2137
      ],
      "blink_ok": true
     },
     {
      "still": "O_1",
      "ms": [
-      1330,
-      2180
+      1287,
+      2137
      ],
      "blink_ok": true
     },
     {
      "still": "O_1",
      "ms": [
-      1330,
-      2180
+      1287,
+      2137
      ],
      "blink_ok": true
     },
@@ -380,6 +380,10 @@
     {
      "still": "T2",
      "ms": 140
+    },
+    {
+     "still": "R0",
+     "ms": 130
     },
     {
      "still": "R1",

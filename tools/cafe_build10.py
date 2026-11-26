@@ -1,5 +1,5 @@
-"""Café package v10 (user requests 2026-11-26): the old man blinks and turns his page (v10c: O_1 > T1 > T2 > R1 > R2 > O_1: he lets go
-and the page falls to the left on its own while his hand goes back to its grip; one reading pose, so the newspaper never changes); the barista's polish runs through three in-betweens (cloth circles the cup);
+"""Café package v10 (user requests 2026-11-26): the old man blinks and turns his page (v10d: O_1 > T1 > T2 > R0 > R1 > R2 > O_1: he lets go
+as the page stands upright over the fold (R0) and it falls to the left on its own while his hand goes back to its grip; one reading pose, so the newspaper never changes); the barista's polish runs through three in-betweens (cloth circles the cup);
 the mum sips her coffee once per loop (v10b: at the start of her loop); the cat's tail flicks (F1/F2, cat_3 dropped).
 
 Built like v7 (tools/cafe_build7.py): every pose = the layer's rest pose + ONLY the zone that moves. The zone is where Quinn's
@@ -101,13 +101,19 @@ def decontaminate(P):
     P = P.copy(); g = P[..., 1]; cap = np.maximum(P[..., 0], P[..., 2]); P[..., 1] = np.where(edge & (g > cap), cap, g); return P
 def quinn(actor, name, ref_alpha):
     P, info = place(f'{R10}/{name}.png', BOX[actor], ref_alpha); return decontaminate(P), info
-# ---------------- old man: blink + page turn (v10c: T1, T2, then R1/R2: the page falls on its own), all on O_1 ----------------
+# ---------------- old man: blink + page turn (v10d: T1, T2, R0 (page upright, fingers leaving it), then R1/R2: the page falls on its own), all on O_1 ----------------
 # (v10.1's T2b/T3/T3b/T4 are dropped: his arm swept across the front of the paper he was holding.)
 O1 = REST['O_1']; poses['O_1'] = O1
 OM, _ = quinn('oldman', 'masters/oldman_MASTER', O1[..., 3] / 255)
-for n, src in [('O_blink', 'oldman_O_blink'), ('T1', 'oldman_T1'), ('T2', 'oldman_T2'), ('R1', 'oldman_R1'), ('R2', 'oldman_R2')]:
+for n, src in [('O_blink', 'oldman_O_blink'), ('T1', 'oldman_T1'), ('T2', 'oldman_T2'), ('R0', 'oldman_R0'), ('R1', 'oldman_R1'), ('R2', 'oldman_R2')]:
     P, info = quinn('oldman', src, O1[..., 3] / 255)
+    if n == 'R0':   # v10d: a tiny stray mark of Quinn's on the skin just below the inner cuff (about 4x3 px): fill it from the skin around it
+        mk = box_mask(S, 2431, 858, 2437, 863); y0_, y1_, x0_, x1_ = 840, 880, 2410, 2460
+        P[y0_:y1_, x0_:x1_, :3] = cv2.inpaint(np.clip(P[y0_:y1_, x0_:x1_, :3], 0, 255).astype(np.uint8), mk[y0_:y1_, x0_:x1_].astype(np.uint8), 3, cv2.INPAINT_TELEA).astype(np.float32)
     z = zone(OM, P, thr=24, smooth=1.0, minsize=40 if n == 'O_blink' else 120, grow=4 if n == 'O_blink' else 6)
+    # v10d: R0's forearm lies over O_1's arm and hand in the same skin tone, so the zone had a hole along the forearm and the paste
+    # kept O_1's skin there, its feathered edge showing as a dark stroke across the forearm: fill the zone's holes (R0 only)
+    if n == 'R0': z = ndi.binary_fill_holes(ndi.binary_closing(z, iterations=2)) | z
     register(n, P, O1, z, info); poses[n] = paste(O1, P, z); zones[n] = z
 # ---------------- barista: in-betweens P1..P3 on B_1; B_1..B_4 as delivered ----------------
 B1 = REST['B_1']; BMq, _ = quinn('barista', 'masters/barista_MASTER', B1[..., 3] / 255)
@@ -178,7 +184,7 @@ def add_layer(actor, names):
         v = poses[n][y0:y1, x0:x1]; assert not (poses[n][..., 3] > 0)[~box_mask(S, x0, y0, x1, y1)].any(), n
         Image.fromarray(np.clip(np.round(v), 0, 255).astype(np.uint8), 'RGBA').save(f'{OUT}/{actor}/{n}.png'); man['stills'][n] = f'{actor}/{n}.png'
     man['layers'].append({'actor': actor, 'x': int(x0 - TRIM), 'y': int(y0), 'w': int(x1 - x0), 'h': int(y1 - y0), 'stills': names})
-NEW = {'cat': ['cat_1', 'cat_2', 'cat_F1', 'cat_F2'], 'oldman': ['O_1', 'O_blink', 'T1', 'T2', 'R1', 'R2'],
+NEW = {'cat': ['cat_1', 'cat_2', 'cat_F1', 'cat_F2'], 'oldman': ['O_1', 'O_blink', 'T1', 'T2', 'R0', 'R1', 'R2'],
        'barista': ['B_1', 'B_P1', 'B_2_polish', 'B_P2', 'B_3_polish', 'B_P3', 'B_4_glance'],
        'mum': ['M_blink_half', 'M_blink_closed', 'M_S1', 'M_S2']}
 for l in man0['layers']:                                       # same drawing order as before
@@ -202,13 +208,13 @@ json.dump(man, open(f'{OUT}/frames.json', 'w'), indent=1)
 json.dump({'stability': stab, 'registration': reg}, open(f'{OUT}/stability.json', 'w'), indent=1)
 # ---------------- routines ----------------
 rt = {'note': None, 'actors': {}}
-rt['note'] = ("Scene 3 (café) routines, v10c. Holds in ms; [a,b] = random in range. Each actor runs independently and out of sync. "
+rt['note'] = ("Scene 3 (café) routines, v10d. Holds in ms; [a,b] = random in range. Each actor runs independently and out of sync. "
     "RULE: fade_ms (a true cross-dissolve into a still) applies ONLY between two stills of the same loop. Every other change is an instant cut. "
     "Within a layer every still is pixel-identical to the first outside the part that moves, so cuts never flicker. "
     "The fan is part of the room: play its loop forever, do not apply the 'fully painted under actors' edge rule to it, and let the edge fade it like the plate. "
-    "v10c (2026-11-26): OLD MAN reads on O_1 only (the newspaper never changes) and turns a page every 5-7 s in four drawn steps, cuts: "
-    "O_1 > T1 (corner lifted) > T2 (page upright in the middle) > R1 (he has let go: the page falls to the left on its own, his hand halfway back outside the paper's right edge) "
-    "> R2 (page almost flat over the left page, hand back in its reading grip) > O_1, 130/140/170/160 ms (0.60 s; R1 a little longer while the page falls, R2 long enough to see it settle). "
+    "v10d (2026-11-26): OLD MAN reads on O_1 only (the newspaper never changes) and turns a page every 5-7 s in five drawn steps, cuts: "
+    "O_1 > T1 (corner lifted) > T2 (page curled up on the right of the fold) > R0 (page standing upright over the fold, his fingers just leaving it) > R1 (he has let go: the page falls to the left on its own, his hand halfway back outside the paper's right edge) "
+    "> R2 (page almost flat over the left page, hand back in its reading grip) > O_1, 130/140/130/170/160 ms (0.73 s; R0 short so the page passes upright quickly but visibly, R1 a little longer while the page falls, R2 long enough to see it settle). "
     "His arm never crosses the front of the paper (v10.1's T2b/T3/T3b/T4 are gone). He blinks on O_1 only, about every 3-6.5 s (O_blink, 100 ms), never mid-turn. "
     "BARISTA polishes in a circle, cuts at 140-200 ms: B_1 > B_P1 > B_2_polish > B_P2 > B_3_polish > B_P3, 3-6 rounds, then her pause and glance (B_4_glance) as before. "
     "v10b (2026-11-26): MUM (part of the plate; her layer holds patches only) sips at the START of her loop of about 22-23 s (21-25 s at the extremes): "
@@ -225,13 +231,13 @@ rt['actors']['barista'] = {
             {'still': 'B_1', 'ms': [140, 200]}, {'still': 'B_P1', 'ms': [140, 200]}, {'still': 'B_2_polish', 'ms': [140, 200]},
             {'still': 'B_P2', 'ms': [140, 200]}, {'still': 'B_3_polish', 'ms': [140, 200]}, {'still': 'B_P3', 'ms': [140, 200]}]},
         {'still': 'B_1', 'ms': [1500, 2500]}, {'still': 'B_4_glance', 'ms': [1400, 2000]}, {'still': 'B_1', 'ms': [800, 1200]}]}
-OM_HOLD = [1330, 2180]
+OM_HOLD = [1287, 2137]
 rt['actors']['oldman'] = {
-    'note': 'v10c. Reads on O_1, the only reading pose, then turns the page in four drawn steps with cuts: he lifts the corner (T1), raises the page upright (T2), lets go so it falls to the left on its own while his hand comes back outside the paper (R1), and the page settles as his hand takes its grip again (R2). O_1 is three holds in a row (the same still, so nothing shows between them) because the engine fits at most one blink into a hold: this way he blinks every 3.0-6.3 s and turns a page every 5.2-6.6 s (5th-95th percentile; extremes 4.6-7.1 s), measured with the engine\'s splitCast/clipSchedule over 100 h. He blinks only on O_1, never mid-turn.',
+    'note': 'v10d. Reads on O_1, the only reading pose, then turns the page in five drawn steps with cuts: he lifts the corner (T1), raises the page (T2), the page stands upright over the fold as his fingers leave it (R0), it falls to the left on its own while his hand comes back outside the paper (R1), and the page settles as his hand takes its grip again (R2). O_1 is three holds in a row (the same still, so nothing shows between them) because the engine fits at most one blink into a hold: this way he blinks every 3.0-6.3 s and turns a page every 5.2-6.6 s (5th-95th percentile; extremes 4.6-7.1 s; holds trimmed to 3 x [1287, 2137] ms for the longer turn), measured with the engine\'s splitCast/clipSchedule over 100 h. He blinks only on O_1, never mid-turn.',
     'routine': [
         {'still': 'O_1', 'ms': OM_HOLD, 'blink_ok': True}, {'still': 'O_1', 'ms': OM_HOLD, 'blink_ok': True},
         {'still': 'O_1', 'ms': OM_HOLD, 'blink_ok': True},
-        {'still': 'T1', 'ms': 130}, {'still': 'T2', 'ms': 140}, {'still': 'R1', 'ms': 170}, {'still': 'R2', 'ms': 160}],
+        {'still': 'T1', 'ms': 130}, {'still': 'T2', 'ms': 140}, {'still': 'R0', 'ms': 130}, {'still': 'R1', 'ms': 170}, {'still': 'R2', 'ms': 160}],
     'blink': {'on': 'O_1', 'frames': [{'still': 'O_blink', 'ms': 100}], 'every_ms': [2500, 4500]}}
 FL = [{'still': 'cat_F1', 'ms': 110}, {'still': 'cat_F2', 'ms': 500}, {'still': 'cat_F1', 'ms': 110}]
 def breathe(name, n):

@@ -60,6 +60,16 @@
     921
    ]
   },
+  "R0": {
+   "changed_px": 10579,
+   "changed_outside_zone_px": 0,
+   "changed_bbox": [
+    2286,
+    774,
+    2476,
+    921
+   ]
+  },
   "R1": {
    "changed_px": 11656,
    "changed_outside_zone_px": 0,
@@ -214,6 +224,17 @@
    "mean_diff": 0.84,
    "p99_diff": 11.0,
    "calm_px": 55418
+  },
+  "R0": {
+   "place_shift_px": [
+    0,
+    0
+   ],
+   "residual_dx": 0.01,
+   "residual_dy": 0.0,
+   "mean_diff": 0.79,
+   "p99_diff": 10.0,
+   "calm_px": 55241
   },
   "R1": {
    "place_shift_px": [
