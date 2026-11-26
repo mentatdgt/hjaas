@@ -1,0 +1,66 @@
+{
+ "file": "grow-chrome-phone-6s.mp4",
+ "painted": true,
+ "paintingMs": 4769,
+ "paintingDoneAfterMs": 6692,
+ "recordingStartsAfterMs": 6694,
+ "view": {
+  "panned": true,
+  "inView": true
+ },
+ "state": {
+  "scene": "grow",
+  "order": [
+   "mister",
+   "rachel"
+  ],
+  "classes": [
+   "hj-actor",
+   "hj-rachel"
+  ],
+  "leadIsRachel": true,
+  "mist": {
+   "current": "M3",
+   "stocked": true,
+   "has": [
+    "M1",
+    "M2",
+    "M3",
+    "M4"
+   ]
+  },
+  "rachelPose": "A1_mist_aim"
+ },
+ "loop": {
+  "seconds": 6.5,
+  "framesRead": 391,
+  "changes": 46,
+  "posesSeen": [
+   "M1",
+   "M2",
+   "M3",
+   "M4"
+  ],
+  "roundAndRound": true,
+  "gapMs": {
+   "shortest": 133.2,
+   "median": 133.4,
+   "longest": 150.1,
+   "mean": 140
+  },
+  "gapsOver160": 0,
+  "picturesPerPose": {
+   "M1": 2,
+   "M2": 1,
+   "M3": 1,
+   "M4": 1
+  },
+  "distinctPictures": 5,
+  "rachelPoseChanges": 11,
+  "pageFramesOver25ms": 0
+ },
+ "errors": [
+  "request failed: assets/scene2/room.webp (net::ERR_ABORTED)"
+ ],
+ "warnings": []
+}

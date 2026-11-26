@@ -90,9 +90,12 @@ function blobOf(url: string, signal?: AbortSignal): Promise<Blob> {
   else {
     blob = fetchBlob(url, undefined, signal);
     const pending = blob;
-    void pending.catch(() => {
+    const forget = (): void => {
       if (blobCache.get(url) === pending) blobCache.delete(url);
-    });
+    };
+    // (Called off: whoever asks for it next starts afresh, without waiting for this one to fail.)
+    signal?.addEventListener('abort', forget, { once: true });
+    void pending.then(() => signal?.removeEventListener('abort', forget), forget);
   }
   blobCache.set(url, blob);
   if (blobCache.size > BLOB_CACHE_LIMIT) blobCache.delete(blobCache.keys().next().value!);
@@ -145,6 +148,15 @@ export function fetchBlob(url: string, priority?: RequestInit['priority'], signa
     const response = await fetch(url, { signal: limit, priority });
     if (!response.ok) throw new Error(`${url}: ${response.status}`);
     return response.blob();
+  });
+}
+
+/** A small JSON file. */
+export function fetchJson<T>(url: string, signal?: AbortSignal): Promise<T> {
+  return underDeadline(signal, async (limit) => {
+    const response = await fetch(url, { signal: limit });
+    if (!response.ok) throw new Error(`${url}: ${response.status}`);
+    return (await response.json()) as T;
   });
 }
 
@@ -267,6 +279,26 @@ export async function decodePart(blob: Blob, part: Crop): Promise<ImageBitmap | 
   }
 }
 
+/**
+ * A rectangle of a picture that an <img> on the page already holds: never downloaded again. (An <img> and fetch() do
+ * not share a request, so asked for with fetch() the file would cross the network twice.) The bytes come from the
+ * browser's cache, and only from there, so that they are decoded off the main thread; where it keeps none (a private
+ * tab in Safari), the rectangle is cut from the <img> itself. Null where the browser can do neither.
+ */
+export async function cutFrom(img: HTMLImageElement, part: Crop): Promise<ImageBitmap | null> {
+  try {
+    const response = await fetch(img.src, { cache: 'only-if-cached', mode: 'same-origin', signal: assetSignal() });
+    if (response.ok) {
+      const cut = await decodePart(await response.blob(), part);
+      if (cut) return cut;
+    }
+  } catch {
+    // Not kept.
+  }
+  if (typeof createImageBitmap !== 'function') return null;
+  return createImageBitmap(img, Math.round(part.x), Math.round(part.y), Math.round(part.w), Math.round(part.h)).catch(() => null);
+}
+
 export function releaseFrame(frame: Frame): void {
   if ('close' in frame) frame.close();
 }
@@ -275,7 +307,10 @@ export function releaseFrame(frame: Frame): void {
 const stalled = new Map<string, number>();
 
 /** A scene's plate, downloaded and decoded. Resolves with the address to give the scene's <img>. */
-export function loadPlate(path: string): Promise<HTMLImageElement> {
+export async function loadPlate(path: string): Promise<HTMLImageElement> {
+  // Being downloaded ahead (see warmRoom): the <img> waits for it, and is given the file from the browser's cache.
+  // (Asked for together, WebKit would download it twice: an <img> never shares a fetch()'s request.)
+  await warming.get(path)?.catch(() => {});
   // An <img> request is the only kind WebKit matches to the document's image preload.
   // After a stall it is asked for under another address: under its own it would be given the same stalled request,
   // which the document's preload keeps open.
@@ -290,13 +325,72 @@ export function loadPlate(path: string): Promise<HTMLImageElement> {
   });
 }
 
-/** Warm a single likely room when the browser has time and the opening room is still on show. */
-export async function warmPlate(path: string, stillHere: () => boolean): Promise<void> {
-  await idle();
-  if (!stillHere()) return;
-  const img = new Image();
-  img.setAttribute('fetchpriority', 'low');
-  await loadImage(asset(path), img).catch(() => {});
+/** Rooms being downloaded ahead of their tap (see warmRoom). */
+const warming = new Map<string, Promise<void>>();
+/** A download ahead that brings nothing for this long is given up: the room's own request starts afresh. */
+const WARM_STALL_MS = 8000;
+
+/**
+ * Download a room's picture into the browser's own cache, at low priority, and keep nothing of it: the bytes are let
+ * go as they arrive (no blob), and nothing is decoded. Should its scene be asked for meanwhile, loadPlate() waits for
+ * this to finish and takes the file from the cache, so that it never crosses the network twice. Rejects if called off.
+ */
+export function warmRoom(path: string, signal: AbortSignal): Promise<void> {
+  const under = warming.get(path);
+  if (under) return under;
+  const control = new AbortController();
+  const stop = (): void => control.abort();
+  const job = (async () => {
+    let stall: ReturnType<typeof setTimeout> | undefined;
+    const alive = (): void => {
+      clearTimeout(stall);
+      stall = setTimeout(stop, WARM_STALL_MS);
+    };
+    signal.addEventListener('abort', stop, { once: true });
+    if (signal.aborted) stop();
+    try {
+      alive();
+      const response = await fetch(asset(path), { signal: control.signal, priority: 'low' });
+      if (!response.ok) throw new Error(`${path}: ${response.status}`);
+      const body = response.body?.getReader();
+      if (!body) {
+        // (A browser without streams: the bytes are let go at once.)
+        await response.arrayBuffer();
+        return;
+      }
+      while (!(await body.read()).done) alive();
+    } finally {
+      clearTimeout(stall);
+      signal.removeEventListener('abort', stop);
+      warming.delete(path);
+    }
+  })();
+  warming.set(path, job);
+  return job;
+}
+
+/**
+ * Whether this browser keeps a room it has downloaded: asked of its cache alone, never of the network. A private tab
+ * in Safari (and some apps' own browsers) keeps nothing of what fetch() brings, and a room fetched ahead there would
+ * be downloaded twice.
+ */
+export async function keepsRooms(path: string): Promise<boolean> {
+  const control = new AbortController();
+  try {
+    const { ok } = await fetch(asset(path), { cache: 'only-if-cached', mode: 'same-origin', signal: control.signal });
+    return ok;
+  } catch {
+    return false;
+  } finally {
+    // (The answer is enough: the body is never read.)
+    control.abort();
+  }
+}
+
+/** The visitor has asked the browser to use less data. */
+export function savesData(): boolean {
+  const { connection } = navigator as Navigator & { connection?: { saveData?: boolean } };
+  return connection?.saveData === true || (typeof matchMedia === 'function' && matchMedia('(prefers-reduced-data: reduce)').matches);
 }
 
 /** Resolves when the browser has a quiet moment (or soon enough anyway). */

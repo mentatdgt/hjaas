@@ -81,7 +81,20 @@ export const grow: SceneConfig = {
   // and where her canvas sits on the plate; routine.json has her routine, her blinks and her reaction.
   // Under 900 px she is drawn from the 1.5x set: a little over half the memory, and still as sharp as a
   // phone shows her.
-  character: { kind: 'clips', dir: 'rachel/', frames: 'frames.json', routine: 'routine.json', small: { dir: 'rachel-1.5x/', below: 900 } },
+  //
+  // The mister's mist rises in a loop (task 024, frames/024-lab-mister/site/): a cast package with one scenery layer,
+  // drawn under her and over the mushrooms. It is part of the room: painted in with it, faded by the edge with the
+  // plate (so not in `keep`), held on its first drawing when paused or with reduced motion, and if it cannot be
+  // loaded the room's own painted mist shows instead. No mushroom is inside its box (grow-cast.json: the test holds
+  // them to it).
+  character: {
+    kind: 'clips',
+    dir: 'rachel/',
+    frames: 'frames.json',
+    routine: 'routine.json',
+    small: { dir: 'rachel-1.5x/', below: 900 },
+    scenery: { dir: 'cast/', frames: 'frames.json', routine: 'routine.json' },
+  },
   spots: SPOTS,
   replaced: REPLACED,
   // Of the edges this room could have, one that keeps the colour solid under every pixel Rachel ever covers

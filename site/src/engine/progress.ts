@@ -6,10 +6,12 @@
 // it, by opacity alone (the compositor's work), and is baked when the fade ends. Coming back to the scene, or
 // with reduced motion, the pieces are simply there.
 //
-// The pieces' files are kept as downloaded. Out of sight the canvas is given back; the pieces are decoded
+// Only the pieces the hunt has reached are downloaded before the scene is shown, and the next one straight after;
+// the others follow in hunt order, once the scene has settled (stream()). A piece found before its file is here is
+// downloaded at once. The pieces' files are kept as downloaded. Out of sight the canvas is given back; the pieces are decoded
 // again and baked when the scene comes back. The next piece to show is kept decoded, so a find's fade starts
 // on the find.
-import { PLATE, decodeBlob, releaseFrame, type Frame } from './assets';
+import { PLATE, decodeBlob, idle, releaseFrame, type Frame } from './assets';
 import type { ProgressPiece, Rect } from './cast';
 import { CSS_EASE_OUT, reducedMotion } from './motion';
 
@@ -20,11 +22,16 @@ function place(el: HTMLElement, box: Rect): void {
   Object.assign(el.style, { left: pct(box.x, PLATE.w), top: pct(box.y, PLATE.h), width: pct(box.w, PLATE.w), height: pct(box.h, PLATE.h) });
 }
 
+/** Downloads the file of a piece (its index in the list). */
+export type PieceLoader = (index: number, signal?: AbortSignal) => Promise<Blob>;
+
 export class Progress {
   readonly el: HTMLCanvasElement;
   private readonly ctx: CanvasRenderingContext2D;
   private readonly pieces: readonly ProgressPiece[];
-  private readonly files: readonly Blob[];
+  private readonly load: PieceLoader;
+  /** The pieces' files, as downloaded or on their way. */
+  private readonly files: Array<Promise<Blob> | undefined>;
   private readonly fadeMs: number;
   /** How many of this scene's mushrooms are found. */
   private readonly found: () => number;
@@ -42,9 +49,11 @@ export class Progress {
   private generation = 0;
   private work: Promise<void> = Promise.resolve();
 
-  constructor(pieces: readonly ProgressPiece[], files: readonly Blob[], fadeMs: number, found: () => number) {
+  /** `files`: those downloaded already, in order from the first; `load` fetches another. */
+  constructor(pieces: readonly ProgressPiece[], files: readonly Blob[], load: PieceLoader, fadeMs: number, found: () => number) {
     this.pieces = pieces;
-    this.files = files;
+    this.load = load;
+    this.files = pieces.map((_, i) => (files[i] ? Promise.resolve(files[i]) : undefined));
     this.fadeMs = fadeMs;
     this.found = found;
     const left = Math.floor(Math.min(...pieces.map((p) => p.box.x)));
@@ -125,6 +134,8 @@ export class Progress {
   sleep(): void {
     this.awake = false;
     this.generation++;
+    // (Coming back never waits for a download still under way from before.)
+    this.work = Promise.resolve();
     for (const [, fade] of this.fading) {
       fade.overlay.getAnimations().forEach((a) => a.cancel());
       fade.overlay.remove();
@@ -165,21 +176,58 @@ export class Progress {
     return total;
   }
 
-  /** Keep the next piece decoded, ready for the next find. */
-  private prepare(): void {
-    const next = this.shown;
-    if (next >= this.pieces.length || this.ahead?.index === next) return;
-    this.ahead = { index: next, frame: decodeBlob(this.files[next]).catch(() => null) };
+  /**
+   * Download the pieces whose files are not here yet, in hunt order from the next one to show, one at a time, until
+   * `signal` says to stop. `most`: only so many of them (the next one: it does not wait for a quiet moment).
+   */
+  async stream(signal: AbortSignal, most = Infinity): Promise<void> {
+    for (let i = Math.max(this.shown, this.found()); i < this.pieces.length && most > 0; i++, most--) {
+      if (this.files[i]) {
+        // (On its way already, asked for by a find: the next one waits for it.)
+        await this.files[i]!.catch(() => {});
+        continue;
+      }
+      if (most === Infinity) await idle();
+      if (signal.aborted) return;
+      await this.file(i, signal).catch(() => {});
+      if (signal.aborted) return;
+      // (The next piece is kept decoded, so a find's fade starts on the find.)
+      if (i === this.shown) this.prepare();
+    }
   }
 
-  /** A piece's picture: the one decoded ahead, or decoded now. */
+  /** QA: which pieces' files are here or on their way. */
+  get downloaded(): number[] {
+    return this.files.flatMap((file, i) => (file ? [i] : []));
+  }
+
+  /** A piece's file: here already, on its way, or fetched now. One that fails, or is called off, is asked for again next time. */
+  private file(index: number, signal?: AbortSignal): Promise<Blob> {
+    const here = this.files[index];
+    if (here) return here;
+    const file = this.load(index, signal);
+    this.files[index] = file;
+    file.catch(() => {
+      if (this.files[index] === file) this.files[index] = undefined;
+    });
+    return file;
+  }
+
+  /** Keep the next piece decoded, ready for the next find, once its file is here. */
+  private prepare(): void {
+    const next = this.shown;
+    const file = this.files[next];
+    if (!this.awake || next >= this.pieces.length || this.ahead?.index === next || !file) return;
+    this.ahead = { index: next, frame: file.then(decodeBlob).catch(() => null) };
+  }
+
+  /** A piece's picture: the one decoded ahead, or decoded now (its file downloaded first, if need be). */
   private decode(index: number): Promise<Frame | null> {
-    if (this.ahead?.index === index) {
-      const { frame } = this.ahead;
-      this.ahead = null;
-      return frame;
-    }
-    return decodeBlob(this.files[index]).catch(() => null);
+    const ahead = this.ahead?.index === index ? this.ahead.frame : null;
+    if (ahead) this.ahead = null;
+    // (A download that was called off as the visitor went elsewhere is asked for again, now its piece is wanted.)
+    const now = (): Promise<Frame | null> => this.file(index).catch(() => this.file(index)).then(decodeBlob).catch(() => null);
+    return ahead ? ahead.then((frame) => frame ?? now()) : now();
   }
 
   private bake(index: number, frame: Frame): void {

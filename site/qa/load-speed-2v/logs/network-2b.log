@@ -1,0 +1,15 @@
+webkit, a normal window: opening set, before: {"beforeTheStroke":["backdrop_01/P_01.webp","backdrop_02/P_02.webp","backdrop_03/P_03.webp","backdrop_04/P_04.webp","backdrop_05/P_05.webp","backdrop_06/P_06.webp","backdrop_07/P_07.webp","backdrop_08/P_08.webp","backdrop_09/P_09.webp","backdrop_10/P_10.webp","stagehand/walk.json","stagehand/L_B01.webp","stagehand/L_B02.webp","stagehand/L_B03.webp","stagehand/L_B04.webp","stagehand/L_B05.webp","stagehand/L_B06.webp","stagehand/L_B07.webp","stagehand/L_B08.webp","stagehand/L_B09.webp","stagehand/L_B10.webp","stagehand/L_B11.webp","stagehand/L_B12.webp","stagehand/L_B13.webp","stagehand/L_B14.webp","stagehand/L_B15.webp","stagehand/L_B16.webp","stagehand/L_W01.webp","stagehand/L_W01b.webp","stagehand/L_W02.webp","stagehand/L_W02b.webp","stagehand/L_W03.webp","stagehand/L_W03b.webp","stagehand/L_W04.webp","stagehand/L_W04b.webp","stagehand/L_W05.webp","stagehand/L_W05b.webp","stagehand/L_W06.webp","stagehand/L_W06b.webp","stagehand/L_W07.webp","stagehand/L_W07b.webp","stagehand/L_W08.webp","stagehand/L_W08b.webp","stagehand/R_W01.webp","stagehand/R_W01b.webp","stagehand/R_W02.webp","stagehand/R_W02b.webp","stagehand/R_W03.webp","stagehand/R_W03b.webp","stagehand/R_W04.webp","stagehand/R_W04b.webp","stagehand/R_W05.webp","stagehand/R_W05b.webp","stagehand/R_W06.webp","stagehand/R_W06b.webp","stagehand/R_W07.webp","stagehand/R_W07b.webp","stagehand/R_W08.webp","stagehand/R_W08b.webp","stagehand/gap_mask.webp","stagehand/body_mask.webp"],"requestsBeforeTheStroke":89,"backdropAndStagehandInAll":61,"rooms":{"scene5/room.webp":1,"scene1/room.webp":1},"roomsCalledOff":[],"roomsRevalidated":[],"othersWholeTwice":[],"files":132,"kB":5001,"errors":[]}
+webkit, a normal window: opening set, now: {"beforeTheStroke":["backdrop_01/P_01.webp"],"requestsBeforeTheStroke":28,"backdropAndStagehandInAll":61,"rooms":{"scene5/room.webp":1,"scene1/room.webp":1},"roomsCalledOff":[],"roomsRevalidated":[],"othersWholeTwice":[],"files":132,"kB":5002,"errors":[]}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.waitForFunction: Timeout 120000ms exceeded.
+    at stroke (/Users/dgt/hjaas/site/qa/tools/load-speed.mjs:29:34)
+    at run.network (/Users/dgt/hjaas/site/qa/tools/load-speed-2b.mjs:123:54)
+    at async file:///Users/dgt/hjaas/site/qa/tools/load-speed-2b.mjs:167:90 {
+  log: [],
+  name: 'TimeoutError'
+}
+
+Node.js v24.21.0

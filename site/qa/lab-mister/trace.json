@@ -1,0 +1,294 @@
+{
+ "machine": "18:40  up 15 days,  2:50, 4 users, load averages: 2.36 3.19 4.50",
+ "now": [
+  {
+   "view": {
+    "inView": true,
+    "mist": 1
+   },
+   "firstStrokeAtMs": 804,
+   "painting": {
+    "longestTaskMs": 9.7,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 22.9,
+    "dropped": 0,
+    "framesBegun": 285
+   },
+   "mistInView12s": {
+    "longestTaskMs": 11.8,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 18.4,
+    "dropped": 0,
+    "framesBegun": 720
+   },
+   "droppedInViewAtMs": [],
+   "errors": []
+  },
+  {
+   "view": {
+    "inView": true,
+    "mist": 1
+   },
+   "firstStrokeAtMs": 822,
+   "painting": {
+    "longestTaskMs": 7.9,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 23.4,
+    "dropped": 0,
+    "framesBegun": 285
+   },
+   "mistInView12s": {
+    "longestTaskMs": 10.6,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 19.9,
+    "dropped": 0,
+    "framesBegun": 720
+   },
+   "droppedInViewAtMs": [],
+   "errors": []
+  },
+  {
+   "view": {
+    "inView": true,
+    "mist": 1
+   },
+   "firstStrokeAtMs": 967,
+   "painting": {
+    "longestTaskMs": 13.1,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 36.8,
+    "dropped": 0,
+    "framesBegun": 285
+   },
+   "mistInView12s": {
+    "longestTaskMs": 22.3,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 25.2,
+    "dropped": 0,
+    "framesBegun": 720
+   },
+   "droppedInViewAtMs": [],
+   "errors": []
+  },
+  {
+   "view": {
+    "inView": true,
+    "mist": 1
+   },
+   "firstStrokeAtMs": 793,
+   "painting": {
+    "longestTaskMs": 11.2,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 27.2,
+    "dropped": 0,
+    "framesBegun": 285
+   },
+   "mistInView12s": {
+    "longestTaskMs": 21.2,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 23.6,
+    "dropped": 0,
+    "framesBegun": 720
+   },
+   "droppedInViewAtMs": [],
+   "errors": []
+  },
+  {
+   "view": {
+    "inView": true,
+    "mist": 1
+   },
+   "firstStrokeAtMs": 848,
+   "painting": {
+    "longestTaskMs": 3.7,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 20,
+    "dropped": 0,
+    "framesBegun": 285
+   },
+   "mistInView12s": {
+    "longestTaskMs": 27.7,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 47.1,
+    "dropped": 1,
+    "framesBegun": 720
+   },
+   "droppedInViewAtMs": [
+    6983
+   ],
+   "errors": []
+  },
+  {
+   "view": {
+    "inView": true,
+    "mist": 1
+   },
+   "firstStrokeAtMs": 1161,
+   "painting": {
+    "longestTaskMs": 34,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 47,
+    "dropped": 2,
+    "framesBegun": 285
+   },
+   "mistInView12s": {
+    "longestTaskMs": 33.4,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 28.3,
+    "dropped": 0,
+    "framesBegun": 720
+   },
+   "droppedInViewAtMs": [],
+   "errors": []
+  }
+ ],
+ "before": [
+  {
+   "view": {
+    "inView": true,
+    "mist": 0
+   },
+   "firstStrokeAtMs": 769,
+   "painting": {
+    "longestTaskMs": 4.6,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 25,
+    "dropped": 0,
+    "framesBegun": 285
+   },
+   "mistInView12s": {
+    "longestTaskMs": 17,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 17.5,
+    "dropped": 0,
+    "framesBegun": 720
+   },
+   "droppedInViewAtMs": [],
+   "errors": []
+  },
+  {
+   "view": {
+    "inView": true,
+    "mist": 0
+   },
+   "firstStrokeAtMs": 820,
+   "painting": {
+    "longestTaskMs": 80.5,
+    "tasksOver50": 1,
+    "busyMsPerSecond": 61.6,
+    "dropped": 4,
+    "framesBegun": 285
+   },
+   "mistInView12s": {
+    "longestTaskMs": 24.9,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 31.3,
+    "dropped": 2,
+    "framesBegun": 720
+   },
+   "droppedInViewAtMs": [
+    7192,
+    8609
+   ],
+   "errors": []
+  },
+  {
+   "view": {
+    "inView": true,
+    "mist": 0
+   },
+   "firstStrokeAtMs": 831,
+   "painting": {
+    "longestTaskMs": 23.4,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 41.9,
+    "dropped": 1,
+    "framesBegun": 285
+   },
+   "mistInView12s": {
+    "longestTaskMs": 14.5,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 21.4,
+    "dropped": 0,
+    "framesBegun": 720
+   },
+   "droppedInViewAtMs": [],
+   "errors": []
+  },
+  {
+   "view": {
+    "inView": true,
+    "mist": 0
+   },
+   "firstStrokeAtMs": 887,
+   "painting": {
+    "longestTaskMs": 33.2,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 40.4,
+    "dropped": 2,
+    "framesBegun": 285
+   },
+   "mistInView12s": {
+    "longestTaskMs": 10.3,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 18.2,
+    "dropped": 0,
+    "framesBegun": 720
+   },
+   "droppedInViewAtMs": [],
+   "errors": []
+  },
+  {
+   "view": {
+    "inView": true,
+    "mist": 0
+   },
+   "firstStrokeAtMs": 774,
+   "painting": {
+    "longestTaskMs": 13.2,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 29.8,
+    "dropped": 0,
+    "framesBegun": 285
+   },
+   "mistInView12s": {
+    "longestTaskMs": 51.6,
+    "tasksOver50": 1,
+    "busyMsPerSecond": 32.9,
+    "dropped": 2,
+    "framesBegun": 720
+   },
+   "droppedInViewAtMs": [
+    7002,
+    8052
+   ],
+   "errors": []
+  },
+  {
+   "view": {
+    "inView": true,
+    "mist": 0
+   },
+   "firstStrokeAtMs": 780,
+   "painting": {
+    "longestTaskMs": 114.1,
+    "tasksOver50": 1,
+    "busyMsPerSecond": 102.1,
+    "dropped": 6,
+    "framesBegun": 285
+   },
+   "mistInView12s": {
+    "longestTaskMs": 26.6,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 41,
+    "dropped": 2,
+    "framesBegun": 720
+   },
+   "droppedInViewAtMs": [
+    5876,
+    6843
+   ],
+   "errors": []
+  }
+ ]
+}

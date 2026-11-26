@@ -1,0 +1,13 @@
+first reaction file asked for: /assets/scene1/rachel-1.5x/reaction/rx_A24.webp at 7648
+{
+ "browser": "webkit",
+ "tapBack": true,
+ "shown": "build",
+ "reactionRequests": 3,
+ "reactionFiles": [
+  "/assets/scene1/rachel-1.5x/reaction/shared.json",
+  "/assets/scene1/rachel-1.5x/reaction/reaction.json",
+  "/assets/scene1/rachel-1.5x/reaction/rx_A24.webp"
+ ],
+ "errors": []
+}

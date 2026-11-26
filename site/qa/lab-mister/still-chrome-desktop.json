@@ -1,0 +1,54 @@
+{
+ "paused": {
+  "poses": [
+   "M1"
+  ],
+  "changes": 0,
+  "rachelPoseChanges": 0,
+  "afterPlay": {
+   "poses": [
+    "M1",
+    "M2",
+    "M3",
+    "M4"
+   ],
+   "changes": 14
+  },
+  "errors": [
+   "request failed: assets/scene2/room.webp (net::ERR_ABORTED)"
+  ]
+ },
+ "reduced": {
+  "state": {
+   "scene": "grow",
+   "order": [
+    "mister",
+    "rachel"
+   ],
+   "classes": [
+    "hj-actor",
+    "hj-rachel"
+   ],
+   "leadIsRachel": true,
+   "mist": {
+    "current": "M1",
+    "stocked": true,
+    "has": [
+     "M1",
+     "M2",
+     "M3",
+     "M4"
+    ]
+   },
+   "rachelPose": "A1_mist_aim"
+  },
+  "poses": [
+   "M1"
+  ],
+  "changes": 0,
+  "errors": [
+   "request failed: assets/scene2/room.webp (net::ERR_ABORTED)"
+  ]
+ },
+ "ok": true
+}

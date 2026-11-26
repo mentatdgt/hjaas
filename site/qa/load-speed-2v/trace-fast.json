@@ -1,0 +1,540 @@
+{
+ "now": [
+  {
+   "rows": {
+    "opening (Build)": {
+     "frames": 285,
+     "dropped": 4,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4063,
+      4080,
+      4096,
+      4563
+     ],
+     "longestTaskMs": 61,
+     "tasksOver16": 2
+    },
+    "Grow": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 5,
+     "tasksOver16": 0
+    },
+    "Design": {
+     "frames": 285,
+     "dropped": 7,
+     "beforeTheWash": 2,
+     "droppedAt": [
+      314,
+      1864,
+      4497,
+      4514,
+      4531,
+      4547,
+      4564
+     ],
+     "longestTaskMs": 100,
+     "tasksOver16": 2
+    },
+    "Film": {
+     "frames": 286,
+     "dropped": 6,
+     "beforeTheWash": 3,
+     "droppedAt": [
+      13,
+      29,
+      296,
+      4479,
+      4746,
+      4746
+     ],
+     "longestTaskMs": 34,
+     "tasksOver16": 2
+    },
+    "Set": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 9,
+     "tasksOver16": 0
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "frames": 285,
+     "dropped": 29,
+     "beforeTheWash": 2,
+     "droppedAt": [
+      15,
+      3049,
+      4049,
+      4065,
+      4082,
+      4099,
+      4115,
+      4132,
+      4149,
+      4165,
+      4182,
+      4199,
+      4215,
+      4232,
+      4249,
+      4265,
+      4349,
+      4365,
+      4549,
+      4565,
+      4582,
+      4599,
+      4615,
+      4632,
+      4649,
+      4665,
+      4715,
+      4732,
+      4749
+     ],
+     "longestTaskMs": 250,
+     "tasksOver16": 6
+    },
+    "Grow": {
+     "frames": 285,
+     "dropped": 5,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4476,
+      4493,
+      4509,
+      4526,
+      4543
+     ],
+     "longestTaskMs": 90,
+     "tasksOver16": 2
+    },
+    "Design": {
+     "frames": 285,
+     "dropped": 13,
+     "beforeTheWash": 5,
+     "droppedAt": [
+      543,
+      560,
+      577,
+      593,
+      1860,
+      4076,
+      4493,
+      4510,
+      4526,
+      4543,
+      4560,
+      4576,
+      4593
+     ],
+     "longestTaskMs": 157,
+     "tasksOver16": 4
+    },
+    "Film": {
+     "frames": 285,
+     "dropped": 4,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4481,
+      4498,
+      4514,
+      4531
+     ],
+     "longestTaskMs": 83,
+     "tasksOver16": 1
+    },
+    "Set": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 9,
+     "tasksOver16": 0
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "frames": 285,
+     "dropped": 1,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4580
+     ],
+     "longestTaskMs": 10,
+     "tasksOver16": 0
+    },
+    "Grow": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 9,
+     "tasksOver16": 0
+    },
+    "Design": {
+     "frames": 285,
+     "dropped": 28,
+     "beforeTheWash": 25,
+     "droppedAt": [
+      303,
+      686,
+      703,
+      719,
+      736,
+      753,
+      786,
+      803,
+      819,
+      836,
+      853,
+      869,
+      886,
+      903,
+      919,
+      936,
+      953,
+      969,
+      986,
+      1003,
+      1019,
+      1036,
+      1053,
+      1069,
+      1853,
+      4503,
+      4519,
+      4536
+     ],
+     "longestTaskMs": 287,
+     "tasksOver16": 5
+    },
+    "Film": {
+     "frames": 285,
+     "dropped": 3,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4478,
+      4495,
+      4512
+     ],
+     "longestTaskMs": 64,
+     "tasksOver16": 1
+    },
+    "Set": {
+     "frames": 285,
+     "dropped": 10,
+     "beforeTheWash": 2,
+     "droppedAt": [
+      3759,
+      3776,
+      4493,
+      4509,
+      4526,
+      4543,
+      4559,
+      4576,
+      4593,
+      4609
+     ],
+     "longestTaskMs": 160,
+     "tasksOver16": 5
+    }
+   },
+   "errors": []
+  }
+ ],
+ "before": [
+  {
+   "rows": {
+    "opening (Build)": {
+     "frames": 285,
+     "dropped": 0,
+     "beforeTheWash": 0,
+     "droppedAt": [],
+     "longestTaskMs": 10,
+     "tasksOver16": 0
+    },
+    "Grow": {
+     "frames": 285,
+     "dropped": 6,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4479,
+      4495,
+      4512,
+      4529,
+      4545,
+      4562
+     ],
+     "longestTaskMs": 111,
+     "tasksOver16": 2
+    },
+    "Design": {
+     "frames": 285,
+     "dropped": 5,
+     "beforeTheWash": 2,
+     "droppedAt": [
+      279,
+      1845,
+      4495,
+      4512,
+      4528
+     ],
+     "longestTaskMs": 69,
+     "tasksOver16": 2
+    },
+    "Film": {
+     "frames": 285,
+     "dropped": 6,
+     "beforeTheWash": 1,
+     "droppedAt": [
+      1412,
+      4495,
+      4512,
+      4529,
+      4545,
+      4562
+     ],
+     "longestTaskMs": 112,
+     "tasksOver16": 3
+    },
+    "Set": {
+     "frames": 285,
+     "dropped": 1,
+     "beforeTheWash": 1,
+     "droppedAt": [
+      329
+     ],
+     "longestTaskMs": 32,
+     "tasksOver16": 1
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "frames": 285,
+     "dropped": 11,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4062,
+      4079,
+      4096,
+      4112,
+      4129,
+      4146,
+      4162,
+      4562,
+      4579,
+      4612,
+      4629
+     ],
+     "longestTaskMs": 117,
+     "tasksOver16": 3
+    },
+    "Grow": {
+     "frames": 285,
+     "dropped": 15,
+     "beforeTheWash": 2,
+     "droppedAt": [
+      2514,
+      3181,
+      4064,
+      4081,
+      4348,
+      4364,
+      4381,
+      4498,
+      4514,
+      4531,
+      4548,
+      4564,
+      4581,
+      4598,
+      4614
+     ],
+     "longestTaskMs": 157,
+     "tasksOver16": 5
+    },
+    "Design": {
+     "frames": 285,
+     "dropped": 8,
+     "beforeTheWash": 3,
+     "droppedAt": [
+      297,
+      313,
+      1863,
+      4496,
+      4513,
+      4530,
+      4546,
+      4563
+     ],
+     "longestTaskMs": 104,
+     "tasksOver16": 4
+    },
+    "Film": {
+     "frames": 285,
+     "dropped": 4,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4475,
+      4491,
+      4508,
+      4525
+     ],
+     "longestTaskMs": 69,
+     "tasksOver16": 1
+    },
+    "Set": {
+     "frames": 286,
+     "dropped": 37,
+     "beforeTheWash": 26,
+     "droppedAt": [
+      2960,
+      2977,
+      2994,
+      3010,
+      3027,
+      3327,
+      3344,
+      3377,
+      3394,
+      3410,
+      3660,
+      3677,
+      3694,
+      3710,
+      3727,
+      3744,
+      3760,
+      3777,
+      3794,
+      3810,
+      3844,
+      3860,
+      3877,
+      3894,
+      3910,
+      3927,
+      4494,
+      4510,
+      4527,
+      4544
+     ],
+     "longestTaskMs": 218,
+     "tasksOver16": 5
+    }
+   },
+   "errors": []
+  },
+  {
+   "rows": {
+    "opening (Build)": {
+     "frames": 285,
+     "dropped": 13,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4062,
+      4079,
+      4095,
+      4112,
+      4129,
+      4145,
+      4162,
+      4179,
+      4562,
+      4579,
+      4612,
+      4629,
+      4645
+     ],
+     "longestTaskMs": 141,
+     "tasksOver16": 3
+    },
+    "Grow": {
+     "frames": 285,
+     "dropped": 4,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4063,
+      4496,
+      4513,
+      4530
+     ],
+     "longestTaskMs": 80,
+     "tasksOver16": 3
+    },
+    "Design": {
+     "frames": 285,
+     "dropped": 8,
+     "beforeTheWash": 3,
+     "droppedAt": [
+      344,
+      360,
+      1860,
+      4494,
+      4510,
+      4527,
+      4544,
+      4560
+     ],
+     "longestTaskMs": 103,
+     "tasksOver16": 4
+    },
+    "Film": {
+     "frames": 285,
+     "dropped": 6,
+     "beforeTheWash": 0,
+     "droppedAt": [
+      4479,
+      4496,
+      4512,
+      4529,
+      4546,
+      4562
+     ],
+     "longestTaskMs": 115,
+     "tasksOver16": 1
+    },
+    "Set": {
+     "frames": 285,
+     "dropped": 12,
+     "beforeTheWash": 1,
+     "droppedAt": [
+      282,
+      4449,
+      4466,
+      4482,
+      4499,
+      4516,
+      4532,
+      4549,
+      4566,
+      4582,
+      4599,
+      4616
+     ],
+     "longestTaskMs": 205,
+     "tasksOver16": 5
+    }
+   },
+   "errors": []
+  }
+ ]
+}

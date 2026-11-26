@@ -137,6 +137,11 @@ const PACKAGES = [
   { dir: 'frames/018-cafe-scene/site', to: 'scene3', json: 'design-cast.json', lines: 'design-lines.png' },
   { dir: 'frames/020-film-scene/site', to: 'scene4', json: 'film-cast.json', lines: 'film-lines.png' },
   { dir: 'frames/022-theatre-scene/site', to: 'scene5', json: 'set-cast.json', lines: 'set-lines.png' },
+  // The lab's moving scenery (task 024): only the mister's mist, drawn under Rachel (grow.ts `scenery`). No plate (the
+  // lab's is scene/mushroom-lab.png, made into scene2/room.webp above) and no pencil lines (grow-lines.png's are made
+  // below, and the mist is nowhere near the edge). Its stills are mostly the plate repeated, so they are kept at the
+  // patches' quality: their interior stays within a level of the room's.
+  { dir: 'frames/024-lab-mister/site', to: 'scene2', json: 'grow-cast.json', lines: null, stills: 'patch' },
 ];
 const exact = { lossless: true, effort: 6 };
 /** Every string in a routine (its stills, blink stills and the rest): what a layer's own list may have left out. */
@@ -188,7 +193,7 @@ for (const pack of PACKAGES) {
   });
   // (A new delivery may drop files the last one had: the folder is made afresh, unless only other files were asked for.)
   if (!process.argv[2] || [pack.to, 'cast'].includes(process.argv[2])) await rm(join(assets, pack.to, 'cast'), { recursive: true, force: true });
-  add(`${pack.dir}/${delivered.plate}`, `${pack.to}/room.webp`, plate, { width: 1672, height: 941, fit: 'fill', kernel: 'lanczos3' }, assets);
+  if (delivered.plate) add(`${pack.dir}/${delivered.plate}`, `${pack.to}/room.webp`, plate, { width: 1672, height: 941, fit: 'fill', kernel: 'lanczos3' }, assets);
   const forPage = { ...delivered, layers: [], clips: {} };
   forPage.canvas = { w: delivered.canvas.w, h: delivered.canvas.h };
   forPage.note = `Made by npm run assets from ${pack.dir}/frames.json: the same cast, with each actor's box grown to hold its clips' patches. Do not edit; edit the delivered file and run npm run assets.`;
@@ -224,7 +229,7 @@ for (const pack of PACKAGES) {
       }
     }
     forPage.layers.push(page);
-    const stillFrame = layer.hunt_progress !== undefined ? exact : castFrame;
+    const stillFrame = layer.hunt_progress !== undefined ? exact : pack.stills === 'patch' ? patchFrame : castFrame;
     for (const [name, clip] of clips) {
       forPage.clips[name] = { ...clip, x: clip.x + grow.left, y: clip.y + grow.top, w: sizes.get(name).width, h: sizes.get(name).height };
       // (A clip may name a frame twice, to hold it.)
@@ -329,7 +334,7 @@ async function withoutMovingLines(data, info, plateFile, boxes) {
   return data;
 }
 // (The café's map is the size of its own, larger plate: it is shrunk with it.)
-const castLines = casts.map(({ pack, delivered, where }) => [pack.lines, pack.to, { plate: join(repo, pack.dir, delivered.plate), canvas: delivered.canvas, boxes: delivered.layers.filter((layer) => where.room.includes(layer.actor)) }]);
+const castLines = casts.filter(({ pack }) => pack.lines).map(({ pack, delivered, where }) => [pack.lines, pack.to, { plate: join(repo, pack.dir, delivered.plate), canvas: delivered.canvas, boxes: delivered.layers.filter((layer) => where.room.includes(layer.actor)) }]);
 for (const [map, dir, moving] of [['build-lines.png', 'scene1'], ['grow-lines.png', 'scene2'], ...castLines]) {
   const lines = (async () => {
     const file = sharp(join(repo, 'scene/pencil', map));

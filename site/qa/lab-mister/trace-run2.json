@@ -1,0 +1,160 @@
+{
+ "machine": "18:24  up 15 days,  2:34, 4 users, load averages: 3.71 5.20 6.33",
+ "now": [
+  {
+   "view": {
+    "inView": true,
+    "mist": 1
+   },
+   "firstStrokeAtMs": 855,
+   "painting": {
+    "longestTaskMs": 6.3,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 32.7,
+    "dropped": 0,
+    "framesBegun": 285
+   },
+   "mistInView12s": {
+    "longestTaskMs": 23.8,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 25,
+    "dropped": 0,
+    "framesBegun": 720
+   },
+   "droppedInViewAtMs": [],
+   "errors": []
+  },
+  {
+   "view": {
+    "inView": true,
+    "mist": 1
+   },
+   "firstStrokeAtMs": 867,
+   "painting": {
+    "longestTaskMs": 19.6,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 40.3,
+    "dropped": 1,
+    "framesBegun": 285
+   },
+   "mistInView12s": {
+    "longestTaskMs": 22.1,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 30,
+    "dropped": 1,
+    "framesBegun": 720
+   },
+   "droppedInViewAtMs": [
+    6465
+   ],
+   "errors": []
+  },
+  {
+   "view": {
+    "inView": true,
+    "mist": 1
+   },
+   "firstStrokeAtMs": 871,
+   "painting": {
+    "longestTaskMs": 29,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 44.9,
+    "dropped": 1,
+    "framesBegun": 285
+   },
+   "mistInView12s": {
+    "longestTaskMs": 59.1,
+    "tasksOver50": 1,
+    "busyMsPerSecond": 45.5,
+    "dropped": 6,
+    "framesBegun": 721
+   },
+   "droppedInViewAtMs": [
+    1065,
+    1132,
+    1165,
+    1182,
+    5715,
+    6765
+   ],
+   "errors": []
+  }
+ ],
+ "before": [
+  {
+   "view": {
+    "inView": true,
+    "mist": 0
+   },
+   "firstStrokeAtMs": 785,
+   "painting": {
+    "longestTaskMs": 9.8,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 39.4,
+    "dropped": 0,
+    "framesBegun": 285
+   },
+   "mistInView12s": {
+    "longestTaskMs": 26.9,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 26.5,
+    "dropped": 3,
+    "framesBegun": 720
+   },
+   "droppedInViewAtMs": [
+    6782,
+    6882,
+    8848
+   ],
+   "errors": []
+  },
+  {
+   "view": {
+    "inView": true,
+    "mist": 0
+   },
+   "firstStrokeAtMs": 773,
+   "painting": {
+    "longestTaskMs": 11.4,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 28.5,
+    "dropped": 0,
+    "framesBegun": 285
+   },
+   "mistInView12s": {
+    "longestTaskMs": 22.6,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 24.4,
+    "dropped": 1,
+    "framesBegun": 720
+   },
+   "droppedInViewAtMs": [
+    7029
+   ],
+   "errors": []
+  },
+  {
+   "view": {
+    "inView": true,
+    "mist": 0
+   },
+   "firstStrokeAtMs": 800,
+   "painting": {
+    "longestTaskMs": 6.2,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 31.5,
+    "dropped": 0,
+    "framesBegun": 285
+   },
+   "mistInView12s": {
+    "longestTaskMs": 5.9,
+    "tasksOver50": 0,
+    "busyMsPerSecond": 17.6,
+    "dropped": 0,
+    "framesBegun": 720
+   },
+   "droppedInViewAtMs": [],
+   "errors": []
+  }
+ ]
+}

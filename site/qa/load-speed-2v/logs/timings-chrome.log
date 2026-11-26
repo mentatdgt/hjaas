@@ -1,0 +1,19 @@
+chrome, fast: opening build: 2484 -> 2526 ms   [2484,3343,2471] [2575,2526,2385]  {"requests":29,"kB":2000} {"requests":29,"kB":1977}  
+chrome, fast: opening set: 3930 -> 2460 ms   [3903,3930,3937] [2460,2713,2449]  {"requests":96,"kB":3164} {"requests":34,"kB":1880}  
+chrome, fast: opening film: 2955 -> 2851 ms   [2978,2938,2955] [3141,2851,2581]  {"requests":38,"kB":2118} {"requests":39,"kB":2207}  
+chrome, fast: cold switch to grow: 2045 -> 1957 ms   [2045,2015,2124] [1938,1958,1957]  {"requests":12,"kB":1672} {"requests":15,"kB":1754}  
+chrome, fast: cold switch to design: 2264 -> 2126 ms   [2264,2259,2603] [2110,2126,2219]  {"requests":17,"kB":1932} {"requests":17,"kB":1939}  
+chrome, fast: cold switch to film: 2165 -> 2082 ms   [2176,2165,2156] [2208,2082,2010]  {"requests":21,"kB":1793} {"requests":8,"kB":1490}  
+chrome, fast: cold switch to set: 3987 -> 1874 ms   [4029,3946,3987] [1874,1861,1900]  {"requests":80,"kB":2944} {"requests":18,"kB":1671}  
+chrome, fast: switch to grow, its room fetched ahead: 868 -> 796 ms   [876,868,833] [796,809,795]  {"requests":15,"kB":799} {"requests":15,"kB":525} ahead [6582,6518,6520] [8751,8840,8771] 
+chrome, fast: switch to set from film, its room fetched ahead: 2747 -> 780 ms   [2747,2746,2827] [780,757,826]  {"requests":76,"kB":1655} {"requests":17,"kB":453} ahead [5916,5947,5908] [5962,5922,5918] 
+chrome, slow: opening build: 9472 -> 9407 ms   [9472,9475,9400] [9407,9363,9421]  {"requests":27,"kB":1746} {"requests":27,"kB":1739}  
+chrome, slow: opening set: 15487 -> 9098 ms   [15487,15491,15462] [9098,9071,9121]  {"requests":90,"kB":2919} {"requests":29,"kB":1648}  
+chrome, slow: opening film: 9758 -> 9561 ms   [9758,9806,9720] [9372,9618,9561]  {"requests":32,"kB":1767} {"requests":29,"kB":1746}  
+chrome, slow: cold switch to grow: 8475 -> 8199 ms   [8492,8475,8457] [8274,8183,8199]  {"requests":12,"kB":1525} {"requests":15,"kB":1526}  
+chrome, slow: cold switch to design: 8685 -> 8385 ms   [8700,8620,8685] [8385,8496,8318]  {"requests":17,"kB":1559} {"requests":17,"kB":1550}  
+chrome, slow: cold switch to film: 8717 -> 8272 ms   [8684,8717,8910] [8411,8272,8193]  {"requests":15,"kB":1525} {"requests":14,"kB":1536}  
+chrome, slow: cold switch to set: 15604 -> 7654 ms   [15604,15657,15529] [7654,7708,7643]  {"requests":74,"kB":2697} {"requests":13,"kB":1418}  
+chrome, slow: switch to grow, its room fetched ahead: 2595 -> 1983 ms   [2591,2633,2595] [1995,1983,1973]  {"requests":13,"kB":398} {"requests":15,"kB":296} ahead [15632,15645,15622] [22081,22056,22083] 
+chrome, slow: switch to set from film, its room fetched ahead: 9054 -> 1455 ms   [9111,9054,9044] [1455,1447,1471]  {"requests":74,"kB":1473} {"requests":14,"kB":200} ahead [11059,11044,11062] [11062,11046,11043] 
+TIMINGS-DONE

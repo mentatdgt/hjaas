@@ -1,6 +1,6 @@
 import './font.css';
 import './site.css';
-import { retainAssets, setAssetBase, warmPlate } from './assets';
+import { idle, keepsRooms, retainAssets, savesData, setAssetBase, warmRoom } from './assets';
 import { Caption, MUSHROOM_ICON, type CaptionCopy } from './caption';
 import { DEFAULT_EDGE, EDGE_STYLES, edgeSeed, type EdgeStyle } from './edge';
 import { flags } from './flags';
@@ -10,7 +10,7 @@ import { onReducedMotionChange, reducedMotion } from './motion';
 import { Pan } from './pan';
 import { paperOf } from './paper';
 import { RESET_WAIT_MS, resetTap } from './reset';
-import { Scene } from './scene';
+import { Casting, Scene, type SceneHost } from './scene';
 import { freshScene, huntView, isProgressKey, loadProgress, presetAll, resetProgress, saveFind, savePan, saveSeen, type HuntView, type Progress, type SceneProgress } from './state';
 import { seeded } from './steps';
 import { Transition } from './transition';
@@ -486,6 +486,8 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
 
   const loading = new Map<string, Promise<Scene>>();
   const scenesLoaded = new Map<string, Scene>();
+  /** Each scene's cast, downloaded from when the scene is first asked for. */
+  const castings = new Map<string, Casting>();
   /** A scene, loaded once. Its mushrooms report back here. */
   const sceneFor = (config: SceneConfig): Promise<Scene> => {
     let scene = loading.get(config.id);
@@ -493,10 +495,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     const found = foundIn.get(config.id)!;
     const of = config.spots.length;
     let self: Scene | undefined;
-    // The opening scene comes with its character; any other scene fetches hers when it is first opened.
-    scene = Scene.load(
-      config,
-      {
+    const sceneHost: SceneHost = {
       flyLayer,
       found,
       target: () => caption.targetRect(),
@@ -545,9 +544,15 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       },
       onPose: flags.debug ? (pose, at) => poses.push([pose, Math.round(at)]) : undefined,
       edge: { style: edgeStyle, seed: edgeSeed, paper },
+      // (Only now is the next room downloaded ahead: never before the scene's own files.)
+      onFilesIn: () => {
+        if (self) void lookAhead(self);
       },
-      !current,
-    ).then((loaded) => {
+    };
+    const casting = castings.get(config.id) ?? new Casting(config, sceneHost);
+    castings.set(config.id, casting);
+    // The opening scene's character is decoded with it; any other scene's, when it goes in the window.
+    scene = Scene.load(config, sceneHost, !current, casting).then((loaded) => {
       if (destroyed) {
         loaded.destroy();
         return loaded;
@@ -558,7 +563,11 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       return loaded;
     });
     loading.set(config.id, scene);
-    void scene.catch(() => loading.delete(config.id));
+    void scene.catch(() => {
+      loading.delete(config.id);
+      // (The cast with it, if it is still on its way: nothing is shown without the room.)
+      casting.cancel();
+    });
     return scene;
   };
 
@@ -637,6 +646,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   /** Put a scene in the window: its plate, its pan position, its name. */
   const place = (scene: Scene): void => {
     current = scene;
+    shownScenes.add(scene.config.id);
     scene.hunt.el.inert = true;
     viewport.replaceChildren(scene.plate);
     figure.setAttribute('aria-label', scene.config.picture);
@@ -685,8 +695,54 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     if (!playing) show(skip, false);
     current?.resume();
   };
-  /** `config` is asked for: what the scene on show has still to download for its routine waits, so that the tap has the network. */
+  /** The scenes that have been in the window in this visit. */
+  const shownScenes = new Set<string>();
+  /** The next room, being downloaded ahead of its tap (one at a time); and the rooms downloaded so. */
+  let ahead: { id: string; control: AbortController } | null = null;
+  const aheadDone = new Set<string>();
+  /** This browser keeps no rooms (a private tab in Safari): none is downloaded ahead. */
+  let cacheless = false;
+  /**
+   * A scene has settled (painted, her routine running, its own files all here): the room of the next tab in the menu not
+   * shown yet in this visit is downloaded into the browser's cache, at low priority, and nothing of it is kept or decoded
+   * (warmRoom). It is given up as soon as the visitor taps for anything (see makeWay()). Not when the browser has been asked
+   * to save data.
+   */
+  const lookAhead = async (scene: Scene): Promise<void> => {
+    if (savesData() || cacheless) return;
+    await idle();
+    const stays = (): boolean => !gone() && !ahead && !busy() && !document.hidden && current === scene && wanted.id === scene.config.id && scene.filesIn;
+    if (!stays()) return;
+    const from = scenes.indexOf(scene.config);
+    const next = [...scenes.slice(from + 1), ...scenes.slice(0, from)].find((each) => !shownScenes.has(each.id));
+    // (Asked for already, though not shown: its room has been downloaded, or is being.)
+    if (!next || loading.has(next.id) || aheadDone.has(next.id)) return;
+    // The room on show has been downloaded: if the browser has not kept it, it would not keep this one either.
+    if (!(await keepsRooms(scene.config.assets + scene.config.plate))) {
+      cacheless = true;
+      return;
+    }
+    if (!stays()) return;
+    const mine = { id: next.id, control: new AbortController() };
+    ahead = mine;
+    marks.aheadStart = Math.round(performance.now());
+    try {
+      await warmRoom(next.assets + next.plate, mine.control.signal);
+      aheadDone.add(next.id);
+      marks.aheadEnd = Math.round(performance.now());
+    } catch {
+      // Called off, or it failed: the room is downloaded when its scene is asked for.
+    } finally {
+      if (ahead === mine) ahead = null;
+    }
+  };
+  /** Any tap: the room being downloaded ahead is given up (unless it is the very room tapped for: loadPlate() waits for it). */
+  const callOffAhead = (keep?: string): void => {
+    if (ahead && ahead.id !== keep) ahead.control.abort();
+  };
+  /** `config` is asked for: what the scene on show has still to download waits, so that the tap has the network. */
   const makeWay = (config: SceneConfig): void => {
+    callOffAhead(config.id);
     if (config.id === current?.config.id) current.resume();
     else current?.pause();
   };
@@ -700,6 +756,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     settled = true;
     quietSeconds = 0;
     showControls(false);
+    // (Once its own files are all here, the next room is downloaded ahead: see onFilesIn.)
     void scene.loadMore().then(() => void (ready = true));
   };
   /** Start a scene's painting, brush-over or fade. It is not waited for: another scene may be asked for meanwhile. */
@@ -780,11 +837,13 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     };
     const overtaken = new Promise<null>((resolve) => asked.addEventListener('abort', () => resolve(null), { once: true }));
     const bringing = (async () => {
-      const next = await sceneFor(config);
+      const coming = sceneFor(config);
+      // Her first frames' files come with the room. (Asked for before, and called off: they are asked for again.)
+      castings.get(config.id)?.start().catch(() => {});
+      const next = await coming;
       if (asked.aborted) return next;
-      // Fetch her first frames once this room has been requested.
       next.preload();
-      if (paintsInFull(config) && !reducedMotion()) await Promise.race([next.loaded().catch(warn(config)), overtaken]);
+      if (paintsInFull(config) && !reducedMotion()) await Promise.race([next.loaded().catch((error) => asked.aborted || warn(config)(error)), overtaken]);
       // A scene out of sight holds no decoded picture: its room is decoded again here, from the browser's
       // own copy of the file, before anything is put on the page.
       if (!asked.aborted) await decoding;
@@ -801,6 +860,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     })();
     const next = await Promise.race([bringing, overtaken]);
     if (next && !asked.aborted) return next;
+    if (wanted.id !== config.id) castings.get(config.id)?.cancel();
     void bringing.then(drop, () => {});
     return null;
   };
@@ -915,6 +975,8 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       }
     } finally {
       moving = false;
+      // (The visitor has stayed after all: whatever was called off by the tap is asked for again.)
+      if (current && !playing && settled && !gone() && wanted.id === current.config.id) void lookAhead(current);
     }
   };
   /**
@@ -965,6 +1027,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     if (!scene || busy() || !resettable()) return;
     const tap = resetTap(armed ? armedAt : undefined, event.timeStamp);
     if (tap === 'ignore') return;
+    callOffAhead();
     if (tap === 'arm') {
       armedAt = event.timeStamp;
       armed = window.setTimeout(disarm, RESET_WAIT_MS);
@@ -1015,6 +1078,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     else if (begun) settleMotion(false);
     current?.visibility();
     if (!document.hidden && !away && !busy()) current?.checkEdge();
+    if (!document.hidden && !away && settled && current && !busy()) void lookAhead(current);
   };
   document.addEventListener('visibilitychange', onVisibility);
   cleanup.push(() => document.removeEventListener('visibilitychange', onVisibility));
@@ -1027,6 +1091,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     if (away) return;
     away = true;
     interrupted = moving;
+    callOffAhead();
     if (begun) settleMotion(false);
     transition.release();
     current?.hold();
@@ -1143,14 +1208,6 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
           if (!destroyed && !busy() && !paused && current === scene && !rush(signal)) pan.drift();
         }, DRIFT_AFTER_MS);
       }
-      const nextId = viewOf(config).next?.id;
-      const likelyNext = nextId && sceneById(nextId);
-      if (likelyNext && wanted === config) {
-        // (Not before her own drawings are here: her routine is waiting for them.)
-        void scene.stock().then(() => warmPlate(likelyNext.assets + likelyNext.plate, () =>
-          !destroyed && !busy() && !document.hidden && current === scene && wanted === config,
-        ));
-      }
     };
     moving = false;
     if (painting && !rush(signal)) play(scene, () => transition.paint(scene), opened);
@@ -1177,10 +1234,12 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       paintWait.abort();
       for (const fade of leaving) fade.finish();
       asking.abort();
+      ahead?.control.abort();
       hurry.abort();
       transition.clear();
       cleanup.forEach((fn) => fn());
       for (const scene of scenesLoaded.values()) scene.destroy();
+      for (const casting of castings.values()) casting.cancel();
       loading.clear();
       scenesLoaded.clear();
       root.remove();

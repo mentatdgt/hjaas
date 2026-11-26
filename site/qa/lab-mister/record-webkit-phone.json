@@ -1,0 +1,67 @@
+{
+ "file": "grow-webkit-phone-6s.mp4",
+ "painted": true,
+ "paintingMs": 4767,
+ "paintingDoneAfterMs": 10830,
+ "recordingStartsAfterMs": 10844,
+ "view": {
+  "panned": true,
+  "inView": true
+ },
+ "state": {
+  "scene": "grow",
+  "order": [
+   "mister",
+   "rachel"
+  ],
+  "classes": [
+   "hj-actor",
+   "hj-rachel"
+  ],
+  "leadIsRachel": true,
+  "mist": {
+   "current": "M1",
+   "stocked": true,
+   "has": [
+    "M1",
+    "M2",
+    "M3",
+    "M4"
+   ]
+  },
+  "rachelPose": "mist_to_write#22"
+ },
+ "loop": {
+  "seconds": 6.5,
+  "framesRead": 390,
+  "changes": 46,
+  "posesSeen": [
+   "M1",
+   "M2",
+   "M3",
+   "M4"
+  ],
+  "roundAndRound": true,
+  "gapMs": {
+   "shortest": 124,
+   "median": 135,
+   "longest": 155,
+   "mean": 140
+  },
+  "gapsOver160": 0,
+  "picturesPerPose": {
+   "M2": 1,
+   "M3": 1,
+   "M4": 1,
+   "M1": 1
+  },
+  "distinctPictures": 4,
+  "rachelPoseChanges": 31,
+  "pageFramesOver25ms": 5
+ },
+ "errors": [
+  "request failed: assets/scene2/room.webp (resource unavailable)",
+  "Failed to load resource: resource unavailable"
+ ],
+ "warnings": []
+}

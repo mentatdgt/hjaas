@@ -97,6 +97,13 @@ export interface ClipCast {
    * the picture is shown less than `below` CSS px wide: phones, where memory is short.
    */
   small?: { dir: string; below: number };
+  /**
+   * The parts of the room that move (the lab's mister, its mist rising), delivered as a cast package of scenery
+   * layers (see Troupe): a folder under the scene's assets, with its two manifests in it. They are drawn under her,
+   * painted in with the room, and loop on their own. If they cannot be loaded the room shows as painted, and she
+   * is not held up.
+   */
+  scenery?: { dir: string; frames: string; routine: string };
 }
 
 /**

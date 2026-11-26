@@ -1,0 +1,200 @@
+{
+ "now": [
+  {
+   "tapEveryMs": 2000,
+   "taps": 48,
+   "peakMB": 69.6,
+   "at": "grow, during a switch",
+   "peakParts": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "sheet": 3,
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "design.frames": 35.9,
+    "design.canvases": 8.1,
+    "design.room": 6.3,
+    "design.edge": 2.6,
+    "grow.frames": 3,
+    "grow.room": 6.3
+   },
+   "mostCastsDecodedAtOnce": 1,
+   "mostEdgesAtOnce": 1,
+   "mostRoomsAtOnce": 2,
+   "othersHoldAtMostMB": 58.7,
+   "othersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "design.frames": 35.9,
+    "design.canvases": 8.1,
+    "design.room": 6.3,
+    "design.edge": 2.6,
+    "grow.frames": 3
+   },
+   "afterwardsOthersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "grow.frames": 3
+   },
+   "endedIn": "design",
+   "errors": [
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  {
+   "tapEveryMs": 1000,
+   "taps": 48,
+   "peakMB": 65.3,
+   "at": "design, during a switch",
+   "peakParts": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "sheet": 4.8,
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "design.frames": 35.9,
+    "design.canvases": 8.3,
+    "design.room": 6.3,
+    "design.edge": 2.6,
+    "grow.frames": 3
+   },
+   "mostCastsDecodedAtOnce": 1,
+   "mostEdgesAtOnce": 1,
+   "mostRoomsAtOnce": 2,
+   "othersHoldAtMostMB": 39,
+   "othersHold": {
+    "build.frames": 2.4,
+    "grow.frames": 21.6,
+    "grow.canvases": 6.2,
+    "grow.room": 6.3,
+    "grow.edge": 2.6
+   },
+   "afterwardsOthersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "grow.frames": 3
+   },
+   "endedIn": "design",
+   "errors": [
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  {
+   "tapEveryMs": 600,
+   "taps": 48,
+   "peakMB": 65.3,
+   "at": "design, during a switch",
+   "peakParts": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "sheet": 4.8,
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "design.frames": 35.9,
+    "design.canvases": 8.3,
+    "design.room": 6.3,
+    "design.edge": 2.6,
+    "grow.frames": 3
+   },
+   "mostCastsDecodedAtOnce": 1,
+   "mostEdgesAtOnce": 1,
+   "mostRoomsAtOnce": 2,
+   "othersHoldAtMostMB": 33.2,
+   "othersHold": {
+    "build.frames": 16.1,
+    "build.canvases": 4.7,
+    "build.room": 6.3,
+    "build.edge": 2.6,
+    "film.canvases": 0.4,
+    "grow.frames": 3
+   },
+   "afterwardsOthersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "grow.frames": 3
+   },
+   "endedIn": "design",
+   "errors": [
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  {
+   "tapEveryMs": 300,
+   "taps": 48,
+   "peakMB": 65.3,
+   "at": "design, during a switch",
+   "peakParts": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "sheet": 4.8,
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "design.frames": 35.9,
+    "design.canvases": 8.3,
+    "design.room": 6.3,
+    "design.edge": 2.6,
+    "grow.frames": 3
+   },
+   "mostCastsDecodedAtOnce": 1,
+   "mostEdgesAtOnce": 1,
+   "mostRoomsAtOnce": 2,
+   "othersHoldAtMostMB": 30.8,
+   "othersHold": {
+    "build.frames": 13.8,
+    "build.canvases": 4.7,
+    "build.room": 6.3,
+    "build.edge": 2.6,
+    "film.canvases": 0.4,
+    "grow.frames": 3
+   },
+   "afterwardsOthersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "grow.frames": 3
+   },
+   "endedIn": "design",
+   "errors": [
+    "Failed to load resource: resource unavailable"
+   ]
+  },
+  {
+   "tapEveryMs": 120,
+   "taps": 48,
+   "peakMB": 65.3,
+   "at": "design, during a switch",
+   "peakParts": {
+    "sprites": 0.9,
+    "logo": 0.7,
+    "sheet": 4.8,
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "design.frames": 35.9,
+    "design.canvases": 8.3,
+    "design.room": 6.3,
+    "design.edge": 2.6,
+    "grow.frames": 3
+   },
+   "mostCastsDecodedAtOnce": 1,
+   "mostEdgesAtOnce": 1,
+   "mostRoomsAtOnce": 2,
+   "othersHoldAtMostMB": 27.8,
+   "othersHold": {
+    "build.frames": 2.4,
+    "film.frames": 4.8,
+    "film.canvases": 8.7,
+    "film.room": 6.3,
+    "film.edge": 2.6,
+    "grow.frames": 3
+   },
+   "afterwardsOthersHold": {
+    "build.frames": 2.4,
+    "film.canvases": 0.4,
+    "grow.frames": 3
+   },
+   "endedIn": "design",
+   "errors": [
+    "Failed to load resource: resource unavailable"
+   ]
+  }
+ ]
+}

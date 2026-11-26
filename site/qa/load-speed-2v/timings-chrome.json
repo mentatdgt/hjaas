@@ -1,0 +1,906 @@
+{
+ "chrome, fast: opening build": {
+  "before": {
+   "ms": [
+    2484,
+    3343,
+    2471
+   ],
+   "median": 2484,
+   "bytes": [
+    {
+     "requests": 29,
+     "kB": 2000
+    },
+    {
+     "requests": 29,
+     "kB": 2000
+    },
+    {
+     "requests": 28,
+     "kB": 1963
+    }
+   ],
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    2575,
+    2526,
+    2385
+   ],
+   "median": 2526,
+   "bytes": [
+    {
+     "requests": 29,
+     "kB": 1977
+    },
+    {
+     "requests": 29,
+     "kB": 1994
+    },
+    {
+     "requests": 28,
+     "kB": 1973
+    }
+   ],
+   "errors": []
+  }
+ },
+ "chrome, fast: opening set": {
+  "before": {
+   "ms": [
+    3903,
+    3930,
+    3937
+   ],
+   "median": 3930,
+   "bytes": [
+    {
+     "requests": 96,
+     "kB": 3164
+    },
+    {
+     "requests": 96,
+     "kB": 3156
+    },
+    {
+     "requests": 90,
+     "kB": 3091
+    }
+   ],
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    2460,
+    2713,
+    2449
+   ],
+   "median": 2460,
+   "bytes": [
+    {
+     "requests": 34,
+     "kB": 1880
+    },
+    {
+     "requests": 35,
+     "kB": 1995
+    },
+    {
+     "requests": 34,
+     "kB": 1881
+    }
+   ],
+   "errors": []
+  }
+ },
+ "chrome, fast: opening film": {
+  "before": {
+   "ms": [
+    2978,
+    2938,
+    2955
+   ],
+   "median": 2955,
+   "bytes": [
+    {
+     "requests": 38,
+     "kB": 2118
+    },
+    {
+     "requests": 40,
+     "kB": 2206
+    },
+    {
+     "requests": 40,
+     "kB": 2182
+    }
+   ],
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    3141,
+    2851,
+    2581
+   ],
+   "median": 2851,
+   "bytes": [
+    {
+     "requests": 39,
+     "kB": 2207
+    },
+    {
+     "requests": 37,
+     "kB": 2090
+    },
+    {
+     "requests": 37,
+     "kB": 2029
+    }
+   ],
+   "errors": []
+  }
+ },
+ "chrome, fast: cold switch to grow": {
+  "before": {
+   "ms": [
+    2045,
+    2015,
+    2124
+   ],
+   "median": 2045,
+   "bytes": [
+    {
+     "requests": 12,
+     "kB": 1672
+    },
+    {
+     "requests": 12,
+     "kB": 1719
+    },
+    {
+     "requests": 12,
+     "kB": 1686
+    }
+   ],
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    1938,
+    1958,
+    1957
+   ],
+   "median": 1957,
+   "bytes": [
+    {
+     "requests": 15,
+     "kB": 1754
+    },
+    {
+     "requests": 15,
+     "kB": 1746
+    },
+    {
+     "requests": 15,
+     "kB": 1757
+    }
+   ],
+   "errors": []
+  }
+ },
+ "chrome, fast: cold switch to design": {
+  "before": {
+   "ms": [
+    2264,
+    2259,
+    2603
+   ],
+   "median": 2264,
+   "bytes": [
+    {
+     "requests": 17,
+     "kB": 1932
+    },
+    {
+     "requests": 17,
+     "kB": 1983
+    },
+    {
+     "requests": 17,
+     "kB": 2087
+    }
+   ],
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    2110,
+    2126,
+    2219
+   ],
+   "median": 2126,
+   "bytes": [
+    {
+     "requests": 17,
+     "kB": 1939
+    },
+    {
+     "requests": 17,
+     "kB": 1918
+    },
+    {
+     "requests": 17,
+     "kB": 1932
+    }
+   ],
+   "errors": []
+  }
+ },
+ "chrome, fast: cold switch to film": {
+  "before": {
+   "ms": [
+    2176,
+    2165,
+    2156
+   ],
+   "median": 2165,
+   "bytes": [
+    {
+     "requests": 21,
+     "kB": 1793
+    },
+    {
+     "requests": 21,
+     "kB": 1798
+    },
+    {
+     "requests": 21,
+     "kB": 1747
+    }
+   ],
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    2208,
+    2082,
+    2010
+   ],
+   "median": 2082,
+   "bytes": [
+    {
+     "requests": 8,
+     "kB": 1490
+    },
+    {
+     "requests": 19,
+     "kB": 1801
+    },
+    {
+     "requests": 20,
+     "kB": 1882
+    }
+   ],
+   "errors": []
+  }
+ },
+ "chrome, fast: cold switch to set": {
+  "before": {
+   "ms": [
+    4029,
+    3946,
+    3987
+   ],
+   "median": 3987,
+   "bytes": [
+    {
+     "requests": 80,
+     "kB": 2944
+    },
+    {
+     "requests": 75,
+     "kB": 2878
+    },
+    {
+     "requests": 80,
+     "kB": 2924
+    }
+   ],
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    1874,
+    1861,
+    1900
+   ],
+   "median": 1874,
+   "bytes": [
+    {
+     "requests": 18,
+     "kB": 1671
+    },
+    {
+     "requests": 15,
+     "kB": 1651
+    },
+    {
+     "requests": 18,
+     "kB": 1682
+    }
+   ],
+   "errors": []
+  }
+ },
+ "chrome, fast: switch to grow, its room fetched ahead": {
+  "before": {
+   "ms": [
+    876,
+    868,
+    833
+   ],
+   "median": 868,
+   "bytes": [
+    {
+     "requests": 15,
+     "kB": 799
+    },
+    {
+     "requests": 15,
+     "kB": 795
+    },
+    {
+     "requests": 15,
+     "kB": 830
+    }
+   ],
+   "aheadAfterMs": [
+    6582,
+    6518,
+    6520
+   ],
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    796,
+    809,
+    795
+   ],
+   "median": 796,
+   "bytes": [
+    {
+     "requests": 15,
+     "kB": 525
+    },
+    {
+     "requests": 15,
+     "kB": 510
+    },
+    {
+     "requests": 15,
+     "kB": 507
+    }
+   ],
+   "aheadAfterMs": [
+    8751,
+    8840,
+    8771
+   ],
+   "errors": []
+  }
+ },
+ "chrome, fast: switch to set from film, its room fetched ahead": {
+  "before": {
+   "ms": [
+    2747,
+    2746,
+    2827
+   ],
+   "median": 2747,
+   "bytes": [
+    {
+     "requests": 76,
+     "kB": 1655
+    },
+    {
+     "requests": 80,
+     "kB": 1728
+    },
+    {
+     "requests": 74,
+     "kB": 1631
+    }
+   ],
+   "aheadAfterMs": [
+    5916,
+    5947,
+    5908
+   ],
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    780,
+    757,
+    826
+   ],
+   "median": 780,
+   "bytes": [
+    {
+     "requests": 17,
+     "kB": 453
+    },
+    {
+     "requests": 19,
+     "kB": 459
+    },
+    {
+     "requests": 15,
+     "kB": 439
+    }
+   ],
+   "aheadAfterMs": [
+    5962,
+    5922,
+    5918
+   ],
+   "errors": []
+  }
+ },
+ "chrome, slow: opening build": {
+  "before": {
+   "ms": [
+    9472,
+    9475,
+    9400
+   ],
+   "median": 9472,
+   "bytes": [
+    {
+     "requests": 27,
+     "kB": 1746
+    },
+    {
+     "requests": 27,
+     "kB": 1757
+    },
+    {
+     "requests": 27,
+     "kB": 1739
+    }
+   ],
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    9407,
+    9363,
+    9421
+   ],
+   "median": 9407,
+   "bytes": [
+    {
+     "requests": 27,
+     "kB": 1739
+    },
+    {
+     "requests": 27,
+     "kB": 1741
+    },
+    {
+     "requests": 27,
+     "kB": 1741
+    }
+   ],
+   "errors": []
+  }
+ },
+ "chrome, slow: opening set": {
+  "before": {
+   "ms": [
+    15487,
+    15491,
+    15462
+   ],
+   "median": 15487,
+   "bytes": [
+    {
+     "requests": 90,
+     "kB": 2919
+    },
+    {
+     "requests": 90,
+     "kB": 2926
+    },
+    {
+     "requests": 90,
+     "kB": 2915
+    }
+   ],
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    9098,
+    9071,
+    9121
+   ],
+   "median": 9098,
+   "bytes": [
+    {
+     "requests": 29,
+     "kB": 1648
+    },
+    {
+     "requests": 29,
+     "kB": 1647
+    },
+    {
+     "requests": 29,
+     "kB": 1645
+    }
+   ],
+   "errors": []
+  }
+ },
+ "chrome, slow: opening film": {
+  "before": {
+   "ms": [
+    9758,
+    9806,
+    9720
+   ],
+   "median": 9758,
+   "bytes": [
+    {
+     "requests": 32,
+     "kB": 1767
+    },
+    {
+     "requests": 32,
+     "kB": 1768
+    },
+    {
+     "requests": 32,
+     "kB": 1767
+    }
+   ],
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    9372,
+    9618,
+    9561
+   ],
+   "median": 9561,
+   "bytes": [
+    {
+     "requests": 29,
+     "kB": 1746
+    },
+    {
+     "requests": 30,
+     "kB": 1755
+    },
+    {
+     "requests": 29,
+     "kB": 1750
+    }
+   ],
+   "errors": []
+  }
+ },
+ "chrome, slow: cold switch to grow": {
+  "before": {
+   "ms": [
+    8492,
+    8475,
+    8457
+   ],
+   "median": 8475,
+   "bytes": [
+    {
+     "requests": 12,
+     "kB": 1525
+    },
+    {
+     "requests": 12,
+     "kB": 1518
+    },
+    {
+     "requests": 12,
+     "kB": 1516
+    }
+   ],
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    8274,
+    8183,
+    8199
+   ],
+   "median": 8199,
+   "bytes": [
+    {
+     "requests": 15,
+     "kB": 1526
+    },
+    {
+     "requests": 15,
+     "kB": 1529
+    },
+    {
+     "requests": 15,
+     "kB": 1533
+    }
+   ],
+   "errors": []
+  }
+ },
+ "chrome, slow: cold switch to design": {
+  "before": {
+   "ms": [
+    8700,
+    8620,
+    8685
+   ],
+   "median": 8685,
+   "bytes": [
+    {
+     "requests": 17,
+     "kB": 1559
+    },
+    {
+     "requests": 17,
+     "kB": 1556
+    },
+    {
+     "requests": 17,
+     "kB": 1554
+    }
+   ],
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    8385,
+    8496,
+    8318
+   ],
+   "median": 8385,
+   "bytes": [
+    {
+     "requests": 17,
+     "kB": 1550
+    },
+    {
+     "requests": 17,
+     "kB": 1547
+    },
+    {
+     "requests": 17,
+     "kB": 1550
+    }
+   ],
+   "errors": []
+  }
+ },
+ "chrome, slow: cold switch to film": {
+  "before": {
+   "ms": [
+    8684,
+    8717,
+    8910
+   ],
+   "median": 8717,
+   "bytes": [
+    {
+     "requests": 15,
+     "kB": 1525
+    },
+    {
+     "requests": 15,
+     "kB": 1525
+    },
+    {
+     "requests": 15,
+     "kB": 1542
+    }
+   ],
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    8411,
+    8272,
+    8193
+   ],
+   "median": 8272,
+   "bytes": [
+    {
+     "requests": 14,
+     "kB": 1536
+    },
+    {
+     "requests": 14,
+     "kB": 1518
+    },
+    {
+     "requests": 14,
+     "kB": 1524
+    }
+   ],
+   "errors": []
+  }
+ },
+ "chrome, slow: cold switch to set": {
+  "before": {
+   "ms": [
+    15604,
+    15657,
+    15529
+   ],
+   "median": 15604,
+   "bytes": [
+    {
+     "requests": 74,
+     "kB": 2697
+    },
+    {
+     "requests": 74,
+     "kB": 2689
+    },
+    {
+     "requests": 74,
+     "kB": 2700
+    }
+   ],
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    7654,
+    7708,
+    7643
+   ],
+   "median": 7654,
+   "bytes": [
+    {
+     "requests": 13,
+     "kB": 1418
+    },
+    {
+     "requests": 13,
+     "kB": 1415
+    },
+    {
+     "requests": 13,
+     "kB": 1412
+    }
+   ],
+   "errors": []
+  }
+ },
+ "chrome, slow: switch to grow, its room fetched ahead": {
+  "before": {
+   "ms": [
+    2591,
+    2633,
+    2595
+   ],
+   "median": 2595,
+   "bytes": [
+    {
+     "requests": 13,
+     "kB": 398
+    },
+    {
+     "requests": 13,
+     "kB": 395
+    },
+    {
+     "requests": 13,
+     "kB": 510
+    }
+   ],
+   "aheadAfterMs": [
+    15632,
+    15645,
+    15622
+   ],
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    1995,
+    1983,
+    1973
+   ],
+   "median": 1983,
+   "bytes": [
+    {
+     "requests": 15,
+     "kB": 296
+    },
+    {
+     "requests": 15,
+     "kB": 293
+    },
+    {
+     "requests": 15,
+     "kB": 293
+    }
+   ],
+   "aheadAfterMs": [
+    22081,
+    22056,
+    22083
+   ],
+   "errors": []
+  }
+ },
+ "chrome, slow: switch to set from film, its room fetched ahead": {
+  "before": {
+   "ms": [
+    9111,
+    9054,
+    9044
+   ],
+   "median": 9054,
+   "bytes": [
+    {
+     "requests": 74,
+     "kB": 1473
+    },
+    {
+     "requests": 74,
+     "kB": 1474
+    },
+    {
+     "requests": 74,
+     "kB": 1484
+    }
+   ],
+   "aheadAfterMs": [
+    11059,
+    11044,
+    11062
+   ],
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    1455,
+    1447,
+    1471
+   ],
+   "median": 1455,
+   "bytes": [
+    {
+     "requests": 14,
+     "kB": 200
+    },
+    {
+     "requests": 14,
+     "kB": 200
+    },
+    {
+     "requests": 14,
+     "kB": 200
+    }
+   ],
+   "aheadAfterMs": [
+    11062,
+    11046,
+    11043
+   ],
+   "errors": []
+  }
+ }
+}

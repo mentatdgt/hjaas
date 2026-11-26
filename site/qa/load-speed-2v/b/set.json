@@ -1,0 +1,370 @@
+{
+ "webkit, fast, 0 found": {
+  "samePicture": true,
+  "before": {
+   "firstStrokeMs": 3709,
+   "before": {
+    "requests": 95,
+    "kB": 3152
+   },
+   "piecesBeforeTheStroke": [
+    "P_01",
+    "P_02",
+    "P_03",
+    "P_04",
+    "P_05",
+    "P_06",
+    "P_07",
+    "P_08",
+    "P_09",
+    "P_10"
+   ],
+   "stagehandBeforeTheStroke": 51,
+   "figures": 3,
+   "stagehandJoinedAfterMs": 1603,
+   "firstWalkAfterMs": 18292,
+   "piecesInAll": 10,
+   "errors": []
+  },
+  "now": {
+   "firstStrokeMs": 2492,
+   "before": {
+    "requests": 34,
+    "kB": 1877
+   },
+   "piecesBeforeTheStroke": [
+    "P_01"
+   ],
+   "stagehandBeforeTheStroke": 0,
+   "figures": 3,
+   "stagehandJoinedAfterMs": 7677,
+   "firstWalkAfterMs": 20719,
+   "piecesInAll": 10,
+   "errors": []
+  }
+ },
+ "webkit, slow, 0 found": {
+  "samePicture": true,
+  "before": {
+   "firstStrokeMs": 15414,
+   "before": {
+    "requests": 89,
+    "kB": 2916
+   },
+   "piecesBeforeTheStroke": [
+    "P_01",
+    "P_02",
+    "P_03",
+    "P_04",
+    "P_05",
+    "P_06",
+    "P_07",
+    "P_08",
+    "P_09",
+    "P_10"
+   ],
+   "stagehandBeforeTheStroke": 51,
+   "figures": 3,
+   "stagehandJoinedAfterMs": 1602,
+   "firstWalkAfterMs": 19099,
+   "piecesInAll": 10,
+   "errors": []
+  },
+  "now": {
+   "firstStrokeMs": 8962,
+   "before": {
+    "requests": 28,
+    "kB": 1645
+   },
+   "piecesBeforeTheStroke": [
+    "P_01"
+   ],
+   "stagehandBeforeTheStroke": 0,
+   "figures": 3,
+   "stagehandJoinedAfterMs": 13088,
+   "firstWalkAfterMs": 26345,
+   "piecesInAll": 10,
+   "errors": []
+  }
+ },
+ "webkit, fast, 4 found": {
+  "samePicture": true,
+  "before": {
+   "firstStrokeMs": 3812,
+   "before": {
+    "requests": 95,
+    "kB": 3211
+   },
+   "piecesBeforeTheStroke": [
+    "P_01",
+    "P_02",
+    "P_03",
+    "P_04",
+    "P_05",
+    "P_06",
+    "P_07",
+    "P_08",
+    "P_09",
+    "P_10"
+   ],
+   "stagehandBeforeTheStroke": 51,
+   "figures": 3,
+   "stagehandJoinedAfterMs": 1602,
+   "firstWalkAfterMs": 15445,
+   "piecesInAll": 10,
+   "errors": []
+  },
+  "now": {
+   "firstStrokeMs": 2705,
+   "before": {
+    "requests": 38,
+    "kB": 2144
+   },
+   "piecesBeforeTheStroke": [
+    "P_01",
+    "P_02",
+    "P_03",
+    "P_04",
+    "P_05"
+   ],
+   "stagehandBeforeTheStroke": 0,
+   "figures": 3,
+   "stagehandJoinedAfterMs": 6895,
+   "firstWalkAfterMs": 21928,
+   "piecesInAll": 10,
+   "errors": []
+  }
+ },
+ "webkit, slow, 4 found": {
+  "samePicture": true,
+  "before": {
+   "firstStrokeMs": 15509,
+   "before": {
+    "requests": 89,
+    "kB": 2935
+   },
+   "piecesBeforeTheStroke": [
+    "P_01",
+    "P_02",
+    "P_03",
+    "P_04",
+    "P_05",
+    "P_06",
+    "P_07",
+    "P_08",
+    "P_09",
+    "P_10"
+   ],
+   "stagehandBeforeTheStroke": 51,
+   "figures": 3,
+   "stagehandJoinedAfterMs": 1605,
+   "firstWalkAfterMs": 13591,
+   "piecesInAll": 10,
+   "errors": []
+  },
+  "now": {
+   "firstStrokeMs": 10436,
+   "before": {
+    "requests": 32,
+    "kB": 1923
+   },
+   "piecesBeforeTheStroke": [
+    "P_01",
+    "P_02",
+    "P_03",
+    "P_04",
+    "P_05"
+   ],
+   "stagehandBeforeTheStroke": 0,
+   "figures": 3,
+   "stagehandJoinedAfterMs": 11173,
+   "firstWalkAfterMs": 24329,
+   "piecesInAll": 10,
+   "errors": []
+  }
+ },
+ "chrome, fast, 0 found": {
+  "samePicture": true,
+  "before": {
+   "firstStrokeMs": 3670,
+   "before": {
+    "requests": 96,
+    "kB": 3091
+   },
+   "piecesBeforeTheStroke": [
+    "P_01",
+    "P_02",
+    "P_03",
+    "P_04",
+    "P_05",
+    "P_06",
+    "P_07",
+    "P_08",
+    "P_09",
+    "P_10"
+   ],
+   "stagehandBeforeTheStroke": 51,
+   "figures": 3,
+   "stagehandJoinedAfterMs": 1607,
+   "firstWalkAfterMs": 14785,
+   "piecesInAll": 10,
+   "errors": []
+  },
+  "now": {
+   "firstStrokeMs": 2371,
+   "before": {
+    "requests": 34,
+    "kB": 1856
+   },
+   "piecesBeforeTheStroke": [
+    "P_01"
+   ],
+   "stagehandBeforeTheStroke": 0,
+   "figures": 3,
+   "stagehandJoinedAfterMs": 7116,
+   "firstWalkAfterMs": 17050,
+   "piecesInAll": 10,
+   "errors": []
+  }
+ },
+ "chrome, slow, 0 found": {
+  "samePicture": true,
+  "before": {
+   "firstStrokeMs": 15177,
+   "before": {
+    "requests": 90,
+    "kB": 2902
+   },
+   "piecesBeforeTheStroke": [
+    "P_01",
+    "P_02",
+    "P_03",
+    "P_04",
+    "P_05",
+    "P_06",
+    "P_07",
+    "P_08",
+    "P_09",
+    "P_10"
+   ],
+   "stagehandBeforeTheStroke": 51,
+   "figures": 3,
+   "stagehandJoinedAfterMs": 1602,
+   "firstWalkAfterMs": 15953,
+   "piecesInAll": 10,
+   "errors": []
+  },
+  "now": {
+   "firstStrokeMs": 9029,
+   "before": {
+    "requests": 29,
+    "kB": 1641
+   },
+   "piecesBeforeTheStroke": [
+    "P_01"
+   ],
+   "stagehandBeforeTheStroke": 0,
+   "figures": 3,
+   "stagehandJoinedAfterMs": 12542,
+   "firstWalkAfterMs": 27381,
+   "piecesInAll": 10,
+   "errors": []
+  }
+ },
+ "chrome, fast, 4 found": {
+  "samePicture": true,
+  "before": {
+   "firstStrokeMs": 3813,
+   "before": {
+    "requests": 96,
+    "kB": 3124
+   },
+   "piecesBeforeTheStroke": [
+    "P_01",
+    "P_02",
+    "P_03",
+    "P_04",
+    "P_05",
+    "P_06",
+    "P_07",
+    "P_08",
+    "P_09",
+    "P_10"
+   ],
+   "stagehandBeforeTheStroke": 51,
+   "figures": 3,
+   "stagehandJoinedAfterMs": 1604,
+   "firstWalkAfterMs": 15192,
+   "piecesInAll": 10,
+   "errors": []
+  },
+  "now": {
+   "firstStrokeMs": 2611,
+   "before": {
+    "requests": 39,
+    "kB": 2168
+   },
+   "piecesBeforeTheStroke": [
+    "P_01",
+    "P_02",
+    "P_03",
+    "P_04",
+    "P_05"
+   ],
+   "stagehandBeforeTheStroke": 0,
+   "figures": 3,
+   "stagehandJoinedAfterMs": 6382,
+   "firstWalkAfterMs": 18131,
+   "piecesInAll": 10,
+   "errors": []
+  }
+ },
+ "chrome, slow, 4 found": {
+  "samePicture": true,
+  "before": {
+   "firstStrokeMs": 15441,
+   "before": {
+    "requests": 90,
+    "kB": 2916
+   },
+   "piecesBeforeTheStroke": [
+    "P_01",
+    "P_02",
+    "P_03",
+    "P_04",
+    "P_05",
+    "P_06",
+    "P_07",
+    "P_08",
+    "P_09",
+    "P_10"
+   ],
+   "stagehandBeforeTheStroke": 51,
+   "figures": 3,
+   "stagehandJoinedAfterMs": 1604,
+   "firstWalkAfterMs": 17446,
+   "piecesInAll": 10,
+   "errors": []
+  },
+  "now": {
+   "firstStrokeMs": 10468,
+   "before": {
+    "requests": 33,
+    "kB": 1929
+   },
+   "piecesBeforeTheStroke": [
+    "P_01",
+    "P_02",
+    "P_03",
+    "P_04",
+    "P_05"
+   ],
+   "stagehandBeforeTheStroke": 0,
+   "figures": 3,
+   "stagehandJoinedAfterMs": 10613,
+   "firstWalkAfterMs": 22206,
+   "piecesInAll": 10,
+   "errors": []
+  }
+ }
+}

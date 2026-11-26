@@ -1,0 +1,30 @@
+{
+ "webkit, fast: opening Build": {
+  "before": {
+   "ms": [
+    3036,
+    2881,
+    2888
+   ],
+   "median": 2888,
+   "bytes": {
+    "requests": 28,
+    "kB": 2003
+   },
+   "errors": []
+  },
+  "now": {
+   "ms": [
+    2956,
+    4223,
+    3170
+   ],
+   "median": 3170,
+   "bytes": {
+    "requests": 28,
+    "kB": 1992
+   },
+   "errors": []
+  }
+ }
+}

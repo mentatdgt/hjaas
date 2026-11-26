@@ -1,0 +1,145 @@
+{
+ "view": {
+  "panned": true,
+  "inView": true
+ },
+ "state": {
+  "scene": "grow",
+  "order": [
+   "mister",
+   "rachel"
+  ],
+  "classes": [
+   "hj-actor",
+   "hj-rachel"
+  ],
+  "leadIsRachel": true,
+  "mist": {
+   "current": "M2",
+   "stocked": true,
+   "has": [
+    "M1",
+    "M2",
+    "M3",
+    "M4"
+   ]
+  },
+  "rachelPose": "A1_mist_aim"
+ },
+ "tapThrough": {
+  "overlaps": true,
+  "overlapPx": 9,
+  "hit": "switch-box"
+ },
+ "loop": {
+  "seconds": 6,
+  "framesRead": 360,
+  "changes": 43,
+  "posesSeen": [
+   "M1",
+   "M2",
+   "M3",
+   "M4"
+  ],
+  "roundAndRound": true,
+  "gapMs": {
+   "shortest": 133.2,
+   "median": 133.4,
+   "longest": 150,
+   "mean": 140.1
+  },
+  "gapsOver160": 0,
+  "picturesPerPose": {
+   "M2": 2,
+   "M3": 1,
+   "M4": 1,
+   "M1": 1
+  },
+  "distinctPictures": 5,
+  "rachelPoseChanges": 10,
+  "pageFramesOver25ms": 0
+ },
+ "shots": {
+  "sheet": "frames-chrome-phone.png",
+  "screenPxPerPlatePx": 1.22,
+  "seams": {
+   "M1": {
+    "outside": {
+     "max": 0,
+     "p99": 0,
+     "mean": 0
+    },
+    "rim": {
+     "max": 38,
+     "p99": 13,
+     "mean": 2.53
+    },
+    "feather": {
+     "max": 192,
+     "p99": 135,
+     "mean": 10.32
+    },
+    "pxChangedInside": 4823
+   },
+   "M2": {
+    "outside": {
+     "max": 1,
+     "p99": 0,
+     "mean": 0
+    },
+    "rim": {
+     "max": 38,
+     "p99": 13,
+     "mean": 2.53
+    },
+    "feather": {
+     "max": 194,
+     "p99": 135,
+     "mean": 10.34
+    },
+    "pxChangedInside": 4293
+   },
+   "M3": {
+    "outside": {
+     "max": 0,
+     "p99": 0,
+     "mean": 0
+    },
+    "rim": {
+     "max": 38,
+     "p99": 13,
+     "mean": 2.54
+    },
+    "feather": {
+     "max": 192,
+     "p99": 135,
+     "mean": 10.31
+    },
+    "pxChangedInside": 4381
+   },
+   "M4": {
+    "outside": {
+     "max": 1,
+     "p99": 0,
+     "mean": 0
+    },
+    "rim": {
+     "max": 38,
+     "p99": 13,
+     "mean": 2.53
+    },
+    "feather": {
+     "max": 192,
+     "p99": 135,
+     "mean": 10.33
+    },
+    "pxChangedInside": 4908
+   }
+  }
+ },
+ "errors": [
+  "request failed: assets/scene2/room.webp (net::ERR_ABORTED)"
+ ],
+ "warnings": [],
+ "ok": false
+}

@@ -1,0 +1,146 @@
+{
+ "view": {
+  "panned": false,
+  "inView": true
+ },
+ "state": {
+  "scene": "grow",
+  "order": [
+   "mister",
+   "rachel"
+  ],
+  "classes": [
+   "hj-actor",
+   "hj-rachel"
+  ],
+  "leadIsRachel": true,
+  "mist": {
+   "current": "M3",
+   "stocked": true,
+   "has": [
+    "M1",
+    "M2",
+    "M3",
+    "M4"
+   ]
+  },
+  "rachelPose": "A1_mist_aim"
+ },
+ "tapThrough": {
+  "overlaps": true,
+  "overlapPx": 3,
+  "hit": "switch-box"
+ },
+ "loop": {
+  "seconds": 6,
+  "framesRead": 361,
+  "changes": 43,
+  "posesSeen": [
+   "M1",
+   "M2",
+   "M3",
+   "M4"
+  ],
+  "roundAndRound": true,
+  "gapMs": {
+   "shortest": 126,
+   "median": 134,
+   "longest": 151,
+   "mean": 139.7
+  },
+  "gapsOver160": 0,
+  "picturesPerPose": {
+   "M3": 1,
+   "M4": 1,
+   "M1": 1,
+   "M2": 1
+  },
+  "distinctPictures": 4,
+  "rachelPoseChanges": 14,
+  "pageFramesOver25ms": 0
+ },
+ "shots": {
+  "sheet": "frames-webkit-desktop.png",
+  "screenPxPerPlatePx": 1.24,
+  "seams": {
+   "M1": {
+    "outside": {
+     "max": 0,
+     "p99": 0,
+     "mean": 0
+    },
+    "rim": {
+     "max": 9,
+     "p99": 5,
+     "mean": 0.88
+    },
+    "feather": {
+     "max": 112,
+     "p99": 69,
+     "mean": 4.73
+    },
+    "pxChangedInside": 3587
+   },
+   "M2": {
+    "outside": {
+     "max": 0,
+     "p99": 0,
+     "mean": 0
+    },
+    "rim": {
+     "max": 9,
+     "p99": 5,
+     "mean": 0.88
+    },
+    "feather": {
+     "max": 111,
+     "p99": 69,
+     "mean": 4.72
+    },
+    "pxChangedInside": 3184
+   },
+   "M3": {
+    "outside": {
+     "max": 0,
+     "p99": 0,
+     "mean": 0
+    },
+    "rim": {
+     "max": 9,
+     "p99": 5,
+     "mean": 0.88
+    },
+    "feather": {
+     "max": 112,
+     "p99": 69,
+     "mean": 4.72
+    },
+    "pxChangedInside": 3102
+   },
+   "M4": {
+    "outside": {
+     "max": 0,
+     "p99": 0,
+     "mean": 0
+    },
+    "rim": {
+     "max": 9,
+     "p99": 5,
+     "mean": 0.88
+    },
+    "feather": {
+     "max": 111,
+     "p99": 68,
+     "mean": 4.72
+    },
+    "pxChangedInside": 3590
+   }
+  }
+ },
+ "errors": [
+  "request failed: assets/scene2/room.webp (resource unavailable)",
+  "Failed to load resource: resource unavailable"
+ ],
+ "warnings": [],
+ "ok": false
+}
