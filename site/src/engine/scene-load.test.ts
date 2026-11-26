@@ -242,6 +242,61 @@ describe('recoverable room assets', () => {
     scene.destroy();
   });
 
+  it('asks for Build\'s reaction again when a tap called it off and the visitor stays', async () => {
+    const requested: string[] = [];
+    let hold: (() => void) | null = null;
+    vi.stubGlobal('requestIdleCallback', (fn: () => void) => queueMicrotask(fn));
+    vi.stubGlobal('createImageBitmap', async () => ({ width: 100, height: 100, close() {} }));
+    vi.stubGlobal('fetch', vi.fn(async (url: string) => {
+      requested.push(url.split('/').pop()!);
+      if (url.endsWith('/reaction.json')) return new Response(JSON.stringify({ frames: [{ file: 'one.png', ms: 100 }, { file: 'two.png', ms: 100 }] }));
+      if (url.endsWith('/shared.json')) return new Response('{}');
+      // (The reaction's first drawing is on its way when the visitor taps.)
+      if (url.endsWith('/one.webp') && !hold) return new Promise<Response>((resolve) => { hold = () => resolve(new Response(url)); });
+      return new Response(url);
+    }));
+    const scene = await load();
+    await scene.stock();
+    const first = scene.loadMore();
+    await vi.waitFor(() => expect(hold).not.toBeNull());
+    // A tap, and back before its file has come: the reaction is asked for afresh, not handed the one that gives up.
+    scene.pause();
+    scene.resume();
+    hold!();
+    await first;
+    await vi.waitFor(() => expect(requested.filter((name) => name === 'two.webp').length).toBeGreaterThan(0));
+    expect(requested.filter((name) => name === 'one.webp')).toHaveLength(1);
+    scene.destroy();
+  });
+
+  it('tells its host once everything it fetches after settling is here, and not while it is paused', async () => {
+    const pending: Array<() => void> = [];
+    const filesIn = vi.fn();
+    vi.stubGlobal('requestIdleCallback', (fn: () => void) => queueMicrotask(fn));
+    vi.stubGlobal('createImageBitmap', async () => ({ width: 100, height: 100, close() {} }));
+    vi.stubGlobal('fetch', vi.fn(async (url: string) => {
+      if (url.endsWith('/frame_01.webp')) return new Response(url);
+      return new Promise<Response>((resolve) => pending.push(() => resolve(new Response(url))));
+    }));
+    const scene = await Scene.load(config, { ...host(), onFilesIn: filesIn }, true);
+    const paused = scene.loadMore();
+    scene.pause();
+    pending.splice(0).forEach((arrive) => arrive());
+    await paused;
+    expect(filesIn).not.toHaveBeenCalled();
+    expect(scene.filesIn).toBe(false);
+    scene.resume();
+    // (Everything it asks for arrives.)
+    await vi.waitFor(() => {
+      pending.splice(0).forEach((arrive) => arrive());
+      expect(filesIn).toHaveBeenCalledOnce();
+    });
+    expect(scene.filesIn).toBe(true);
+    scene.pause();
+    expect(scene.filesIn).toBe(false);
+    scene.destroy();
+  });
+
   it('asks for a scene\'s cast together with its room, and decodes none of it before the scene is opened', async () => {
     const requested: string[] = [];
     const bitmaps = vi.fn(async () => ({ width: 100, height: 100, close() {} }));

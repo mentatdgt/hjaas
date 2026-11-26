@@ -34,6 +34,8 @@ export interface SceneHost {
   onLayout: () => void;
   /** QA: called on every pose change. */
   onPose?: (pose: string, at: number) => void;
+  /** Everything the scene fetches once it has settled (loadMore()) is here. */
+  onFilesIn?: () => void;
   /** How wide the picture is shown, in CSS px (the window onto the room, not the room itself). */
   shownWidth: () => number;
   /** The painting's edge: which style, and the paper it fades into, as red, green, blue. */
@@ -213,7 +215,8 @@ async function frameCast(config: SceneConfig, cast: FrameCast, host: SceneHost, 
       throw error;
     }
     let reaction: Reaction | null = null;
-    let loading: Promise<void> | null = null;
+    /** The reaction being downloaded, and whether that download is still wanted. */
+    let loading: { job: Promise<void>; active: () => boolean } | null = null;
     let awake = true;
     let generation = 0;
     const loadPose = async (pose: string, url: string, at: number): Promise<void> => {
@@ -265,16 +268,19 @@ async function frameCast(config: SceneConfig, cast: FrameCast, host: SceneHost, 
         if (!cast.reaction || !reactions || !awake || reaction || by.aborted) return Promise.resolve();
         const at = generation;
         const active = (): boolean => awake && generation === at && !by.aborted;
-        loading ??= loadReaction(config.assets, dir + cast.reaction, active, (pose, url) => loadPose(pose, url, at))
+        // (One called off by a tap may still be waiting for a file: it gives up when that comes, so it is not handed back.)
+        if (loading?.active()) return loading.job;
+        const job: Promise<void> = loadReaction(config.assets, dir + cast.reaction, active, (pose, url) => loadPose(pose, url, at))
           .then((ready) => {
             if (active() && ready) reaction = ready;
           }, (error) => {
             if (active()) console.warn(`[hjaas] ${config.id}: reaction frames unavailable; finds still count`, error);
           })
           .finally(() => {
-            if (active()) loading = null;
+            if (loading?.job === job) loading = null;
           });
-        return loading;
+        loading = { job, active };
+        return job;
       },
       sleep: (keepShown = true) => {
         awake = false;
@@ -777,6 +783,8 @@ export class Scene {
   private paused = false;
   /** The scene has settled: loadMore() has been asked for. */
   private settled = false;
+  /** And everything loadMore() fetches is here (until the scene pauses or rests). */
+  private complete = false;
   /** The room's picture is being decoded again. */
   private readying: Promise<unknown> | null = null;
   /** She is being put on the plate. */
@@ -996,6 +1004,7 @@ export class Scene {
   pause(): void {
     if (this.paused) return;
     this.paused = true;
+    this.complete = false;
     this.fetching.abort();
     this.fetching = new AbortController();
   }
@@ -1273,6 +1282,14 @@ export class Scene {
       if (cast !== this.cast) await cast.more(reactions, signal);
     }
     await others;
+    if (over() || this.paused || this.complete) return;
+    this.complete = true;
+    this.host.onFilesIn?.();
+  }
+
+  /** Everything the scene fetches once it has settled is here (see loadMore()). */
+  get filesIn(): boolean {
+    return this.complete;
   }
 
   /** The walkers, downloaded and put on the plate (over the hunt's progress, under the cast), each as soon as he is ready. */

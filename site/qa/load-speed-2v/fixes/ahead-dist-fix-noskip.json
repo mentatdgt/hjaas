@@ -1,0 +1,20 @@
+{
+ "how": "noskip",
+ "browser": "chrome",
+ "ownFiles": 28,
+ "ownStillsDoneAt": 26898,
+ "ownStillsPending": 0,
+ "ownRequestsAfterWarmStarted": 0,
+ "ownBytesAfterWarmStarted": 0,
+ "warm": [
+  {
+   "at": 26957,
+   "done": 33281,
+   "priority": null,
+   "dest": "empty",
+   "kB": 1236,
+   "dropped": false
+  }
+ ],
+ "errors": []
+}

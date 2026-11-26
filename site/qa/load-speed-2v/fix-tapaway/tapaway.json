@@ -1,0 +1,20 @@
+{
+ "webkit: film, then design after 1.5 s, then film": {
+  "castRequestsBeforeTheSecondTap": 5,
+  "calledOff": 1,
+  "castRequestsAfterIt": 0,
+  "shown": "design",
+  "thenShown": [
+   "film",
+   4
+  ],
+  "rooms": {
+   "scene1/room.webp": 1,
+   "scene4/room.webp": 1,
+   "scene3/room.webp": 1
+  },
+  "wholeTwice": [],
+  "errors": [],
+  "warnings": []
+ }
+}

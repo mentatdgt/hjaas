@@ -1,0 +1,18 @@
+webkit, fast: opening build: 2504 -> 2484 ms   [2599,2460,2504] [2494,2420,2484]  {"requests":28,"kB":1976} {"requests":28,"kB":1973}  
+webkit, fast: opening set: 3862 -> 2524 ms   [3885,3862,3827] [2524,2480,4335]  {"requests":95,"kB":3162} {"requests":34,"kB":1887}  
+webkit, fast: opening film: 3630 -> 2521 ms   [3824,3523,3630] [2552,2483,2521]  {"requests":37,"kB":3285} {"requests":36,"kB":2085}  
+webkit, fast: cold switch to grow: 2079 -> 2158 ms   [2079,2067,2141] [2158,2174,1948]  {"requests":12,"kB":1689} {"requests":15,"kB":1740}  
+webkit, fast: cold switch to design: 2245 -> 2140 ms   [2245,2240,2252] [2140,2153,2100]  {"requests":17,"kB":1892} {"requests":17,"kB":1889}  
+webkit, fast: cold switch to film: 2277 -> 2106 ms   [2669,2271,2277] [2404,2106,2033]  {"requests":15,"kB":1603} {"requests":20,"kB":1776}  
+webkit, fast: cold switch to set: 4103 -> 2040 ms   [4103,4026,4178] [1937,2323,2040]  {"requests":80,"kB":2994} {"requests":19,"kB":1721}  
+webkit, fast: switch to grow, its room fetched ahead: 788 -> 822 ms   [807,788,782] [822,866,798]  {"requests":13,"kB":622} {"requests":15,"kB":516} ahead [6466,6502,6493] [9882,9759,9781] 
+webkit, fast: switch to set from film, its room fetched ahead: 2841 -> 803 ms   [2762,2841,2924] [803,788,828]  {"requests":81,"kB":1760} {"requests":20,"kB":513} ahead [6062,6015,6026] [6021,6042,6058] 
+webkit, slow: opening build: 9434 -> 9482 ms   [9319,9473,9434] [9389,9482,9582]  {"requests":26,"kB":1735} {"requests":26,"kB":1743}  
+webkit, slow: opening set: 15441 -> 9025 ms   [15441,15357,15527] [9025,9001,9084]  {"requests":89,"kB":2921} {"requests":28,"kB":1633}  
+webkit, slow: opening film: 15778 -> 9584 ms   [16162,15614,15778] [9584,9637,9575]  {"requests":31,"kB":2995} {"requests":28,"kB":1746}  
+webkit, slow: cold switch to grow: 8540 -> 8334 ms   [8540,8525,8675] [8487,8334,8277]  {"requests":12,"kB":1521} {"requests":15,"kB":1537}  
+webkit, slow: cold switch to design: 8753 -> 8374 ms   [8747,8753,8757] [8355,8374,8415]  {"requests":17,"kB":1546} {"requests":17,"kB":1549}  
+webkit, slow: cold switch to film: 8860 -> 8342 ms   [8860,8820,8955] [8296,8445,8342]  {"requests":17,"kB":1529} {"requests":14,"kB":1524}  
+webkit, slow: cold switch to set: 15826 -> 7763 ms   [15953,15826,15704] [7812,7706,7763]  {"requests":74,"kB":2703} {"requests":13,"kB":1415}  
+webkit, slow: switch to grow, its room fetched ahead: 2607 -> 2053 ms   [2607,2543,2836] [2053,2108,2020]  {"requests":13,"kB":450} {"requests":15,"kB":293} ahead [15498,15493,15401] [23152,23164,23076] 
+webkit, slow: switch to set from film, its room fetched ahead: 9432 -> 1617 ms   [10541,9432,9083] [1782,1617,1546]  {"requests":74,"kB":1540} {"requests":14,"kB":301} ahead [11390,11119,11151] [11144,11204,11186] 

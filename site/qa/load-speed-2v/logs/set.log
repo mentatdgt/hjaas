@@ -1,0 +1,9 @@
+webkit, fast, 0 found: same true; stroke 3709 -> 2492; pieces before stroke 10 -> ["P_01"]; stagehand before stroke 51 -> 0; joined 1603 -> 7677; walks 18292 -> 20719; 
+webkit, slow, 0 found: same true; stroke 15414 -> 8962; pieces before stroke 10 -> ["P_01"]; stagehand before stroke 51 -> 0; joined 1602 -> 13088; walks 19099 -> 26345; 
+webkit, fast, 4 found: same true; stroke 3812 -> 2705; pieces before stroke 10 -> ["P_01","P_02","P_03","P_04","P_05"]; stagehand before stroke 51 -> 0; joined 1602 -> 6895; walks 15445 -> 21928; 
+webkit, slow, 4 found: same true; stroke 15509 -> 10436; pieces before stroke 10 -> ["P_01","P_02","P_03","P_04","P_05"]; stagehand before stroke 51 -> 0; joined 1605 -> 11173; walks 13591 -> 24329; 
+chrome, fast, 0 found: same true; stroke 3670 -> 2371; pieces before stroke 10 -> ["P_01"]; stagehand before stroke 51 -> 0; joined 1607 -> 7116; walks 14785 -> 17050; 
+chrome, slow, 0 found: same true; stroke 15177 -> 9029; pieces before stroke 10 -> ["P_01"]; stagehand before stroke 51 -> 0; joined 1602 -> 12542; walks 15953 -> 27381; 
+chrome, fast, 4 found: same true; stroke 3813 -> 2611; pieces before stroke 10 -> ["P_01","P_02","P_03","P_04","P_05"]; stagehand before stroke 51 -> 0; joined 1604 -> 6382; walks 15192 -> 18131; 
+chrome, slow, 4 found: same true; stroke 15441 -> 10468; pieces before stroke 10 -> ["P_01","P_02","P_03","P_04","P_05"]; stagehand before stroke 51 -> 0; joined 1604 -> 10613; walks 17446 -> 22206; 
+CHAIN-B-DONE

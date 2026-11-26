@@ -1,0 +1,8 @@
+webkit, a normal window, opening: {"same":true,"canvases":4,"screen":"hj-finder 68x61:7779877d","errors":[]}
+webkit, a normal window, switch: {"same":true,"canvases":4,"screen":"hj-finder 68x61:7779877d","errors":[]}
+webkit, a private window, opening: {"same":true,"canvases":4,"screen":"hj-finder 68x61:7779877d","errors":["Failed to load resource: resource unavailable"]}
+webkit, a private window, switch: {"same":true,"canvases":4,"screen":"hj-finder 68x61:7779877d","errors":["Failed to load resource: resource unavailable"]}
+chrome, a normal window, opening: {"same":true,"canvases":4,"screen":"hj-finder 68x61:ecf781c6","errors":[]}
+chrome, a normal window, switch: {"same":true,"canvases":4,"screen":"hj-finder 68x61:ecf781c6","errors":[]}
+chrome, a private window, opening: {"same":true,"canvases":4,"screen":"hj-finder 68x61:ecf781c6","errors":[]}
+chrome, a private window, switch: {"same":true,"canvases":4,"screen":"hj-finder 68x61:ecf781c6","errors":[]}

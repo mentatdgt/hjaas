@@ -544,6 +544,10 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       },
       onPose: flags.debug ? (pose, at) => poses.push([pose, Math.round(at)]) : undefined,
       edge: { style: edgeStyle, seed: edgeSeed, paper },
+      // (Only now is the next room downloaded ahead: never before the scene's own files.)
+      onFilesIn: () => {
+        if (self) void lookAhead(self);
+      },
     };
     const casting = castings.get(config.id) ?? new Casting(config, sceneHost);
     castings.set(config.id, casting);
@@ -707,7 +711,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
   const lookAhead = async (scene: Scene): Promise<void> => {
     if (savesData() || cacheless) return;
     await idle();
-    const stays = (): boolean => !gone() && !ahead && !busy() && !document.hidden && current === scene && wanted.id === scene.config.id;
+    const stays = (): boolean => !gone() && !ahead && !busy() && !document.hidden && current === scene && wanted.id === scene.config.id && scene.filesIn;
     if (!stays()) return;
     const from = scenes.indexOf(scene.config);
     const next = [...scenes.slice(from + 1), ...scenes.slice(0, from)].find((each) => !shownScenes.has(each.id));
@@ -752,11 +756,8 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     settled = true;
     quietSeconds = 0;
     showControls(false);
-    void scene.loadMore().then(() => {
-      ready = true;
-      // (Once its own files are all here.)
-      void lookAhead(scene);
-    });
+    // (Once its own files are all here, the next room is downloaded ahead: see onFilesIn.)
+    void scene.loadMore().then(() => void (ready = true));
   };
   /** Start a scene's painting, brush-over or fade. It is not waited for: another scene may be asked for meanwhile. */
   const play = (scene: Scene, motion: () => Promise<void>, then?: () => void): void => {
