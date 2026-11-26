@@ -1,0 +1,5 @@
+webkit, a normal window: the browser asks to save data, before: {"rooms":{"scene1/room.webp":1,"scene2/room.webp":1},"roomsCalledOff":[],"roomsRevalidated":[],"othersWholeTwice":[],"files":41,"kB":5338,"errors":[]}
+webkit, a normal window: the browser asks to save data, now: {"rooms":{"scene1/room.webp":1},"roomsCalledOff":[],"roomsRevalidated":[],"othersWholeTwice":[],"files":40,"kB":4103,"errors":[]}
+chrome, a normal window: the browser asks to save data, before: {"rooms":{"scene1/room.webp":1,"scene2/room.webp":1},"roomsCalledOff":[],"roomsRevalidated":[],"othersWholeTwice":[],"files":41,"kB":5340,"errors":[]}
+chrome, a normal window: the browser asks to save data, now: {"rooms":{"scene1/room.webp":1},"roomsCalledOff":[],"roomsRevalidated":[],"othersWholeTwice":[],"files":40,"kB":4106,"errors":[]}
+NET2B-DONE

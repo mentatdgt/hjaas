@@ -110,6 +110,182 @@
    "files": 93,
    "kB": 8245,
    "errors": []
+  },
+  "now": {
+   "warmingSeenAfterMs": 20501,
+   "warmingWasWhole": false,
+   "rooms": {
+    "scene1/room.webp": 1,
+    "scene3/room.webp": 1,
+    "scene2/room.webp": 1
+   },
+   "roomsCalledOff": [
+    "scene2/room.webp at 22%",
+    "scene4/room.webp at 26%"
+   ],
+   "roomsRevalidated": [],
+   "othersWholeTwice": [],
+   "files": 99,
+   "kB": 8607,
+   "errors": []
+  }
+ },
+ "webkit, a private window: design tapped while grow's room is being fetched ahead, then grow": {
+  "before": {
+   "warmingSeenAfterMs": 7027,
+   "warmingWasWhole": false,
+   "rooms": {
+    "scene1/room.webp": 1,
+    "scene2/room.webp": 1,
+    "scene3/room.webp": 1
+   },
+   "roomsCalledOff": [],
+   "roomsRevalidated": [],
+   "othersWholeTwice": [],
+   "files": 92,
+   "kB": 8103,
+   "errors": []
+  },
+  "now": {
+   "warmingSeenAfterMs": null,
+   "warmingWasWhole": false,
+   "rooms": {
+    "scene1/room.webp": 1,
+    "scene3/room.webp": 1,
+    "scene2/room.webp": 1
+   },
+   "roomsCalledOff": [],
+   "roomsRevalidated": [],
+   "othersWholeTwice": [],
+   "files": 100,
+   "kB": 8745,
+   "errors": [
+    "Failed to load resource: resource unavailable"
+   ]
+  }
+ },
+ "chrome, a normal window: design tapped while grow's room is being fetched ahead, then grow": {
+  "before": {
+   "warmingSeenAfterMs": 7090,
+   "warmingWasWhole": false,
+   "rooms": {
+    "scene1/room.webp": 1,
+    "scene2/room.webp": 1,
+    "scene3/room.webp": 1
+   },
+   "roomsCalledOff": [],
+   "roomsRevalidated": [
+    "scene2/room.webp"
+   ],
+   "othersWholeTwice": [],
+   "files": 93,
+   "kB": 8224,
+   "errors": []
+  },
+  "now": {
+   "warmingSeenAfterMs": 17185,
+   "warmingWasWhole": false,
+   "rooms": {
+    "scene1/room.webp": 1,
+    "scene3/room.webp": 1,
+    "scene2/room.webp": 1
+   },
+   "roomsCalledOff": [
+    "scene2/room.webp at 23%",
+    "scene4/room.webp at 20%"
+   ],
+   "roomsRevalidated": [],
+   "othersWholeTwice": [],
+   "files": 98,
+   "kB": 8468,
+   "errors": []
+  }
+ },
+ "chrome, a private window: design tapped while grow's room is being fetched ahead, then grow": {
+  "before": {
+   "warmingSeenAfterMs": 7028,
+   "warmingWasWhole": false,
+   "rooms": {
+    "scene1/room.webp": 1,
+    "scene2/room.webp": 1,
+    "scene3/room.webp": 1
+   },
+   "roomsCalledOff": [],
+   "roomsRevalidated": [
+    "scene2/room.webp"
+   ],
+   "othersWholeTwice": [],
+   "files": 93,
+   "kB": 8224,
+   "errors": []
+  },
+  "now": {
+   "warmingSeenAfterMs": 17176,
+   "warmingWasWhole": false,
+   "rooms": {
+    "scene1/room.webp": 1,
+    "scene3/room.webp": 1,
+    "scene2/room.webp": 1
+   },
+   "roomsCalledOff": [
+    "scene2/room.webp at 23%",
+    "scene4/room.webp at 21%"
+   ],
+   "roomsRevalidated": [],
+   "othersWholeTwice": [],
+   "files": 98,
+   "kB": 8468,
+   "errors": []
+  }
+ },
+ "webkit, a normal window: the browser asks to save data": {
+  "before": {
+   "rooms": {
+    "scene1/room.webp": 1,
+    "scene2/room.webp": 1
+   },
+   "roomsCalledOff": [],
+   "roomsRevalidated": [],
+   "othersWholeTwice": [],
+   "files": 41,
+   "kB": 5338,
+   "errors": []
+  },
+  "now": {
+   "rooms": {
+    "scene1/room.webp": 1
+   },
+   "roomsCalledOff": [],
+   "roomsRevalidated": [],
+   "othersWholeTwice": [],
+   "files": 40,
+   "kB": 4103,
+   "errors": []
+  }
+ },
+ "chrome, a normal window: the browser asks to save data": {
+  "before": {
+   "rooms": {
+    "scene1/room.webp": 1,
+    "scene2/room.webp": 1
+   },
+   "roomsCalledOff": [],
+   "roomsRevalidated": [],
+   "othersWholeTwice": [],
+   "files": 41,
+   "kB": 5340,
+   "errors": []
+  },
+  "now": {
+   "rooms": {
+    "scene1/room.webp": 1
+   },
+   "roomsCalledOff": [],
+   "roomsRevalidated": [],
+   "othersWholeTwice": [],
+   "files": 40,
+   "kB": 4106,
+   "errors": []
   }
  }
 }
