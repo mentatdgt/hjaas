@@ -81,17 +81,30 @@ export class Player {
 
   /** How long ago, in ms of play, the step she is on began (less than 0 while a delay puts her next move off). */
   get since(): number {
-    return this.elapsed;
+    return this.elapsed + this.lag();
   }
 
   /**
-   * What her routine will show, in ms from now (clips.ts, Planned: another actor's blink `avoid` asks). Null while she
-   * reacts, holds still, or is about to change schedules: then nobody knows.
+   * The time since her last frame, as her next one will count it: so that two players read in the same frame
+   * agree, whichever of them has run its own frame yet.
+   */
+  private lag(): number {
+    return this.running ? Math.min(Math.max(0, performance.now() - this.last), MAX_CATCH_UP_MS) : 0;
+  }
+
+  /**
+   * What her routine will show, in ms from now (clips.ts, Planned: another actor's blink `avoid` asks). From the
+   * routine she is playing; or from the one waiting to start, which begins as the step on show ends (her own
+   * routine, once her drawings are in). Null while she reacts or holds still: then nobody knows.
    */
   planned(): Planned | null {
-    const plan = this.from && this.from === this.loop && !this.reacting ? planOf(this.from) : undefined;
+    if (this.reacting) return null;
+    const playing = this.from !== null && this.from === this.loop;
+    const plan = planOf(this.loop);
     if (!plan) return null;
-    return { busy: (stills, from, to) => plan(stills, from + this.elapsed, to + this.elapsed).map(([a, b]) => [a - this.elapsed, b - this.elapsed] as const) };
+    // How long ago the plan's first step began (its step on show), or, for one waiting, less than 0: until this step ends.
+    const at = playing ? this.since : this.since - this.step.ms;
+    return { busy: (stills, from, to) => plan(stills, from + at, to + at).map(([a, b]) => [a - at, b - at] as const) };
   }
 
   start(): void {

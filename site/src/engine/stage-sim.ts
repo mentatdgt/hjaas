@@ -13,6 +13,11 @@ export interface SimActor {
   routine: ClipRoutine;
   /** Her first move is put off by this long. */
   delay?: number;
+  /**
+   * Her routine is only started this long after the others (her drawings came late: the page holds her still
+   * until then). Meanwhile it is waiting, and its plan is read as the player reads a waiting one.
+   */
+  late?: number;
 }
 
 /** One step as shown: from `at` to `at + ms`. */
@@ -40,12 +45,15 @@ export function simulate(actors: readonly SimActor[], ms: number, rnd: Rng, opti
   // Every actor's schedule exists before any is asked for a step (as on the page: all are made, then started).
   for (const actor of actors) {
     const schedule = clipSchedule(actor.frames, actor.routine, rnd, () => true, useStage ? stage(actor.name) : undefined);
-    state.set(actor.name, { schedule, step: { pose: '', ms: 0 }, start: actor.delay ?? 0, shown: [] });
+    state.set(actor.name, { schedule, step: { pose: '', ms: 0 }, start: (actor.delay ?? 0) + (actor.late ?? 0), shown: [] });
   }
+  const late = new Set(actors.filter((actor) => actor.late).map((actor) => actor.name));
   // All are started at 0. A delay is a first step that ends that much later: to the player it began `delay`
   // from now (its elapsed starts below 0), and so it does here.
   now = 0;
-  for (const s of state.values()) {
+  for (const [name, s] of state) {
+    // (Held still until then: her first step is asked for as the hold ends.)
+    if (late.has(name)) continue;
     do s.step = s.schedule.next().value;
     while (s.step.ms <= 0);
     s.shown.push({ pose: s.step.pose, at: s.start, ms: s.step.ms });

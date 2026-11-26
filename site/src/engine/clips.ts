@@ -362,13 +362,20 @@ interface Pending {
   before: string;
 }
 
+/** An `avoid` margin is kept by this much more on the plan, so that it is kept on the screen too. */
+const FRAME_SLACK_MS = 34;
+
 /** How far back a schedule's plan remembers what it has shown (another actor's `avoid` margin reaches back). */
 const PAST_MS = 5000;
 
 /** The end of a pass through the routine, among the moments rolled ahead. */
 const END = Symbol('end of pass');
 
-function* runSchedule(
+/**
+ * The schedule's state is set up at once, so that its plan can be read before it is first asked for a step (a
+ * player that has it waiting: see Player.planned). The steps themselves are rolled only as they are asked for.
+ */
+function runSchedule(
   frames: ClipFrames,
   routine: ClipRoutine,
   rnd: Rng,
@@ -377,7 +384,11 @@ function* runSchedule(
   plan: { busy: Plan },
 ): Generator<Step, never, Signal> {
   const problems = checkClips(frames, routine);
-  if (problems.length) throw new Error(`routine: ${problems.join(' ')}`);
+  // (Thrown when it is first asked for a step, as before.)
+  if (problems.length)
+    return (function* (): Generator<Step, never, Signal> {
+      throw new Error(`routine: ${problems.join(' ')}`);
+    })();
 
   const roll = (ms: Ms): number => (typeof ms === 'number' ? ms : ms[0] + rnd() * (ms[1] - ms[0]));
   const count = (n: Ms): number => (typeof n === 'number' ? Math.round(n) : n[0] + Math.floor(rnd() * (n[1] - n[0] + 1)));
@@ -414,6 +425,8 @@ function* runSchedule(
     pending?: Pending;
     /** (A routine with `avoid`: false for the part of a hold before its blink, and the blink, which the time since the last blink leaves out.) */
     count?: boolean;
+    /** (A routine with `avoid`: the first frame of a blink, checked again as it is shown. `n`: its frames.) */
+    veto?: { rule: BlinkRule; blinkMs: number; pose: string; n: number };
   }
 
   /**
@@ -540,6 +553,42 @@ function* runSchedule(
   const clipFrames = (steps: readonly Step[]): string[] => [...new Set(steps.map((step) => step.pose).filter((pose) => pose !== NOTHING && !(pose in frames.stills)))];
 
   /**
+   * The other actor's stills a blink keeps clear of: `at` ms into the step that is beginning (or a later one),
+   * the first moment at or after it that is clear for the whole blink; null if there is none by `latest`.
+   */
+  const clearFrom = (rule: BlinkRule, blinkMs: number, at: number, latest: number): number | null => {
+    const since = stage?.since() ?? 0;
+    const ways = avoidsOf(rule).flatMap((avoid) => {
+      const other = stage?.other(avoid.actor);
+      // (Two frames more: poses change on a screen's frames, so what is shown may be a frame either side of the plan.)
+      const m = (avoid.margin_ms ?? 0) + FRAME_SLACK_MS;
+      return other ? other.busy(avoid.stills, at - since - m, latest + blinkMs - since + m).map(([a, b]) => [a + since - m, b + since + m] as const) : [];
+    });
+    ways.sort((a, b) => a[0] - b[0]);
+    for (let moved = true; moved; ) {
+      moved = false;
+      for (const [a, b] of ways) {
+        if (at < b && at + blinkMs > a) {
+          at = b;
+          moved = true;
+        }
+      }
+    }
+    return at <= latest ? at : null;
+  };
+
+  /** A blink that was decided, as it is about to be shown: still clear? (The other actor may have started since.) */
+  const veto = (moment: Moment): Moment => {
+    const check = moment.veto!;
+    if (clearFrom(check.rule, check.blinkMs, 0, 0) === 0) return moment;
+    // Not now after all: the pose is held instead, and the blink waits for her next chance.
+    ahead.splice(0, check.n - 1);
+    postponed = true;
+    nextBlink = 0;
+    return { step: { pose: check.pose, ms: check.blinkMs }, home: [] };
+  };
+
+  /**
    * A hold of a routine with `avoid`, as it begins: the moments it is shown as. Its blink comes when it is
    * due, as it would have been rolled; but never while the other actor is on the stills it avoids, or within
    * the margin of them. Then it waits for the first clear moment of this hold, or of the next that may blink.
@@ -549,37 +598,16 @@ function* runSchedule(
     const { rule, frames: blink, blinkMs, lead, fade, before } = moment.pending!;
     const ms = step.ms;
     const pose = step.pose;
-    // The other actor's stills to keep clear of, from `from` to `to` ms into this hold: none in the way, or
-    // the first moment at or after `at` that is clear for the whole blink (null: none before `latest`).
-    const clearFrom = (at: number, latest: number): number | null => {
-      const since = stage?.since() ?? 0;
-      const ways = avoidsOf(rule).flatMap((avoid) => {
-        const other = stage?.other(avoid.actor);
-        const m = avoid.margin_ms ?? 0;
-        return other ? other.busy(avoid.stills, at - since - m, latest + blinkMs - since + m).map(([a, b]) => [a + since - m, b + since + m] as const) : [];
-      });
-      ways.sort((a, b) => a[0] - b[0]);
-      for (let moved = true; moved; ) {
-        moved = false;
-        for (const [a, b] of ways) {
-          if (at < b && at + blinkMs > a) {
-            at = b;
-            moved = true;
-          }
-        }
-      }
-      return at <= latest ? at : null;
-    };
     if (ms >= blinkMs + lead + BLINK_MARGIN_MS && sinceBlink + ms / 2 >= nextBlink) {
       const latest = ms - blinkMs - BLINK_MARGIN_MS;
-      const first = clearFrom(postponed ? lead : lead + rnd() * (latest - lead), latest);
+      const first = clearFrom(rule, blinkMs, postponed ? lead : lead + rnd() * (latest - lead), latest);
       if (first !== null) {
         postponed = false;
         sinceBlink = 0;
         nextBlink = roll(every!);
         return [
           { step: { pose, ms: first, ...fade }, home: [], count: false },
-          ...blink.map((frame) => ({ step: { pose: frame.still, ms: frame.ms }, home: [], count: false })),
+          ...blink.map((frame, i) => ({ step: { pose: frame.still, ms: frame.ms }, home: [], count: false, ...(i === 0 ? { veto: { rule, blinkMs, pose, n: blink.length } } : {}) })),
           { step: { pose, ms: ms - first - blinkMs }, home: [] },
         ];
       }
@@ -587,11 +615,11 @@ function* runSchedule(
     } else if (free && !fade.fade && sinceBlink >= nextBlink && blinksOn(rule, before)) {
       const left = ms - blinkMs;
       // (Here only with something of the hold left after it: the blink is never the step before the next one.)
-      if (left >= BLINK_REST_MS && clearFrom(0, 0) === 0) {
+      if (left >= BLINK_REST_MS && clearFrom(rule, blinkMs, 0, 0) === 0) {
         postponed = false;
         sinceBlink = 0;
         nextBlink = roll(every!);
-        return [...blink.map((frame) => ({ step: { pose: frame.still, ms: frame.ms }, home: [], count: false })), { step: { pose, ms: left }, home: [] }];
+        return [...blink.map((frame, i) => ({ step: { pose: frame.still, ms: frame.ms }, home: [], count: false, ...(i === 0 ? { veto: { rule, blinkMs, pose, n: blink.length } } : {}) })), { step: { pose, ms: left }, home: [] }];
       }
       postponed ||= sinceBlink >= nextBlink;
     }
@@ -621,7 +649,8 @@ function* runSchedule(
 
   // The plan, for another actor's `avoid`: from the step last given out (the one the player is on), the
   // moments rolled ahead, rolling further when asked to look further. (Unknown on the way home to a reaction.)
-  // (And the steps shown before it, a few seconds of them: the margin after a still reaches back.)
+  // (And the steps shown before it, a few seconds of them: the margin after a still reaches back.) Before
+  // its first step (or its first after a reaction), it begins at that step.
   let shown: Step | null = null;
   let homing = false;
   const past: Step[] = [];
@@ -638,7 +667,7 @@ function* runSchedule(
   };
   plan.busy = (stills, from, to) => {
     const found: Array<readonly [number, number]> = [];
-    if (!shown || homing) return found;
+    if (homing) return found;
     let back = 0;
     for (const step of past) {
       back -= step.ms;
@@ -650,7 +679,7 @@ function* runSchedule(
       if (stills.includes(step.pose) && t < to && t + step.ms > from) found.push([t, t + step.ms]);
       t += step.ms;
     };
-    visit(shown);
+    if (shown) visit(shown);
     for (let i = 0; t < to && i < 10_000; i++) {
       if (i >= ahead.length) ahead.push(rolling.next().value);
       const moment = ahead[i];
@@ -659,6 +688,8 @@ function* runSchedule(
     return found;
   };
 
+  return play();
+  function* play(): Generator<Step, never, Signal> {
   for (;;) {
     rollAhead();
     let moment = ahead.shift()!;
@@ -667,6 +698,7 @@ function* runSchedule(
       ahead.unshift(...decide(moment));
       moment = ahead.shift() as Moment;
     }
+    if (moment.veto) moment = veto(moment);
     rollAhead();
     const { step, home } = moment;
     if (deferred && moment.count !== false) sinceBlink += step.ms;
@@ -690,6 +722,7 @@ function* runSchedule(
     past.length = 0;
     rolling = passes();
     ahead = [];
+  }
   }
 }
 

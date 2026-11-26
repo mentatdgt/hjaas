@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 import framesJson from '../../public/assets/scene3/cast/frames.json';
 import routineJson from '../../public/assets/scene3/cast/routine.json';
 import { splitCast, type CastFrames, type CastRoutines } from './cast';
-import { checkClips, clipSchedule, type ClipFrames, type ClipRoutine } from './clips';
+import { checkClips, clipSchedule, type ClipFrames, type ClipRoutine, type Planned } from './clips';
 import { runsOf, simulate, type Shown, type SimActor } from './stage-sim';
 import { seeded } from './steps';
 
@@ -60,6 +60,25 @@ describe('Rachel does not blink while the mum sips', () => {
     }
     expect(sips).toBeGreaterThan(400);
     expect(blinks).toBeGreaterThan(1500);
+  });
+
+  it('also when the mum starts late (her drawings came after Rachel\'s): her waiting routine is read too', () => {
+    let sips = 0;
+    for (let seed = 1; seed <= 40; seed++) {
+      const rnd = seeded(500 + seed);
+      const rachel = actor('rachel');
+      const shown = simulate(
+        [
+          { name: 'rachel', frames: rachel.frames, routine: rachel.routine },
+          { name: 'mum', frames: actor('mum').frames, routine: actor('mum').routine, late: 500 + rnd() * 20_000 },
+        ],
+        60_000,
+        rnd,
+      );
+      expect(clashes(shown.get('rachel')!, shown.get('mum')!), `seed ${seed}`).toBe(0);
+      sips += runsOf(shown.get('mum')!, SIP).length;
+    }
+    expect(sips).toBeGreaterThan(80);
   });
 
   it('which without the rule she would (the check can fail)', () => {
@@ -152,6 +171,28 @@ describe('a blink that waits (made up)', () => {
     }
   });
 
+  it('is checked again as it is shown: if the other actor has started meanwhile and is in the way, it waits', () => {
+    // Nobody is known when her hold begins and its blink is decided; by the blink, the other is sipping.
+    let known = false;
+    const sipping: Planned = { busy: (_stills, from, to) => (from < 5000 && to > -5000 ? [[-5000, 5000]] : []) };
+    const stage = { since: () => 0, other: () => (known ? sipping : null) };
+    const routine = { ...her.routine, blink: { ...(her.routine.blink as object), every_ms: 1 } } as unknown as ClipRoutine;
+    const schedule = clipSchedule(her.frames, routine, seeded(4), () => true, stage);
+    const first = schedule.next().value;
+    expect(first.pose).toBe('A');
+    known = true;
+    const rest = [schedule.next().value, schedule.next().value];
+    // The blink's place is held on her pose: the hold is all hers, its parts adding up to its length.
+    expect(rest.map((step) => step.pose)).toEqual(['A', 'A']);
+    expect(first.ms + rest[0].ms + rest[1].ms).toBeCloseTo(1000);
+    expect(rest[0].ms).toBe(90);
+    // And once it is clear, the blink comes, at the first chance.
+    known = false;
+    let blinked = false;
+    for (let i = 0; i < 6 && !blinked; i++) blinked = schedule.next().value.pose === 'A_blink';
+    expect(blinked).toBe(true);
+  });
+
   it('is ignored without a stage, or while the other actor is not playing a routine', () => {
     const free = simulate([her, other], 60_000, seeded(9), { stage: false });
     const blinks = runsOf(free.get('her')!, ['A_blink']);
@@ -185,5 +226,133 @@ describe('what is wrong with an avoid, in words', () => {
     };
     expect(splitCast(frames, r({ actor: 'waiter', stills: ['M_S1'] }), 1672).problems.join(' ')).toContain('"waiter"');
     expect(splitCast(frames, r({ actor: 'mum', stills: ['M_S9'] }), 1672).problems.join(' ')).toContain('"M_S9"');
+  });
+});
+
+// The same with the real players, on a clock moved a frame at a time (as player.test.ts does), the way scene.ts
+// wires them: Rachel's routine sees the mum through her player. The mum holds still until her drawings are in
+// (a hold schedule), then her routine is set waiting, as stock() does. Now and then a frame is late.
+describe('with the players', () => {
+  it('keeps the rule on the screen: also when the mum starts late, and through late frames', async () => {
+    const { Player } = await import('./player');
+    const { holdSchedule } = await import('./steps');
+    const { vi } = await import('vitest');
+    let clock = 0;
+    let queue: Array<(now: number) => void> = [];
+    vi.stubGlobal('requestAnimationFrame', (frame: (now: number) => void) => queue.push(frame));
+    vi.stubGlobal('cancelAnimationFrame', () => {});
+    const spy = vi.spyOn(performance, 'now').mockImplementation(() => clock);
+    try {
+      let clashed = 0;
+      let unknowable = 0;
+      let stalled = 0;
+      let sips = 0;
+      let blinks = 0;
+      for (let seed = 1; seed <= 12; seed++) {
+        const rnd = seeded(900 + seed);
+        clock = 0;
+        queue = [];
+        const standIn = (rest: string) => {
+          const her = { rest, current: rest, show: (pose: string) => void (her.current = pose), dissolve: (_f: string, pose: string) => void (her.current = pose) };
+          return her as unknown as import('./character').Character;
+        };
+        const shown: Record<string, Shown[]> = { rachel: [], mum: [] };
+        const players: Record<string, InstanceType<typeof Player>> = {};
+        const stage = (name: string) => ({
+          since: () => players[name].since,
+          other: (who: string) => (who === name ? null : players[who]?.planned() ?? null),
+        });
+        const rachel = actor('rachel');
+        const mum = actor('mum');
+        players.rachel = new Player(standIn('R_A1_sketch'), clipSchedule(rachel.frames, rachel.routine, rnd, () => true, stage('rachel')));
+        players.mum = new Player(standIn(''), holdSchedule(''));
+        for (const name of ['rachel', 'mum']) players[name].onPose = (pose, at) => {
+          const list = shown[name];
+          if (list.length) list[list.length - 1].ms = at - list[list.length - 1].at;
+          list.push({ pose, at, ms: 0 });
+        };
+        players.mum.delay(rnd() * 900);
+        players.rachel.start();
+        players.mum.start();
+        const late = 500 + rnd() * 20_000;
+        let switched = false;
+        const stalls: number[] = [];
+        while (clock < 10 * 60_000) {
+          const stall = rnd() < 0.002;
+          clock += stall ? 120 + rnd() * 300 : 16.7;
+          if (stall) stalls.push(clock);
+          if (!switched && clock >= late) {
+            switched = true;
+            players.mum.setLoop(clipSchedule(mum.frames, mum.routine, rnd, () => true, stage('mum')));
+          }
+          const due = queue;
+          queue = [];
+          for (const frame of due) frame(clock);
+        }
+        for (const list of Object.values(shown)) list.pop();
+        // What no schedule can help, set aside by name: a blink shown before the mum's routine existed (her
+        // drawings came after it), and a gap that a late frame made shorter on the screen than in the plan.
+        const sp = runsOf(shown.mum, SIP);
+        for (const [a, b] of runsOf(shown.rachel, [BLINK])) {
+          const hit = sp.find(([x, y]) => a < y + MARGIN && b > x - MARGIN);
+          if (!hit) continue;
+          const [from, to] = hit[1] <= a ? [hit[1], a] : [b, hit[0]];
+          if (a < late) unknowable++;
+          else if (stalls.some((t) => t >= from - 20 && t <= to + 20)) stalled++;
+          else clashed++;
+        }
+        sips += runsOf(shown.mum, SIP).length;
+        blinks += runsOf(shown.rachel, [BLINK]).length;
+      }
+      expect(sips).toBeGreaterThan(250);
+      expect(blinks).toBeGreaterThan(800);
+      expect(clashed).toBe(0);
+      // (Each a few in two hours of play, with a late mum in every run and a frame of 120-420 ms every 8 s or so.)
+      expect(unknowable).toBeLessThanOrEqual(4);
+      expect(stalled).toBeLessThanOrEqual(6);
+    } finally {
+      spy.mockRestore();
+      vi.unstubAllGlobals();
+    }
+  });
+});
+
+describe("a player's plan", () => {
+  it('of a routine waiting to start: it begins as the step on show ends; of one playing: from where its step began', async () => {
+    const { Player } = await import('./player');
+    const { holdSchedule } = await import('./steps');
+    const { vi } = await import('vitest');
+    let clock = 0;
+    let queue: Array<(now: number) => void> = [];
+    vi.stubGlobal('requestAnimationFrame', (frame: (now: number) => void) => queue.push(frame));
+    vi.stubGlobal('cancelAnimationFrame', () => {});
+    const spy = vi.spyOn(performance, 'now').mockImplementation(() => clock);
+    const tick = (ms: number) => {
+      for (let t = 0; t < ms; t += 10) {
+        clock += 10;
+        const due = queue;
+        queue = [];
+        for (const frame of due) frame(clock);
+      }
+    };
+    try {
+      const her = { rest: '', current: '', show: (pose: string) => void (her.current = pose), dissolve: () => {} };
+      const player = new Player(her as unknown as import('./character').Character, holdSchedule(''));
+      player.start();
+      tick(50);
+      // Held still: nobody knows.
+      expect(player.planned()).toBeNull();
+      const mum = actor('mum');
+      player.setLoop(clipSchedule(mum.frames, mum.routine, seeded(1)));
+      // Waiting: the hold has 150 ms left, then 50 ms of nothing, then M_S1 for 220 ms.
+      expect(player.planned()!.busy(['M_S1'], 0, 1000)).toEqual([[200, 420]]);
+      tick(250);
+      // Playing, 50 ms into M_S1.
+      expect(player.since).toBe(50);
+      expect(player.planned()!.busy(['M_S1'], -1000, 300)).toEqual([[-50, 170]]);
+    } finally {
+      spy.mockRestore();
+      vi.unstubAllGlobals();
+    }
   });
 });

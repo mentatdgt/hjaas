@@ -4,13 +4,13 @@
  "margin_ms": 1000,
  "with_rule": {
   "sips": 1600,
-  "blinks": 5133,
-  "blinks_per_minute": 8.56,
+  "blinks": 5104,
+  "blinks_per_minute": 8.51,
   "blinks_during_a_sip": 0,
   "blinks_within_1s_of_a_sip": 0,
-  "mean_gap_between_blinks_away_from_sips_ms": 6111,
-  "gaps_away_from_sips": 3534,
-  "longest_gap_ms": 15778
+  "mean_gap_between_blinks_away_from_sips_ms": 6144,
+  "gaps_away_from_sips": 3506,
+  "longest_gap_ms": 15895
  },
  "before": {
   "sips": 1600,
@@ -22,5 +22,5 @@
   "gaps_away_from_sips": 3004,
   "longest_gap_ms": 12500
  },
- "blink_rate_change": "-8.3% overall; -1% in the mean gap away from sips"
+ "blink_rate_change": "-8.8% overall; -0.4% in the mean gap away from sips"
 }
