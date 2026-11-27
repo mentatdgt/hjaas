@@ -9,3 +9,5 @@ This run was started by the Fable bridge (`wren-inbox/quinn/fable_watch.sh`), no
 - **Don't touch `wren-inbox/`.** It holds Wren's and Quinn's job folders.
 - **No secrets** in commits. **No paid generation jobs** (Higgsfield or similar).
 - **Your final message is the report Wren reads.** Keep it short and in this order: done or not done; branch and commit hash; what you built or changed; checks you ran and their results; anything you couldn't do, or that Wren should look at.
+
+- Subagents: run them in the foreground and wait for their results. This job ends the moment you end your turn (that also kills any subagent still running), so never end your turn while a check or subagent is still running, and never make a progress note your final answer. Short on time: stop starting new checks, write the report with what is and isn't done, commit, push, then end.
