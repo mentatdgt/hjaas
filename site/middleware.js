@@ -79,7 +79,12 @@ function page(status, wrong) {
   });
 }
 
+// The tab and home-screen icons pass the gate: they're only pictures, and some browsers
+// (Chrome on iPhone/iPad) fetch them without the preview cookie, so they'd show a grey globe.
+const OPEN = new Set(['/favicon.ico', '/favicon-16.png', '/favicon-32.png', '/apple-touch-icon.png', '/icon-192.png']);
+
 export default async function middleware(request) {
+  if (OPEN.has(new URL(request.url).pathname)) return undefined;
   const password = process.env.PREVIEW_PASSWORD;
   if (!password) return page(503, false);
   const expected = await token(password);
