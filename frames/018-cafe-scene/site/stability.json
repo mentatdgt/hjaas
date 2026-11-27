@@ -40,54 +40,54 @@
     740
    ]
   },
-  "T1": {
-   "changed_px": 9848,
+  "P1": {
+   "changed_px": 6485,
    "changed_outside_zone_px": 0,
    "changed_bbox": [
-    2355,
-    759,
+    2357,
+    824,
     2476,
     921
    ]
   },
-  "T2": {
-   "changed_px": 10886,
+  "P2": {
+   "changed_px": 6766,
    "changed_outside_zone_px": 0,
    "changed_bbox": [
-    2297,
-    768,
+    2300,
+    782,
     2476,
     921
    ]
   },
-  "R0": {
-   "changed_px": 10579,
+  "P3": {
+   "changed_px": 7706,
    "changed_outside_zone_px": 0,
    "changed_bbox": [
-    2286,
-    774,
+    2278,
+    750,
     2476,
     921
    ]
   },
-  "R1": {
-   "changed_px": 11656,
+  "P4": {
+   "changed_px": 7480,
    "changed_outside_zone_px": 0,
    "changed_bbox": [
-    2235,
-    725,
+    2257,
+    769,
     2476,
     921
    ]
   },
-  "R2": {
-   "changed_px": 3305,
+  "P5": {
+   "changed_px": 6833,
    "changed_outside_zone_px": 0,
    "changed_bbox": [
-    2199,
-    765,
-    2298,
-    830
+    2356,
+    824,
+    2476,
+    921
    ]
   },
   "B_P1": {
@@ -203,60 +203,60 @@
    "p99_diff": 10.0,
    "calm_px": 64123
   },
-  "T1": {
+  "P1": {
    "place_shift_px": [
     0,
     0
    ],
    "residual_dx": -0.0,
-   "residual_dy": 0.01,
-   "mean_diff": 0.81,
-   "p99_diff": 11.0,
-   "calm_px": 56351
-  },
-  "T2": {
-   "place_shift_px": [
-    0,
-    0
-   ],
-   "residual_dx": 0.01,
    "residual_dy": 0.0,
-   "mean_diff": 0.84,
-   "p99_diff": 11.0,
-   "calm_px": 55418
-  },
-  "R0": {
-   "place_shift_px": [
-    0,
-    0
-   ],
-   "residual_dx": 0.01,
-   "residual_dy": 0.0,
-   "mean_diff": 0.79,
+   "mean_diff": 0.76,
    "p99_diff": 10.0,
-   "calm_px": 55241
+   "calm_px": 61384
   },
-  "R1": {
+  "P2": {
    "place_shift_px": [
     0,
     0
    ],
    "residual_dx": 0.0,
    "residual_dy": 0.0,
-   "mean_diff": 0.75,
+   "mean_diff": 0.76,
    "p99_diff": 10.0,
-   "calm_px": 58046
+   "calm_px": 60247
   },
-  "R2": {
+  "P3": {
    "place_shift_px": [
     0,
     0
    ],
-   "residual_dx": -0.01,
-   "residual_dy": -0.01,
-   "mean_diff": 1.23,
-   "p99_diff": 17.0,
-   "calm_px": 64350
+   "residual_dx": -0.0,
+   "residual_dy": 0.0,
+   "mean_diff": 0.75,
+   "p99_diff": 10.0,
+   "calm_px": 60518
+  },
+  "P4": {
+   "place_shift_px": [
+    0,
+    0
+   ],
+   "residual_dx": -0.0,
+   "residual_dy": 0.0,
+   "mean_diff": 0.75,
+   "p99_diff": 10.0,
+   "calm_px": 60771
+  },
+  "P5": {
+   "place_shift_px": [
+    0,
+    0
+   ],
+   "residual_dx": -0.0,
+   "residual_dy": 0.0,
+   "mean_diff": 0.76,
+   "p99_diff": 10.0,
+   "calm_px": 61318
   },
   "B_P1": {
    "place_shift_px": [

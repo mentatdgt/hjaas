@@ -71,11 +71,11 @@
    "stills": [
     "O_1",
     "O_blink",
-    "T1",
-    "T2",
-    "R0",
-    "R1",
-    "R2"
+    "P1",
+    "P2",
+    "P3",
+    "P4",
+    "P5"
    ]
   },
   {
@@ -156,11 +156,11 @@
   "C_3": "child/C_3.png",
   "O_1": "oldman/O_1.png",
   "O_blink": "oldman/O_blink.png",
-  "T1": "oldman/T1.png",
-  "T2": "oldman/T2.png",
-  "R0": "oldman/R0.png",
-  "R1": "oldman/R1.png",
-  "R2": "oldman/R2.png",
+  "P1": "oldman/P1.png",
+  "P2": "oldman/P2.png",
+  "P3": "oldman/P3.png",
+  "P4": "oldman/P4.png",
+  "P5": "oldman/P5.png",
   "B_1": "barista/B_1.png",
   "B_P1": "barista/B_P1.png",
   "B_2_polish": "barista/B_2_polish.png",
