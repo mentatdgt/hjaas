@@ -33,7 +33,7 @@ const manifest = JSON.parse(await readFile(`${pkg}frames.json`, 'utf8'));
 const LAYER = Object.fromEntries(manifest.layers.map((l) => [l.actor, l]));
 /** The poses the brief asks to see, by actor. */
 const WANTED = {
-  oldman: ['O_1', 'T1', 'T2', 'R0', 'R1', 'R2', 'O_blink'],
+  oldman: ['O_1', 'P1', 'P2', 'P3', 'P4', 'P5', 'O_blink'],
   barista: ['B_1', 'B_P1', 'B_2_polish', 'B_P2', 'B_3_polish', 'B_P3', 'B_4_glance'],
   mum: ['M_S1', 'M_S2', 'M_blink_closed'],
   // (Not cat_1 and cat_2: each begins a dissolve (1 s into cat_2; 600 ms into cat_1 since job 024), so read on its first frame it is still mostly the pose before.)
@@ -133,12 +133,12 @@ run.film = async () => {
   const turn = posesOf('oldman');
   order.oldman = { turns: 0, wrong: [] };
   turn.forEach((p, i) => {
-    if (p.pose !== 'T1' || i + 5 >= turn.length) return;
+    if (p.pose !== 'P1' || i + 5 >= turn.length) return;
     order.oldman.turns++;
     const seq = turn.slice(i, i + 6).map((q) => q.pose).join(' ');
-    if (seq !== 'T1 T2 R0 R1 R2 O_1') order.oldman.wrong.push(seq);
+    if (seq !== 'P1 P2 P3 P4 P5 O_1') order.oldman.wrong.push(seq);
   });
-  order.oldman.turnMs = turn.flatMap((p, i) => (p.pose === 'T1' && i + 5 < turn.length ? [turn.slice(i, i + 6).map((q, j, a) => (j ? q.at - a[j - 1].at : 0)).slice(1)] : []));
+  order.oldman.turnMs = turn.flatMap((p, i) => (p.pose === 'P1' && i + 5 < turn.length ? [turn.slice(i, i + 6).map((q, j, a) => (j ? q.at - a[j - 1].at : 0)).slice(1)] : []));
   const circle = ['B_1', 'B_P1', 'B_2_polish', 'B_P2', 'B_3_polish', 'B_P3'];
   const bar = posesOf('barista');
   order.barista = { steps: 0, wrong: [] };
@@ -256,7 +256,7 @@ print(json.dumps({a: [[t, p, ms] for (t, p, ms, f) in TL[a]] for a in TL}))`;
   // The preview's order, as the page's is checked.
   const seq = (actor) => timeline[actor].map(([, p]) => p ?? '');
   const om = seq('oldman');
-  const turns = om.flatMap((p, i) => (p === 'T1' ? [om.slice(i, i + 6).join(' ')] : []));
+  const turns = om.flatMap((p, i) => (p === 'P1' ? [om.slice(i, i + 6).join(' ')] : []));
   say('preview: old man turns', turns);
   const ca = seq('cat');
   say('preview: cat flicks', ca.flatMap((p, i) => (p === 'cat_F2' ? [ca.slice(i - 1, i + 3).join(' ')] : [])));

@@ -264,10 +264,10 @@ describe('the rest of the café (package v10)', () => {
     });
   });
 
-  it('the old man blinks on his reading pose only, and turns his page in five drawn steps, on cuts', () => {
+  it('the old man blinks on his reading pose only, and turns his page behind the paper in five drawn steps, on cuts (v10f)', () => {
     const steps = take('oldman', 3000);
-    const TURN = ['T1', 'T2', 'R0', 'R1', 'R2'];
-    const MS: Record<string, number> = { T1: 130, T2: 140, R0: 130, R1: 170, R2: 160 };
+    const TURN = ['P1', 'P2', 'P3', 'P4', 'P5'];
+    const MS: Record<string, number> = { P1: 150, P2: 200, P3: 220, P4: 200, P5: 150 };
     let turns = 0;
     let blinks = 0;
     let readSince = 0;
@@ -281,7 +281,7 @@ describe('the rest of the café (package v10)', () => {
         expect(step.ms).toBe(100);
         expect([steps[i - 1].pose, steps[i + 1]?.pose ?? 'O_1']).toEqual(['O_1', 'O_1']);
       }
-      if (step.pose === 'T1' && i + 5 < steps.length) {
+      if (step.pose === 'P1' && i + 5 < steps.length) {
         turns++;
         expect(steps.slice(i, i + 5).map((each) => [each.pose, each.ms])).toEqual(TURN.map((pose) => [pose, MS[pose]]));
         expect(steps[i + 5]?.pose ?? 'O_1').toBe('O_1');
@@ -299,6 +299,10 @@ describe('the rest of the café (package v10)', () => {
     expect(gaps[Math.floor(gaps.length * 0.05)]).toBeGreaterThan(4500);
     expect(gaps[Math.floor(gaps.length * 0.95)]).toBeLessThan(7200);
     expect(steps.some((step) => step.pose === 'O_2' || step.pose === 'O_3')).toBe(false);
+    // v10d's turn (his hand round the front of the paper, the page falling on our side) is gone, stills and all.
+    const OLD = ['T1', 'T2', 'R0', 'R1', 'R2'];
+    expect(steps.some((step) => OLD.includes(step.pose))).toBe(false);
+    expect(Object.keys(actor('oldman').frames.stills).filter((still) => OLD.includes(still))).toEqual([]);
   });
 
   it('the cat rests on cat_1, tail in: her routine opens on a short cat_1 hold before the flick (job 024)', () => {
