@@ -2,14 +2,17 @@
 
 export interface ContactPayload {
   name: string;
-  email: string;
+  /** At least one of email and phone is there; a missing one is left out, never sent empty. */
+  email?: string;
+  /** E.164, "+6598881135". */
+  phone?: string;
   needs: string[];
   message: string;
   /** The honeypot: empty from a visitor, who never sees the field. Only api/contact.js judges it. */
   website: string;
 }
 
-export const CONTACT_LIMITS = { name: 100, email: 254, needs: 500, message: 4000 } as const;
+export const CONTACT_LIMITS = { name: 100, email: 254, phone: 20, needs: 500, message: 4000 } as const;
 const CONTACT_TIMEOUT_MS = 15_000;
 
 /** Length across the selected values, including a separator between choices. */
@@ -19,7 +22,8 @@ export function needsLength(needs: readonly string[]): number {
 
 function withinLimits(payload: ContactPayload): boolean {
   return payload.name.length <= CONTACT_LIMITS.name
-    && payload.email.length <= CONTACT_LIMITS.email
+    && (payload.email ?? '').length <= CONTACT_LIMITS.email
+    && (payload.phone ?? '').length <= CONTACT_LIMITS.phone
     && payload.message.length <= CONTACT_LIMITS.message
     && needsLength(payload.needs) <= CONTACT_LIMITS.needs;
 }

@@ -94,7 +94,7 @@ const run = {
           if (state === '50-found') {
             await openForm(page); await jpg(page, `${name}-form-1-open`);
             const err = async (n) => page.evaluate((k) => { const e = document.querySelector(`#hj-${k}-err`); return e.hidden ? null : e.textContent; }, n);
-            const errs = async () => ({ name: await err('name'), email: await err('email'), message: await err('message') });
+            const errs = async () => ({ name: await err('name'), reply: await err('reply'), email: await err('email'), phone: await err('phone'), message: await err('message') });
             await press(page, options); await wait(300); r.empty = await errs();
             await page.evaluate(() => (document.querySelector('.hj-sheet-body').scrollTop = 0)); await wait(100); await jpg(page, `${name}-form-2-missing`);
             await page.fill('#hj-name', 'Wren'); await page.fill('#hj-email', 'wren@example'); await page.fill('#hj-message', 'A shelf for the mushroom lab.');

@@ -1,0 +1,516 @@
+{
+  "csp": "script-src 'self'",
+  "iphone-webkit": {
+    "skipped": "browserType.launch: Executable doesn't exist at ~/Library/Caches/ms-playwright/webkit-2388/pw_run.sh"
+  },
+  "iphone-chrome-emulated": {
+    "viewport": {
+      "width": 390,
+      "height": 664
+    },
+    "phoneChunkBeforeOpening": [],
+    "phoneChunkAfterOpening": [
+      "phone-BTBmOwS7.js"
+    ],
+    "layout": {
+      "sheet": {
+        "x": 0,
+        "y": 93,
+        "w": 390,
+        "h": 571,
+        "right": 390
+      },
+      "country": {
+        "x": 18,
+        "y": 334,
+        "w": 121,
+        "h": 46,
+        "right": 139
+      },
+      "phone": {
+        "x": 147,
+        "y": 334,
+        "w": 225,
+        "h": 46,
+        "right": 372
+      },
+      "oneRow": true,
+      "rowInsideSheet": true,
+      "face": "SG +65",
+      "faceFits": true,
+      "selectValue": "SG",
+      "selectText": "Singapore +65",
+      "firstOptions": [
+        "SG: Singapore +65",
+        "AF: Afghanistan +93",
+        "AX: Åland Islands +358",
+        "AL: Albania +355"
+      ],
+      "options": 245,
+      "emptyOption": false,
+      "placeholders": {
+        "hj-name": {
+          "text": "Timothée Chalamet",
+          "textWidth": 147,
+          "room": 304,
+          "fits": true
+        },
+        "hj-email": {
+          "text": "timothee@gmail.com",
+          "textWidth": 157,
+          "room": 304,
+          "fits": true
+        },
+        "hj-phone": {
+          "text": "9888 1135",
+          "textWidth": 72,
+          "room": 175,
+          "fits": true
+        },
+        "hj-message": {
+          "text": "The space, the timeline, the feeling you're after. Rough is fine.",
+          "textWidth": 0,
+          "room": 328,
+          "fits": true
+        }
+      },
+      "fontSizes": {
+        "hj-name": "16px",
+        "hj-email": "16px",
+        "hj-country": "16px",
+        "hj-phone": "16px",
+        "hj-message": "16px"
+      },
+      "allAtLeast16": true,
+      "placeholderColour": "rgb(117, 111, 100)",
+      "emailBorder": "rgb(133, 128, 115)",
+      "faceBorder": "rgb(133, 128, 115)"
+    },
+    "tabOrder": [
+      "hj-name",
+      "hj-email",
+      "hj-country",
+      "hj-phone",
+      "need:Building or renovating",
+      "need:Mushrooms",
+      "need:Designing a space",
+      "need:Production for a shoot",
+      "need:Designing a set",
+      "need:Something else",
+      "hj-message",
+      "hj-send",
+      "BODY"
+    ],
+    "tabOrderOk": true,
+    "scaleOnFocus": {
+      "hj-email": 1,
+      "hj-country": 1,
+      "hj-phone": 1
+    },
+    "groupError": {
+      "errors": {
+        "hj-name-err": null,
+        "hj-reply-err": "Add an email or a phone number so I can reply.",
+        "hj-email-err": null,
+        "hj-phone-err": null,
+        "hj-message-err": null
+      },
+      "focus": "hj-email",
+      "invalid": [
+        "true",
+        "true"
+      ]
+    },
+    "badNumber": {
+      "hj-name-err": null,
+      "hj-reply-err": null,
+      "hj-email-err": null,
+      "hj-phone-err": "That number doesn't look right for Singapore.",
+      "hj-message-err": null
+    },
+    "pasted": {
+      "country": "GB",
+      "phone": "7911 123456",
+      "face": "GB +44",
+      "phoneError": null
+    },
+    "phoneOnlySend": {
+      "posted": [
+        {
+          "name": "Wren",
+          "phone": "+6598881135",
+          "needs": [],
+          "message": "A shelf for the mushroom lab, please."
+        }
+      ],
+      "toResend": [
+        {
+          "subject": "HJaaS: Wren",
+          "text": "Name: Wren\nPhone: +65 9888 1135\nNeeds: (none picked)\n\nA shelf for the mushroom lab, please.\n"
+        }
+      ],
+      "says": "I'll get back to you on +65 9888 1135."
+    },
+    "afterReset": {
+      "country": "SG",
+      "face": "SG +65",
+      "phone": "",
+      "errorsHidden": true
+    },
+    "bothSend": {
+      "posted": [
+        {
+          "name": "Wren",
+          "email": "wren@example.org",
+          "phone": "+6598881135",
+          "needs": [],
+          "message": "A shelf for the mushroom lab, please."
+        }
+      ],
+      "replyTo": "wren@example.org",
+      "says": "I'll reply to wren@example.org."
+    },
+    "consoleErrors": []
+  },
+  "ipad-webkit": {
+    "skipped": "browserType.launch: Executable doesn't exist at ~/Library/Caches/ms-playwright/webkit-2388/pw_run.sh"
+  },
+  "ipad-chrome-emulated": {
+    "viewport": {
+      "width": 810,
+      "height": 1080
+    },
+    "phoneChunkBeforeOpening": [],
+    "phoneChunkAfterOpening": [
+      "phone-BTBmOwS7.js"
+    ],
+    "layout": {
+      "sheet": {
+        "x": 33,
+        "y": 81,
+        "w": 418,
+        "h": 460,
+        "right": 451
+      },
+      "country": {
+        "x": 57,
+        "y": 322,
+        "w": 121,
+        "h": 46,
+        "right": 178
+      },
+      "phone": {
+        "x": 186,
+        "y": 322,
+        "w": 241,
+        "h": 46,
+        "right": 427
+      },
+      "oneRow": true,
+      "rowInsideSheet": true,
+      "face": "SG +65",
+      "faceFits": true,
+      "selectValue": "SG",
+      "selectText": "Singapore +65",
+      "firstOptions": [
+        "SG: Singapore +65",
+        "AF: Afghanistan +93",
+        "AX: Åland Islands +358",
+        "AL: Albania +355"
+      ],
+      "options": 245,
+      "emptyOption": false,
+      "placeholders": {
+        "hj-name": {
+          "text": "Timothée Chalamet",
+          "textWidth": 147,
+          "room": 320,
+          "fits": true
+        },
+        "hj-email": {
+          "text": "timothee@gmail.com",
+          "textWidth": 157,
+          "room": 320,
+          "fits": true
+        },
+        "hj-phone": {
+          "text": "9888 1135",
+          "textWidth": 72,
+          "room": 191,
+          "fits": true
+        },
+        "hj-message": {
+          "text": "The space, the timeline, the feeling you're after. Rough is fine.",
+          "textWidth": 0,
+          "room": 344,
+          "fits": true
+        }
+      },
+      "fontSizes": {
+        "hj-name": "16px",
+        "hj-email": "16px",
+        "hj-country": "16px",
+        "hj-phone": "16px",
+        "hj-message": "16px"
+      },
+      "allAtLeast16": true,
+      "placeholderColour": "rgb(117, 111, 100)",
+      "emailBorder": "rgb(133, 128, 115)",
+      "faceBorder": "rgb(133, 128, 115)"
+    },
+    "tabOrder": [
+      "hj-name",
+      "hj-email",
+      "hj-country",
+      "hj-phone",
+      "need:Building or renovating",
+      "need:Mushrooms",
+      "need:Designing a space",
+      "need:Production for a shoot",
+      "need:Designing a set",
+      "need:Something else",
+      "hj-message",
+      "hj-send",
+      "BODY"
+    ],
+    "tabOrderOk": true,
+    "scaleOnFocus": {
+      "hj-email": 1,
+      "hj-country": 1,
+      "hj-phone": 1
+    },
+    "groupError": {
+      "errors": {
+        "hj-name-err": null,
+        "hj-reply-err": "Add an email or a phone number so I can reply.",
+        "hj-email-err": null,
+        "hj-phone-err": null,
+        "hj-message-err": null
+      },
+      "focus": "hj-email",
+      "invalid": [
+        "true",
+        "true"
+      ]
+    },
+    "badNumber": {
+      "hj-name-err": null,
+      "hj-reply-err": null,
+      "hj-email-err": null,
+      "hj-phone-err": "That number doesn't look right for Singapore.",
+      "hj-message-err": null
+    },
+    "pasted": {
+      "country": "GB",
+      "phone": "7911 123456",
+      "face": "GB +44",
+      "phoneError": null
+    },
+    "phoneOnlySend": {
+      "posted": [
+        {
+          "name": "Wren",
+          "phone": "+6598881135",
+          "needs": [],
+          "message": "A shelf for the mushroom lab, please."
+        }
+      ],
+      "toResend": [
+        {
+          "subject": "HJaaS: Wren",
+          "text": "Name: Wren\nPhone: +65 9888 1135\nNeeds: (none picked)\n\nA shelf for the mushroom lab, please.\n"
+        }
+      ],
+      "says": "I'll get back to you on +65 9888 1135."
+    },
+    "afterReset": {
+      "country": "SG",
+      "face": "SG +65",
+      "phone": "",
+      "errorsHidden": true
+    },
+    "bothSend": {
+      "posted": [
+        {
+          "name": "Wren",
+          "email": "wren@example.org",
+          "phone": "+6598881135",
+          "needs": [],
+          "message": "A shelf for the mushroom lab, please."
+        }
+      ],
+      "replyTo": "wren@example.org",
+      "says": "I'll reply to wren@example.org."
+    },
+    "consoleErrors": []
+  },
+  "desktop-chrome": {
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "phoneChunkBeforeOpening": [],
+    "phoneChunkAfterOpening": [
+      "phone-BTBmOwS7.js"
+    ],
+    "layout": {
+      "sheet": {
+        "x": 201,
+        "y": 81,
+        "w": 418,
+        "h": 651,
+        "right": 619
+      },
+      "country": {
+        "x": 225,
+        "y": 322,
+        "w": 121,
+        "h": 46,
+        "right": 346
+      },
+      "phone": {
+        "x": 354,
+        "y": 322,
+        "w": 241,
+        "h": 46,
+        "right": 595
+      },
+      "oneRow": true,
+      "rowInsideSheet": true,
+      "face": "SG +65",
+      "faceFits": true,
+      "selectValue": "SG",
+      "selectText": "Singapore +65",
+      "firstOptions": [
+        "SG: Singapore +65",
+        "AF: Afghanistan +93",
+        "AX: Åland Islands +358",
+        "AL: Albania +355"
+      ],
+      "options": 245,
+      "emptyOption": false,
+      "placeholders": {
+        "hj-name": {
+          "text": "Timothée Chalamet",
+          "textWidth": 147,
+          "room": 320,
+          "fits": true
+        },
+        "hj-email": {
+          "text": "timothee@gmail.com",
+          "textWidth": 157,
+          "room": 320,
+          "fits": true
+        },
+        "hj-phone": {
+          "text": "9888 1135",
+          "textWidth": 72,
+          "room": 191,
+          "fits": true
+        },
+        "hj-message": {
+          "text": "The space, the timeline, the feeling you're after. Rough is fine.",
+          "textWidth": 0,
+          "room": 344,
+          "fits": true
+        }
+      },
+      "fontSizes": {
+        "hj-name": "16px",
+        "hj-email": "16px",
+        "hj-country": "16px",
+        "hj-phone": "16px",
+        "hj-message": "16px"
+      },
+      "allAtLeast16": true,
+      "placeholderColour": "rgb(117, 111, 100)",
+      "emailBorder": "rgb(133, 128, 115)",
+      "faceBorder": "rgb(133, 128, 115)"
+    },
+    "tabOrder": [
+      "hj-name",
+      "hj-email",
+      "hj-country",
+      "hj-phone",
+      "need:Building or renovating",
+      "need:Mushrooms",
+      "need:Designing a space",
+      "need:Production for a shoot",
+      "need:Designing a set",
+      "need:Something else",
+      "hj-message",
+      "hj-send",
+      "BODY"
+    ],
+    "tabOrderOk": true,
+    "scaleOnFocus": {
+      "hj-email": 1,
+      "hj-country": 1,
+      "hj-phone": 1
+    },
+    "groupError": {
+      "errors": {
+        "hj-name-err": null,
+        "hj-reply-err": "Add an email or a phone number so I can reply.",
+        "hj-email-err": null,
+        "hj-phone-err": null,
+        "hj-message-err": null
+      },
+      "focus": "hj-email",
+      "invalid": [
+        "true",
+        "true"
+      ]
+    },
+    "badNumber": {
+      "hj-name-err": null,
+      "hj-reply-err": null,
+      "hj-email-err": null,
+      "hj-phone-err": "That number doesn't look right for Singapore.",
+      "hj-message-err": null
+    },
+    "pasted": {
+      "country": "GB",
+      "phone": "7911 123456",
+      "face": "GB +44",
+      "phoneError": null
+    },
+    "phoneOnlySend": {
+      "posted": [
+        {
+          "name": "Wren",
+          "phone": "+6598881135",
+          "needs": [],
+          "message": "A shelf for the mushroom lab, please."
+        }
+      ],
+      "toResend": [
+        {
+          "subject": "HJaaS: Wren",
+          "text": "Name: Wren\nPhone: +65 9888 1135\nNeeds: (none picked)\n\nA shelf for the mushroom lab, please.\n"
+        }
+      ],
+      "says": "I'll get back to you on +65 9888 1135."
+    },
+    "afterReset": {
+      "country": "SG",
+      "face": "SG +65",
+      "phone": "",
+      "errorsHidden": true
+    },
+    "bothSend": {
+      "posted": [
+        {
+          "name": "Wren",
+          "email": "wren@example.org",
+          "phone": "+6598881135",
+          "needs": [],
+          "message": "A shelf for the mushroom lab, please."
+        }
+      ],
+      "replyTo": "wren@example.org",
+      "says": "I'll reply to wren@example.org."
+    },
+    "consoleErrors": []
+  }
+}

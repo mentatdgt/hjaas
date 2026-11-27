@@ -26,7 +26,10 @@ const ask = (body, headers = {}, ip = '203.0.113.1') => contact.fetch(new Reques
 
 async function handler() {
   const good = { name: 'Wren', email: 'wren@example.org', needs: ['Building or renovating', 'Designing a set'], message: 'A shelf, please.\nNo hurry.', website: '' };
+  const { email, ...noEmail } = good;
   const cases = [['good', good], ['no needs', { ...good, needs: [] }], ['honeypot', { ...good, website: 'https://spam.example' }],
+    ['phone only', { ...noEmail, phone: '+6598881135' }], ['email and phone', { ...good, phone: '+6598881135' }],
+    ['neither email nor phone', noEmail], ['bad phone', { ...noEmail, phone: '+6512345678' }],
     ['bad email', { ...good, email: 'wren@example.org\r\nBcc: other@example.org' }], ['other site', good, { Origin: 'https://example.org' }]];
   const results = [];
   for (const [name, body, headers] of cases) {

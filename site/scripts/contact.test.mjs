@@ -82,6 +82,52 @@ it('takes no needs, trims, evens out line breaks, and an older page without the 
   });
 });
 
+const mailFor = async (body) => {
+  await expectAnswer(await contact(request(body)), 200);
+  expect(resend).toHaveBeenCalledOnce();
+  return JSON.parse(resend.mock.calls[0][1].body);
+};
+
+it('takes an email only: replies go to it, and there is no Phone line', async () => {
+  const mail = await mailFor(valid);
+  expect(mail.reply_to).toBe('wren@example.org');
+  expect(mail.text).not.toMatch(/Phone|\(none\)/);
+});
+
+it('takes a phone only: no reply_to, and the number in the mail written the international way', async () => {
+  const { email, ...phoneOnly } = valid;
+  const mail = await mailFor({ ...phoneOnly, phone: '+6598881135' });
+  expect(mail).not.toHaveProperty('reply_to');
+  expect(mail.text).toBe('Name: Wren\nPhone: +65 9888 1135\nNeeds: Building or renovating, Designing a set\n\nA shelf, please.\nNo hurry.\n');
+});
+
+it('takes both: replies go to the email, and the mail has both lines', async () => {
+  const mail = await mailFor({ ...valid, phone: '+447911123456' });
+  expect(mail.reply_to).toBe('wren@example.org');
+  expect(mail.text).toBe('Name: Wren\nEmail: wren@example.org\nPhone: +44 7911 123456\nNeeds: Building or renovating, Designing a set\n\nA shelf, please.\nNo hurry.\n');
+});
+
+it.each([
+  ['neither email nor phone', { email: undefined }],
+  ['a blank phone', { email: undefined, phone: '' }],
+  ['a phone that is not text', { email: undefined, phone: 6598881135 }],
+  ['a phone that is no real number', { email: undefined, phone: '+6512345678' }],
+  ['a phone with a line break', { email: undefined, phone: '+6598881135\nBcc: other@example.org' }],
+  ['a phone ending in a line break', { email: undefined, phone: '+6598881135\n' }],
+  ['a phone not in E.164 (spaces)', { email: undefined, phone: '+65 9888 1135' }],
+  ['a phone not in E.164 (no +)', { email: undefined, phone: '6598881135' }],
+  ['a phone not in E.164 (national)', { email: undefined, phone: '98881135' }],
+  ['a phone of 16 digits', { email: undefined, phone: '+6598881135123456' }],
+  ['a phone over 20 characters', { email: undefined, phone: `+65${'9'.repeat(18)}` }],
+  ['a good email with a bad phone', { phone: '+6512345678' }],
+  ['a good phone with a bad email', { email: 'wren@example', phone: '+6598881135' }],
+  ['a good phone with a blank email', { email: '', phone: '+6598881135' }],
+])('refuses %s', (_, overrides) => {
+  const body = { ...valid, ...overrides };
+  for (const key of Object.keys(body)) if (body[key] === undefined) delete body[key];
+  return expectRefused(body);
+});
+
 it.each(NEEDS)('takes the form\'s choice "%s", and puts it in the mail', async (need) => {
   await expectAnswer(await contact(request({ ...valid, needs: [need] })), 200);
   expect(JSON.parse(resend.mock.calls[0][1].body).text).toContain(`\nNeeds: ${need}\n`);

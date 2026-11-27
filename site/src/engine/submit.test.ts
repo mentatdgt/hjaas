@@ -17,6 +17,7 @@ afterEach(() => {
 it.each<Partial<ContactPayload>>([
   { name: 'a'.repeat(101) },
   { email: 'a'.repeat(255) },
+  { phone: `+${'1'.repeat(20)}` },
   { needs: ['a'.repeat(250), 'b'.repeat(250)] },
   { message: 'a'.repeat(4001) },
 ])('rejects an oversized payload field before starting a request', async (overrides) => {
