@@ -1,7 +1,9 @@
 // Job 023b, the brief's schedule check (reviews/cafe-round10-build.md): the engine's own schedules (splitCast,
 // clipSchedule) for Rachel and the mum on one clock (src/engine/stage-sim.ts), 30 minutes of play from each of 20
 // starts, the mum staggered 0-0.9 s as on the page. With the rule (the package as built) and before it (the same
-// routine without "avoid"). Writes qa/cafe-round10/schedule.json. Skipped by `npm test`; run it with
+// routine without "avoid"). Job 025 adds the old man: on the same 20 starts, never a blink during his page turn
+// (P1-P5), nor one cut straight into or out of it. Writes qa/cafe-round10/schedule.json (HJ_SCHEDULE_OUT, relative
+// to qa/tools/, to write it elsewhere). Skipped by `npm test`; run it with
 //
 //   HJ_SCHEDULE=1 npx vitest run qa/tools/cafe-schedule.test.ts
 import { writeFileSync } from 'node:fs';
@@ -70,8 +72,34 @@ describe.runIf(process.env.HJ_SCHEDULE)('the café schedule over 30 minutes', ()
     const w = result.with_rule as Record<string, number>;
     const b = result.before as Record<string, number>;
     result.blink_rate_change = `${Math.round((w.blinks / b.blinks - 1) * 1000) / 10}% overall; ${Math.round((w.mean_gap_between_blinks_away_from_sips_ms / b.mean_gap_between_blinks_away_from_sips_ms - 1) * 1000) / 10}% in the mean gap away from sips`;
-    writeFileSync(new URL('../cafe-round10/schedule.json', import.meta.url), `${JSON.stringify(result, null, 1)}\n`);
+    // The old man (job 025): his blink against his turn, on his own schedule (nothing else moves it).
+    const TURN = ['P1', 'P2', 'P3', 'P4', 'P5'];
+    const om = { turns: 0, blinks: 0, blinks_during_a_turn: 0, blinks_touching_a_turn: 0, turn_ms: new Set<number>(), turn_gap_ms: [Infinity, 0] };
+    for (let seed = 1; seed <= STARTS; seed++) {
+      const oldman = actor('oldman');
+      const shown = simulate([{ name: 'oldman', frames: oldman.frames, routine: oldman.routine }], MINUTES * 60_000, seeded(1000 + seed)).get('oldman')!;
+      const turns = runsOf(shown, TURN);
+      const blinks = runsOf(shown, ['O_blink']);
+      om.turns += turns.length;
+      om.blinks += blinks.length;
+      // (A turn the 30 minutes cut short is not timed.)
+      for (const [a, e] of turns) if (e < MINUTES * 60_000 - 1) om.turn_ms.add(Math.round(e - a));
+      for (let i = 1; i < turns.length; i++) {
+        const gap = turns[i][0] - turns[i - 1][0];
+        om.turn_gap_ms = [Math.min(om.turn_gap_ms[0], gap), Math.max(om.turn_gap_ms[1], gap)];
+      }
+      for (const [a, e] of blinks) {
+        if (turns.some(([x, y]) => a < y && e > x)) om.blinks_during_a_turn++;
+        else if (turns.some(([x, y]) => Math.abs(a - y) < 1e-6 || Math.abs(e - x) < 1e-6)) om.blinks_touching_a_turn++;
+      }
+    }
+    result.oldman = { ...om, turn_ms: [...om.turn_ms], turn_gap_ms: om.turn_gap_ms.map(Math.round) };
+    writeFileSync(new URL(process.env.HJ_SCHEDULE_OUT ?? '../cafe-round10/schedule.json', import.meta.url), `${JSON.stringify(result, null, 1)}\n`);
     console.log(JSON.stringify(result, null, 1));
     expect(w.blinks_during_a_sip + w.blinks_within_1s_of_a_sip).toBe(0);
+    expect(om.turns).toBeGreaterThan(1000);
+    expect(om.blinks).toBeGreaterThan(1000);
+    expect(om.blinks_during_a_turn + om.blinks_touching_a_turn).toBe(0);
+    expect([...om.turn_ms]).toEqual([920]);
   });
 });
