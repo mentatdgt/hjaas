@@ -1195,6 +1195,7 @@ a.hj-logo:active {
   transition: border-color 140ms ease;
 }
 
+.hj-field input::placeholder,
 .hj-field textarea::placeholder {
   color: #756f64;
   opacity: 1;

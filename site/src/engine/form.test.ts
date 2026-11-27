@@ -139,7 +139,7 @@ it('offers the six choices, in tab order, and says what the brief says', () => {
   expect(boxes.map((box) => box[1])).toEqual(labels);
   expect(boxes.map((box) => box[2])).toEqual(labels);
   for (const words of [
-    'tabindex="-1">Hi! What have you got in mind?</h2>', '>Your name</label>', '>Where should I reply?</label>',
+    'tabindex="-1">Hi! What have you got in mind?</h2>', '>Your name</label>', '>Email or phone number</label>', 'placeholder="Timothée Chalamet"', 'placeholder="timothee@gmail.com or +65 9888 1135"',
     '<legend>What can I help with? <span class="hj-hint">Pick any</span></legend>', '>Tell me about it</label>',
     'placeholder="The space, the timeline, the feeling you\'re after. Rough is fine."', '>Send it</span>',
     '>Got it, thank you.</h3>', '>Back to the scenes</span>', 'aria-label="Close"',
@@ -152,11 +152,14 @@ it('asks for what is missing, and says when a message did not go through', async
   sendForm();
   const said = (name: string): string => dialog.querySelector(`#hj-${name}-err`).textContent;
   expect(said('name')).toBe('What should I call you?');
-  expect(said('email')).toBe('I need an email to reply to.');
+  expect(said('email')).toBe('I need an email or phone number to reply to.');
   expect(said('message')).toBe('A few words, so I know where to start.');
   node.querySelector('email').value = 'wren@example';
   sendForm();
-  expect(said('email')).toBe('That email looks a bit off. Typo?');
+  expect(said('email')).toBe("That doesn't look like an email or phone number. Typo?");
+  node.querySelector('email').value = '12345';
+  sendForm();
+  expect(said('email')).toBe("That doesn't look like an email or phone number. Typo?");
   expect(submitContact).not.toHaveBeenCalled();
 
   Object.entries({ name: 'Wren', email: 'wren@example.org', message: 'Hello' }).forEach(([name, value]) => (node.querySelector(name).value = value));

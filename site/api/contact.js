@@ -22,6 +22,9 @@ const RATE_WINDOW_MS = 60_000;
 
 // One plain address: no spaces, line breaks or control characters, nothing that could name a second one.
 const EMAIL = /^[^\s\p{C}@<>()[\]\\,;:"]+@[^\s\p{C}@<>()[\]\\,;:"]+\.[^\s\p{C}@<>()[\]\\,;:".]{2,}$/u;
+// Or a phone number: digits with optional +, spaces, dashes, dots or brackets, 7 to 15 digits (same rule as the form).
+const PHONE = /^\+?[\d ().-]{7,24}$/;
+const isPhone = (value) => PHONE.test(value) && (value.match(/\d/g) || []).length >= 7 && (value.match(/\d/g) || []).length <= 15;
 const NOT_ONE_LINE = /[\p{Cc}\p{Zl}\p{Zp}]/u;
 
 function answer(status, headers = {}) {
@@ -88,7 +91,7 @@ function check(data) {
   const message = text(data.message, LIMITS.message);
   const { needs } = data;
   if (!name || !email || !message || !Array.isArray(needs)) return null;
-  if (NOT_ONE_LINE.test(data.name) || NOT_ONE_LINE.test(data.email) || !EMAIL.test(email)) return null;
+  if (NOT_ONE_LINE.test(data.name) || NOT_ONE_LINE.test(data.email) || !(EMAIL.test(email) || isPhone(email))) return null;
   if (!needs.every((need) => NEEDS.includes(need)) || needs.join(' ').length > LIMITS.needs) return null;
   return { name, email, needs, message: message.replace(/\r\n?/g, '\n') };
 }
@@ -104,9 +107,9 @@ async function send({ name, email, needs, message }, { key, from, to }) {
       body: JSON.stringify({
         from,
         to: [to],
-        reply_to: email,
+        ...(EMAIL.test(email) ? { reply_to: email } : {}),
         subject: `HJaaS: ${name}`,
-        text: `Name: ${name}\nEmail: ${email}\nNeeds: ${needs.join(', ') || '(none picked)'}\n\n${message}\n`,
+        text: `Name: ${name}\n${EMAIL.test(email) ? 'Email' : 'Phone'}: ${email}\nNeeds: ${needs.join(', ') || '(none picked)'}\n\n${message}\n`,
       }),
       signal: request.signal,
     });

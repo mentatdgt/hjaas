@@ -8,13 +8,20 @@ const CLOSE_ICON = `<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false
 const TICK_ICON = `<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.6 8.4l2.9 2.9 5.9-6.2"/></svg>`;
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+// A phone number: digits with optional +, spaces, dashes, dots or brackets, 7 to 15 digits (same rule as api/contact.js).
+const PHONE = /^\+?[\d ().-]{7,24}$/;
+const isPhone = (value: string): boolean => PHONE.test(value) && (value.match(/\d/g)?.length ?? 0) >= 7 && (value.match(/\d/g)?.length ?? 0) <= 15;
 
 type FieldName = 'name' | 'email' | 'message';
 
 const RULES: Record<FieldName, (value: string) => string> = {
   name: (value) => (value ? '' : 'What should I call you?'),
   email: (value) =>
-    !value ? 'I need an email to reply to.' : EMAIL.test(value) ? '' : 'That email looks a bit off. Typo?',
+    !value
+      ? 'I need an email or phone number to reply to.'
+      : EMAIL.test(value) || isPhone(value)
+        ? ''
+        : "That doesn't look like an email or phone number. Typo?",
   message: (value) => (value ? '' : 'A few words, so I know where to start.'),
 };
 
@@ -59,12 +66,12 @@ export class ContactForm {
             <p class="hj-alert hj-notice" role="status" hidden></p>
             <div class="hj-field">
               <label for="hj-name">Your name</label>
-              <input id="hj-name" name="name" type="text" autocomplete="name" autocapitalize="words" maxlength="${CONTACT_LIMITS.name}" required aria-describedby="hj-name-err" />
+              <input id="hj-name" name="name" type="text" placeholder="Timothée Chalamet" autocomplete="name" autocapitalize="words" maxlength="${CONTACT_LIMITS.name}" required aria-describedby="hj-name-err" />
               <p class="hj-err" id="hj-name-err" aria-live="polite" hidden></p>
             </div>
             <div class="hj-field">
-              <label for="hj-email">Where should I reply?</label>
-              <input id="hj-email" name="email" type="email" autocomplete="email" inputmode="email" spellcheck="false" maxlength="${CONTACT_LIMITS.email}" required aria-describedby="hj-email-err" />
+              <label for="hj-email">Email or phone number</label>
+              <input id="hj-email" name="email" type="text" placeholder="timothee@gmail.com or +65 9888 1135" autocomplete="email" autocapitalize="off" spellcheck="false" maxlength="${CONTACT_LIMITS.email}" required aria-describedby="hj-email-err" />
               <p class="hj-err" id="hj-email-err" aria-live="polite" hidden></p>
             </div>
             <fieldset class="hj-field hj-needs">
