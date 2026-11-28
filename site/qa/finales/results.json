@@ -207,12 +207,18 @@
   },
   "film-desktop": {
    "shown": "H+0",
-   "peakDecodedBytes": 2192080,
-   "decodedNow": 2192080,
-   "canvasBytes": 377520,
-   "set": "242px canvas",
+   "peakDecodedBytes": 3021120,
+   "decodedNow": 3021120,
+   "canvasBytes": 517328,
+   "set": "298px canvas",
    "longTasks": 0,
-   "videoFrames": 63,
+   "flashes": 1,
+   "actors": {
+    "water": "visible",
+    "presenter": "hidden",
+    "rachel": "hidden"
+   },
+   "videoFrames": 64,
    "errors": []
   },
   "setdesign-desktop": {
@@ -257,12 +263,18 @@
   },
   "film-iphone": {
    "shown": "H+0",
-   "peakDecodedBytes": 1232340,
-   "decodedNow": 1232340,
-   "canvasBytes": 1232340,
-   "set": "437px canvas",
+   "peakDecodedBytes": 1699920,
+   "decodedNow": 1699920,
+   "canvasBytes": 1699920,
+   "set": "540px canvas",
    "longTasks": 0,
-   "videoFrames": 64,
+   "flashes": 1,
+   "actors": {
+    "water": "visible",
+    "presenter": "hidden",
+    "rachel": "hidden"
+   },
+   "videoFrames": 67,
    "errors": []
   },
   "setdesign-iphone": {
