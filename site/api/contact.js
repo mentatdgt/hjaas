@@ -5,9 +5,12 @@
 // RESEND_API_KEY, MAIL_FROM and CONTACT_TO. If one is missing, every request is answered 503.
 //
 // Nothing a visitor writes is ever logged or returned: only a status code is logged.
-// The form's choices come from src/engine/needs.js, the one list of them (Vercel bundles the import).
+// The form's choices come from src/engine/needs.js, the one list of them, and its email rule from src/engine/email.js,
+// the same one the page uses (Vercel bundles the imports).
 // Keep tests out of this folder (they are in scripts/contact.test.mjs): Vercel makes a function of every file in api/.
 
+import { isValidPhoneNumber, parsePhoneNumberFromString } from 'libphonenumber-js/max';
+import { EMAIL } from '../src/engine/email.js';
 import { NEEDS } from '../src/engine/needs.js';
 
 const RESEND = 'https://api.resend.com/emails';
@@ -15,15 +18,17 @@ const RESEND_TIMEOUT_MS = 10_000;
 const MAX_BODY = 16 * 1024;
 
 /** The same as CONTACT_LIMITS in src/engine/submit.ts; a test compares them. */
-export const LIMITS = { name: 100, email: 254, needs: 500, message: 4000 };
+export const LIMITS = { name: 100, email: 254, phone: 20, needs: 500, message: 4000 };
 
 const RATE_LIMIT = 5;
 const RATE_WINDOW_MS = 60_000;
 
-// One plain address: no spaces, line breaks or control characters, nothing that could name a second one.
-const EMAIL = /^[^\s\p{C}@<>()[\]\\,;:"]+@[^\s\p{C}@<>()[\]\\,;:"]+\.[^\s\p{C}@<>()[\]\\,;:".]{2,}$/u;
+// A phone number as the form sends it: E.164 (+, then up to 15 digits), and a real one (libphonenumber-js, max metadata).
+const E164 = /^\+[1-9]\d{1,14}$/;
+const isPhone = (value) => E164.test(value) && isValidPhoneNumber(value);
 const NOT_ONE_LINE = /[\p{Cc}\p{Zl}\p{Zp}]/u;
 
+/** Every answer is JSON, and {"ok":true} only for a message taken: the form thanks the visitor for nothing else. */
 function answer(status, headers = {}) {
   return Response.json({ ok: status === 200 }, { status, headers: { 'Cache-Control': 'no-store', ...headers } });
 }
@@ -84,17 +89,33 @@ function text(value, max) {
 /** The message if every field is what the form could have sent, or null. */
 function check(data) {
   const name = text(data.name, LIMITS.name);
-  const email = text(data.email, LIMITS.email);
   const message = text(data.message, LIMITS.message);
   const { needs } = data;
-  if (!name || !email || !message || !Array.isArray(needs)) return null;
-  if (NOT_ONE_LINE.test(data.name) || NOT_ONE_LINE.test(data.email) || !EMAIL.test(email)) return null;
+  if (!name || !message || !Array.isArray(needs) || NOT_ONE_LINE.test(data.name)) return null;
+  // Email and phone: either may be left out (the form never sends one empty), but at least one is there,
+  // and one that is there must be right.
+  const hasEmail = data.email !== undefined;
+  const hasPhone = data.phone !== undefined;
+  if (!hasEmail && !hasPhone) return null;
+  const email = hasEmail ? text(data.email, LIMITS.email) : null;
+  const phone = hasPhone ? text(data.phone, LIMITS.phone) : null;
+  if (hasEmail && (!email || NOT_ONE_LINE.test(data.email) || !EMAIL.test(email))) return null;
+  if (hasPhone && (!phone || NOT_ONE_LINE.test(data.phone) || !isPhone(phone))) return null;
   if (!needs.every((need) => NEEDS.includes(need)) || needs.join(' ').length > LIMITS.needs) return null;
-  return { name, email, needs, message: message.replace(/\r\n?/g, '\n') };
+  return { name, email, phone, needs, message: message.replace(/\r\n?/g, '\n') };
+}
+
+/** The mail's text: an Email line and/or a Phone line ("+65 9888 1135"), only for what was given. */
+function mailText({ name, email, phone, needs, message }) {
+  const lines = [`Name: ${name}`];
+  if (email) lines.push(`Email: ${email}`);
+  if (phone) lines.push(`Phone: ${parsePhoneNumberFromString(phone)?.formatInternational() ?? phone}`);
+  lines.push(`Needs: ${needs.join(', ') || '(none picked)'}`);
+  return `${lines.join('\n')}\n\n${message}\n`;
 }
 
 /** Resend's status code, or 0 if it could not be reached or did not answer in time. */
-async function send({ name, email, needs, message }, { key, from, to }) {
+async function send(mail, { key, from, to }) {
   const request = new AbortController();
   const timeout = setTimeout(() => request.abort(), RESEND_TIMEOUT_MS);
   try {
@@ -104,9 +125,9 @@ async function send({ name, email, needs, message }, { key, from, to }) {
       body: JSON.stringify({
         from,
         to: [to],
-        reply_to: email,
-        subject: `HJaaS: ${name}`,
-        text: `Name: ${name}\nEmail: ${email}\nNeeds: ${needs.join(', ') || '(none picked)'}\n\n${message}\n`,
+        ...(mail.email ? { reply_to: mail.email } : {}),
+        subject: `HJaaS: ${mail.name}`,
+        text: mailText(mail),
       }),
       signal: request.signal,
     });
@@ -135,8 +156,9 @@ async function contact(request) {
   const data = type === 'application/json' ? await readJson(request) : null;
   if (!data) return answer(400);
 
-  // The honeypot: no visitor can see this field. Whoever filled it in is told all went well.
-  if (typeof data.website === 'string' ? data.website.trim() : data.website) return answer(200);
+  // The honeypot ("extra", labelled "Leave this empty"): no visitor can see it. Whoever filled it in is told all
+  // went well, {"ok":true} like a real send, and nothing is sent.
+  if (typeof data.extra === 'string' ? data.extra.trim() : data.extra) return answer(200);
 
   const mail = check(data);
   if (!mail) return answer(400);

@@ -25,8 +25,11 @@ const ask = (body, headers = {}, ip = '203.0.113.1') => contact.fetch(new Reques
 }));
 
 async function handler() {
-  const good = { name: 'Wren', email: 'wren@example.org', needs: ['Building or renovating', 'Designing a set'], message: 'A shelf, please.\nNo hurry.', website: '' };
-  const cases = [['good', good], ['no needs', { ...good, needs: [] }], ['honeypot', { ...good, website: 'https://spam.example' }],
+  const good = { name: 'Wren', email: 'wren@example.org', needs: ['Building or renovating', 'Designing a set'], message: 'A shelf, please.\nNo hurry.', extra: '' };
+  const { email, ...noEmail } = good;
+  const cases = [['good', good], ['no needs', { ...good, needs: [] }], ['honeypot', { ...good, extra: 'https://spam.example' }],
+    ['phone only', { ...noEmail, phone: '+6598881135' }], ['email and phone', { ...good, phone: '+6598881135' }],
+    ['neither email nor phone', noEmail], ['bad phone', { ...noEmail, phone: '+6512345678' }],
     ['bad email', { ...good, email: 'wren@example.org\r\nBcc: other@example.org' }], ['other site', good, { Origin: 'https://example.org' }]];
   const results = [];
   for (const [name, body, headers] of cases) {
@@ -89,7 +92,14 @@ async function browser() {
   const report = { csp: csp.match(/connect-src[^;]*/)[0] };
 
   async function run(name, launch, options, tabKey) {
-    const instance = await launch();
+    let instance;
+    try {
+      instance = await launch();
+    } catch (error) {
+      // WebKit not downloaded for this Playwright: say so and carry on with the other runs.
+      report[name] = { skipped: String(error.message).split('\n')[0].replace(/\/Users\/[^/]+/g, '~') };
+      return;
+    }
     const context = await instance.newContext(options);
     const page = await context.newPage();
     const errors = [];
@@ -143,7 +153,7 @@ async function browser() {
     const without = await picture();
     await page.evaluate(() => window.__after.parentElement.insertBefore(window.__trap, window.__after));
     if (!quiet) result.trap.pixelsSameWithoutIt = withTrap.equals(without);
-    result.trap.inAccessibilityTree = /website/i.test(await sheet.ariaSnapshot());
+    result.trap.inAccessibilityTree = /leave this empty/i.test(await sheet.ariaSnapshot());
     const stops = [];
     for (const [key, count] of [[tabKey, 24], [`Shift+${tabKey}`, 24]]) {
       for (let i = 0; i < count; i++) {
@@ -152,7 +162,7 @@ async function browser() {
       }
     }
     result.trap.tabStops = [...new Set(stops)];
-    result.trap.reachedByTab = stops.includes('hj-website');
+    result.trap.reachedByTab = stops.includes('hj-extra');
 
     // 500: sending, failed, what was written kept. Then Send again: 200, sent.
     answers = [500, 200];
@@ -195,14 +205,14 @@ async function browser() {
     answers = ['function'];
     toResend.length = 0;
     await fill();
-    await page.evaluate(() => { document.querySelector('#hj-website').value = 'https://spam.example'; });
+    await page.evaluate(() => { document.querySelector('#hj-extra').value = 'https://spam.example'; });
     await press();
     await page.waitForSelector('.hj-sent:not([hidden])');
     result.honeypotFilled = { says: 'sent', toResend: toResend.length };
     // The form is cleared after a send, the honeypot too.
     await page.evaluate(() => document.querySelector('.hj-done').click());
     await page.waitForTimeout(500);
-    result.honeypotClearedAfter = (await page.evaluate(() => document.querySelector('#hj-website').value)) === '';
+    result.honeypotClearedAfter = (await page.evaluate(() => document.querySelector('#hj-extra').value)) === '';
     result.consoleErrors = errors;
     await instance.close();
   }

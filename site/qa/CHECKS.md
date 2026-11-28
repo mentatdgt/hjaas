@@ -46,6 +46,8 @@ not a reading of the code.
 | Send on the dev server | "Sending", then the sent state in test mode; the payload is in the console and nothing leaves the browser. |
 | Send on a production build with no endpoint (`m6/prod-form-not-connected.jpg`) | The sheet says the form is not switched on as soon as it opens; Send is off; pressing it does nothing and never shows a sent state. |
 | Escape | Closes the sheet and returns focus to the button. |
+| The whole form on one screen (`form-compact/`, `qa/tools/form-compact.mjs`) | Heading to Send without scrolling on iPhone 390 x 664 and 430 x 750 (Safari's area with its toolbars), iPad both ways, desktop 1280 x 720 and 1440 x 900; also with "Add an email or a phone number" and a field's message showing. Fields stay 16 px; chips and Send 44 px. With too little room above the button for the whole form, the sheet sits in the middle. |
+| Send | Mushroom red, white type (5.2:1); a shade darker on hover and keyboard focus, with the ink ring. Pressed, it fades to grey in 150 ms and ignores a second press; red again if sending fails. |
 
 ## Reduced motion
 

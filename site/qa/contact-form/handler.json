@@ -19,7 +19,7 @@
         ],
         "reply_to": "wren@example.org",
         "subject": "HJaaS: Wren",
-        "text": "Name: Wren\nEmail: wren@example.org\nNeeds: Build, Set Design\n\nA shelf, please.\nNo hurry.\n"
+        "text": "Name: Wren\nEmail: wren@example.org\nNeeds: Building or renovating, Designing a set\n\nA shelf, please.\nNo hurry.\n"
       }
     }
   },
@@ -52,6 +52,69 @@
     "answer": 200,
     "body": {
       "ok": true
+    },
+    "toResend": null
+  },
+  {
+    "case": "phone only",
+    "answer": 200,
+    "body": {
+      "ok": true
+    },
+    "toResend": {
+      "url": "https://api.resend.com/emails",
+      "method": "POST",
+      "headers": {
+        "Authorization": "Bearer <RESEND_API_KEY>",
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "from": "HJaaS <from@example.org>",
+        "to": [
+          "inbox@example.org"
+        ],
+        "subject": "HJaaS: Wren",
+        "text": "Name: Wren\nPhone: +65 9888 1135\nNeeds: Building or renovating, Designing a set\n\nA shelf, please.\nNo hurry.\n"
+      }
+    }
+  },
+  {
+    "case": "email and phone",
+    "answer": 200,
+    "body": {
+      "ok": true
+    },
+    "toResend": {
+      "url": "https://api.resend.com/emails",
+      "method": "POST",
+      "headers": {
+        "Authorization": "Bearer <RESEND_API_KEY>",
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "from": "HJaaS <from@example.org>",
+        "to": [
+          "inbox@example.org"
+        ],
+        "reply_to": "wren@example.org",
+        "subject": "HJaaS: Wren",
+        "text": "Name: Wren\nEmail: wren@example.org\nPhone: +65 9888 1135\nNeeds: Building or renovating, Designing a set\n\nA shelf, please.\nNo hurry.\n"
+      }
+    }
+  },
+  {
+    "case": "neither email nor phone",
+    "answer": 400,
+    "body": {
+      "ok": false
+    },
+    "toResend": null
+  },
+  {
+    "case": "bad phone",
+    "answer": 400,
+    "body": {
+      "ok": false
     },
     "toResend": null
   },
