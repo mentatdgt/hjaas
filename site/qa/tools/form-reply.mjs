@@ -168,7 +168,7 @@ for (const [wanted, launchWanted, wantedOptions, wantedTab, fallback] of RUNS) {
   await page.fill('#hj-message', 'A shelf for the mushroom lab, please.');
   await press();
   await wait(300);
-  r.groupError = { errors: await errorsShown(), focus: await page.evaluate(() => document.activeElement.id), invalid: await page.evaluate(() => ['hj-email', 'hj-phone'].map((id) => document.getElementById(id).getAttribute('aria-invalid'))) };
+  r.groupError = { errors: await errorsShown(), focus: await page.evaluate(() => document.activeElement.id), invalid: await page.evaluate(() => ['hj-email', 'hj-phone'].map((id) => document.getElementById(id).getAttribute('aria-invalid'))), describedBy: await page.evaluate(() => ['hj-email', 'hj-phone'].map((id) => document.getElementById(id).getAttribute('aria-describedby'))), groupLive: await page.evaluate(() => document.getElementById('hj-reply-err').getAttribute('aria-live')) };
   await page.evaluate(() => { const b = document.querySelector('.hj-sheet-body'); b.scrollTop += document.querySelector('.hj-reply').getBoundingClientRect().top - b.getBoundingClientRect().top - 12; });
   await wait(150);
   await shot('2-group-error');
@@ -198,7 +198,7 @@ for (const [wanted, launchWanted, wantedOptions, wantedTab, fallback] of RUNS) {
   await press();
   await page.waitForSelector('.hj-sent:not([hidden])', { timeout: 8000 });
   await wait(700);
-  r.phoneOnlySend = { posted: posted.map(({ website, ...rest }) => rest), toResend: toResend.map(({ from, to, ...rest }) => rest), says: await page.textContent('.hj-sent-line') };
+  r.phoneOnlySend = { posted: posted.map(({ extra, ...rest }) => rest), toResend: toResend.map(({ from, to, ...rest }) => rest), says: await page.textContent('.hj-sent-line') };
   await shot('5-phone-only-sent');
 
   // Opened again after a send: empty, Singapore again.
@@ -216,7 +216,7 @@ for (const [wanted, launchWanted, wantedOptions, wantedTab, fallback] of RUNS) {
   toResend.length = 0;
   await press();
   await page.waitForSelector('.hj-sent:not([hidden])', { timeout: 8000 });
-  r.bothSend = { posted: posted.map(({ website, ...rest }) => rest), replyTo: toResend[0]?.reply_to, says: await page.textContent('.hj-sent-line') };
+  r.bothSend = { posted: posted.map(({ extra, ...rest }) => rest), replyTo: toResend[0]?.reply_to, says: await page.textContent('.hj-sent-line') };
 
   // Playwright's own screenshot styles are refused by the CSP in WebKit and logged: not the page's doing.
   r.consoleErrors = errors.filter((e) => !/stylesheet|inline style/i.test(e));

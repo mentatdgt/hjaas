@@ -1,0 +1,452 @@
+{
+  "engine": "chrome",
+  "webkitSkipped": "browserType.launch: Executable doesn't exist at ~/Library/Caches/ms-playwright/webkit-2388/pw_run.sh",
+  "viewport": {
+    "width": 390,
+    "height": 664
+  },
+  "empty": {
+    "title": {
+      "hidden": false,
+      "text": "Hi! What have you got in mind?"
+    },
+    "dialogLabelledBy": "hj-form-title",
+    "status": "",
+    "statusRole": "status",
+    "statusVisuallyHidden": true,
+    "button": {
+      "label": "Send it",
+      "disabled": null,
+      "background": "rgb(200, 55, 45)"
+    },
+    "alert": null,
+    "sent": null,
+    "focus": "BODY",
+    "errors": {},
+    "describedBy": {
+      "email": "hj-email-err",
+      "phone": "hj-phone-err"
+    },
+    "invalid": {
+      "email": null,
+      "phone": null
+    },
+    "kept": {
+      "name": "",
+      "email": "",
+      "phone": "",
+      "message": ""
+    },
+    "fits": {
+      "scrollHeight": 549,
+      "visibleHeight": 549
+    }
+  },
+  "neitherFilled": {
+    "title": {
+      "hidden": false,
+      "text": "Hi! What have you got in mind?"
+    },
+    "dialogLabelledBy": "hj-form-title",
+    "status": "",
+    "statusRole": "status",
+    "statusVisuallyHidden": true,
+    "button": {
+      "label": "Send it",
+      "disabled": null,
+      "background": "rgb(200, 55, 45)"
+    },
+    "alert": null,
+    "sent": null,
+    "focus": "hj-email",
+    "errors": {
+      "hj-reply-err": "Add an email or a phone number so I can reply."
+    },
+    "describedBy": {
+      "email": "hj-reply-err hj-email-err",
+      "phone": "hj-reply-err hj-phone-err"
+    },
+    "invalid": {
+      "email": "true",
+      "phone": "true"
+    },
+    "kept": {
+      "name": "Wren",
+      "email": "",
+      "phone": "",
+      "message": "A shelf for the mushroom lab, please."
+    },
+    "fits": {
+      "scrollHeight": 569,
+      "visibleHeight": 569
+    }
+  },
+  "badPhone": {
+    "title": {
+      "hidden": false,
+      "text": "Hi! What have you got in mind?"
+    },
+    "dialogLabelledBy": "hj-form-title",
+    "status": "",
+    "statusRole": "status",
+    "statusVisuallyHidden": true,
+    "button": {
+      "label": "Send it",
+      "disabled": null,
+      "background": "rgb(200, 55, 45)"
+    },
+    "alert": null,
+    "sent": null,
+    "focus": "hj-phone",
+    "errors": {
+      "hj-phone-err": "That number doesn't look right for Singapore. Check the digits or pick a different country code."
+    },
+    "describedBy": {
+      "email": "hj-email-err",
+      "phone": "hj-phone-err"
+    },
+    "invalid": {
+      "email": "false",
+      "phone": "true"
+    },
+    "kept": {
+      "name": "Wren",
+      "email": "",
+      "phone": "1234 5678",
+      "message": "A shelf for the mushroom lab, please."
+    },
+    "fits": {
+      "scrollHeight": 586,
+      "visibleHeight": 586
+    }
+  },
+  "pageErrors1": [],
+  "busy": {
+    "title": {
+      "hidden": false,
+      "text": "Hi! What have you got in mind?"
+    },
+    "dialogLabelledBy": "hj-form-title",
+    "status": "",
+    "statusRole": "status",
+    "statusVisuallyHidden": true,
+    "button": {
+      "label": "Send it",
+      "disabled": null,
+      "background": "rgb(200, 55, 45)"
+    },
+    "alert": "Too many tries. Please wait a minute and try again.",
+    "sent": null,
+    "focus": "hj-send",
+    "errors": {},
+    "describedBy": {
+      "email": "hj-email-err",
+      "phone": "hj-phone-err"
+    },
+    "invalid": {
+      "email": "false",
+      "phone": "false"
+    },
+    "kept": {
+      "name": "Wren",
+      "email": "wren@example.org",
+      "phone": "",
+      "message": "A shelf for the mushroom lab, please."
+    },
+    "fits": {
+      "scrollHeight": 592,
+      "visibleHeight": 592
+    }
+  },
+  "busy30": "Too many tries. Please try again in 30 seconds.",
+  "outage": {
+    "title": {
+      "hidden": false,
+      "text": "Hi! What have you got in mind?"
+    },
+    "dialogLabelledBy": "hj-form-title",
+    "status": "",
+    "statusRole": "status",
+    "statusVisuallyHidden": true,
+    "button": {
+      "label": "Send it",
+      "disabled": null,
+      "background": "rgb(200, 55, 45)"
+    },
+    "alert": "Couldn't send your message just now. It's all still here, so please try again in a moment.",
+    "sent": null,
+    "focus": "hj-send",
+    "errors": {},
+    "describedBy": {
+      "email": "hj-email-err",
+      "phone": "hj-phone-err"
+    },
+    "invalid": {
+      "email": "false",
+      "phone": "false"
+    },
+    "kept": {
+      "name": "Wren",
+      "email": "wren@example.org",
+      "phone": "",
+      "message": "A shelf for the mushroom lab, please."
+    },
+    "fits": {
+      "scrollHeight": 610,
+      "visibleHeight": 599
+    }
+  },
+  "networkDown": "Couldn't send your message just now. It's all still here, so please try again in a moment.",
+  "htmlPage": {
+    "title": {
+      "hidden": false,
+      "text": "Hi! What have you got in mind?"
+    },
+    "dialogLabelledBy": "hj-form-title",
+    "status": "",
+    "statusRole": "status",
+    "statusVisuallyHidden": true,
+    "button": {
+      "label": "Send it",
+      "disabled": null,
+      "background": "rgb(200, 55, 45)"
+    },
+    "alert": "Couldn't send your message just now. It's all still here, so please try again in a moment.",
+    "sent": null,
+    "focus": "hj-send",
+    "errors": {},
+    "describedBy": {
+      "email": "hj-email-err",
+      "phone": "hj-phone-err"
+    },
+    "invalid": {
+      "email": "false",
+      "phone": "false"
+    },
+    "kept": {
+      "name": "Wren",
+      "email": "wren@example.org",
+      "phone": "",
+      "message": "A shelf for the mushroom lab, please."
+    },
+    "fits": {
+      "scrollHeight": 610,
+      "visibleHeight": 599
+    }
+  },
+  "emptyBody": "Couldn't send your message just now. It's all still here, so please try again in a moment.",
+  "sending": {
+    "title": {
+      "hidden": false,
+      "text": "Hi! What have you got in mind?"
+    },
+    "dialogLabelledBy": "hj-form-title",
+    "status": "Sending your message…",
+    "statusRole": "status",
+    "statusVisuallyHidden": true,
+    "button": {
+      "label": "Sending",
+      "disabled": "true",
+      "background": "rgb(119, 115, 106)"
+    },
+    "alert": null,
+    "sent": null,
+    "focus": "hj-send is-sending",
+    "errors": {},
+    "describedBy": {
+      "email": "hj-email-err",
+      "phone": "hj-phone-err"
+    },
+    "invalid": {
+      "email": "false",
+      "phone": "false"
+    },
+    "kept": {
+      "name": "Wren",
+      "email": "wren@example.org",
+      "phone": "",
+      "message": "A shelf for the mushroom lab, please."
+    },
+    "fits": {
+      "scrollHeight": 549,
+      "visibleHeight": 549
+    }
+  },
+  "sent": {
+    "title": {
+      "hidden": true,
+      "text": "Hi! What have you got in mind?"
+    },
+    "dialogLabelledBy": "hj-sent-title",
+    "status": "Message sent.",
+    "statusRole": "status",
+    "statusVisuallyHidden": true,
+    "button": {
+      "label": "Send it",
+      "disabled": null,
+      "background": "rgb(200, 55, 45)"
+    },
+    "alert": null,
+    "sent": "Got it, thank you.\n\nI'll reply to wren@example.org.\n\nBack to the scenes",
+    "focus": "hj-sent-title",
+    "errors": {},
+    "describedBy": {
+      "email": "hj-email-err",
+      "phone": "hj-phone-err"
+    },
+    "invalid": {
+      "email": "false",
+      "phone": "false"
+    },
+    "kept": {
+      "name": "Wren",
+      "email": "wren@example.org",
+      "phone": "",
+      "message": "A shelf for the mushroom lab, please."
+    },
+    "fits": {
+      "scrollHeight": 239,
+      "visibleHeight": 239
+    }
+  },
+  "pageErrors2": [],
+  "keyboard": {
+    "closed": {
+      "visible": {
+        "top": 0,
+        "bottom": 664
+      },
+      "followsViewport": true,
+      "sheet": {
+        "top": 66,
+        "bottom": 664
+      },
+      "send": {
+        "top": 606,
+        "bottom": 650
+      },
+      "body": {
+        "scrollTop": 0,
+        "scrollHeight": 549,
+        "clientHeight": 549
+      },
+      "focused": "",
+      "focusedInView": false
+    },
+    "messageFocused": {
+      "visible": {
+        "top": 0,
+        "bottom": 360
+      },
+      "followsViewport": true,
+      "sheet": {
+        "top": 16,
+        "bottom": 360
+      },
+      "send": {
+        "top": 363,
+        "bottom": 407
+      },
+      "body": {
+        "scrollTop": 193,
+        "scrollHeight": 549,
+        "clientHeight": 295
+      },
+      "focused": "hj-message",
+      "focusedInView": true
+    },
+    "sheetInSight": true,
+    "scrolledToSend": {
+      "visible": {
+        "top": 0,
+        "bottom": 360
+      },
+      "followsViewport": true,
+      "sheet": {
+        "top": 16,
+        "bottom": 360
+      },
+      "send": {
+        "top": 302,
+        "bottom": 346
+      },
+      "body": {
+        "scrollTop": 254,
+        "scrollHeight": 549,
+        "clientHeight": 295
+      },
+      "focused": "hj-message",
+      "focusedInView": true
+    },
+    "sendReachable": true,
+    "errorRefocus": {
+      "visible": {
+        "top": 0,
+        "bottom": 360
+      },
+      "followsViewport": true,
+      "sheet": {
+        "top": 16,
+        "bottom": 360
+      },
+      "send": {
+        "top": 616,
+        "bottom": 660
+      },
+      "body": {
+        "scrollTop": 0,
+        "scrollHeight": 609,
+        "clientHeight": 295
+      },
+      "focused": "hj-name",
+      "focusedInView": true
+    },
+    "pageScrolled": {
+      "visible": {
+        "top": 100,
+        "bottom": 360
+      },
+      "followsViewport": true,
+      "sheet": {
+        "top": 116,
+        "bottom": 360
+      },
+      "send": {
+        "top": 716,
+        "bottom": 760
+      },
+      "body": {
+        "scrollTop": 0,
+        "scrollHeight": 609,
+        "clientHeight": 195
+      },
+      "focused": "hj-name",
+      "focusedInView": true
+    },
+    "pageScrolledFollows": true,
+    "keyboardDown": {
+      "visible": {
+        "top": 0,
+        "bottom": 664
+      },
+      "followsViewport": true,
+      "sheet": {
+        "top": 16,
+        "bottom": 664
+      },
+      "send": {
+        "top": 616,
+        "bottom": 660
+      },
+      "body": {
+        "scrollTop": 0,
+        "scrollHeight": 609,
+        "clientHeight": 599
+      },
+      "focused": "hj-name",
+      "focusedInView": true
+    },
+    "closedClass": false,
+    "pageErrors": []
+  }
+}

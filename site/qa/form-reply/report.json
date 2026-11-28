@@ -15,23 +15,23 @@
     "layout": {
       "sheet": {
         "x": 0,
-        "y": 93,
+        "y": 115,
         "w": 390,
-        "h": 571,
+        "h": 549,
         "right": 390
       },
       "country": {
         "x": 18,
-        "y": 334,
+        "y": 280,
         "w": 121,
-        "h": 46,
+        "h": 36,
         "right": 139
       },
       "phone": {
         "x": 147,
-        "y": 334,
+        "y": 280,
         "w": 225,
-        "h": 46,
+        "h": 36,
         "right": 372
       },
       "oneRow": true,
@@ -52,25 +52,25 @@
         "hj-name": {
           "text": "Timothée Chalamet",
           "textWidth": 147,
-          "room": 304,
+          "room": 308,
           "fits": true
         },
         "hj-email": {
           "text": "timothee@gmail.com",
           "textWidth": 157,
-          "room": 304,
+          "room": 308,
           "fits": true
         },
         "hj-phone": {
           "text": "9888 1135",
           "textWidth": 72,
-          "room": 175,
+          "room": 179,
           "fits": true
         },
         "hj-message": {
           "text": "The space, the timeline, the feeling you're after. Rough is fine.",
           "textWidth": 0,
-          "room": 328,
+          "room": 330,
           "fits": true
         }
       },
@@ -119,13 +119,18 @@
       "invalid": [
         "true",
         "true"
-      ]
+      ],
+      "describedBy": [
+        "hj-reply-err hj-email-err",
+        "hj-reply-err hj-phone-err"
+      ],
+      "groupLive": null
     },
     "badNumber": {
       "hj-name-err": null,
       "hj-reply-err": null,
       "hj-email-err": null,
-      "hj-phone-err": "That number doesn't look right for Singapore.",
+      "hj-phone-err": "That number doesn't look right for Singapore. Check the digits or pick a different country code.",
       "hj-message-err": null
     },
     "pasted": {
@@ -186,25 +191,25 @@
     ],
     "layout": {
       "sheet": {
-        "x": 33,
-        "y": 81,
+        "x": 196,
+        "y": 288,
         "w": 418,
-        "h": 460,
-        "right": 451
+        "h": 553,
+        "right": 614
       },
       "country": {
-        "x": 57,
-        "y": 322,
+        "x": 220,
+        "y": 452,
         "w": 121,
-        "h": 46,
-        "right": 178
+        "h": 36,
+        "right": 341
       },
       "phone": {
-        "x": 186,
-        "y": 322,
+        "x": 349,
+        "y": 452,
         "w": 241,
-        "h": 46,
-        "right": 427
+        "h": 36,
+        "right": 590
       },
       "oneRow": true,
       "rowInsideSheet": true,
@@ -224,25 +229,25 @@
         "hj-name": {
           "text": "Timothée Chalamet",
           "textWidth": 147,
-          "room": 320,
+          "room": 324,
           "fits": true
         },
         "hj-email": {
           "text": "timothee@gmail.com",
           "textWidth": 157,
-          "room": 320,
+          "room": 324,
           "fits": true
         },
         "hj-phone": {
           "text": "9888 1135",
           "textWidth": 72,
-          "room": 191,
+          "room": 195,
           "fits": true
         },
         "hj-message": {
           "text": "The space, the timeline, the feeling you're after. Rough is fine.",
           "textWidth": 0,
-          "room": 344,
+          "room": 346,
           "fits": true
         }
       },
@@ -291,13 +296,18 @@
       "invalid": [
         "true",
         "true"
-      ]
+      ],
+      "describedBy": [
+        "hj-reply-err hj-email-err",
+        "hj-reply-err hj-phone-err"
+      ],
+      "groupLive": null
     },
     "badNumber": {
       "hj-name-err": null,
       "hj-reply-err": null,
       "hj-email-err": null,
-      "hj-phone-err": "That number doesn't look right for Singapore.",
+      "hj-phone-err": "That number doesn't look right for Singapore. Check the digits or pick a different country code.",
       "hj-message-err": null
     },
     "pasted": {
@@ -356,23 +366,23 @@
     "layout": {
       "sheet": {
         "x": 201,
-        "y": 81,
+        "y": 179,
         "w": 418,
-        "h": 651,
+        "h": 553,
         "right": 619
       },
       "country": {
         "x": 225,
-        "y": 322,
+        "y": 344,
         "w": 121,
-        "h": 46,
+        "h": 36,
         "right": 346
       },
       "phone": {
         "x": 354,
-        "y": 322,
+        "y": 344,
         "w": 241,
-        "h": 46,
+        "h": 36,
         "right": 595
       },
       "oneRow": true,
@@ -393,25 +403,25 @@
         "hj-name": {
           "text": "Timothée Chalamet",
           "textWidth": 147,
-          "room": 320,
+          "room": 324,
           "fits": true
         },
         "hj-email": {
           "text": "timothee@gmail.com",
           "textWidth": 157,
-          "room": 320,
+          "room": 324,
           "fits": true
         },
         "hj-phone": {
           "text": "9888 1135",
           "textWidth": 72,
-          "room": 191,
+          "room": 195,
           "fits": true
         },
         "hj-message": {
           "text": "The space, the timeline, the feeling you're after. Rough is fine.",
           "textWidth": 0,
-          "room": 344,
+          "room": 346,
           "fits": true
         }
       },
@@ -460,13 +470,18 @@
       "invalid": [
         "true",
         "true"
-      ]
+      ],
+      "describedBy": [
+        "hj-reply-err hj-email-err",
+        "hj-reply-err hj-phone-err"
+      ],
+      "groupLive": null
     },
     "badNumber": {
       "hj-name-err": null,
       "hj-reply-err": null,
       "hj-email-err": null,
-      "hj-phone-err": "That number doesn't look right for Singapore.",
+      "hj-phone-err": "That number doesn't look right for Singapore. Check the digits or pick a different country code.",
       "hj-message-err": null
     },
     "pasted": {

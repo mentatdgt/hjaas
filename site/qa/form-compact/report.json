@@ -152,6 +152,107 @@
           "A few words, so I know where to start."
         ]
       },
+      "badPhone": {
+        "viewport": {
+          "w": 390,
+          "h": 664
+        },
+        "scrollHeight": 586,
+        "visibleHeight": 586,
+        "fits": true,
+        "sheet": {
+          "top": 29,
+          "bottom": 664,
+          "height": 635,
+          "centred": true,
+          "roomAboveButton": 519
+        },
+        "sheetInView": true,
+        "sendInView": true,
+        "sendHeight": 44,
+        "chipHeights": [
+          44
+        ],
+        "chipRows": 3,
+        "smallestChipGap": 6,
+        "overlaps": [],
+        "outside": [],
+        "clipped": [],
+        "textareaLines": 3,
+        "placeholderFits": true,
+        "fieldSizes": [
+          "16px",
+          "16px",
+          "16px",
+          "16px",
+          "16px"
+        ],
+        "type": {
+          "title": "18px",
+          "label": "13.5px",
+          "legend": "13.5px",
+          "hint": "13.5px",
+          "sub": "13px",
+          "chip": "14px",
+          "error": "13px",
+          "send": "15.5px"
+        },
+        "errors": [
+          "That number doesn't look right for Singapore. Check the digits or pick a different country code."
+        ],
+        "phoneErrorLines": 2
+      },
+      "longestCountry": "FK",
+      "badPhoneLongCountry": {
+        "viewport": {
+          "w": 390,
+          "h": 664
+        },
+        "scrollHeight": 586,
+        "visibleHeight": 586,
+        "fits": true,
+        "sheet": {
+          "top": 29,
+          "bottom": 664,
+          "height": 635,
+          "centred": true,
+          "roomAboveButton": 519
+        },
+        "sheetInView": true,
+        "sendInView": true,
+        "sendHeight": 44,
+        "chipHeights": [
+          44
+        ],
+        "chipRows": 3,
+        "smallestChipGap": 6,
+        "overlaps": [],
+        "outside": [],
+        "clipped": [],
+        "textareaLines": 3,
+        "placeholderFits": true,
+        "fieldSizes": [
+          "16px",
+          "16px",
+          "16px",
+          "16px",
+          "16px"
+        ],
+        "type": {
+          "title": "18px",
+          "label": "13.5px",
+          "legend": "13.5px",
+          "hint": "13.5px",
+          "sub": "13px",
+          "chip": "14px",
+          "error": "13px",
+          "send": "15.5px"
+        },
+        "errors": [
+          "That number doesn't look right for Falkland Islands (Islas Malvinas). Check the digits or pick a different country code."
+        ],
+        "phoneErrorLines": 2
+      },
       "pageErrors": []
     },
     "iphone-430x750": {
@@ -303,6 +404,107 @@
           "Add an email or a phone number so I can reply.",
           "A few words, so I know where to start."
         ]
+      },
+      "badPhone": {
+        "viewport": {
+          "w": 430,
+          "h": 750
+        },
+        "scrollHeight": 586,
+        "visibleHeight": 586,
+        "fits": true,
+        "sheet": {
+          "top": 115,
+          "bottom": 750,
+          "height": 635,
+          "centred": true,
+          "roomAboveButton": 605
+        },
+        "sheetInView": true,
+        "sendInView": true,
+        "sendHeight": 44,
+        "chipHeights": [
+          44
+        ],
+        "chipRows": 3,
+        "smallestChipGap": 6,
+        "overlaps": [],
+        "outside": [],
+        "clipped": [],
+        "textareaLines": 3,
+        "placeholderFits": true,
+        "fieldSizes": [
+          "16px",
+          "16px",
+          "16px",
+          "16px",
+          "16px"
+        ],
+        "type": {
+          "title": "18px",
+          "label": "13.5px",
+          "legend": "13.5px",
+          "hint": "13.5px",
+          "sub": "13px",
+          "chip": "14px",
+          "error": "13px",
+          "send": "15.5px"
+        },
+        "errors": [
+          "That number doesn't look right for Singapore. Check the digits or pick a different country code."
+        ],
+        "phoneErrorLines": 2
+      },
+      "longestCountry": "FK",
+      "badPhoneLongCountry": {
+        "viewport": {
+          "w": 430,
+          "h": 750
+        },
+        "scrollHeight": 586,
+        "visibleHeight": 586,
+        "fits": true,
+        "sheet": {
+          "top": 115,
+          "bottom": 750,
+          "height": 635,
+          "centred": true,
+          "roomAboveButton": 605
+        },
+        "sheetInView": true,
+        "sendInView": true,
+        "sendHeight": 44,
+        "chipHeights": [
+          44
+        ],
+        "chipRows": 3,
+        "smallestChipGap": 6,
+        "overlaps": [],
+        "outside": [],
+        "clipped": [],
+        "textareaLines": 3,
+        "placeholderFits": true,
+        "fieldSizes": [
+          "16px",
+          "16px",
+          "16px",
+          "16px",
+          "16px"
+        ],
+        "type": {
+          "title": "18px",
+          "label": "13.5px",
+          "legend": "13.5px",
+          "hint": "13.5px",
+          "sub": "13px",
+          "chip": "14px",
+          "error": "13px",
+          "send": "15.5px"
+        },
+        "errors": [
+          "That number doesn't look right for Falkland Islands (Islas Malvinas). Check the digits or pick a different country code."
+        ],
+        "phoneErrorLines": 2
       },
       "pageErrors": []
     },
@@ -456,6 +658,107 @@
           "A few words, so I know where to start."
         ]
       },
+      "badPhone": {
+        "viewport": {
+          "w": 810,
+          "h": 1080
+        },
+        "scrollHeight": 590,
+        "visibleHeight": 590,
+        "fits": true,
+        "sheet": {
+          "top": 220,
+          "bottom": 860,
+          "height": 640,
+          "centred": true,
+          "roomAboveButton": 526
+        },
+        "sheetInView": true,
+        "sendInView": true,
+        "sendHeight": 44,
+        "chipHeights": [
+          44
+        ],
+        "chipRows": 3,
+        "smallestChipGap": 6,
+        "overlaps": [],
+        "outside": [],
+        "clipped": [],
+        "textareaLines": 3,
+        "placeholderFits": true,
+        "fieldSizes": [
+          "16px",
+          "16px",
+          "16px",
+          "16px",
+          "16px"
+        ],
+        "type": {
+          "title": "18px",
+          "label": "13.5px",
+          "legend": "13.5px",
+          "hint": "13.5px",
+          "sub": "13px",
+          "chip": "14px",
+          "error": "13px",
+          "send": "15.5px"
+        },
+        "errors": [
+          "That number doesn't look right for Singapore. Check the digits or pick a different country code."
+        ],
+        "phoneErrorLines": 2
+      },
+      "longestCountry": "FK",
+      "badPhoneLongCountry": {
+        "viewport": {
+          "w": 810,
+          "h": 1080
+        },
+        "scrollHeight": 590,
+        "visibleHeight": 590,
+        "fits": true,
+        "sheet": {
+          "top": 220,
+          "bottom": 860,
+          "height": 640,
+          "centred": true,
+          "roomAboveButton": 526
+        },
+        "sheetInView": true,
+        "sendInView": true,
+        "sendHeight": 44,
+        "chipHeights": [
+          44
+        ],
+        "chipRows": 3,
+        "smallestChipGap": 6,
+        "overlaps": [],
+        "outside": [],
+        "clipped": [],
+        "textareaLines": 3,
+        "placeholderFits": true,
+        "fieldSizes": [
+          "16px",
+          "16px",
+          "16px",
+          "16px",
+          "16px"
+        ],
+        "type": {
+          "title": "18px",
+          "label": "13.5px",
+          "legend": "13.5px",
+          "hint": "13.5px",
+          "sub": "13px",
+          "chip": "14px",
+          "error": "13px",
+          "send": "15.5px"
+        },
+        "errors": [
+          "That number doesn't look right for Falkland Islands (Islas Malvinas). Check the digits or pick a different country code."
+        ],
+        "phoneErrorLines": 2
+      },
       "pageErrors": []
     },
     "ipad-landscape": {
@@ -607,6 +910,107 @@
           "Add an email or a phone number so I can reply.",
           "A few words, so I know where to start."
         ]
+      },
+      "badPhone": {
+        "viewport": {
+          "w": 1080,
+          "h": 810
+        },
+        "scrollHeight": 590,
+        "visibleHeight": 590,
+        "fits": true,
+        "sheet": {
+          "top": 85,
+          "bottom": 725,
+          "height": 640,
+          "centred": true,
+          "roomAboveButton": 572
+        },
+        "sheetInView": true,
+        "sendInView": true,
+        "sendHeight": 44,
+        "chipHeights": [
+          44
+        ],
+        "chipRows": 3,
+        "smallestChipGap": 6,
+        "overlaps": [],
+        "outside": [],
+        "clipped": [],
+        "textareaLines": 3,
+        "placeholderFits": true,
+        "fieldSizes": [
+          "16px",
+          "16px",
+          "16px",
+          "16px",
+          "16px"
+        ],
+        "type": {
+          "title": "18px",
+          "label": "13.5px",
+          "legend": "13.5px",
+          "hint": "13.5px",
+          "sub": "13px",
+          "chip": "14px",
+          "error": "13px",
+          "send": "15.5px"
+        },
+        "errors": [
+          "That number doesn't look right for Singapore. Check the digits or pick a different country code."
+        ],
+        "phoneErrorLines": 2
+      },
+      "longestCountry": "FK",
+      "badPhoneLongCountry": {
+        "viewport": {
+          "w": 1080,
+          "h": 810
+        },
+        "scrollHeight": 590,
+        "visibleHeight": 590,
+        "fits": true,
+        "sheet": {
+          "top": 85,
+          "bottom": 725,
+          "height": 640,
+          "centred": true,
+          "roomAboveButton": 572
+        },
+        "sheetInView": true,
+        "sendInView": true,
+        "sendHeight": 44,
+        "chipHeights": [
+          44
+        ],
+        "chipRows": 3,
+        "smallestChipGap": 6,
+        "overlaps": [],
+        "outside": [],
+        "clipped": [],
+        "textareaLines": 3,
+        "placeholderFits": true,
+        "fieldSizes": [
+          "16px",
+          "16px",
+          "16px",
+          "16px",
+          "16px"
+        ],
+        "type": {
+          "title": "18px",
+          "label": "13.5px",
+          "legend": "13.5px",
+          "hint": "13.5px",
+          "sub": "13px",
+          "chip": "14px",
+          "error": "13px",
+          "send": "15.5px"
+        },
+        "errors": [
+          "That number doesn't look right for Falkland Islands (Islas Malvinas). Check the digits or pick a different country code."
+        ],
+        "phoneErrorLines": 2
       },
       "pageErrors": []
     },
@@ -760,6 +1164,107 @@
           "A few words, so I know where to start."
         ]
       },
+      "badPhone": {
+        "viewport": {
+          "w": 1280,
+          "h": 720
+        },
+        "scrollHeight": 590,
+        "visibleHeight": 590,
+        "fits": true,
+        "sheet": {
+          "top": 40,
+          "bottom": 680,
+          "height": 640,
+          "centred": true,
+          "roomAboveButton": 615
+        },
+        "sheetInView": true,
+        "sendInView": true,
+        "sendHeight": 44,
+        "chipHeights": [
+          44
+        ],
+        "chipRows": 3,
+        "smallestChipGap": 6,
+        "overlaps": [],
+        "outside": [],
+        "clipped": [],
+        "textareaLines": 3,
+        "placeholderFits": true,
+        "fieldSizes": [
+          "16px",
+          "16px",
+          "16px",
+          "16px",
+          "16px"
+        ],
+        "type": {
+          "title": "18px",
+          "label": "13.5px",
+          "legend": "13.5px",
+          "hint": "13.5px",
+          "sub": "13px",
+          "chip": "14px",
+          "error": "13px",
+          "send": "15.5px"
+        },
+        "errors": [
+          "That number doesn't look right for Singapore. Check the digits or pick a different country code."
+        ],
+        "phoneErrorLines": 2
+      },
+      "longestCountry": "FK",
+      "badPhoneLongCountry": {
+        "viewport": {
+          "w": 1280,
+          "h": 720
+        },
+        "scrollHeight": 590,
+        "visibleHeight": 590,
+        "fits": true,
+        "sheet": {
+          "top": 40,
+          "bottom": 680,
+          "height": 640,
+          "centred": true,
+          "roomAboveButton": 615
+        },
+        "sheetInView": true,
+        "sendInView": true,
+        "sendHeight": 44,
+        "chipHeights": [
+          44
+        ],
+        "chipRows": 3,
+        "smallestChipGap": 6,
+        "overlaps": [],
+        "outside": [],
+        "clipped": [],
+        "textareaLines": 3,
+        "placeholderFits": true,
+        "fieldSizes": [
+          "16px",
+          "16px",
+          "16px",
+          "16px",
+          "16px"
+        ],
+        "type": {
+          "title": "18px",
+          "label": "13.5px",
+          "legend": "13.5px",
+          "hint": "13.5px",
+          "sub": "13px",
+          "chip": "14px",
+          "error": "13px",
+          "send": "15.5px"
+        },
+        "errors": [
+          "That number doesn't look right for Falkland Islands (Islas Malvinas). Check the digits or pick a different country code."
+        ],
+        "phoneErrorLines": 2
+      },
       "pageErrors": []
     },
     "desktop-1440x900": {
@@ -911,6 +1416,107 @@
           "Add an email or a phone number so I can reply.",
           "A few words, so I know where to start."
         ]
+      },
+      "badPhone": {
+        "viewport": {
+          "w": 1440,
+          "h": 900
+        },
+        "scrollHeight": 590,
+        "visibleHeight": 590,
+        "fits": true,
+        "sheet": {
+          "top": 93,
+          "bottom": 733,
+          "height": 640,
+          "centred": false,
+          "roomAboveButton": 717
+        },
+        "sheetInView": true,
+        "sendInView": true,
+        "sendHeight": 44,
+        "chipHeights": [
+          44
+        ],
+        "chipRows": 3,
+        "smallestChipGap": 6,
+        "overlaps": [],
+        "outside": [],
+        "clipped": [],
+        "textareaLines": 3,
+        "placeholderFits": true,
+        "fieldSizes": [
+          "16px",
+          "16px",
+          "16px",
+          "16px",
+          "16px"
+        ],
+        "type": {
+          "title": "18px",
+          "label": "13.5px",
+          "legend": "13.5px",
+          "hint": "13.5px",
+          "sub": "13px",
+          "chip": "14px",
+          "error": "13px",
+          "send": "15.5px"
+        },
+        "errors": [
+          "That number doesn't look right for Singapore. Check the digits or pick a different country code."
+        ],
+        "phoneErrorLines": 2
+      },
+      "longestCountry": "FK",
+      "badPhoneLongCountry": {
+        "viewport": {
+          "w": 1440,
+          "h": 900
+        },
+        "scrollHeight": 590,
+        "visibleHeight": 590,
+        "fits": true,
+        "sheet": {
+          "top": 93,
+          "bottom": 733,
+          "height": 640,
+          "centred": false,
+          "roomAboveButton": 717
+        },
+        "sheetInView": true,
+        "sendInView": true,
+        "sendHeight": 44,
+        "chipHeights": [
+          44
+        ],
+        "chipRows": 3,
+        "smallestChipGap": 6,
+        "overlaps": [],
+        "outside": [],
+        "clipped": [],
+        "textareaLines": 3,
+        "placeholderFits": true,
+        "fieldSizes": [
+          "16px",
+          "16px",
+          "16px",
+          "16px",
+          "16px"
+        ],
+        "type": {
+          "title": "18px",
+          "label": "13.5px",
+          "legend": "13.5px",
+          "hint": "13.5px",
+          "sub": "13px",
+          "chip": "14px",
+          "error": "13px",
+          "send": "15.5px"
+        },
+        "errors": [
+          "That number doesn't look right for Falkland Islands (Islas Malvinas). Check the digits or pick a different country code."
+        ],
+        "phoneErrorLines": 2
       },
       "pageErrors": []
     }

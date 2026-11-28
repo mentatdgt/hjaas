@@ -168,6 +168,28 @@ for (const [name, options] of SIZES) {
   await page.evaluate(() => document.activeElement?.blur());
   r.allEmpty = await measure(page);
   await shot('3-all-empty');
+
+  // Job 005: a wrong number, with the longer line ("... Check the digits or pick a different country code.").
+  // Singapore, then the longest country name there is, which takes the most lines.
+  await page.fill('#hj-name', 'Wren');
+  await page.fill('#hj-message', 'A shelf for the mushroom lab, please.');
+  await page.fill('#hj-phone', '1234 5678');
+  await press();
+  await wait(250);
+  await page.evaluate(() => document.activeElement?.blur());
+  await page.evaluate(() => (document.querySelector('.hj-sheet-body').scrollTop = 0));
+  r.badPhone = await measure(page);
+  r.badPhone.phoneErrorLines = await page.evaluate(() => { const e = document.querySelector('#hj-phone-err'); return Math.round(e.getBoundingClientRect().height / parseFloat(getComputedStyle(e).lineHeight)); });
+  await shot('4-bad-phone');
+  r.longestCountry = await page.evaluate(() => [...document.querySelector('#hj-country').options].reduce((a, b) => (b.textContent.length > a.textContent.length ? b : a)).value);
+  await page.selectOption('#hj-country', r.longestCountry);
+  await press();
+  await wait(250);
+  await page.evaluate(() => document.activeElement?.blur());
+  await page.evaluate(() => (document.querySelector('.hj-sheet-body').scrollTop = 0));
+  r.badPhoneLongCountry = await measure(page);
+  r.badPhoneLongCountry.phoneErrorLines = await page.evaluate(() => { const e = document.querySelector('#hj-phone-err'); return Math.round(e.getBoundingClientRect().height / parseFloat(getComputedStyle(e).lineHeight)); });
+  await shot('5-bad-phone-long-country');
   r.pageErrors = errors;
   await context.close();
 }
@@ -237,6 +259,6 @@ writeFileSync(join(out, 'report.json'), JSON.stringify(report, null, 2));
 const line = (n, s) => `${n.padEnd(18)} ${String(s.scrollHeight).padStart(4)} / ${String(s.visibleHeight).padEnd(4)} ${s.fits ? 'fits' : 'SCROLLS'}${s.overlaps.length ? ` overlaps:${s.overlaps.length}` : ''}${s.outside.length ? ` outside:${s.outside}` : ''}${s.clipped.length ? ` clipped:${s.clipped}` : ''}`;
 console.log(`engine: ${engine}${webkitSkipped ? ` (WebKit: ${webkitSkipped})` : ''}`);
 for (const [n, r] of Object.entries(report.sizes)) {
-  console.log(line(`${n}`, r.empty), '| neither:', r.neitherFilled.scrollHeight, '/', r.neitherFilled.visibleHeight, '| all-empty:', r.allEmpty.scrollHeight, '/', r.allEmpty.visibleHeight, '| chips', r.empty.chipHeights, 'rows', r.empty.chipRows, 'gap', r.empty.smallestChipGap, r.pageErrors.length ? r.pageErrors : '');
+  console.log(line(`${n}`, r.empty), '| neither:', r.neitherFilled.scrollHeight, '/', r.neitherFilled.visibleHeight, '| all-empty:', r.allEmpty.scrollHeight, '/', r.allEmpty.visibleHeight, '| bad phone:', r.badPhone.scrollHeight, '/', r.badPhone.visibleHeight, `(${r.badPhone.phoneErrorLines} lines; long country ${r.badPhoneLongCountry.scrollHeight} / ${r.badPhoneLongCountry.visibleHeight}, ${r.badPhoneLongCountry.phoneErrorLines} lines)`, '| chips', r.empty.chipHeights, 'rows', r.empty.chipRows, 'gap', r.empty.smallestChipGap, r.pageErrors.length ? r.pageErrors : '');
 }
 for (const [n, b] of Object.entries(report.button)) for (const [state, c] of Object.entries(b)) if (c && c.background) console.log(n, state, c.background, c.color, c.contrast, c.disabled, c.label);
