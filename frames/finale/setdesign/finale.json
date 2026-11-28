@@ -87,58 +87,46 @@
    "A00.png": "A00.png",
    "H.png": "H.png",
    "A01.png": "A01.png",
+   "A02.png": "A02.png",
+   "A03.png": "A03.png",
    "A04.png": "A04.png",
-   "A05.png": "A05.png",
    "B.png": "B.png",
    "BA1.png": "BA1.png",
    "BA2.png": "BA2.png",
    "R1.png": "R1.png",
+   "R2.png": "R2.png",
    "S1.png": "S1.png",
    "S2.png": "S2.png",
    "S3.png": "S3.png"
   },
   "patches": {
-   "A02.png": {
-    "base": "A01.png",
-    "x": 261,
-    "y": 0,
-    "w": 432,
-    "h": 733
-   },
-   "A03.png": {
-    "base": "A01.png",
-    "x": 254,
-    "y": 0,
-    "w": 439,
-    "h": 733
-   },
-   "R2.png": {
-    "base": "R1.png",
-    "x": 219,
-    "y": 22,
-    "w": 331,
-    "h": 711
+   "A05.png": {
+    "base": "A04.png",
+    "x": 388,
+    "y": 125,
+    "w": 87,
+    "h": 146
    },
    "R3.png": {
-    "base": "R1.png",
-    "x": 229,
-    "y": 7,
-    "w": 321,
-    "h": 726
+    "base": "R2.png",
+    "x": 211,
+    "y": 0,
+    "w": 347,
+    "h": 733
    },
    "R4.png": {
-    "base": "R1.png",
-    "x": 212,
+    "base": "R2.png",
+    "x": 204,
     "y": 0,
-    "w": 338,
+    "w": 354,
     "h": 733
    },
    "H_blink.png": {
     "base": "H.png",
-    "x": 334,
-    "y": 81,
-    "w": 113,
-    "h": 65
+    "x": 54,
+    "y": 60,
+    "w": 393,
+    "h": 298
    }
   }
  }
