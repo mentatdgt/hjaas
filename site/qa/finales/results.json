@@ -1,0 +1,279 @@
+{
+ "rules": {
+  "revisit-build": {
+   "phase": "held",
+   "covers": true,
+   "shown": "F12_ok.png",
+   "flashes": 0,
+   "requests": [
+    "finale.ts?t=1795848052824",
+    "finale.ts?t=1795848052824",
+    "finale.json",
+    "F12_ok.webp",
+    "H_blink_ok.webp"
+   ]
+  },
+  "revisit-set": {
+   "phase": "held",
+   "covers": true,
+   "shown": "H.png",
+   "flashes": 0,
+   "requests": [
+    "finale.ts?t=1795848052824",
+    "finale.json",
+    "H.webp",
+    "H_blink.webp"
+   ]
+  },
+  "revisit-film": {
+   "phase": "held",
+   "covers": true,
+   "shown": "H.png",
+   "flashes": 0,
+   "requests": [
+    "finale.ts?t=1795848052824",
+    "finale.json",
+    "H.webp"
+   ]
+  },
+  "away-and-back-mid-finale": {
+   "phase": "held",
+   "covers": true,
+   "shown": "A00.png A01.png A02.png A03.png A04.png A05.png B.png H.png H_blink.png H.png",
+   "flashes": 0
+  },
+  "reduced-motion-film": {
+   "phase": "held",
+   "covers": true,
+   "shown": "H.png",
+   "flashes": 0
+  },
+  "reduced-motion-set": {
+   "phase": "held",
+   "covers": true,
+   "shown": "H.png",
+   "flashes": 0
+  },
+  "motion-film": {
+   "phase": "held",
+   "covers": true,
+   "shown": "H.png",
+   "flashes": 1
+  },
+  "not-ready-build": {
+   "samples": [
+    "1000ms: waiting/routine",
+    "2500ms: waiting/routine",
+    "3500ms: waiting/routine",
+    "6000ms: held/finale",
+    "9000ms: held/finale"
+   ],
+   "phase": "held",
+   "covers": true,
+   "shown": "F12_ok.png"
+  }
+ },
+ "network": {
+  "build": {
+   "firstLoadRequests": 46,
+   "firstLoadFinaleRequests": 0,
+   "finaleRequestsWithFiveFound": 0,
+   "afterSixthFind": [
+    "finale.json (Low)",
+    "F00_ok.webp (Low)",
+    "F12_ok.webp (Low)",
+    "H_blink_ok.webp (Low)",
+    "F01_ok.webp (Low)",
+    "F02_ok.webp (Low)",
+    "F03_ok.webp (Low)",
+    "F04_ok.webp (Low)",
+    "F05_ok.webp (Low)",
+    "F06_ok.webp (Low)",
+    "F07_ok.webp (Low)",
+    "F08_ok.webp (Low)",
+    "F09_ok.webp (Low)",
+    "F10_ok.webp (Low)",
+    "F11_ok.webp (Low)"
+   ]
+  },
+  "grow": {
+   "firstLoadRequests": 115,
+   "firstLoadFinaleRequests": 0,
+   "finaleRequestsWithFiveFound": 0,
+   "afterSixthFind": [
+    "finale.json (Low)",
+    "F00_ok.webp (Low)",
+    "F12_ok.webp (Low)",
+    "H_blink_ok.webp (Low)",
+    "F01_ok.webp (Low)",
+    "F02_ok.webp (Low)",
+    "F03_ok.webp (Low)",
+    "F04_ok.webp (Low)",
+    "F05_ok.webp (Low)",
+    "F06_ok.webp (Low)",
+    "F07_ok.webp (Low)",
+    "F08_ok.webp (Low)",
+    "F09_ok.webp (Low)",
+    "F10_ok.webp (Low)",
+    "F11_ok.webp (Low)"
+   ]
+  },
+  "design": {
+   "firstLoadRequests": 74,
+   "firstLoadFinaleRequests": 0,
+   "finaleRequestsWithFiveFound": 0,
+   "afterSixthFind": [
+    "finale.json (Low)",
+    "F00_cm.webp (Low)",
+    "F10_cm.webp (Low)",
+    "H_blink_cm.webp (Low)",
+    "F01_cm.webp (Low)",
+    "F02_cm.webp (Low)",
+    "F03_cm.webp (Low)",
+    "F04_cm.webp (Low)",
+    "F05_cm.webp (Low)",
+    "F06_cm.webp (Low)",
+    "F07_cm.webp (Low)",
+    "F08_cm.webp (Low)",
+    "F09_cm.webp (Low)"
+   ]
+  },
+  "film": {
+   "firstLoadRequests": 43,
+   "firstLoadFinaleRequests": 0,
+   "finaleRequestsWithFiveFound": 0,
+   "afterSixthFind": [
+    "finale.json (Low)",
+    "H.webp (Low)"
+   ]
+  },
+  "set": {
+   "firstLoadRequests": 137,
+   "firstLoadFinaleRequests": 0,
+   "finaleRequestsWithFiveFound": 0,
+   "afterSixthFind": [
+    "finale.json (Low)",
+    "A00.webp (Low)",
+    "H.webp (Low)",
+    "H_blink.webp (Low)",
+    "A01.webp (Low)",
+    "A02.webp (Low)",
+    "A03.webp (Low)",
+    "A04.webp (Low)",
+    "A05.webp (Low)",
+    "B.webp (Low)",
+    "BA1.webp (Low)",
+    "BA2.webp (Low)",
+    "R1.webp (Low)",
+    "R2.webp (Low)",
+    "R3.webp (Low)",
+    "R4.webp (Low)",
+    "S1.webp (Low)",
+    "S2.webp (Low)",
+    "S3.webp (Low)"
+   ]
+  }
+ },
+ "record": {
+  "build-desktop": {
+   "shown": "F00_ok+0 F01_ok+792 F02_ok+182 F03_ok+67 F04_ok+101 F05_ok+84 F06_ok+65 F07_ok+85 F08_ok+81 F09_ok+97 F10_ok+70 F11_ok+85 F12_ok+166 H_blink_ok+4450 F12_ok+135",
+   "peakDecodedBytes": 15320248,
+   "decodedNow": 3704064,
+   "canvasBytes": 630240,
+   "set": "390px canvas",
+   "longTasks": 0,
+   "videoFrames": 40,
+   "errors": []
+  },
+  "grow-desktop": {
+   "shown": "F00_ok+0 F01_ok+817 F02_ok+149 F03_ok+99 F04_ok+68 F05_ok+84 F06_ok+81 F07_ok+85 F08_ok+84 F09_ok+100 F10_ok+83 F11_ok+66 F12_ok+167 H_blink_ok+4084 F12_ok+132 H_blink_ok+3118 F12_ok+134",
+   "peakDecodedBytes": 13448340,
+   "decodedNow": 2715780,
+   "canvasBytes": 460224,
+   "set": "282px canvas",
+   "longTasks": 0,
+   "videoFrames": 75,
+   "errors": []
+  },
+  "design-desktop": {
+   "shown": "F00_cm+0 F01_cm+800 F02_cm+167 F03_cm+82 F04_cm+83 F05_cm+85 F06_cm+83 F07_cm+82 F08_cm+83 F09_cm+67 F10_cm+168 H_blink_cm+4367 F10_cm+134",
+   "peakDecodedBytes": 12010092,
+   "decodedNow": 3150780,
+   "canvasBytes": 379988,
+   "set": "287px canvas",
+   "longTasks": 0,
+   "videoFrames": 358,
+   "errors": []
+  },
+  "film-desktop": {
+   "shown": "H+0",
+   "peakDecodedBytes": 2192080,
+   "decodedNow": 2192080,
+   "canvasBytes": 377520,
+   "set": "242px canvas",
+   "longTasks": 0,
+   "videoFrames": 63,
+   "errors": []
+  },
+  "setdesign-desktop": {
+   "shown": "A00+0 A01+716 A02+136 A03+98 A04+135 A05+83 B+167 BA1+2482 BA2+102 R1+116 R2+132 R3+117 R4+118 S1+733 S2+134 S3+115 H+151 H_blink+5483 H+134",
+   "peakDecodedBytes": 12355508,
+   "decodedNow": 2237176,
+   "canvasBytes": 379392,
+   "set": "312px canvas",
+   "longTasks": 0,
+   "videoFrames": 162,
+   "errors": []
+  },
+  "build-iphone": {
+   "shown": "F00_ok+0 F01_ok+784 F02_ok+183 F03_ok+82 F04_ok+69 F05_ok+83 F06_ok+83 F07_ok+84 F08_ok+98 F09_ok+68 F10_ok+84 F11_ok+100 F12_ok+150 H_blink_ok+4217 F12_ok+133",
+   "peakDecodedBytes": 8628764,
+   "decodedNow": 2083924,
+   "canvasBytes": 2064344,
+   "set": "706px canvas",
+   "longTasks": 0,
+   "videoFrames": 55,
+   "errors": []
+  },
+  "grow-iphone": {
+   "shown": "F00_ok+0 F01_ok+818 F02_ok+149 F03_ok+100 F04_ok+82 F05_ok+67 F06_ok+84 F07_ok+84 F08_ok+66 F09_ok+84 F10_ok+83 F11_ok+99 F12_ok+167 H_blink_ok+5785 F12_ok+116",
+   "peakDecodedBytes": 7571508,
+   "decodedNow": 1529444,
+   "canvasBytes": 1510516,
+   "set": "511px canvas",
+   "longTasks": 0,
+   "videoFrames": 96,
+   "errors": []
+  },
+  "design-iphone": {
+   "shown": "F00_cm+0 F01_cm+816 F02_cm+182 F03_cm+67 F04_cm+67 F05_cm+100 F06_cm+66 F07_cm+101 F08_cm+67 F09_cm+98 F10_cm+151 H_blink_cm+4983 F10_cm+133",
+   "peakDecodedBytes": 6756352,
+   "decodedNow": 1772672,
+   "canvasBytes": 1245920,
+   "set": "520px canvas",
+   "longTasks": 0,
+   "videoFrames": 231,
+   "errors": []
+  },
+  "film-iphone": {
+   "shown": "H+0",
+   "peakDecodedBytes": 1232340,
+   "decodedNow": 1232340,
+   "canvasBytes": 1232340,
+   "set": "437px canvas",
+   "longTasks": 0,
+   "videoFrames": 64,
+   "errors": []
+  },
+  "setdesign-iphone": {
+   "shown": "A00+0 A01+702 A02+132 A03+116 A04+118 A05+99 B+152 BA1+2499 BA2+98 R1+118 R2+133 R3+101 R4+132 S1+734 S2+134 S3+116 H+132 H_blink+5785 H+133",
+   "peakDecodedBytes": 6958200,
+   "decodedNow": 1260200,
+   "canvasBytes": 1243000,
+   "set": "565px canvas",
+   "longTasks": 0,
+   "videoFrames": 59,
+   "errors": []
+  }
+ }
+}

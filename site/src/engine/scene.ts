@@ -2,7 +2,8 @@
 // A scene knows nothing about the page around it; site.ts puts it in the window and takes it out again.
 import { FrameStore, PLATE, type Frame, asset, cutFrom, decodeBlob, fetchBlob, fetchFrame, fetchJson, frameSize, idle, loadImage, loadPlate, releaseFrame, requiredAsset } from './assets';
 import { leadOf, splitCast, type CastFrames, type CastRoutines, type CastScreen } from './cast';
-import { Character } from './character';
+import { Character, shadowStyle } from './character';
+import { Finale, fetchScope, type FinaleManifest } from './finale';
 import { edgeAlpha, edgeName, makeEdge, type Edge, type EdgeStyle } from './edge';
 import { checkClips, clipEntry, clipPose, clipReaction, clipSchedule, clipsInUse, restOf, stillsInUse, type ClipFrames, type ClipRoutine, type Entry, type Stage } from './clips';
 import { Hunt, type HuntArt } from './mushrooms';
@@ -795,6 +796,12 @@ export class Scene {
   private working = false;
   private generation = 0;
   private destroyed = false;
+  /** Her finale (finale.ts), once she is on the plate, if the scene has one. */
+  private finale: Finale | null = null;
+  /** The cast a finale has taken the place of: hidden, their players stopped. */
+  private readonly benched = new Set<Cast>();
+  /** Her ground shadow as it was before a finale took it over. */
+  private shadowWas: string | null = null;
 
   private constructor(config: SceneConfig, host: SceneHost, plate: HTMLDivElement, room: HTMLImageElement, hunt: Hunt, edge: Edge, casting: Casting) {
     this.config = config;
@@ -822,6 +829,7 @@ export class Scene {
     hunt.layout(plate.clientWidth / PLATE.w);
     for (const cast of this.casts) cast.character.resize();
     this.finder?.resize();
+    this.finale?.resize();
     this.host.onLayout();
   }
 
@@ -884,7 +892,11 @@ export class Scene {
         host.onFind(spot);
         made?.progressed();
       },
-      onLand: host.onLand,
+      // The host lands it on the counter first; then, if it was the tenth, her finale.
+      onLand: (spot: Spot) => {
+        host.onLand(spot);
+        made?.landed();
+      },
     }, drawn);
     const scene = new Scene(config, host, plate, room, hunt, edge, casting);
     made = scene;
@@ -900,11 +912,86 @@ export class Scene {
   syncFinds(): void {
     this.hunt.syncFinds();
     this.progressed();
+    // Reset: she comes back from her finale. Completed elsewhere (another tab): she holds its pose.
+    const finale = this.finale;
+    if (!finale) return;
+    if (this.hunt.remaining > 0 && finale.phase !== 'routine') finale.reset();
+    else if (this.hunt.remaining === 0 && finale.phase === 'routine') finale.complete();
   }
 
   /** A mushroom of this scene was found (the host has counted it): the picture shows the hunt's progress. */
   private progressed(): void {
     this.progress?.reach();
+    if (this.settled) this.fetchFinale(true);
+  }
+
+  /** A find has landed on the counter: if it was the scene's last, her finale starts. */
+  private landed(): void {
+    if (this.hunt.remaining === 0 && this.finale?.phase === 'routine') this.finale.trigger();
+  }
+
+  /** Her finale's files, once the scene has six of its ten (see fetchScope in finale.ts). `live`: a find, just now. */
+  private fetchFinale(live = false): void {
+    if (!this.finale || this.paused) return;
+    const scope = fetchScope(this.total - this.hunt.remaining, this.total, live || this.finale.phase !== 'held');
+    if (scope !== 'none') this.finale.want(scope);
+  }
+
+  /** Her finale, on the plate with her: under way at once if the scene is already complete. */
+  private setUpFinale(): void {
+    const config = this.config.finale;
+    const lead = this.cast;
+    if (!config || !lead || this.finale) return;
+    const finale = new Finale(config, this.config.assets, {
+      rnd: this.host.rnd,
+      still: this.host.still,
+      shownWidth: this.host.shownWidth,
+      place: (el) => lead.character.el.after(el),
+      overlay: (el) => this.plate.insertBefore(el, this.mark),
+      cover: (on, hide, box) => this.cover(on, hide, box),
+    });
+    this.finale = finale;
+    void finale.wake();
+    if (this.hunt.remaining === 0) finale.complete();
+  }
+
+  /** A finale takes the place of these layers (true), or gives it back (false). */
+  private cover(on: boolean, hide: readonly string[], box: FinaleManifest['plate']): void {
+    for (const cast of this.casts) {
+      const names = [cast.character.el.dataset.actor, cast === this.cast ? 'rachel' : undefined];
+      if (!names.some((name) => name !== undefined && hide.includes(name))) continue;
+      const player = this.players.get(cast);
+      cast.character.el.style.visibility = on ? 'hidden' : '';
+      if (on) {
+        this.benched.add(cast);
+        player?.settle();
+      } else if (this.benched.delete(cast)) {
+        this.restart(cast);
+        if (this.working && !document.hidden) player?.start();
+      }
+    }
+    // Her ground shadow, if the scene draws one, goes under the finale's frame instead.
+    const shadow = this.cast?.character.shadow;
+    const placement = this.config.character?.kind === 'frames' ? this.config.character.placement : null;
+    if (!shadow || placement?.kind !== 'standing') return;
+    if (on) {
+      this.shadowWas ??= shadow.style.cssText;
+      Object.assign(shadow.style, shadowStyle({ left: box.x, width: box.w }, placement.baseline, placement.height));
+    } else if (this.shadowWas !== null) {
+      shadow.style.cssText = this.shadowWas;
+      this.shadowWas = null;
+    }
+  }
+
+  /** QA (`?finale=`): play the finale from the top, without finding ten mushrooms. */
+  rehearseFinale(name: string): Promise<void> {
+    if (!this.finale || (this.config.finale?.name !== name && this.config.id !== name)) return Promise.resolve();
+    return this.finale.rehearse();
+  }
+
+  /** QA: her finale. */
+  get finaleShow(): Finale | null {
+    return this.finale;
   }
 
   /**
@@ -926,7 +1013,7 @@ export class Scene {
     this.paused = false;
     // A scene come back to: its frames are decoded again while the brush is still at work. (A cast that kept
     // nothing can be drawn again once each actor's rest frame is back.)
-    const back = Promise.all([...this.casts.map((cast) => cast.wake()), this.progress?.wake(), ...this.walks.map((walk) => walk.wake())]).then(() => {});
+    const back = Promise.all([...this.casts.map((cast) => cast.wake()), this.progress?.wake(), ...this.walks.map((walk) => walk.wake()), this.finale?.wake()]).then(() => {});
     if (this.character || !this.config.character) return back;
     this.preload();
     const at = this.generation;
@@ -938,8 +1025,9 @@ export class Scene {
           return;
         }
         if (casts && !this.character) this.attach(casts);
-        // The progress pieces the hunt has reached are drawn before the scene shows, and the walkers' pictures decoded.
-        await Promise.all([this.progress?.wake(), ...this.walks.map((walk) => walk.wake())]);
+        // The progress pieces the hunt has reached are drawn before the scene shows, and the walkers' pictures decoded;
+        // and a complete scene's held pose (a moment, at most: see Finale.wake()).
+        await Promise.all([this.progress?.wake(), ...this.walks.map((walk) => walk.wake()), this.finale?.wake()]);
       }).catch((error) => {
         if (at === this.generation) this.entering = null;
         throw error;
@@ -1008,12 +1096,14 @@ export class Scene {
     this.complete = false;
     this.fetching.abort();
     this.fetching = new AbortController();
+    this.finale?.halt();
   }
 
   /** The visitor stays after all: carry on downloading. */
   resume(): void {
     if (!this.paused || this.destroyed) return;
     this.paused = false;
+    if (this.settled) this.fetchFinale();
     if (this.settled) void this.loadMore();
     else void this.stock();
   }
@@ -1065,6 +1155,7 @@ export class Scene {
     }
     this.stagger();
     this.download();
+    this.setUpFinale();
     // The scene was set to work before she arrived.
     if (this.working) this.work();
   }
@@ -1080,7 +1171,8 @@ export class Scene {
    * that none of it is left to be done in the painting's own frames. (The scene must be on the page.)
    */
   async drawn(): Promise<void> {
-    await Promise.all([this.progress?.wake(), ...this.walks.map((walk) => walk.wake())]);
+    // (A complete scene's held pose too, so that the painting uncovers her in it: not for long.)
+    await Promise.all([this.progress?.wake(), ...this.walks.map((walk) => walk.wake()), this.finale?.phase === 'held' ? this.finale.heldReady(1200) : null]);
     for (const cast of this.casts) await cast.character.rehearse();
   }
 
@@ -1096,13 +1188,15 @@ export class Scene {
       cast.character.painting = false;
       void cast.wake();
     }
-    if (!document.hidden) for (const player of this.players.values()) player.start();
+    if (!document.hidden) for (const [cast, player] of this.players) if (!this.benched.has(cast)) player.start();
+    this.finale?.run(!document.hidden);
   }
 
   /** Stop on the current pose (the visitor is leaving for another scene). work() carries on from it. */
   hold(): void {
     this.working = false;
     for (const player of this.players.values()) player.stop();
+    this.finale?.run(false);
   }
 
   /**
@@ -1127,6 +1221,8 @@ export class Scene {
     this.finder?.sleep();
     this.progress?.sleep();
     for (const walk of this.walks) walk.sleep();
+    // (A finale under way ends on the held pose: coming back, she holds it.)
+    this.finale?.sleep();
     this.stagger();
     if (!keepRoom) {
       this.room.removeAttribute('src');
@@ -1197,23 +1293,26 @@ export class Scene {
       for (const key of ['stills', 'canvases', 'clipFrames', 'clipFramesPeak'] as const) hers[key] += m[key] ?? 0;
       if (cast === this.cast) hers.canvasWidth = m.canvasWidth ?? 0;
     }
-    hers.canvases += (this.finder?.bytes ?? 0) + (this.progress?.bytes ?? 0) + this.walks.reduce((sum, walk) => sum + walk.bytes, 0);
-    return { ...hers, room: this.room.getAttribute('src') ? PLATE.w * PLATE.h * 4 : 0, edge: this.edge.bytes };
+    hers.canvases += (this.finder?.bytes ?? 0) + (this.progress?.bytes ?? 0) + this.walks.reduce((sum, walk) => sum + walk.bytes, 0) + (this.finale?.canvasBytes ?? 0);
+    const finale = { finaleFrames: this.finale?.bytes ?? 0, finaleFramesPeak: this.finale?.peak ?? 0 };
+    return { ...hers, ...finale, room: this.room.getAttribute('src') ? PLATE.w * PLATE.h * 4 : 0, edge: this.edge.bytes };
   }
 
   /** The tab was hidden or shown: she picks up on the same pose when it comes back. */
   visibility(): void {
     if (!this.working) return;
-    for (const player of this.players.values()) {
+    for (const [cast, player] of this.players) {
       if (document.hidden) player.stop();
-      else player.start();
+      else if (!this.benched.has(cast)) player.start();
     }
+    this.finale?.run(!document.hidden);
   }
 
   finishMotion(resetRoutine: boolean): void {
     for (const [cast, player] of this.players) {
-      if (resetRoutine || player.reacting) player.finishMotion(this.rhythm(cast), resetRoutine, this.working && !document.hidden);
+      if (resetRoutine || player.reacting) player.finishMotion(this.rhythm(cast), resetRoutine, this.working && !document.hidden && !this.benched.has(cast));
     }
+    this.finale?.refresh();
     this.progress?.finishMotion();
     if (resetRoutine) {
       for (const walk of this.walks) walk.frame(performance.now());
@@ -1225,6 +1324,7 @@ export class Scene {
   refresh(): void {
     for (const [cast, player] of this.players) player.setLoop(this.rhythm(cast));
     this.finder?.draw();
+    this.finale?.refresh();
   }
 
   /**
@@ -1233,7 +1333,8 @@ export class Scene {
    * held again from now: `again` in its config).
    */
   react(): Promise<void> {
-    if (!this.player || !this.cast || document.hidden) return Promise.resolve();
+    // (In her finale, or about to be, she does not answer.)
+    if (!this.player || !this.cast || document.hidden || (this.finale && this.finale.phase !== 'routine')) return Promise.resolve();
     if (this.player.reacting) {
       // A second find while she is still answering the first: she holds the look a while longer.
       if (this.config.again === 'hold') this.player.prolong();
@@ -1283,6 +1384,8 @@ export class Scene {
       if (cast !== this.cast) await cast.more(reactions, signal);
     }
     await others;
+    // Only now, with all of hers here, her finale's files (if the scene has six of its ten: see fetchScope).
+    if (!over()) this.fetchFinale();
     if (over() || this.paused || this.complete) return;
     this.complete = true;
     this.host.onFilesIn?.();
@@ -1330,8 +1433,13 @@ export class Scene {
       ctx.drawImage(walk.el, w.left - origin.left, w.top - origin.top, w.width, w.height);
     }
     this.hunt.sketch(ctx, origin);
-    for (const cast of this.casts) cast.character.sketch(ctx, origin);
-    this.finder?.sketch(ctx, origin);
+    for (const cast of this.casts) {
+      // (A layer her finale has taken the place of: only its shadow. The finale goes where she is.)
+      cast.character.sketch(ctx, origin, !this.benched.has(cast));
+      if (cast === this.cast) this.finale?.sketch(ctx, origin);
+    }
+    const holder = this.casts.find((cast) => cast.screen);
+    if (!holder || !this.benched.has(holder)) this.finder?.sketch(ctx, origin);
     // Its painting was left part way: the sheet still over it, in its place under the edge, and the pencil's veil over that.
     const over = (canvas: HTMLCanvasElement | null | undefined): void => {
       if (canvas) ctx.drawImage(canvas, r.left - origin.left, r.top - origin.top, r.width, r.height);
@@ -1351,6 +1459,8 @@ export class Scene {
     this.working = false;
     this.layout.disconnect();
     for (const player of this.players.values()) player.settle();
+    this.finale?.destroy();
+    this.finale = null;
     for (const actor of this.casts) {
       actor.sleep(false);
       actor.backdrop?.close();

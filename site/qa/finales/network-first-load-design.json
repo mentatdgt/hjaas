@@ -1,0 +1,372 @@
+[
+ {
+  "at": 75242005,
+  "url": "/?debug&reset",
+  "priority": "VeryHigh"
+ },
+ {
+  "at": 75242012,
+  "url": "/room-route.js",
+  "priority": "High"
+ },
+ {
+  "at": 75242012,
+  "url": "/shell.css",
+  "priority": "VeryHigh"
+ },
+ {
+  "at": 75242026,
+  "url": "/assets/scene3/room.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242091,
+  "url": "/assets/scene3/cast/frames.json",
+  "priority": "High"
+ },
+ {
+  "at": 75242091,
+  "url": "/assets/scene3/cast/routine.json",
+  "priority": "High"
+ },
+ {
+  "at": 75242093,
+  "url": "/assets/scene3/pencil-tb.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242093,
+  "url": "/assets/scene3/pencil-lr.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242093,
+  "url": "/assets/shared/mushrooms/mushroom_01.webp",
+  "priority": "Low"
+ },
+ {
+  "at": 75242093,
+  "url": "/assets/shared/mushrooms/mushroom_07.webp",
+  "priority": "Low"
+ },
+ {
+  "at": 75242093,
+  "url": "/assets/shared/mushrooms/mushroom_04.webp",
+  "priority": "Low"
+ },
+ {
+  "at": 75242093,
+  "url": "/assets/shared/mushrooms/mushroom_06.webp",
+  "priority": "Low"
+ },
+ {
+  "at": 75242093,
+  "url": "/assets/shared/mushrooms/mushroom_03.webp",
+  "priority": "Low"
+ },
+ {
+  "at": 75242094,
+  "url": "/assets/shared/mushrooms/mushroom_08.webp",
+  "priority": "Low"
+ },
+ {
+  "at": 75242094,
+  "url": "/assets/shared/mushrooms/mushroom_09.webp",
+  "priority": "Low"
+ },
+ {
+  "at": 75242094,
+  "url": "/assets/shared/mushrooms/mushroom_02.webp",
+  "priority": "Low"
+ },
+ {
+  "at": 75242094,
+  "url": "/assets/shared/logo/logo.webp",
+  "priority": "Low"
+ },
+ {
+  "at": 75242112,
+  "url": "/assets/scene3/cast/fan/fan_00.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242113,
+  "url": "/assets/scene3/cast/cat/cat_1.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242113,
+  "url": "/assets/scene3/cast/child/C_1.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242113,
+  "url": "/assets/scene3/cast/oldman/O_1.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242113,
+  "url": "/assets/scene3/cast/barista/B_1.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242113,
+  "url": "/assets/scene3/cast/rachel/R_A1_sketch.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242123,
+  "url": "/favicon-32.png",
+  "priority": "High"
+ },
+ {
+  "at": 75242269,
+  "url": "/assets/scene3/cast/rachel/R_A2_stroke.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242269,
+  "url": "/assets/scene3/cast/rachel/R_S1_reach.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242269,
+  "url": "/assets/scene3/cast/rachel/R_S2_lift.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242269,
+  "url": "/assets/scene3/cast/rachel/R_B1_sip.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242269,
+  "url": "/assets/scene3/cast/rachel/R_A1_blink.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242269,
+  "url": "/assets/scene3/cast/rachel/R_K1_blink.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242270,
+  "url": "/assets/scene3/cast/rachel/R_K1_look.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242270,
+  "url": "/assets/scene3/cast/rachel/R_K2_smile.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242270,
+  "url": "/assets/scene3/cast/fan/fan_01.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242270,
+  "url": "/assets/scene3/cast/fan/fan_02.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242270,
+  "url": "/assets/scene3/cast/fan/fan_03.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242270,
+  "url": "/assets/scene3/cast/fan/fan_04.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242270,
+  "url": "/assets/scene3/cast/fan/fan_05.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242270,
+  "url": "/assets/scene3/cast/fan/fan_06.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242271,
+  "url": "/assets/scene3/cast/fan/fan_07.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242271,
+  "url": "/assets/scene3/cast/fan/fan_08.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242271,
+  "url": "/assets/scene3/cast/fan/fan_09.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242271,
+  "url": "/assets/scene3/cast/fan/fan_10.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242271,
+  "url": "/assets/scene3/cast/fan/fan_11.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242271,
+  "url": "/assets/scene3/cast/fan/fan_12.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242271,
+  "url": "/assets/scene3/cast/fan/fan_13.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242271,
+  "url": "/assets/scene3/cast/fan/fan_14.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242271,
+  "url": "/assets/scene3/cast/fan/fan_15.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242272,
+  "url": "/assets/scene3/cast/fan/fan_16.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242272,
+  "url": "/assets/scene3/cast/fan/fan_17.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242272,
+  "url": "/assets/scene3/cast/fan/fan_18.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242272,
+  "url": "/assets/scene3/cast/fan/fan_19.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242272,
+  "url": "/assets/scene3/cast/cat/cat_F1.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242272,
+  "url": "/assets/scene3/cast/cat/cat_F2.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242272,
+  "url": "/assets/scene3/cast/cat/cat_2.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242272,
+  "url": "/assets/scene3/cast/child/C_2.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242273,
+  "url": "/assets/scene3/cast/child/C_3.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242273,
+  "url": "/assets/scene3/cast/oldman/P1.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242273,
+  "url": "/assets/scene3/cast/oldman/P2.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242273,
+  "url": "/assets/scene3/cast/oldman/P3.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242273,
+  "url": "/assets/scene3/cast/oldman/P4.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242273,
+  "url": "/assets/scene3/cast/oldman/P5.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242273,
+  "url": "/assets/scene3/cast/oldman/O_blink.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242273,
+  "url": "/assets/scene3/cast/barista/B_P1.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242274,
+  "url": "/assets/scene3/cast/barista/B_2_polish.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242274,
+  "url": "/assets/scene3/cast/barista/B_P2.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242274,
+  "url": "/assets/scene3/cast/barista/B_3_polish.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242274,
+  "url": "/assets/scene3/cast/barista/B_P3.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242274,
+  "url": "/assets/scene3/cast/barista/B_4_glance.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242274,
+  "url": "/assets/scene3/cast/mum/M_S1.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242274,
+  "url": "/assets/scene3/cast/mum/M_S2.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242274,
+  "url": "/assets/scene3/cast/mum/M_blink_half.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75242275,
+  "url": "/assets/scene3/cast/mum/M_blink_closed.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75248489,
+  "url": "/assets/scene3/room.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75248490,
+  "url": "/assets/scene4/room.webp",
+  "priority": "Low"
+ }
+]

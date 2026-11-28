@@ -236,6 +236,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
       get scene() { return current; },
       get player() { return current?.player; },
       get rachel() { return current?.character; },
+      get finale() { return current?.finaleShow; },
       get hunt() { return current?.hunt; },
       get logo() { return logo; },
       get ready() { return ready; },
@@ -247,6 +248,7 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
         for (const [id, scene] of scenesLoaded) {
           const m = scene.memory;
           parts[`${id}.frames`] = m.stills + m.clipFrames;
+          parts[`${id}.finale`] = m.finaleFrames;
           parts[`${id}.canvases`] = m.canvases;
           parts[`${id}.room`] = m.room;
           parts[`${id}.edge`] = m.edge;
@@ -747,6 +749,8 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     else current?.pause();
   };
 
+  /** QA: the finale `?finale=` asks for has been played. */
+  let rehearsed = false;
   /** A picture is finished, and the page is quiet again. */
   const arrived = (scene: Scene): void => {
     visit.finished(scene.config.id);
@@ -758,6 +762,11 @@ export function mountSite(host: HTMLElement, options: SiteOptions): Site {
     showControls(false);
     // (Once its own files are all here, the next room is downloaded ahead: see onFilesIn.)
     void scene.loadMore().then(() => void (ready = true));
+    // QA (development only, like every switch): `?finale=setdesign` plays that scene's finale, once.
+    if (flags.finale && !rehearsed && (scene.config.finale?.name === flags.finale || scene.config.id === flags.finale)) {
+      rehearsed = true;
+      void scene.rehearseFinale(flags.finale);
+    }
   };
   /** Start a scene's painting, brush-over or fade. It is not waited for: another scene may be asked for meanwhile. */
   const play = (scene: Scene, motion: () => Promise<void>, then?: () => void): void => {

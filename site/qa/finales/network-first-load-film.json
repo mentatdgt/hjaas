@@ -1,0 +1,217 @@
+[
+ {
+  "at": 75264216,
+  "url": "/?debug&reset",
+  "priority": "VeryHigh"
+ },
+ {
+  "at": 75264222,
+  "url": "/room-route.js",
+  "priority": "High"
+ },
+ {
+  "at": 75264222,
+  "url": "/shell.css",
+  "priority": "VeryHigh"
+ },
+ {
+  "at": 75264235,
+  "url": "/assets/scene4/room.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75264305,
+  "url": "/assets/scene4/cast/frames.json",
+  "priority": "High"
+ },
+ {
+  "at": 75264305,
+  "url": "/assets/scene4/cast/routine.json",
+  "priority": "High"
+ },
+ {
+  "at": 75264306,
+  "url": "/assets/scene4/pencil-tb.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75264307,
+  "url": "/assets/scene4/pencil-lr.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75264307,
+  "url": "/assets/shared/mushrooms/mushroom_04.webp",
+  "priority": "Low"
+ },
+ {
+  "at": 75264307,
+  "url": "/assets/shared/mushrooms/mushroom_01.webp",
+  "priority": "Low"
+ },
+ {
+  "at": 75264307,
+  "url": "/assets/shared/mushrooms/mushroom_07.webp",
+  "priority": "Low"
+ },
+ {
+  "at": 75264307,
+  "url": "/assets/shared/mushrooms/mushroom_08.webp",
+  "priority": "Low"
+ },
+ {
+  "at": 75264307,
+  "url": "/assets/shared/mushrooms/mushroom_06.webp",
+  "priority": "Low"
+ },
+ {
+  "at": 75264307,
+  "url": "/assets/shared/mushrooms/mushroom_03.webp",
+  "priority": "Low"
+ },
+ {
+  "at": 75264307,
+  "url": "/assets/shared/logo/logo.webp",
+  "priority": "Low"
+ },
+ {
+  "at": 75264331,
+  "url": "/assets/scene4/cast/water/W_1.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75264331,
+  "url": "/assets/scene4/cast/presenter2x/M_1.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75264331,
+  "url": "/assets/scene4/cast/rachel/R_A1_film.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75264331,
+  "url": "/favicon-32.png",
+  "priority": "High"
+ },
+ {
+  "at": 75264344,
+  "url": "/assets/scene4/room.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75264511,
+  "url": "/assets/scene4/cast/rachel/R_K0_turn.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75264511,
+  "url": "/assets/scene4/cast/rachel/R_K1_look.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75264511,
+  "url": "/assets/scene4/cast/water/W_2.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75264511,
+  "url": "/assets/scene4/cast/water/W_3.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75264511,
+  "url": "/assets/scene4/cast/presenter2x/M_1_mid.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75264512,
+  "url": "/assets/scene4/cast/presenter2x/M_1_closed.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75264512,
+  "url": "/assets/scene4/cast/presenter2x/M_1_12.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75264512,
+  "url": "/assets/scene4/cast/presenter2x/M_12.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75264512,
+  "url": "/assets/scene4/cast/presenter2x/M_2.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75264512,
+  "url": "/assets/scene4/cast/presenter2x/M_2_closed.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75264512,
+  "url": "/assets/scene4/cast/presenter2x/M_1_13.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75264512,
+  "url": "/assets/scene4/cast/presenter2x/M_13.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75264512,
+  "url": "/assets/scene4/cast/presenter2x/M_3.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75264513,
+  "url": "/assets/scene4/cast/presenter2x/M_3_closed.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75264513,
+  "url": "/assets/scene4/cast/presenter2x/M_1_blink.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75264513,
+  "url": "/assets/scene4/cast/presenter2x/M_1_mid_blink.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75264513,
+  "url": "/assets/scene4/cast/presenter2x/M_1_closed_blink.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75264513,
+  "url": "/assets/scene4/cast/presenter2x/M_2_blink.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75264513,
+  "url": "/assets/scene4/cast/presenter2x/M_2_closed_blink.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75264513,
+  "url": "/assets/scene4/cast/presenter2x/M_3_blink.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75264513,
+  "url": "/assets/scene4/cast/presenter2x/M_3_closed_blink.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75270959,
+  "url": "/assets/scene4/room.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75270961,
+  "url": "/assets/scene5/room.webp",
+  "priority": "Low"
+ }
+]

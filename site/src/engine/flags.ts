@@ -9,6 +9,8 @@
 //   ?slow=5        play the UI motion (GSAP) this many times slower, for frame-by-frame review
 //   ?edge=organic  the painting's edge: pencil (the one that ships) | organic | a-round | a | b | c, for comparison
 //   ?debug         outline mushroom hit areas and expose window.__hj
+//   ?finale=build  play that scene's finale once it has settled, without finding its ten (build, grow, design,
+//                  film, setdesign, or the scene's id). Open the scene with its address: ?finale=setdesign#set
 // Production builds ignore them all: `?all=50` would otherwise skip the hunt and open the form.
 
 const params = new URLSearchParams(import.meta.env.DEV && typeof location !== 'undefined' ? location.search : '');
@@ -30,4 +32,5 @@ export const flags = {
   slow: num('slow'),
   edge: params.get('edge'),
   debug: params.has('debug'),
+  finale: params.get('finale'),
 };

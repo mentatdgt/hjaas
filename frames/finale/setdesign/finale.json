@@ -1,0 +1,145 @@
+{
+ "scene": "setdesign",
+ "plate": {
+  "x": 550.7,
+  "y": 82.8,
+  "w": 501.8,
+  "h": 489.0
+ },
+ "density": 1.5,
+ "size": [
+  753,
+  733
+ ],
+ "frames": [
+  {
+   "file": "A00.png",
+   "ms": 700
+  },
+  {
+   "file": "A01.png",
+   "ms": 130
+  },
+  {
+   "file": "A02.png",
+   "ms": 120
+  },
+  {
+   "file": "A03.png",
+   "ms": 110
+  },
+  {
+   "file": "A04.png",
+   "ms": 110
+  },
+  {
+   "file": "A05.png",
+   "ms": 140
+  },
+  {
+   "file": "B.png",
+   "ms": 2500
+  },
+  {
+   "file": "BA1.png",
+   "ms": 110
+  },
+  {
+   "file": "BA2.png",
+   "ms": 110
+  },
+  {
+   "file": "R1.png",
+   "ms": 130
+  },
+  {
+   "file": "R2.png",
+   "ms": 110
+  },
+  {
+   "file": "R3.png",
+   "ms": 120
+  },
+  {
+   "file": "R4.png",
+   "ms": 740
+  },
+  {
+   "file": "S1.png",
+   "ms": 130
+  },
+  {
+   "file": "S2.png",
+   "ms": 120
+  },
+  {
+   "file": "S3.png",
+   "ms": 130
+  },
+  {
+   "file": "H.png",
+   "ms": 100
+  }
+ ],
+ "blink": "H_blink.png",
+ "parts": {
+  "stills": {
+   "A00.png": "A00.png",
+   "H.png": "H.png",
+   "A01.png": "A01.png",
+   "A04.png": "A04.png",
+   "A05.png": "A05.png",
+   "B.png": "B.png",
+   "BA1.png": "BA1.png",
+   "BA2.png": "BA2.png",
+   "R1.png": "R1.png",
+   "S1.png": "S1.png",
+   "S2.png": "S2.png",
+   "S3.png": "S3.png"
+  },
+  "patches": {
+   "A02.png": {
+    "base": "A01.png",
+    "x": 261,
+    "y": 0,
+    "w": 432,
+    "h": 733
+   },
+   "A03.png": {
+    "base": "A01.png",
+    "x": 254,
+    "y": 0,
+    "w": 439,
+    "h": 733
+   },
+   "R2.png": {
+    "base": "R1.png",
+    "x": 219,
+    "y": 22,
+    "w": 331,
+    "h": 711
+   },
+   "R3.png": {
+    "base": "R1.png",
+    "x": 229,
+    "y": 7,
+    "w": 321,
+    "h": 726
+   },
+   "R4.png": {
+    "base": "R1.png",
+    "x": 212,
+    "y": 0,
+    "w": 338,
+    "h": 733
+   },
+   "H_blink.png": {
+    "base": "H.png",
+    "x": 334,
+    "y": 81,
+    "w": 113,
+    "h": 65
+   }
+  }
+ }
+}

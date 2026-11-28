@@ -1,0 +1,422 @@
+{
+ "window": [
+  1139,
+  7639
+ ],
+ "frames": {
+  "BeginFrame": 390,
+  "DrawFrame": 17,
+  "DroppedFrame": 97,
+  "BeginMainThreadFrame": 292,
+  "Commit": 453
+ },
+ "frameStates": {
+  "STATE_NO_UPDATE_DESIRED": 277,
+  "STATE_DROPPED": 97,
+  "STATE_PRESENTED_ALL": 16
+ },
+ "droppedAffectingSmoothness": 97,
+ "droppedFrameEvents": [
+  {
+   "atMs": 1203,
+   "partial": false
+  },
+  {
+   "atMs": 1254,
+   "partial": false
+  },
+  {
+   "atMs": 1303,
+   "partial": false
+  },
+  {
+   "atMs": 1354,
+   "partial": false
+  },
+  {
+   "atMs": 1403,
+   "partial": false
+  },
+  {
+   "atMs": 1504,
+   "partial": false
+  },
+  {
+   "atMs": 1537,
+   "partial": false
+  },
+  {
+   "atMs": 1570,
+   "partial": false
+  },
+  {
+   "atMs": 1637,
+   "partial": false
+  },
+  {
+   "atMs": 1670,
+   "partial": false
+  },
+  {
+   "atMs": 1721,
+   "partial": false
+  },
+  {
+   "atMs": 1821,
+   "partial": false
+  },
+  {
+   "atMs": 1870,
+   "partial": false
+  },
+  {
+   "atMs": 1921,
+   "partial": false
+  },
+  {
+   "atMs": 1987,
+   "partial": false
+  },
+  {
+   "atMs": 2020,
+   "partial": false
+  },
+  {
+   "atMs": 2138,
+   "partial": false
+  },
+  {
+   "atMs": 2237,
+   "partial": false
+  },
+  {
+   "atMs": 2321,
+   "partial": false
+  },
+  {
+   "atMs": 2354,
+   "partial": false
+  },
+  {
+   "atMs": 2404,
+   "partial": false
+  },
+  {
+   "atMs": 2504,
+   "partial": false
+  },
+  {
+   "atMs": 2537,
+   "partial": false
+  },
+  {
+   "atMs": 2621,
+   "partial": false
+  },
+  {
+   "atMs": 2654,
+   "partial": false
+  },
+  {
+   "atMs": 2703,
+   "partial": false
+  },
+  {
+   "atMs": 2754,
+   "partial": false
+  },
+  {
+   "atMs": 2821,
+   "partial": false
+  },
+  {
+   "atMs": 2921,
+   "partial": false
+  },
+  {
+   "atMs": 3037,
+   "partial": false
+  },
+  {
+   "atMs": 3121,
+   "partial": false
+  },
+  {
+   "atMs": 3154,
+   "partial": false
+  },
+  {
+   "atMs": 3237,
+   "partial": false
+  },
+  {
+   "atMs": 3270,
+   "partial": false
+  },
+  {
+   "atMs": 3321,
+   "partial": false
+  },
+  {
+   "atMs": 3387,
+   "partial": false
+  },
+  {
+   "atMs": 3470,
+   "partial": false
+  },
+  {
+   "atMs": 3520,
+   "partial": false
+  },
+  {
+   "atMs": 3554,
+   "partial": false
+  },
+  {
+   "atMs": 3721,
+   "partial": false
+  },
+  {
+   "atMs": 3754,
+   "partial": false
+  },
+  {
+   "atMs": 3838,
+   "partial": false
+  },
+  {
+   "atMs": 3870,
+   "partial": false
+  },
+  {
+   "atMs": 3938,
+   "partial": false
+  },
+  {
+   "atMs": 3987,
+   "partial": false
+  },
+  {
+   "atMs": 4138,
+   "partial": false
+  },
+  {
+   "atMs": 4205,
+   "partial": false
+  },
+  {
+   "atMs": 4236,
+   "partial": false
+  },
+  {
+   "atMs": 4304,
+   "partial": false
+  },
+  {
+   "atMs": 4387,
+   "partial": false
+  },
+  {
+   "atMs": 4438,
+   "partial": false
+  },
+  {
+   "atMs": 4470,
+   "partial": false
+  },
+  {
+   "atMs": 4555,
+   "partial": false
+  },
+  {
+   "atMs": 4655,
+   "partial": false
+  },
+  {
+   "atMs": 4704,
+   "partial": false
+  },
+  {
+   "atMs": 4787,
+   "partial": false
+  },
+  {
+   "atMs": 4887,
+   "partial": false
+  },
+  {
+   "atMs": 5003,
+   "partial": false
+  },
+  {
+   "atMs": 5038,
+   "partial": false
+  },
+  {
+   "atMs": 5121,
+   "partial": false
+  },
+  {
+   "atMs": 5204,
+   "partial": false
+  },
+  {
+   "atMs": 5305,
+   "partial": false
+  },
+  {
+   "atMs": 5455,
+   "partial": false
+  },
+  {
+   "atMs": 5537,
+   "partial": false
+  },
+  {
+   "atMs": 5621,
+   "partial": false
+  },
+  {
+   "atMs": 5654,
+   "partial": false
+  },
+  {
+   "atMs": 5721,
+   "partial": false
+  },
+  {
+   "atMs": 5754,
+   "partial": false
+  },
+  {
+   "atMs": 5805,
+   "partial": false
+  },
+  {
+   "atMs": 5888,
+   "partial": false
+  },
+  {
+   "atMs": 5921,
+   "partial": false
+  },
+  {
+   "atMs": 6037,
+   "partial": false
+  },
+  {
+   "atMs": 6121,
+   "partial": false
+  },
+  {
+   "atMs": 6154,
+   "partial": false
+  },
+  {
+   "atMs": 6238,
+   "partial": false
+  },
+  {
+   "atMs": 6322,
+   "partial": false
+  },
+  {
+   "atMs": 6354,
+   "partial": false
+  },
+  {
+   "atMs": 6420,
+   "partial": false
+  },
+  {
+   "atMs": 6487,
+   "partial": false
+  },
+  {
+   "atMs": 6588,
+   "partial": false
+  },
+  {
+   "atMs": 6688,
+   "partial": false
+  },
+  {
+   "atMs": 6754,
+   "partial": false
+  },
+  {
+   "atMs": 6822,
+   "partial": false
+  },
+  {
+   "atMs": 6855,
+   "partial": false
+  },
+  {
+   "atMs": 6921,
+   "partial": false
+  },
+  {
+   "atMs": 6955,
+   "partial": false
+  },
+  {
+   "atMs": 7104,
+   "partial": false
+  },
+  {
+   "atMs": 7138,
+   "partial": false
+  },
+  {
+   "atMs": 7188,
+   "partial": false
+  },
+  {
+   "atMs": 7222,
+   "partial": false
+  },
+  {
+   "atMs": 7254,
+   "partial": false
+  },
+  {
+   "atMs": 7322,
+   "partial": false
+  },
+  {
+   "atMs": 7354,
+   "partial": false
+  },
+  {
+   "atMs": 7438,
+   "partial": false
+  },
+  {
+   "atMs": 7538,
+   "partial": false
+  },
+  {
+   "atMs": 7588,
+   "partial": false
+  },
+  {
+   "atMs": 7621,
+   "partial": false
+  }
+ ],
+ "mainThreadTasks": 1283,
+ "longTasksOver50ms": 0,
+ "longestTaskMs": 11,
+ "longTasks": []
+}
+
+{
+ "shown": "A00+0 A01+701 A02+102 A03+130 A04+102 A05+116 B+133 BA1+2498 BA2+135 R1+101 R2+116 R3+120 R4+111 S1+754 S2+114 S3+136 H+115",
+ "peakDecodedBytes": 6958200,
+ "longTasks": [],
+ "lateFrames": 118,
+ "layoutShifts": [],
+ "set": 565
+}

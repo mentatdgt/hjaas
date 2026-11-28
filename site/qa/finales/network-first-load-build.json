@@ -1,0 +1,232 @@
+[
+ {
+  "at": 75193821,
+  "url": "/?debug&reset",
+  "priority": "VeryHigh"
+ },
+ {
+  "at": 75193850,
+  "url": "/room-route.js",
+  "priority": "High"
+ },
+ {
+  "at": 75193850,
+  "url": "/shell.css",
+  "priority": "VeryHigh"
+ },
+ {
+  "at": 75193867,
+  "url": "/assets/scene1/room.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75194019,
+  "url": "/assets/scene1/rachel/frame_01.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75194021,
+  "url": "/assets/scene1/pencil-tb.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75194021,
+  "url": "/assets/scene1/pencil-lr.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75194021,
+  "url": "/assets/shared/mushrooms/mushroom_07.webp",
+  "priority": "Low"
+ },
+ {
+  "at": 75194022,
+  "url": "/assets/shared/mushrooms/mushroom_08.webp",
+  "priority": "Low"
+ },
+ {
+  "at": 75194022,
+  "url": "/assets/shared/mushrooms/mushroom_02.webp",
+  "priority": "Low"
+ },
+ {
+  "at": 75194022,
+  "url": "/assets/shared/mushrooms/mushroom_06.webp",
+  "priority": "Low"
+ },
+ {
+  "at": 75194022,
+  "url": "/assets/shared/mushrooms/mushroom_03.webp",
+  "priority": "Low"
+ },
+ {
+  "at": 75194022,
+  "url": "/assets/shared/mushrooms/mushroom_09.webp",
+  "priority": "Low"
+ },
+ {
+  "at": 75194022,
+  "url": "/assets/shared/mushrooms/mushroom_01.webp",
+  "priority": "Low"
+ },
+ {
+  "at": 75194022,
+  "url": "/assets/shared/mushrooms/mushroom_04.webp",
+  "priority": "Low"
+ },
+ {
+  "at": 75194022,
+  "url": "/assets/shared/logo/logo.webp",
+  "priority": "Low"
+ },
+ {
+  "at": 75194036,
+  "url": "/favicon-32.png",
+  "priority": "High"
+ },
+ {
+  "at": 75194163,
+  "url": "/assets/scene1/rachel/frame_01_02.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75194164,
+  "url": "/assets/scene1/rachel/frame_02.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75194164,
+  "url": "/assets/scene1/rachel/frame_02_03a.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75194164,
+  "url": "/assets/scene1/rachel/frame_02_03ab.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75194164,
+  "url": "/assets/scene1/rachel/frame_02_03b.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75194164,
+  "url": "/assets/scene1/rachel/frame_03.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75194164,
+  "url": "/assets/scene1/rachel/frame_04.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75194164,
+  "url": "/assets/scene1/rachel/blink_half.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75194165,
+  "url": "/assets/scene1/rachel/blink_closed.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75200568,
+  "url": "/assets/scene1/rachel/reaction/shared.json",
+  "priority": "High"
+ },
+ {
+  "at": 75200568,
+  "url": "/assets/scene1/rachel/reaction/reaction.json",
+  "priority": "High"
+ },
+ {
+  "at": 75200583,
+  "url": "/assets/scene1/rachel/reaction/rx_A24.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75200605,
+  "url": "/assets/scene1/rachel/reaction/rx_A25.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75200634,
+  "url": "/assets/scene1/rachel/reaction/rx_A49.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75200666,
+  "url": "/assets/scene1/rachel/reaction/rx_A52.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75200699,
+  "url": "/assets/scene1/rachel/reaction/rx_A53.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75200734,
+  "url": "/assets/scene1/rachel/reaction/rx_A55.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75200766,
+  "url": "/assets/scene1/rachel/reaction/rx_A58.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75200789,
+  "url": "/assets/scene1/rachel/K1.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75200834,
+  "url": "/assets/scene1/rachel/reaction/rx_K1_B36.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75200849,
+  "url": "/assets/scene1/rachel/reaction/rx_B36.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75200871,
+  "url": "/assets/scene1/rachel/reaction/rx_B36_B39.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75200882,
+  "url": "/assets/scene1/rachel/reaction/rx_B39.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75200917,
+  "url": "/assets/scene1/rachel/reaction/rx_B41.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75200949,
+  "url": "/assets/scene1/rachel/K2.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75200984,
+  "url": "/assets/scene1/rachel/reaction/rx_wink_half.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75201017,
+  "url": "/assets/scene1/rachel/reaction/rx_wink.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75201068,
+  "url": "/assets/scene1/room.webp",
+  "priority": "High"
+ },
+ {
+  "at": 75201069,
+  "url": "/assets/scene2/room.webp",
+  "priority": "Low"
+ }
+]

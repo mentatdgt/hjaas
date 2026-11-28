@@ -442,10 +442,79 @@ for (const [dir, scale] of [['rachel/', 1], ['rachel-1.5x/', SMALL]]) {
   }
 }
 
+// The finales (job 006): what Rachel plays when a scene's tenth mushroom is found, ending on a pose she holds. Each is
+// delivered in frames/finale/<name>/ as PNGs and a finale.json (see src/engine/finale.ts for the format), and goes to
+// <scene>/finale/ as delivered (WebP, the manifest copied as is) and to <scene>/finale-0.75x/ at three quarters of the
+// size for narrow screens, made as the lab's lighter set is: a patch is put on its base at full size, the whole is
+// shrunk, and the patch's rectangle (grown outward to whole pixels) is cut from that. A new delivery (more
+// in-betweens, another held pose) is a file swap and `npm run assets`.
+const only = process.argv[2];
+const FINALES = [['build', 'scene1'], ['grow', 'scene2'], ['design', 'scene3'], ['film', 'scene4'], ['setdesign', 'scene5']];
+const finaleFrame = { quality: 90, alphaQuality: 100, smartSubsample: true, effort: 6 };
+const finaleManifests = [];
+for (const [name, scene] of FINALES) {
+  const src = `frames/finale/${name}`;
+  let delivered;
+  try {
+    delivered = JSON.parse(await readFile(join(repo, src, 'finale.json'), 'utf8'));
+  } catch {
+    continue;
+  }
+  const full = `${scene}/finale`;
+  const light = `${scene}/finale-0.75x`;
+  // (Files of an earlier delivery are not left behind. Only when this run makes the folder afresh.)
+  for (const dir of [full, light]) if (!only || `${dir}/`.includes(only)) await rm(join(assets, dir), { recursive: true, force: true });
+  const [W, H] = delivered.size;
+  const sw = Math.round(W * SMALL);
+  const sh = Math.round(H * SMALL);
+  const sx = sw / W;
+  const sy = sh / H;
+  const { stills = {}, patches = {} } = delivered.parts ?? {};
+  const files = [...new Set([...delivered.frames.map((f) => f.file), delivered.blink, ...Object.keys(stills), ...Object.keys(patches)].filter(Boolean))];
+  const smaller = structuredClone(delivered);
+  smaller.size = [sw, sh];
+  smaller.density = delivered.density * sx;
+  smaller.note = `Made by npm run assets from ${src}/finale.json at ${SMALL} of the size, for narrow screens. Do not edit.`;
+  const finalePixels = new Map();
+  const whole = (file) => {
+    if (!finalePixels.has(file)) finalePixels.set(file, sharp(join(repo, src, stills[file] ?? file)).ensureAlpha().raw().toBuffer({ resolveWithObject: true }));
+    return finalePixels.get(file);
+  };
+  const shrink = (data) => sharp(data, { raw: { width: W, height: H, channels: 4 } }).resize(sw, sh, { kernel: 'lanczos3' });
+  for (const file of files) {
+    const patch = patches[file];
+    if (patch?.same) continue;
+    const from = stills[file] ?? file;
+    add(`${src}/${from}`, `${full}/${from.replace(/\.png$/i, '.webp')}`, finaleFrame, undefined, assets);
+    if (!patch) {
+      addMade(async () => {
+        const { data, info } = await whole(file);
+        if (info.width !== W || info.height !== H) throw new Error(`${src}/${from} is ${info.width} x ${info.height}, not the finale's size ${W} x ${H}.`);
+        return shrink(data);
+      }, `${light}/${from.replace(/\.png$/i, '.webp')}`, finaleFrame);
+      continue;
+    }
+    const left = Math.floor(patch.x * sx);
+    const top = Math.floor(patch.y * sy);
+    const area = { left, top, width: Math.min(sw, Math.ceil((patch.x + patch.w) * sx)) - left, height: Math.min(sh, Math.ceil((patch.y + patch.h) * sy)) - top };
+    smaller.parts.patches[file] = { ...patch, x: area.left, y: area.top, w: area.width, h: area.height };
+    addMade(async () => {
+      const base = await whole(patch.base);
+      const cut = await sharp(join(repo, src, file)).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+      if (cut.info.width !== patch.w || cut.info.height !== patch.h) throw new Error(`${src}/${file} is not ${patch.w} x ${patch.h}, as finale.json says.`);
+      // The patch replaces its rectangle of the base, as it does on the page.
+      const composed = Buffer.from(base.data);
+      for (let row = 0; row < patch.h; row++) cut.data.copy(composed, ((patch.y + row) * W + patch.x) * 4, row * patch.w * 4, (row + 1) * patch.w * 4);
+      const { data, info } = await shrink(composed).raw().toBuffer({ resolveWithObject: true });
+      return sharp(data, { raw: { width: info.width, height: info.height, channels: 4 } }).extract(area);
+    }, `${light}/${file.replace(/\.png$/i, '.webp')}`, finaleFrame);
+  }
+  finaleManifests.push({ src, full, light, delivered, smaller });
+}
+
 // Several at a time: encoding is slow (a few seconds for one of Rachel's frames) and each uses one core.
 // (`npm run assets -- pencil` makes only the files with that word in their path: quicker, after one change.)
 let total = 0;
-const only = process.argv[2];
 const queue = jobs.filter((job) => !only || job.to.includes(only));
 const work = async () => {
   for (let job = queue.shift(); job; job = queue.shift()) {
@@ -477,6 +546,21 @@ await copyFile(join(repo, lab, 'routine.json'), join(assets, 'scene2/rachel/rout
 await writeFile(join(assets, smallDir, 'frames.json'), `${JSON.stringify(smallFrames, null, 1)}\n`);
 
 await writeFile(join(site, 'src/scenes/build-patches.json'), `${JSON.stringify(buildPatches, null, 1)}\n`);
+
+// The finales' manifests: the delivered one as it is, and the lighter set's with its size and its patches' places.
+for (const { src, full, light, smaller } of finaleManifests) {
+  if (only && !`${full}/`.includes(only) && !`${light}/`.includes(only)) continue;
+  await mkdir(join(assets, full), { recursive: true });
+  await mkdir(join(assets, light), { recursive: true });
+  await copyFile(join(repo, src, 'finale.json'), join(assets, full, 'finale.json'));
+  await writeFile(join(assets, light, 'finale.json'), `${JSON.stringify(smaller, null, 1)}\n`);
+  for (const dir of [full, light]) {
+    const names = (await readdir(join(assets, dir))).filter((f) => f.endsWith('.webp'));
+    let bytes = 0;
+    for (const f of names) bytes += (await stat(join(assets, dir, f))).size;
+    console.log(`${dir.padEnd(24)} ${names.length} files, ${(bytes / 1024).toFixed(0)} KB`);
+  }
+}
 
 // The reaction manifest is used as delivered; the player swaps .png for .webp itself.
 await copyFile(join(repo, reaction, 'reaction.json'), join(out, 'rachel/reaction/reaction.json'));

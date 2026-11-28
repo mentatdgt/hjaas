@@ -104,4 +104,6 @@ export const grow: SceneConfig = {
   strokes: STROKES,
   // Rachel, with the spray bottle (845 to 1145): between the middle of her body and the middle of her reach.
   focusX: 1005,
+  // At 10/10: she holds up an oyster cluster (frames/finale/grow).
+  finale: { name: 'grow', dir: 'finale/', small: { dir: 'finale-0.75x/', below: 900 } },
 };
