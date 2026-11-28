@@ -88,21 +88,39 @@
    "F04_ok.png": "F04_ok.png",
    "F05_ok.png": "F05_ok.png",
    "F06_ok.png": "F06_ok.png",
-   "F07_ok.png": "F07_ok.png",
    "F08_ok.png": "F08_ok.png",
    "F09_ok.png": "F09_ok.png",
-   "F10_ok.png": "F10_ok.png",
-   "F12_ok.png": "F12_ok.png",
-   "F13_ok.png": "F13_ok.png",
-   "F14_ok.png": "F14_ok.png"
+   "F11_ok.png": "F11_ok.png",
+   "F12_ok.png": "F12_ok.png"
   },
   "patches": {
-   "F11_ok.png": {
-    "base": "F10_ok.png",
-    "x": 123,
-    "y": 0,
-    "w": 513,
-    "h": 617
+   "F07_ok.png": {
+    "base": "F06_ok.png",
+    "x": 55,
+    "y": 130,
+    "w": 626,
+    "h": 503
+   },
+   "F10_ok.png": {
+    "base": "F08_ok.png",
+    "x": 108,
+    "y": 211,
+    "w": 573,
+    "h": 422
+   },
+   "F13_ok.png": {
+    "base": "F15_ok.png",
+    "x": 215,
+    "y": 237,
+    "w": 466,
+    "h": 300
+   },
+   "F14_ok.png": {
+    "base": "F15_ok.png",
+    "x": 200,
+    "y": 237,
+    "w": 481,
+    "h": 398
    },
    "H_blink_ok.png": {
     "base": "F15_ok.png",

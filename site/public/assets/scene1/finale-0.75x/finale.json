@@ -91,77 +91,59 @@
    "F00_ok.png": "F00_ok.png",
    "F17_ok.png": "F17_ok.png",
    "F01_ok.png": "F01_ok.png",
+   "F03_ok.png": "F03_ok.png",
    "F06_ok.png": "F06_ok.png",
    "F07_ok.png": "F07_ok.png",
    "F08_ok.png": "F08_ok.png",
+   "F09_ok.png": "F09_ok.png",
    "F10_ok.png": "F10_ok.png",
    "F11_ok.png": "F11_ok.png",
    "F12_ok.png": "F12_ok.png",
+   "F13_ok.png": "F13_ok.png",
    "F14_ok.png": "F14_ok.png"
   },
   "patches": {
    "F02_ok.png": {
     "base": "F00_ok.png",
-    "x": 30,
-    "y": 167,
-    "w": 372,
-    "h": 564
-   },
-   "F03_ok.png": {
-    "base": "F01_ok.png",
-    "x": 30,
-    "y": 167,
-    "w": 373,
-    "h": 564
+    "x": 24,
+    "y": 161,
+    "w": 384,
+    "h": 570
    },
    "F04_ok.png": {
-    "base": "F01_ok.png",
-    "x": 20,
-    "y": 149,
-    "w": 509,
-    "h": 582
+    "base": "F03_ok.png",
+    "x": 14,
+    "y": 143,
+    "w": 521,
+    "h": 588
    },
    "F05_ok.png": {
-    "base": "F01_ok.png",
-    "x": 27,
-    "y": 129,
-    "w": 376,
-    "h": 602
-   },
-   "F09_ok.png": {
-    "base": "F01_ok.png",
-    "x": 0,
-    "y": 62,
-    "w": 454,
-    "h": 669
-   },
-   "F13_ok.png": {
-    "base": "F01_ok.png",
-    "x": 1,
-    "y": 22,
-    "w": 400,
-    "h": 709
+    "base": "F03_ok.png",
+    "x": 21,
+    "y": 123,
+    "w": 388,
+    "h": 608
    },
    "F15_ok.png": {
     "base": "F17_ok.png",
-    "x": 8,
+    "x": 2,
     "y": 0,
-    "w": 377,
-    "h": 729
+    "w": 389,
+    "h": 731
    },
    "F16_ok.png": {
     "base": "F17_ok.png",
-    "x": 14,
+    "x": 8,
     "y": 0,
-    "w": 371,
-    "h": 729
+    "w": 383,
+    "h": 731
    },
    "H_blink_ok.png": {
     "base": "F17_ok.png",
-    "x": 149,
-    "y": 128,
-    "w": 89,
-    "h": 55
+    "x": 30,
+    "y": 0,
+    "w": 372,
+    "h": 719
    }
   }
  },
