@@ -58,10 +58,22 @@
   },
   {
    "file": "F11_ok.png",
-   "ms": 167
+   "ms": 83
   },
   {
    "file": "F12_ok.png",
+   "ms": 83
+  },
+  {
+   "file": "F13_ok.png",
+   "ms": 83
+  },
+  {
+   "file": "F14_ok.png",
+   "ms": 167
+  },
+  {
+   "file": "F15_ok.png",
    "ms": 167
   }
  ],
@@ -69,7 +81,7 @@
  "parts": {
   "stills": {
    "F00_ok.png": "F00_ok.png",
-   "F12_ok.png": "F12_ok.png",
+   "F15_ok.png": "F15_ok.png",
    "F01_ok.png": "F01_ok.png",
    "F02_ok.png": "F02_ok.png",
    "F03_ok.png": "F03_ok.png",
@@ -80,11 +92,20 @@
    "F08_ok.png": "F08_ok.png",
    "F09_ok.png": "F09_ok.png",
    "F10_ok.png": "F10_ok.png",
-   "F11_ok.png": "F11_ok.png"
+   "F12_ok.png": "F12_ok.png",
+   "F13_ok.png": "F13_ok.png",
+   "F14_ok.png": "F14_ok.png"
   },
   "patches": {
+   "F11_ok.png": {
+    "base": "F10_ok.png",
+    "x": 123,
+    "y": 0,
+    "w": 513,
+    "h": 617
+   },
    "H_blink_ok.png": {
-    "base": "F12_ok.png",
+    "base": "F15_ok.png",
     "x": 408,
     "y": 106,
     "w": 120,
