@@ -46,6 +46,9 @@ const COPY = {
 };
 
 const EXIT_MS = 240;
+// Room the sheet needs above the button to show the whole form, every error line included (it is 420 px wide
+// wherever it hangs from the button). With less, it sits in the middle instead. qa/tools/form-compact.mjs checks it.
+const SHEET_ROOM = 680;
 
 export class ContactForm {
   private readonly dialog: HTMLDialogElement;
@@ -85,9 +88,8 @@ export class ContactForm {
               <input id="hj-name" name="name" type="text" placeholder="Timothée Chalamet" autocomplete="name" autocapitalize="words" maxlength="${CONTACT_LIMITS.name}" required aria-describedby="hj-name-err" />
               <p class="hj-err" id="hj-name-err" aria-live="polite" hidden></p>
             </div>
-            <fieldset class="hj-field hj-reply" aria-describedby="hj-reply-hint hj-reply-err">
-              <legend>How should I reply?</legend>
-              <p class="hj-hint" id="hj-reply-hint">Email, phone, or both</p>
+            <fieldset class="hj-field hj-reply" aria-describedby="hj-reply-err">
+              <legend>How should I reply? <span class="hj-hint" id="hj-reply-hint">Email, phone, or both</span></legend>
               <p class="hj-err" id="hj-reply-err" aria-live="polite" hidden></p>
               <div class="hj-sub">
                 <label for="hj-email">Email</label>
@@ -114,7 +116,7 @@ export class ContactForm {
             </fieldset>
             <div class="hj-field">
               <label for="hj-message">Tell me about it</label>
-              <textarea id="hj-message" name="message" rows="4" placeholder="The space, the timeline, the feeling you're after. Rough is fine." maxlength="${CONTACT_LIMITS.message}" required aria-describedby="hj-message-err"></textarea>
+              <textarea id="hj-message" name="message" rows="3" placeholder="The space, the timeline, the feeling you're after. Rough is fine." maxlength="${CONTACT_LIMITS.message}" required aria-describedby="hj-message-err"></textarea>
               <p class="hj-err" id="hj-message-err" aria-live="polite" hidden></p>
             </div>
             <div class="hj-trap" aria-hidden="true">
@@ -265,8 +267,8 @@ export class ContactForm {
     const anchor = this.trigger.getBoundingClientRect();
     const width = Math.min(420, window.innerWidth - 24);
     const left = Math.max(12, Math.min(anchor.left, window.innerWidth - width - 12));
-    // A short window leaves too little room above the button; the sheet then sits in the middle (scene.css).
-    this.dialog.classList.toggle('is-centred', anchor.top - 26 < 480 || anchor.top > window.innerHeight);
+    // Too little room above the button for the whole form; the sheet then sits in the middle (site.css).
+    this.dialog.classList.toggle('is-centred', anchor.top - 26 < SHEET_ROOM || anchor.top > window.innerHeight);
     this.dialog.style.setProperty('--anchor-left', `${Math.round(left)}px`);
     this.dialog.style.setProperty('--anchor-bottom', `${Math.round(window.innerHeight - anchor.top + 10)}px`);
   }

@@ -144,7 +144,7 @@ it('offers the six choices, in tab order, and says what the brief says', () => {
   expect(boxes.map((box) => box[2])).toEqual(labels);
   for (const words of [
     'tabindex="-1">Hi! What have you got in mind?</h2>', '>Your name</label>', 'placeholder="Timothée Chalamet"',
-    '<legend>How should I reply?</legend>', '<p class="hj-hint" id="hj-reply-hint">Email, phone, or both</p>',
+    '<legend>How should I reply? <span class="hj-hint" id="hj-reply-hint">Email, phone, or both</span></legend>',
     '>Email</label>', 'placeholder="timothee@gmail.com"', '>Phone</label>', 'placeholder="9888 1135"', 'aria-label="Country code"',
     '<option value="SG" selected>Singapore +65</option>',
     '<legend>What can I help with? <span class="hj-hint">Pick any</span></legend>', '>Tell me about it</label>',
@@ -156,7 +156,8 @@ it('offers the six choices, in tab order, and says what the brief says', () => {
 it('marks up email and phone the autofill way, neither of them required', () => {
   const { dialog } = setup();
   const tag = (id: string): string => dialog.innerHTML.match(new RegExp(`<(?:input|select) id="${id}"[^>]*>`))![0];
-  expect(dialog.innerHTML).toMatch(/<fieldset class="hj-field hj-reply" aria-describedby="hj-reply-hint hj-reply-err">/);
+  // The hint is in the legend, so it is in the group's name; the description is only its error.
+  expect(dialog.innerHTML).toMatch(/<fieldset class="hj-field hj-reply" aria-describedby="hj-reply-err">/);
   expect(tag('hj-email')).toMatch(/name="email" type="email" autocomplete="email" inputmode="email" spellcheck="false" autocapitalize="off"/);
   expect(tag('hj-country')).toMatch(/name="country" autocomplete="tel-country-code" aria-label="Country code"/);
   // tel-national belongs to the text group: a text box, with the phone keypad.
