@@ -127,4 +127,6 @@ export const film: SceneConfig = {
   // presenter's face, her camera and Rachel all in view (reviews/hunt-counter-review-01.md, round 2). Centred on
   // her, he would be down to a hand.
   focusX: 977,
+  // At 10/10: a selfie with the presenter, under a camera flash (frames/finale/film; its pose is a placeholder).
+  finale: { name: 'film', dir: 'finale/', small: { dir: 'finale-0.75x/', below: 900 } },
 };

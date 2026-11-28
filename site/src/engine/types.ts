@@ -1,6 +1,7 @@
 // What a scene is, as data. The engine (this folder) knows how to show any scene; a scene's own file in
 // src/scenes/ only describes it: its plate, its character, its hiding spots and its brush strokes.
 import type { KeepBox } from './edge';
+import type { FinaleConfig } from './finale';
 import type { Rng, Step } from './steps';
 
 /** One brush stroke of a scene's paint-in. */
@@ -172,6 +173,11 @@ export interface SceneConfig {
    * swing, the coffee sip). `at-once`: the reaction cuts straight in from whatever pose she is in.
    */
   answer?: 'at-once';
+  /**
+   * What she plays when the scene's last mushroom is found, ending on a pose she holds (finale.ts): its name in
+   * frames/finale/, and its folders under `assets` (the lighter one below `small.below` CSS px). Leave out for none.
+   */
+  finale?: FinaleConfig;
   /** The first-visit painting. The same strokes, played quickly, brush the scene in over another one. */
   strokes: readonly StrokePlan[];
   /** The plate x a portrait phone opens centred on: the middle of Rachel herself, not of her furniture. */

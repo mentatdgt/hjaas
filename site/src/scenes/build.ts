@@ -85,4 +85,6 @@ export const build: SceneConfig = {
   // is the least move from Rachel (755) that brings the box's far end in and keeps all of her clear of the
   // window's own side fade (reviews/hunt-counter-review-01.md, round 2).
   focusX: 900,
+  // At 10/10: the hammer on her shoulder (frames/finale/build).
+  finale: { name: 'build', dir: 'finale/', small: { dir: 'finale-0.75x/', below: 900 } },
 };

@@ -134,4 +134,6 @@ export const set: SceneConfig = {
   strokes: STROKES,
   // Rachel (738 to 935) and her brush (to 1050): between the middle of her body and the middle of her reach.
   focusX: 865,
+  // At 10/10: a bow, held, then she rises, arms open (frames/finale/setdesign).
+  finale: { name: 'setdesign', dir: 'finale/', small: { dir: 'finale-0.75x/', below: 900 } },
 };

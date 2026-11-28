@@ -117,6 +117,21 @@ export function backing(cssW: number, dpr: number, source: { w: number; h: numbe
 
 const pct = (value: number, of: number): string => `${(value / of) * 100}%`;
 
+/**
+ * Where a standing figure's ground shadow goes, for a frame at `p` (plate px) whose feet are on `baseline`, the figure
+ * `height` tall. The box is grown by the blur radius so the gradient can fade to nothing inside it. (A finale's frame
+ * takes her shadow over, sized to its own box: finale.ts.)
+ */
+export function shadowStyle(p: { left: number; width: number }, baseline: number, height: number): Record<'left' | 'top' | 'width' | 'height', string> {
+  const depth = SHADOW.depth * height;
+  return {
+    left: pct(p.left + p.width * SHADOW.inset - SHADOW.soften, PLATE.w),
+    top: pct(baseline - depth * SHADOW.lift - SHADOW.soften, PLATE.h),
+    width: pct(p.width * SHADOW.width + SHADOW.soften * 2, PLATE.w),
+    height: pct(depth + SHADOW.soften * 2, PLATE.h),
+  };
+}
+
 export class Character {
   readonly el: HTMLDivElement;
   /** The soft ground shadow of a standing figure. Null when the frames carry their own. */
@@ -161,17 +176,9 @@ export class Character {
     const p = this.placement;
 
     if (config.placement.kind === 'standing' && config.placement.shadow) {
-      const { baseline, height } = config.placement;
       this.shadow = document.createElement('div');
       this.shadow.className = 'hj-shadow';
-      // The box is grown by the blur radius so the gradient can fade to nothing inside it.
-      const depth = SHADOW.depth * height;
-      Object.assign(this.shadow.style, {
-        left: pct(p.left + p.width * SHADOW.inset - SHADOW.soften, PLATE.w),
-        top: pct(baseline - depth * SHADOW.lift - SHADOW.soften, PLATE.h),
-        width: pct(p.width * SHADOW.width + SHADOW.soften * 2, PLATE.w),
-        height: pct(depth + SHADOW.soften * 2, PLATE.h),
-      });
+      Object.assign(this.shadow.style, shadowStyle(p, config.placement.baseline, config.placement.height));
     }
 
     this.el = document.createElement('div');
@@ -424,7 +431,7 @@ export class Character {
    * Copy her, as she looks now, onto another canvas (the sheet the brush rubs away when the visitor leaves
    * this scene). `origin` is that canvas's place on the page; the context works in CSS px.
    */
-  sketch(ctx: CanvasRenderingContext2D, origin: DOMRect): void {
+  sketch(ctx: CanvasRenderingContext2D, origin: DOMRect, body = true): void {
     if (this.shadow) {
       const s = this.shadow.getBoundingClientRect();
       const cx = s.left - origin.left + s.width / 2;
@@ -439,7 +446,8 @@ export class Character {
       ctx.fillRect(-1, -1, 2, 2);
       ctx.restore();
     }
-    if (!this.canvas.width) return;
+    // (`body` false: her shadow only, as a finale has taken her place over it.)
+    if (!body || !this.canvas.width) return;
     const r = this.el.getBoundingClientRect();
     ctx.drawImage(this.canvas, r.left - origin.left, r.top - origin.top, r.width, r.height);
   }

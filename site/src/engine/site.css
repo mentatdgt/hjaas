@@ -380,6 +380,15 @@
   pointer-events: none;
 }
 
+/* A finale's camera flash (finale.ts): white over the picture, under its edge. Only its opacity moves. */
+.hj-flash {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* A live screen she holds (the back of the camera in the film scene): placed and sized by screen.ts. */
 .hj-rachel canvas.hj-finder,
 .hj-actor canvas.hj-finder {

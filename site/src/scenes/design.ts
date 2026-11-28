@@ -97,4 +97,6 @@ export const design: SceneConfig = {
   strokes: STROKES,
   // Rachel and the hand she draws with (780 to 1005).
   focusX: 900,
+  // At 10/10: she turns her tablet to show a rendering (frames/finale/design).
+  finale: { name: 'design', dir: 'finale/', small: { dir: 'finale-0.75x/', below: 900 } },
 };

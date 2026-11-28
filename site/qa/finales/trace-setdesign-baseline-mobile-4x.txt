@@ -1,0 +1,350 @@
+{
+ "window": [
+  3916,
+  10416
+ ],
+ "frames": {
+  "BeginFrame": 390,
+  "DrawFrame": 84,
+  "DroppedFrame": 79,
+  "BeginMainThreadFrame": 312,
+  "Commit": 576
+ },
+ "frameStates": {
+  "STATE_DROPPED": 79,
+  "STATE_PRESENTED_ALL": 85,
+  "STATE_NO_UPDATE_DESIRED": 229,
+  "STATE_PRESENTED_PARTIAL": 39
+ },
+ "droppedAffectingSmoothness": 79,
+ "droppedFrameEvents": [
+  {
+   "atMs": 3927,
+   "partial": false
+  },
+  {
+   "atMs": 3978,
+   "partial": false
+  },
+  {
+   "atMs": 4028,
+   "partial": false
+  },
+  {
+   "atMs": 4160,
+   "partial": false
+  },
+  {
+   "atMs": 4210,
+   "partial": false
+  },
+  {
+   "atMs": 4311,
+   "partial": false
+  },
+  {
+   "atMs": 4344,
+   "partial": false
+  },
+  {
+   "atMs": 4411,
+   "partial": false
+  },
+  {
+   "atMs": 4478,
+   "partial": false
+  },
+  {
+   "atMs": 4544,
+   "partial": false
+  },
+  {
+   "atMs": 4611,
+   "partial": false
+  },
+  {
+   "atMs": 4677,
+   "partial": false
+  },
+  {
+   "atMs": 4727,
+   "partial": false
+  },
+  {
+   "atMs": 4759,
+   "partial": false
+  },
+  {
+   "atMs": 4828,
+   "partial": false
+  },
+  {
+   "atMs": 4927,
+   "partial": false
+  },
+  {
+   "atMs": 5044,
+   "partial": false
+  },
+  {
+   "atMs": 5161,
+   "partial": false
+  },
+  {
+   "atMs": 5210,
+   "partial": false
+  },
+  {
+   "atMs": 5260,
+   "partial": false
+  },
+  {
+   "atMs": 5328,
+   "partial": false
+  },
+  {
+   "atMs": 5544,
+   "partial": false
+  },
+  {
+   "atMs": 5727,
+   "partial": false
+  },
+  {
+   "atMs": 5777,
+   "partial": false
+  },
+  {
+   "atMs": 5828,
+   "partial": false
+  },
+  {
+   "atMs": 5944,
+   "partial": false
+  },
+  {
+   "atMs": 6028,
+   "partial": false
+  },
+  {
+   "atMs": 6060,
+   "partial": false
+  },
+  {
+   "atMs": 6144,
+   "partial": false
+  },
+  {
+   "atMs": 6210,
+   "partial": false
+  },
+  {
+   "atMs": 6311,
+   "partial": false
+  },
+  {
+   "atMs": 6344,
+   "partial": false
+  },
+  {
+   "atMs": 6377,
+   "partial": false
+  },
+  {
+   "atMs": 6426,
+   "partial": false
+  },
+  {
+   "atMs": 6511,
+   "partial": false
+  },
+  {
+   "atMs": 6560,
+   "partial": false
+  },
+  {
+   "atMs": 6628,
+   "partial": false
+  },
+  {
+   "atMs": 6744,
+   "partial": false
+  },
+  {
+   "atMs": 6777,
+   "partial": false
+  },
+  {
+   "atMs": 6861,
+   "partial": false
+  },
+  {
+   "atMs": 6945,
+   "partial": false
+  },
+  {
+   "atMs": 7010,
+   "partial": false
+  },
+  {
+   "atMs": 7077,
+   "partial": false
+  },
+  {
+   "atMs": 7128,
+   "partial": false
+  },
+  {
+   "atMs": 7227,
+   "partial": false
+  },
+  {
+   "atMs": 7260,
+   "partial": false
+  },
+  {
+   "atMs": 7311,
+   "partial": false
+  },
+  {
+   "atMs": 7345,
+   "partial": false
+  },
+  {
+   "atMs": 7377,
+   "partial": false
+  },
+  {
+   "atMs": 7477,
+   "partial": false
+  },
+  {
+   "atMs": 7544,
+   "partial": false
+  },
+  {
+   "atMs": 7627,
+   "partial": false
+  },
+  {
+   "atMs": 7727,
+   "partial": false
+  },
+  {
+   "atMs": 7910,
+   "partial": false
+  },
+  {
+   "atMs": 7944,
+   "partial": false
+  },
+  {
+   "atMs": 8045,
+   "partial": false
+  },
+  {
+   "atMs": 8161,
+   "partial": false
+  },
+  {
+   "atMs": 8228,
+   "partial": false
+  },
+  {
+   "atMs": 8278,
+   "partial": false
+  },
+  {
+   "atMs": 8378,
+   "partial": false
+  },
+  {
+   "atMs": 8445,
+   "partial": false
+  },
+  {
+   "atMs": 8528,
+   "partial": false
+  },
+  {
+   "atMs": 8628,
+   "partial": false
+  },
+  {
+   "atMs": 8661,
+   "partial": false
+  },
+  {
+   "atMs": 8711,
+   "partial": false
+  },
+  {
+   "atMs": 8778,
+   "partial": false
+  },
+  {
+   "atMs": 8878,
+   "partial": false
+  },
+  {
+   "atMs": 8944,
+   "partial": false
+  },
+  {
+   "atMs": 9045,
+   "partial": false
+  },
+  {
+   "atMs": 9078,
+   "partial": false
+  },
+  {
+   "atMs": 9161,
+   "partial": false
+  },
+  {
+   "atMs": 9212,
+   "partial": true
+  },
+  {
+   "atMs": 9928,
+   "partial": false
+  },
+  {
+   "atMs": 10012,
+   "partial": false
+  },
+  {
+   "atMs": 10061,
+   "partial": false
+  },
+  {
+   "atMs": 10111,
+   "partial": false
+  },
+  {
+   "atMs": 10228,
+   "partial": false
+  },
+  {
+   "atMs": 10327,
+   "partial": false
+  },
+  {
+   "atMs": 10378,
+   "partial": false
+  }
+ ],
+ "mainThreadTasks": 1393,
+ "longTasksOver50ms": 0,
+ "longestTaskMs": 16,
+ "longTasks": []
+}
+
+{
+ "shown": "",
+ "peakDecodedBytes": 0,
+ "longTasks": [],
+ "lateFrames": 90,
+ "layoutShifts": []
+}

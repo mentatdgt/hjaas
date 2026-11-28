@@ -199,6 +199,25 @@ of each character's frames at three quarters of the size (`scene1/rachel-1.5x/`,
 which the scene's config (`small`) uses when the picture is shown under 900 px wide. `?debug` adds
 `__hj.memory`: the page's own account of its decoded images and canvases, from their sizes.
 
+## Finales
+
+When a scene's tenth mushroom lands on the counter, Rachel leaves her routine and plays its finale
+(`src/engine/finale.ts`): a run of drawings, plain cuts, each shown for its own time, ending on a pose she holds and
+blinks in (133 ms, every 3 to 6 s). The film's hides the presenter too and cuts in under a camera flash. A scene
+already complete shows the held pose at once; reduced motion (or Pause) goes straight to it, with no flash and no blinks;
+leaving mid-way, she holds it when the visitor comes back. A reset brings her routine back.
+
+The art is in `frames/finale/<name>/` (`build`, `grow`, `design`, `film`, `setdesign`), as PNGs and a `finale.json`
+(format at the top of `finale.ts`). `npm run assets` makes `public/assets/<sceneN>/finale/` and a lighter set at three
+quarters of the size, `finale-0.75x/`, used under 900 px as the lab's is. **A new delivery is a file swap**: new PNGs and
+`finale.json` in that folder, `npm run assets`, `npm test`.
+
+Nothing of a finale is downloaded with its scene. Its files come once the scene has six of its ten (a scene already
+complete: only the held pose and its blink), at low priority, the first frame and the held pose first, and are kept as
+downloaded; a few frames ahead are decoded in the decoder worker and given back once shown. If the tenth comes before
+the finale is here: the held pose if it is, else her routine for up to 3 s while the finale arrives, then the held pose
+when it does. Evidence and tools: `qa/finales/`, `qa/tools/finales.mjs`, `qa/tools/finale-trace.mjs`.
+
 ## Swapping art
 
 1. Replace the file in `frames/…/approved/`, `scene/` or `assets/logo/` (Wren's side).
@@ -262,5 +281,6 @@ ignores them all, so nobody can skip the hunt with `?found=10`.
 | `?edge=organic`, `?edge=a-round`, `?edge=a`, `?edge=b`, `?edge=c` | The earlier edges, for comparison: `organic` is the wash without the pencil (and with its straight cuts), the others the even feathers before it. The site ships `pencil`. |
 | `?slow=6` | Play the interface motion six times slower. |
 | `?debug` | Outline the mushroom hit areas and expose `window.__hj` (pose log, late-frame log). |
+| `?finale=setdesign#set` | Play that scene's finale once the scene has settled, without finding its ten (`build`, `grow`, `design`, `film`, `setdesign`). |
 
 Combine them with `&`, for example `http://localhost:5173/?reset&intro=full`.
