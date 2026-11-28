@@ -224,17 +224,24 @@ The function's settings are environment variables in the Vercel project, never i
 
 | Answer | When |
 |---|---|
-| `200 {"ok":true}` | Sent. Also when the honeypot (`website`) is filled in, and then nothing is sent |
+| `200 {"ok":true}` | Sent. Also when the honeypot (`extra`, labelled "Leave this empty") is filled in, and then nothing is sent |
 | `400 {"ok":false}` | Not JSON, over 16 KB, or a field the form could not have sent |
 | `403` | Not from hjaas.com, www.hjaas.com or the deployment's own `vercel.app` address |
-| `405`, `429` | Not a POST; more than five a minute from one address (best effort) |
+| `405`, `429` | Not a POST; more than five a minute from one address (best effort; 429 comes with `Retry-After: 60`) |
 | `502` | Resend refused it, could not be reached, or took more than 10 s. Only its status code is logged (0: no answer) |
 | `503` | A setting is missing. An empty POST shows it without sending anything: 503 means missing, 400 all there |
 
+The page thanks the visitor only for a 2xx whose body is JSON with `ok: true`. An empty body, an HTML page (a
+misrouted endpoint) or broken JSON counts as a failure, like no connection or a 5xx: "Couldn't send your message
+just now…". A 429 says "Too many tries…", worded from `Retry-After`. Every field keeps what was written.
+
 `npm run dev` has no endpoint: the form shows its success state in **test mode** and says nothing was sent.
 A build made with `VITE_FORM_ENDPOINT=` (empty) says up front that it cannot send. The choices
-are in `src/engine/needs.js`, which the page and the function both import. The limits are written in both; a test
-compares them.
+are in `src/engine/needs.js` and the email rule in `src/engine/email.js`; the page and the function both import
+them. The limits are written in both; a test compares them.
+
+On a touch screen, while the form is open, the sheet is placed and sized from `window.visualViewport`, so the
+iPhone keyboard never covers it (`form.ts`, `followViewport`; `site.css`, `.is-vv`).
 
 The build also writes `_headers` (for Netlify or Cloudflare Pages). It adds an external endpoint's origin to
 `connect-src`; `/api/contact` is the same origin, so `connect-src 'self'` stays as it is.

@@ -1029,6 +1029,23 @@ a.hj-logo:active {
     transform 260ms var(--hj-ease-out);
 }
 
+/* Touch screens, while open (form.ts, followViewport()): placed in the visual viewport, the part of the page in
+   sight, which the iPhone keyboard shrinks. The dialog covers exactly that area (a tap on its empty part closes it,
+   like the backdrop) and the sheet sits in it, its one scroll area taking whatever height is left. */
+.hj-dialog.is-vv.is-centred[open] {
+  inset: var(--vv-top) 0 auto 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: var(--vv-height);
+  max-height: none;
+  margin: 0 auto;
+}
+
+.hj-dialog.is-vv.is-centred .hj-sheet {
+  max-height: calc(var(--vv-height) - 32px);
+}
+
 /* Laid out once ahead of time, unseen (form.ts, prepare()). */
 .hj-dialog.is-preparing {
   display: block;
@@ -1105,7 +1122,8 @@ a.hj-logo:active {
   place-items: center;
   width: 44px;
   height: 44px;
-  margin: -10px -12px -10px 0;
+  /* (auto on the left: it stays on the right once the title is hidden, on the thank-you.) */
+  margin: -10px -12px -10px auto;
   padding: 0;
   border: 0;
   border-radius: 6px;
@@ -1612,6 +1630,23 @@ a.hj-logo:active {
   .hj-dialog.is-open {
     transform: none;
     transition: transform 420ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  /* Following the visual viewport (above): the sheet sits on the keyboard, or the bottom edge without one. */
+  .hj-dialog.is-vv[open],
+  .hj-dialog.is-vv.is-centred[open] {
+    inset: var(--vv-top) 0 auto 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: var(--vv-height);
+    max-height: none;
+    margin: 0;
+  }
+
+  .hj-dialog.is-vv .hj-sheet,
+  .hj-dialog.is-vv.is-centred .hj-sheet {
+    max-height: calc(var(--vv-height) - 16px);
   }
 
   .hj-sheet {

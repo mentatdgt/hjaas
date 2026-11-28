@@ -5,10 +5,12 @@
 // RESEND_API_KEY, MAIL_FROM and CONTACT_TO. If one is missing, every request is answered 503.
 //
 // Nothing a visitor writes is ever logged or returned: only a status code is logged.
-// The form's choices come from src/engine/needs.js, the one list of them (Vercel bundles the import).
+// The form's choices come from src/engine/needs.js, the one list of them, and its email rule from src/engine/email.js,
+// the same one the page uses (Vercel bundles the imports).
 // Keep tests out of this folder (they are in scripts/contact.test.mjs): Vercel makes a function of every file in api/.
 
 import { isValidPhoneNumber, parsePhoneNumberFromString } from 'libphonenumber-js/max';
+import { EMAIL } from '../src/engine/email.js';
 import { NEEDS } from '../src/engine/needs.js';
 
 const RESEND = 'https://api.resend.com/emails';
@@ -21,13 +23,12 @@ export const LIMITS = { name: 100, email: 254, phone: 20, needs: 500, message: 4
 const RATE_LIMIT = 5;
 const RATE_WINDOW_MS = 60_000;
 
-// One plain address: no spaces, line breaks or control characters, nothing that could name a second one.
-const EMAIL = /^[^\s\p{C}@<>()[\]\\,;:"]+@[^\s\p{C}@<>()[\]\\,;:"]+\.[^\s\p{C}@<>()[\]\\,;:".]{2,}$/u;
 // A phone number as the form sends it: E.164 (+, then up to 15 digits), and a real one (libphonenumber-js, max metadata).
 const E164 = /^\+[1-9]\d{1,14}$/;
 const isPhone = (value) => E164.test(value) && isValidPhoneNumber(value);
 const NOT_ONE_LINE = /[\p{Cc}\p{Zl}\p{Zp}]/u;
 
+/** Every answer is JSON, and {"ok":true} only for a message taken: the form thanks the visitor for nothing else. */
 function answer(status, headers = {}) {
   return Response.json({ ok: status === 200 }, { status, headers: { 'Cache-Control': 'no-store', ...headers } });
 }
@@ -155,8 +156,9 @@ async function contact(request) {
   const data = type === 'application/json' ? await readJson(request) : null;
   if (!data) return answer(400);
 
-  // The honeypot: no visitor can see this field. Whoever filled it in is told all went well.
-  if (typeof data.website === 'string' ? data.website.trim() : data.website) return answer(200);
+  // The honeypot ("extra", labelled "Leave this empty"): no visitor can see it. Whoever filled it in is told all
+  // went well, {"ok":true} like a real send, and nothing is sent.
+  if (typeof data.extra === 'string' ? data.extra.trim() : data.extra) return answer(200);
 
   const mail = check(data);
   if (!mail) return answer(400);
