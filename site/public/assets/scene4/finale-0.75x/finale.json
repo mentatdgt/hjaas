@@ -1,0 +1,33 @@
+{
+ "scene": "film",
+ "plate": {
+  "x": 658.1,
+  "y": 236,
+  "w": 388.4,
+  "h": 626.5
+ },
+ "density": 1.1243567753001715,
+ "size": [
+  437,
+  705
+ ],
+ "frames": [
+  {
+   "file": "H.png",
+   "ms": 100
+  }
+ ],
+ "blink": null,
+ "hide": [
+  "presenter",
+  "rachel"
+ ],
+ "transition": "flash",
+ "parts": {
+  "stills": {
+   "H.png": "H.png"
+  },
+  "patches": {}
+ },
+ "note": "Made by npm run assets from frames/finale/film/finale.json at 0.75 of the size, for narrow screens. Do not edit."
+}

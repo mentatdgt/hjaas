@@ -1,0 +1,95 @@
+{
+ "scene": "grow",
+ "plate": {
+  "x": 695.8,
+  "y": 226.7,
+  "w": 453.7,
+  "h": 656.5
+ },
+ "density": 1.5,
+ "size": [
+  681,
+  985
+ ],
+ "frames": [
+  {
+   "file": "F00_ok.png",
+   "ms": 800
+  },
+  {
+   "file": "F01_ok.png",
+   "ms": 167
+  },
+  {
+   "file": "F02_ok.png",
+   "ms": 83
+  },
+  {
+   "file": "F03_ok.png",
+   "ms": 83
+  },
+  {
+   "file": "F04_ok.png",
+   "ms": 83
+  },
+  {
+   "file": "F05_ok.png",
+   "ms": 83
+  },
+  {
+   "file": "F06_ok.png",
+   "ms": 83
+  },
+  {
+   "file": "F07_ok.png",
+   "ms": 83
+  },
+  {
+   "file": "F08_ok.png",
+   "ms": 83
+  },
+  {
+   "file": "F09_ok.png",
+   "ms": 83
+  },
+  {
+   "file": "F10_ok.png",
+   "ms": 83
+  },
+  {
+   "file": "F11_ok.png",
+   "ms": 167
+  },
+  {
+   "file": "F12_ok.png",
+   "ms": 167
+  }
+ ],
+ "blink": "H_blink_ok.png",
+ "parts": {
+  "stills": {
+   "F00_ok.png": "F00_ok.png",
+   "F12_ok.png": "F12_ok.png",
+   "F01_ok.png": "F01_ok.png",
+   "F02_ok.png": "F02_ok.png",
+   "F03_ok.png": "F03_ok.png",
+   "F04_ok.png": "F04_ok.png",
+   "F05_ok.png": "F05_ok.png",
+   "F06_ok.png": "F06_ok.png",
+   "F07_ok.png": "F07_ok.png",
+   "F08_ok.png": "F08_ok.png",
+   "F09_ok.png": "F09_ok.png",
+   "F10_ok.png": "F10_ok.png",
+   "F11_ok.png": "F11_ok.png"
+  },
+  "patches": {
+   "H_blink_ok.png": {
+    "base": "F12_ok.png",
+    "x": 408,
+    "y": 106,
+    "w": 120,
+    "h": 68
+   }
+  }
+ }
+}

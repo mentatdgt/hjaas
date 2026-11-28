@@ -1,0 +1,146 @@
+{
+ "scene": "setdesign",
+ "plate": {
+  "x": 550.7,
+  "y": 82.8,
+  "w": 501.8,
+  "h": 489
+ },
+ "density": 1.1254980079681274,
+ "size": [
+  565,
+  550
+ ],
+ "frames": [
+  {
+   "file": "A00.png",
+   "ms": 700
+  },
+  {
+   "file": "A01.png",
+   "ms": 130
+  },
+  {
+   "file": "A02.png",
+   "ms": 120
+  },
+  {
+   "file": "A03.png",
+   "ms": 110
+  },
+  {
+   "file": "A04.png",
+   "ms": 110
+  },
+  {
+   "file": "A05.png",
+   "ms": 140
+  },
+  {
+   "file": "B.png",
+   "ms": 2500
+  },
+  {
+   "file": "BA1.png",
+   "ms": 110
+  },
+  {
+   "file": "BA2.png",
+   "ms": 110
+  },
+  {
+   "file": "R1.png",
+   "ms": 130
+  },
+  {
+   "file": "R2.png",
+   "ms": 110
+  },
+  {
+   "file": "R3.png",
+   "ms": 120
+  },
+  {
+   "file": "R4.png",
+   "ms": 740
+  },
+  {
+   "file": "S1.png",
+   "ms": 130
+  },
+  {
+   "file": "S2.png",
+   "ms": 120
+  },
+  {
+   "file": "S3.png",
+   "ms": 130
+  },
+  {
+   "file": "H.png",
+   "ms": 100
+  }
+ ],
+ "blink": "H_blink.png",
+ "parts": {
+  "stills": {
+   "A00.png": "A00.png",
+   "H.png": "H.png",
+   "A01.png": "A01.png",
+   "A04.png": "A04.png",
+   "A05.png": "A05.png",
+   "B.png": "B.png",
+   "BA1.png": "BA1.png",
+   "BA2.png": "BA2.png",
+   "R1.png": "R1.png",
+   "S1.png": "S1.png",
+   "S2.png": "S2.png",
+   "S3.png": "S3.png"
+  },
+  "patches": {
+   "A02.png": {
+    "base": "A01.png",
+    "x": 195,
+    "y": 0,
+    "w": 325,
+    "h": 550
+   },
+   "A03.png": {
+    "base": "A01.png",
+    "x": 190,
+    "y": 0,
+    "w": 330,
+    "h": 550
+   },
+   "R2.png": {
+    "base": "R1.png",
+    "x": 164,
+    "y": 16,
+    "w": 249,
+    "h": 534
+   },
+   "R3.png": {
+    "base": "R1.png",
+    "x": 171,
+    "y": 5,
+    "w": 242,
+    "h": 545
+   },
+   "R4.png": {
+    "base": "R1.png",
+    "x": 159,
+    "y": 0,
+    "w": 254,
+    "h": 550
+   },
+   "H_blink.png": {
+    "base": "H.png",
+    "x": 250,
+    "y": 60,
+    "w": 86,
+    "h": 50
+   }
+  }
+ },
+ "note": "Made by npm run assets from frames/finale/setdesign/finale.json at 0.75 of the size, for narrow screens. Do not edit."
+}
