@@ -14,6 +14,9 @@ const base = process.env.HJ_URL ?? 'http://localhost:5173/';
 const out = 'qa/finales';
 const headless = process.env.HJ_HEADLESS === '1';
 const SCENES = [['build', 'build'], ['grow', 'grow'], ['design', 'design'], ['film', 'film'], ['set', 'setdesign']];
+// Film's finale is off until its pose is approved (job 007): nothing to record. `network` and `rules` still check it
+// fetches and flashes nothing.
+const PLAYS = SCENES.filter(([hash]) => hash !== 'film');
 const what = process.argv[2] ?? 'all';
 await mkdir(out, { recursive: true });
 const results = JSON.parse(await readFile(join(out, 'results.json'), 'utf8').catch(() => '{}'));
@@ -106,7 +109,7 @@ async function record() {
   results.record = {};
   const browser = await chromium.launch({ channel: 'chrome', headless });
   for (const device of ['desktop', 'iphone']) {
-    for (const [hash, name] of SCENES) {
+    for (const [hash, name] of PLAYS) {
       const phone = device === 'iphone';
       const size = phone ? { width: 390, height: 844 } : { width: 1440, height: 900 };
       // The iPhone in Chrome's emulation (screencast is Chrome's): iPhone 14's 390 x 844 at 3x, touch.
@@ -156,7 +159,7 @@ async function record() {
     return null;
   });
   if (!safari) return;
-  for (const [hash, name] of SCENES) {
+  for (const [hash, name] of PLAYS) {
     const context = await safari.newContext({ ...devices['iPhone 14'], viewport: { width: 390, height: 844 } });
     const page = await context.newPage();
     await page.goto(`${base}?debug&reset&intro=off&finale=${name}#${hash}`);

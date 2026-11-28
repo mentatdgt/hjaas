@@ -1,0 +1,169 @@
+{
+ "scene": "build",
+ "plate": {
+  "x": 575.6,
+  "y": 220.9,
+  "w": 627.1,
+  "h": 649.9
+ },
+ "density": 1.1253985122210415,
+ "size": [
+  706,
+  731
+ ],
+ "frames": [
+  {
+   "file": "F00_ok.png",
+   "ms": 800
+  },
+  {
+   "file": "F01_ok.png",
+   "ms": 167
+  },
+  {
+   "file": "F02_ok.png",
+   "ms": 83
+  },
+  {
+   "file": "F03_ok.png",
+   "ms": 83
+  },
+  {
+   "file": "F04_ok.png",
+   "ms": 83
+  },
+  {
+   "file": "F05_ok.png",
+   "ms": 83
+  },
+  {
+   "file": "F06_ok.png",
+   "ms": 83
+  },
+  {
+   "file": "F07_ok.png",
+   "ms": 83
+  },
+  {
+   "file": "F08_ok.png",
+   "ms": 83
+  },
+  {
+   "file": "F09_ok.png",
+   "ms": 83
+  },
+  {
+   "file": "F10_ok.png",
+   "ms": 83
+  },
+  {
+   "file": "F11_ok.png",
+   "ms": 83
+  },
+  {
+   "file": "F12_ok.png",
+   "ms": 83
+  },
+  {
+   "file": "F13_ok.png",
+   "ms": 83
+  },
+  {
+   "file": "F14_ok.png",
+   "ms": 83
+  },
+  {
+   "file": "F15_ok.png",
+   "ms": 83
+  },
+  {
+   "file": "F16_ok.png",
+   "ms": 167
+  },
+  {
+   "file": "F17_ok.png",
+   "ms": 167
+  }
+ ],
+ "blink": "H_blink_ok.png",
+ "parts": {
+  "stills": {
+   "F00_ok.png": "F00_ok.png",
+   "F17_ok.png": "F17_ok.png",
+   "F01_ok.png": "F01_ok.png",
+   "F06_ok.png": "F06_ok.png",
+   "F07_ok.png": "F07_ok.png",
+   "F08_ok.png": "F08_ok.png",
+   "F10_ok.png": "F10_ok.png",
+   "F11_ok.png": "F11_ok.png",
+   "F12_ok.png": "F12_ok.png",
+   "F14_ok.png": "F14_ok.png"
+  },
+  "patches": {
+   "F02_ok.png": {
+    "base": "F00_ok.png",
+    "x": 30,
+    "y": 167,
+    "w": 372,
+    "h": 564
+   },
+   "F03_ok.png": {
+    "base": "F01_ok.png",
+    "x": 30,
+    "y": 167,
+    "w": 373,
+    "h": 564
+   },
+   "F04_ok.png": {
+    "base": "F01_ok.png",
+    "x": 20,
+    "y": 149,
+    "w": 509,
+    "h": 582
+   },
+   "F05_ok.png": {
+    "base": "F01_ok.png",
+    "x": 27,
+    "y": 129,
+    "w": 376,
+    "h": 602
+   },
+   "F09_ok.png": {
+    "base": "F01_ok.png",
+    "x": 0,
+    "y": 62,
+    "w": 454,
+    "h": 669
+   },
+   "F13_ok.png": {
+    "base": "F01_ok.png",
+    "x": 1,
+    "y": 22,
+    "w": 400,
+    "h": 709
+   },
+   "F15_ok.png": {
+    "base": "F17_ok.png",
+    "x": 8,
+    "y": 0,
+    "w": 377,
+    "h": 729
+   },
+   "F16_ok.png": {
+    "base": "F17_ok.png",
+    "x": 14,
+    "y": 0,
+    "w": 371,
+    "h": 729
+   },
+   "H_blink_ok.png": {
+    "base": "F17_ok.png",
+    "x": 149,
+    "y": 128,
+    "w": 89,
+    "h": 55
+   }
+  }
+ },
+ "note": "Made by npm run assets from frames/finale/build/finale.json at 0.75 of the size, for narrow screens. Do not edit."
+}

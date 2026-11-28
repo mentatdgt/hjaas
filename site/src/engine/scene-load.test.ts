@@ -617,6 +617,33 @@ describe('recoverable room assets', () => {
     scene.destroy();
   });
 
+  it('a scene without a finale (Film, for now) never fetches or plays one, even complete; one with a finale does', async () => {
+    const requested: string[] = [];
+    vi.stubGlobal('requestIdleCallback', (fn: () => void) => queueMicrotask(fn));
+    vi.stubGlobal('createImageBitmap', async () => ({ width: 100, height: 100, close() {} }));
+    vi.stubGlobal('fetch', vi.fn(async (url: string) => {
+      requested.push(url);
+      if (url.includes('/finale')) return new Response(null, { status: 404 });
+      return new Response(url);
+    }));
+    const complete = (room: typeof config) => Scene.load(room, { ...host(), found: new Set(room.spots.map((spot) => spot.id)) }, true);
+    // Film's own config: its finale is a comment until its pose is approved.
+    expect(SCENES.find((scene) => scene.id === 'film')?.finale).toBeUndefined();
+    // Build with its finale taken away: the same scene, every mushroom found, settled; nothing of a finale.
+    const without = await complete({ ...config, finale: undefined });
+    await without.loadMore();
+    without.syncFinds();
+    expect(without.finaleShow).toBeNull();
+    expect(requested.filter((url) => url.includes('/finale'))).toEqual([]);
+    without.destroy();
+    // (Build as it is, complete: it does ask for its held pose, so the check above can fail.)
+    const withFinale = await complete(config);
+    await withFinale.loadMore();
+    expect(withFinale.finaleShow).not.toBeNull();
+    await vi.waitFor(() => expect(requested.some((url) => url.includes('/scene1/finale/'))).toBe(true));
+    withFinale.destroy();
+  });
+
   it('gives a slow room a minute, then expires, and a fresh load can succeed', async () => {
     vi.useFakeTimers();
     decode.mockImplementation(() => new Promise(() => {}));
