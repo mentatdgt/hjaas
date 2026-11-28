@@ -5,12 +5,14 @@ import { describe, expect, it } from 'vitest';
 import { BLINK_MS, Director, FETCH_AT, FLASH_UP_MS, WAIT_MS, fetchOrder, fetchScope, needs, type FinaleManifest, type Readiness } from './finale';
 import buildJson from '../../../frames/finale/build/finale.json';
 import designJson from '../../../frames/finale/design/finale.json';
+import filmJson from '../../../frames/finale/film/finale.json';
 import growJson from '../../../frames/finale/grow/finale.json';
 import setdesignJson from '../../../frames/finale/setdesign/finale.json';
 
 // (As delivered, in frames/finale/.)
 const build = buildJson as unknown as FinaleManifest;
 const design = designJson as unknown as FinaleManifest;
+const film = filmJson as unknown as FinaleManifest;
 const grow = growJson as unknown as FinaleManifest;
 const setdesign = setdesignJson as unknown as FinaleManifest;
 
@@ -26,7 +28,7 @@ const RUN: FinaleManifest = {
   blink: 'H_blink.png',
   parts: { stills: { 'A.png': 'A.png', 'H.png': 'H.png' }, patches: { 'B.png': { base: 'A.png', x: 1, y: 2, w: 3, h: 4 }, 'C.png': { base: 'A.png', same: true }, 'H_blink.png': { base: 'H.png', x: 5, y: 5, w: 5, h: 5 } } },
 };
-/** A finale that cuts straight to its held pose under a camera flash (as Film's will, once its pose is approved). */
+/** A finale that cuts straight to its held pose under a camera flash (like Film's, with a blink added). */
 const FLASH: FinaleManifest = {
   plate: { x: 0, y: 0, w: 100, h: 100 },
   size: [150, 150],
@@ -84,7 +86,7 @@ describe('the finale starts on the tenth find, and keeps exact time', () => {
     expect(d.update(4200, { ...READY, blinkReady: false })).toBe('H.png');
   });
 
-  it('a flash finale (a fixture: no delivered finale has one now) cuts under the flash: at its peak, not before', () => {
+  it('a flash finale (a fixture; Film is the delivered one) cuts under the flash: at its peak, not before', () => {
     const d = new Director(FLASH, steady);
     d.trigger(500, READY);
     expect(d.flashAt).toBe(500);
@@ -231,15 +233,32 @@ describe('what is fetched, and when', () => {
 });
 
 describe('the delivered finales', () => {
-  it('none of them flashes: only a finale with `transition: "flash"` does', () => {
+  it('only Film flashes: only a finale with `transition: "flash"` does', () => {
     for (const m of [RUN, build, grow, design, setdesign]) {
       const d = new Director(m, steady);
       d.trigger(0, READY);
       expect(d.flashAt).toBeNull();
     }
+    expect(film.transition).toBe('flash');
+    const d = new Director(film, steady);
+    d.trigger(0, READY);
+    expect(d.flashAt).toBe(0);
   });
 
-  it.each([['build', build], ['grow', grow], ['design', design], ['setdesign', setdesign]] as const)('%s: every frame and patch is listed, the held pose last', (_name, manifest) => {
+  it('film: one held pose, no blink, the presenter and Rachel hidden; it cuts to it at the flash peak and stays', () => {
+    expect(film.frames).toEqual([{ file: 'H.png', ms: 100 }]);
+    expect(film.blink).toBeNull();
+    expect(film.hide).toEqual(['presenter', 'rachel']);
+    expect(fetchOrder(film, 'held')).toEqual(['H.png']);
+    expect(fetchOrder(film, 'all')).toEqual(['H.png']);
+    const d = new Director(film, steady);
+    d.trigger(1000, READY);
+    expect(d.update(1000 + FLASH_UP_MS - 1, READY)).toBeNull();
+    expect(at(d, [1000 + FLASH_UP_MS, 5000, 20000])).toEqual(['H.png', 'H.png', 'H.png']);
+    expect(d.phase).toBe('held');
+  });
+
+  it.each([['build', build], ['grow', grow], ['design', design], ['film', film], ['setdesign', setdesign]] as const)('%s: every frame and patch is listed, the held pose last', (_name, manifest) => {
     const m = manifest;
     const known = new Set([...Object.keys(m.parts?.stills ?? {}), ...Object.keys(m.parts?.patches ?? {})]);
     for (const { file, ms } of m.frames) {

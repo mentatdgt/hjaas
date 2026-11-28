@@ -1,0 +1,33 @@
+{
+ "scene": "film",
+ "plate": {
+  "x": 658.1,
+  "y": 162.9,
+  "w": 479.7,
+  "h": 699.6
+ },
+ "density": 1.5,
+ "size": [
+  720,
+  1049
+ ],
+ "frames": [
+  {
+   "file": "H.png",
+   "ms": 100
+  }
+ ],
+ "blink": null,
+ "hide": [
+  "presenter",
+  "rachel"
+ ],
+ "transition": "flash",
+ "parts": {
+  "stills": {
+   "H.png": "H.png"
+  },
+  "patches": {}
+ },
+ "note": "Film selfie pose approved by the owner on 2026-11-28 (v9)."
+}

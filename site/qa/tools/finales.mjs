@@ -13,10 +13,13 @@ import { join } from 'node:path';
 const base = process.env.HJ_URL ?? 'http://localhost:5173/';
 const out = 'qa/finales';
 const headless = process.env.HJ_HEADLESS === '1';
-const SCENES = [['build', 'build'], ['grow', 'grow'], ['design', 'design'], ['film', 'film'], ['set', 'setdesign']];
-// Film's finale is off until its pose is approved (job 007): nothing to record. `network` and `rules` still check it
-// fetches and flashes nothing.
-const PLAYS = SCENES.filter(([hash]) => hash !== 'film');
+// A third argument (or HJ_ONLY), tabs comma-separated, e.g. `record film`, runs just those scenes; `rules` keeps its
+// own fixed list.
+const only = (process.argv[3] ?? process.env.HJ_ONLY)?.split(',');
+const SCENES = [['build', 'build'], ['grow', 'grow'], ['design', 'design'], ['film', 'film'], ['set', 'setdesign']]
+  .filter(([hash]) => !only || only.includes(hash));
+// Every scene has a finale now (Film's pose approved 2026-11-28, job 008).
+const PLAYS = SCENES;
 const what = process.argv[2] ?? 'all';
 await mkdir(out, { recursive: true });
 const results = JSON.parse(await readFile(join(out, 'results.json'), 'utf8').catch(() => '{}'));
@@ -24,7 +27,8 @@ const save = () => writeFile(join(out, 'results.json'), `${JSON.stringify(result
 const ready = (page) => page.waitForFunction(() => window.__hj?.ready === true, null, { timeout: 90000 });
 
 async function network() {
-  results.network = {};
+  // (Run for some scenes only, the others' results are kept.)
+  results.network = only ? (results.network ?? {}) : {};
   for (const [hash] of SCENES) {
     const browser = await chromium.launch({ channel: 'chrome', headless });
     const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
@@ -106,7 +110,7 @@ async function toWebm(browser, frames, file) {
 }
 
 async function record() {
-  results.record = {};
+  results.record = only ? (results.record ?? {}) : {};
   const browser = await chromium.launch({ channel: 'chrome', headless });
   for (const device of ['desktop', 'iphone']) {
     for (const [hash, name] of PLAYS) {
@@ -123,6 +127,12 @@ async function record() {
       cdp.on('Page.screencastFrame', (e) => {
         frames.push({ data: e.data, at: e.metadata.timestamp });
         void cdp.send('Page.screencastFrameAck', { sessionId: e.sessionId }).catch(() => {});
+      });
+      // Every flash the page ever puts up is counted.
+      await page.addInitScript(() => {
+        window.__flashes = 0;
+        new MutationObserver((list) => { for (const m of list) for (const n of m.addedNodes) if (n.classList?.contains('hj-flash')) window.__flashes++; })
+          .observe(document, { childList: true, subtree: true });
       });
       await page.goto(`${base}?debug&reset&intro=off&finale=${name}#${hash}`);
       await ready(page);
@@ -143,6 +153,9 @@ async function record() {
           canvasBytes: f.canvasBytes,
           set: document.querySelector('.hj-finale canvas') ? `${document.querySelector('.hj-finale canvas').width}px canvas` : '',
           longTasks: window.__hj.longTasks.length,
+          flashes: window.__flashes,
+          // Each actor on the page and whether the finale hid it, by its data-actor name.
+          actors: Object.fromEntries([...document.querySelectorAll('[data-actor]')].map((el) => [el.dataset.actor, getComputedStyle(el).visibility])),
         };
       });
       results.record[`${name}-${device}`] = { ...r, videoFrames: frames.length, errors };
